@@ -1,0 +1,41 @@
+{
+  "name": "beat-the-fine-london",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "setup": "./scripts/setup.sh",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "db:generate": "turbo run prisma:generate",
+    "db:migrate": "turbo run prisma:migrate",
+    "db:seed": "turbo run db:seed",
+    "db:studio": "pnpm -C packages/db prisma studio",
+    "db:reset": "pnpm -C packages/db prisma migrate reset --force",
+    "db:switch:postgresql": "pnpm -C packages/db db:switch:postgresql",
+    "db:switch:sqlite": "pnpm -C packages/db db:switch:sqlite",
+    "i18n:scan": "pnpm -C packages/i18n-core i18n:scan",
+    "i18n:generate": "pnpm -C packages/i18n-core i18n:generate",
+    "i18n:process": "pnpm -C packages/i18n-core i18n:process",
+    "i18n:translate": "pnpm -C packages/i18n-core i18n:translate",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:build": "docker build -t beat-the-fine-london .",
+    "docker:run": "docker run -p 3000:3000 -p 3001:3001 --env-file .env beat-the-fine-london",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "turbo": "^1.12.0",
+    "typescript": "^5.0.0"
+  },
+  "packageManager": "pnpm@8.0.0"
+}

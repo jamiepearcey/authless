@@ -1,0 +1,21 @@
+{
+  "sourceLocale": "en",
+  "defaultLocale": "en",
+  "locales": ["en", "fr", "de"],
+  "localesDir": "public/i18n",
+  "sourceGlobs": [
+    "app/**/*.{ts,tsx}",
+    "src/**/*.{ts,tsx}",
+    "components/**/*.{ts,tsx}",
+    "features/**/*.{ts,tsx}"
+  ],
+  "ignoreGlobs": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.turbo/**",
+    "**/coverage/**",
+    "**/*.d.ts"
+  ]
+}

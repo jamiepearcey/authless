@@ -1,0 +1,17 @@
+{
+  "extends": "./packages/config/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "customConditions": ["server", "client", "next",  "react-server"],
+    "paths": {
+      "@/*": ["./apps/web/*"],
+      "@ui/*": ["./packages/ui/src/*"],
+      "@trpc/*": ["./packages/trpc/src/*"],
+      "@shared/*": ["./packages/shared/src/*"],
+      "@db/*": ["./packages/db/src/*"],
+      "@config/*": ["./packages/config/*"],
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "packages/ui/src/components"],
+  "exclude": ["node_modules"]
+}
