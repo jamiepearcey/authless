@@ -5,20 +5,6 @@ export const navigationLinks = [
     label: t("Features", "components.links.navigationLinks.features__1itlrq"),
   },
   {
-    href: "/tech-stack",
-    label: t(
-      "Tech Stack",
-      "components.links.navigationLinks.tech_stack__1bkoks",
-    ),
-  },
-  {
-    href: "/getting-started",
-    label: t(
-      "Getting Started",
-      "components.links.navigationLinks.getting_started__1uousr",
-    ),
-  },
-  {
     href: "/contact",
     label: t("Contact", "components.links.navigationLinks.contact__1itlrq"),
   },

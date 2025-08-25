@@ -301,6 +301,10 @@ export const appRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       try {
+        if (!ctx.session.user.id) {
+          throw new TRPCError({ code: "UNAUTHORIZED" });
+        }
+        
         // Check if user is already a member
         const existingMembership = await ctx.db.membership.findFirst({
           where: {
@@ -347,7 +351,7 @@ export const appRouter = router({
             expiresAt,
             bypassEmailVerification: input.bypassEmailVerification,
             invitedByUserId: ctx.session.user.id,
-            message: input.message,
+            message: input.message
           },
         });
         
@@ -374,6 +378,7 @@ export const appRouter = router({
         return {
           success: true,
           invitationId: invitation.id,
+          invitationCode: input.bypassEmailVerification ? invitation.id : undefined,
           token: token, // This should be sent via email in production
           message: "Invitation sent successfully",
         };
@@ -527,6 +532,7 @@ export const appRouter = router({
                 image: true,
                 createdAt: true,
                 lastLoginAt: true,
+                isEmailVerified: true,
               },
             },
           },
@@ -536,6 +542,7 @@ export const appRouter = router({
         return memberships.map(membership => ({
           id: membership.id,
           role: membership.role,
+          tenantId: membership.tenantId,
           isAdmin: membership.role === "admin",
           status: membership.status,
           createdAt: membership.createdAt,
@@ -972,6 +979,405 @@ export const appRouter = router({
         message: "Message status updated successfully.",
       };
     }),
+
+  updateTenantUser: protectedProcedure
+    .input(z.object({
+      userId: z.string(),
+      tenantId: z.string(),
+      data: z.object({
+        name: z.string().optional(),
+        role: z.enum(["admin", "member"]).optional(),
+        status: z.enum(["active", "pending", "suspended"]).optional(),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { userId, tenantId, data } = input;
+        console.log("update user", input);
+        
+        // Verify user has access to this tenant
+        const membership = await ctx.db.membership.findFirst({
+          where: { userId: ctx.session.user.id, tenantId, role: "admin" },
+        });
+        
+        if (!membership) {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
+        }
+        console.log("membership", membership);
+        // Update membership
+        const updatedMembership = await ctx.db.membership.update({
+          where: { id: userId },
+          data: {
+            role: data.role,
+            status: data.status,
+          },
+        });
+        
+        // Update user if name is provided
+        if (data.name) {
+          await ctx.db.user.update({
+            where: { id: userId },
+            data: { name: data.name },
+          });
+        }
+        
+        return { success: true, message: "User updated successfully" };
+      } catch (error) {
+        if (error instanceof TRPCError) throw error;
+        console.error("Failed to update user:", error);
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to update user" });
+      }
+    }),
+
+        resendUserVerification: protectedProcedure
+        .input(z.object({
+          userId: z.string(),
+          tenantId: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          try {
+            const { userId, tenantId } = input;
+            
+            // Verify user has access to this tenant
+            const membership = await ctx.db.membership.findFirst({
+              where: { userId: ctx.session.user.id, tenantId, role: "admin" },
+            });
+            
+            if (!membership) {
+              throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
+            }
+            
+            // Generate new verification token
+            const user = await ctx.db.user.findUnique({
+              where: { id: userId },
+            });
+            
+            if (!user) {
+              throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+            }
+            
+            // TODO: Implement actual email sending logic
+            // For now, just return success
+            return { success: true, message: "Verification email sent successfully" };
+          } catch (error) {
+            if (error instanceof TRPCError) throw error;
+            console.error("Failed to resend verification:", error);
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to resend verification" });
+          }
+        }),
+
+      validateInvitation: publicProcedure
+        .input(z.object({ code: z.string() }))
+        .mutation(async ({ ctx, input }) => {
+          try {
+            const { code } = input;
+            
+            const invitation = await ctx.db.invitation.findUnique({
+              where: { id: code },
+              include: {
+                tenant: {
+                  select: {
+                    id: true,
+                    name: true,
+                    slug: true,
+                  },
+                },
+              },
+            });
+            
+            if (!invitation) {
+              throw new TRPCError({ code: "NOT_FOUND", message: "Invitation not found" });
+            }
+            
+            if (invitation.status !== "pending") {
+              throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation has already been used or expired" });
+            }
+            
+            // Check if invitation has expired (24 hours)
+            const expirationTime = new Date(invitation.createdAt.getTime() + 24 * 60 * 60 * 1000);
+            if (new Date() > expirationTime) {
+              throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation has expired" });
+            }
+            
+            return {
+              id: invitation.id,
+              email: invitation.email,
+              role: invitation.role,
+              message: invitation.message,
+              tenantId: invitation.tenantId,
+              tenantName: invitation.tenant.name,
+              tenantSlug: invitation.tenant.slug,
+              createdAt: invitation.createdAt,
+            };
+          } catch (error) {
+            if (error instanceof TRPCError) throw error;
+            console.error("Failed to validate invitation:", error);
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to validate invitation" });
+          }
+        }),
+
+      acceptInvitation: publicProcedure
+        .input(z.object({
+          code: z.string(),
+          password: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          try {
+            const { code, password } = input;
+            
+            // Validate invitation
+            const invitation = await ctx.db.invitation.findUnique({
+              where: { id: code },
+              include: {
+                tenant: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+              },
+            });
+            
+            if (!invitation) {
+              throw new TRPCError({ code: "NOT_FOUND", message: "Invitation not found" });
+            }
+            
+            if (invitation.status !== "pending") {
+              throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation has already been used" });
+            }
+            
+            // Check if invitation has expired (24 hours)
+            const expirationTime = new Date(invitation.createdAt.getTime() + 24 * 60 * 60 * 1000);
+            if (new Date() > expirationTime) {
+              throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation has expired" });
+            }
+            
+            // Check if user already exists
+            let user = await ctx.db.user.findUnique({
+              where: { email: invitation.email },
+            });
+            
+            if (user) {
+              // User exists, just create membership
+              await ctx.db.membership.create({
+                data: {
+                  userId: user.id,
+                  tenantId: invitation.tenantId,
+                  role: invitation.role,
+                  status: "active",
+                  invitationAcceptedAt: new Date(),
+                },
+              });
+            } else {
+              // Create new user
+              user = await ctx.db.user.create({
+                data: {
+                  email: invitation.email,
+                  hashedPassword: await ctx.hashPassword(password),
+                  isEmailVerified: true, // Since they're using invitation code
+                  platformRole: "user",
+                  status: "active",
+                },
+              });
+              
+              // Create membership
+              await ctx.db.membership.create({
+                data: {
+                  userId: user.id,
+                  tenantId: invitation.tenantId,
+                  role: invitation.role,
+                  status: "active",
+                  invitationAcceptedAt: new Date(),
+                },
+              });
+            }
+            
+            // Mark invitation as accepted
+            await ctx.db.invitation.update({
+              where: { id: code },
+              data: {
+                status: "accepted",
+                acceptedAt: new Date(),
+                acceptedByUserId: user.id,
+              },
+            });
+            
+            // Log the action
+            await ctx.db.auditLog.create({
+              data: {
+                tenantId: invitation.tenantId,
+                userId: user.id,
+                action: "invitation_accepted",
+                resourceType: "invitation",
+                resourceId: invitation.id,
+                details: JSON.stringify({ 
+                  email: invitation.email,
+                  role: invitation.role,
+                  tenantName: invitation.tenant.name
+                }),
+                severity: "info",
+              },
+            });
+            
+            return { success: true, message: "Account created successfully" };
+          } catch (error) {
+            if (error instanceof TRPCError) throw error;
+            console.error("Failed to accept invitation:", error);
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to accept invitation" });
+          }
+        }),
+
+      setupTwoFactor: protectedProcedure
+        .mutation(async ({ ctx }) => {
+          try {
+            // Generate a new secret for 2FA
+            const secret = require("crypto").randomBytes(32).toString("base32");
+            
+            // Generate QR code URL for authenticator apps
+            const user = await ctx.db.user.findUnique({
+              where: { email: ctx.session.user.email },
+              select: { email: true, name: true, isEmailVerified: true },
+            });
+            
+            if (!user) {
+              throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+            }
+            
+            const appName = "Beat The Fine London";
+            const qrCodeUrl = `otpauth://totp/${encodeURIComponent(appName)}:${encodeURIComponent(user?.email ?? "")}?secret=${secret}&issuer=${encodeURIComponent(appName)}`;
+            
+            // TODO: Generate actual QR code image
+            // For now, return the URL that can be used with a QR code generator
+            const qrCode = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrCodeUrl)}`;
+            
+            // Store the secret temporarily (in production, this would be encrypted)
+            // For now, we'll store it in the user record
+            await ctx.db.user.update({
+              where: { email: ctx.session.user.email },
+              data: {
+                twoFactorSecret: secret,
+                twoFactorEnabled: false, // Will be enabled after verification
+              },
+            });
+            
+            return {
+              secret,
+              qrCode,
+              qrCodeUrl,
+            };
+          } catch (error) {
+            if (error instanceof TRPCError) throw error;
+            console.error("Failed to setup 2FA:", error);
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to setup 2FA" });
+          }
+        }),
+
+      verifyTwoFactor: protectedProcedure
+        .input(z.object({ code: z.string() }))
+        .mutation(async ({ ctx, input }) => {
+          try {
+            const { code } = input;
+            
+            // Get user's 2FA secret
+            const user = await ctx.db.user.findUnique({
+              where: { email: ctx.session.user.email },
+              select: { twoFactorSecret: true },
+            });
+            
+            if (!user?.twoFactorSecret) {
+              throw new TRPCError({ code: "BAD_REQUEST", message: "2FA not set up" });
+            }
+            
+            // Verify the TOTP code
+            const totp = require("totp-generator");
+            const expectedCode = totp(user.twoFactorSecret);
+            
+            if (code !== expectedCode) {
+              throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid verification code" });
+            }
+            
+            // Enable 2FA for the user
+            await ctx.db.user.update({
+              where: { email: ctx.session.user.email },
+              data: {
+                twoFactorEnabled: true,
+              },
+            });
+            
+            // Log the action
+            await ctx.db.auditLog.create({
+              data: {
+                userId: ctx.session.user.id || "",
+                action: "two_factor_enabled",
+                resourceType: "user",
+                resourceId: ctx.session.user.id || "",
+                details: JSON.stringify({ enabled: true }),
+                severity: "info",
+              },
+            });
+            
+            return { success: true, message: "Two-factor authentication enabled successfully" };
+          } catch (error) {
+            if (error instanceof TRPCError) throw error;
+            console.error("Failed to verify 2FA:", error);
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to verify 2FA" });
+          }
+        }),
+
+      deleteTenantUser: protectedProcedure
+        .input(z.object({
+          userId: z.string(),
+          tenantId: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          try {
+            const { userId, tenantId } = input;
+            
+            // Verify user has access to this tenant
+            const membership = await ctx.db.membership.findFirst({
+              where: { userId: ctx.session.user.id, tenantId, role: "admin" },
+            });
+            
+            if (!membership) {
+              throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
+            }
+            
+            // Check if user is trying to remove themselves
+            if (userId === ctx.session.user.id) {
+              throw new TRPCError({ code: "BAD_REQUEST", message: "Cannot remove yourself from the tenant" });
+            }
+            
+            // Remove the user's membership from this tenant
+            await ctx.db.membership.deleteMany({
+              where: {
+                userId,
+                tenantId,
+              },
+            });
+            
+            // Log the action
+            await ctx.db.auditLog.create({
+              data: {
+                tenantId,
+                userId: ctx.session.user.id || "",
+                action: "user_removed_from_tenant",
+                resourceType: "membership",
+                resourceId: userId,
+                details: JSON.stringify({ 
+                  removedUserId: userId,
+                  reason: "Admin removal"
+                }),
+                severity: "warning",
+              },
+            });
+            
+            return { success: true, message: "User removed from tenant successfully" };
+          } catch (error) {
+            if (error instanceof TRPCError) throw error;
+            console.error("Failed to remove user from tenant:", error);
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to remove user from tenant" });
+          }
+        }),
 });
 
 export type AppRouter = typeof appRouter;

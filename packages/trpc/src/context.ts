@@ -1,19 +1,19 @@
-import { getServerSession } from "next-auth";
 import { db } from "@db/base";
-// Note: authOptions will be imported differently in the actual implementation
-// This is a placeholder for now
-const authOptions = {} as any;
+import bcrypt from "bcryptjs";
 
 export interface Context {
   session: any;
   db: typeof db;
+  hashPassword: (password: string) => Promise<string>;
 }
 
-export const createContext = async (): Promise<Context> => {
-  const session = await getServerSession(authOptions);
-
+export const createContext = async (session?: any): Promise<Context> => {
   return {
-    session,
+    session: session || {},
     db,
+    hashPassword: async (password: string) => {
+      const saltRounds = 12;
+      return bcrypt.hash(password, saltRounds);
+    },
   };
 };

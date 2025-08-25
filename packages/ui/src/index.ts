@@ -8,6 +8,7 @@ export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 export { Checkbox } from "./components/checkbox";
 export { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./components/command";
 export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./components/dialog";
+export { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./components/alert-dialog";
 export { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./components/dropdown-menu";
 export { HoverCard, HoverCardContent, HoverCardTrigger } from "./components/hover-card";
 export { Input } from "./components/input";

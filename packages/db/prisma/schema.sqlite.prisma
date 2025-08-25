@@ -48,6 +48,8 @@ model User {
   emailVerificationToken String?  @unique
   passwordResetToken    String?   @unique
   passwordResetExpires  DateTime?
+  twoFactorSecret       String?   // TOTP secret for 2FA
+  twoFactorEnabled      Boolean   @default(false) // Whether 2FA is enabled
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
   accounts              Account[]

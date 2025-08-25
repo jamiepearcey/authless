@@ -1,58 +1,124 @@
 "use client";
-
 import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { t } from "@i18n-core";
-import { Button } from "@ui/base";
-import { Input } from "@ui/base";
-import { Label } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
+import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
-import { 
-  Plus, 
-  Search, 
-  Users, 
-  Mail, 
-  Calendar, 
-  Crown,
-  UserPlus,
-  MoreHorizontal,
-  Edit,
-  Trash2,
-  Shield,
-  UserCheck
-} from "lucide-react";
+import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, EyeOff, User } from "lucide-react";
 import { trpc } from "../../../../../lib/trpc";
 import { toast } from "@ui/base";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@ui/base";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@ui/base";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@ui/base";
+
+interface User {
+  id: string;
+  name: string | null;
+  email: string;
+  image: string | null;
+  createdAt: string;
+  lastLoginAt: string | null;
+  status: string;
+  role: string;
+  isEmailVerified: boolean;
+}
 
 export default function TenantUsersPage() {
   const params = useParams();
-  const router = useRouter();
   const tenantSlug = params.slug as string;
   
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRole, setSelectedRole] = useState<string>("all");
-  const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [showInviteForm, setShowInviteForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [showUserDetails, setShowUserDetails] = useState(false);
+  const [showInvitationCode, setShowInvitationCode] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [invitationCode, setInvitationCode] = useState("");
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
   const [inviteData, setInviteData] = useState({
     email: "",
     role: "member",
     message: "",
     bypassEmailVerification: false,
   });
+  const [editData, setEditData] = useState({
+    name: "",
+    role: "member" as "member" | "admin",
+    status: "active" as "active" | "suspended" | "pending",
+  });
 
-  const { data: tenant } = trpc.getTenant.useQuery(
-    { slug: tenantSlug },
+  const { data: memberships, refetch: refetchMemberships } = trpc.getTenantMemberships.useQuery(
+    { tenantSlug },
     { enabled: !!tenantSlug }
   );
 
   const inviteUser = trpc.inviteUser.useMutation({
     onSuccess: (data) => {
-      toast.success("Invitation sent successfully!");
-      setShowInviteForm(false);
-      setInviteData({ email: "", role: "member", message: "", bypassEmailVerification: false });
-      // TODO: Refresh user list
+      if (inviteData.bypassEmailVerification && data.invitationCode) {
+        setInvitationCode(data.invitationCode);
+        setShowInvitationCode(true);
+      } else {
+        toast.success("User invited successfully!");
+        setShowInviteForm(false);
+        setInviteData({ email: "", role: "member", message: "", bypassEmailVerification: false });
+        refetchMemberships();
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const updateUser = trpc.updateTenantUser.useMutation({
+    onSuccess: () => {
+      toast.success("User updated successfully!");
+      setShowEditForm(false);
+      setSelectedUser(null);
+      refetchMemberships();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const resendVerification = trpc.resendUserVerification.useMutation({
+    onSuccess: () => {
+      toast.success("Verification email sent successfully!");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const deleteUser = trpc.deleteTenantUser.useMutation({
+    onSuccess: () => {
+      toast.success("User removed from tenant successfully!");
+      setShowDeleteConfirm(false);
+      setUserToDelete(null);
+      refetchMemberships();
     },
     onError: (error) => {
       toast.error(error.message);
@@ -61,34 +127,73 @@ export default function TenantUsersPage() {
 
   const handleInviteUser = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!inviteData.email.trim()) {
       toast.error("Email is required");
       return;
     }
-
+    
     try {
       await inviteUser.mutateAsync({
-        tenantId: tenant?.id || "",
+        tenantId: memberships?.[0]?.tenantId || "",
         email: inviteData.email.trim(),
         role: inviteData.role as any,
         message: inviteData.message.trim() || undefined,
         bypassEmailVerification: inviteData.bypassEmailVerification,
       });
     } catch (error) {
-      // Error is handled by the mutation
+      // Handled by mutation
+    }
+  };
+
+  const handleEditUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedUser) return;
+    
+    try {
+      await updateUser.mutateAsync({
+        userId: selectedUser.id,
+        tenantId: memberships?.[0]?.tenantId || "",
+        data: {
+          name: editData.name,
+          role: editData.role ,
+          status: editData.status,
+        },
+      });
+    } catch (error) {
+      // Handled by mutation
+    }
+  };
+
+  const handleResendVerification = async (userId: string) => {
+    try {
+      await resendVerification.mutateAsync({
+        userId,
+        tenantId: memberships?.[0]?.tenantId || "",
+      });
+    } catch (error) {
+      // Handled by mutation
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    if (!userToDelete) return;
+    
+    try {
+      await deleteUser.mutateAsync({
+        userId: userToDelete.id,
+        tenantId: memberships?.[0]?.tenantId || "",
+      });
+    } catch (error) {
+      // Handled by mutation
     }
   };
 
   const getRoleBadge = (role: string) => {
     switch (role) {
       case "admin":
-        return <Badge variant="default" className="bg-purple-100 text-purple-800 flex items-center gap-1">
-          <Crown className="h-3 w-3" />
-          Admin
-        </Badge>;
+        return <Badge variant="default" className="bg-red-100 text-red-700 border-red-200">Admin</Badge>;
       case "member":
-        return <Badge variant="secondary" className="bg-blue-100 text-blue-800">Member</Badge>;
+        return <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">Member</Badge>;
       default:
         return <Badge variant="outline">{role}</Badge>;
     }
@@ -97,406 +202,425 @@ export default function TenantUsersPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "active":
-        return <Badge variant="default" className="bg-green-100 text-green-800">Active</Badge>;
+        return <Badge variant="default" className="bg-green-100 text-green-700 border-green-200">Active</Badge>;
       case "pending":
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Pending</Badge>;
+        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-700 border-yellow-200">Pending</Badge>;
       case "suspended":
-        return <Badge variant="destructive" className="bg-red-100 text-red-800">Suspended</Badge>;
+        return <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200">Suspended</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
   };
 
-  // Mock data for now - will be replaced with actual tRPC query
-  const mockUsers = [
-    {
-      id: "1",
-      name: "John Doe",
-      email: "john@example.com",
-      role: "admin",
-      status: "active",
-      joinedAt: "2024-01-15",
-      lastActiveAt: "2024-01-20",
-    },
-    {
-      id: "2",
-      name: "Jane Smith",
-      email: "jane@example.com",
-      role: "member",
-      status: "active",
-      joinedAt: "2024-01-16",
-      lastActiveAt: "2024-01-19",
-    },
-    {
-      id: "3",
-      name: "Bob Johnson",
-      email: "bob@example.com",
-      role: "member",
-      status: "pending",
-      joinedAt: "2024-01-17",
-      lastActiveAt: null,
-    },
-  ];
+  const openEditForm = (user: User) => {
+    setSelectedUser(user);
+    setEditData({
+      name: user.name || "",
+      role: user.role as "member" | "admin",
+      status: user.status as "active" | "suspended" | "pending",
+    });
+    setShowEditForm(true);
+  };
 
-  const filteredUsers = mockUsers.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = selectedRole === "all" || user.role === selectedRole;
-    const matchesStatus = selectedStatus === "all" || user.status === selectedStatus;
-    
-    return matchesSearch && matchesRole && matchesStatus;
-  });
+  const openUserDetails = (user: User) => {
+    setSelectedUser(user);
+    setShowUserDetails(true);
+  };
 
-  if (!tenant) {
+  const openDeleteConfirm = (user: User) => {
+    setUserToDelete(user);
+    setShowDeleteConfirm(true);
+  };
+
+  if (!memberships) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Tenant not found</h1>
-          <p className="text-gray-600 mt-2">The requested workspace could not be found.</p>
-        </div>
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            {t("User Management", "tenants.users.page.TenantUsersPage.user_management__1itlrq")}
-          </h1>
-          <p className="text-gray-600 mt-2">
-            {t("Manage users and permissions for", "tenants.users.page.TenantUsersPage.manage_users_and_permissions_for__2bkoks")} {tenant.name}
-          </p>
+          <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
+          <p className="text-gray-600">Manage your team members and their roles</p>
         </div>
         <Button onClick={() => setShowInviteForm(true)} className="flex items-center gap-2">
-          <UserPlus className="h-4 w-4" />
-          {t("Invite User", "tenants.users.page.TenantUsersPage.invite_user__3ckols")}
+          <Plus className="h-4 w-4" />
+          Invite User
         </Button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <Users className="h-8 w-8 text-blue-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">{t("Total Users", "tenants.users.page.TenantUsersPage.total_users__4ckols")}</p>
-                <p className="text-2xl font-bold text-gray-900">{mockUsers.length}</p>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-blue-600" />
+              <div>
+                <p className="text-2xl font-bold">{memberships.length}</p>
+                <p className="text-sm text-gray-600">Total Users</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        
         <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <Crown className="h-8 w-8 text-purple-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">{t("Admins", "tenants.users.page.TenantUsersPage.admins__5ckols")}</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {mockUsers.filter(u => u.role === "admin").length}
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2">
+              <UserCheck className="h-5 w-5 text-green-600" />
+              <div>
+                <p className="text-2xl font-bold">
+                  {memberships.filter(m => m.status === "active").length}
                 </p>
+                <p className="text-sm text-gray-600">Active</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        
         <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <UserCheck className="h-8 w-8 text-green-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">{t("Active Users", "tenants.users.page.TenantUsersPage.active_users__6ckols")}</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {mockUsers.filter(u => u.status === "active").length}
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2">
+              <Shield className="h-5 w-5 text-red-600" />
+              <div>
+                <p className="text-2xl font-bold">
+                  {memberships.filter(m => m.role === "admin").length}
                 </p>
+                <p className="text-sm text-gray-600">Admins</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        
         <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <Mail className="h-8 w-8 text-yellow-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">{t("Pending", "tenants.users.page.TenantUsersPage.pending__7ckols")}</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {mockUsers.filter(u => u.status === "pending").length}
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2">
+              <UserX className="h-5 w-5 text-yellow-600" />
+              <div>
+                <p className="text-2xl font-bold">
+                  {memberships.filter(m => m.status === "pending").length}
                 </p>
+                <p className="text-sm text-gray-600">Pending</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Filters */}
-      <Card className="mb-6">
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <Label htmlFor="search" className="text-sm font-medium text-gray-700">
-                {t("Search", "tenants.users.page.TenantUsersPage.search__8ckols")}
-              </Label>
-              <div className="relative mt-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  id="search"
-                  placeholder={t("Search users...", "tenants.users.page.TenantUsersPage.search_users__9ckols")}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </div>
-            
-            <div>
-              <Label htmlFor="role" className="text-sm font-medium text-gray-700">
-                {t("Role", "tenants.users.page.TenantUsersPage.role__10ckols")}
-              </Label>
-              <Select value={selectedRole} onValueChange={setSelectedRole}>
-                <SelectTrigger className="mt-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">{t("All Roles", "tenants.users.page.TenantUsersPage.all_roles__11ckols")}</SelectItem>
-                  <SelectItem value="admin">{t("Admin", "tenants.users.page.TenantUsersPage.admin__12ckols")}</SelectItem>
-                  <SelectItem value="member">{t("Member", "tenants.users.page.TenantUsersPage.member__13ckols")}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div>
-              <Label htmlFor="status" className="text-sm font-medium text-gray-700">
-                {t("Status", "tenants.users.page.TenantUsersPage.status__14ckols")}
-              </Label>
-              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                <SelectTrigger className="mt-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">{t("All Statuses", "tenants.users.page.TenantUsersPage.all_statuses__15ckols")}</SelectItem>
-                  <SelectItem value="active">{t("Active", "tenants.users.page.TenantUsersPage.active__16ckols")}</SelectItem>
-                  <SelectItem value="pending">{t("Pending", "tenants.users.page.TenantUsersPage.pending__17ckols")}</SelectItem>
-                  <SelectItem value="suspended">{t("Suspended", "tenants.users.page.TenantUsersPage.suspended__18ckols")}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="flex items-end">
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedRole("all");
-                  setSelectedStatus("all");
-                }}
-                className="w-full"
-              >
-                {t("Clear Filters", "tenants.users.page.TenantUsersPage.clear_filters__19ckols")}
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Users Table */}
+      {/* User List */}
       <Card>
         <CardHeader>
-          <CardTitle>{t("Users", "tenants.users.page.TenantUsersPage.users__20ckols")}</CardTitle>
-          <CardDescription>
-            {t("Manage user roles and permissions", "tenants.users.page.TenantUsersPage.manage_user_roles_and_permissions__21ckols")}
-          </CardDescription>
+          <CardTitle>Team Members</CardTitle>
+          <CardDescription>Manage user roles, permissions, and status</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("User", "tenants.users.page.TenantUsersPage.user__22ckols")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("Role", "tenants.users.page.TenantUsersPage.role__23ckols")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("Status", "tenants.users.page.TenantUsersPage.status__24ckols")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("Joined", "tenants.users.page.TenantUsersPage.joined__25ckols")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("Last Active", "tenants.users.page.TenantUsersPage.last_active__26ckols")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("Actions", "tenants.users.page.TenantUsersPage.actions__27ckols")}
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-10 w-10 flex-shrink-0">
-                          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-                            <span className="text-sm font-medium text-white">
-                              {user.name.charAt(0).toUpperCase()}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                          <div className="text-sm text-gray-500">{user.email}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {getRoleBadge(user.role)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {getStatusBadge(user.status)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(user.joinedAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {user.lastActiveAt ? new Date(user.lastActiveAt).toLocaleDateString() : t("Never", "tenants.users.page.TenantUsersPage.never__28ckols")}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex items-center space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="space-y-3">
+            {memberships.map((membership) => (
+              <div key={membership.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                    {membership.user.image ? (
+                      <img src={membership.user.image} alt={membership.user.name || ""} className="h-10 w-10 rounded-full" />
+                    ) : (
+                      <span className="text-gray-600 font-medium">
+                        {membership.user.name?.charAt(0) || membership.user.email?.charAt(0).toUpperCase()}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">{membership.user.name || "No Name"}</p>
+                    <p className="text-sm text-gray-500">{membership.user.email}</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      {getRoleBadge(membership.role)}
+                      {getStatusBadge(membership.status)}
+                      {!membership.user.isEmailVerified && (
+                        <Badge variant="outline" className="text-orange-600 border-orange-200">
+                          Unverified
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-500">
+                    Joined {new Date(membership.createdAt).toLocaleDateString()}
+                  </span>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => openUserDetails(membership.user as User)}>
+                        <Eye className="h-4 w-4 mr-2" />
+                        View Details
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => openEditForm(membership.user as User)}>
+                        <Edit className="h-4 w-4 mr-2" />
+                        Edit User
+                      </DropdownMenuItem>
+                      {!membership.user.isEmailVerified && (
+                        <DropdownMenuItem onClick={() => handleResendVerification(membership.user.id)}>
+                          <Mail className="h-4 w-4 mr-2" />
+                          Resend Verification
+                        </DropdownMenuItem>
+                      )}
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem 
+                        className="text-red-600"
+                        onClick={() => openDeleteConfirm(membership.user as User)}
+                      >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Remove User
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
 
       {/* Invite User Modal */}
       {showInviteForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-medium text-gray-900">
-                {t("Invite User", "tenants.users.page.TenantUsersPage.invite_user__29ckols")}
-              </h3>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowInviteForm(false)}
-                className="h-8 w-8 p-0"
-              >
-                ×
-              </Button>
-            </div>
-            
+        <Dialog open={showInviteForm} onOpenChange={setShowInviteForm}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Invite Team Member</DialogTitle>
+              <DialogDescription>
+                Send an invitation to join your team
+              </DialogDescription>
+            </DialogHeader>
             <form onSubmit={handleInviteUser} className="space-y-4">
               <div>
-                <Label htmlFor="invite-email" className="text-sm font-medium text-gray-700">
-                  {t("Email Address", "tenants.users.page.TenantUsersPage.email_address__30ckols")} *
-                </Label>
+                <Label htmlFor="email">Email Address</Label>
                 <Input
-                  id="invite-email"
+                  id="email"
                   type="email"
                   value={inviteData.email}
                   onChange={(e) => setInviteData(prev => ({ ...prev, email: e.target.value }))}
-                  placeholder="user@example.com"
-                  className="mt-1"
                   required
                 />
               </div>
-              
               <div>
-                <Label htmlFor="invite-role" className="text-sm font-medium text-gray-700">
-                  {t("Role", "tenants.users.page.TenantUsersPage.role__31ckols")}
-                </Label>
+                <Label htmlFor="role">Role</Label>
                 <Select value={inviteData.role} onValueChange={(value) => setInviteData(prev => ({ ...prev, role: value }))}>
-                  <SelectTrigger className="mt-1">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="member">{t("Member", "tenants.users.page.TenantUsersPage.member__32ckols")}</SelectItem>
-                    <SelectItem value="admin">{t("Admin", "tenants.users.page.TenantUsersPage.admin__33ckols")}</SelectItem>
+                    <SelectItem value="member">Member</SelectItem>
+                    <SelectItem value="admin">Admin</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              
               <div>
-                <Label htmlFor="invite-message" className="text-sm font-medium text-gray-700">
-                  {t("Personal Message (Optional)", "tenants.users.page.TenantUsersPage.personal_message_optional__34ckols")}
-                </Label>
-                <textarea
-                  id="invite-message"
+                <Label htmlFor="message">Personal Message (Optional)</Label>
+                <Textarea
+                  id="message"
                   value={inviteData.message}
                   onChange={(e) => setInviteData(prev => ({ ...prev, message: e.target.value }))}
                   rows={3}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                  placeholder={t("Add a personal message to the invitation...", "tenants.users.page.TenantUsersPage.add_personal_message_to_invitation__35ckols")}
+                  placeholder="Add a personal message to your invitation..."
                 />
               </div>
-              
               <div className="flex items-center space-x-2">
                 <input
-                  id="bypass-verification"
                   type="checkbox"
+                  id="bypassEmailVerification"
                   checked={inviteData.bypassEmailVerification}
                   onChange={(e) => setInviteData(prev => ({ ...prev, bypassEmailVerification: e.target.checked }))}
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  className="rounded border-gray-300"
                 />
-                <Label htmlFor="bypass-verification" className="text-sm text-gray-700">
-                  {t("Bypass email verification", "tenants.users.page.TenantUsersPage.bypass_email_verification__36ckols")}
+                <Label htmlFor="bypassEmailVerification">
+                  Bypass email verification (generate invitation code)
                 </Label>
               </div>
-              
-              <div className="flex justify-end space-x-3 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowInviteForm(false)}
-                >
-                  {t("Cancel", "tenants.users.page.TenantUsersPage.cancel__37ckols")}
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => setShowInviteForm(false)}>
+                  Cancel
                 </Button>
-                <Button
-                  type="submit"
-                  disabled={inviteUser.isLoading}
-                  className="flex items-center gap-2"
-                >
-                  {inviteUser.isLoading ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                      {t("Sending...", "tenants.users.page.TenantUsersPage.sending__38ckols")}
-                    </>
-                  ) : (
-                    <>
-                      <Mail className="h-4 w-4" />
-                      {t("Send Invitation", "tenants.users.page.TenantUsersPage.send_invitation__39ckols")}
-                    </>
-                  )}
+                <Button type="submit" disabled={inviteUser.isPending}>
+                  {inviteUser.isPending ? "Inviting..." : "Send Invitation"}
                 </Button>
-              </div>
+              </DialogFooter>
             </form>
-          </div>
-        </div>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Edit User Modal */}
+      {showEditForm && selectedUser && (
+        <Dialog open={showEditForm} onOpenChange={setShowEditForm}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Edit User</DialogTitle>
+              <DialogDescription>
+                Update user information and permissions
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleEditUser} className="space-y-4">
+              <div>
+                <Label htmlFor="edit-name">Name</Label>
+                <Input
+                  id="edit-name"
+                  value={editData.name}
+                  onChange={(e) => setEditData(prev => ({ ...prev, name: e.target.value }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-role">Role</Label>
+                <Select value={editData.role} onValueChange={(value) => setEditData(prev => ({ ...prev, role: value as "member" | "admin" }))}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="member">Member</SelectItem>
+                    <SelectItem value="admin">Admin</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="edit-status">Status</Label>
+                <Select value={editData.status} onValueChange={(value) => setEditData(prev => ({ ...prev, status: value as "active" | "suspended" | "pending" }))}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="suspended">Suspended</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => setShowEditForm(false)}>
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={updateUser.isPending}>
+                  {updateUser.isPending ? "Updating..." : "Update User"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* User Details Modal */}
+      {showUserDetails && selectedUser && (
+        <Dialog open={showUserDetails} onOpenChange={setShowUserDetails}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>User Details</DialogTitle>
+              <DialogDescription>
+                View detailed information about this user
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center">
+                  {selectedUser.image ? (
+                    <img src={selectedUser.image} alt={selectedUser.name || ""} className="h-16 w-16 rounded-full" />
+                  ) : (
+                    <span className="text-gray-600 font-medium text-xl">
+                      {selectedUser.name?.charAt(0) || selectedUser.email.charAt(0).toUpperCase()}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">{selectedUser.name || "No Name"}</h3>
+                  <p className="text-gray-600">{selectedUser.email}</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-sm font-medium text-gray-500">Role</Label>
+                  <p className="text-sm">{getRoleBadge(selectedUser.role)}</p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-500">Status</Label>
+                  <p className="text-sm">{getStatusBadge(selectedUser.status)}</p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-500">Email Verified</Label>
+                  <p className="text-sm">
+                    {selectedUser.isEmailVerified ? (
+                      <Badge variant="default" className="bg-green-100 text-green-700 border-green-200">Verified</Badge>
+                    ) : (
+                      <Badge variant="outline" className="text-orange-600 border-orange-200">Unverified</Badge>
+                    )}
+                  </p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-500">Member Since</Label>
+                  <p className="text-sm">{new Date(selectedUser.createdAt).toLocaleDateString()}</p>
+                </div>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button onClick={() => setShowUserDetails(false)}>Close</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Invitation Code Modal */}
+      {showInvitationCode && (
+        <Dialog open={showInvitationCode} onOpenChange={setShowInvitationCode}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Invitation Code Generated</DialogTitle>
+              <DialogDescription>
+                Share this invitation code with the user. They can use it to set up their account.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <p className="text-sm text-gray-600 mb-2">Invitation Code:</p>
+                <code className="text-lg font-mono bg-white p-2 rounded border block break-all">
+                  {invitationCode}
+                </code>
+              </div>
+              <p className="text-sm text-gray-600">
+                The user should visit: <code className="bg-gray-100 px-2 py-1 rounded">/invite/{invitationCode}</code>
+              </p>
+            </div>
+            <DialogFooter>
+              <Button onClick={() => setShowInvitationCode(false)}>
+                Close
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteConfirm && userToDelete && (
+        <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Remove User from Tenant</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to remove <strong>{userToDelete.name || userToDelete.email}</strong> from this tenant? 
+                This action cannot be undone and the user will lose access to all tenant resources.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDeleteUser}
+                className="bg-red-600 hover:bg-red-700"
+                disabled={deleteUser.isPending}
+              >
+                {deleteUser.isPending ? "Removing..." : "Remove User"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       )}
     </div>
   );

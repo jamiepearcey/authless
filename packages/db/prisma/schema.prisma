@@ -55,6 +55,8 @@ model User {
   platformRole          String?   // 'admin' or null
   status                String    @default("active") // active, suspended, deleted
   lastLoginAt           DateTime?
+  twoFactorSecret       String?   // TOTP secret for 2FA
+  twoFactorEnabled      Boolean   @default(false) // Whether 2FA is enabled
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
   
