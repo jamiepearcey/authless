@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { legalLinks, quickLinks } from "./links";
 import { t } from "@i18n-core";

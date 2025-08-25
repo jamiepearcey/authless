@@ -3,8 +3,10 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "@ui/base";
-import { Settings, User, LogOut } from "lucide-react";
+import { Settings, User, LogOut, Shield, Building2 } from "lucide-react";
 import { t } from "@i18n-core";
+import TenantSwitcher from "./TenantSwitcher";
+import { navigationLinks } from "./links";
 export default function Header() {
   const { data: session, status } = useSession();
   return (
@@ -20,33 +22,23 @@ export default function Header() {
 
           {/* Navigation */}
           <nav className="hidden md:flex space-x-8">
-            <Link
-              href="/"
-              className="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors"
-            >
-              {t(
-                "Home",
-                "components.header.Header.home__2ya9mw"
-              )}
-            </Link>
-            <Link
-              href="/about"
-              className="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors"
-            >
-              {t(
-                "About",
-                "components.header.Header.about__a5oty8"
-              )}
-            </Link>
-            <Link
-              href="/contact"
-              className="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors"
-            >
-              {t(
-                "Contact",
-                "components.header.Header.contact__gpmzqy"
-              )}
-            </Link>
+            {navigationLinks.map((link: any) => {
+              // Skip admin-only links for non-admin users
+              if (link.adminOnly && (session?.user as any)?.platformRole !== 'admin') {
+                return null;
+              }
+              
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors flex items-center gap-1"
+                >
+                  {link.adminOnly && <Shield className="h-3 w-3" />}
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Auth Section */}
@@ -55,6 +47,9 @@ export default function Header() {
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
             ) : session ? (
               <div className="flex items-center space-x-4">
+                {/* Tenant Switcher */}
+                <TenantSwitcher />
+                
                 {/* User Menu */}
                 <div className="relative group">
                   <button className="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 transition-colors">
@@ -76,7 +71,7 @@ export default function Header() {
 
                   {/* Dropdown Menu */}
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                  <Link
+                    <Link
                       href="/settings/profile"
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
@@ -90,6 +85,30 @@ export default function Header() {
                       <Settings className="h-4 w-4 mr-2" />
                       Account
                     </Link>
+                    
+                    {/* Admin Functions */}
+                    {(session?.user as any)?.platformRole === 'admin' && (
+                      <>
+                        <hr className="my-1" />
+                        <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Platform Admin
+                        </div>
+                        <Link
+                          href="/admin/tenants"
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <Shield className="h-4 w-4 mr-2" />
+                          Manage Tenants
+                        </Link>
+                        <Link
+                          href="/admin/tenants/create"
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <Building2 className="h-4 w-4 mr-2" />
+                          Create Tenant
+                        </Link>
+                      </>
+                    )}
                  
                     <hr className="my-1" />
                     <button

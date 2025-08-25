@@ -337,5 +337,9 @@
   "contact.page.ContactPage.what_can_we_help_you_with__22ckols": "",
   "contact.page.ContactPage.brief_description_of_your_issue__23ckols": "",
   "contact.page.ContactPage.describe_your_issue__24ckols": "",
-  "contact.page.ContactPage.please_provide_detail_about_your_issue__25ckols": ""
+  "contact.page.ContactPage.please_provide_detail_about_your_issue__25ckols": "",
+  "components.TenantSwitcher.your_workspaces__1itlrq": "",
+  "components.TenantSwitcher.create_new_workspace__2bkoks": "",
+  "components.TenantSwitcher.manage_workspaces__3ckols": "",
+  "components.TenantSwitcher.all_workspaces__4ckols": ""
 }

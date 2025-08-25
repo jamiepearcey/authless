@@ -45,7 +45,10 @@ const ContactPage = () => {
   const [replyText, setReplyText] = useState("");
 
   // tRPC queries and mutations
-  const { data: contactReasons } = trpc.getContactReasons.useQuery();
+  const { data: contactReasons } = trpc.getContactReasons.useQuery(
+    { tenantId: undefined }, // Will be enhanced with tenant context
+    { enabled: !!session?.user }
+  );
   const submitMessage = trpc.submitContactMessage.useMutation();
   const { data: userMessages, refetch: refetchMessages } = trpc.getUserContactMessages.useQuery(
     { limit: 50 },
@@ -57,16 +60,16 @@ const ContactPage = () => {
   );
   const addReply = trpc.addContactReply.useMutation();
 
-  // Auto-fill form for logged-in users
+  // Auto-fill form for logged-in users (only once when session loads)
   useEffect(() => {
-    if (session?.user) {
-              setFormData(prev => ({
-          ...prev,
-          name: session?.user?.name || "",
-          email: session?.user?.email || "",
-        }));
+    if (session?.user && !formData.name && !formData.email) {
+      setFormData(prev => ({
+        ...prev,
+        name: session.user?.name || "",
+        email: session.user?.email || "",
+      }));
     }
-  }, [session]);
+  }, [session?.user?.name, session?.user?.email]); // Remove formData dependencies
 
   const handleReasonToggle = (reasonId: string) => {
     setSelectedReasons(prev => 
@@ -403,12 +406,11 @@ const ContactPage = () => {
                           return (
                             <div
                               key={reason.id}
-                              className={`flex items-start space-x-3 p-4 rounded-lg border transition-all duration-200 cursor-pointer ${
+                              className={`flex items-start space-x-3 p-4 rounded-lg border transition-all duration-200 ${
                                 isSelected 
                                   ? 'bg-blue-50 border-blue-300 shadow-sm' 
                                   : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
                               }`}
-                              onClick={() => handleReasonToggle(reason.id)}
                             >
                               <Checkbox
                                 id={reason.id}
@@ -423,7 +425,7 @@ const ContactPage = () => {
                                 <div className="space-y-1 flex-1">
                                   <label 
                                     htmlFor={reason.id} 
-                                    className={`text-sm font-medium cursor-pointer block ${
+                                    className={`text-sm font-medium block ${
                                       isSelected ? 'text-blue-600' : 'text-gray-900'
                                     }`}
                                   >

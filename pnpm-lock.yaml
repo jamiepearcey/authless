@@ -374,6 +374,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@db/base':
+        specifier: workspace:*
+        version: link:../db
       '@i18n-core':
         specifier: workspace:*
         version: link:../i18n-core

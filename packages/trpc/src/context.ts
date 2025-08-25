@@ -1,13 +1,19 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../apps/web/app/api/auth/[...nextauth]/route";
 import { db } from "@db/base";
+// Note: authOptions will be imported differently in the actual implementation
+// This is a placeholder for now
+const authOptions = {} as any;
 
-export const createContext = async () => {
+export interface Context {
+  session: any;
+  db: typeof db;
+}
+
+export const createContext = async (): Promise<Context> => {
   const session = await getServerSession(authOptions);
+
   return {
     session,
     db,
   };
 };
-
-export type Context = Awaited<ReturnType<typeof createContext>>;

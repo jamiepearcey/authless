@@ -18,6 +18,7 @@
     "db:seed": "tsx src/seed.ts",
     "db:seed:simple": "tsx src/seed-simple.ts",
     "db:seed:contact-reasons": "tsx src/seed-contact-reasons.ts",
+    "db:seed:multi-tenancy": "tsx src/seed-multi-tenancy.ts",
     "db:switch:postgresql": "cp prisma/schema.postgresql.prisma prisma/schema.prisma",
     "db:switch:sqlite": "cp prisma/schema.sqlite.prisma prisma/schema.prisma",
     "test": "vitest run",

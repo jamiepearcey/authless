@@ -33,8 +33,12 @@ model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
+  tenantId     String?  // Current tenant context for multi-tenancy
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant       Tenant?  @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  
+  @@index([tenantId])
 }
 
 model User {
@@ -48,11 +52,25 @@ model User {
   emailVerificationToken String?  @unique
   passwordResetToken    String?   @unique
   passwordResetExpires  DateTime?
+  platformRole          String?   // 'admin' or null
+  status                String    @default("active") // active, suspended, deleted
+  lastLoginAt           DateTime?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
+  
   accounts              Account[]
   sessions              Session[]
+  memberships           Membership[]
   contactMessages       ContactMessage[]
+  auditLogs             AuditLog[]
+  invitedMemberships    Membership[] @relation("InvitedBy")
+  sentInvitations       Invitation[] @relation("InvitedBy")
+  acceptedInvitations   Invitation[] @relation("InvitationAcceptedBy")
+  
+  @@index([email])
+  @@index([platformRole])
+  @@index([status])
+  @@index([lastLoginAt])
 }
 
 model VerificationToken {
@@ -63,6 +81,118 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Tenant {
+  id                           String    @id @default(cuid())
+  slug                         String    @unique // tenant identifier (subdomain or path)
+  name                         String
+  status                       String    @default("active") // active, suspended, deleted
+  subdomain                    String?   @unique // optional subdomain
+  customDomain                 String?   @unique // future: custom domain support
+  
+  // Branding
+  logoUrl                      String?
+  theme                        String?   // JSON string for theme customization
+  primaryColor                 String?   // Hex color for tenant branding
+  secondaryColor               String?   // Hex color for tenant branding
+  
+  // Settings
+  invitePolicy                 String    @default("admin_only") // admin_only, open
+  emailVerificationBypassEnabled Boolean @default(false)
+  locale                       String    @default("en")
+  timezone                     String    @default("UTC")
+  plan                         String    @default("free")
+  limits                       String?   // JSON string for plan limits
+  featureFlags                 String?   // JSON string for feature toggles
+  ssoEnabled                   Boolean   @default(false)
+  ssoProvider                  String?   // SSO provider configuration
+  
+  // Billing
+  billingEnabled               Boolean   @default(false)
+  stripeCustomerId             String?
+  currentPeriodStart           DateTime?
+  currentPeriodEnd             DateTime?
+  cancelAtPeriodEnd            Boolean   @default(false)
+  
+  // Metadata
+  description                  String?
+  website                      String?
+  industry                     String?
+  size                         String?   // company size
+  
+  createdAt                    DateTime  @default(now())
+  updatedAt                    DateTime  @updatedAt
+  suspendedAt                  DateTime?
+  deletedAt                    DateTime?
+  
+  memberships                  Membership[]
+  invitations                  Invitation[]
+  contactMessages             ContactMessage[]
+  auditLogs                   AuditLog[]
+  sessions                    Session[]
+  contactReasons              ContactReason[]
+  
+  @@index([slug])
+  @@index([subdomain])
+  @@index([status])
+  @@index([plan])
+  @@index([createdAt])
+  @@index([suspendedAt])
+  @@index([deletedAt])
+}
+
+model Membership {
+  id                  String    @id @default(cuid())
+  tenantId            String
+  userId              String
+  role                String    // 'admin' or 'member'
+  status              String    @default("active") // active, suspended, removed
+  permissions         String?   // JSON string for granular permissions
+  invitedByUserId     String?
+  invitationAcceptedAt DateTime?
+  lastActiveAt        DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  
+  tenant              Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  invitedBy           User?     @relation("InvitedBy", fields: [invitedByUserId], references: [id])
+  
+  @@unique([tenantId, userId])
+  @@index([tenantId])
+  @@index([userId])
+  @@index([role])
+  @@index([status])
+  @@index([lastActiveAt])
+}
+
+model Invitation {
+  id                        String    @id @default(cuid())
+  tenantId                  String
+  email                     String
+  role                      String    // 'admin' or 'member'
+  token                     String    @unique // hashed invitation token
+  expiresAt                 DateTime
+  bypassEmailVerification   Boolean   @default(false)
+  status                    String    @default("pending") // pending, accepted, expired, cancelled
+  message                   String?   // Custom invitation message
+  acceptedAt                DateTime?
+  acceptedByUserId          String?
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+  
+  tenant                    Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  invitedBy                 User      @relation("InvitedBy", fields: [invitedByUserId], references: [id])
+  invitedByUserId           String
+  acceptedBy                User?     @relation("InvitationAcceptedBy", fields: [acceptedByUserId], references: [id])
+  
+  @@index([tenantId])
+  @@index([email])
+  @@index([token])
+  @@index([status])
+  @@index([expiresAt])
+  @@index([createdAt])
+}
+
 model ContactReason {
   id          String    @id @default(cuid())
   key         String    @unique // technical, billing, account, feature, general
@@ -71,10 +201,16 @@ model ContactReason {
   icon        String    // Icon name for UI
   isActive    Boolean   @default(true)
   sortOrder   Int       @default(0)
+  tenantId    String?   // Optional: tenant-specific reasons
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   
+  tenant      Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   contactMessages ContactMessageReason[]
+  
+  @@index([tenantId])
+  @@index([isActive])
+  @@index([sortOrder])
 }
 
 model ContactMessage {
@@ -84,18 +220,30 @@ model ContactMessage {
   subject     String
   message     String
   userId      String?   // Optional - user might not be logged in
+  tenantId    String?   // Required for multi-tenancy
   status      String    @default("open") // open, pending, in_progress, resolved, closed
   priority    String    @default("normal") // low, normal, high, urgent
+  category    String?   // Auto-detected or manually set category
+  tags        String?   // JSON array of tags
+  assignedTo  String?   // User ID of assigned support agent
+  dueDate     DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  resolvedAt  DateTime?
   
   user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  tenant      Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   replies     ContactReply[]
   reasons     ContactMessageReason[]
   
   @@index([userId])
+  @@index([tenantId])
   @@index([status])
+  @@index([priority])
+  @@index([category])
+  @@index([assignedTo])
   @@index([createdAt])
+  @@index([resolvedAt])
 }
 
 model ContactMessageReason {
@@ -117,10 +265,40 @@ model ContactReply {
   contactMessageId  String
   message           String
   isFromUser        Boolean         @default(false) // false = from support, true = from user
+  isInternal        Boolean         @default(false) // Internal notes not visible to user
+  attachments       String?         // JSON array of attachment URLs
   createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
   
   contactMessage    ContactMessage  @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
   
   @@index([contactMessageId])
+  @@index([isFromUser])
+  @@index([isInternal])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id          String    @id @default(cuid())
+  tenantId    String?   // null for platform-level actions
+  userId      String    // user performing the action
+  action      String    // action performed
+  resourceType String?  // type of resource affected
+  resourceId  String?   // ID of resource affected
+  details     String?   // JSON string with additional details
+  ipAddress   String?   // IP address of the request
+  userAgent   String?   // User agent of the request
+  metadata    String?   // Additional metadata (JSON)
+  severity    String    @default("info") // info, warning, error, critical
+  createdAt   DateTime  @default(now())
+  
+  tenant      Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([tenantId])
+  @@index([userId])
+  @@index([action])
+  @@index([resourceType])
+  @@index([severity])
   @@index([createdAt])
 }

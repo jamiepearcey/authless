@@ -14,7 +14,7 @@ export default function AccountPage() {
   const [isProfilePublic, setIsProfilePublic] = useState<boolean>(false);
   const [showActivity, setShowActivity] = useState<boolean>(false);
   const [securityAlerts, setSecurityAlerts] = useState<boolean>(false);
-  const [accountUpdates, setAccountUpdates] = useState<boolean>(false);
+  const [ marketingCommunications, setMarketingCommunications] = useState<boolean>(false);
   const handlePasswordChange = async () => {
     try {
       // TODO: Implement password change API
@@ -106,40 +106,96 @@ export default function AccountPage() {
               </p>
             </div>
 
+          </div>
+        </div>
+      </div>
+
+      {/* Notification Settings */}
+      <div className="bg-white shadow rounded-lg">
+        <div className="px-4 py-5 sm:p-6">
+          <div className="flex items-center space-x-3 mb-6">
+            <Bell className="h-6 w-6 text-indigo-600" />
+            <h3 className="text-lg leading-6 font-medium text-gray-900">
+              {t(
+                "Notification Preferences",
+                "settings.account.page.AccountPage.notification_preferences__1j89jg",
+              )}
+            </h3>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                {t(
-                  "Email Notifications",
-                  "settings.account.page.AccountPage.email_notifications__2brrj5",
-                )}
-              </label>
-              <div className="mt-2 space-y-2">
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    defaultChecked
-                    className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  />
-
-                  <span className="ml-2 text-sm text-gray-700">
+                
                     {t(
                       "Security alerts and account updates",
                       "settings.account.page.AccountPage.security_alerts_and_account_updates__umvh4l",
                     )}
-                  </span>
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    defaultChecked
-                    className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  />
-
-                  <span className="ml-2 text-sm text-gray-700">
-                    Marketing communications
-                  </span>
-                </label>
+              </label>
+              <div className="mt-2 flex items-center gap-3">
+                <Toggle
+                  className="mr-2"
+                  checked={securityAlerts}
+                  onChange={setSecurityAlerts}
+                  label={t(
+                    "Security alerts",
+                    "settings.account.page.AccountPage.security_alerts_and_account_updates__umvh4l",
+                  )}
+                />
+                <span className="text-sm text-gray-700 inline-flex items-center gap-1">
+                  {securityAlerts ? (
+                    <>
+                      {t(
+                        "Allow security alerts",
+                        "visibility.enabled__generic",
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {t(
+                        "Do not allow security alerts",
+                        "visibility.disabled__generic",
+                      )}
+                    </>
+                  )}
+                </span>
               </div>
+              <p className="mt-1 text-xs text-gray-500"></p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                {t(
+                  "Marketing communications"
+                )}
+              </label>
+              <div className="mt-2 flex items-center gap-3">
+                <Toggle
+                  className="mr-2"
+                  checked={marketingCommunications}
+                  onChange={setMarketingCommunications}
+                  label={t(
+                    "Account updates"
+                  )}
+                />
+                <span className="text-sm text-gray-700 inline-flex items-center gap-1">
+                  {marketingCommunications ? (
+                    <>
+                      {t(
+                        "Allow account updates",
+                        "visibility.enabled__generic",
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {t(
+                        "Do not allow account updates",
+                        "visibility.disabled__generic",
+                      )}
+                    </>
+                  )}
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-gray-500"></p>
             </div>
           </div>
         </div>
@@ -217,98 +273,6 @@ export default function AccountPage() {
         onChangePassword={handlePasswordChange}
         minLength={8}
       />
-
-      {/* Notification Settings */}
-      <div className="bg-white shadow rounded-lg">
-        <div className="px-4 py-5 sm:p-6">
-          <div className="flex items-center space-x-3 mb-6">
-            <Bell className="h-6 w-6 text-indigo-600" />
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
-              {t(
-                "Notification Preferences",
-                "settings.account.page.AccountPage.notification_preferences__1j89jg",
-              )}
-            </h3>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                {t(
-                  "Security alerts",
-                  "settings.page.Settings.security_alerts__1qfety",
-                )}
-              </label>
-              <div className="mt-2 flex items-center gap-3">
-                <Toggle
-                  className="mr-2"
-                  checked={securityAlerts}
-                  onChange={setSecurityAlerts}
-                  label={t(
-                    "Security alerts",
-                    "settings.account.page.AccountPage.security_alerts_and_account_updates__umvh4l",
-                  )}
-                />
-                <span className="text-sm text-gray-700 inline-flex items-center gap-1">
-                  {securityAlerts ? (
-                    <>
-                      {t(
-                        "Allow security alerts",
-                        "visibility.enabled__generic",
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      {t(
-                        "Do not allow security alerts",
-                        "visibility.disabled__generic",
-                      )}
-                    </>
-                  )}
-                </span>
-              </div>
-              <p className="mt-1 text-xs text-gray-500"></p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                {t(
-                  "Account Updates",
-                  "settings.page.Settings.account_updates__1qfety",
-                )}
-              </label>
-              <div className="mt-2 flex items-center gap-3">
-                <Toggle
-                  className="mr-2"
-                  checked={accountUpdates}
-                  onChange={setAccountUpdates}
-                  label={t(
-                    "Account updates",
-                    "settings.account.page.AccountPage.account_updates__1qfety",
-                  )}
-                />
-                <span className="text-sm text-gray-700 inline-flex items-center gap-1">
-                  {accountUpdates ? (
-                    <>
-                      {t(
-                        "Allow account updates",
-                        "visibility.enabled__generic",
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      {t(
-                        "Do not allow account updates",
-                        "visibility.disabled__generic",
-                      )}
-                    </>
-                  )}
-                </span>
-              </div>
-              <p className="mt-1 text-xs text-gray-500"></p>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* NEW: Privacy */}
       <div className="bg-white shadow rounded-lg">

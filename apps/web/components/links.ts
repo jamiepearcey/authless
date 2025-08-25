@@ -22,13 +22,14 @@ export const navigationLinks = [
     href: "/contact",
     label: t("Contact", "components.links.navigationLinks.contact__1itlrq"),
   },
+  {
+    href: "/admin/tenants",
+    label: t("Admin", "components.links.navigationLinks.admin__1ckols"),
+    adminOnly: true,
+  },
 ];
 export const quickLinks = [
-  ...navigationLinks,
-  {
-    href: "/contact",
-    label: t("Contact", "components.links.quickLinks.contact__1itlrq"),
-  },
+  ...navigationLinks
 ];
 export const legalLinks = [
   {
