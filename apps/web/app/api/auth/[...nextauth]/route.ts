@@ -49,10 +49,10 @@ export const authOptions = {
 
         return {
           id: user.id,
-          email: user.email,
+          email: user.email!,
           name: user.name,
           image: user.image,
-          platformRole: user.platformRole
+          platformRole: user.platformRole || undefined
         };
       }
     })
@@ -68,13 +68,13 @@ export const authOptions = {
   },
   
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
         token.platformRole = user.platformRole;
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: any; token: any }) {
       if (token) {
         session.user.id = token.sub;
         session.user.platformRole = token.platformRole;

@@ -41,7 +41,7 @@ export default function TenantDashboardPage() {
   );
 
   const { data: memberships, refetch: refetchMemberships } = trpc.getTenantMemberships.useQuery(
-    { tenantSlug },
+    { slug: tenantSlug },
     { enabled: !!tenantSlug }
   );
 
@@ -66,8 +66,8 @@ export default function TenantDashboardPage() {
     }
 
     try {
-      await inviteUser.mutateAsync({
-        tenantId: tenant?.id || "",
+      await inviteUser.mutateAsync({    
+        slug: tenantSlug,
         email: inviteData.email.trim(),
         role: inviteData.role as any,
         message: inviteData.message.trim() || undefined,
@@ -169,7 +169,7 @@ export default function TenantDashboardPage() {
               <Users className="h-8 w-8 text-blue-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">{t("Total Users", "tenants.dashboard.page.TenantDashboardPage.total_users__5ckols")}</p>
-                <p className="text-2xl font-bold text-gray-900">{tenant._count?.memberships || 0}</p>
+                <p className="text-2xl font-bold text-gray-900">{tenant?.memberships?.length || 0}</p>
               </div>
             </div>
           </CardContent>

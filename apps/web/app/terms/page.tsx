@@ -238,7 +238,7 @@ const Terms = () => {
                   <strong>
                     {t("Email:", "terms.page.Terms.email__22n0ns")}
                   </strong>{" "}
-                  legal@beatthefine.com
+                  legal@authless.com
                   <br />
                   <strong>
                     {t("Address:", "terms.page.Terms.address__1kv4eu")}

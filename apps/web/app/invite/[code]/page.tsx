@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { t } from "@i18n-core";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label } from "@ui/base";
 import { Shield, Eye, EyeOff, CheckCircle, AlertCircle } from "lucide-react";
@@ -22,10 +21,11 @@ export default function InvitePage() {
   const [isValidating, setIsValidating] = useState(false);
   const [invitation, setInvitation] = useState<any>(null);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [submitted, setSubmitted] = useState(false);
 
   const validateInvitation = trpc.validateInvitation.useMutation({
     onSuccess: (data) => {
-      setInvitation(data);
+      setInvitation(data.invitation);
       setIsValidating(false);
     },
     onError: (error) => {
@@ -47,7 +47,7 @@ export default function InvitePage() {
   useEffect(() => {
     if (invitationCode) {
       setIsValidating(true);
-      validateInvitation.mutate({ code: invitationCode });
+      validateInvitation.mutate({ token: invitationCode });
     }
   }, [invitationCode]);
 
@@ -79,7 +79,7 @@ export default function InvitePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setSubmitted(true);
     // Clear previous errors
     setValidationErrors([]);
     
@@ -98,7 +98,7 @@ export default function InvitePage() {
     
     try {
       await acceptInvitation.mutateAsync({
-        code: invitationCode,
+        token: invitationCode,
         password: formData.password,
       });
     } catch (error) {
@@ -224,24 +224,37 @@ export default function InvitePage() {
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="text-sm font-medium text-gray-900 mb-2">Password Requirements</h4>
               <ul className="text-xs text-gray-600 space-y-1">
-                <li className={`flex items-center gap-2 ${formData.password.length >= 8 ? 'text-green-600' : ''}`}>
-                  <CheckCircle className={`h-3 w-3 ${formData.password.length >= 8 ? 'text-green-600' : 'text-gray-400'}`} />
+                {/* show passwords must match hint */}
+                <li className={`flex items-center gap-2 ${formData.password === formData.confirmPassword ? 'text-green-600' : submitted ? 'text-red-600' : ''}`}>
+                  {
+                      submitted && formData.password != formData.confirmPassword ? (<>
+                        <AlertCircle className={`h-3 w-3 text-red-600`} />
+                        Passwords do not match
+                      </>) : (<>
+                        <CheckCircle className={`h-3 w-3 ${formData.password === formData.confirmPassword ? 'text-green-600' : 'text-gray-400'}`} />
+                        Passwords must match
+                      </>)
+
+                  }
+                </li>
+                <li className={`flex items-center gap-2 ${formData.password.length >= 8 ? 'text-green-600' : submitted ? 'text-red-600' : ''}`}>
+                  <CheckCircle className={`h-3 w-3 ${formData.password.length >= 8 ? 'text-green-600' : submitted ? 'text-red-600' : 'text-gray-400'}`} />
                   At least 8 characters
                 </li>
-                <li className={`flex items-center gap-2 ${/[A-Z]/.test(formData.password) ? 'text-green-600' : ''}`}>
-                  <CheckCircle className={`h-3 w-3 ${/[A-Z]/.test(formData.password) ? 'text-green-600' : 'text-gray-400'}`} />
+                <li className={`flex items-center gap-2 ${/[A-Z]/.test(formData.password) ? 'text-green-600' : submitted ? 'text-red-600' : ''}`}>
+                  <CheckCircle className={`h-3 w-3 ${/[A-Z]/.test(formData.password) ? 'text-green-600' : submitted ? 'text-red-600' : 'text-gray-400'}`} />
                   One uppercase letter
                 </li>
-                <li className={`flex items-center gap-2 ${/[a-z]/.test(formData.password) ? 'text-green-600' : ''}`}>
-                  <CheckCircle className={`h-3 w-3 ${/[a-z]/.test(formData.password) ? 'text-green-600' : 'text-gray-400'}`} />
+                <li className={`flex items-center gap-2 ${/[a-z]/.test(formData.password) ? 'text-green-600' : submitted ? 'text-red-600' : ''}`}>
+                  <CheckCircle className={`h-3 w-3 ${/[a-z]/.test(formData.password) ? 'text-green-600' : submitted ? 'text-red-600' : 'text-gray-400'}`} />
                   One lowercase letter
                 </li>
-                <li className={`flex items-center gap-2 ${/[0-9]/.test(formData.password) ? 'text-green-600' : ''}`}>
-                  <CheckCircle className={`h-3 w-3 ${/[0-9]/.test(formData.password) ? 'text-green-600' : 'text-gray-400'}`} />
+                <li className={`flex items-center gap-2 ${/[0-9]/.test(formData.password) ? 'text-green-600' : submitted ? 'text-red-600' : ''}`}>
+                  <CheckCircle className={`h-3 w-3 ${/[0-9]/.test(formData.password) ? 'text-green-600' : submitted ? 'text-red-600' : 'text-gray-400'}`} />
                   One number
                 </li>
-                <li className={`flex items-center gap-2 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-green-600' : ''}`}>
-                  <CheckCircle className={`h-3 w-3 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-green-600' : 'text-gray-400'}`} />
+                <li className={`flex items-center gap-2 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-green-600' : submitted ? 'text-red-600' : ''}`}>
+                  <CheckCircle className={`h-3 w-3 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-green-600' : submitted ? 'text-red-600' : 'text-gray-400'}`} />
                   One special character
                 </li>
               </ul>

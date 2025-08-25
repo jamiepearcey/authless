@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { t } from "@i18n-core";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, OtpInput } from "@ui/base";
 import { Button, Input, Label } from "@ui/base";
 import { Badge } from "@ui/base";
 import { Shield, Smartphone, CheckCircle, AlertCircle, ArrowRight, QrCode, Copy, Download } from "lucide-react";
 import { trpc } from "../lib/trpc";
 import { toast } from "@ui/base";
+import QRCode from 'react-qr-code'
 
 interface TwoFactorSetupProps {
   isWizard?: boolean;
@@ -23,9 +24,10 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
 
   const setup2FA = trpc.setupTwoFactor.useMutation({
     onSuccess: (data) => {
-      setQrCode(data.qrCode);
+      setQrCode(data.qrCodeUrl);
       setSecret(data.secret);
       setStep("setup");
+      console.log(data.qrCodeUrl);
     },
     onError: (error) => {
       toast.error(error.message);
@@ -162,7 +164,7 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
           <div className="text-center">
             {qrCode && (
               <div className="bg-white p-4 rounded-lg border inline-block mb-4">
-                <img src={qrCode} alt="QR Code" className="w-48 h-48" />
+                <QRCode value={qrCode} />
               </div>
             )}
           </div>
@@ -245,15 +247,18 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
             <Label htmlFor="verificationCode" className="text-sm font-medium text-gray-700">
               Verification Code
             </Label>
-            <Input
-              id="verificationCode"
-              type="text"
-              value={verificationCode}
-              onChange={(e) => setVerificationCode(e.target.value)}
-              placeholder="000000"
-              maxLength={6}
-              className="mt-1 text-center text-lg font-mono tracking-widest"
-            />
+            <OtpInput
+                  value={verificationCode}
+                  onChange={(value) => setVerificationCode(value)}
+                  onComplete={(value) => setVerificationCode(value)}
+                  autoFocus
+                  length={6}
+                  isInvalid={verificationCode.length !== 6}
+                  ariaLabel="Enter the 6-digit code from your authenticator app"
+                  name="otp"
+                  className="w-full"
+                />
+                
             <p className="text-xs text-gray-500 mt-1">
               Enter the 6-digit code from your authenticator app
             </p>

@@ -1,7 +1,5 @@
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../../api/auth/[...nextauth]/route";
 
 interface TenantLayoutProps {
   children: ReactNode;
@@ -19,14 +17,8 @@ export default async function TenantLayout({ children, params }: TenantLayoutPro
     notFound();
   }
 
-  // lets make sure the logged in user is global admin or tenant admin or prevent access with getsession  
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id || session.user.role !== "admin") {
-    notFound();
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex-1 bg-gray-50">
       {/* Tenant Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

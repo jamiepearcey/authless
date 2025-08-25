@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button, OtpInput } from "@ui/base";
+import { Button, OtpInput, toast } from "@ui/base";
 import { QrCode, ArrowLeft, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { t } from "@i18n-core";
+import { trpc } from "@/lib/trpc";
+import QRCodeComponent from "react-qr-code";
+
 export default function AuthenticatorSetupPage() {
   const [step, setStep] = useState<"setup" | "verify" | "success">("setup");
   const [qrCode, setQrCode] = useState<string>("");
@@ -12,14 +15,31 @@ export default function AuthenticatorSetupPage() {
   const [verificationCode, setVerificationCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // Mock QR code generation - in real app, this would come from API
+  const setup2FA = trpc.setupTwoFactor.useMutation({
+    onSuccess: (data) => {
+      setQrCode(data.qrCodeUrl);
+      setSecret(data.secret);
+      setStep("setup");
+      console.log(data.qrCodeUrl);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const verify2FA = trpc.verifyTwoFactor.useMutation({
+    onSuccess: () => {
+      setStep("success");
+    },
+    onError: (error) => {
+      alert("Invalid verification code. Please try again.");
+    },
+  });
+
   useEffect(() => {
-    // Generate a mock QR code data URL
-    const mockQRData =
-      "otpauth://totp/BeatTheFineLondon:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=BeatTheFineLondon";
-    setQrCode(mockQRData);
-    setSecret("JBSWY3DPEHPK3PXP");
+    setup2FA.mutate();
   }, []);
+
   const handleSetup = async () => {
     setIsLoading(true);
     try {
@@ -39,12 +59,7 @@ export default function AuthenticatorSetupPage() {
     }
     setIsLoading(true);
     try {
-      // TODO: Call API to verify the code
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
-      setStep("success");
-    } catch (error) {
-      console.error("Failed to verify code:", error);
-      alert("Invalid verification code. Please try again.");
+      await verify2FA.mutate({ code: verificationCode });
     } finally {
       setIsLoading(false);
     }
@@ -148,7 +163,7 @@ export default function AuthenticatorSetupPage() {
                     <div className="w-48 h-48 bg-white p-4 rounded-lg">
                       {/* Mock QR Code - in real app, use a QR code library */}
                       <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center">
-                        <QrCode className="h-24 w-24 text-white" />
+                        <QRCodeComponent value={qrCode} />
                       </div>
                     </div>
                   </div>

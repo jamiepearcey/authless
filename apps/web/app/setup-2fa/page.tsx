@@ -54,7 +54,7 @@ export default function Setup2FAPage() {
             <Shield className="h-10 w-10 text-blue-600" />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Welcome to {session.user.name || "your workspace"}! 🎉
+            Welcome {session.user.name || "to your workspace"}!
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Let's get your account set up with the best security practices

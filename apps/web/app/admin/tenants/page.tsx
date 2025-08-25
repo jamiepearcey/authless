@@ -102,7 +102,8 @@ export default function AdminTenantsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <main className="flex flex-1 pt-8 pb-8">
+      <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div>
@@ -379,5 +380,6 @@ export default function AdminTenantsPage() {
         </CardContent>
       </Card>
     </div>
+    </main>
   );
 }

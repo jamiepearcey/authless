@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { I18nMount } from "@i18n-core/src/server";
 
 import { ReactNode } from "react";
+import { Toaster } from "@ui/base";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps) {
         <I18nMount>
           <ClientProviders>
             <div className="min-h-screen bg-background flex flex-col">
+              <Toaster />
               <Header />
               {children}
               <Footer />

@@ -540,7 +540,7 @@ const Privacy = () => {
                         "privacy.page.Privacy.data_protection_officer__p3sb8b",
                       )}
                     </strong>{" "}
-                    dpo@beatthefine.com
+                    dpo@authless.com
                   </p>
                 </div>
               </CardContent>

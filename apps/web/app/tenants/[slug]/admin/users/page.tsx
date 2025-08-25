@@ -1,13 +1,14 @@
 "use client";
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { t } from "@i18n-core";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
 import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, EyeOff, User } from "lucide-react";
 import { trpc } from "../../../../../lib/trpc";
 import { toast } from "@ui/base";
+import { Copy } from "lucide-react";
+import { copyToClipboard } from "@shared/base";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,6 +47,12 @@ interface User {
   isEmailVerified: boolean;
 }
 
+type Predicate<T> = (value: T) => boolean;
+
+function or<T>(...predicates: Predicate<T>[]): Predicate<T> {
+  return (value: T) => predicates.some(p => p(value));
+}
+
 export default function TenantUsersPage() {
   const params = useParams();
   const tenantSlug = params.slug as string;
@@ -67,11 +74,11 @@ export default function TenantUsersPage() {
   const [editData, setEditData] = useState({
     name: "",
     role: "member" as "member" | "admin",
-    status: "active" as "active" | "suspended" | "pending",
+    status: "active" as "active" | "suspended" | "removed",
   });
-
+  const [search, setSearch] = useState("");
   const { data: memberships, refetch: refetchMemberships } = trpc.getTenantMemberships.useQuery(
-    { tenantSlug },
+    { slug: tenantSlug  },
     { enabled: !!tenantSlug }
   );
 
@@ -134,7 +141,7 @@ export default function TenantUsersPage() {
     
     try {
       await inviteUser.mutateAsync({
-        tenantId: memberships?.[0]?.tenantId || "",
+        slug: tenantSlug,
         email: inviteData.email.trim(),
         role: inviteData.role as any,
         message: inviteData.message.trim() || undefined,
@@ -152,12 +159,10 @@ export default function TenantUsersPage() {
     try {
       await updateUser.mutateAsync({
         userId: selectedUser.id,
-        tenantId: memberships?.[0]?.tenantId || "",
-        data: {
-          name: editData.name,
-          role: editData.role ,
-          status: editData.status,
-        },
+        slug: tenantSlug,
+        name: editData.name,
+        role: editData.role,
+        status: editData.status
       });
     } catch (error) {
       // Handled by mutation
@@ -168,7 +173,7 @@ export default function TenantUsersPage() {
     try {
       await resendVerification.mutateAsync({
         userId,
-        tenantId: memberships?.[0]?.tenantId || "",
+        slug: tenantSlug,
       });
     } catch (error) {
       // Handled by mutation
@@ -181,7 +186,7 @@ export default function TenantUsersPage() {
     try {
       await deleteUser.mutateAsync({
         userId: userToDelete.id,
-        tenantId: memberships?.[0]?.tenantId || "",
+        slug: tenantSlug,
       });
     } catch (error) {
       // Handled by mutation
@@ -203,10 +208,10 @@ export default function TenantUsersPage() {
     switch (status) {
       case "active":
         return <Badge variant="default" className="bg-green-100 text-green-700 border-green-200">Active</Badge>;
-      case "pending":
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-700 border-yellow-200">Pending</Badge>;
       case "suspended":
         return <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200">Suspended</Badge>;
+      case "removed":
+        return <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200">Removed</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -217,7 +222,7 @@ export default function TenantUsersPage() {
     setEditData({
       name: user.name || "",
       role: user.role as "member" | "admin",
-      status: user.status as "active" | "suspended" | "pending",
+      status: user.status as "active" | "suspended" | "removed",
     });
     setShowEditForm(true);
   };
@@ -239,6 +244,13 @@ export default function TenantUsersPage() {
       </div>
     );
   }
+
+  const nameEqual : Predicate<typeof memberships[0]> =  (membership) => membership.user.name?.toLowerCase().includes(search.toLowerCase()) || false;    
+  const emailEqual : Predicate<typeof memberships[0]> =  (membership) => membership.user.email?.toLowerCase().includes(search.toLowerCase()) || false;
+  const roleEqual : Predicate<typeof memberships[0]> =  (membership) => membership.role === search.toLowerCase() || false;
+
+  const filteredMemberships = memberships.filter(or(nameEqual, emailEqual, roleEqual
+  ));
 
   return (
     <div className="space-y-6">
@@ -273,7 +285,7 @@ export default function TenantUsersPage() {
               <UserCheck className="h-5 w-5 text-green-600" />
               <div>
                 <p className="text-2xl font-bold">
-                  {memberships.filter(m => m.status === "active").length}
+                  {memberships.filter(m => m.user.isEmailVerified).length}
                 </p>
                 <p className="text-sm text-gray-600">Active</p>
               </div>
@@ -299,9 +311,9 @@ export default function TenantUsersPage() {
               <UserX className="h-5 w-5 text-yellow-600" />
               <div>
                 <p className="text-2xl font-bold">
-                  {memberships.filter(m => m.status === "pending").length}
+                  {memberships.filter(m => !m.user.isEmailVerified).length}
                 </p>
-                <p className="text-sm text-gray-600">Pending</p>
+                <p className="text-sm text-gray-600">Removed</p>
               </div>
             </div>
           </CardContent>
@@ -311,12 +323,22 @@ export default function TenantUsersPage() {
       {/* User List */}
       <Card>
         <CardHeader>
-          <CardTitle>Team Members</CardTitle>
-          <CardDescription>Manage user roles, permissions, and status</CardDescription>
+          <div className="flex items-center justify-between"> 
+          <div className="inline-flex flex-col">
+            <CardTitle>Team Members</CardTitle>
+            <CardDescription>Manage user roles, permissions, and status   
+            </CardDescription>
+          </div>
+          {/* filter controls for memberships using input filter and button to apply filter right aligned */}
+          <div className="inline-flex gap-2 justify-end mt-2">
+            <div className="flex items-center gap-2 w-96">
+              <Input type="text" onChange={(e) => setSearch(e.target.value)} placeholder="Search" />
+            </div>
+          </div></div>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {memberships.map((membership) => (
+            {filteredMemberships.map((membership) => (
               <div key={membership.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
@@ -333,7 +355,7 @@ export default function TenantUsersPage() {
                     <p className="text-sm text-gray-500">{membership.user.email}</p>
                     <div className="flex items-center gap-2 mt-1">
                       {getRoleBadge(membership.role)}
-                      {getStatusBadge(membership.status)}
+                      {getStatusBadge(membership.user.isEmailVerified ? "active" : "removed")}
                       {!membership.user.isEmailVerified && (
                         <Badge variant="outline" className="text-orange-600 border-orange-200">
                           Unverified
@@ -381,7 +403,7 @@ export default function TenantUsersPage() {
               </div>
             ))}
           </div>
-        </CardContent>
+        </CardContent>  
       </Card>
 
       {/* Invite User Modal */}
@@ -485,14 +507,14 @@ export default function TenantUsersPage() {
               </div>
               <div>
                 <Label htmlFor="edit-status">Status</Label>
-                <Select value={editData.status} onValueChange={(value) => setEditData(prev => ({ ...prev, status: value as "active" | "suspended" | "pending" }))}>
+                  <Select value={editData.status} onValueChange={(value) => setEditData(prev => ({ ...prev, status: value as "active" | "suspended" | "removed" }))}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
                     <SelectItem value="suspended">Suspended</SelectItem>
+                    <SelectItem value="removed">Removed</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -571,7 +593,7 @@ export default function TenantUsersPage() {
       {/* Invitation Code Modal */}
       {showInvitationCode && (
         <Dialog open={showInvitationCode} onOpenChange={setShowInvitationCode}>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="w-full max-w-4xl">
             <DialogHeader>
               <DialogTitle>Invitation Code Generated</DialogTitle>
               <DialogDescription>
@@ -584,10 +606,21 @@ export default function TenantUsersPage() {
                 <code className="text-lg font-mono bg-white p-2 rounded border block break-all">
                   {invitationCode}
                 </code>
+              </div> <div className="p-4 bg-gray-50 rounded-lg">
+                <p className="text-sm text-gray-600 mb-2">The user should visit:</p>
+                <div className="flex items-center gap-1">
+                  <code className="bg-gray-100 p-2 py-1 rounded-md flex-grow">/invite/{invitationCode}</code>
+                  <Button variant="outline" size="icon" onClick={(e) => 
+                    {
+                      e.preventDefault();
+                      copyToClipboard(`${window.location.origin}/invite/${invitationCode}`)
+                      toast.success("Copied to clipboard")
+                    }
+                  } className="text-blue-600 hover:text-blue-700">
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
-              <p className="text-sm text-gray-600">
-                The user should visit: <code className="bg-gray-100 px-2 py-1 rounded">/invite/{invitationCode}</code>
-              </p>
             </div>
             <DialogFooter>
               <Button onClick={() => setShowInvitationCode(false)}>

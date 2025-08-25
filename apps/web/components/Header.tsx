@@ -4,7 +4,6 @@ import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "@ui/base";
 import { Settings, User, LogOut, Shield, Building2 } from "lucide-react";
-import { t } from "@i18n-core";
 import TenantSwitcher from "./TenantSwitcher";
 import { navigationLinks } from "./links";
 export default function Header() {

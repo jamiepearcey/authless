@@ -12,6 +12,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
 export default function TenantSettingsPage() {
   const params = useParams();
   const tenantSlug = params.slug as string;
+  console.log("tenantSlug", tenantSlug);
+  
   
   const [activeTab, setActiveTab] = useState("general");
   const [isEditing, setIsEditing] = useState(false);
@@ -178,7 +180,7 @@ export default function TenantSettingsPage() {
                     <Label htmlFor="plan">Plan</Label>
                     <Select 
                       value={formData.plan} 
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, plan: value }))}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, plan: value as "free" | "pro" | "enterprise" }))}
                       disabled={!isEditing}
                     >
                       <SelectTrigger>
@@ -381,7 +383,7 @@ export default function TenantSettingsPage() {
                   <Label htmlFor="invitePolicy">Invitation Policy</Label>
                   <Select 
                     value={formData.invitePolicy} 
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, invitePolicy: value }))}
+                    onValueChange={(value) => setFormData(prev => ({ ...prev, invitePolicy: value as "admin_only" | "open" }))}
                   >
                     <SelectTrigger>
                       <SelectValue />
@@ -442,7 +444,7 @@ export default function TenantSettingsPage() {
                     <Label htmlFor="ssoProvider">SSO Provider</Label>
                     <Select 
                       value={formData.ssoProvider} 
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, ssoProvider: value }))}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, ssoProvider: value as "none" | "google" | "azure" | "okta" | "onelogin" | "custom"  }))}
                     >
                       <SelectTrigger>
                         <SelectValue />

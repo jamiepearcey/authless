@@ -17,11 +17,7 @@ import {
   MessageSquare, 
   Send, 
   User, 
-  Mail, 
   Calendar, 
-  Clock, 
-  CheckCircle2, 
-  AlertCircle,
   Bug,
   CreditCard,
   Shield,
@@ -30,6 +26,20 @@ import {
 } from "lucide-react";
 import { trpc } from "../../lib/trpc";
 import { toast } from "@ui/base";
+
+interface ContactMessage {
+  id: string;
+  subject: string;
+  message: string;
+  status: string;
+  priority: string;
+  createdAt: string;
+  lastMessage?: {
+    content: string;
+    createdAt: string;
+    isFromUser: boolean;
+  };
+}
 
 const ContactPage = () => {
   const { data: session, status } = useSession();
@@ -51,7 +61,7 @@ const ContactPage = () => {
   );
   const submitMessage = trpc.submitContactMessage.useMutation();
   const { data: userMessages, refetch: refetchMessages } = trpc.getUserContactMessages.useQuery(
-    { limit: 50 },
+    undefined,
     { enabled: !!session?.user }
   );
   const { data: selectedMessageData, refetch: refetchSelectedMessage } = trpc.getContactMessage.useQuery(
@@ -112,8 +122,9 @@ const ContactPage = () => {
         setSelectedReasons([]);
         refetchMessages();
       }
-    } catch (error: any) {
-      toast.error(error.message || "Failed to send message");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to send message";
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -134,27 +145,13 @@ const ContactPage = () => {
         refetchSelectedMessage();
         refetchMessages();
       }
-    } catch (error: any) {
-      toast.error(error.message || "Failed to send reply");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to send reply";
+      toast.error(errorMessage);
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'open':
-        return <MessageSquare className="h-4 w-4 text-primary" />;
-      case 'pending':
-        return <Clock className="h-4 w-4 text-yellow-500" />;
-      case 'in_progress':
-        return <AlertCircle className="h-4 w-4 text-blue-500" />;
-      case 'resolved':
-        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
-      case 'closed':
-        return <CheckCircle2 className="h-4 w-4 text-gray-500" />;
-      default:
-        return <AlertCircle className="h-4 w-4 text-muted-foreground" />;
-    }
-  };
+
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -230,7 +227,7 @@ const ContactPage = () => {
 
   return (
     <main className="flex flex-1 pt-8 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
@@ -274,9 +271,9 @@ const ContactPage = () => {
                   </CardHeader>
                   <CardContent className="p-0">
                     <div className="h-96 overflow-y-auto">
-                      {userMessages?.messages && userMessages.messages.length > 0 ? (
+                      {userMessages && userMessages.length > 0 ? (
                         <div className="space-y-1 p-3">
-                          {userMessages.messages.map((msg) => (
+                          {userMessages.map((msg: ContactMessage) => (
                             <div 
                               key={msg.id} 
                               className={`p-3 rounded-lg cursor-pointer transition-colors hover:bg-gray-50 ${
@@ -295,7 +292,7 @@ const ContactPage = () => {
                                 {getPriorityBadge(msg.priority)}
                               </div>
                               <p className="text-xs text-gray-600 line-clamp-2 mb-2">
-                                {msg.lastMessage}
+                                {msg.lastMessage?.content || msg.message}
                               </p>
                               <div className="flex items-center gap-2 text-xs text-gray-500">
                                 <Calendar className="h-3 w-3" />
@@ -400,7 +397,7 @@ const ContactPage = () => {
                         {t("What can we help you with?", "contact.page.ContactPage.what_can_we_help_you_with__22ckols")}
                       </Label>
                       <div className="grid gap-3">
-                        {contactReasons?.map((reason) => {
+                        {contactReasons?.map((reason: { id: string; key: string; label: string; description: string; icon: string }) => {
                           const isSelected = selectedReasons.includes(reason.id);
                           
                           return (

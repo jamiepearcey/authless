@@ -35,7 +35,7 @@ export default function EditTenantPage() {
     secondaryColor: "",
   });
 
-  const { data: tenant, isLoading, refetch } = trpc.getTenant.useQuery(
+  const { data: tenant, isLoading } = trpc.getTenant.useQuery(
     { slug: tenantSlug },
     { enabled: !!tenantSlug }
   );
@@ -146,7 +146,8 @@ export default function EditTenantPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <main className="flex flex-1 pt-8 pb-8">
+      <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center gap-4">
@@ -188,7 +189,7 @@ export default function EditTenantPage() {
         </Button>
       </div>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="mx-auto">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -411,6 +412,7 @@ export default function EditTenantPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+      </div>
+    </main>
   );
 }
