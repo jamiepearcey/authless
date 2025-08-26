@@ -67,15 +67,7 @@ export default function Verify2FAPage() {
       description: t("Receive verification code via WhatsApp", "verify2fa.page.Verify2FAPage.receive_code_via_whatsapp__7abcde"),
       icon: <MessageCircle className="h-5 w-5" />,
       available: true, // This would be checked against user's WhatsApp setup
-    },
-    {
-      id: "sms",
-      key: "sms",
-      label: t("SMS", "verify2fa.page.Verify2FAPage.sms__8abcde"),
-      description: t("Receive verification code via text message", "verify2fa.page.Verify2FAPage.receive_code_via_text__9abcde"),
-      icon: <PhoneIcon className="h-5 w-5" />,
-      available: false, // Not implemented yet
-    },
+    }
   ];
 
   // Redirect if not authenticated
@@ -96,6 +88,7 @@ export default function Verify2FAPage() {
   }, [twoFactorMethods, selectedMethod]);
 
   const handleMethodSelect = (methodId: string) => {
+    setVerificationMode("initial");
     setSelectedMethod(methodId);
     setError("");
     setVerificationCode("");
@@ -158,11 +151,6 @@ export default function Verify2FAPage() {
     // This would trigger resending the verification code
     // Implementation depends on the selected method
     toast.info("Verification code resent");
-  };
-
-  const handleSkip = () => {
-    // This would skip 2FA for this session (if allowed by policy)
-    router.push(callbackUrl);
   };
 
   if (status === "loading") {
@@ -352,7 +340,7 @@ export default function Verify2FAPage() {
                           )}
                         </Button>
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-center">
                           <Button
                             type="button"
                             variant="outline"
@@ -361,16 +349,6 @@ export default function Verify2FAPage() {
                             className="text-sm"
                           >
                             {t("Resend Code", "verify2fa.page.Verify2FAPage.resend_code__16abcde")}
-                          </Button>
-                          
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={handleSkip}
-                            className="text-sm text-gray-500 hover:text-gray-700"
-                          >
-                            {t("Skip for now", "verify2fa.page.Verify2FAPage.skip_for_now__17abcde")}
                           </Button>
                         </div>
                       </div>
