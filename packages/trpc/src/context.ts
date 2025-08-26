@@ -1,5 +1,8 @@
+import { initTRPC, TRPCError } from "@trpc/server";
+import * as bcrypt from "bcryptjs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../../apps/web/app/api/auth/[...nextauth]/route";
 import { db } from "@db/base";
-import bcrypt from "bcryptjs";
 
 // Define the session type inline to match NextAuth with our custom fields
 interface SessionUser {

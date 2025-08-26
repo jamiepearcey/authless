@@ -43,9 +43,12 @@ export const appRouter = router({
   deleteTenantUser: invitationRouter.deleteTenantUser,
   
   // Two-factor authentication
-  setupTwoFactor: twoFactorRouter.setupTwoFactor,
-  verifyTwoFactor: twoFactorRouter.verifyTwoFactor,
-  verifyTwoFactorCode: twoFactorRouter.verifyTwoFactorCode,
+  generateAuthenticatorCode: twoFactorRouter.generateAuthenticatorCode,
+  verifyAndCreateAuthenticatorCode: twoFactorRouter.verifyAndCreateAuthenticatorCode,
+  getAuthenticatorCodes: twoFactorRouter.getAuthenticatorCodes,
+  deleteAuthenticatorCode: twoFactorRouter.deleteAuthenticatorCode,
+  verifyAuthenticatorCode: twoFactorRouter.verifyAuthenticatorCode,
+  getTwoFactorStatus: twoFactorRouter.getTwoFactorStatus,
   
   // Contact system
   getContactReasons: contactRouter.getContactReasons,
@@ -64,7 +67,6 @@ export const appRouter = router({
   getUserPasskeys: passkeyRouter.getUserPasskeys,
   revokePasskey: passkeyRouter.revokePasskey,
   getAccountsWithPasskeys: passkeyRouter.getAccountsWithPasskeys,
-  getTwoFactorStatus: passkeyRouter.getTwoFactorStatus,
   getAvailableAccounts: passkeyRouter.getAvailableAccounts,
 });
 

@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../../../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -51,7 +52,7 @@ model User {
   platformRole           String?
   status                 String           @default("active")
   lastLoginAt            DateTime?
-  twoFactorSecret        String?
+  twoFactorSecret        String?          // Legacy field - will be deprecated
   twoFactorEnabled       Boolean          @default(false)
   createdAt              DateTime         @default(now())
   updatedAt              DateTime         @updatedAt
@@ -63,6 +64,7 @@ model User {
   invitedMemberships     Membership[]     @relation("InvitedBy")
   memberships            Membership[]
   passkeys               Passkey[]
+  authenticatorCodes     AuthenticatorCode[]
   sessions               Session[]
 
   @@index([email])
@@ -305,5 +307,22 @@ model Passkey {
   @@index([credentialId])
   @@index([isActive])
   @@index([lastUsedAt])
+  @@index([createdAt])
+}
+
+model AuthenticatorCode {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String   // User-friendly name for the code (e.g., "iPhone", "Backup Code")
+  secret      String   // The actual TOTP secret
+  isActive    Boolean  @default(true)
+  lastUsedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isActive])
   @@index([createdAt])
 }

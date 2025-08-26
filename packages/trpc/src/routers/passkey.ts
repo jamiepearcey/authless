@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { publicProcedure, protectedProcedure } from "../base";
-import crypto from "crypto";
+import { router, protectedProcedure, publicProcedure } from "../base";
+import * as crypto from "crypto";
 
 // Passkey registration input schema
 const passkeyRegistrationInput = z.object({
@@ -252,8 +252,12 @@ export const passkeyRouter = {
         where: { id: userId },
         select: {
           twoFactorEnabled: true,
-          twoFactorSecret: true,
+          twoFactorSecret: true, // Legacy field
           passkeys: {
+            where: { isActive: true },
+            select: { id: true },
+          },
+          authenticatorCodes: {
             where: { isActive: true },
             select: { id: true },
           },
@@ -269,8 +273,8 @@ export const passkeyRouter = {
 
       return {
         authenticator: {
-          enabled: user.twoFactorEnabled || false,
-          verified: !!user.twoFactorSecret,
+          enabled: user.authenticatorCodes.length > 0 || !!user.twoFactorSecret, // Check both new and legacy
+          verified: user.authenticatorCodes.length > 0 || !!user.twoFactorSecret,
         },
         passkey: {
           enabled: user.passkeys.length > 0,
