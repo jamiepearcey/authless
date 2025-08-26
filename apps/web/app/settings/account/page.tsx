@@ -145,15 +145,13 @@ export default function AccountPage() {
                   {securityAlerts ? (
                     <>
                       {t(
-                        "Allow security alerts",
-                        "visibility.enabled__generic",
+                        "On"
                       )}
                     </>
                   ) : (
                     <>
                       {t(
-                        "Do not allow security alerts",
-                        "visibility.disabled__generic",
+                        "Off"
                       )}
                     </>
                   )}
@@ -181,15 +179,13 @@ export default function AccountPage() {
                   {marketingCommunications ? (
                     <>
                       {t(
-                        "Allow account updates",
-                        "visibility.enabled__generic",
+                        "On"
                       )}
                     </>
                   ) : (
                     <>
                       {t(
-                        "Do not allow account updates",
-                        "visibility.disabled__generic",
+                        "Off"
                       )}
                     </>
                   )}

@@ -1,0 +1,424 @@
+import { z } from "zod";
+import { TRPCError } from "@trpc/server";
+import { router, platformAdminProcedure, tenantMemberProcedure, protectedProcedure } from "../base";
+import { Prisma } from "@prisma/client";
+
+
+const tenantSelect = Prisma.validator<Prisma.TenantSelect>()({
+  id: true,
+  name: true,
+  slug: true,
+  status: true,
+  logoUrl: true,
+  plan: true,
+  primaryColor: true,
+  secondaryColor: true,
+  createdAt: true,
+  updatedAt: true,
+  deletedAt: true,
+  invitePolicy: true,
+  emailVerificationBypassEnabled: true,
+  ssoEnabled: true,
+  description: true,
+  website: true,
+  industry: true,
+  size: true,
+  subdomain: true,
+  customDomain: true,
+  timezone: true,
+  locale: true,
+  theme: true
+});
+
+type TenantDTO = Prisma.TenantGetPayload<{ select: typeof tenantSelect }>;
+
+
+export const tenantRouter = router({
+  // Create tenant (platform admin only)
+  createTenant: platformAdminProcedure
+    .input(z.object({
+      slug: z.string().min(2).max(32),
+      name: z.string().min(1),
+      subdomain: z.string().optional(),
+      plan: z.string().default("free"),
+      invitePolicy: z.enum(["admin_only", "open"]).default("admin_only"),
+      description: z.string().optional(),
+      website: z.string().optional(),
+      industry: z.string().optional(),
+      size: z.string().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        // Validate tenant slug
+        if (!/^[a-z0-9-]+$/.test(input.slug)) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Tenant slug must contain only lowercase letters, numbers, and hyphens",
+          });
+        }
+        
+        if (input.slug.startsWith("-") || input.slug.endsWith("-")) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Tenant slug cannot start or end with a hyphen",
+          });
+        }
+        
+        // Check if slug already exists
+        const existingTenant = await ctx.db.tenant.findUnique({
+          where: { slug: input.slug },
+        });
+        
+        if (existingTenant) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "Tenant slug already exists",
+          });
+        }
+        
+        // Create tenant
+        const newTenant = await ctx.db.tenant.create({
+          data: {
+            slug: input.slug,
+            name: input.name,
+            subdomain: input.subdomain,
+            plan: input.plan,
+            invitePolicy: input.invitePolicy,
+            description: input.description,
+            website: input.website,
+            industry: input.industry,
+            size: input.size,
+          },
+        });
+        
+        // Log the action
+        await ctx.db.auditLog.create({
+          data: {
+            userId: ctx.session.user.id || "unknown",
+            action: "tenant_created",
+            resourceType: "tenant",
+            resourceId: newTenant.id,
+            details: JSON.stringify({ slug: input.slug, name: input.name }),
+            severity: "info",
+          },
+        });
+        
+        return newTenant;
+      } catch (error) {
+        if (error instanceof TRPCError) throw error;
+        
+        console.error("Failed to create tenant:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to create tenant",
+        });
+      }
+    }),
+
+  // Get tenant by slug (tenant members can access)
+  getTenant: tenantMemberProcedure
+    .input(z.object({ slug: z.string() }))  
+    .query(async ({ ctx, input }) => {
+      console.log("input", input);
+      const tenant = await ctx.db.tenant.findUnique({
+        where: { slug: input.slug },
+        include: {
+          memberships: {
+            where: { status: "active" },
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                  image: true,
+                  createdAt: true,
+                  lastLoginAt: true,
+                  isEmailVerified: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      
+      if (!tenant) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Tenant not found" });
+      }
+      
+      return tenant;
+    }),
+
+  // Update tenant (platform admin only)
+  updateTenant: platformAdminProcedure
+    .input(z.object({
+      slug: z.string(),
+      data: z.object({
+        name: z.string().optional(),
+        description: z.string().optional(),
+        website: z.string().url().optional(),
+        industry: z.string().optional(),
+        size: z.string().optional(),
+        plan: z.enum(["free", "pro", "enterprise"]).optional(),
+        status: z.enum(["active", "suspended", "deleted"]).optional(),
+        invitePolicy: z.enum(["admin_only", "open"]).optional(),
+        emailVerificationBypassEnabled: z.boolean().optional(),
+        ssoEnabled: z.boolean().optional(),
+        primaryColor: z.string().optional(),
+        secondaryColor: z.string().optional(),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { slug, data } = input;
+        
+        // Check if tenant exists
+        const existingTenant = await ctx.db.tenant.findUnique({
+          where: { slug },
+        });
+        
+        if (!existingTenant) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Tenant not found" });
+        }
+        
+        // Update tenant
+        const updatedTenant = await ctx.db.tenant.update({
+          where: { slug },
+          data,
+        });
+        
+        // Log the action
+        await ctx.db.auditLog.create({
+          data: {
+            userId: ctx.session.user.id || "unknown",
+            action: "tenant_updated",
+            resourceType: "tenant",
+            resourceId: updatedTenant.id,
+            details: JSON.stringify({ slug, changes: data }),
+            severity: "info",
+          },
+        });
+        
+        return updatedTenant;
+      } catch (error) {
+        if (error instanceof TRPCError) throw error;
+        
+        console.error("Failed to update tenant:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to update tenant",
+        });
+      }
+    }),
+
+  // Delete tenant (platform admin only)
+  deleteTenant: platformAdminProcedure
+    .input(z.object({ slug: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { slug } = input;
+        
+        // Check if tenant exists
+        const existingTenant = await ctx.db.tenant.findUnique({
+          where: { slug },
+        });
+        
+        if (!existingTenant) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Tenant not found" });
+        }
+        
+        // Soft delete by setting status to deleted
+        const deletedTenant = await ctx.db.tenant.update({
+          where: { slug },
+          data: { 
+            status: "deleted",
+            deletedAt: new Date(),
+          },
+        });
+        
+        // Log the action
+        await ctx.db.auditLog.create({
+          data: {
+            userId: ctx.session.user.id || "unknown",
+            action: "tenant_deleted",
+            resourceType: "tenant",
+            resourceId: deletedTenant.id,
+            details: JSON.stringify({ slug }),
+            severity: "warning",
+          },
+        });
+        
+        return deletedTenant;
+      } catch (error) {
+        if (error instanceof TRPCError) throw error;
+        
+        console.error("Failed to delete tenant:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to delete tenant",
+        });
+      }
+    }),
+
+  // Get all tenants (platform admin only)
+  getAllTenants: platformAdminProcedure.query(async ({ ctx }) => {
+    const tenants = await ctx.db.tenant.findMany({
+      where: { status: { not: "deleted" } },
+      orderBy: { createdAt: "desc" },
+      include: {
+        _count: {
+          select: {
+            memberships: {
+              where: { status: "active" },
+            },
+          },
+        },
+      },
+    });
+    
+    return tenants;
+  }),
+
+  // Get tenants with pagination and filtering (platform admin only)
+  getTenants: platformAdminProcedure
+    .input(z.object({
+      limit: z.number().min(1).max(100),
+      offset: z.number().min(0),
+      status: z.string().optional(),
+      plan: z.string().optional(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { limit, offset, status, plan } = input;
+      
+      // Build where clause
+      const where: Prisma.TenantWhereInput = { status: { not: "deleted" } };
+      if (status && status !== "all") {
+        where.status = status as any;
+      }
+      if (plan && plan !== "all") {
+        where.plan = plan as any;
+      }
+      
+      // Get total count for pagination
+      const total = await ctx.db.tenant.count({ where });
+      
+      // Get tenants with pagination
+      const tenants = await ctx.db.tenant.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        skip: offset,
+        take: limit,
+        include: {
+          _count: {
+            select: {
+              memberships: {
+                where: { status: "active" },
+              },
+            },
+          },
+        },
+      });
+      
+              return {
+          tenants,
+          total,
+          hasMore: total > offset + limit,
+        };
+    }),
+
+  // Get tenant memberships (tenant members can access)
+  getTenantMemberships: tenantMemberProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      // Get tenant first
+      const tenant = await ctx.db.tenant.findUnique({
+        where: { slug: input.slug },
+      });
+      
+      if (!tenant) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Tenant not found" });
+      }
+      
+      // Get all memberships for this tenant
+      const memberships = await ctx.db.membership.findMany({
+        where: {
+          tenantId: tenant.id,
+          status: "active",
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              status: true,
+              image: true,
+              createdAt: true,
+              lastLoginAt: true,
+              isEmailVerified: true,
+            },
+          },
+        },
+        orderBy: { createdAt: "desc" },
+      });
+      
+      // Transform the data to include computed fields
+      const transformedMemberships = memberships.map((membership) => ({
+        id: membership.id,
+        tenant: {
+          id: tenant.id,
+          slug: tenant.slug,
+          name: tenant.name,
+          status: tenant.status,
+          logoUrl: tenant.logoUrl,
+          plan: tenant.plan,
+          primaryColor: tenant.primaryColor,
+          secondaryColor: tenant.secondaryColor,
+        },
+        role: membership.role,
+        createdAt: membership.createdAt,
+        lastActiveAt: membership.lastActiveAt,
+        isAdmin: membership.role === "admin",
+        user: membership.user,
+      }));
+      
+      return transformedMemberships;
+    }),
+
+  // Get user's tenants (for tenant switcher)
+  getUserTenants: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.session?.user?.email) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+
+    const user = await ctx.db.user.findUnique({
+      where: { email: ctx.session.user.email },
+      include: {
+        memberships: {
+          where: { status: "active" },
+          include: {
+            tenant: {
+              select: tenantSelect,
+            },
+          },
+          orderBy: { createdAt: "desc" },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+
+    // Transform to match the expected interface
+    const userTenants = user.memberships.map((membership) => ({
+      tenant: membership.tenant,
+      role: membership.role,
+      isAdmin: membership.role === "admin",
+      createdAt: membership.createdAt,
+      lastActiveAt: membership.lastActiveAt,
+    }));
+
+    return userTenants;
+  }),
+});

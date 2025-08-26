@@ -243,7 +243,7 @@ export default function TenantSwitcher() {
         <DropdownMenuSeparator />
         
         {/* Platform Admin Actions */}
-        {isPlatformAdmin && (
+        {false &&isPlatformAdmin && (
           <>
             <DropdownMenuLabel className="flex items-center gap-2 text-xs text-gray-500">
               <Globe className="h-3 w-3" />
@@ -268,10 +268,17 @@ export default function TenantSwitcher() {
         
         {/* User Management */}
         {currentTenantData?.isAdmin && (
+          <>
+            <DropdownMenuLabel className="flex items-center gap-2 text-xs text-gray-500">
+              <Users className="h-3 w-3" />
+              {t("Administration", "components.TenantSwitcher.workspace_administration__1itlrq")}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
           <DropdownMenuItem className="flex items-center gap-2 cursor-pointer" onClick={() => router.push(`/tenants/${currentTenant?.slug}/admin/users`)}>
             <Users className="h-4 w-4" />
             <span>Manage Users</span>
           </DropdownMenuItem>
+          </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

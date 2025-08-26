@@ -12,6 +12,6 @@
       "@config/*": ["./packages/config/*"],
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "packages/ui/src/components"],
+  "include": ["**/*.ts", "**/*.tsx", "packages/ui/src/components", "packages/trpc/src/router.ts.baj"],
   "exclude": ["node_modules"]
 }
