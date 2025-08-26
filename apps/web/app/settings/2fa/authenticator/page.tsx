@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button, OtpInput, toast, Input, Card } from "@ui/base";
+import { Button, OtpInput, toast, Input, Card, ConfirmRemoveDialog } from "@ui/base";
 import { QrCode, ArrowLeft, CheckCircle, Plus, Trash2, Smartphone } from "lucide-react";
 import Link from "next/link";
 import { t } from "@i18n-core";
@@ -92,9 +92,7 @@ export default function AuthenticatorSetupPage() {
   };
 
   const handleDeleteCode = async (id: string) => {
-    if (confirm("Are you sure you want to delete this authenticator code?")) {
-      await deleteCode.mutateAsync({ id });
-    }
+    await deleteCode.mutateAsync({ id });
   };
 
   const handleBackToAdd = () => {
@@ -146,71 +144,56 @@ export default function AuthenticatorSetupPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center space-x-4">
-        <Link href="/settings/2fa">
-          <Button variant="outline" size="sm">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+      <div className="bg-white shadow rounded-lg">
+        <div className="px-4 py-5 sm:p-6">
+          <div className="flex items-center space-x-3 mb-6">
+            <Link
+              href="/settings/2fa"
+              className="text-gray-400 hover:text-gray-600"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
+            <QrCode className="h-6 w-6 text-indigo-600" />
+            <h3 className="text-lg leading-6 font-medium text-gray-900">
+              {t(
+                "Authenticator App Management",
+                "2fa.authenticator.page.AuthenticatorSetupPage.authenticator_app_management__4d84h3",
+              )}
+            </h3>
+          </div>
+
+          <p className="text-sm text-gray-600 mb-6">
             {t(
-              "Authenticator App",
-              "2fa.authenticator.page.AuthenticatorSetupPage.authenticator_app__4d84h3",
-            )}
-          </h1>
-          <p className="text-sm text-gray-600">
-            {t(
-              "Set up authenticator apps to generate verification codes",
-              "2fa.authenticator.page.AuthenticatorSetupPage.set_up_authenticator_apps_to_generate_verification_codes__5d84h3",
+              "Manage your authenticator apps to generate verification codes for your account.",
+              "2fa.authenticator.page.AuthenticatorSetupPage.manage_authenticator_apps_to_generate_verification_codes__5d84h3",
             )}
           </p>
+
+          {/* Add New Authenticator */}
+          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+            <div className="flex items-center space-x-3 mb-3">
+              <Plus className="h-5 w-5 text-indigo-600" />
+              <h4 className="text-sm font-medium text-gray-900">Add New Authenticator</h4>
+            </div>
+            <div className="flex space-x-3">
+              <input
+                type="text"
+                placeholder="Enter authenticator name (e.g., iPhone, Google Authenticator, Backup)"
+                value={newCodeName}
+                onChange={(e) => setNewCodeName(e.target.value)}
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+              />
+              <Button
+                onClick={handleGenerateCode}
+                disabled={isLoading || !newCodeName.trim()}
+                size="sm"
+              >
+                {isLoading ? "Generating..." : "Generate Code"}
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Section 1: Add New Authenticator */}
-      <Card className="p-6">
-        <div className="flex items-center space-x-3 mb-4">
-          <Plus className="h-5 w-5 text-blue-600" />
-          <h2 className="text-lg font-medium text-gray-900">
-            {t(
-              "Add New Authenticator",
-              "2fa.authenticator.page.AuthenticatorSetupPage.add_new_authenticator__6d84h3",
-            )}
-          </h2>
-        </div>
-        
-        <div className="space-y-4">
-          <div>
-            <label htmlFor="codeName" className="block text-sm font-medium text-gray-700 mb-2">
-              {t(
-                "Authenticator Name",
-                "2fa.authenticator.page.AuthenticatorSetupPage.authenticator_name__7d84h3",
-              )}
-            </label>
-            <Input
-              id="codeName"
-              type="text"
-              placeholder="e.g., iPhone, Google Authenticator, Backup"
-              value={newCodeName}
-              onChange={(e) => setNewCodeName(e.target.value)}
-              className="w-full"
-            />
-          </div>
-          
-          <Button 
-            onClick={handleGenerateCode} 
-            disabled={isLoading || !newCodeName.trim()}
-            className="w-full"
-          >
-            {isLoading ? "Generating..." : t(
-              "Generate Authenticator Code",
-              "2fa.authenticator.page.AuthenticatorSetupPage.generate_authenticator_code__8d84h3",
-            )}
-          </Button>
-        </div>
-      </Card>
 
       {/* Section 2: QR Code and Verification (only shown after generating) */}
       {step === "verify" && (
@@ -291,59 +274,55 @@ export default function AuthenticatorSetupPage() {
       )}
 
       {/* Section 3: Existing Authenticator Apps */}
-      <Card className="p-6">
-        <div className="flex items-center space-x-3 mb-4">
-          <Smartphone className="h-5 w-5 text-purple-600" />
-          <h2 className="text-lg font-medium text-gray-900">
+      <div className="bg-white shadow rounded-lg">
+        <div className="px-4 py-5 sm:p-6">
+          <h4 className="text-lg font-medium text-gray-900 mb-4">
             {t(
               "Your Authenticator Apps",
               "2fa.authenticator.page.AuthenticatorSetupPage.your_authenticator_apps__4d84h3",
             )}
-          </h2>
-        </div>
-        
-        {!hasExistingCodes ? (
-          <div className="text-center py-8 text-gray-500">
-            <Smartphone className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-            <p className="text-sm">
-              {t(
-                "No authenticator apps configured yet. Add one above to get started.",
-                "2fa.authenticator.page.AuthenticatorSetupPage.no_authenticator_apps_configured_yet__5d84h3",
-              )}
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {existingCodes?.map((code) => (
-              <div key={code.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <Smartphone className="h-5 w-5 text-purple-500" />
-                  <div>
-                    <p className="font-medium text-gray-900">{code.name}</p>
-                    <p className="text-sm text-gray-500">
-                      Secret: {code.secret} • Created {new Date(code.createdAt).toLocaleDateString()}
-                    </p>
-                    {code.lastUsedAt && (
-                      <p className="text-xs text-gray-400">
-                        Last used: {new Date(code.lastUsedAt).toLocaleDateString()}
-                      </p>
-                    )}
+          </h4>
+          
+          {!hasExistingCodes ? (
+            <div className="text-center py-8 text-gray-500">
+              <Smartphone className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+              <p className="text-sm">
+                {t(
+                  "No authenticator apps configured yet. Add one above to get started.",
+                  "2fa.authenticator.page.AuthenticatorSetupPage.no_authenticator_apps_configured_yet__5d84h3",
+                )}
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {existingCodes?.map((code) => (
+                <div key={code.id} className="border border-gray-200 rounded-lg p-4 flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Smartphone className="h-5 w-5 text-purple-500" />
+                    <div>
+                      <p className="font-medium text-gray-900">{code.name}</p>
+                      <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        <span>Secret: {code.secret}</span>
+                        <span>Created: {new Date(code.createdAt).toLocaleDateString()}</span>
+                        {code.lastUsedAt && (
+                          <span>Last used: {new Date(code.lastUsedAt).toLocaleDateString()}</span>
+                        )}
+                      </div>
+                    </div>
                   </div>
+                  
+                  <ConfirmRemoveDialog
+                    title="Remove Authenticator Code"
+                    description={`Are you sure you want to remove the authenticator code "${code.name}"? This action cannot be undone and you'll need to set it up again if you want to use it.`}
+                    actionText="Remove Authenticator Code"
+                    onConfirm={() => handleDeleteCode(code.id)}
+                  />
                 </div>
-                
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleDeleteCode(code.id)}
-                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-          </div>
-        )}
-      </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

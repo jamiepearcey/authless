@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@ui/base";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@ui/base";
+import { ConfirmRemoveDialog } from "@ui/base";
 import {
   Key,
   ArrowLeft,
@@ -43,7 +43,7 @@ export default function PasskeySetupPage() {
 
   // tRPC queries and mutations
   const { data: passkeys, refetch: refetchPasskeys } = trpc.getUserPasskeys.useQuery(
-    { userId: session?.user?.id },
+    { userId: session?.user?.id || "" },
     { enabled: !!session?.user?.id }
   );
   const revokePasskeyMutation = trpc.revokePasskey.useMutation();
@@ -374,31 +374,19 @@ export default function PasskeySetupPage() {
                         </span>
                       )}
                       
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Revoke Passkey</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Are you sure you want to revoke the passkey "{passkey.name}"? 
-                              This action cannot be undone and you'll need to set it up again if you want to use it.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction 
-                              onClick={() => handleRevokePasskey(passkey.id)}
-                              className="bg-red-600 hover:bg-red-700"
-                            >
-                              Revoke Passkey
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
+                      <ConfirmRemoveDialog
+                        onConfirm={() => handleRevokePasskey(passkey.id)}
+                        title={`Revoke Passkey: ${passkey.name}`}
+                        description={`Are you sure you want to revoke the passkey "${passkey.name}"? This action cannot be undone and you'll need to set it up again if you want to use it.`}
+                        actionText={t(
+                          "Revoke",
+                          "2fa.passkey.page.PasskeySetupPage.revoke__1onmtc",
+                        )}
+                      >
+                        <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50">
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </ConfirmRemoveDialog>
                     </div>
                   </div>
                 ))}

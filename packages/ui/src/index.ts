@@ -33,3 +33,4 @@ export { OtpInput } from "./components/otp-input";
 export { PasswordSettingsCard } from "./components/password-settings-card";
 export { toast } from "./components/sonner";
 export { ConfirmDeleteAccountDialog } from "./components/confirm-delete-accont";
+export { ConfirmRemoveDialog } from "./components/confirm-remove-dialog";
