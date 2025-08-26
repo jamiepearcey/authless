@@ -5,6 +5,7 @@ import { tenantRouter } from "./routers/tenant";
 import { invitationRouter } from "./routers/invitation";
 import { twoFactorRouter } from "./routers/twoFactor";
 import { contactRouter } from "./routers/contact";
+import { passkeyRouter } from "./routers/passkey";
 
 // Main router that aggregates all feature routers
 export const appRouter = router({
@@ -54,6 +55,17 @@ export const appRouter = router({
   getUserContactMessages: contactRouter.getUserContactMessages,
   addContactReply: contactRouter.addContactReply,
   updateContactMessageStatus: contactRouter.updateContactMessageStatus,
+  
+  // Passkey system
+  getRegistrationOptions: passkeyRouter.getRegistrationOptions,
+  registerPasskey: passkeyRouter.registerPasskey,
+  getAuthenticationOptions: passkeyRouter.getAuthenticationOptions,
+  authenticatePasskey: passkeyRouter.authenticatePasskey,
+  getUserPasskeys: passkeyRouter.getUserPasskeys,
+  revokePasskey: passkeyRouter.revokePasskey,
+  getAccountsWithPasskeys: passkeyRouter.getAccountsWithPasskeys,
+  getTwoFactorStatus: passkeyRouter.getTwoFactorStatus,
+  getAvailableAccounts: passkeyRouter.getAvailableAccounts,
 });
 
 // Export type for client usage

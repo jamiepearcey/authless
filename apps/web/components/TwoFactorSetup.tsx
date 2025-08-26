@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, OtpInput } f
 import { Button, Input, Label } from "@ui/base";
 import { Badge } from "@ui/base";
 import { Shield, Smartphone, CheckCircle, AlertCircle, ArrowRight, QrCode, Copy, Download } from "lucide-react";
-import { trpc } from "../lib/trpc";
+
+import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import QRCode from 'react-qr-code'
 

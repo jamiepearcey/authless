@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { Button, PasswordSettingsCard } from "@ui/base";
+import { useSession, signOut } from "next-auth/react";
+import { Button, PasswordSettingsCard, ConfirmDeleteAccountDialog, toast } from "@ui/base";
 import { Mail, Bell, Trash2, Globe, Lock, Eye, EyeOff } from "lucide-react";
 import { t, useLocale } from "@i18n-core";
 export default function AccountPage() {
   const { data: session } = useSession();
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false);
 
   // NEW: preferences state
   const { locale, switchLocale } = useLocale();
@@ -29,21 +30,32 @@ export default function AccountPage() {
     }
   };
   const handleDeleteAccount = async () => {
-    if (
-      !confirm(
-        "Are you sure you want to delete your account? This action cannot be undone.",
-      )
-    ) {
-      return;
-    }
+    setIsDeletingAccount(true);
     try {
-      // TODO: Implement account deletion API
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
+      // Call tRPC to delete the user account
+      const response = await fetch('/api/trpc/deleteUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: session?.user?.id,
+        }),
+      });
 
-      // TODO: Redirect to home page and show success message
+      if (!response.ok) {
+        throw new Error('Failed to delete account');
+      }
+
+      // Sign out the user
+      await signOut({ callbackUrl: '/' });
+      
+      // Show success message (this will be handled by the redirect)
     } catch (error) {
       console.error("Failed to delete account:", error);
-      // TODO: Show error message
+      toast.error("Failed to delete account. Please try again.");
+    } finally {
+      setIsDeletingAccount(false);
     }
   };
 
@@ -367,13 +379,18 @@ export default function AccountPage() {
               )}
             </p>
 
-            <Button
-              onClick={handleDeleteAccount}
-              variant="outline"
-              className="border-red-300 text-red-700 hover:bg-red-50"
-            >
-              Delete Account
-            </Button>
+            <ConfirmDeleteAccountDialog
+              onConfirm={handleDeleteAccount}
+              isLoading={isDeletingAccount}
+              trigger={
+                <Button
+                  variant="outline"
+                  className="border-red-300 text-red-700 hover:bg-red-50"
+                >
+                  Delete Account
+                </Button>
+              }
+            />
           </div>
         </div>
       </div>

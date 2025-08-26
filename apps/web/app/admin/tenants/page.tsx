@@ -19,7 +19,7 @@ import {
   Trash2,
   AlertTriangle
 } from "lucide-react";
-import { trpc } from "../../../lib/trpc";
+import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 
 export default function AdminTenantsPage() {

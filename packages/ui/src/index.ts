@@ -32,3 +32,4 @@ export { ValidationSlot } from "./components/validation-slot";
 export { OtpInput } from "./components/otp-input";
 export { PasswordSettingsCard } from "./components/password-settings-card";
 export { toast } from "./components/sonner";
+export { ConfirmDeleteAccountDialog } from "./components/confirm-delete-accont";

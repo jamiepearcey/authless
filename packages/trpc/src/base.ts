@@ -98,6 +98,15 @@ const enforceTenantAdmin = t.middleware(async ({ ctx, next, getRawInput }) => {
   if (!slug) {
     throw new TRPCError({ code: "BAD_REQUEST", message: "Tenant ID required" });
   }
+
+  if(ctx.session.user.platformRole === "admin"){
+    return next({
+      ctx: {
+        ...ctx,
+        session: { ...ctx.session, user: ctx.session.user },
+      },
+    });
+  }
   
   const membership = await ctx.db.membership.findFirst({
     where: {

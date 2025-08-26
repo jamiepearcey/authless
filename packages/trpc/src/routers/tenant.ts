@@ -395,7 +395,7 @@ export const tenantRouter = router({
       where: { email: ctx.session.user.email },
       include: {
         memberships: {
-          where: { status: "active" },
+          where: { status: "active", role: "admin" },
           include: {
             tenant: {
               select: tenantSelect,

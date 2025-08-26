@@ -83,8 +83,7 @@ export function I18nGate({
         const res = await fetch(active.url, { cache: "reload", signal: ac.signal });
         if (!res.ok) throw new Error(`Failed to fetch ${active.url} (${res.status})`);
         raw = await res.text();
-        debugger
-
+        
         // minimally validate & persist
         try {
           JSON.parse(raw);

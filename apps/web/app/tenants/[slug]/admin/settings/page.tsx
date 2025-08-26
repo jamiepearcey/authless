@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/b
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
 import { Building2, Palette, Shield, Zap } from "lucide-react";
-import { trpc } from "../../../../../lib/trpc";
+import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
 

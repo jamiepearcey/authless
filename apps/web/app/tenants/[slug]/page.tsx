@@ -19,7 +19,7 @@ import {
   Plus,
   Mail
 } from "lucide-react";
-import { trpc } from "../../../lib/trpc";
+import { trpc } from "@/lib/trpc";
 import Link from "next/link";
 import { toast } from "@ui/base";
 

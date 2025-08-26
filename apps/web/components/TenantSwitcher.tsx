@@ -6,7 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { t } from "@i18n-core";
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, Avatar, AvatarFallback, AvatarImage, Badge } from "@ui/base";
 import { ChevronDown, Building2, Plus, Settings, Users, Globe } from "lucide-react";
-import { trpc } from "../lib/trpc";
+import { trpc } from "@/lib/trpc";
 
 interface Tenant {
   id: string;

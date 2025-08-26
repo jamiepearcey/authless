@@ -120,6 +120,23 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const pathParts = pathname.split("/");
 
+  // Check if the path requires authentication
+  const protectedPaths = ["/settings", "/admin", "/dashboard"];
+  const requiresAuth = protectedPaths.some(path => pathname.startsWith(path));
+  
+  if (requiresAuth) {
+    // Check for authentication token (session cookie)
+    const authToken = request.cookies.get("next-auth.session-token") || 
+                     request.cookies.get("__Secure-next-auth.session-token");
+    
+    if (!authToken) {
+      // Redirect to passkey-select page first, which will redirect to signin if no passkeys
+      const passkeySelectUrl = new URL("/passkey-select", request.url);
+      passkeySelectUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(passkeySelectUrl);
+    }
+  }
+
   if (isPathMode && tenantSlug) {
     // We’re in /tenants/[slug] mode
     if (pathParts[1] === "tenants" && pathParts[2]) {

@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/b
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
 import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, EyeOff, User } from "lucide-react";
-import { trpc } from "../../../../../lib/trpc";
+
+import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Copy } from "lucide-react";
 import { copyToClipboard } from "@shared/base";

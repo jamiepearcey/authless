@@ -10,7 +10,7 @@ import { Textarea } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { ArrowLeft, Building2, Save, Trash2 } from "lucide-react";
-import { trpc } from "../../../../../lib/trpc";
+import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 
 export default function EditTenantPage() {

@@ -30,3 +30,25 @@ export const createContext = async (session?: Session | null): Promise<Context> 
     },
   };
 };
+
+// Development-only context that bypasses authentication
+export const createDevContext = async (): Promise<Context> => {
+  // Create a mock admin session for development testing
+  const mockSession: Session = {
+    user: {
+      id: "cm5qmqzrb000008ld7k1tdl1a", // Use the seed admin user ID
+      email: "admin@beatthefine.london",
+      name: "Dev Admin",
+      platformRole: "admin"
+    }
+  };
+
+  return {
+    session: mockSession,
+    db,
+    hashPassword: async (password: string) => {
+      const saltRounds = 12;
+      return bcrypt.hash(password, saltRounds);
+    },
+  };
+};

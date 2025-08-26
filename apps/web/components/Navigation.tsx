@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@ui/base";
 import { Linkedin, Facebook, Twitter, User, LogOut, Settings, Github } from "lucide-react";
 import {

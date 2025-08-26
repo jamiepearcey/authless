@@ -22,7 +22,7 @@ import {
   ArrowRight,
   Smartphone as PhoneIcon
 } from "lucide-react";
-import { trpc } from "../../lib/trpc";
+import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 
 interface TwoFactorMethod {

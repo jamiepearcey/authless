@@ -1,34 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@ui/base";
-import { t } from "@i18n-core";
-import {
-  Shield,
-  QrCode,
-  Key,
-  MessageCircle,
-  CheckCircle,
-  XCircle,
-} from "lucide-react";
 import Link from "next/link";
-export default function TwoFactorPage() {
+import { Button } from "@ui/base";
+import { Shield, QrCode, Key, MessageCircle, CheckCircle, XCircle } from "lucide-react";
+import { t } from "@i18n-core";
+import { trpc } from "../../../lib/trpc";
 
-  // Mock 2FA status - in real app, this would come from API
-  const [twoFactorStatus] = useState({
-    authenticator: {
-      enabled: false,
-      verified: false,
-    },
-    passkey: {
-      enabled: false,
-      verified: false,
-    },
-    whatsapp: {
-      enabled: false,
-      verified: false,
-    },
-  });
+export default function TwoFactorPage() {
+  // Get 2FA status from tRPC
+  const { data: twoFactorStatus, isLoading } = trpc.getTwoFactorStatus.useQuery();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
+
+  const status = twoFactorStatus || {
+    authenticator: { enabled: false, verified: false },
+    passkey: { enabled: false, verified: false },
+  };
   const getStatusIcon = (enabled: boolean, verified: boolean) => {
     if (enabled && verified) {
       return <CheckCircle className="h-5 w-5 text-green-500" />;
@@ -111,8 +104,8 @@ export default function TwoFactorPage() {
                 </h4>
               </div>
               {getStatusIcon(
-                twoFactorStatus.authenticator.enabled,
-                twoFactorStatus.authenticator.verified,
+                status.authenticator.enabled,
+                status.authenticator.verified,
               )}
             </div>
 
@@ -125,11 +118,11 @@ export default function TwoFactorPage() {
 
             <div className="mb-4">
               <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(twoFactorStatus.authenticator.enabled, twoFactorStatus.authenticator.verified)}`}
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(status.authenticator.enabled, status.authenticator.verified)}`}
               >
                 {getStatusText(
-                  twoFactorStatus.authenticator.enabled,
-                  twoFactorStatus.authenticator.verified,
+                  status.authenticator.enabled,
+                  status.authenticator.verified,
                 )}
               </span>
             </div>
@@ -137,11 +130,11 @@ export default function TwoFactorPage() {
             <Link href="/settings/2fa/authenticator">
               <Button
                 variant={
-                  twoFactorStatus.authenticator.enabled ? "outline" : "default"
+                  status.authenticator.enabled ? "outline" : "default"
                 }
                 className="w-full"
               >
-                {twoFactorStatus.authenticator.enabled ? "Manage" : "Set Up"}
+                {status.authenticator.enabled ? "Manage" : "Set Up"}
               </Button>
             </Link>
           </div>
@@ -156,8 +149,8 @@ export default function TwoFactorPage() {
                 <h4 className="text-lg font-medium text-gray-900">Passkey</h4>
               </div>
               {getStatusIcon(
-                twoFactorStatus.passkey.enabled,
-                twoFactorStatus.passkey.verified,
+                status.passkey.enabled,
+                status.passkey.verified,
               )}
             </div>
 
@@ -170,11 +163,11 @@ export default function TwoFactorPage() {
 
             <div className="mb-4">
               <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(twoFactorStatus.passkey.enabled, twoFactorStatus.passkey.verified)}`}
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(status.passkey.enabled, status.passkey.verified)}`}
               >
                 {getStatusText(
-                  twoFactorStatus.passkey.enabled,
-                  twoFactorStatus.passkey.verified,
+                  status.passkey.enabled,
+                  status.passkey.verified,
                 )}
               </span>
             </div>
@@ -182,11 +175,11 @@ export default function TwoFactorPage() {
             <Link href="/settings/2fa/passkey">
               <Button
                 variant={
-                  twoFactorStatus.passkey.enabled ? "outline" : "default"
+                  status.passkey.enabled ? "outline" : "default"
                 }
                 className="w-full"
               >
-                {twoFactorStatus.passkey.enabled ? "Manage" : "Set Up"}
+                {status.passkey.enabled ? "Manage" : "Set Up"}
               </Button>
             </Link>
           </div>
@@ -201,8 +194,8 @@ export default function TwoFactorPage() {
                 <h4 className="text-lg font-medium text-gray-900">WhatsApp</h4>
               </div>
               {getStatusIcon(
-                twoFactorStatus.whatsapp.enabled,
-                twoFactorStatus.whatsapp.verified,
+                status.passkey.enabled,
+                status.passkey.verified,
               )}
             </div>
 
@@ -215,11 +208,11 @@ export default function TwoFactorPage() {
 
             <div className="mb-4">
               <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(twoFactorStatus.whatsapp.enabled, twoFactorStatus.whatsapp.verified)}`}
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(status.passkey.enabled, status.passkey.verified)}`}
               >
                 {getStatusText(
-                  twoFactorStatus.whatsapp.enabled,
-                  twoFactorStatus.whatsapp.verified,
+                  status.passkey.enabled,
+                  status.passkey.verified,
                 )}
               </span>
             </div>
@@ -227,11 +220,11 @@ export default function TwoFactorPage() {
             <Link href="/settings/2fa/whatsapp">
               <Button
                 variant={
-                  twoFactorStatus.whatsapp.enabled ? "outline" : "default"
+                  status.passkey.enabled ? "outline" : "default"
                 }
                 className="w-full"
               >
-                {twoFactorStatus.whatsapp.enabled ? "Manage" : "Set Up"}
+                {status.passkey.enabled ? "Manage" : "Set Up"}
               </Button>
             </Link>
           </div>

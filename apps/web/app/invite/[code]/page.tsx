@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label } from "@ui/base";
 import { Shield, Eye, EyeOff, CheckCircle, AlertCircle } from "lucide-react";
-import { trpc } from "../../../lib/trpc";
+import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 
 export default function InvitePage() {

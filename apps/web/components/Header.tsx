@@ -122,7 +122,7 @@ export default function Header() {
               </div>
             ) : (
               <div className="flex items-center space-x-4">
-                <Link href="/signin">
+                <Link href="/passkey-select">
                   <Button variant="outline">Sign In</Button>
                 </Link>
                 <Link href="/signup">

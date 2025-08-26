@@ -1,6 +1,3 @@
-// SQLite Prisma schema
-// Copy this to schema.postgresql.prisma and update DATABASE_URL to use PostgreSQL
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -23,8 +20,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -33,42 +29,42 @@ model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
-  tenantId     String?  // Current tenant context for multi-tenancy
+  tenantId     String?
   expires      DateTime
+  tenant       Tenant?  @relation(fields: [tenantId], references: [id])
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tenant       Tenant?  @relation(fields: [tenantId], references: [id], onDelete: SetNull)
-  
+
   @@index([tenantId])
 }
 
 model User {
-  id                    String    @id @default(cuid())
-  name                  String?
-  email                 String?   @unique
-  emailVerified         DateTime?
-  image                 String?
-  hashedPassword        String?
-  isEmailVerified       Boolean   @default(false)
-  emailVerificationToken String?  @unique
-  passwordResetToken    String?   @unique
-  passwordResetExpires  DateTime?
-  platformRole          String?   // 'admin' or null
-  status                String    @default("active") // active, suspended, deleted
-  lastLoginAt           DateTime?
-  twoFactorSecret       String?   // TOTP secret for 2FA
-  twoFactorEnabled      Boolean   @default(false) // Whether 2FA is enabled
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
-  
-  accounts              Account[]
-  sessions              Session[]
-  memberships           Membership[]
-  contactMessages       ContactMessage[]
-  auditLogs             AuditLog[]
-  invitedMemberships    Membership[] @relation("InvitedBy")
-  sentInvitations       Invitation[] @relation("InvitedBy")
-  acceptedInvitations   Invitation[] @relation("InvitationAcceptedBy")
-  
+  id                     String           @id @default(cuid())
+  name                   String?
+  email                  String?          @unique
+  emailVerified          DateTime?
+  image                  String?
+  hashedPassword         String?
+  isEmailVerified        Boolean          @default(false)
+  emailVerificationToken String?          @unique
+  passwordResetToken     String?          @unique
+  passwordResetExpires   DateTime?
+  platformRole           String?
+  status                 String           @default("active")
+  lastLoginAt            DateTime?
+  twoFactorSecret        String?
+  twoFactorEnabled       Boolean          @default(false)
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  accounts               Account[]
+  auditLogs              AuditLog[]
+  contactMessages        ContactMessage[]
+  acceptedInvitations    Invitation[]     @relation("InvitationAcceptedBy")
+  sentInvitations        Invitation[]     @relation("InvitedBy")
+  invitedMemberships     Membership[]     @relation("InvitedBy")
+  memberships            Membership[]
+  passkeys               Passkey[]
+  sessions               Session[]
+
   @@index([email])
   @@index([platformRole])
   @@index([status])
@@ -84,55 +80,45 @@ model VerificationToken {
 }
 
 model Tenant {
-  id                           String    @id @default(cuid())
-  slug                         String    @unique // tenant identifier (subdomain or path)
-  name                         String
-  status                       String    @default("active") // active, suspended, deleted
-  subdomain                    String?   @unique // optional subdomain
-  customDomain                 String?   @unique // future: custom domain support
-  
-  // Branding
-  logoUrl                      String?
-  theme                        String?   // JSON string for theme customization
-  primaryColor                 String?   // Hex color for tenant branding
-  secondaryColor               String?   // Hex color for tenant branding
-  
-  // Settings
-  invitePolicy                 String    @default("admin_only") // admin_only, open
-  emailVerificationBypassEnabled Boolean @default(false)
-  locale                       String    @default("en")
-  timezone                     String    @default("UTC")
-  plan                         String    @default("free")
-  limits                       String?   // JSON string for plan limits
-  featureFlags                 String?   // JSON string for feature toggles
-  ssoEnabled                   Boolean   @default(false)
-  ssoProvider                  String?   // SSO provider configuration
-  
-  // Billing
-  billingEnabled               Boolean   @default(false)
-  stripeCustomerId             String?
-  currentPeriodStart           DateTime?
-  currentPeriodEnd             DateTime?
-  cancelAtPeriodEnd            Boolean   @default(false)
-  
-  // Metadata
-  description                  String?
-  website                      String?
-  industry                     String?
-  size                         String?   // company size
-  
-  createdAt                    DateTime  @default(now())
-  updatedAt                    DateTime  @updatedAt
-  suspendedAt                  DateTime?
-  deletedAt                    DateTime?
-  
-  memberships                  Membership[]
-  invitations                  Invitation[]
-  contactMessages             ContactMessage[]
-  auditLogs                   AuditLog[]
-  sessions                    Session[]
-  contactReasons              ContactReason[]
-  
+  id                             String           @id @default(cuid())
+  slug                           String           @unique
+  name                           String
+  status                         String           @default("active")
+  subdomain                      String?          @unique
+  customDomain                   String?          @unique
+  logoUrl                        String?
+  theme                          String?
+  primaryColor                   String?
+  secondaryColor                 String?
+  invitePolicy                   String           @default("admin_only")
+  emailVerificationBypassEnabled Boolean          @default(false)
+  locale                         String           @default("en")
+  timezone                       String           @default("UTC")
+  plan                           String           @default("free")
+  limits                         String?
+  featureFlags                   String?
+  ssoEnabled                     Boolean          @default(false)
+  ssoProvider                    String?
+  billingEnabled                 Boolean          @default(false)
+  stripeCustomerId               String?
+  currentPeriodStart             DateTime?
+  currentPeriodEnd               DateTime?
+  cancelAtPeriodEnd              Boolean          @default(false)
+  description                    String?
+  website                        String?
+  industry                       String?
+  size                           String?
+  createdAt                      DateTime         @default(now())
+  updatedAt                      DateTime         @updatedAt
+  suspendedAt                    DateTime?
+  deletedAt                      DateTime?
+  auditLogs                      AuditLog[]
+  contactMessages                ContactMessage[]
+  contactReasons                 ContactReason[]
+  invitations                    Invitation[]
+  memberships                    Membership[]
+  sessions                       Session[]
+
   @@index([slug])
   @@index([subdomain])
   @@index([status])
@@ -143,22 +129,21 @@ model Tenant {
 }
 
 model Membership {
-  id                  String    @id @default(cuid())
-  tenantId            String
-  userId              String
-  role                String    // 'admin' or 'member'
-  status              String    @default("active") // active, suspended, removed
-  permissions         String?   // JSON string for granular permissions
-  invitedByUserId     String?
+  id                   String    @id @default(cuid())
+  tenantId             String
+  userId               String
+  role                 String
+  status               String    @default("active")
+  permissions          String?
+  invitedByUserId      String?
   invitationAcceptedAt DateTime?
-  lastActiveAt        DateTime?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
-  
-  tenant              Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  invitedBy           User?     @relation("InvitedBy", fields: [invitedByUserId], references: [id])
-  
+  lastActiveAt         DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  invitedBy            User?     @relation("InvitedBy", fields: [invitedByUserId], references: [id])
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant               Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@unique([tenantId, userId])
   @@index([tenantId])
   @@index([userId])
@@ -168,25 +153,24 @@ model Membership {
 }
 
 model Invitation {
-  id                        String    @id @default(cuid())
-  tenantId                  String
-  email                     String
-  role                      String    // 'admin' or 'member'
-  token                     String    @unique // hashed invitation token
-  expiresAt                 DateTime
-  bypassEmailVerification   Boolean   @default(false)
-  status                    String    @default("pending") // pending, accepted, expired, cancelled
-  message                   String?   // Custom invitation message
-  acceptedAt                DateTime?
-  acceptedByUserId          String?
-  createdAt                 DateTime  @default(now())
-  updatedAt                 DateTime  @updatedAt
-  
-  tenant                    Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  invitedBy                 User      @relation("InvitedBy", fields: [invitedByUserId], references: [id])
-  invitedByUserId           String
-  acceptedBy                User?     @relation("InvitationAcceptedBy", fields: [acceptedByUserId], references: [id])
-  
+  id                      String    @id @default(cuid())
+  tenantId                String
+  email                   String
+  role                    String
+  token                   String    @unique
+  expiresAt               DateTime
+  bypassEmailVerification Boolean   @default(false)
+  status                  String    @default("pending")
+  message                 String?
+  acceptedAt              DateTime?
+  acceptedByUserId        String?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+  invitedByUserId         String
+  acceptedBy              User?     @relation("InvitationAcceptedBy", fields: [acceptedByUserId], references: [id])
+  invitedBy               User      @relation("InvitedBy", fields: [invitedByUserId], references: [id])
+  tenant                  Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@index([tenantId])
   @@index([email])
   @@index([token])
@@ -196,48 +180,46 @@ model Invitation {
 }
 
 model ContactReason {
-  id          String    @id @default(cuid())
-  key         String    @unique // technical, billing, account, feature, general
-  label       String    // Technical Issue, Billing Question, etc.
-  description String    // Detailed description
-  icon        String    // Icon name for UI
-  isActive    Boolean   @default(true)
-  sortOrder   Int       @default(0)
-  tenantId    String?   // Optional: tenant-specific reasons
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  
-  tenant      Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  id              String                 @id @default(cuid())
+  key             String                 @unique
+  label           String
+  description     String
+  icon            String
+  isActive        Boolean                @default(true)
+  sortOrder       Int                    @default(0)
+  tenantId        String?
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
   contactMessages ContactMessageReason[]
-  
+  tenant          Tenant?                @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@index([tenantId])
   @@index([isActive])
   @@index([sortOrder])
 }
 
 model ContactMessage {
-  id          String    @id @default(cuid())
-  name        String
-  email       String
-  subject     String
-  message     String
-  userId      String?   // Optional - user might not be logged in
-  tenantId    String?   // Required for multi-tenancy
-  status      String    @default("open") // open, pending, in_progress, resolved, closed
-  priority    String    @default("normal") // low, normal, high, urgent
-  category    String?   // Auto-detected or manually set category
-  tags        String?   // JSON array of tags
-  assignedTo  String?   // User ID of assigned support agent
-  dueDate     DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  resolvedAt  DateTime?
-  
-  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
-  tenant      Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  replies     ContactReply[]
-  reasons     ContactMessageReason[]
-  
+  id         String                 @id @default(cuid())
+  name       String
+  email      String
+  subject    String
+  message    String
+  userId     String?
+  tenantId   String?
+  status     String                 @default("open")
+  priority   String                 @default("normal")
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
+  assignedTo String?
+  category   String?
+  dueDate    DateTime?
+  resolvedAt DateTime?
+  tags       String?
+  tenant     Tenant?                @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user       User?                  @relation(fields: [userId], references: [id])
+  reasons    ContactMessageReason[]
+  replies    ContactReply[]
+
   @@index([userId])
   @@index([tenantId])
   @@index([status])
@@ -249,31 +231,29 @@ model ContactMessage {
 }
 
 model ContactMessageReason {
-  id                String          @id @default(cuid())
-  contactMessageId  String
-  contactReasonId   String
-  createdAt         DateTime        @default(now())
-  
-  contactMessage    ContactMessage  @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
-  contactReason     ContactReason   @relation(fields: [contactReasonId], references: [id], onDelete: Cascade)
-  
+  id               String         @id @default(cuid())
+  contactMessageId String
+  contactReasonId  String
+  createdAt        DateTime       @default(now())
+  contactReason    ContactReason  @relation(fields: [contactReasonId], references: [id], onDelete: Cascade)
+  contactMessage   ContactMessage @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
+
   @@unique([contactMessageId, contactReasonId])
   @@index([contactMessageId])
   @@index([contactReasonId])
 }
 
 model ContactReply {
-  id                String          @id @default(cuid())
-  contactMessageId  String
-  message           String
-  isFromUser        Boolean         @default(false) // false = from support, true = from user
-  isInternal        Boolean         @default(false) // Internal notes not visible to user
-  attachments       String?         // JSON array of attachment URLs
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-  
-  contactMessage    ContactMessage  @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
-  
+  id               String         @id @default(cuid())
+  contactMessageId String
+  message          String
+  isFromUser       Boolean        @default(false)
+  isInternal       Boolean        @default(false)
+  attachments      String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  contactMessage   ContactMessage @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
+
   @@index([contactMessageId])
   @@index([isFromUser])
   @@index([isInternal])
@@ -281,26 +261,49 @@ model ContactReply {
 }
 
 model AuditLog {
-  id          String    @id @default(cuid())
-  tenantId    String?   // null for platform-level actions
-  userId      String    // user performing the action
-  action      String    // action performed
-  resourceType String?  // type of resource affected
-  resourceId  String?   // ID of resource affected
-  details     String?   // JSON string with additional details
-  ipAddress   String?   // IP address of the request
-  userAgent   String?   // User agent of the request
-  metadata    String?   // Additional metadata (JSON)
-  severity    String    @default("info") // info, warning, error, critical
-  createdAt   DateTime  @default(now())
-  
-  tenant      Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  id           String   @id @default(cuid())
+  tenantId     String?
+  userId       String
+  action       String
+  resourceType String?
+  resourceId   String?
+  details      String?
+  ipAddress    String?
+  userAgent    String?
+  metadata     String?
+  severity     String   @default("info")
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant       Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@index([tenantId])
   @@index([userId])
   @@index([action])
   @@index([resourceType])
   @@index([severity])
+  @@index([createdAt])
+}
+
+model Passkey {
+  id               String    @id @default(cuid())
+  userId           String
+  name             String
+  credentialId     String    @unique
+  publicKey        String
+  signCount        Int       @default(0)
+  transports       String?
+  backupEligible   Boolean   @default(false)
+  backupState      Boolean   @default(false)
+  userVerification String    @default("preferred")
+  isActive         Boolean   @default(true)
+  lastUsedAt       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([credentialId])
+  @@index([isActive])
+  @@index([lastUsedAt])
   @@index([createdAt])
 }

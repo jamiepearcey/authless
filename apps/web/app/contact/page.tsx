@@ -24,7 +24,7 @@ import {
   HelpCircle,
   ChevronRight
 } from "lucide-react";
-import { trpc } from "../../lib/trpc";
+import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 
 interface ContactMessage {
