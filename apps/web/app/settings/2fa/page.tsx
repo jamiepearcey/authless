@@ -2,26 +2,13 @@
 
 import Link from "next/link";
 import { Button } from "@ui/base";
-import { Shield, QrCode, Key, MessageCircle, CheckCircle, XCircle, Plus, Trash2, Clock } from "lucide-react";
+import { Shield, QrCode, Key, MessageCircle, CheckCircle, XCircle } from "lucide-react";
 import { t } from "@i18n-core";
 import { trpc } from "../../../lib/trpc";
-import { useState } from "react";
-import { toast } from "@ui/base";
 
 export default function TwoFactorPage() {
-  const [newCodeName, setNewCodeName] = useState("");
-  const [isGenerating, setIsGenerating] = useState(false);
-
   // Get 2FA status from tRPC
   const { data: twoFactorStatus, isLoading } = trpc.getTwoFactorStatus.useQuery();
-  
-  // Get authenticator codes
-  const { data: authenticatorCodes, refetch: refetchCodes } = trpc.getAuthenticatorCodes.useQuery();
-
-  // tRPC mutations
-  const generateCodeMutation = trpc.generateAuthenticatorCode.useMutation();
-  const deleteCodeMutation = trpc.deleteAuthenticatorCode.useMutation();
-
 
   if (isLoading) {
     return (
@@ -31,89 +18,41 @@ export default function TwoFactorPage() {
     );
   }
 
-  let status = twoFactorStatus || {
-    authenticator: { enabled: false, verified: false },
-    passkey: { enabled: false, verified: false },
+  const status = twoFactorStatus || {
+    hasPasskeys: false,
+    hasAuthenticatorCodes: false,
+    passkeyCount: 0,
+    authenticatorCodeCount: 0,
   };
 
-  status = {
-    authenticator: { enabled: false, verified: false },
-    passkey: { enabled: false, verified: false },
-  };
-  const getStatusIcon = (enabled: boolean, verified: boolean) => {
-    if (enabled && verified) {
+  const getStatusIcon = (hasDevices: boolean) => {
+    if (hasDevices) {
       return <CheckCircle className="h-6 w-6 text-green-500" />;
-    } else if (enabled && !verified) {
-      return <Clock className="h-6 w-6 text-yellow-500" />;
     } else {
       return <XCircle className="h-6 w-6 text-red-500" />;
     }
   };
 
-  const getStatusColor = (enabled: boolean, verified: boolean) => {
-    if (enabled && verified) {
+  const getStatusColor = (hasDevices: boolean) => {
+    if (hasDevices) {
       return "bg-green-100 text-green-800";
-    } else if (enabled && !verified) {
-      return "bg-yellow-100 text-yellow-800";
     } else {
       return "bg-red-100 text-red-800";
     }
   };
 
-  const getStatusText = (enabled: boolean, verified: boolean) => {
-    if (enabled && verified) {
-      return "Enabled";
-    } else if (enabled && !verified) {
-      return "Pending Verification";
+  const getStatusText = (hasDevices: boolean) => {
+    if (hasDevices) {
+      return "Set Up";
     } else {
-      return "Disabled";
+      return "Not Set Up";
     }
   };
 
-  const handleGenerateCode = async () => {
-    if (!newCodeName.trim()) {
-      toast.error("Please enter a name for the authenticator code");
-      return;
-    }
-
-    setIsGenerating(true);
-    try {
-      await generateCodeMutation.mutateAsync({ name: newCodeName.trim() });
-      toast.success("New authenticator code generated successfully!");
-      setNewCodeName("");
-      refetchCodes();
-    } catch (error) {
-      toast.error("Failed to generate authenticator code");
-      console.error("Generate code error:", error);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const handleDeleteCode = async (codeId: string) => {
-    try {
-      await deleteCodeMutation.mutateAsync({ id: codeId });
-      toast.success("Authenticator code deleted successfully!");
-      refetchCodes();
-    } catch (error) {
-      toast.error("Failed to delete authenticator code");
-      console.error("Delete code error:", error);
-    }
-  };
-
-  const formatDate = (dateString: string | null) => {
-    if (!dateString) return "Never used";
-    
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "Yesterday";
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    return `${Math.floor(diffDays / 30)} months ago`;
+  const getDeviceCountText = (count: number) => {
+    if (count === 0) return "No devices";
+    if (count === 1) return "1 device";
+    return `${count} devices`;
   };
 
   return (
@@ -146,22 +85,21 @@ export default function TwoFactorPage() {
                     "2fa.page.TwoFactorPage.authenticator_app__j0xg13",
                   )}
                 </h2>
-                {getStatusIcon(
-                  status.authenticator.enabled,
-                  status.authenticator.verified,
-                )}
+                {getStatusIcon(status.hasAuthenticatorCodes)}
               </div>
             </div>
 
             <div className="mb-4">
               <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(status.authenticator.enabled, status.authenticator.verified)}`}
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(status.hasAuthenticatorCodes)}`}
               >
-                {getStatusText(
-                  status.authenticator.enabled,
-                  status.authenticator.verified,
-                )}
+                {getStatusText(status.hasAuthenticatorCodes)}
               </span>
+              {status.hasAuthenticatorCodes && (
+                <span className="ml-2 text-sm text-gray-500">
+                  {getDeviceCountText(status.authenticatorCodeCount)}
+                </span>
+              )}
             </div>
 
             <p className="text-gray-600 mb-6">
@@ -171,61 +109,14 @@ export default function TwoFactorPage() {
               )}
             </p>
 
-            {/* Generate New Code Section */}
-            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-sm font-medium text-gray-900 mb-3">Generate New Code</h3>
-              <div className="flex space-x-2">
-                <input
-                  type="text"
-                  value={newCodeName}
-                  onChange={(e) => setNewCodeName(e.target.value)}
-                  placeholder="e.g., iPhone, Backup Code"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-                />
-                <Button
-                  onClick={handleGenerateCode}
-                  disabled={isGenerating || !newCodeName.trim()}
-                  size="sm"
-                >
-                  {isGenerating ? "Generating..." : "Generate"}
-                </Button>
-              </div>
-            </div>
-
-            {/* Existing Codes */}
-            {authenticatorCodes && authenticatorCodes.length > 0 && (
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-900 mb-3">Your Authenticator Codes</h3>
-                <div className="space-y-2">
-                  {authenticatorCodes.map((code: any) => (
-                    <div key={code.id} className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg">
-                      <div className="flex-1">
-                        <p className="font-medium text-gray-900">{code.name}</p>
-                        <p className="text-sm text-gray-500">Code: {code.secret}</p>
-                        <p className="text-xs text-gray-400">Last used: {formatDate(code.lastUsedAt)}</p>
-                      </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDeleteCode(code.id)}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             <Link href="/settings/2fa/authenticator">
               <Button
                 variant={
-                  status.authenticator.enabled ? "outline" : "default"
+                  status.hasAuthenticatorCodes ? "outline" : "default"
                 }
                 className="w-full"
               >
-                {status.authenticator.enabled ? "Manage" : "Set Up"}
+                {status.hasAuthenticatorCodes ? "Manage" : "Set Up"}
               </Button>
             </Link>
           </div>
@@ -241,22 +132,21 @@ export default function TwoFactorPage() {
                     "2fa.page.TwoFactorPage.passkey__1uhp1i",
                   )}
                 </h2>
-                {getStatusIcon(
-                  status.passkey.enabled,
-                  status.passkey.verified,
-                )}
+                {getStatusIcon(status.hasPasskeys)}
               </div>
             </div>
 
             <div className="mb-4">
               <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(status.passkey.enabled, status.passkey.verified)}`}
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(status.hasPasskeys)}`}
               >
-                {getStatusText(
-                  status.passkey.enabled,
-                  status.passkey.verified,
-                )}
+                {getStatusText(status.hasPasskeys)}
               </span>
+              {status.hasPasskeys && (
+                <span className="ml-2 text-sm text-gray-500">
+                  {getDeviceCountText(status.passkeyCount)}
+                </span>
+              )}
             </div>
 
             <p className="text-gray-600 mb-6">
@@ -269,13 +159,44 @@ export default function TwoFactorPage() {
             <Link href="/settings/2fa/passkey">
               <Button
                 variant={
-                  status.passkey.enabled ? "outline" : "default"
+                  status.hasPasskeys ? "outline" : "default"
                 }
                 className="w-full"
               >
-                {status.passkey.enabled ? "Manage" : "Set Up"}
+                {status.hasPasskeys ? "Manage" : "Set Up"}
               </Button>
             </Link>
+          </div>
+
+          {/* WhatsApp Section (Disabled for now) */}
+          <div className="bg-white shadow rounded-lg p-6 opacity-60">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-3">
+                <MessageCircle className="h-6 w-6 text-gray-400" />
+                <h2 className="text-xl font-semibold text-gray-400">
+                  WhatsApp
+                </h2>
+                <XCircle className="h-6 w-6 text-gray-400" />
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                Coming Soon
+              </span>
+            </div>
+
+            <p className="text-gray-400 mb-6">
+              Receive verification codes via WhatsApp for secure two-factor authentication
+            </p>
+
+            <Button
+              disabled
+              variant="outline"
+              className="w-full cursor-not-allowed"
+            >
+              Coming Soon
+            </Button>
           </div>
         </div>
       </div>

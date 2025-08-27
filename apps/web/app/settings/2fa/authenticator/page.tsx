@@ -44,6 +44,8 @@ export default function AuthenticatorSetupPage() {
       setQrCode("");
       setSecret("");
       setTempName("");
+      // Auto-reset to add step after 3 seconds
+      setTimeout(() => setStep("add"), 3000);
     },
     onError: (error) => {
       toast.error("Invalid verification code. Please try again.");
@@ -103,44 +105,6 @@ export default function AuthenticatorSetupPage() {
     setTempName("");
   };
 
-  if (step === "success") {
-    return (
-      <div className="bg-white shadow rounded-lg">
-        <div className="px-4 py-5 sm:p-6 text-center">
-          <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            {t(
-              "Authenticator App Setup Complete!",
-              "2fa.authenticator.page.AuthenticatorSetupPage.authenticator_app_setup_complete__1mjles",
-            )}
-          </h3>
-          <p className="text-sm text-gray-600 mb-6">
-            {t(
-              "Your authenticator app is now configured and will generate verification codes for your account.",
-              "2fa.authenticator.page.AuthenticatorSetupPage.your_authenticator_app_is_now_configured_and_will_generate_verification_codes_for_your_account__2d93l7",
-            )}
-          </p>
-          <div className="space-x-3">
-            <Link href="/settings/2fa">
-              <Button variant="outline">
-                {t(
-                  "Back to 2FA Settings",
-                  "2fa.authenticator.page.AuthenticatorSetupPage.back_to_2fa_settings__2184h3",
-                )}
-              </Button>
-            </Link>
-            <Button onClick={() => setStep("add")}>
-              {t(
-                "Add Another Authenticator",
-                "2fa.authenticator.page.AuthenticatorSetupPage.add_another_authenticator__3d84h3",
-              )}
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -195,9 +159,9 @@ export default function AuthenticatorSetupPage() {
         </div>
       </div>
 
-      {/* Section 2: QR Code and Verification (only shown after generating) */}
+      {/* Section 2: QR Code and Verification (fixed height, transitions to success) */}
       {step === "verify" && (
-        <Card className="p-6">
+        <div className="bg-white shadow rounded-lg p-6">
           <div className="flex items-center space-x-3 mb-4">
             <QrCode className="h-5 w-5 text-green-600" />
             <h2 className="text-lg font-medium text-gray-900">
@@ -270,7 +234,31 @@ export default function AuthenticatorSetupPage() {
               </div>
             </div>
           </div>
-        </Card>
+        </div>
+      )}
+
+      {/* Success Notification (overlays the QR section) */}
+      {step === "success" && (
+        <div className="bg-white shadow rounded-lg p-6 border-2 border-green-200 bg-green-50">
+          <div className="text-center">
+            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-green-900 mb-2">
+              {t(
+                "Authenticator App Setup Complete!",
+                "2fa.authenticator.page.AuthenticatorSetupPage.authenticator_app_setup_complete__1mjles",
+              )}
+            </h3>
+            <p className="text-sm text-green-700 mb-4">
+              {t(
+                "Your authenticator app is now configured and will generate verification codes for your account.",
+                "2fa.authenticator.page.AuthenticatorSetupPage.your_authenticator_app_is_now_configured_and_will_generate_verification_codes_for_your_account__2d93l7",
+              )}
+            </p>
+            <p className="text-xs text-green-600">
+              This notification will automatically disappear in a few seconds...
+            </p>
+          </div>
+        </div>
       )}
 
       {/* Section 3: Existing Authenticator Apps */}
