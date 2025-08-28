@@ -241,7 +241,7 @@ export default function PasskeySelectPage() {
 
   // Show account selection
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="flex-1 flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-2xl">
         <CardHeader className="text-center pb-4">
           <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 mb-4">

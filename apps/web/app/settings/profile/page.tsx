@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
-import { User, Camera, Save, toast } from "lucide-react";
+import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, toast } from "@ui/base";
+import { User, Camera, Save } from "lucide-react";
 import { t } from "@i18n-core";
 import { trpc } from "@/lib/trpc";
+import { ProfilePhotoUploadDialog } from "@/components/ProfilePhotoUploadDialog";
 
 export default function ProfilePage() {
   const { data: session, update } = useSession();
@@ -15,9 +16,7 @@ export default function ProfilePage() {
     email: "",
     bio: "",
     location: "",
-    website: "",
-    timezone: "UTC",
-    locale: "en",
+    website: ""
   });
 
   // Get current user data
@@ -44,6 +43,25 @@ export default function ProfilePage() {
     },
   });
 
+  // Update profile photo mutation
+  const updateProfilePhoto = trpc.updateProfilePhoto.useMutation({
+    onSuccess: (updatedUser) => {
+      // Update session with new image
+      update({
+        ...session,
+        user: {
+          ...session?.user,
+          email: updatedUser.email,
+          image: updatedUser.image,
+        },
+      });
+      refetchUser();
+    },
+    onError: (error) => {
+      toast.error(`Failed to update profile photo: ${error.message}`);
+    },
+  });
+
   // Initialize form data when user data loads
   useEffect(() => {
     if (userData) {
@@ -52,12 +70,24 @@ export default function ProfilePage() {
         email: userData.email || "",
         bio: userData.bio || "",
         location: userData.location || "",
-        website: userData.website || "",
-        timezone: userData.timezone || "UTC",
-        locale: userData.locale || "en",
+        website: userData.website || ""
       });
     }
   }, [userData]);
+
+  const handleProfilePhotoUpload = async (imageFile: File) => {
+    if (!session?.user?.id) return;
+    
+    try {
+      await updateProfilePhoto.mutateAsync({
+        userId: session.user.id,
+        imageFile,
+      });
+    } catch (error) {
+      // Error is handled by the mutation
+      throw error;
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,9 +100,7 @@ export default function ProfilePage() {
         name: formData.name,
         bio: formData.bio,
         location: formData.location,
-        website: formData.website,
-        timezone: formData.timezone,
-        locale: formData.locale,
+        website: formData.website
       });
     } finally {
       setIsLoading(false);
@@ -104,7 +132,7 @@ export default function ProfilePage() {
           {/* Profile Picture */}
           <div className="flex items-center space-x-6">
             <div className="relative">
-              <div className="h-20 w-20 rounded-full bg-gray-300 flex items-center justify-center">
+              <div className="h-20 w-20 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
                 {session?.user?.image ? (
                   <img
                     src={session.user.image}
@@ -115,19 +143,25 @@ export default function ProfilePage() {
                   <User className="h-10 w-10 text-gray-600" />
                 )}
               </div>
-              <button
-                type="button"
-                className="absolute -bottom-2 -right-2 bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition-colors"
-              >
-                <Camera className="h-4 w-4" />
-              </button>
+              <ProfilePhotoUploadDialog
+                currentImageUrl={session?.user?.image}
+                onImageUpload={handleProfilePhotoUpload}
+                trigger={
+                  <button
+                    type="button"
+                    className="absolute -bottom-2 -right-2 bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition-colors"
+                  >
+                    <Camera className="h-4 w-4" />
+                  </button>
+                }
+              />
             </div>
             <div>
               <h4 className="text-sm font-medium text-gray-900">
                 Profile Photo
               </h4>
               <p className="text-sm text-gray-500">
-                JPG, PNG or GIF. Max size 2MB.
+                JPG, PNG or GIF. Max size 5MB.
               </p>
             </div>
           </div>
@@ -144,22 +178,6 @@ export default function ProfilePage() {
               className="mt-1"
               placeholder="Enter your full name"
             />
-          </div>
-
-          {/* Email (read-only) */}
-          <div>
-            <Label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email Address
-            </Label>
-            <Input
-              id="email"
-              value={formData.email}
-              disabled
-              className="mt-1 bg-gray-50"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Email address cannot be changed
-            </p>
           </div>
 
           {/* Bio */}
@@ -206,46 +224,6 @@ export default function ProfilePage() {
             />
           </div>
 
-          {/* Timezone and Locale */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <Label htmlFor="timezone" className="block text-sm font-medium text-gray-700">
-                Timezone
-              </Label>
-              <Select value={formData.timezone} onValueChange={(value) => handleInputChange("timezone", value)}>
-                <SelectTrigger className="mt-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="UTC">UTC</SelectItem>
-                  <SelectItem value="Europe/London">Europe/London</SelectItem>
-                  <SelectItem value="America/New_York">America/New_York</SelectItem>
-                  <SelectItem value="America/Los_Angeles">America/Los_Angeles</SelectItem>
-                  <SelectItem value="Asia/Tokyo">Asia/Tokyo</SelectItem>
-                  <SelectItem value="Australia/Sydney">Australia/Sydney</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="locale" className="block text-sm font-medium text-gray-700">
-                Language
-              </Label>
-              <Select value={formData.locale} onValueChange={(value) => handleInputChange("locale", value)}>
-                <SelectTrigger className="mt-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="es">Español</SelectItem>
-                  <SelectItem value="fr">Français</SelectItem>
-                  <SelectItem value="de">Deutsch</SelectItem>
-                  <SelectItem value="ja">日本語</SelectItem>
-                  <SelectItem value="zh">中文</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
 
           {/* Submit Button */}
           <div className="flex justify-end">

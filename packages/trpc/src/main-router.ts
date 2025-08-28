@@ -23,6 +23,8 @@ export const appRouter = router({
   getUser: userRouter.getUser,
   getCurrentUser: userRouter.getCurrentUser,
   updateUser: userRouter.updateUser,
+  updateProfilePhoto: userRouter.updateProfilePhoto,
+  deleteProfilePhoto: userRouter.deleteProfilePhoto,
   changePassword: userRouter.changePassword,
   deleteUser: userRouter.deleteUser,
   getAllUsers: userRouter.getAllUsers,

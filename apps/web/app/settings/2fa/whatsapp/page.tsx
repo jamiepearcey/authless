@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button, OtpInput } from "@ui/base";
+import { PhoneNumberInput } from "@/components/PhoneNumberInput";
 import {
   MessageCircle,
   ArrowLeft,
@@ -11,16 +12,34 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { t } from "@i18n-core";
+
 export default function WhatsAppSetupPage() {
   const [step, setStep] = useState<"setup" | "verify" | "success">("setup");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [countryCode, setCountryCode] = useState("44");
+  const [fullPhoneNumber, setFullPhoneNumber] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [phoneValidationError, setPhoneValidationError] = useState("");
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
+
+  const handlePhoneNumberChange = (value: string, code: string, full: string) => {
+    setPhoneNumber(value);
+    setCountryCode(code);
+    setFullPhoneNumber(full);
+  };
+
+  const handlePhoneValidationChange = (isValid: boolean, error?: string) => {
+    setIsPhoneValid(isValid);
+    setPhoneValidationError(error || "");
+  };
+
   const handleSetup = async () => {
-    if (!phoneNumber || phoneNumber.length < 10) {
-      alert("Please enter a valid phone number");
+    if (!isPhoneValid) {
+      setPhoneValidationError("Please enter a valid phone number");
       return;
     }
+    
     setIsLoading(true);
     try {
       // TODO: Call API to send WhatsApp verification code
@@ -32,6 +51,7 @@ export default function WhatsAppSetupPage() {
       setIsLoading(false);
     }
   };
+
   const handleVerify = async () => {
     if (!verificationCode || verificationCode.length !== 6) {
       alert("Please enter a valid 6-digit code");
@@ -49,6 +69,7 @@ export default function WhatsAppSetupPage() {
       setIsLoading(false);
     }
   };
+
   const handleResendCode = async () => {
     setIsLoading(true);
     try {
@@ -272,13 +293,15 @@ export default function WhatsAppSetupPage() {
                       "2fa.whatsapp.page.WhatsAppSetupPage.whatsapp_phone_number__qnkklh",
                     )}
                   </label>
-                  <input
-                    type="tel"
-                    id="phoneNumber"
+                  
+                  <PhoneNumberInput
                     value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    placeholder="+1 (555) 123-4567"
-                    className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    onChange={handlePhoneNumberChange}
+                    onValidationChange={handlePhoneValidationChange}
+                    placeholder="Enter your phone number"
+                    showError={true}
+                    required={true}
+                    className="mb-2"
                   />
 
                   <p className="text-sm text-gray-500 mt-2">
@@ -324,7 +347,7 @@ export default function WhatsAppSetupPage() {
 
                 <Button
                   onClick={handleSetup}
-                  disabled={isLoading || !phoneNumber}
+                  disabled={isLoading || !isPhoneValid}
                   className="w-full"
                 >
                   {isLoading ? "Setting up..." : "Send Verification Code"}

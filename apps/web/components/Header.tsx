@@ -114,8 +114,10 @@ export default function Header() {
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
             ) : session ? (
               <div className="flex items-center space-x-4">
-                {/* Tenant Switcher */}
-                <TenantSwitcher />
+                {/* Tenant Switcher in fixed size container so it doesnt wabble */}
+                <div className="w-70">
+                  <TenantSwitcher />
+                </div>
                 
                 {/* Notification Bell */}
                 <NotificationBell
