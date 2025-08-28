@@ -10,6 +10,7 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Copy } from "lucide-react";
 import { copyToClipboard } from "@shared/base";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -256,15 +257,35 @@ export default function TenantUsersPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
-          <p className="text-gray-600">Manage your team members and their roles</p>
+      <div className="mb-8">
+        <div className="flex items-center space-x-4 mb-4">
+          <BreadcrumbNavigation
+            items={[
+              { label: "Tenants", href: "/tenants" },
+              { label: tenantSlug, href: `/tenants/${tenantSlug}` },
+              { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
+              { label: "Users", current: true },
+            ]}
+            showHome={false}
+          />
         </div>
-        <Button onClick={() => setShowInviteForm(true)} className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
-          Invite User
-        </Button>
+        
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+              <Users className="h-8 w-8 text-indigo-600" />
+              <span>User Management</span>
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Manage tenant members, roles, and permissions
+            </p>
+          </div>
+          
+          <Button onClick={() => setShowInviteForm(true)} className="flex items-center gap-2">
+            <Plus className="h-4 w-4" />
+            Invite User
+          </Button>
+        </div>
       </div>
 
       {/* Stats */}

@@ -22,6 +22,7 @@ import {
 import { trpc } from "@/lib/trpc";
 import Link from "next/link";
 import { toast } from "@ui/base";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 export default function TenantDashboardPage() {
   const params = useParams();
@@ -135,29 +136,42 @@ export default function TenantDashboardPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            {t("Welcome to", "tenants.dashboard.page.TenantDashboardPage.welcome_to__1itlrq")} {tenant.name}
-          </h1>
-          <p className="text-gray-600 mt-2">
-            {t("Manage your workspace and team", "tenants.dashboard.page.TenantDashboardPage.manage_your_workspace_and_team__2bkoks")}
-          </p>
+      <div className="mb-8">
+        <div className="flex items-center space-x-4 mb-4">
+          <BreadcrumbNavigation
+            items={[
+              { label: "Tenants", href: "/tenants" },
+              { label: tenant.name || tenantSlug, current: true },
+            ]}
+            showHome={false}
+          />
         </div>
         
-        <div className="flex space-x-3">
-          <Link href={`/tenants/${tenantSlug}/admin/settings`}>
-            <Button variant="outline" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              {t("Settings", "tenants.dashboard.page.TenantDashboardPage.settings__3ckols")}
-            </Button>
-          </Link>
-          <Link href={`/tenants/${tenantSlug}/admin/users`}>
-            <Button className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              {t("Manage Users", "tenants.dashboard.page.TenantDashboardPage.manage_users__4ckols")}
-            </Button>
-          </Link>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+              <Building2 className="h-8 w-8 text-indigo-600" />
+              <span>Welcome to {tenant.name}</span>
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Manage your workspace and team
+            </p>
+          </div>
+          
+          <div className="flex space-x-3">
+            <Link href={`/tenants/${tenantSlug}/admin/settings`}>
+              <Button variant="outline" className="flex items-center gap-2">
+                <Settings className="h-4 w-4" />
+                Settings
+              </Button>
+            </Link>
+            <Link href={`/tenants/${tenantSlug}/admin/users`}>
+              <Button className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                Manage Users
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
 

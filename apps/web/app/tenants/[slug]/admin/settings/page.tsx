@@ -8,6 +8,7 @@ import { Building2, Palette, Shield, Zap } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 export default function TenantSettingsPage() {
   const params = useParams();
@@ -126,14 +127,46 @@ export default function TenantSettingsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Tenant Settings</h1>
-          <p className="text-gray-600">Configure your workspace settings and preferences</p>
+      <div className="mb-8">
+        <div className="flex items-center space-x-4 mb-4">
+          <BreadcrumbNavigation
+            items={[
+              { label: "Tenants", href: "/tenants" },
+              { label: tenantSlug, href: `/tenants/${tenantSlug}` },
+              { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
+              { label: "Settings", current: true },
+            ]}
+            showHome={false}
+          />
         </div>
-        <div className="flex items-center gap-3">
-          {getStatusBadge(tenant.status)}
-          {getPlanBadge(tenant.plan)}
+        
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+              <Building2 className="h-8 w-8 text-indigo-600" />
+              <span>Tenant Settings</span>
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Configure workspace settings and preferences
+            </p>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            {isEditing ? (
+              <>
+                <Button variant="outline" onClick={() => setIsEditing(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleSubmit} disabled={updateTenant.isPending}>
+                  {updateTenant.isPending ? "Saving..." : "Save Changes"}
+                </Button>
+              </>
+            ) : (
+              <Button onClick={() => setIsEditing(true)}>
+                Edit Settings
+              </Button>
+            )}
+          </div>
         </div>
       </div>
 

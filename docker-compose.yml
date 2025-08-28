@@ -19,5 +19,30 @@ services:
       timeout: 5s
       retries: 5
 
+  centrifugo:
+    image: centrifugo/centrifugo:v5
+    container_name: beatthefine-centrifugo
+    restart: always
+    environment:
+      CENTRIFUGO_TOKEN_HMAC_SECRET_KEY: "your-secret-key-change-in-production"
+      CENTRIFUGO_API_KEY: "your-api-key-change-in-production"
+      CENTRIFUGO_ADMIN_PASSWORD: "admin123"
+      CENTRIFUGO_ADMIN_SECRET: "admin-secret-key"
+      CENTRIFUGO_ALLOWED_ORIGINS: "http://localhost:3000"
+    ports:
+      - "8000:8000"  # Main WebSocket/HTTP port
+      - "9000:9000"  # Admin panel
+    command: centrifugo --config=/etc/centrifugo/config.json
+    volumes:
+      - ./centrifugo-config.json:/etc/centrifugo/config.json
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:

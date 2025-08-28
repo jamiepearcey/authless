@@ -1,0 +1,30 @@
+{
+  "token_hmac_secret_key": "your-secret-key-change-in-production",
+  "api_key": "your-api-key-change-in-production",
+  "admin_password": "admin123",
+  "admin_secret": "admin-secret-key",
+  "allowed_origins": ["http://localhost:3000"],
+  "log_level": "debug",
+  "log_file": "",
+  "health": true,
+  "admin": true,
+  "admin_web": true,
+  "admin_web_path": "/admin",
+  "api_insecure": true,
+  "api": true,
+  "sockjs_url": "https://cdn.jsdelivr.net/sockjs-client@1.6.1/dist/sockjs.min.js",
+  "websocket_compression": true,
+  "client_insecure": true,
+  "namespaces": [
+    {
+      "name": "notifications",
+      "publish": true,
+      "subscribe_to_publish": true,
+      "presence": false,
+      "join_leave": false,
+      "history_size": 10,
+      "history_ttl": "300s",
+      "recover": true
+    }
+  ]
+}

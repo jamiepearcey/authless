@@ -1,24 +1,53 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { Button, NotificationBell } from "@ui/base";
 import { Settings, User, LogOut, Shield, Building2 } from "lucide-react";
 import TenantSwitcher from "./TenantSwitcher";
 import { navigationLinks } from "./links";
 import { trpc } from "@/lib/trpc";
+import { useBasicNotificationSubscription, useCentrifugo, NotificationMessage } from "@/hooks/useNotificationSubscription";
 
 export default function Header() {
   const { data: session, status } = useSession();
+  const [realtimeNotifications, setRealtimeNotifications] = useState<NotificationMessage['notification'][]>([]);
   
   // Get notification data
-  const { data: unreadCount } = trpc.getUnreadCount.useQuery();
-  const { data: notificationsData } = trpc.getUserNotifications.useQuery({ limit: 5 });
+  const { data: unreadCount, refetch: refetchUnreadCount } = trpc.getUnreadCount.useQuery();
+  const { data: notificationsData, refetch: refetchNotifications } = trpc.getUserNotifications.useQuery({ limit: 5 });
   
   // Mutations for notification actions
   const markAsReadMutation = trpc.markAsRead.useMutation();
   const markAllAsReadMutation = trpc.markAllAsRead.useMutation();
   const archiveMutation = trpc.archiveNotification.useMutation();
+
+  // Real-time notification handler
+  const handleRealtimeNotification = useCallback((message: NotificationMessage) => {
+    console.log('Received real-time notification:', message);
+    
+    if (message.type === 'notification_created') {
+      refetchUnreadCount();
+      refetchNotifications();
+    }
+  }, [refetchUnreadCount, refetchNotifications]);
+
+  // Get Centrifugo connection status
+  const { isConnected } = useCentrifugo();
+  
+  // Subscribe to real-time notifications
+  const { isSubscribed, hasErrors } = useBasicNotificationSubscription(handleRealtimeNotification);
+
+  // Log connection status (for debugging)
+  useEffect(() => {
+    if (session?.user?.id) {
+      console.log('Centrifugo connection status:', { isSubscribed, isConnected, hasErrors });
+    }
+  }, [isSubscribed, isConnected, hasErrors, session?.user?.id]);
+
+  // Combine server-side and real-time notifications
+  const allNotifications = notificationsData?.items ?? []
 
   const handleMarkAsRead = async (notificationId: string) => {
     try {
@@ -91,7 +120,7 @@ export default function Header() {
                 {/* Notification Bell */}
                 <NotificationBell
                   unreadCount={unreadCount || 0}
-                  notifications={notificationsData?.items || []}
+                  notifications={allNotifications}
                   onMarkAsRead={handleMarkAsRead}
                   onMarkAllAsRead={handleMarkAllAsRead}
                   onArchive={handleArchive}

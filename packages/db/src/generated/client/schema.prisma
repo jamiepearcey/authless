@@ -39,21 +39,35 @@ model Session {
 }
 
 model User {
-  id                     String                  @id @default(cuid())
+  id                     String    @id @default(cuid())
   name                   String?
-  email                  String?                 @unique
+  email                  String?   @unique
   emailVerified          DateTime?
   image                  String?
   hashedPassword         String?
-  isEmailVerified        Boolean                 @default(false)
-  emailVerificationToken String?                 @unique
-  passwordResetToken     String?                 @unique
+  isEmailVerified        Boolean   @default(false)
+  emailVerificationToken String?   @unique
+  passwordResetToken     String?   @unique
   passwordResetExpires   DateTime?
   platformRole           String?
-  status                 String                  @default("active")
+  status                 String    @default("active")
   lastLoginAt            DateTime?
   twoFactorSecret        String?
-  twoFactorEnabled       Boolean                 @default(false)
+  twoFactorEnabled       Boolean   @default(false)
+
+  // Profile fields
+  bio      String?
+  location String?
+  website  String?
+  timezone String  @default("UTC")
+  locale   String  @default("en")
+
+  // Notification preferences
+  emailNotifications Boolean @default(true)
+  marketingEmails    Boolean @default(false)
+  securityAlerts     Boolean @default(true)
+  activityUpdates    Boolean @default(false)
+
   createdAt              DateTime                @default(now())
   updatedAt              DateTime                @updatedAt
   accounts               Account[]

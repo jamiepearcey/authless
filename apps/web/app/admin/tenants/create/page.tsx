@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Building2, Save, AlertCircle } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 export default function CreateTenantPage() {
   const router = useRouter();
@@ -95,25 +96,36 @@ export default function CreateTenantPage() {
   return (
     <main className="flex flex-1 pt-8 pb-8">
       <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
-        <Button
-          variant="ghost"
-          onClick={() => router.back()}
-          className="flex items-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {t("Back", "admin.tenants.create.page.CreateTenantPage.back__1itlrq")}
-        </Button>
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            {t("Create New Workspace", "admin.tenants.create.page.CreateTenantPage.create_new_workspace__2bkoks")}
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center space-x-4 mb-4">
+            <Button
+              variant="outline"
+              onClick={() => router.back()}
+              className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back
+            </Button>
+            <div className="h-6 w-px bg-gray-300" />
+            <BreadcrumbNavigation
+              items={[
+                { label: "Admin", href: "/admin" },
+                { label: "Tenants", href: "/admin/tenants" },
+                { label: "Create New Workspace", current: true },
+              ]}
+              showHome={false}
+            />
+          </div>
+          
+          <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+            <Building2 className="h-8 w-8 text-indigo-600" />
+            <span>Create New Workspace</span>
           </h1>
-          <p className="text-gray-600 mt-2">
-            {t("Set up a new workspace for your organization", "admin.tenants.create.page.CreateTenantPage.set_up_new_workspace_for_your_organization__3ckols")}
+          <p className="mt-2 text-gray-600">
+            Set up a new workspace for your organization
           </p>
         </div>
-      </div>
 
       <div className=" mx-auto">
         <Card>

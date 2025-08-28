@@ -161,6 +161,15 @@ exports.Prisma.UserScalarFieldEnum = {
   lastLoginAt: 'lastLoginAt',
   twoFactorSecret: 'twoFactorSecret',
   twoFactorEnabled: 'twoFactorEnabled',
+  bio: 'bio',
+  location: 'location',
+  website: 'website',
+  timezone: 'timezone',
+  locale: 'locale',
+  emailNotifications: 'emailNotifications',
+  marketingEmails: 'marketingEmails',
+  securityAlerts: 'securityAlerts',
+  activityUpdates: 'activityUpdates',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

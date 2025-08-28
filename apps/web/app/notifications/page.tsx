@@ -149,7 +149,7 @@ export default function NotificationsPage() {
               <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
                 <Bell className="h-8 w-8 text-indigo-600" />
                 <span>Notifications</span>
-                {unreadCount && unreadCount > 0 && (
+                {unreadCount != null && unreadCount > 0 && (
                   <span className="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">
                     {unreadCount} unread
                   </span>
@@ -160,7 +160,7 @@ export default function NotificationsPage() {
               </p>
             </div>
             
-            {unreadCount && unreadCount > 0 && (
+            {unreadCount != null && unreadCount > 0 && (
               <Button onClick={handleMarkAllAsRead} variant="outline">
                 <Check className="h-4 w-4 mr-2" />
                 Mark all as read

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Bell, Plus, Filter, Search, Loader2, Inbox, Trash2, Edit } from "lucide-react";
+import { Bell, Plus, Filter, Search, Loader2, Inbox, Trash2, Edit, CheckSquare, Square, Check } from "lucide-react";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@ui/base";
 import { Badge } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
+import Link from "next/link";
 
 export default function AdminNotificationsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,6 +17,11 @@ export default function AdminNotificationsPage() {
   const [typeFilter, setTypeFilter] = useState<"all" | "info" | "success" | "warning" | "error">("all");
   const [priorityFilter, setPriorityFilter] = useState<"all" | "low" | "normal" | "high" | "urgent">("all");
   const [tenantFilter, setTenantFilter] = useState<string>("all");
+  
+  // Batch selection state
+  const [selectedNotifications, setSelectedNotifications] = useState<Set<string>>(new Set());
+  const [isSelectAll, setIsSelectAll] = useState(false);
+  const [showBatchDeleteConfirm, setShowBatchDeleteConfirm] = useState(false);
 
   // Get all notifications with infinite scroll
   const {
@@ -49,6 +55,19 @@ export default function AdminNotificationsPage() {
     },
   });
 
+  // Batch delete mutation
+  const batchDeleteMutation = trpc.batchDeleteNotifications.useMutation({
+    onSuccess: (deletedCount: number) => {
+      setSelectedNotifications(new Set());
+      setIsSelectAll(false);
+      refetch();
+      toast.success(`Successfully deleted ${deletedCount} notifications`);
+    },
+    onError: (error: any) => {
+      toast.error(`Failed to delete notifications: ${error.message}`);
+    },
+  });
+
   // Flatten notifications from all pages
   const notifications = notificationsData?.pages.flatMap(page => page.items) || [];
 
@@ -76,6 +95,83 @@ export default function AdminNotificationsPage() {
       }
     }
   };
+
+  // Handle batch delete
+  const handleBatchDelete = async () => {
+    if (selectedNotifications.size === 0) return;
+    
+    setShowBatchDeleteConfirm(true);
+  };
+
+  // Confirm and execute batch delete
+  const confirmBatchDelete = async () => {
+    try {
+      await batchDeleteMutation.mutateAsync({
+        ids: Array.from(selectedNotifications)
+      });
+      setShowBatchDeleteConfirm(false);
+    } catch (error) {
+      toast.error("Failed to delete notifications");
+    }
+  };
+
+  // Handle select all
+  const handleSelectAll = () => {
+    if (isSelectAll) {
+      setSelectedNotifications(new Set());
+      setIsSelectAll(false);
+    } else {
+      const allIds = new Set(filteredNotifications.map(n => n.id));
+      setSelectedNotifications(allIds);
+      setIsSelectAll(true);
+    }
+  };
+
+  // Handle individual selection
+  const handleSelectNotification = (id: string, checked: boolean) => {
+    const newSelected = new Set(selectedNotifications);
+    if (checked) {
+      newSelected.add(id);
+    } else {
+      newSelected.delete(id);
+    }
+    setSelectedNotifications(newSelected);
+    
+    // Update select all state
+    if (newSelected.size === filteredNotifications.length) {
+      setIsSelectAll(true);
+    } else if (newSelected.size === 0) {
+      setIsSelectAll(false);
+    } else {
+      setIsSelectAll(false);
+    }
+  };
+
+  // Update select all state when filters change
+  useEffect(() => {
+    if (selectedNotifications.size === filteredNotifications.length && filteredNotifications.length > 0) {
+      setIsSelectAll(true);
+    } 
+  }, [filteredNotifications, selectedNotifications]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Ctrl+A or Cmd+A for select all
+      if ((event.ctrlKey || event.metaKey) && event.key === 'a') {
+        handleSelectAll()
+      }
+      
+      // Escape to clear selection
+      if (event.key === 'Escape' && selectedNotifications.size > 0) {
+        setSelectedNotifications(new Set());
+        setIsSelectAll(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedNotifications.size, handleSelectAll]);
 
   // Infinite scroll handler
   const loadMore = useCallback(() => {
@@ -158,6 +254,11 @@ export default function AdminNotificationsPage() {
               <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
                 <Bell className="h-8 w-8 text-indigo-600" />
                 <span>Admin Notifications</span>
+                {selectedNotifications.size > 0 && (
+                  <Badge variant="secondary" className="ml-3 bg-indigo-100 text-indigo-800">
+                    {selectedNotifications.size} selected
+                  </Badge>
+                )}
               </h1>
               <p className="mt-2 text-gray-600">
                 Manage all notifications across the system
@@ -166,15 +267,10 @@ export default function AdminNotificationsPage() {
             
             <div className="flex space-x-3">
               <Button variant="outline" asChild>
-                <a href="/admin/notifications/test">🧪 Test Notifications</a>
+                <Link href="/admin/notifications/manage">🔧 Manage & Test</Link>
               </Button>
-              <Button variant="outline">
-                <Plus className="h-4 w-4 mr-2" />
-                Create Notification
-              </Button>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Webhook
+              <Button variant="outline" asChild>
+                <Link href="/admin/notifications/templates">📝 Templates</Link>
               </Button>
             </div>
           </div>
@@ -349,8 +445,74 @@ export default function AdminNotificationsPage() {
             </div>
           ) : (
             <>
+              {/* Batch Selection Toolbar */}
+              {filteredNotifications.length > 0 && (
+                <div className="flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 p-4 rounded-lg mb-4 shadow-sm">
+                  <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={isSelectAll}
+                        onChange={handleSelectAll}
+                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      />
+                      <span className="text-sm font-medium text-gray-700">
+                        {isSelectAll ? "Deselect All" : "Select All"}
+                      </span>
+                    </div>
+                    {selectedNotifications.size > 0 && (
+                      <span className="text-sm text-gray-600">
+                        • {selectedNotifications.size} of {filteredNotifications.length} selected
+                      </span>
+                    )}
+                    <span className="text-xs text-gray-500">
+                      💡 Use Ctrl+A to select all, Escape to clear
+                    </span>
+                  </div>
+                  
+                  {selectedNotifications.size > 0 && (
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setSelectedNotifications(new Set())}
+                        className="text-gray-600 border-gray-300 hover:bg-gray-50"
+                      >
+                        Clear Selection
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={handleBatchDelete}
+                        disabled={batchDeleteMutation.isPending}
+                        className="text-white bg-red-600 hover:bg-red-700 border-red-600"
+                      >
+                        {batchDeleteMutation.isPending ? (
+                          <>
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            Deleting...
+                          </>
+                        ) : (
+                          <>
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Delete Selected ({selectedNotifications.size})
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {filteredNotifications.map((notification) => (
-                <Card key={notification.id} className="hover:shadow-md transition-shadow">
+                <Card 
+                  key={notification.id} 
+                  className={`hover:shadow-md transition-all duration-200 ${
+                    selectedNotifications.has(notification.id) 
+                      ? 'ring-2 ring-indigo-500 bg-indigo-50/50' 
+                      : ''
+                  }`}
+                >
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
@@ -422,6 +584,13 @@ export default function AdminNotificationsPage() {
                           <Trash2 className="h-4 w-4 mr-1" />
                           Delete
                         </Button>
+                        
+                        <input
+                          type="checkbox"
+                          checked={selectedNotifications.has(notification.id)}
+                          onChange={(e) => handleSelectNotification(notification.id, e.target.checked)}
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        />
                       </div>
                     </div>
                   </CardHeader>
@@ -476,6 +645,58 @@ export default function AdminNotificationsPage() {
           )}
         </div>
       </div>
+
+      {/* Batch Delete Confirmation Dialog */}
+      {showBatchDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                  <Trash2 className="h-5 w-5 text-red-600" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-gray-900">
+                  Delete Notifications
+                </h3>
+                <p className="text-sm text-gray-500">
+                  This action cannot be undone
+                </p>
+              </div>
+            </div>
+            
+            <p className="text-gray-700 mb-6">
+              Are you sure you want to delete <strong>{selectedNotifications.size}</strong> notification{selectedNotifications.size > 1 ? 's' : ''}?
+            </p>
+            
+            <div className="flex space-x-3">
+              <Button
+                variant="outline"
+                onClick={() => setShowBatchDeleteConfirm(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={confirmBatchDelete}
+                disabled={batchDeleteMutation.isPending}
+                className="flex-1"
+              >
+                {batchDeleteMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Deleting...
+                  </>
+                ) : (
+                  'Delete'
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

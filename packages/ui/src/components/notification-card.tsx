@@ -10,7 +10,7 @@ interface NotificationCardProps {
   id: string;
   title: string;
   description?: string | null;
-  type: "info" | "success" | "warning" | "error";
+  type?: "info" | "success" | "warning" | "error";
   priority: "low" | "normal" | "high" | "urgent";
   status: "unread" | "read" | "archived";
   createdAt: string;

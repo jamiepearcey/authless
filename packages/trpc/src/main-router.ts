@@ -23,6 +23,7 @@ export const appRouter = router({
   getUser: userRouter.getUser,
   getCurrentUser: userRouter.getCurrentUser,
   updateUser: userRouter.updateUser,
+  changePassword: userRouter.changePassword,
   deleteUser: userRouter.deleteUser,
   getAllUsers: userRouter.getAllUsers,
   
@@ -82,10 +83,15 @@ export const appRouter = router({
   getAllNotifications: notificationRouter.getAllNotifications,
   updateNotification: notificationRouter.updateNotification,
   deleteNotification: notificationRouter.deleteNotification,
+  batchDeleteNotifications: notificationRouter.batchDeleteNotifications,
   createWebhookEndpoint: notificationRouter.createWebhookEndpoint,
   getWebhookEndpoints: notificationRouter.getWebhookEndpoints,
   updateWebhookEndpoint: notificationRouter.updateWebhookEndpoint,
   deleteWebhookEndpoint: notificationRouter.deleteWebhookEndpoint,
+  
+  // Real-time notifications (Centrifugo)
+  getCentrifugoToken: notificationRouter.getCentrifugoToken,
+  subscribeToNotifications: notificationRouter.subscribeToNotifications,
 });
 
 // Export type for client usage

@@ -21,17 +21,17 @@ interface Notification {
   notification: {
     id: string;
     title: string;
-    description?: string;
-    type: "info" | "success" | "warning" | "error";
-    priority: "low" | "normal" | "high" | "urgent";
+    description?: string | null;
+    type?: "info" | "success" | "warning" | "error" | null | string
+    priority: "low" | "normal" | "high" | "urgent" | string
     createdAt: string;
     tenant?: {
       name: string;
       slug: string;
-    };
+    } | null;
   };
-  status: "unread" | "read" | "archived";
-  readAt?: string;
+  status: "unread" | "read" | "archived" | string;
+  readAt?: string | null;
 }
 
 interface NotificationBellProps {
@@ -180,7 +180,7 @@ export function NotificationBell({
                 <div key={item.id} className="p-3 hover:bg-gray-50 rounded-lg">
                   <div className="flex items-start space-x-3">
                     <span className="text-lg">
-                      {getNotificationIcon(item.notification.type)}
+                      {getNotificationIcon(item.notification.type ?? "info")}
                     </span>
                     
                     <div className="flex-1 min-w-0">

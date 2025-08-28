@@ -22,6 +22,7 @@
     "@trpc/react-query": "^11.0.0",
     "@trpc/server": "^11.0.0",
     "base32-encode": "^2.0.0",
+    "centrifuge": "^5.4.0",
     "next-auth": "^4.24.5",
     "otplib": "^12.0.1",
     "zod": "^3.22.0"

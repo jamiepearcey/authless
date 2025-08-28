@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Building2, Save, Trash2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 export default function EditTenantPage() {
   const params = useParams();
@@ -136,11 +137,9 @@ export default function EditTenantPage() {
 
   if (!tenant) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Tenant not found</h1>
-          <p className="text-gray-600 mt-2">The requested tenant could not be found.</p>
-        </div>
+      <div className="text-center">
+        <h1 className="text-2xl font-bold text-gray-900">Tenant not found</h1>
+        <p className="text-gray-600 mt-2">The requested workspace could not be found.</p>
       </div>
     );
   }
@@ -148,46 +147,37 @@ export default function EditTenantPage() {
   return (
     <main className="flex flex-1 pt-8 pb-8">
       <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            onClick={() => router.back()}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            {t("Back", "admin.tenants.edit.page.EditTenantPage.back__1itlrq")}
-          </Button>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              {t("Edit Workspace", "admin.tenants.edit.page.EditTenantPage.edit_workspace__2bkoks")}
-            </h1>
-            <p className="text-gray-600 mt-2">
-              {t("Update workspace settings and configuration", "admin.tenants.edit.page.EditTenantPage.update_workspace_settings_and_configuration__3ckols")}
-            </p>
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center space-x-4 mb-4">
+            <Button
+              variant="outline"
+              onClick={() => router.back()}
+              className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back
+            </Button>
+            <div className="h-6 w-px bg-gray-300" />
+            <BreadcrumbNavigation
+              items={[
+                { label: "Admin", href: "/admin" },
+                { label: "Tenants", href: "/admin/tenants" },
+                { label: tenantSlug, href: `/admin/tenants/${tenantSlug}` },
+                { label: "Edit", current: true },
+              ]}
+              showHome={false}
+            />
           </div>
+          
+          <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+            <Building2 className="h-8 w-8 text-indigo-600" />
+            <span>Edit Workspace: {tenant.name}</span>
+          </h1>
+          <p className="mt-2 text-gray-600">
+            Update workspace settings and configuration
+          </p>
         </div>
-        
-        <Button
-          variant="destructive"
-          onClick={handleDelete}
-          disabled={isDeleting}
-          className="flex items-center gap-2"
-        >
-          {isDeleting ? (
-            <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-              {t("Deleting...", "admin.tenants.edit.page.EditTenantPage.deleting__4ckols")}
-            </>
-          ) : (
-            <>
-              <Trash2 className="h-4 w-4" />
-              {t("Delete Tenant", "admin.tenants.edit.page.EditTenantPage.delete_tenant__5ckols")}
-            </>
-          )}
-        </Button>
-      </div>
 
       <div className="mx-auto">
         <Card>

@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { protectedProcedure, router, platformAdminProcedure } from "../base";
+import { centrifugoService } from "../centrifugo";
+import { emailNotificationService } from "../email-service";
 
 // Real-time notification adapter interface
 export interface NotificationAdapter {
@@ -8,7 +10,40 @@ export interface NotificationAdapter {
   subscribe(userId: string, callback: (notification: any) => void): () => void;
 }
 
-// In-memory adapter implementation (can be replaced with Redis, WebSocket, etc.)
+// Centrifugo-based notification adapter
+class CentrifugoNotificationAdapter implements NotificationAdapter {
+  async publish(notification: any): Promise<void> {
+    // Publish to Centrifugo with appropriate channels based on notification scope
+    const scope = {
+      tenantId: notification.tenantId,
+      role: notification.role,
+      userId: notification.userId,
+    };
+
+    console.log('🔍 [CentrifugoNotificationAdapter] Publishing notification:', {
+      id: notification.id,
+      title: notification.title,
+      scope: scope
+    });
+
+    const success = await centrifugoService.publishNotification(notification, scope);
+    
+    if (!success) {
+      console.error('Failed to publish notification to Centrifugo:', notification.id);
+    } else {
+      console.log('✅ Published notification to Centrifugo:', notification.id, 'scope:', scope);
+    }
+  }
+
+  // This is handled by the client-side Centrifugo connection
+  subscribe(userId: string, callback: (notification: any) => void): () => void {
+    console.log(`Subscription for user ${userId} should be handled client-side via Centrifugo`);
+    // Return a no-op unsubscribe function since this is handled client-side
+    return () => {};
+  }
+}
+
+// In-memory fallback adapter (for development/testing)
 class InMemoryNotificationAdapter implements NotificationAdapter {
   private subscribers = new Map<string, Set<(notification: any) => void>>();
   private notifications = new Map<string, any>();
@@ -59,8 +94,10 @@ class InMemoryNotificationAdapter implements NotificationAdapter {
   }
 }
 
-// Global notification adapter instance
-export const notificationAdapter = new InMemoryNotificationAdapter();
+// Use Centrifugo adapter by default, fallback to in-memory for development
+export const notificationAdapter = process.env.NODE_ENV === 'test' 
+  ? new InMemoryNotificationAdapter()
+  : new CentrifugoNotificationAdapter();
 
 // Input schemas
 const createNotificationSchema = z.object({
@@ -117,6 +154,15 @@ export const notificationRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { tenantId, role, userId } = input;
       
+      console.log('🔍 [createNotification] Input received:', {
+        title: input.title,
+        tenantId,
+        role,
+        userId,
+        type: input.type,
+        priority: input.priority
+      });
+      
       // Create the notification
       const notification = await ctx.db.notification.create({
         data: {
@@ -130,6 +176,13 @@ export const notificationRouter = router({
           metadata: input.metadata ? JSON.stringify(input.metadata) : null,
           expiresAt: input.expiresAt,
         },
+      });
+
+      console.log('🔍 [createNotification] Notification created:', {
+        id: notification.id,
+        tenantId: notification.tenantId,
+        role: notification.role,
+        userId: notification.userId
       });
 
       // If targeting specific users, create recipient records
@@ -204,6 +257,9 @@ export const notificationRouter = router({
 
       // Publish to real-time adapter
       await notificationAdapter.publish(notification);
+
+      // Send email notifications to users who have email notifications enabled
+      await sendEmailNotifications(ctx, notification, { tenantId, role, userId });
 
       // Trigger webhooks if any are configured
       await triggerWebhooks(ctx, "notification.created", {
@@ -437,14 +493,39 @@ export const notificationRouter = router({
   deleteNotification: platformAdminProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const notification = await ctx.db.notification.delete({
-        where: { id: input.id },
+      const { id } = input;
+
+      // Delete the notification (this will cascade to recipients)
+      const deletedNotification = await ctx.db.notification.delete({
+        where: { id },
       });
 
-      // Trigger webhooks
-      await triggerWebhooks(ctx, "notification.deleted", { notification });
+      return deletedNotification;
+    }),
 
-      return notification;
+  // Batch delete notifications
+  batchDeleteNotifications: platformAdminProcedure
+    .input(z.object({ ids: z.array(z.string()) }))
+    .mutation(async ({ ctx, input }) => {
+      const { ids } = input;
+
+      if (ids.length === 0) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "No notification IDs provided",
+        });
+      }
+
+      // Delete multiple notifications (this will cascade to recipients)
+      const result = await ctx.db.notification.deleteMany({
+        where: {
+          id: {
+            in: ids,
+          },
+        },
+      });
+
+      return result.count;
     }),
 
   // Webhook management
@@ -515,21 +596,154 @@ export const notificationRouter = router({
       return webhook;
     }),
 
-  // Real-time subscription endpoint
+  // Real-time subscription endpoint - generates Centrifugo token
+  getCentrifugoToken: protectedProcedure
+    .mutation(async ({ ctx }) => {
+      try {
+        const userId = ctx.session.user.id;
+        
+        if (!userId) {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "User ID not found in session",
+          });
+        }
+        
+        // Generate Centrifugo JWT token for the user
+        const token = centrifugoService.generateToken(userId, 3600); // 1 hour expiration
+        const channels = centrifugoService.generateChannels({ userId });
+        
+        console.log('🎫 Generated Centrifugo token for user:', userId);
+        console.log('📡 Channels for user:', channels);
+        
+        // Convert HTTP URL to WebSocket URL for client-side connection
+        const httpUrl = process.env.CENTRIFUGO_URL || "http://localhost:8000";
+        const wsDomain = httpUrl.replace('http://', 'ws://').replace('https://', 'wss://')
+        const wsUrl = `${wsDomain}/connection/websocket`;
+        
+        return {
+          token,
+          centrifugoUrl: wsUrl, // WebSocket URL for client
+          httpUrl: httpUrl, // HTTP URL for reference
+          channels,
+          message: "Use this token to connect to Centrifugo for real-time notifications",
+        };
+      } catch (error) {
+        console.error('Error generating Centrifugo token:', error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR", 
+          message: "Failed to generate Centrifugo token",
+          cause: error,
+        });
+      }
+    }),
+
+  // Legacy subscription endpoint (for backwards compatibility)
   subscribeToNotifications: protectedProcedure
     .mutation(async ({ ctx }) => {
       const userId = ctx.session.user.id;
       
-      // In a real implementation, this would establish a WebSocket connection
-      // For now, we'll return a subscription token that the client can use
-      const subscriptionToken = `sub_${userId}_${Date.now()}`;
+      // Generate Centrifugo token for real-time updates
+      const token = centrifugoService.generateToken(userId, 3600);
       
       return {
-        subscriptionToken,
-        message: "Subscription established. Use the token for real-time updates.",
+        subscriptionToken: token,
+        centrifugoUrl: process.env.CENTRIFUGO_URL || "http://localhost:8000",
+        message: "Use Centrifugo for real-time updates.",
       };
     }),
 });
+
+// Helper function to send email notifications to users who have email notifications enabled
+async function sendEmailNotifications(ctx: any, notification: any, targetScope: { tenantId?: string | null; role?: string | null; userId?: string | null }) {
+  try {
+    // Get all users who should receive this notification and have email notifications enabled
+    let userIds: string[] = [];
+
+    if (targetScope.userId) {
+      // Single user notification
+      userIds = [targetScope.userId];
+    } else if (targetScope.tenantId && targetScope.role) {
+      // Role-based notification in a tenant
+      const memberships = await ctx.db.membership.findMany({
+        where: {
+          tenantId: targetScope.tenantId,
+          role: targetScope.role,
+          status: "active",
+        },
+        select: { userId: true },
+      });
+      userIds = memberships.map((m: { userId: string }) => m.userId);
+    } else if (targetScope.tenantId) {
+      // Tenant-wide notification
+      const memberships = await ctx.db.membership.findMany({
+        where: {
+          tenantId: targetScope.tenantId,
+          status: "active",
+        },
+        select: { userId: true },
+      });
+      userIds = memberships.map((m: { userId: string }) => m.userId);
+    } else {
+      // Global notification
+      const allUsers = await ctx.db.user.findMany({
+        where: { status: "active" },
+        select: { id: true },
+      });
+      userIds = allUsers.map((u: { id: string }) => u.id);
+    }
+
+    if (userIds.length === 0) {
+      console.log('📧 No users to send email notifications to');
+      return;
+    }
+
+    // Get user details and check email notification preferences
+    const users = await ctx.db.user.findMany({
+      where: {
+        id: { in: userIds },
+        emailNotifications: true, // Only users who have email notifications enabled
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+      },
+    });
+
+    if (users.length === 0) {
+      console.log('📧 No users with email notifications enabled');
+      return;
+    }
+
+    console.log(`📧 Sending email notifications to ${users.length} users`);
+
+    // Prepare email notification data
+    const emailNotifications = users.map((user: { id: string; email: string | null; name: string | null }) => ({
+      notification: {
+        id: notification.id,
+        title: notification.title,
+        description: notification.description,
+        type: notification.type,
+        priority: notification.priority,
+        createdAt: notification.createdAt.toISOString(),
+      },
+      recipient: {
+        id: user.id,
+        email: user.email!,
+        name: user.name,
+      },
+      targetScope,
+    }));
+
+    // Send email notifications
+    const result = await emailNotificationService.sendBulkNotificationEmails(emailNotifications);
+    
+    console.log('📧 Email notification results:', result);
+  } catch (error) {
+    console.error('📧 Error sending email notifications:', error);
+  }
+}
 
 // Helper function to trigger webhooks
 async function triggerWebhooks(ctx: any, event: string, data: any) {

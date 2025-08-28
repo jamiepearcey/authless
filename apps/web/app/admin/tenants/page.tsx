@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 export default function AdminTenantsPage() {
   const router = useRouter();
@@ -104,93 +105,86 @@ export default function AdminTenantsPage() {
   return (
     <main className="flex flex-1 pt-8 pb-8">
       <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            {t("Tenant Management", "admin.tenants.page.AdminTenantsPage.tenant_management__1itlrq")}
-          </h1>
-          <p className="text-gray-600 mt-2">
-            {t("Manage all workspaces and their settings", "admin.tenants.page.AdminTenantsPage.manage_all_workspaces_and_their_settings__2bkoks")}
-          </p>
-        </div>
-        <Button onClick={handleCreateTenant} className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
-          {t("Create Tenant", "admin.tenants.page.AdminTenantsPage.create_tenant__3ckols")}
-        </Button>
-      </div>
-
-      {/* Filters */}
-      <Card className="mb-6">
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center space-x-4 mb-4">
+            <BreadcrumbNavigation
+              items={[
+                { label: "Admin", href: "/admin" },
+                { label: "Tenant Management", current: true },
+              ]}
+              showHome={false}
+            />
+          </div>
+          
+          <div className="flex justify-between items-center">
             <div>
-              <Label htmlFor="search" className="text-sm font-medium text-gray-700">
-                {t("Search", "admin.tenants.page.AdminTenantsPage.search__4ckols")}
-              </Label>
-              <div className="relative mt-1">
+              <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+                <Building2 className="h-8 w-8 text-indigo-600" />
+                <span>Tenant Management</span>
+              </h1>
+              <p className="text-gray-600 mt-2">
+                Manage all workspaces and their settings
+              </p>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              {/* Quick Search */}
+              <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
-                  id="search"
-                  placeholder={t("Search tenants...", "admin.tenants.page.AdminTenantsPage.search_tenants__5ckols")}
+                  placeholder="Search tenants..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 w-64"
                 />
               </div>
-            </div>
-            
-            <div>
-              <Label htmlFor="status" className="text-sm font-medium text-gray-700">
-                {t("Status", "admin.tenants.page.AdminTenantsPage.status__6ckols")}
-              </Label>
-              <select
-                id="status"
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              >
-                <option value="all">{t("All Statuses", "admin.tenants.page.AdminTenantsPage.all_statuses__7ckols")}</option>
-                <option value="active">{t("Active", "admin.tenants.page.AdminTenantsPage.active__8ckols")}</option>
-                <option value="suspended">{t("Suspended", "admin.tenants.page.AdminTenantsPage.suspended__9ckols")}</option>
-                <option value="deleted">{t("Deleted", "admin.tenants.page.AdminTenantsPage.deleted__10ckols")}</option>
-              </select>
-            </div>
-            
-            <div>
-              <Label htmlFor="plan" className="text-sm font-medium text-gray-700">
-                {t("Plan", "admin.tenants.page.AdminTenantsPage.plan__11ckols")}
-              </Label>
-              <select
-                id="plan"
-                value={selectedPlan}
-                onChange={(e) => setSelectedPlan(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              >
-                <option value="all">{t("All Plans", "admin.tenants.page.AdminTenantsPage.all_plans__12ckols")}</option>
-                <option value="free">{t("Free", "admin.tenants.page.AdminTenantsPage.free__13ckols")}</option>
-                <option value="pro">{t("Pro", "admin.tenants.page.AdminTenantsPage.pro__14ckols")}</option>
-                <option value="enterprise">{t("Enterprise", "admin.tenants.page.AdminTenantsPage.enterprise__15ckols")}</option>
-              </select>
-            </div>
-            
-            <div className="flex items-end">
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedStatus("all");
-                  setSelectedPlan("all");
-                  setCurrentPage(1);
-                }}
-                className="w-full"
-              >
-                {t("Clear Filters", "admin.tenants.page.AdminTenantsPage.clear_filters__16ckols")}
+              
+              {/* Quick Filters */}
+              <div className="flex items-center space-x-2">
+                <select
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="active">Active</option>
+                  <option value="suspended">Suspended</option>
+                  <option value="deleted">Deleted</option>
+                </select>
+                
+                <select
+                  value={selectedPlan}
+                  onChange={(e) => setSelectedPlan(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                  <option value="all">All Plans</option>
+                  <option value="free">Free</option>
+                  <option value="pro">Pro</option>
+                  <option value="enterprise">Enterprise</option>
+                </select>
+                
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setSearchTerm("");
+                    setSelectedStatus("all");
+                    setSelectedPlan("all");
+                    setCurrentPage(1);
+                  }}
+                  size="sm"
+                >
+                  Clear
+                </Button>
+              </div>
+              
+              <Button onClick={handleCreateTenant} className="flex items-center gap-2">
+                <Plus className="h-4 w-4" />
+                Create Tenant
               </Button>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">

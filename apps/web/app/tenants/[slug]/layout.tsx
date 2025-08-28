@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import { TenantNavigation } from "@/components/TenantNavigation";
 
 interface TenantLayoutProps {
   children: ReactNode;
@@ -30,26 +31,7 @@ export default async function TenantLayout({ children, params }: TenantLayoutPro
             </div>
             
             {/* Tenant Navigation */}
-            <nav className="flex space-x-8">
-              <a
-                href={`/tenants/${tenantSlug}`}
-                className="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium"
-              >
-                Dashboard
-              </a>
-              <a
-                href={`/tenants/${tenantSlug}/admin/users`}
-                className="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium"
-              >
-                Users
-              </a>
-              <a
-                href={`/tenants/${tenantSlug}/admin/settings`}
-                className="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium"
-              >
-                Settings
-              </a>
-            </nav>
+            <TenantNavigation tenantSlug={tenantSlug} />
           </div>
         </div>
       </div>
