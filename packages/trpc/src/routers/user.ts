@@ -89,6 +89,24 @@ export const userRouter = router({
       return updatedUser;
     }),
 
+  // Get all users (platform admin only)
+  getAllUsers: platformAdminProcedure.query(async ({ ctx }) => {
+    const users = await ctx.db.user.findMany({
+      where: { status: "active" },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        platformRole: true,
+        status: true,
+        createdAt: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    
+    return users;
+  }),
+
   // Delete user (platform admin only)
   deleteUser: platformAdminProcedure
     .input(z.object({ id: z.string() }))

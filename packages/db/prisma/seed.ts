@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { db } from '../src/client';
 import bcrypt from 'bcryptjs';
-
-const prisma = new PrismaClient();
 
 async function main() {
   console.log('🌱 Starting database seed...');
@@ -9,7 +7,7 @@ async function main() {
   // Create admin user
   const hashedPassword = await bcrypt.hash('admin123', 12);
   
-  const adminUser = await prisma.user.upsert({
+  const adminUser = await db.user.upsert({
     where: { email: 'admin@beatthefine.london' },
     update: {},
     create: {
@@ -25,7 +23,7 @@ async function main() {
   console.log('✅ Admin user created:', adminUser.email);
 
   // Create a default tenant
-  const defaultTenant = await prisma.tenant.upsert({
+  const defaultTenant = await db.tenant.upsert({
     where: { slug: 'default' },
     update: {},
     create: {
@@ -43,7 +41,7 @@ async function main() {
   console.log('✅ Default tenant created:', defaultTenant.slug);
 
   // Create admin membership for the default tenant
-  await prisma.membership.upsert({
+  await db.membership.upsert({
     where: {
       tenantId_userId: {
         tenantId: defaultTenant.id,
@@ -71,7 +69,7 @@ async function main() {
   ];
 
   for (const reason of contactReasons) {
-    await prisma.contactReason.upsert({
+    await db.contactReason.upsert({
       where: { key: reason.key },
       update: {},
       create: {
@@ -98,5 +96,5 @@ main()
     process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect();
+    await db.$disconnect();
   });

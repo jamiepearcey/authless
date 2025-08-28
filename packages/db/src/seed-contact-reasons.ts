@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { db } from "./client";
 
 const contactReasons = [
   {
@@ -44,7 +42,7 @@ async function main() {
   console.log("🌱 Seeding contact reasons...");
 
   for (const reason of contactReasons) {
-    const existing = await prisma.contactReason.findUnique({
+    const existing = await db.contactReason.findUnique({
       where: { key: reason.key },
     });
 
@@ -53,7 +51,7 @@ async function main() {
       continue;
     }
 
-    const created = await prisma.contactReason.create({
+    const created = await db.contactReason.create({
       data: reason,
     });
 
@@ -69,5 +67,5 @@ main()
     process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect();
+    await db.$disconnect();
   });

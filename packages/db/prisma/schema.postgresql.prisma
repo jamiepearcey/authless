@@ -65,6 +65,8 @@ model User {
   passkeys               Passkey[]
   authenticatorCodes     AuthenticatorCode[]
   sessions               Session[]
+  notifications          Notification[]
+  notificationRecipients NotificationRecipient[]
 
   @@index([email])
   @@index([platformRole])
@@ -94,5 +96,83 @@ model AuthenticatorCode {
 
   @@index([userId])
   @@index([isActive])
+  @@index([createdAt])
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  type        String   @default("info") // info, success, warning, error
+  priority    String   @default("normal") // low, normal, high, urgent
+  status      String   @default("unread") // unread, read, archived
+  
+  // Target scope - one of these must be set
+  tenantId    String?
+  role        String?  // Role within a tenant
+  userId      String?  // Specific user
+  
+  // Metadata
+  metadata    String?  // JSON string for additional data
+  expiresAt   DateTime?
+  readAt      DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  tenant      Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Notification recipients (for tracking who has seen/read the notification)
+  recipients  NotificationRecipient[]
+
+  @@index([tenantId])
+  @@index([role])
+  @@index([userId])
+  @@index([type])
+  @@index([priority])
+  @@index([status])
+  @@index([expiresAt])
+  @@index([createdAt])
+}
+
+model NotificationRecipient {
+  id             String       @id @default(cuid())
+  notificationId String
+  userId         String
+  status         String       @default("unread") // unread, read, archived
+  readAt         DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([notificationId, userId])
+  @@index([notificationId])
+  @@index([userId])
+  @@index([status])
+  @@index([readAt])
+  @@index([createdAt])
+}
+
+model WebhookEndpoint {
+  id          String   @id @default(cuid())
+  tenantId    String?
+  name        String
+  url         String
+  secret      String?  // For webhook signature verification
+  events      String   // JSON array of event types to send
+  isActive    Boolean  @default(true)
+  lastTriggeredAt DateTime?
+  failureCount Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  tenant      Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  @@index([tenantId])
+  @@index([isActive])
+  @@index([lastTriggeredAt])
   @@index([createdAt])
 }

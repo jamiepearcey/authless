@@ -1,3 +1,9 @@
-export * from "@prisma/client";
-export { db } from "./client";;
-export type { PrismaClient } from "@prisma/client";
+// Export the Prisma client instance
+export { db } from "./client";
+
+// Export the generated Prisma client and types
+export { PrismaClient } from "./generated/client";
+export type { Prisma } from "./generated/client";
+
+// Export all model types from the generated client
+export * from "./generated/client";

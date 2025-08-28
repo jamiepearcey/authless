@@ -27,13 +27,18 @@
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "@shared/base": "workspace:*",
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^17.2.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/dotenv": "^8.2.3",
     "prisma": "^5.22.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.5",
     "vitest": "^1.6.1"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }

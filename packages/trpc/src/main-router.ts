@@ -6,6 +6,7 @@ import { invitationRouter } from "./routers/invitation";
 import { twoFactorRouter } from "./routers/twoFactor";
 import { contactRouter } from "./routers/contact";
 import { passkeyRouter } from "./routers/passkey";
+import { notificationRouter } from "./routers/notification";
 
 // Main router that aggregates all feature routers
 export const appRouter = router({
@@ -23,6 +24,7 @@ export const appRouter = router({
   getCurrentUser: userRouter.getCurrentUser,
   updateUser: userRouter.updateUser,
   deleteUser: userRouter.deleteUser,
+  getAllUsers: userRouter.getAllUsers,
   
   // Tenant management
   createTenant: tenantRouter.createTenant,
@@ -33,6 +35,7 @@ export const appRouter = router({
   getTenants: tenantRouter.getTenants,
   getTenantMemberships: tenantRouter.getTenantMemberships,
   getUserTenants: tenantRouter.getUserTenants,
+  getTenantRoles: tenantRouter.getTenantRoles,
   
   // User invitations and tenant user management
   inviteUser: invitationRouter.inviteUser,
@@ -68,6 +71,21 @@ export const appRouter = router({
   revokePasskey: passkeyRouter.revokePasskey,
   getAccountsWithPasskeys: passkeyRouter.getAccountsWithPasskeys,
   getAvailableAccounts: passkeyRouter.getAvailableAccounts,
+  
+  // Notification system
+  createNotification: notificationRouter.createNotification,
+  getUserNotifications: notificationRouter.getUserNotifications,
+  getUnreadCount: notificationRouter.getUnreadCount,
+  markAsRead: notificationRouter.markAsRead,
+  markAllAsRead: notificationRouter.markAllAsRead,
+  archiveNotification: notificationRouter.archiveNotification,
+  getAllNotifications: notificationRouter.getAllNotifications,
+  updateNotification: notificationRouter.updateNotification,
+  deleteNotification: notificationRouter.deleteNotification,
+  createWebhookEndpoint: notificationRouter.createWebhookEndpoint,
+  getWebhookEndpoints: notificationRouter.getWebhookEndpoints,
+  updateWebhookEndpoint: notificationRouter.updateWebhookEndpoint,
+  deleteWebhookEndpoint: notificationRouter.deleteWebhookEndpoint,
 });
 
 // Export type for client usage

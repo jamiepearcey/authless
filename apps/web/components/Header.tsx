@@ -2,12 +2,51 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
-import { Button } from "@ui/base";
+import { Button, NotificationBell } from "@ui/base";
 import { Settings, User, LogOut, Shield, Building2 } from "lucide-react";
 import TenantSwitcher from "./TenantSwitcher";
 import { navigationLinks } from "./links";
+import { trpc } from "@/lib/trpc";
+
 export default function Header() {
   const { data: session, status } = useSession();
+  
+  // Get notification data
+  const { data: unreadCount } = trpc.getUnreadCount.useQuery();
+  const { data: notificationsData } = trpc.getUserNotifications.useQuery({ limit: 5 });
+  
+  // Mutations for notification actions
+  const markAsReadMutation = trpc.markAsRead.useMutation();
+  const markAllAsReadMutation = trpc.markAllAsRead.useMutation();
+  const archiveMutation = trpc.archiveNotification.useMutation();
+
+  const handleMarkAsRead = async (notificationId: string) => {
+    try {
+      await markAsReadMutation.mutateAsync({
+        notificationId,
+        userId: session?.user?.id || "",
+      });
+    } catch (error) {
+      console.error("Failed to mark notification as read:", error);
+    }
+  };
+
+  const handleMarkAllAsRead = async () => {
+    try {
+      await markAllAsReadMutation.mutateAsync();
+    } catch (error) {
+      console.error("Failed to mark all notifications as read:", error);
+    }
+  };
+
+  const handleArchive = async (notificationId: string) => {
+    try {
+      await archiveMutation.mutateAsync({ notificationId });
+    } catch (error) {
+      console.error("Failed to archive notification:", error);
+    }
+  };
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,6 +88,16 @@ export default function Header() {
                 {/* Tenant Switcher */}
                 <TenantSwitcher />
                 
+                {/* Notification Bell */}
+                <NotificationBell
+                  unreadCount={unreadCount || 0}
+                  notifications={notificationsData?.items || []}
+                  onMarkAsRead={handleMarkAsRead}
+                  onMarkAllAsRead={handleMarkAllAsRead}
+                  onArchive={handleArchive}
+                  isLoading={false}
+                />
+                
                 {/* User Menu */}
                 <div className="relative group">
                   <button className="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 transition-colors">
@@ -70,6 +119,13 @@ export default function Header() {
 
                   {/* Dropdown Menu */}
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <Link
+                      href="/notifications"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <User className="h-4 w-4 mr-2" />
+                      Notifications
+                    </Link>
                     <Link
                       href="/settings/profile"
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -105,6 +161,13 @@ export default function Header() {
                         >
                           <Building2 className="h-4 w-4 mr-2" />
                           Create Tenant
+                        </Link>
+                        <Link
+                          href="/admin/notifications"
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <Shield className="h-4 w-4 mr-2" />
+                          Manage Notifications
                         </Link>
                       </>
                     )}

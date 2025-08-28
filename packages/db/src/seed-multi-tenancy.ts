@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { db } from "@db/base"
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
 
 async function main() {
   console.log("🌱 Seeding multi-tenancy system...");
@@ -10,14 +9,14 @@ async function main() {
   console.log("Creating platform admin...");
   const platformAdminEmail = "admin@example.com";
   
-  let platformAdmin = await prisma.user.findUnique({
+  let platformAdmin = await db.user.findUnique({
     where: { email: platformAdminEmail },
   });
 
   if (!platformAdmin) {
     const hashedPassword = await bcrypt.hash("admin123", 10);
     
-    platformAdmin = await prisma.user.create({
+    platformAdmin = await db.user.create({
       data: {
         email: platformAdminEmail,
         name: "Platform Admin",
@@ -30,7 +29,7 @@ async function main() {
     console.log("✅ Created platform admin:", platformAdmin.email);
   } else {
     // Update existing user to be platform admin
-    await prisma.user.update({
+    await db.user.update({
       where: { id: platformAdmin.id },
       data: { platformRole: "admin" },
     });
@@ -65,7 +64,7 @@ async function main() {
   for (const tenantData of sampleTenants) {
     console.log(`Creating tenant: ${tenantData.name}...`);
     
-    const existingTenant = await prisma.tenant.findUnique({
+    const existingTenant = await db.tenant.findUnique({
       where: { slug: tenantData.slug },
     });
 
@@ -74,14 +73,14 @@ async function main() {
       continue;
     }
 
-    const tenant = await prisma.tenant.create({
+    const tenant = await db.tenant.create({
       data: tenantData,
     });
 
     console.log(`✅ Created tenant: ${tenant.name} (${tenant.slug})`);
 
     // Create tenant admin membership for platform admin
-    await prisma.membership.create({
+    await db.membership.create({
       data: {
         tenantId: tenant.id,
         userId: platformAdmin.id,
@@ -108,14 +107,14 @@ async function main() {
 
     for (const memberData of sampleMembers) {
       // Create user if doesn't exist
-      let user = await prisma.user.findUnique({
+      let user = await db.user.findUnique({
         where: { email: memberData.email },
       });
 
       if (!user) {
         const hashedPassword = await bcrypt.hash("password123", 10);
         
-        user = await prisma.user.create({
+        user = await db.user.create({
           data: {
             email: memberData.email,
             name: memberData.name,
@@ -128,7 +127,7 @@ async function main() {
       }
 
       // Create membership
-      await prisma.membership.create({
+      await db.membership.create({
         data: {
           tenantId: tenant.id,
           userId: user.id,
@@ -161,14 +160,14 @@ async function main() {
   ];
 
   for (const invitationData of sampleInvitations) {
-    const tenant = await prisma.tenant.findUnique({
+    const tenant = await db.tenant.findUnique({
       where: { slug: invitationData.tenantSlug },
     });
 
     if (!tenant) continue;
 
     // Check if invitation already exists
-    const existingInvitation = await prisma.invitation.findFirst({
+    const existingInvitation = await db.invitation.findFirst({
       where: {
         tenantId: tenant.id,
         email: invitationData.email,
@@ -185,7 +184,7 @@ async function main() {
     const token = require("crypto").randomBytes(32).toString("hex");
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
-    await prisma.invitation.create({
+    await db.invitation.create({
       data: {
         tenantId: tenant.id,
         email: invitationData.email,
@@ -224,5 +223,5 @@ main()
     process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect();
+    await db.$disconnect();
   });

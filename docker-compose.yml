@@ -2,8 +2,9 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:15-alpine
-    container_name: beat-the-fine-postgres
+    image: postgres:15
+    container_name: beatthefine-postgres
+    restart: always
     environment:
       POSTGRES_DB: beatthefine
       POSTGRES_USER: postgres

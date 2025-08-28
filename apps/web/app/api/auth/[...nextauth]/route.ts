@@ -7,7 +7,7 @@ import { db } from "@db/base";
 import { verifyPassword } from "@shared/base";
 
 export const authOptions = {
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db as any),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,

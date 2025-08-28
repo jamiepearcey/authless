@@ -279,6 +279,22 @@ export const tenantRouter = router({
     return tenants;
   }),
 
+  // Get unique roles for a specific tenant (platform admin only)
+  getTenantRoles: platformAdminProcedure
+    .input(z.object({ tenantId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const roles = await ctx.db.membership.findMany({
+        where: {
+          tenantId: input.tenantId,
+          status: "active",
+        },
+        select: { role: true },
+        distinct: ["role"],
+      });
+      
+      return roles.map(membership => membership.role);
+    }),
+
   // Get tenants with pagination and filtering (platform admin only)
   getTenants: platformAdminProcedure
     .input(z.object({

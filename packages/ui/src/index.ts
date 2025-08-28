@@ -34,3 +34,5 @@ export { PasswordSettingsCard } from "./components/password-settings-card";
 export { toast } from "./components/sonner";
 export { ConfirmDeleteAccountDialog } from "./components/confirm-delete-accont";
 export { ConfirmRemoveDialog } from "./components/confirm-remove-dialog";
+export { NotificationBell } from "./components/notification-bell";
+export { NotificationCard } from "./components/notification-card";
