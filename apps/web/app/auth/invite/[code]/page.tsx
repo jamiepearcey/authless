@@ -37,7 +37,7 @@ export default function InvitePage() {
   const acceptInvitation = trpc.acceptInvitation.useMutation({
     onSuccess: () => {
       toast.success("Account created successfully! You can now sign in.");
-      router.push("/signin");
+      router.push("/auth/signin");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -129,7 +129,7 @@ export default function InvitePage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center">
-            <Button onClick={() => router.push("/signin")} className="w-full">
+            <Button onClick={() => router.push("/auth/signin")} className="w-full">
               Go to Sign In
             </Button>
           </CardContent>

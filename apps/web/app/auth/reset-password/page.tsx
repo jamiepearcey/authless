@@ -50,7 +50,7 @@ export default function ResetPasswordPage() {
       if (response.ok) {
         setSuccess(data.message);
         setTimeout(() => {
-          router.push("/signin");
+          router.push("/auth/signin");
         }, 3000);
       } else {
         setError(data.error || "Failed to reset password");
@@ -77,7 +77,7 @@ export default function ResetPasswordPage() {
               "reset-password.page.ResetPasswordPage.this_password_reset_link_is_invalid_or_has_expired__2epf0z",
             )}
           </p>
-          <Link href="/forgot-password">
+          <Link href="/auth/forgot-password">
             <Button>
               {t(
                 "Request New Reset Link",
@@ -172,7 +172,7 @@ export default function ResetPasswordPage() {
               "forgot-password.page.ForgotPasswordPage.remember_your_password__22wf6z",
             )}{" "}
             <Link
-              href="/signin"
+              href="/auth/signin"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               {t(

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { protectedProcedure, router, platformAdminProcedure } from "../base";
+import { protectedProcedure, router, platformAdminProcedure } from "../middleware";
 import { centrifugoService } from "../centrifugo";
 import { emailNotificationService } from "../email-service";
 
@@ -618,7 +618,7 @@ export const notificationRouter = router({
         
         // Convert HTTP URL to WebSocket URL for client-side connection
         const httpUrl = process.env.CENTRIFUGO_URL || "http://localhost:8000";
-        const wsDomain = httpUrl.replace('http://', 'ws://').replace('https://', 'wss://')
+        const wsDomain = httpUrl.replace('http://', 'ws://').replace('https://', 'wss://');
         const wsUrl = `${wsDomain}/connection/websocket`;
         
         return {

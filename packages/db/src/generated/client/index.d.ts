@@ -98,6 +98,31 @@ export type NotificationRecipient = $Result.DefaultSelection<Prisma.$Notificatio
  * 
  */
 export type WebhookEndpoint = $Result.DefaultSelection<Prisma.$WebhookEndpointPayload>
+/**
+ * Model FeatureDefinition
+ * 
+ */
+export type FeatureDefinition = $Result.DefaultSelection<Prisma.$FeatureDefinitionPayload>
+/**
+ * Model GlobalFeatureRule
+ * 
+ */
+export type GlobalFeatureRule = $Result.DefaultSelection<Prisma.$GlobalFeatureRulePayload>
+/**
+ * Model TenantFeatureRule
+ * 
+ */
+export type TenantFeatureRule = $Result.DefaultSelection<Prisma.$TenantFeatureRulePayload>
+/**
+ * Model FeatureAuditEntry
+ * 
+ */
+export type FeatureAuditEntry = $Result.DefaultSelection<Prisma.$FeatureAuditEntryPayload>
+/**
+ * Model SetupState
+ * 
+ */
+export type SetupState = $Result.DefaultSelection<Prisma.$SetupStatePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -391,6 +416,56 @@ export class PrismaClient<
     * ```
     */
   get webhookEndpoint(): Prisma.WebhookEndpointDelegate<ExtArgs>;
+
+  /**
+   * `prisma.featureDefinition`: Exposes CRUD operations for the **FeatureDefinition** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FeatureDefinitions
+    * const featureDefinitions = await prisma.featureDefinition.findMany()
+    * ```
+    */
+  get featureDefinition(): Prisma.FeatureDefinitionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.globalFeatureRule`: Exposes CRUD operations for the **GlobalFeatureRule** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GlobalFeatureRules
+    * const globalFeatureRules = await prisma.globalFeatureRule.findMany()
+    * ```
+    */
+  get globalFeatureRule(): Prisma.GlobalFeatureRuleDelegate<ExtArgs>;
+
+  /**
+   * `prisma.tenantFeatureRule`: Exposes CRUD operations for the **TenantFeatureRule** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TenantFeatureRules
+    * const tenantFeatureRules = await prisma.tenantFeatureRule.findMany()
+    * ```
+    */
+  get tenantFeatureRule(): Prisma.TenantFeatureRuleDelegate<ExtArgs>;
+
+  /**
+   * `prisma.featureAuditEntry`: Exposes CRUD operations for the **FeatureAuditEntry** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FeatureAuditEntries
+    * const featureAuditEntries = await prisma.featureAuditEntry.findMany()
+    * ```
+    */
+  get featureAuditEntry(): Prisma.FeatureAuditEntryDelegate<ExtArgs>;
+
+  /**
+   * `prisma.setupState`: Exposes CRUD operations for the **SetupState** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SetupStates
+    * const setupStates = await prisma.setupState.findMany()
+    * ```
+    */
+  get setupState(): Prisma.SetupStateDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -848,7 +923,12 @@ export namespace Prisma {
     AuthenticatorCode: 'AuthenticatorCode',
     Notification: 'Notification',
     NotificationRecipient: 'NotificationRecipient',
-    WebhookEndpoint: 'WebhookEndpoint'
+    WebhookEndpoint: 'WebhookEndpoint',
+    FeatureDefinition: 'FeatureDefinition',
+    GlobalFeatureRule: 'GlobalFeatureRule',
+    TenantFeatureRule: 'TenantFeatureRule',
+    FeatureAuditEntry: 'FeatureAuditEntry',
+    SetupState: 'SetupState'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -864,7 +944,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint"
+      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2058,6 +2138,356 @@ export namespace Prisma {
           }
         }
       }
+      FeatureDefinition: {
+        payload: Prisma.$FeatureDefinitionPayload<ExtArgs>
+        fields: Prisma.FeatureDefinitionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FeatureDefinitionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FeatureDefinitionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload>
+          }
+          findFirst: {
+            args: Prisma.FeatureDefinitionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FeatureDefinitionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload>
+          }
+          findMany: {
+            args: Prisma.FeatureDefinitionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload>[]
+          }
+          create: {
+            args: Prisma.FeatureDefinitionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload>
+          }
+          createMany: {
+            args: Prisma.FeatureDefinitionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FeatureDefinitionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload>[]
+          }
+          delete: {
+            args: Prisma.FeatureDefinitionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload>
+          }
+          update: {
+            args: Prisma.FeatureDefinitionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload>
+          }
+          deleteMany: {
+            args: Prisma.FeatureDefinitionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FeatureDefinitionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FeatureDefinitionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureDefinitionPayload>
+          }
+          aggregate: {
+            args: Prisma.FeatureDefinitionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFeatureDefinition>
+          }
+          groupBy: {
+            args: Prisma.FeatureDefinitionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FeatureDefinitionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FeatureDefinitionCountArgs<ExtArgs>
+            result: $Utils.Optional<FeatureDefinitionCountAggregateOutputType> | number
+          }
+        }
+      }
+      GlobalFeatureRule: {
+        payload: Prisma.$GlobalFeatureRulePayload<ExtArgs>
+        fields: Prisma.GlobalFeatureRuleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GlobalFeatureRuleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GlobalFeatureRuleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload>
+          }
+          findFirst: {
+            args: Prisma.GlobalFeatureRuleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GlobalFeatureRuleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload>
+          }
+          findMany: {
+            args: Prisma.GlobalFeatureRuleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload>[]
+          }
+          create: {
+            args: Prisma.GlobalFeatureRuleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload>
+          }
+          createMany: {
+            args: Prisma.GlobalFeatureRuleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GlobalFeatureRuleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload>[]
+          }
+          delete: {
+            args: Prisma.GlobalFeatureRuleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload>
+          }
+          update: {
+            args: Prisma.GlobalFeatureRuleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload>
+          }
+          deleteMany: {
+            args: Prisma.GlobalFeatureRuleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GlobalFeatureRuleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.GlobalFeatureRuleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GlobalFeatureRulePayload>
+          }
+          aggregate: {
+            args: Prisma.GlobalFeatureRuleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGlobalFeatureRule>
+          }
+          groupBy: {
+            args: Prisma.GlobalFeatureRuleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GlobalFeatureRuleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GlobalFeatureRuleCountArgs<ExtArgs>
+            result: $Utils.Optional<GlobalFeatureRuleCountAggregateOutputType> | number
+          }
+        }
+      }
+      TenantFeatureRule: {
+        payload: Prisma.$TenantFeatureRulePayload<ExtArgs>
+        fields: Prisma.TenantFeatureRuleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TenantFeatureRuleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TenantFeatureRuleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload>
+          }
+          findFirst: {
+            args: Prisma.TenantFeatureRuleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TenantFeatureRuleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload>
+          }
+          findMany: {
+            args: Prisma.TenantFeatureRuleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload>[]
+          }
+          create: {
+            args: Prisma.TenantFeatureRuleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload>
+          }
+          createMany: {
+            args: Prisma.TenantFeatureRuleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TenantFeatureRuleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload>[]
+          }
+          delete: {
+            args: Prisma.TenantFeatureRuleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload>
+          }
+          update: {
+            args: Prisma.TenantFeatureRuleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload>
+          }
+          deleteMany: {
+            args: Prisma.TenantFeatureRuleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TenantFeatureRuleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TenantFeatureRuleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantFeatureRulePayload>
+          }
+          aggregate: {
+            args: Prisma.TenantFeatureRuleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTenantFeatureRule>
+          }
+          groupBy: {
+            args: Prisma.TenantFeatureRuleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TenantFeatureRuleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TenantFeatureRuleCountArgs<ExtArgs>
+            result: $Utils.Optional<TenantFeatureRuleCountAggregateOutputType> | number
+          }
+        }
+      }
+      FeatureAuditEntry: {
+        payload: Prisma.$FeatureAuditEntryPayload<ExtArgs>
+        fields: Prisma.FeatureAuditEntryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FeatureAuditEntryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FeatureAuditEntryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload>
+          }
+          findFirst: {
+            args: Prisma.FeatureAuditEntryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FeatureAuditEntryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload>
+          }
+          findMany: {
+            args: Prisma.FeatureAuditEntryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload>[]
+          }
+          create: {
+            args: Prisma.FeatureAuditEntryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload>
+          }
+          createMany: {
+            args: Prisma.FeatureAuditEntryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FeatureAuditEntryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload>[]
+          }
+          delete: {
+            args: Prisma.FeatureAuditEntryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload>
+          }
+          update: {
+            args: Prisma.FeatureAuditEntryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload>
+          }
+          deleteMany: {
+            args: Prisma.FeatureAuditEntryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FeatureAuditEntryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FeatureAuditEntryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeatureAuditEntryPayload>
+          }
+          aggregate: {
+            args: Prisma.FeatureAuditEntryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFeatureAuditEntry>
+          }
+          groupBy: {
+            args: Prisma.FeatureAuditEntryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FeatureAuditEntryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FeatureAuditEntryCountArgs<ExtArgs>
+            result: $Utils.Optional<FeatureAuditEntryCountAggregateOutputType> | number
+          }
+        }
+      }
+      SetupState: {
+        payload: Prisma.$SetupStatePayload<ExtArgs>
+        fields: Prisma.SetupStateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SetupStateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SetupStateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload>
+          }
+          findFirst: {
+            args: Prisma.SetupStateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SetupStateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload>
+          }
+          findMany: {
+            args: Prisma.SetupStateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload>[]
+          }
+          create: {
+            args: Prisma.SetupStateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload>
+          }
+          createMany: {
+            args: Prisma.SetupStateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SetupStateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload>[]
+          }
+          delete: {
+            args: Prisma.SetupStateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload>
+          }
+          update: {
+            args: Prisma.SetupStateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload>
+          }
+          deleteMany: {
+            args: Prisma.SetupStateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SetupStateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SetupStateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetupStatePayload>
+          }
+          aggregate: {
+            args: Prisma.SetupStateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSetupState>
+          }
+          groupBy: {
+            args: Prisma.SetupStateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SetupStateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SetupStateCountArgs<ExtArgs>
+            result: $Utils.Optional<SetupStateCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2357,6 +2787,8 @@ export namespace Prisma {
     notifications: number
     sessions: number
     webhookEndpoints: number
+    featureRules: number
+    featureAuditEntries: number
   }
 
   export type TenantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2368,6 +2800,8 @@ export namespace Prisma {
     notifications?: boolean | TenantCountOutputTypeCountNotificationsArgs
     sessions?: boolean | TenantCountOutputTypeCountSessionsArgs
     webhookEndpoints?: boolean | TenantCountOutputTypeCountWebhookEndpointsArgs
+    featureRules?: boolean | TenantCountOutputTypeCountFeatureRulesArgs
+    featureAuditEntries?: boolean | TenantCountOutputTypeCountFeatureAuditEntriesArgs
   }
 
   // Custom InputTypes
@@ -2435,6 +2869,20 @@ export namespace Prisma {
    */
   export type TenantCountOutputTypeCountWebhookEndpointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WebhookEndpointWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountFeatureRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TenantFeatureRuleWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountFeatureAuditEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FeatureAuditEntryWhereInput
   }
 
 
@@ -2537,6 +2985,55 @@ export namespace Prisma {
    */
   export type NotificationCountOutputTypeCountRecipientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NotificationRecipientWhereInput
+  }
+
+
+  /**
+   * Count Type FeatureDefinitionCountOutputType
+   */
+
+  export type FeatureDefinitionCountOutputType = {
+    globalRules: number
+    tenantRules: number
+    auditEntries: number
+  }
+
+  export type FeatureDefinitionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    globalRules?: boolean | FeatureDefinitionCountOutputTypeCountGlobalRulesArgs
+    tenantRules?: boolean | FeatureDefinitionCountOutputTypeCountTenantRulesArgs
+    auditEntries?: boolean | FeatureDefinitionCountOutputTypeCountAuditEntriesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FeatureDefinitionCountOutputType without action
+   */
+  export type FeatureDefinitionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinitionCountOutputType
+     */
+    select?: FeatureDefinitionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FeatureDefinitionCountOutputType without action
+   */
+  export type FeatureDefinitionCountOutputTypeCountGlobalRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GlobalFeatureRuleWhereInput
+  }
+
+  /**
+   * FeatureDefinitionCountOutputType without action
+   */
+  export type FeatureDefinitionCountOutputTypeCountTenantRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TenantFeatureRuleWhereInput
+  }
+
+  /**
+   * FeatureDefinitionCountOutputType without action
+   */
+  export type FeatureDefinitionCountOutputTypeCountAuditEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FeatureAuditEntryWhereInput
   }
 
 
@@ -7255,6 +7752,8 @@ export namespace Prisma {
     notifications?: boolean | Tenant$notificationsArgs<ExtArgs>
     sessions?: boolean | Tenant$sessionsArgs<ExtArgs>
     webhookEndpoints?: boolean | Tenant$webhookEndpointsArgs<ExtArgs>
+    featureRules?: boolean | Tenant$featureRulesArgs<ExtArgs>
+    featureAuditEntries?: boolean | Tenant$featureAuditEntriesArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tenant"]>
 
@@ -7337,6 +7836,8 @@ export namespace Prisma {
     notifications?: boolean | Tenant$notificationsArgs<ExtArgs>
     sessions?: boolean | Tenant$sessionsArgs<ExtArgs>
     webhookEndpoints?: boolean | Tenant$webhookEndpointsArgs<ExtArgs>
+    featureRules?: boolean | Tenant$featureRulesArgs<ExtArgs>
+    featureAuditEntries?: boolean | Tenant$featureAuditEntriesArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TenantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -7352,6 +7853,8 @@ export namespace Prisma {
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       webhookEndpoints: Prisma.$WebhookEndpointPayload<ExtArgs>[]
+      featureRules: Prisma.$TenantFeatureRulePayload<ExtArgs>[]
+      featureAuditEntries: Prisma.$FeatureAuditEntryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7758,6 +8261,8 @@ export namespace Prisma {
     notifications<T extends Tenant$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany"> | Null>
     sessions<T extends Tenant$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany"> | Null>
     webhookEndpoints<T extends Tenant$webhookEndpointsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$webhookEndpointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WebhookEndpointPayload<ExtArgs>, T, "findMany"> | Null>
+    featureRules<T extends Tenant$featureRulesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$featureRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "findMany"> | Null>
+    featureAuditEntries<T extends Tenant$featureAuditEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$featureAuditEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8290,6 +8795,46 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: WebhookEndpointScalarFieldEnum | WebhookEndpointScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.featureRules
+   */
+  export type Tenant$featureRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    where?: TenantFeatureRuleWhereInput
+    orderBy?: TenantFeatureRuleOrderByWithRelationInput | TenantFeatureRuleOrderByWithRelationInput[]
+    cursor?: TenantFeatureRuleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TenantFeatureRuleScalarFieldEnum | TenantFeatureRuleScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.featureAuditEntries
+   */
+  export type Tenant$featureAuditEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    where?: FeatureAuditEntryWhereInput
+    orderBy?: FeatureAuditEntryOrderByWithRelationInput | FeatureAuditEntryOrderByWithRelationInput[]
+    cursor?: FeatureAuditEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FeatureAuditEntryScalarFieldEnum | FeatureAuditEntryScalarFieldEnum[]
   }
 
   /**
@@ -20725,6 +21270,4874 @@ export namespace Prisma {
 
 
   /**
+   * Model FeatureDefinition
+   */
+
+  export type AggregateFeatureDefinition = {
+    _count: FeatureDefinitionCountAggregateOutputType | null
+    _min: FeatureDefinitionMinAggregateOutputType | null
+    _max: FeatureDefinitionMaxAggregateOutputType | null
+  }
+
+  export type FeatureDefinitionMinAggregateOutputType = {
+    id: string | null
+    key: string | null
+    name: string | null
+    description: string | null
+    tier: string | null
+    defaultEnabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdBy: string | null
+  }
+
+  export type FeatureDefinitionMaxAggregateOutputType = {
+    id: string | null
+    key: string | null
+    name: string | null
+    description: string | null
+    tier: string | null
+    defaultEnabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdBy: string | null
+  }
+
+  export type FeatureDefinitionCountAggregateOutputType = {
+    id: number
+    key: number
+    name: number
+    description: number
+    tier: number
+    defaultEnabled: number
+    createdAt: number
+    updatedAt: number
+    createdBy: number
+    _all: number
+  }
+
+
+  export type FeatureDefinitionMinAggregateInputType = {
+    id?: true
+    key?: true
+    name?: true
+    description?: true
+    tier?: true
+    defaultEnabled?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+  }
+
+  export type FeatureDefinitionMaxAggregateInputType = {
+    id?: true
+    key?: true
+    name?: true
+    description?: true
+    tier?: true
+    defaultEnabled?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+  }
+
+  export type FeatureDefinitionCountAggregateInputType = {
+    id?: true
+    key?: true
+    name?: true
+    description?: true
+    tier?: true
+    defaultEnabled?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+    _all?: true
+  }
+
+  export type FeatureDefinitionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FeatureDefinition to aggregate.
+     */
+    where?: FeatureDefinitionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FeatureDefinitions to fetch.
+     */
+    orderBy?: FeatureDefinitionOrderByWithRelationInput | FeatureDefinitionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FeatureDefinitionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FeatureDefinitions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FeatureDefinitions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FeatureDefinitions
+    **/
+    _count?: true | FeatureDefinitionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FeatureDefinitionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FeatureDefinitionMaxAggregateInputType
+  }
+
+  export type GetFeatureDefinitionAggregateType<T extends FeatureDefinitionAggregateArgs> = {
+        [P in keyof T & keyof AggregateFeatureDefinition]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFeatureDefinition[P]>
+      : GetScalarType<T[P], AggregateFeatureDefinition[P]>
+  }
+
+
+
+
+  export type FeatureDefinitionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FeatureDefinitionWhereInput
+    orderBy?: FeatureDefinitionOrderByWithAggregationInput | FeatureDefinitionOrderByWithAggregationInput[]
+    by: FeatureDefinitionScalarFieldEnum[] | FeatureDefinitionScalarFieldEnum
+    having?: FeatureDefinitionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FeatureDefinitionCountAggregateInputType | true
+    _min?: FeatureDefinitionMinAggregateInputType
+    _max?: FeatureDefinitionMaxAggregateInputType
+  }
+
+  export type FeatureDefinitionGroupByOutputType = {
+    id: string
+    key: string
+    name: string
+    description: string | null
+    tier: string
+    defaultEnabled: boolean
+    createdAt: Date
+    updatedAt: Date
+    createdBy: string
+    _count: FeatureDefinitionCountAggregateOutputType | null
+    _min: FeatureDefinitionMinAggregateOutputType | null
+    _max: FeatureDefinitionMaxAggregateOutputType | null
+  }
+
+  type GetFeatureDefinitionGroupByPayload<T extends FeatureDefinitionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FeatureDefinitionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FeatureDefinitionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FeatureDefinitionGroupByOutputType[P]>
+            : GetScalarType<T[P], FeatureDefinitionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FeatureDefinitionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    description?: boolean
+    tier?: boolean
+    defaultEnabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+    globalRules?: boolean | FeatureDefinition$globalRulesArgs<ExtArgs>
+    tenantRules?: boolean | FeatureDefinition$tenantRulesArgs<ExtArgs>
+    auditEntries?: boolean | FeatureDefinition$auditEntriesArgs<ExtArgs>
+    _count?: boolean | FeatureDefinitionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["featureDefinition"]>
+
+  export type FeatureDefinitionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    description?: boolean
+    tier?: boolean
+    defaultEnabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+  }, ExtArgs["result"]["featureDefinition"]>
+
+  export type FeatureDefinitionSelectScalar = {
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    description?: boolean
+    tier?: boolean
+    defaultEnabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+  }
+
+  export type FeatureDefinitionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    globalRules?: boolean | FeatureDefinition$globalRulesArgs<ExtArgs>
+    tenantRules?: boolean | FeatureDefinition$tenantRulesArgs<ExtArgs>
+    auditEntries?: boolean | FeatureDefinition$auditEntriesArgs<ExtArgs>
+    _count?: boolean | FeatureDefinitionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type FeatureDefinitionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $FeatureDefinitionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FeatureDefinition"
+    objects: {
+      globalRules: Prisma.$GlobalFeatureRulePayload<ExtArgs>[]
+      tenantRules: Prisma.$TenantFeatureRulePayload<ExtArgs>[]
+      auditEntries: Prisma.$FeatureAuditEntryPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      key: string
+      name: string
+      description: string | null
+      tier: string
+      defaultEnabled: boolean
+      createdAt: Date
+      updatedAt: Date
+      createdBy: string
+    }, ExtArgs["result"]["featureDefinition"]>
+    composites: {}
+  }
+
+  type FeatureDefinitionGetPayload<S extends boolean | null | undefined | FeatureDefinitionDefaultArgs> = $Result.GetResult<Prisma.$FeatureDefinitionPayload, S>
+
+  type FeatureDefinitionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<FeatureDefinitionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: FeatureDefinitionCountAggregateInputType | true
+    }
+
+  export interface FeatureDefinitionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FeatureDefinition'], meta: { name: 'FeatureDefinition' } }
+    /**
+     * Find zero or one FeatureDefinition that matches the filter.
+     * @param {FeatureDefinitionFindUniqueArgs} args - Arguments to find a FeatureDefinition
+     * @example
+     * // Get one FeatureDefinition
+     * const featureDefinition = await prisma.featureDefinition.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FeatureDefinitionFindUniqueArgs>(args: SelectSubset<T, FeatureDefinitionFindUniqueArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one FeatureDefinition that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {FeatureDefinitionFindUniqueOrThrowArgs} args - Arguments to find a FeatureDefinition
+     * @example
+     * // Get one FeatureDefinition
+     * const featureDefinition = await prisma.featureDefinition.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FeatureDefinitionFindUniqueOrThrowArgs>(args: SelectSubset<T, FeatureDefinitionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first FeatureDefinition that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureDefinitionFindFirstArgs} args - Arguments to find a FeatureDefinition
+     * @example
+     * // Get one FeatureDefinition
+     * const featureDefinition = await prisma.featureDefinition.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FeatureDefinitionFindFirstArgs>(args?: SelectSubset<T, FeatureDefinitionFindFirstArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first FeatureDefinition that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureDefinitionFindFirstOrThrowArgs} args - Arguments to find a FeatureDefinition
+     * @example
+     * // Get one FeatureDefinition
+     * const featureDefinition = await prisma.featureDefinition.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FeatureDefinitionFindFirstOrThrowArgs>(args?: SelectSubset<T, FeatureDefinitionFindFirstOrThrowArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more FeatureDefinitions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureDefinitionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FeatureDefinitions
+     * const featureDefinitions = await prisma.featureDefinition.findMany()
+     * 
+     * // Get first 10 FeatureDefinitions
+     * const featureDefinitions = await prisma.featureDefinition.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const featureDefinitionWithIdOnly = await prisma.featureDefinition.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FeatureDefinitionFindManyArgs>(args?: SelectSubset<T, FeatureDefinitionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a FeatureDefinition.
+     * @param {FeatureDefinitionCreateArgs} args - Arguments to create a FeatureDefinition.
+     * @example
+     * // Create one FeatureDefinition
+     * const FeatureDefinition = await prisma.featureDefinition.create({
+     *   data: {
+     *     // ... data to create a FeatureDefinition
+     *   }
+     * })
+     * 
+     */
+    create<T extends FeatureDefinitionCreateArgs>(args: SelectSubset<T, FeatureDefinitionCreateArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many FeatureDefinitions.
+     * @param {FeatureDefinitionCreateManyArgs} args - Arguments to create many FeatureDefinitions.
+     * @example
+     * // Create many FeatureDefinitions
+     * const featureDefinition = await prisma.featureDefinition.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FeatureDefinitionCreateManyArgs>(args?: SelectSubset<T, FeatureDefinitionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FeatureDefinitions and returns the data saved in the database.
+     * @param {FeatureDefinitionCreateManyAndReturnArgs} args - Arguments to create many FeatureDefinitions.
+     * @example
+     * // Create many FeatureDefinitions
+     * const featureDefinition = await prisma.featureDefinition.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FeatureDefinitions and only return the `id`
+     * const featureDefinitionWithIdOnly = await prisma.featureDefinition.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FeatureDefinitionCreateManyAndReturnArgs>(args?: SelectSubset<T, FeatureDefinitionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a FeatureDefinition.
+     * @param {FeatureDefinitionDeleteArgs} args - Arguments to delete one FeatureDefinition.
+     * @example
+     * // Delete one FeatureDefinition
+     * const FeatureDefinition = await prisma.featureDefinition.delete({
+     *   where: {
+     *     // ... filter to delete one FeatureDefinition
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FeatureDefinitionDeleteArgs>(args: SelectSubset<T, FeatureDefinitionDeleteArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one FeatureDefinition.
+     * @param {FeatureDefinitionUpdateArgs} args - Arguments to update one FeatureDefinition.
+     * @example
+     * // Update one FeatureDefinition
+     * const featureDefinition = await prisma.featureDefinition.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FeatureDefinitionUpdateArgs>(args: SelectSubset<T, FeatureDefinitionUpdateArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more FeatureDefinitions.
+     * @param {FeatureDefinitionDeleteManyArgs} args - Arguments to filter FeatureDefinitions to delete.
+     * @example
+     * // Delete a few FeatureDefinitions
+     * const { count } = await prisma.featureDefinition.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FeatureDefinitionDeleteManyArgs>(args?: SelectSubset<T, FeatureDefinitionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FeatureDefinitions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureDefinitionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FeatureDefinitions
+     * const featureDefinition = await prisma.featureDefinition.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FeatureDefinitionUpdateManyArgs>(args: SelectSubset<T, FeatureDefinitionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FeatureDefinition.
+     * @param {FeatureDefinitionUpsertArgs} args - Arguments to update or create a FeatureDefinition.
+     * @example
+     * // Update or create a FeatureDefinition
+     * const featureDefinition = await prisma.featureDefinition.upsert({
+     *   create: {
+     *     // ... data to create a FeatureDefinition
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FeatureDefinition we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FeatureDefinitionUpsertArgs>(args: SelectSubset<T, FeatureDefinitionUpsertArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of FeatureDefinitions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureDefinitionCountArgs} args - Arguments to filter FeatureDefinitions to count.
+     * @example
+     * // Count the number of FeatureDefinitions
+     * const count = await prisma.featureDefinition.count({
+     *   where: {
+     *     // ... the filter for the FeatureDefinitions we want to count
+     *   }
+     * })
+    **/
+    count<T extends FeatureDefinitionCountArgs>(
+      args?: Subset<T, FeatureDefinitionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FeatureDefinitionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FeatureDefinition.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureDefinitionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FeatureDefinitionAggregateArgs>(args: Subset<T, FeatureDefinitionAggregateArgs>): Prisma.PrismaPromise<GetFeatureDefinitionAggregateType<T>>
+
+    /**
+     * Group by FeatureDefinition.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureDefinitionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FeatureDefinitionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FeatureDefinitionGroupByArgs['orderBy'] }
+        : { orderBy?: FeatureDefinitionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FeatureDefinitionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFeatureDefinitionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FeatureDefinition model
+   */
+  readonly fields: FeatureDefinitionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FeatureDefinition.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FeatureDefinitionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    globalRules<T extends FeatureDefinition$globalRulesArgs<ExtArgs> = {}>(args?: Subset<T, FeatureDefinition$globalRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "findMany"> | Null>
+    tenantRules<T extends FeatureDefinition$tenantRulesArgs<ExtArgs> = {}>(args?: Subset<T, FeatureDefinition$tenantRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "findMany"> | Null>
+    auditEntries<T extends FeatureDefinition$auditEntriesArgs<ExtArgs> = {}>(args?: Subset<T, FeatureDefinition$auditEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FeatureDefinition model
+   */ 
+  interface FeatureDefinitionFieldRefs {
+    readonly id: FieldRef<"FeatureDefinition", 'String'>
+    readonly key: FieldRef<"FeatureDefinition", 'String'>
+    readonly name: FieldRef<"FeatureDefinition", 'String'>
+    readonly description: FieldRef<"FeatureDefinition", 'String'>
+    readonly tier: FieldRef<"FeatureDefinition", 'String'>
+    readonly defaultEnabled: FieldRef<"FeatureDefinition", 'Boolean'>
+    readonly createdAt: FieldRef<"FeatureDefinition", 'DateTime'>
+    readonly updatedAt: FieldRef<"FeatureDefinition", 'DateTime'>
+    readonly createdBy: FieldRef<"FeatureDefinition", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FeatureDefinition findUnique
+   */
+  export type FeatureDefinitionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureDefinition to fetch.
+     */
+    where: FeatureDefinitionWhereUniqueInput
+  }
+
+  /**
+   * FeatureDefinition findUniqueOrThrow
+   */
+  export type FeatureDefinitionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureDefinition to fetch.
+     */
+    where: FeatureDefinitionWhereUniqueInput
+  }
+
+  /**
+   * FeatureDefinition findFirst
+   */
+  export type FeatureDefinitionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureDefinition to fetch.
+     */
+    where?: FeatureDefinitionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FeatureDefinitions to fetch.
+     */
+    orderBy?: FeatureDefinitionOrderByWithRelationInput | FeatureDefinitionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FeatureDefinitions.
+     */
+    cursor?: FeatureDefinitionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FeatureDefinitions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FeatureDefinitions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FeatureDefinitions.
+     */
+    distinct?: FeatureDefinitionScalarFieldEnum | FeatureDefinitionScalarFieldEnum[]
+  }
+
+  /**
+   * FeatureDefinition findFirstOrThrow
+   */
+  export type FeatureDefinitionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureDefinition to fetch.
+     */
+    where?: FeatureDefinitionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FeatureDefinitions to fetch.
+     */
+    orderBy?: FeatureDefinitionOrderByWithRelationInput | FeatureDefinitionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FeatureDefinitions.
+     */
+    cursor?: FeatureDefinitionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FeatureDefinitions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FeatureDefinitions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FeatureDefinitions.
+     */
+    distinct?: FeatureDefinitionScalarFieldEnum | FeatureDefinitionScalarFieldEnum[]
+  }
+
+  /**
+   * FeatureDefinition findMany
+   */
+  export type FeatureDefinitionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureDefinitions to fetch.
+     */
+    where?: FeatureDefinitionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FeatureDefinitions to fetch.
+     */
+    orderBy?: FeatureDefinitionOrderByWithRelationInput | FeatureDefinitionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FeatureDefinitions.
+     */
+    cursor?: FeatureDefinitionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FeatureDefinitions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FeatureDefinitions.
+     */
+    skip?: number
+    distinct?: FeatureDefinitionScalarFieldEnum | FeatureDefinitionScalarFieldEnum[]
+  }
+
+  /**
+   * FeatureDefinition create
+   */
+  export type FeatureDefinitionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FeatureDefinition.
+     */
+    data: XOR<FeatureDefinitionCreateInput, FeatureDefinitionUncheckedCreateInput>
+  }
+
+  /**
+   * FeatureDefinition createMany
+   */
+  export type FeatureDefinitionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FeatureDefinitions.
+     */
+    data: FeatureDefinitionCreateManyInput | FeatureDefinitionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FeatureDefinition createManyAndReturn
+   */
+  export type FeatureDefinitionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many FeatureDefinitions.
+     */
+    data: FeatureDefinitionCreateManyInput | FeatureDefinitionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FeatureDefinition update
+   */
+  export type FeatureDefinitionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FeatureDefinition.
+     */
+    data: XOR<FeatureDefinitionUpdateInput, FeatureDefinitionUncheckedUpdateInput>
+    /**
+     * Choose, which FeatureDefinition to update.
+     */
+    where: FeatureDefinitionWhereUniqueInput
+  }
+
+  /**
+   * FeatureDefinition updateMany
+   */
+  export type FeatureDefinitionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FeatureDefinitions.
+     */
+    data: XOR<FeatureDefinitionUpdateManyMutationInput, FeatureDefinitionUncheckedUpdateManyInput>
+    /**
+     * Filter which FeatureDefinitions to update
+     */
+    where?: FeatureDefinitionWhereInput
+  }
+
+  /**
+   * FeatureDefinition upsert
+   */
+  export type FeatureDefinitionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FeatureDefinition to update in case it exists.
+     */
+    where: FeatureDefinitionWhereUniqueInput
+    /**
+     * In case the FeatureDefinition found by the `where` argument doesn't exist, create a new FeatureDefinition with this data.
+     */
+    create: XOR<FeatureDefinitionCreateInput, FeatureDefinitionUncheckedCreateInput>
+    /**
+     * In case the FeatureDefinition was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FeatureDefinitionUpdateInput, FeatureDefinitionUncheckedUpdateInput>
+  }
+
+  /**
+   * FeatureDefinition delete
+   */
+  export type FeatureDefinitionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter which FeatureDefinition to delete.
+     */
+    where: FeatureDefinitionWhereUniqueInput
+  }
+
+  /**
+   * FeatureDefinition deleteMany
+   */
+  export type FeatureDefinitionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FeatureDefinitions to delete
+     */
+    where?: FeatureDefinitionWhereInput
+  }
+
+  /**
+   * FeatureDefinition.globalRules
+   */
+  export type FeatureDefinition$globalRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    where?: GlobalFeatureRuleWhereInput
+    orderBy?: GlobalFeatureRuleOrderByWithRelationInput | GlobalFeatureRuleOrderByWithRelationInput[]
+    cursor?: GlobalFeatureRuleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GlobalFeatureRuleScalarFieldEnum | GlobalFeatureRuleScalarFieldEnum[]
+  }
+
+  /**
+   * FeatureDefinition.tenantRules
+   */
+  export type FeatureDefinition$tenantRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    where?: TenantFeatureRuleWhereInput
+    orderBy?: TenantFeatureRuleOrderByWithRelationInput | TenantFeatureRuleOrderByWithRelationInput[]
+    cursor?: TenantFeatureRuleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TenantFeatureRuleScalarFieldEnum | TenantFeatureRuleScalarFieldEnum[]
+  }
+
+  /**
+   * FeatureDefinition.auditEntries
+   */
+  export type FeatureDefinition$auditEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    where?: FeatureAuditEntryWhereInput
+    orderBy?: FeatureAuditEntryOrderByWithRelationInput | FeatureAuditEntryOrderByWithRelationInput[]
+    cursor?: FeatureAuditEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FeatureAuditEntryScalarFieldEnum | FeatureAuditEntryScalarFieldEnum[]
+  }
+
+  /**
+   * FeatureDefinition without action
+   */
+  export type FeatureDefinitionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureDefinition
+     */
+    select?: FeatureDefinitionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureDefinitionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GlobalFeatureRule
+   */
+
+  export type AggregateGlobalFeatureRule = {
+    _count: GlobalFeatureRuleCountAggregateOutputType | null
+    _min: GlobalFeatureRuleMinAggregateOutputType | null
+    _max: GlobalFeatureRuleMaxAggregateOutputType | null
+  }
+
+  export type GlobalFeatureRuleMinAggregateOutputType = {
+    id: string | null
+    featureKey: string | null
+    enabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdBy: string | null
+  }
+
+  export type GlobalFeatureRuleMaxAggregateOutputType = {
+    id: string | null
+    featureKey: string | null
+    enabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdBy: string | null
+  }
+
+  export type GlobalFeatureRuleCountAggregateOutputType = {
+    id: number
+    featureKey: number
+    enabled: number
+    createdAt: number
+    updatedAt: number
+    createdBy: number
+    _all: number
+  }
+
+
+  export type GlobalFeatureRuleMinAggregateInputType = {
+    id?: true
+    featureKey?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+  }
+
+  export type GlobalFeatureRuleMaxAggregateInputType = {
+    id?: true
+    featureKey?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+  }
+
+  export type GlobalFeatureRuleCountAggregateInputType = {
+    id?: true
+    featureKey?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+    _all?: true
+  }
+
+  export type GlobalFeatureRuleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GlobalFeatureRule to aggregate.
+     */
+    where?: GlobalFeatureRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GlobalFeatureRules to fetch.
+     */
+    orderBy?: GlobalFeatureRuleOrderByWithRelationInput | GlobalFeatureRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GlobalFeatureRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GlobalFeatureRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GlobalFeatureRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GlobalFeatureRules
+    **/
+    _count?: true | GlobalFeatureRuleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GlobalFeatureRuleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GlobalFeatureRuleMaxAggregateInputType
+  }
+
+  export type GetGlobalFeatureRuleAggregateType<T extends GlobalFeatureRuleAggregateArgs> = {
+        [P in keyof T & keyof AggregateGlobalFeatureRule]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGlobalFeatureRule[P]>
+      : GetScalarType<T[P], AggregateGlobalFeatureRule[P]>
+  }
+
+
+
+
+  export type GlobalFeatureRuleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GlobalFeatureRuleWhereInput
+    orderBy?: GlobalFeatureRuleOrderByWithAggregationInput | GlobalFeatureRuleOrderByWithAggregationInput[]
+    by: GlobalFeatureRuleScalarFieldEnum[] | GlobalFeatureRuleScalarFieldEnum
+    having?: GlobalFeatureRuleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GlobalFeatureRuleCountAggregateInputType | true
+    _min?: GlobalFeatureRuleMinAggregateInputType
+    _max?: GlobalFeatureRuleMaxAggregateInputType
+  }
+
+  export type GlobalFeatureRuleGroupByOutputType = {
+    id: string
+    featureKey: string
+    enabled: boolean
+    createdAt: Date
+    updatedAt: Date
+    createdBy: string
+    _count: GlobalFeatureRuleCountAggregateOutputType | null
+    _min: GlobalFeatureRuleMinAggregateOutputType | null
+    _max: GlobalFeatureRuleMaxAggregateOutputType | null
+  }
+
+  type GetGlobalFeatureRuleGroupByPayload<T extends GlobalFeatureRuleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GlobalFeatureRuleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GlobalFeatureRuleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GlobalFeatureRuleGroupByOutputType[P]>
+            : GetScalarType<T[P], GlobalFeatureRuleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GlobalFeatureRuleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    featureKey?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["globalFeatureRule"]>
+
+  export type GlobalFeatureRuleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    featureKey?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["globalFeatureRule"]>
+
+  export type GlobalFeatureRuleSelectScalar = {
+    id?: boolean
+    featureKey?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+  }
+
+  export type GlobalFeatureRuleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+  }
+  export type GlobalFeatureRuleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+  }
+
+  export type $GlobalFeatureRulePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GlobalFeatureRule"
+    objects: {
+      feature: Prisma.$FeatureDefinitionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      featureKey: string
+      enabled: boolean
+      createdAt: Date
+      updatedAt: Date
+      createdBy: string
+    }, ExtArgs["result"]["globalFeatureRule"]>
+    composites: {}
+  }
+
+  type GlobalFeatureRuleGetPayload<S extends boolean | null | undefined | GlobalFeatureRuleDefaultArgs> = $Result.GetResult<Prisma.$GlobalFeatureRulePayload, S>
+
+  type GlobalFeatureRuleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<GlobalFeatureRuleFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: GlobalFeatureRuleCountAggregateInputType | true
+    }
+
+  export interface GlobalFeatureRuleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GlobalFeatureRule'], meta: { name: 'GlobalFeatureRule' } }
+    /**
+     * Find zero or one GlobalFeatureRule that matches the filter.
+     * @param {GlobalFeatureRuleFindUniqueArgs} args - Arguments to find a GlobalFeatureRule
+     * @example
+     * // Get one GlobalFeatureRule
+     * const globalFeatureRule = await prisma.globalFeatureRule.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GlobalFeatureRuleFindUniqueArgs>(args: SelectSubset<T, GlobalFeatureRuleFindUniqueArgs<ExtArgs>>): Prisma__GlobalFeatureRuleClient<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one GlobalFeatureRule that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {GlobalFeatureRuleFindUniqueOrThrowArgs} args - Arguments to find a GlobalFeatureRule
+     * @example
+     * // Get one GlobalFeatureRule
+     * const globalFeatureRule = await prisma.globalFeatureRule.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GlobalFeatureRuleFindUniqueOrThrowArgs>(args: SelectSubset<T, GlobalFeatureRuleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GlobalFeatureRuleClient<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first GlobalFeatureRule that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GlobalFeatureRuleFindFirstArgs} args - Arguments to find a GlobalFeatureRule
+     * @example
+     * // Get one GlobalFeatureRule
+     * const globalFeatureRule = await prisma.globalFeatureRule.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GlobalFeatureRuleFindFirstArgs>(args?: SelectSubset<T, GlobalFeatureRuleFindFirstArgs<ExtArgs>>): Prisma__GlobalFeatureRuleClient<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first GlobalFeatureRule that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GlobalFeatureRuleFindFirstOrThrowArgs} args - Arguments to find a GlobalFeatureRule
+     * @example
+     * // Get one GlobalFeatureRule
+     * const globalFeatureRule = await prisma.globalFeatureRule.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GlobalFeatureRuleFindFirstOrThrowArgs>(args?: SelectSubset<T, GlobalFeatureRuleFindFirstOrThrowArgs<ExtArgs>>): Prisma__GlobalFeatureRuleClient<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more GlobalFeatureRules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GlobalFeatureRuleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GlobalFeatureRules
+     * const globalFeatureRules = await prisma.globalFeatureRule.findMany()
+     * 
+     * // Get first 10 GlobalFeatureRules
+     * const globalFeatureRules = await prisma.globalFeatureRule.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const globalFeatureRuleWithIdOnly = await prisma.globalFeatureRule.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GlobalFeatureRuleFindManyArgs>(args?: SelectSubset<T, GlobalFeatureRuleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a GlobalFeatureRule.
+     * @param {GlobalFeatureRuleCreateArgs} args - Arguments to create a GlobalFeatureRule.
+     * @example
+     * // Create one GlobalFeatureRule
+     * const GlobalFeatureRule = await prisma.globalFeatureRule.create({
+     *   data: {
+     *     // ... data to create a GlobalFeatureRule
+     *   }
+     * })
+     * 
+     */
+    create<T extends GlobalFeatureRuleCreateArgs>(args: SelectSubset<T, GlobalFeatureRuleCreateArgs<ExtArgs>>): Prisma__GlobalFeatureRuleClient<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many GlobalFeatureRules.
+     * @param {GlobalFeatureRuleCreateManyArgs} args - Arguments to create many GlobalFeatureRules.
+     * @example
+     * // Create many GlobalFeatureRules
+     * const globalFeatureRule = await prisma.globalFeatureRule.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GlobalFeatureRuleCreateManyArgs>(args?: SelectSubset<T, GlobalFeatureRuleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GlobalFeatureRules and returns the data saved in the database.
+     * @param {GlobalFeatureRuleCreateManyAndReturnArgs} args - Arguments to create many GlobalFeatureRules.
+     * @example
+     * // Create many GlobalFeatureRules
+     * const globalFeatureRule = await prisma.globalFeatureRule.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GlobalFeatureRules and only return the `id`
+     * const globalFeatureRuleWithIdOnly = await prisma.globalFeatureRule.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GlobalFeatureRuleCreateManyAndReturnArgs>(args?: SelectSubset<T, GlobalFeatureRuleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a GlobalFeatureRule.
+     * @param {GlobalFeatureRuleDeleteArgs} args - Arguments to delete one GlobalFeatureRule.
+     * @example
+     * // Delete one GlobalFeatureRule
+     * const GlobalFeatureRule = await prisma.globalFeatureRule.delete({
+     *   where: {
+     *     // ... filter to delete one GlobalFeatureRule
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GlobalFeatureRuleDeleteArgs>(args: SelectSubset<T, GlobalFeatureRuleDeleteArgs<ExtArgs>>): Prisma__GlobalFeatureRuleClient<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one GlobalFeatureRule.
+     * @param {GlobalFeatureRuleUpdateArgs} args - Arguments to update one GlobalFeatureRule.
+     * @example
+     * // Update one GlobalFeatureRule
+     * const globalFeatureRule = await prisma.globalFeatureRule.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GlobalFeatureRuleUpdateArgs>(args: SelectSubset<T, GlobalFeatureRuleUpdateArgs<ExtArgs>>): Prisma__GlobalFeatureRuleClient<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more GlobalFeatureRules.
+     * @param {GlobalFeatureRuleDeleteManyArgs} args - Arguments to filter GlobalFeatureRules to delete.
+     * @example
+     * // Delete a few GlobalFeatureRules
+     * const { count } = await prisma.globalFeatureRule.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GlobalFeatureRuleDeleteManyArgs>(args?: SelectSubset<T, GlobalFeatureRuleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GlobalFeatureRules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GlobalFeatureRuleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GlobalFeatureRules
+     * const globalFeatureRule = await prisma.globalFeatureRule.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GlobalFeatureRuleUpdateManyArgs>(args: SelectSubset<T, GlobalFeatureRuleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one GlobalFeatureRule.
+     * @param {GlobalFeatureRuleUpsertArgs} args - Arguments to update or create a GlobalFeatureRule.
+     * @example
+     * // Update or create a GlobalFeatureRule
+     * const globalFeatureRule = await prisma.globalFeatureRule.upsert({
+     *   create: {
+     *     // ... data to create a GlobalFeatureRule
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GlobalFeatureRule we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GlobalFeatureRuleUpsertArgs>(args: SelectSubset<T, GlobalFeatureRuleUpsertArgs<ExtArgs>>): Prisma__GlobalFeatureRuleClient<$Result.GetResult<Prisma.$GlobalFeatureRulePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of GlobalFeatureRules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GlobalFeatureRuleCountArgs} args - Arguments to filter GlobalFeatureRules to count.
+     * @example
+     * // Count the number of GlobalFeatureRules
+     * const count = await prisma.globalFeatureRule.count({
+     *   where: {
+     *     // ... the filter for the GlobalFeatureRules we want to count
+     *   }
+     * })
+    **/
+    count<T extends GlobalFeatureRuleCountArgs>(
+      args?: Subset<T, GlobalFeatureRuleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GlobalFeatureRuleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GlobalFeatureRule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GlobalFeatureRuleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GlobalFeatureRuleAggregateArgs>(args: Subset<T, GlobalFeatureRuleAggregateArgs>): Prisma.PrismaPromise<GetGlobalFeatureRuleAggregateType<T>>
+
+    /**
+     * Group by GlobalFeatureRule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GlobalFeatureRuleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GlobalFeatureRuleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GlobalFeatureRuleGroupByArgs['orderBy'] }
+        : { orderBy?: GlobalFeatureRuleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GlobalFeatureRuleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGlobalFeatureRuleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GlobalFeatureRule model
+   */
+  readonly fields: GlobalFeatureRuleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GlobalFeatureRule.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GlobalFeatureRuleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    feature<T extends FeatureDefinitionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FeatureDefinitionDefaultArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GlobalFeatureRule model
+   */ 
+  interface GlobalFeatureRuleFieldRefs {
+    readonly id: FieldRef<"GlobalFeatureRule", 'String'>
+    readonly featureKey: FieldRef<"GlobalFeatureRule", 'String'>
+    readonly enabled: FieldRef<"GlobalFeatureRule", 'Boolean'>
+    readonly createdAt: FieldRef<"GlobalFeatureRule", 'DateTime'>
+    readonly updatedAt: FieldRef<"GlobalFeatureRule", 'DateTime'>
+    readonly createdBy: FieldRef<"GlobalFeatureRule", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GlobalFeatureRule findUnique
+   */
+  export type GlobalFeatureRuleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which GlobalFeatureRule to fetch.
+     */
+    where: GlobalFeatureRuleWhereUniqueInput
+  }
+
+  /**
+   * GlobalFeatureRule findUniqueOrThrow
+   */
+  export type GlobalFeatureRuleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which GlobalFeatureRule to fetch.
+     */
+    where: GlobalFeatureRuleWhereUniqueInput
+  }
+
+  /**
+   * GlobalFeatureRule findFirst
+   */
+  export type GlobalFeatureRuleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which GlobalFeatureRule to fetch.
+     */
+    where?: GlobalFeatureRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GlobalFeatureRules to fetch.
+     */
+    orderBy?: GlobalFeatureRuleOrderByWithRelationInput | GlobalFeatureRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GlobalFeatureRules.
+     */
+    cursor?: GlobalFeatureRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GlobalFeatureRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GlobalFeatureRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GlobalFeatureRules.
+     */
+    distinct?: GlobalFeatureRuleScalarFieldEnum | GlobalFeatureRuleScalarFieldEnum[]
+  }
+
+  /**
+   * GlobalFeatureRule findFirstOrThrow
+   */
+  export type GlobalFeatureRuleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which GlobalFeatureRule to fetch.
+     */
+    where?: GlobalFeatureRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GlobalFeatureRules to fetch.
+     */
+    orderBy?: GlobalFeatureRuleOrderByWithRelationInput | GlobalFeatureRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GlobalFeatureRules.
+     */
+    cursor?: GlobalFeatureRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GlobalFeatureRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GlobalFeatureRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GlobalFeatureRules.
+     */
+    distinct?: GlobalFeatureRuleScalarFieldEnum | GlobalFeatureRuleScalarFieldEnum[]
+  }
+
+  /**
+   * GlobalFeatureRule findMany
+   */
+  export type GlobalFeatureRuleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which GlobalFeatureRules to fetch.
+     */
+    where?: GlobalFeatureRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GlobalFeatureRules to fetch.
+     */
+    orderBy?: GlobalFeatureRuleOrderByWithRelationInput | GlobalFeatureRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GlobalFeatureRules.
+     */
+    cursor?: GlobalFeatureRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GlobalFeatureRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GlobalFeatureRules.
+     */
+    skip?: number
+    distinct?: GlobalFeatureRuleScalarFieldEnum | GlobalFeatureRuleScalarFieldEnum[]
+  }
+
+  /**
+   * GlobalFeatureRule create
+   */
+  export type GlobalFeatureRuleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GlobalFeatureRule.
+     */
+    data: XOR<GlobalFeatureRuleCreateInput, GlobalFeatureRuleUncheckedCreateInput>
+  }
+
+  /**
+   * GlobalFeatureRule createMany
+   */
+  export type GlobalFeatureRuleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GlobalFeatureRules.
+     */
+    data: GlobalFeatureRuleCreateManyInput | GlobalFeatureRuleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GlobalFeatureRule createManyAndReturn
+   */
+  export type GlobalFeatureRuleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many GlobalFeatureRules.
+     */
+    data: GlobalFeatureRuleCreateManyInput | GlobalFeatureRuleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GlobalFeatureRule update
+   */
+  export type GlobalFeatureRuleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GlobalFeatureRule.
+     */
+    data: XOR<GlobalFeatureRuleUpdateInput, GlobalFeatureRuleUncheckedUpdateInput>
+    /**
+     * Choose, which GlobalFeatureRule to update.
+     */
+    where: GlobalFeatureRuleWhereUniqueInput
+  }
+
+  /**
+   * GlobalFeatureRule updateMany
+   */
+  export type GlobalFeatureRuleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GlobalFeatureRules.
+     */
+    data: XOR<GlobalFeatureRuleUpdateManyMutationInput, GlobalFeatureRuleUncheckedUpdateManyInput>
+    /**
+     * Filter which GlobalFeatureRules to update
+     */
+    where?: GlobalFeatureRuleWhereInput
+  }
+
+  /**
+   * GlobalFeatureRule upsert
+   */
+  export type GlobalFeatureRuleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GlobalFeatureRule to update in case it exists.
+     */
+    where: GlobalFeatureRuleWhereUniqueInput
+    /**
+     * In case the GlobalFeatureRule found by the `where` argument doesn't exist, create a new GlobalFeatureRule with this data.
+     */
+    create: XOR<GlobalFeatureRuleCreateInput, GlobalFeatureRuleUncheckedCreateInput>
+    /**
+     * In case the GlobalFeatureRule was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GlobalFeatureRuleUpdateInput, GlobalFeatureRuleUncheckedUpdateInput>
+  }
+
+  /**
+   * GlobalFeatureRule delete
+   */
+  export type GlobalFeatureRuleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter which GlobalFeatureRule to delete.
+     */
+    where: GlobalFeatureRuleWhereUniqueInput
+  }
+
+  /**
+   * GlobalFeatureRule deleteMany
+   */
+  export type GlobalFeatureRuleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GlobalFeatureRules to delete
+     */
+    where?: GlobalFeatureRuleWhereInput
+  }
+
+  /**
+   * GlobalFeatureRule without action
+   */
+  export type GlobalFeatureRuleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GlobalFeatureRule
+     */
+    select?: GlobalFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GlobalFeatureRuleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TenantFeatureRule
+   */
+
+  export type AggregateTenantFeatureRule = {
+    _count: TenantFeatureRuleCountAggregateOutputType | null
+    _min: TenantFeatureRuleMinAggregateOutputType | null
+    _max: TenantFeatureRuleMaxAggregateOutputType | null
+  }
+
+  export type TenantFeatureRuleMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    featureKey: string | null
+    enabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdBy: string | null
+  }
+
+  export type TenantFeatureRuleMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    featureKey: string | null
+    enabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdBy: string | null
+  }
+
+  export type TenantFeatureRuleCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    featureKey: number
+    enabled: number
+    createdAt: number
+    updatedAt: number
+    createdBy: number
+    _all: number
+  }
+
+
+  export type TenantFeatureRuleMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    featureKey?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+  }
+
+  export type TenantFeatureRuleMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    featureKey?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+  }
+
+  export type TenantFeatureRuleCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    featureKey?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+    _all?: true
+  }
+
+  export type TenantFeatureRuleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TenantFeatureRule to aggregate.
+     */
+    where?: TenantFeatureRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantFeatureRules to fetch.
+     */
+    orderBy?: TenantFeatureRuleOrderByWithRelationInput | TenantFeatureRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TenantFeatureRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantFeatureRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantFeatureRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TenantFeatureRules
+    **/
+    _count?: true | TenantFeatureRuleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TenantFeatureRuleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TenantFeatureRuleMaxAggregateInputType
+  }
+
+  export type GetTenantFeatureRuleAggregateType<T extends TenantFeatureRuleAggregateArgs> = {
+        [P in keyof T & keyof AggregateTenantFeatureRule]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTenantFeatureRule[P]>
+      : GetScalarType<T[P], AggregateTenantFeatureRule[P]>
+  }
+
+
+
+
+  export type TenantFeatureRuleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TenantFeatureRuleWhereInput
+    orderBy?: TenantFeatureRuleOrderByWithAggregationInput | TenantFeatureRuleOrderByWithAggregationInput[]
+    by: TenantFeatureRuleScalarFieldEnum[] | TenantFeatureRuleScalarFieldEnum
+    having?: TenantFeatureRuleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TenantFeatureRuleCountAggregateInputType | true
+    _min?: TenantFeatureRuleMinAggregateInputType
+    _max?: TenantFeatureRuleMaxAggregateInputType
+  }
+
+  export type TenantFeatureRuleGroupByOutputType = {
+    id: string
+    tenantId: string
+    featureKey: string
+    enabled: boolean
+    createdAt: Date
+    updatedAt: Date
+    createdBy: string
+    _count: TenantFeatureRuleCountAggregateOutputType | null
+    _min: TenantFeatureRuleMinAggregateOutputType | null
+    _max: TenantFeatureRuleMaxAggregateOutputType | null
+  }
+
+  type GetTenantFeatureRuleGroupByPayload<T extends TenantFeatureRuleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TenantFeatureRuleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TenantFeatureRuleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TenantFeatureRuleGroupByOutputType[P]>
+            : GetScalarType<T[P], TenantFeatureRuleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TenantFeatureRuleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    featureKey?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tenantFeatureRule"]>
+
+  export type TenantFeatureRuleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    featureKey?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tenantFeatureRule"]>
+
+  export type TenantFeatureRuleSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    featureKey?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+  }
+
+  export type TenantFeatureRuleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+  }
+  export type TenantFeatureRuleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+  }
+
+  export type $TenantFeatureRulePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TenantFeatureRule"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+      feature: Prisma.$FeatureDefinitionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      featureKey: string
+      enabled: boolean
+      createdAt: Date
+      updatedAt: Date
+      createdBy: string
+    }, ExtArgs["result"]["tenantFeatureRule"]>
+    composites: {}
+  }
+
+  type TenantFeatureRuleGetPayload<S extends boolean | null | undefined | TenantFeatureRuleDefaultArgs> = $Result.GetResult<Prisma.$TenantFeatureRulePayload, S>
+
+  type TenantFeatureRuleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TenantFeatureRuleFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TenantFeatureRuleCountAggregateInputType | true
+    }
+
+  export interface TenantFeatureRuleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TenantFeatureRule'], meta: { name: 'TenantFeatureRule' } }
+    /**
+     * Find zero or one TenantFeatureRule that matches the filter.
+     * @param {TenantFeatureRuleFindUniqueArgs} args - Arguments to find a TenantFeatureRule
+     * @example
+     * // Get one TenantFeatureRule
+     * const tenantFeatureRule = await prisma.tenantFeatureRule.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TenantFeatureRuleFindUniqueArgs>(args: SelectSubset<T, TenantFeatureRuleFindUniqueArgs<ExtArgs>>): Prisma__TenantFeatureRuleClient<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one TenantFeatureRule that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {TenantFeatureRuleFindUniqueOrThrowArgs} args - Arguments to find a TenantFeatureRule
+     * @example
+     * // Get one TenantFeatureRule
+     * const tenantFeatureRule = await prisma.tenantFeatureRule.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TenantFeatureRuleFindUniqueOrThrowArgs>(args: SelectSubset<T, TenantFeatureRuleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TenantFeatureRuleClient<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first TenantFeatureRule that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantFeatureRuleFindFirstArgs} args - Arguments to find a TenantFeatureRule
+     * @example
+     * // Get one TenantFeatureRule
+     * const tenantFeatureRule = await prisma.tenantFeatureRule.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TenantFeatureRuleFindFirstArgs>(args?: SelectSubset<T, TenantFeatureRuleFindFirstArgs<ExtArgs>>): Prisma__TenantFeatureRuleClient<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first TenantFeatureRule that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantFeatureRuleFindFirstOrThrowArgs} args - Arguments to find a TenantFeatureRule
+     * @example
+     * // Get one TenantFeatureRule
+     * const tenantFeatureRule = await prisma.tenantFeatureRule.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TenantFeatureRuleFindFirstOrThrowArgs>(args?: SelectSubset<T, TenantFeatureRuleFindFirstOrThrowArgs<ExtArgs>>): Prisma__TenantFeatureRuleClient<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more TenantFeatureRules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantFeatureRuleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TenantFeatureRules
+     * const tenantFeatureRules = await prisma.tenantFeatureRule.findMany()
+     * 
+     * // Get first 10 TenantFeatureRules
+     * const tenantFeatureRules = await prisma.tenantFeatureRule.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tenantFeatureRuleWithIdOnly = await prisma.tenantFeatureRule.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TenantFeatureRuleFindManyArgs>(args?: SelectSubset<T, TenantFeatureRuleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a TenantFeatureRule.
+     * @param {TenantFeatureRuleCreateArgs} args - Arguments to create a TenantFeatureRule.
+     * @example
+     * // Create one TenantFeatureRule
+     * const TenantFeatureRule = await prisma.tenantFeatureRule.create({
+     *   data: {
+     *     // ... data to create a TenantFeatureRule
+     *   }
+     * })
+     * 
+     */
+    create<T extends TenantFeatureRuleCreateArgs>(args: SelectSubset<T, TenantFeatureRuleCreateArgs<ExtArgs>>): Prisma__TenantFeatureRuleClient<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many TenantFeatureRules.
+     * @param {TenantFeatureRuleCreateManyArgs} args - Arguments to create many TenantFeatureRules.
+     * @example
+     * // Create many TenantFeatureRules
+     * const tenantFeatureRule = await prisma.tenantFeatureRule.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TenantFeatureRuleCreateManyArgs>(args?: SelectSubset<T, TenantFeatureRuleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TenantFeatureRules and returns the data saved in the database.
+     * @param {TenantFeatureRuleCreateManyAndReturnArgs} args - Arguments to create many TenantFeatureRules.
+     * @example
+     * // Create many TenantFeatureRules
+     * const tenantFeatureRule = await prisma.tenantFeatureRule.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TenantFeatureRules and only return the `id`
+     * const tenantFeatureRuleWithIdOnly = await prisma.tenantFeatureRule.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TenantFeatureRuleCreateManyAndReturnArgs>(args?: SelectSubset<T, TenantFeatureRuleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a TenantFeatureRule.
+     * @param {TenantFeatureRuleDeleteArgs} args - Arguments to delete one TenantFeatureRule.
+     * @example
+     * // Delete one TenantFeatureRule
+     * const TenantFeatureRule = await prisma.tenantFeatureRule.delete({
+     *   where: {
+     *     // ... filter to delete one TenantFeatureRule
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TenantFeatureRuleDeleteArgs>(args: SelectSubset<T, TenantFeatureRuleDeleteArgs<ExtArgs>>): Prisma__TenantFeatureRuleClient<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one TenantFeatureRule.
+     * @param {TenantFeatureRuleUpdateArgs} args - Arguments to update one TenantFeatureRule.
+     * @example
+     * // Update one TenantFeatureRule
+     * const tenantFeatureRule = await prisma.tenantFeatureRule.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TenantFeatureRuleUpdateArgs>(args: SelectSubset<T, TenantFeatureRuleUpdateArgs<ExtArgs>>): Prisma__TenantFeatureRuleClient<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more TenantFeatureRules.
+     * @param {TenantFeatureRuleDeleteManyArgs} args - Arguments to filter TenantFeatureRules to delete.
+     * @example
+     * // Delete a few TenantFeatureRules
+     * const { count } = await prisma.tenantFeatureRule.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TenantFeatureRuleDeleteManyArgs>(args?: SelectSubset<T, TenantFeatureRuleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TenantFeatureRules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantFeatureRuleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TenantFeatureRules
+     * const tenantFeatureRule = await prisma.tenantFeatureRule.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TenantFeatureRuleUpdateManyArgs>(args: SelectSubset<T, TenantFeatureRuleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TenantFeatureRule.
+     * @param {TenantFeatureRuleUpsertArgs} args - Arguments to update or create a TenantFeatureRule.
+     * @example
+     * // Update or create a TenantFeatureRule
+     * const tenantFeatureRule = await prisma.tenantFeatureRule.upsert({
+     *   create: {
+     *     // ... data to create a TenantFeatureRule
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TenantFeatureRule we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TenantFeatureRuleUpsertArgs>(args: SelectSubset<T, TenantFeatureRuleUpsertArgs<ExtArgs>>): Prisma__TenantFeatureRuleClient<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of TenantFeatureRules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantFeatureRuleCountArgs} args - Arguments to filter TenantFeatureRules to count.
+     * @example
+     * // Count the number of TenantFeatureRules
+     * const count = await prisma.tenantFeatureRule.count({
+     *   where: {
+     *     // ... the filter for the TenantFeatureRules we want to count
+     *   }
+     * })
+    **/
+    count<T extends TenantFeatureRuleCountArgs>(
+      args?: Subset<T, TenantFeatureRuleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TenantFeatureRuleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TenantFeatureRule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantFeatureRuleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TenantFeatureRuleAggregateArgs>(args: Subset<T, TenantFeatureRuleAggregateArgs>): Prisma.PrismaPromise<GetTenantFeatureRuleAggregateType<T>>
+
+    /**
+     * Group by TenantFeatureRule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantFeatureRuleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TenantFeatureRuleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TenantFeatureRuleGroupByArgs['orderBy'] }
+        : { orderBy?: TenantFeatureRuleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TenantFeatureRuleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTenantFeatureRuleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TenantFeatureRule model
+   */
+  readonly fields: TenantFeatureRuleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TenantFeatureRule.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TenantFeatureRuleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    feature<T extends FeatureDefinitionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FeatureDefinitionDefaultArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TenantFeatureRule model
+   */ 
+  interface TenantFeatureRuleFieldRefs {
+    readonly id: FieldRef<"TenantFeatureRule", 'String'>
+    readonly tenantId: FieldRef<"TenantFeatureRule", 'String'>
+    readonly featureKey: FieldRef<"TenantFeatureRule", 'String'>
+    readonly enabled: FieldRef<"TenantFeatureRule", 'Boolean'>
+    readonly createdAt: FieldRef<"TenantFeatureRule", 'DateTime'>
+    readonly updatedAt: FieldRef<"TenantFeatureRule", 'DateTime'>
+    readonly createdBy: FieldRef<"TenantFeatureRule", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TenantFeatureRule findUnique
+   */
+  export type TenantFeatureRuleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantFeatureRule to fetch.
+     */
+    where: TenantFeatureRuleWhereUniqueInput
+  }
+
+  /**
+   * TenantFeatureRule findUniqueOrThrow
+   */
+  export type TenantFeatureRuleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantFeatureRule to fetch.
+     */
+    where: TenantFeatureRuleWhereUniqueInput
+  }
+
+  /**
+   * TenantFeatureRule findFirst
+   */
+  export type TenantFeatureRuleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantFeatureRule to fetch.
+     */
+    where?: TenantFeatureRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantFeatureRules to fetch.
+     */
+    orderBy?: TenantFeatureRuleOrderByWithRelationInput | TenantFeatureRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TenantFeatureRules.
+     */
+    cursor?: TenantFeatureRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantFeatureRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantFeatureRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TenantFeatureRules.
+     */
+    distinct?: TenantFeatureRuleScalarFieldEnum | TenantFeatureRuleScalarFieldEnum[]
+  }
+
+  /**
+   * TenantFeatureRule findFirstOrThrow
+   */
+  export type TenantFeatureRuleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantFeatureRule to fetch.
+     */
+    where?: TenantFeatureRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantFeatureRules to fetch.
+     */
+    orderBy?: TenantFeatureRuleOrderByWithRelationInput | TenantFeatureRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TenantFeatureRules.
+     */
+    cursor?: TenantFeatureRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantFeatureRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantFeatureRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TenantFeatureRules.
+     */
+    distinct?: TenantFeatureRuleScalarFieldEnum | TenantFeatureRuleScalarFieldEnum[]
+  }
+
+  /**
+   * TenantFeatureRule findMany
+   */
+  export type TenantFeatureRuleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantFeatureRules to fetch.
+     */
+    where?: TenantFeatureRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantFeatureRules to fetch.
+     */
+    orderBy?: TenantFeatureRuleOrderByWithRelationInput | TenantFeatureRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TenantFeatureRules.
+     */
+    cursor?: TenantFeatureRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantFeatureRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantFeatureRules.
+     */
+    skip?: number
+    distinct?: TenantFeatureRuleScalarFieldEnum | TenantFeatureRuleScalarFieldEnum[]
+  }
+
+  /**
+   * TenantFeatureRule create
+   */
+  export type TenantFeatureRuleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TenantFeatureRule.
+     */
+    data: XOR<TenantFeatureRuleCreateInput, TenantFeatureRuleUncheckedCreateInput>
+  }
+
+  /**
+   * TenantFeatureRule createMany
+   */
+  export type TenantFeatureRuleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TenantFeatureRules.
+     */
+    data: TenantFeatureRuleCreateManyInput | TenantFeatureRuleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TenantFeatureRule createManyAndReturn
+   */
+  export type TenantFeatureRuleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many TenantFeatureRules.
+     */
+    data: TenantFeatureRuleCreateManyInput | TenantFeatureRuleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TenantFeatureRule update
+   */
+  export type TenantFeatureRuleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TenantFeatureRule.
+     */
+    data: XOR<TenantFeatureRuleUpdateInput, TenantFeatureRuleUncheckedUpdateInput>
+    /**
+     * Choose, which TenantFeatureRule to update.
+     */
+    where: TenantFeatureRuleWhereUniqueInput
+  }
+
+  /**
+   * TenantFeatureRule updateMany
+   */
+  export type TenantFeatureRuleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TenantFeatureRules.
+     */
+    data: XOR<TenantFeatureRuleUpdateManyMutationInput, TenantFeatureRuleUncheckedUpdateManyInput>
+    /**
+     * Filter which TenantFeatureRules to update
+     */
+    where?: TenantFeatureRuleWhereInput
+  }
+
+  /**
+   * TenantFeatureRule upsert
+   */
+  export type TenantFeatureRuleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TenantFeatureRule to update in case it exists.
+     */
+    where: TenantFeatureRuleWhereUniqueInput
+    /**
+     * In case the TenantFeatureRule found by the `where` argument doesn't exist, create a new TenantFeatureRule with this data.
+     */
+    create: XOR<TenantFeatureRuleCreateInput, TenantFeatureRuleUncheckedCreateInput>
+    /**
+     * In case the TenantFeatureRule was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TenantFeatureRuleUpdateInput, TenantFeatureRuleUncheckedUpdateInput>
+  }
+
+  /**
+   * TenantFeatureRule delete
+   */
+  export type TenantFeatureRuleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+    /**
+     * Filter which TenantFeatureRule to delete.
+     */
+    where: TenantFeatureRuleWhereUniqueInput
+  }
+
+  /**
+   * TenantFeatureRule deleteMany
+   */
+  export type TenantFeatureRuleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TenantFeatureRules to delete
+     */
+    where?: TenantFeatureRuleWhereInput
+  }
+
+  /**
+   * TenantFeatureRule without action
+   */
+  export type TenantFeatureRuleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantFeatureRule
+     */
+    select?: TenantFeatureRuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantFeatureRuleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FeatureAuditEntry
+   */
+
+  export type AggregateFeatureAuditEntry = {
+    _count: FeatureAuditEntryCountAggregateOutputType | null
+    _min: FeatureAuditEntryMinAggregateOutputType | null
+    _max: FeatureAuditEntryMaxAggregateOutputType | null
+  }
+
+  export type FeatureAuditEntryMinAggregateOutputType = {
+    id: string | null
+    featureKey: string | null
+    scope: string | null
+    tenantId: string | null
+    beforeValue: string | null
+    afterValue: string | null
+    action: string | null
+    createdAt: Date | null
+    createdBy: string | null
+  }
+
+  export type FeatureAuditEntryMaxAggregateOutputType = {
+    id: string | null
+    featureKey: string | null
+    scope: string | null
+    tenantId: string | null
+    beforeValue: string | null
+    afterValue: string | null
+    action: string | null
+    createdAt: Date | null
+    createdBy: string | null
+  }
+
+  export type FeatureAuditEntryCountAggregateOutputType = {
+    id: number
+    featureKey: number
+    scope: number
+    tenantId: number
+    beforeValue: number
+    afterValue: number
+    action: number
+    createdAt: number
+    createdBy: number
+    _all: number
+  }
+
+
+  export type FeatureAuditEntryMinAggregateInputType = {
+    id?: true
+    featureKey?: true
+    scope?: true
+    tenantId?: true
+    beforeValue?: true
+    afterValue?: true
+    action?: true
+    createdAt?: true
+    createdBy?: true
+  }
+
+  export type FeatureAuditEntryMaxAggregateInputType = {
+    id?: true
+    featureKey?: true
+    scope?: true
+    tenantId?: true
+    beforeValue?: true
+    afterValue?: true
+    action?: true
+    createdAt?: true
+    createdBy?: true
+  }
+
+  export type FeatureAuditEntryCountAggregateInputType = {
+    id?: true
+    featureKey?: true
+    scope?: true
+    tenantId?: true
+    beforeValue?: true
+    afterValue?: true
+    action?: true
+    createdAt?: true
+    createdBy?: true
+    _all?: true
+  }
+
+  export type FeatureAuditEntryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FeatureAuditEntry to aggregate.
+     */
+    where?: FeatureAuditEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FeatureAuditEntries to fetch.
+     */
+    orderBy?: FeatureAuditEntryOrderByWithRelationInput | FeatureAuditEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FeatureAuditEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FeatureAuditEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FeatureAuditEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FeatureAuditEntries
+    **/
+    _count?: true | FeatureAuditEntryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FeatureAuditEntryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FeatureAuditEntryMaxAggregateInputType
+  }
+
+  export type GetFeatureAuditEntryAggregateType<T extends FeatureAuditEntryAggregateArgs> = {
+        [P in keyof T & keyof AggregateFeatureAuditEntry]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFeatureAuditEntry[P]>
+      : GetScalarType<T[P], AggregateFeatureAuditEntry[P]>
+  }
+
+
+
+
+  export type FeatureAuditEntryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FeatureAuditEntryWhereInput
+    orderBy?: FeatureAuditEntryOrderByWithAggregationInput | FeatureAuditEntryOrderByWithAggregationInput[]
+    by: FeatureAuditEntryScalarFieldEnum[] | FeatureAuditEntryScalarFieldEnum
+    having?: FeatureAuditEntryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FeatureAuditEntryCountAggregateInputType | true
+    _min?: FeatureAuditEntryMinAggregateInputType
+    _max?: FeatureAuditEntryMaxAggregateInputType
+  }
+
+  export type FeatureAuditEntryGroupByOutputType = {
+    id: string
+    featureKey: string
+    scope: string
+    tenantId: string | null
+    beforeValue: string | null
+    afterValue: string | null
+    action: string
+    createdAt: Date
+    createdBy: string
+    _count: FeatureAuditEntryCountAggregateOutputType | null
+    _min: FeatureAuditEntryMinAggregateOutputType | null
+    _max: FeatureAuditEntryMaxAggregateOutputType | null
+  }
+
+  type GetFeatureAuditEntryGroupByPayload<T extends FeatureAuditEntryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FeatureAuditEntryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FeatureAuditEntryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FeatureAuditEntryGroupByOutputType[P]>
+            : GetScalarType<T[P], FeatureAuditEntryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FeatureAuditEntrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    featureKey?: boolean
+    scope?: boolean
+    tenantId?: boolean
+    beforeValue?: boolean
+    afterValue?: boolean
+    action?: boolean
+    createdAt?: boolean
+    createdBy?: boolean
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+    tenant?: boolean | FeatureAuditEntry$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["featureAuditEntry"]>
+
+  export type FeatureAuditEntrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    featureKey?: boolean
+    scope?: boolean
+    tenantId?: boolean
+    beforeValue?: boolean
+    afterValue?: boolean
+    action?: boolean
+    createdAt?: boolean
+    createdBy?: boolean
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+    tenant?: boolean | FeatureAuditEntry$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["featureAuditEntry"]>
+
+  export type FeatureAuditEntrySelectScalar = {
+    id?: boolean
+    featureKey?: boolean
+    scope?: boolean
+    tenantId?: boolean
+    beforeValue?: boolean
+    afterValue?: boolean
+    action?: boolean
+    createdAt?: boolean
+    createdBy?: boolean
+  }
+
+  export type FeatureAuditEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+    tenant?: boolean | FeatureAuditEntry$tenantArgs<ExtArgs>
+  }
+  export type FeatureAuditEntryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    feature?: boolean | FeatureDefinitionDefaultArgs<ExtArgs>
+    tenant?: boolean | FeatureAuditEntry$tenantArgs<ExtArgs>
+  }
+
+  export type $FeatureAuditEntryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FeatureAuditEntry"
+    objects: {
+      feature: Prisma.$FeatureDefinitionPayload<ExtArgs>
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      featureKey: string
+      scope: string
+      tenantId: string | null
+      beforeValue: string | null
+      afterValue: string | null
+      action: string
+      createdAt: Date
+      createdBy: string
+    }, ExtArgs["result"]["featureAuditEntry"]>
+    composites: {}
+  }
+
+  type FeatureAuditEntryGetPayload<S extends boolean | null | undefined | FeatureAuditEntryDefaultArgs> = $Result.GetResult<Prisma.$FeatureAuditEntryPayload, S>
+
+  type FeatureAuditEntryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<FeatureAuditEntryFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: FeatureAuditEntryCountAggregateInputType | true
+    }
+
+  export interface FeatureAuditEntryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FeatureAuditEntry'], meta: { name: 'FeatureAuditEntry' } }
+    /**
+     * Find zero or one FeatureAuditEntry that matches the filter.
+     * @param {FeatureAuditEntryFindUniqueArgs} args - Arguments to find a FeatureAuditEntry
+     * @example
+     * // Get one FeatureAuditEntry
+     * const featureAuditEntry = await prisma.featureAuditEntry.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FeatureAuditEntryFindUniqueArgs>(args: SelectSubset<T, FeatureAuditEntryFindUniqueArgs<ExtArgs>>): Prisma__FeatureAuditEntryClient<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one FeatureAuditEntry that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {FeatureAuditEntryFindUniqueOrThrowArgs} args - Arguments to find a FeatureAuditEntry
+     * @example
+     * // Get one FeatureAuditEntry
+     * const featureAuditEntry = await prisma.featureAuditEntry.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FeatureAuditEntryFindUniqueOrThrowArgs>(args: SelectSubset<T, FeatureAuditEntryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FeatureAuditEntryClient<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first FeatureAuditEntry that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureAuditEntryFindFirstArgs} args - Arguments to find a FeatureAuditEntry
+     * @example
+     * // Get one FeatureAuditEntry
+     * const featureAuditEntry = await prisma.featureAuditEntry.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FeatureAuditEntryFindFirstArgs>(args?: SelectSubset<T, FeatureAuditEntryFindFirstArgs<ExtArgs>>): Prisma__FeatureAuditEntryClient<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first FeatureAuditEntry that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureAuditEntryFindFirstOrThrowArgs} args - Arguments to find a FeatureAuditEntry
+     * @example
+     * // Get one FeatureAuditEntry
+     * const featureAuditEntry = await prisma.featureAuditEntry.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FeatureAuditEntryFindFirstOrThrowArgs>(args?: SelectSubset<T, FeatureAuditEntryFindFirstOrThrowArgs<ExtArgs>>): Prisma__FeatureAuditEntryClient<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more FeatureAuditEntries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureAuditEntryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FeatureAuditEntries
+     * const featureAuditEntries = await prisma.featureAuditEntry.findMany()
+     * 
+     * // Get first 10 FeatureAuditEntries
+     * const featureAuditEntries = await prisma.featureAuditEntry.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const featureAuditEntryWithIdOnly = await prisma.featureAuditEntry.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FeatureAuditEntryFindManyArgs>(args?: SelectSubset<T, FeatureAuditEntryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a FeatureAuditEntry.
+     * @param {FeatureAuditEntryCreateArgs} args - Arguments to create a FeatureAuditEntry.
+     * @example
+     * // Create one FeatureAuditEntry
+     * const FeatureAuditEntry = await prisma.featureAuditEntry.create({
+     *   data: {
+     *     // ... data to create a FeatureAuditEntry
+     *   }
+     * })
+     * 
+     */
+    create<T extends FeatureAuditEntryCreateArgs>(args: SelectSubset<T, FeatureAuditEntryCreateArgs<ExtArgs>>): Prisma__FeatureAuditEntryClient<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many FeatureAuditEntries.
+     * @param {FeatureAuditEntryCreateManyArgs} args - Arguments to create many FeatureAuditEntries.
+     * @example
+     * // Create many FeatureAuditEntries
+     * const featureAuditEntry = await prisma.featureAuditEntry.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FeatureAuditEntryCreateManyArgs>(args?: SelectSubset<T, FeatureAuditEntryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FeatureAuditEntries and returns the data saved in the database.
+     * @param {FeatureAuditEntryCreateManyAndReturnArgs} args - Arguments to create many FeatureAuditEntries.
+     * @example
+     * // Create many FeatureAuditEntries
+     * const featureAuditEntry = await prisma.featureAuditEntry.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FeatureAuditEntries and only return the `id`
+     * const featureAuditEntryWithIdOnly = await prisma.featureAuditEntry.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FeatureAuditEntryCreateManyAndReturnArgs>(args?: SelectSubset<T, FeatureAuditEntryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a FeatureAuditEntry.
+     * @param {FeatureAuditEntryDeleteArgs} args - Arguments to delete one FeatureAuditEntry.
+     * @example
+     * // Delete one FeatureAuditEntry
+     * const FeatureAuditEntry = await prisma.featureAuditEntry.delete({
+     *   where: {
+     *     // ... filter to delete one FeatureAuditEntry
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FeatureAuditEntryDeleteArgs>(args: SelectSubset<T, FeatureAuditEntryDeleteArgs<ExtArgs>>): Prisma__FeatureAuditEntryClient<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one FeatureAuditEntry.
+     * @param {FeatureAuditEntryUpdateArgs} args - Arguments to update one FeatureAuditEntry.
+     * @example
+     * // Update one FeatureAuditEntry
+     * const featureAuditEntry = await prisma.featureAuditEntry.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FeatureAuditEntryUpdateArgs>(args: SelectSubset<T, FeatureAuditEntryUpdateArgs<ExtArgs>>): Prisma__FeatureAuditEntryClient<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more FeatureAuditEntries.
+     * @param {FeatureAuditEntryDeleteManyArgs} args - Arguments to filter FeatureAuditEntries to delete.
+     * @example
+     * // Delete a few FeatureAuditEntries
+     * const { count } = await prisma.featureAuditEntry.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FeatureAuditEntryDeleteManyArgs>(args?: SelectSubset<T, FeatureAuditEntryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FeatureAuditEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureAuditEntryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FeatureAuditEntries
+     * const featureAuditEntry = await prisma.featureAuditEntry.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FeatureAuditEntryUpdateManyArgs>(args: SelectSubset<T, FeatureAuditEntryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FeatureAuditEntry.
+     * @param {FeatureAuditEntryUpsertArgs} args - Arguments to update or create a FeatureAuditEntry.
+     * @example
+     * // Update or create a FeatureAuditEntry
+     * const featureAuditEntry = await prisma.featureAuditEntry.upsert({
+     *   create: {
+     *     // ... data to create a FeatureAuditEntry
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FeatureAuditEntry we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FeatureAuditEntryUpsertArgs>(args: SelectSubset<T, FeatureAuditEntryUpsertArgs<ExtArgs>>): Prisma__FeatureAuditEntryClient<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of FeatureAuditEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureAuditEntryCountArgs} args - Arguments to filter FeatureAuditEntries to count.
+     * @example
+     * // Count the number of FeatureAuditEntries
+     * const count = await prisma.featureAuditEntry.count({
+     *   where: {
+     *     // ... the filter for the FeatureAuditEntries we want to count
+     *   }
+     * })
+    **/
+    count<T extends FeatureAuditEntryCountArgs>(
+      args?: Subset<T, FeatureAuditEntryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FeatureAuditEntryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FeatureAuditEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureAuditEntryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FeatureAuditEntryAggregateArgs>(args: Subset<T, FeatureAuditEntryAggregateArgs>): Prisma.PrismaPromise<GetFeatureAuditEntryAggregateType<T>>
+
+    /**
+     * Group by FeatureAuditEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeatureAuditEntryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FeatureAuditEntryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FeatureAuditEntryGroupByArgs['orderBy'] }
+        : { orderBy?: FeatureAuditEntryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FeatureAuditEntryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFeatureAuditEntryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FeatureAuditEntry model
+   */
+  readonly fields: FeatureAuditEntryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FeatureAuditEntry.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FeatureAuditEntryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    feature<T extends FeatureDefinitionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FeatureDefinitionDefaultArgs<ExtArgs>>): Prisma__FeatureDefinitionClient<$Result.GetResult<Prisma.$FeatureDefinitionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    tenant<T extends FeatureAuditEntry$tenantArgs<ExtArgs> = {}>(args?: Subset<T, FeatureAuditEntry$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FeatureAuditEntry model
+   */ 
+  interface FeatureAuditEntryFieldRefs {
+    readonly id: FieldRef<"FeatureAuditEntry", 'String'>
+    readonly featureKey: FieldRef<"FeatureAuditEntry", 'String'>
+    readonly scope: FieldRef<"FeatureAuditEntry", 'String'>
+    readonly tenantId: FieldRef<"FeatureAuditEntry", 'String'>
+    readonly beforeValue: FieldRef<"FeatureAuditEntry", 'String'>
+    readonly afterValue: FieldRef<"FeatureAuditEntry", 'String'>
+    readonly action: FieldRef<"FeatureAuditEntry", 'String'>
+    readonly createdAt: FieldRef<"FeatureAuditEntry", 'DateTime'>
+    readonly createdBy: FieldRef<"FeatureAuditEntry", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FeatureAuditEntry findUnique
+   */
+  export type FeatureAuditEntryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureAuditEntry to fetch.
+     */
+    where: FeatureAuditEntryWhereUniqueInput
+  }
+
+  /**
+   * FeatureAuditEntry findUniqueOrThrow
+   */
+  export type FeatureAuditEntryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureAuditEntry to fetch.
+     */
+    where: FeatureAuditEntryWhereUniqueInput
+  }
+
+  /**
+   * FeatureAuditEntry findFirst
+   */
+  export type FeatureAuditEntryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureAuditEntry to fetch.
+     */
+    where?: FeatureAuditEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FeatureAuditEntries to fetch.
+     */
+    orderBy?: FeatureAuditEntryOrderByWithRelationInput | FeatureAuditEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FeatureAuditEntries.
+     */
+    cursor?: FeatureAuditEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FeatureAuditEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FeatureAuditEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FeatureAuditEntries.
+     */
+    distinct?: FeatureAuditEntryScalarFieldEnum | FeatureAuditEntryScalarFieldEnum[]
+  }
+
+  /**
+   * FeatureAuditEntry findFirstOrThrow
+   */
+  export type FeatureAuditEntryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureAuditEntry to fetch.
+     */
+    where?: FeatureAuditEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FeatureAuditEntries to fetch.
+     */
+    orderBy?: FeatureAuditEntryOrderByWithRelationInput | FeatureAuditEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FeatureAuditEntries.
+     */
+    cursor?: FeatureAuditEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FeatureAuditEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FeatureAuditEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FeatureAuditEntries.
+     */
+    distinct?: FeatureAuditEntryScalarFieldEnum | FeatureAuditEntryScalarFieldEnum[]
+  }
+
+  /**
+   * FeatureAuditEntry findMany
+   */
+  export type FeatureAuditEntryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which FeatureAuditEntries to fetch.
+     */
+    where?: FeatureAuditEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FeatureAuditEntries to fetch.
+     */
+    orderBy?: FeatureAuditEntryOrderByWithRelationInput | FeatureAuditEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FeatureAuditEntries.
+     */
+    cursor?: FeatureAuditEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FeatureAuditEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FeatureAuditEntries.
+     */
+    skip?: number
+    distinct?: FeatureAuditEntryScalarFieldEnum | FeatureAuditEntryScalarFieldEnum[]
+  }
+
+  /**
+   * FeatureAuditEntry create
+   */
+  export type FeatureAuditEntryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FeatureAuditEntry.
+     */
+    data: XOR<FeatureAuditEntryCreateInput, FeatureAuditEntryUncheckedCreateInput>
+  }
+
+  /**
+   * FeatureAuditEntry createMany
+   */
+  export type FeatureAuditEntryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FeatureAuditEntries.
+     */
+    data: FeatureAuditEntryCreateManyInput | FeatureAuditEntryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FeatureAuditEntry createManyAndReturn
+   */
+  export type FeatureAuditEntryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many FeatureAuditEntries.
+     */
+    data: FeatureAuditEntryCreateManyInput | FeatureAuditEntryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FeatureAuditEntry update
+   */
+  export type FeatureAuditEntryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FeatureAuditEntry.
+     */
+    data: XOR<FeatureAuditEntryUpdateInput, FeatureAuditEntryUncheckedUpdateInput>
+    /**
+     * Choose, which FeatureAuditEntry to update.
+     */
+    where: FeatureAuditEntryWhereUniqueInput
+  }
+
+  /**
+   * FeatureAuditEntry updateMany
+   */
+  export type FeatureAuditEntryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FeatureAuditEntries.
+     */
+    data: XOR<FeatureAuditEntryUpdateManyMutationInput, FeatureAuditEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which FeatureAuditEntries to update
+     */
+    where?: FeatureAuditEntryWhereInput
+  }
+
+  /**
+   * FeatureAuditEntry upsert
+   */
+  export type FeatureAuditEntryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FeatureAuditEntry to update in case it exists.
+     */
+    where: FeatureAuditEntryWhereUniqueInput
+    /**
+     * In case the FeatureAuditEntry found by the `where` argument doesn't exist, create a new FeatureAuditEntry with this data.
+     */
+    create: XOR<FeatureAuditEntryCreateInput, FeatureAuditEntryUncheckedCreateInput>
+    /**
+     * In case the FeatureAuditEntry was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FeatureAuditEntryUpdateInput, FeatureAuditEntryUncheckedUpdateInput>
+  }
+
+  /**
+   * FeatureAuditEntry delete
+   */
+  export type FeatureAuditEntryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+    /**
+     * Filter which FeatureAuditEntry to delete.
+     */
+    where: FeatureAuditEntryWhereUniqueInput
+  }
+
+  /**
+   * FeatureAuditEntry deleteMany
+   */
+  export type FeatureAuditEntryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FeatureAuditEntries to delete
+     */
+    where?: FeatureAuditEntryWhereInput
+  }
+
+  /**
+   * FeatureAuditEntry.tenant
+   */
+  export type FeatureAuditEntry$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * FeatureAuditEntry without action
+   */
+  export type FeatureAuditEntryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FeatureAuditEntry
+     */
+    select?: FeatureAuditEntrySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeatureAuditEntryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SetupState
+   */
+
+  export type AggregateSetupState = {
+    _count: SetupStateCountAggregateOutputType | null
+    _min: SetupStateMinAggregateOutputType | null
+    _max: SetupStateMaxAggregateOutputType | null
+  }
+
+  export type SetupStateMinAggregateOutputType = {
+    id: string | null
+    isCompleted: boolean | null
+    currentStep: string | null
+    contextSnapshot: string | null
+    completedAt: Date | null
+    completedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SetupStateMaxAggregateOutputType = {
+    id: string | null
+    isCompleted: boolean | null
+    currentStep: string | null
+    contextSnapshot: string | null
+    completedAt: Date | null
+    completedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SetupStateCountAggregateOutputType = {
+    id: number
+    isCompleted: number
+    currentStep: number
+    contextSnapshot: number
+    completedAt: number
+    completedBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SetupStateMinAggregateInputType = {
+    id?: true
+    isCompleted?: true
+    currentStep?: true
+    contextSnapshot?: true
+    completedAt?: true
+    completedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SetupStateMaxAggregateInputType = {
+    id?: true
+    isCompleted?: true
+    currentStep?: true
+    contextSnapshot?: true
+    completedAt?: true
+    completedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SetupStateCountAggregateInputType = {
+    id?: true
+    isCompleted?: true
+    currentStep?: true
+    contextSnapshot?: true
+    completedAt?: true
+    completedBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SetupStateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SetupState to aggregate.
+     */
+    where?: SetupStateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SetupStates to fetch.
+     */
+    orderBy?: SetupStateOrderByWithRelationInput | SetupStateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SetupStateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SetupStates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SetupStates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SetupStates
+    **/
+    _count?: true | SetupStateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SetupStateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SetupStateMaxAggregateInputType
+  }
+
+  export type GetSetupStateAggregateType<T extends SetupStateAggregateArgs> = {
+        [P in keyof T & keyof AggregateSetupState]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSetupState[P]>
+      : GetScalarType<T[P], AggregateSetupState[P]>
+  }
+
+
+
+
+  export type SetupStateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SetupStateWhereInput
+    orderBy?: SetupStateOrderByWithAggregationInput | SetupStateOrderByWithAggregationInput[]
+    by: SetupStateScalarFieldEnum[] | SetupStateScalarFieldEnum
+    having?: SetupStateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SetupStateCountAggregateInputType | true
+    _min?: SetupStateMinAggregateInputType
+    _max?: SetupStateMaxAggregateInputType
+  }
+
+  export type SetupStateGroupByOutputType = {
+    id: string
+    isCompleted: boolean
+    currentStep: string | null
+    contextSnapshot: string | null
+    completedAt: Date | null
+    completedBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SetupStateCountAggregateOutputType | null
+    _min: SetupStateMinAggregateOutputType | null
+    _max: SetupStateMaxAggregateOutputType | null
+  }
+
+  type GetSetupStateGroupByPayload<T extends SetupStateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SetupStateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SetupStateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SetupStateGroupByOutputType[P]>
+            : GetScalarType<T[P], SetupStateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SetupStateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    isCompleted?: boolean
+    currentStep?: boolean
+    contextSnapshot?: boolean
+    completedAt?: boolean
+    completedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["setupState"]>
+
+  export type SetupStateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    isCompleted?: boolean
+    currentStep?: boolean
+    contextSnapshot?: boolean
+    completedAt?: boolean
+    completedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["setupState"]>
+
+  export type SetupStateSelectScalar = {
+    id?: boolean
+    isCompleted?: boolean
+    currentStep?: boolean
+    contextSnapshot?: boolean
+    completedAt?: boolean
+    completedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $SetupStatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SetupState"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      isCompleted: boolean
+      currentStep: string | null
+      contextSnapshot: string | null
+      completedAt: Date | null
+      completedBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["setupState"]>
+    composites: {}
+  }
+
+  type SetupStateGetPayload<S extends boolean | null | undefined | SetupStateDefaultArgs> = $Result.GetResult<Prisma.$SetupStatePayload, S>
+
+  type SetupStateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SetupStateFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SetupStateCountAggregateInputType | true
+    }
+
+  export interface SetupStateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SetupState'], meta: { name: 'SetupState' } }
+    /**
+     * Find zero or one SetupState that matches the filter.
+     * @param {SetupStateFindUniqueArgs} args - Arguments to find a SetupState
+     * @example
+     * // Get one SetupState
+     * const setupState = await prisma.setupState.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SetupStateFindUniqueArgs>(args: SelectSubset<T, SetupStateFindUniqueArgs<ExtArgs>>): Prisma__SetupStateClient<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SetupState that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SetupStateFindUniqueOrThrowArgs} args - Arguments to find a SetupState
+     * @example
+     * // Get one SetupState
+     * const setupState = await prisma.setupState.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SetupStateFindUniqueOrThrowArgs>(args: SelectSubset<T, SetupStateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SetupStateClient<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SetupState that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetupStateFindFirstArgs} args - Arguments to find a SetupState
+     * @example
+     * // Get one SetupState
+     * const setupState = await prisma.setupState.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SetupStateFindFirstArgs>(args?: SelectSubset<T, SetupStateFindFirstArgs<ExtArgs>>): Prisma__SetupStateClient<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SetupState that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetupStateFindFirstOrThrowArgs} args - Arguments to find a SetupState
+     * @example
+     * // Get one SetupState
+     * const setupState = await prisma.setupState.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SetupStateFindFirstOrThrowArgs>(args?: SelectSubset<T, SetupStateFindFirstOrThrowArgs<ExtArgs>>): Prisma__SetupStateClient<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SetupStates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetupStateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SetupStates
+     * const setupStates = await prisma.setupState.findMany()
+     * 
+     * // Get first 10 SetupStates
+     * const setupStates = await prisma.setupState.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const setupStateWithIdOnly = await prisma.setupState.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SetupStateFindManyArgs>(args?: SelectSubset<T, SetupStateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SetupState.
+     * @param {SetupStateCreateArgs} args - Arguments to create a SetupState.
+     * @example
+     * // Create one SetupState
+     * const SetupState = await prisma.setupState.create({
+     *   data: {
+     *     // ... data to create a SetupState
+     *   }
+     * })
+     * 
+     */
+    create<T extends SetupStateCreateArgs>(args: SelectSubset<T, SetupStateCreateArgs<ExtArgs>>): Prisma__SetupStateClient<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SetupStates.
+     * @param {SetupStateCreateManyArgs} args - Arguments to create many SetupStates.
+     * @example
+     * // Create many SetupStates
+     * const setupState = await prisma.setupState.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SetupStateCreateManyArgs>(args?: SelectSubset<T, SetupStateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SetupStates and returns the data saved in the database.
+     * @param {SetupStateCreateManyAndReturnArgs} args - Arguments to create many SetupStates.
+     * @example
+     * // Create many SetupStates
+     * const setupState = await prisma.setupState.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SetupStates and only return the `id`
+     * const setupStateWithIdOnly = await prisma.setupState.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SetupStateCreateManyAndReturnArgs>(args?: SelectSubset<T, SetupStateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SetupState.
+     * @param {SetupStateDeleteArgs} args - Arguments to delete one SetupState.
+     * @example
+     * // Delete one SetupState
+     * const SetupState = await prisma.setupState.delete({
+     *   where: {
+     *     // ... filter to delete one SetupState
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SetupStateDeleteArgs>(args: SelectSubset<T, SetupStateDeleteArgs<ExtArgs>>): Prisma__SetupStateClient<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SetupState.
+     * @param {SetupStateUpdateArgs} args - Arguments to update one SetupState.
+     * @example
+     * // Update one SetupState
+     * const setupState = await prisma.setupState.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SetupStateUpdateArgs>(args: SelectSubset<T, SetupStateUpdateArgs<ExtArgs>>): Prisma__SetupStateClient<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SetupStates.
+     * @param {SetupStateDeleteManyArgs} args - Arguments to filter SetupStates to delete.
+     * @example
+     * // Delete a few SetupStates
+     * const { count } = await prisma.setupState.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SetupStateDeleteManyArgs>(args?: SelectSubset<T, SetupStateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SetupStates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetupStateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SetupStates
+     * const setupState = await prisma.setupState.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SetupStateUpdateManyArgs>(args: SelectSubset<T, SetupStateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SetupState.
+     * @param {SetupStateUpsertArgs} args - Arguments to update or create a SetupState.
+     * @example
+     * // Update or create a SetupState
+     * const setupState = await prisma.setupState.upsert({
+     *   create: {
+     *     // ... data to create a SetupState
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SetupState we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SetupStateUpsertArgs>(args: SelectSubset<T, SetupStateUpsertArgs<ExtArgs>>): Prisma__SetupStateClient<$Result.GetResult<Prisma.$SetupStatePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SetupStates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetupStateCountArgs} args - Arguments to filter SetupStates to count.
+     * @example
+     * // Count the number of SetupStates
+     * const count = await prisma.setupState.count({
+     *   where: {
+     *     // ... the filter for the SetupStates we want to count
+     *   }
+     * })
+    **/
+    count<T extends SetupStateCountArgs>(
+      args?: Subset<T, SetupStateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SetupStateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SetupState.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetupStateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SetupStateAggregateArgs>(args: Subset<T, SetupStateAggregateArgs>): Prisma.PrismaPromise<GetSetupStateAggregateType<T>>
+
+    /**
+     * Group by SetupState.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetupStateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SetupStateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SetupStateGroupByArgs['orderBy'] }
+        : { orderBy?: SetupStateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SetupStateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSetupStateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SetupState model
+   */
+  readonly fields: SetupStateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SetupState.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SetupStateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SetupState model
+   */ 
+  interface SetupStateFieldRefs {
+    readonly id: FieldRef<"SetupState", 'String'>
+    readonly isCompleted: FieldRef<"SetupState", 'Boolean'>
+    readonly currentStep: FieldRef<"SetupState", 'String'>
+    readonly contextSnapshot: FieldRef<"SetupState", 'String'>
+    readonly completedAt: FieldRef<"SetupState", 'DateTime'>
+    readonly completedBy: FieldRef<"SetupState", 'String'>
+    readonly createdAt: FieldRef<"SetupState", 'DateTime'>
+    readonly updatedAt: FieldRef<"SetupState", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SetupState findUnique
+   */
+  export type SetupStateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+    /**
+     * Filter, which SetupState to fetch.
+     */
+    where: SetupStateWhereUniqueInput
+  }
+
+  /**
+   * SetupState findUniqueOrThrow
+   */
+  export type SetupStateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+    /**
+     * Filter, which SetupState to fetch.
+     */
+    where: SetupStateWhereUniqueInput
+  }
+
+  /**
+   * SetupState findFirst
+   */
+  export type SetupStateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+    /**
+     * Filter, which SetupState to fetch.
+     */
+    where?: SetupStateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SetupStates to fetch.
+     */
+    orderBy?: SetupStateOrderByWithRelationInput | SetupStateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SetupStates.
+     */
+    cursor?: SetupStateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SetupStates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SetupStates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SetupStates.
+     */
+    distinct?: SetupStateScalarFieldEnum | SetupStateScalarFieldEnum[]
+  }
+
+  /**
+   * SetupState findFirstOrThrow
+   */
+  export type SetupStateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+    /**
+     * Filter, which SetupState to fetch.
+     */
+    where?: SetupStateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SetupStates to fetch.
+     */
+    orderBy?: SetupStateOrderByWithRelationInput | SetupStateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SetupStates.
+     */
+    cursor?: SetupStateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SetupStates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SetupStates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SetupStates.
+     */
+    distinct?: SetupStateScalarFieldEnum | SetupStateScalarFieldEnum[]
+  }
+
+  /**
+   * SetupState findMany
+   */
+  export type SetupStateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+    /**
+     * Filter, which SetupStates to fetch.
+     */
+    where?: SetupStateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SetupStates to fetch.
+     */
+    orderBy?: SetupStateOrderByWithRelationInput | SetupStateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SetupStates.
+     */
+    cursor?: SetupStateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SetupStates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SetupStates.
+     */
+    skip?: number
+    distinct?: SetupStateScalarFieldEnum | SetupStateScalarFieldEnum[]
+  }
+
+  /**
+   * SetupState create
+   */
+  export type SetupStateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+    /**
+     * The data needed to create a SetupState.
+     */
+    data: XOR<SetupStateCreateInput, SetupStateUncheckedCreateInput>
+  }
+
+  /**
+   * SetupState createMany
+   */
+  export type SetupStateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SetupStates.
+     */
+    data: SetupStateCreateManyInput | SetupStateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SetupState createManyAndReturn
+   */
+  export type SetupStateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SetupStates.
+     */
+    data: SetupStateCreateManyInput | SetupStateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SetupState update
+   */
+  export type SetupStateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+    /**
+     * The data needed to update a SetupState.
+     */
+    data: XOR<SetupStateUpdateInput, SetupStateUncheckedUpdateInput>
+    /**
+     * Choose, which SetupState to update.
+     */
+    where: SetupStateWhereUniqueInput
+  }
+
+  /**
+   * SetupState updateMany
+   */
+  export type SetupStateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SetupStates.
+     */
+    data: XOR<SetupStateUpdateManyMutationInput, SetupStateUncheckedUpdateManyInput>
+    /**
+     * Filter which SetupStates to update
+     */
+    where?: SetupStateWhereInput
+  }
+
+  /**
+   * SetupState upsert
+   */
+  export type SetupStateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+    /**
+     * The filter to search for the SetupState to update in case it exists.
+     */
+    where: SetupStateWhereUniqueInput
+    /**
+     * In case the SetupState found by the `where` argument doesn't exist, create a new SetupState with this data.
+     */
+    create: XOR<SetupStateCreateInput, SetupStateUncheckedCreateInput>
+    /**
+     * In case the SetupState was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SetupStateUpdateInput, SetupStateUncheckedUpdateInput>
+  }
+
+  /**
+   * SetupState delete
+   */
+  export type SetupStateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+    /**
+     * Filter which SetupState to delete.
+     */
+    where: SetupStateWhereUniqueInput
+  }
+
+  /**
+   * SetupState deleteMany
+   */
+  export type SetupStateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SetupStates to delete
+     */
+    where?: SetupStateWhereInput
+  }
+
+  /**
+   * SetupState without action
+   */
+  export type SetupStateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SetupState
+     */
+    select?: SetupStateSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -21045,6 +26458,75 @@ export namespace Prisma {
   };
 
   export type WebhookEndpointScalarFieldEnum = (typeof WebhookEndpointScalarFieldEnum)[keyof typeof WebhookEndpointScalarFieldEnum]
+
+
+  export const FeatureDefinitionScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    name: 'name',
+    description: 'description',
+    tier: 'tier',
+    defaultEnabled: 'defaultEnabled',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    createdBy: 'createdBy'
+  };
+
+  export type FeatureDefinitionScalarFieldEnum = (typeof FeatureDefinitionScalarFieldEnum)[keyof typeof FeatureDefinitionScalarFieldEnum]
+
+
+  export const GlobalFeatureRuleScalarFieldEnum: {
+    id: 'id',
+    featureKey: 'featureKey',
+    enabled: 'enabled',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    createdBy: 'createdBy'
+  };
+
+  export type GlobalFeatureRuleScalarFieldEnum = (typeof GlobalFeatureRuleScalarFieldEnum)[keyof typeof GlobalFeatureRuleScalarFieldEnum]
+
+
+  export const TenantFeatureRuleScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    featureKey: 'featureKey',
+    enabled: 'enabled',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    createdBy: 'createdBy'
+  };
+
+  export type TenantFeatureRuleScalarFieldEnum = (typeof TenantFeatureRuleScalarFieldEnum)[keyof typeof TenantFeatureRuleScalarFieldEnum]
+
+
+  export const FeatureAuditEntryScalarFieldEnum: {
+    id: 'id',
+    featureKey: 'featureKey',
+    scope: 'scope',
+    tenantId: 'tenantId',
+    beforeValue: 'beforeValue',
+    afterValue: 'afterValue',
+    action: 'action',
+    createdAt: 'createdAt',
+    createdBy: 'createdBy'
+  };
+
+  export type FeatureAuditEntryScalarFieldEnum = (typeof FeatureAuditEntryScalarFieldEnum)[keyof typeof FeatureAuditEntryScalarFieldEnum]
+
+
+  export const SetupStateScalarFieldEnum: {
+    id: 'id',
+    isCompleted: 'isCompleted',
+    currentStep: 'currentStep',
+    contextSnapshot: 'contextSnapshot',
+    completedAt: 'completedAt',
+    completedBy: 'completedBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SetupStateScalarFieldEnum = (typeof SetupStateScalarFieldEnum)[keyof typeof SetupStateScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -21573,6 +27055,8 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     sessions?: SessionListRelationFilter
     webhookEndpoints?: WebhookEndpointListRelationFilter
+    featureRules?: TenantFeatureRuleListRelationFilter
+    featureAuditEntries?: FeatureAuditEntryListRelationFilter
   }
 
   export type TenantOrderByWithRelationInput = {
@@ -21616,6 +27100,8 @@ export namespace Prisma {
     notifications?: NotificationOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     webhookEndpoints?: WebhookEndpointOrderByRelationAggregateInput
+    featureRules?: TenantFeatureRuleOrderByRelationAggregateInput
+    featureAuditEntries?: FeatureAuditEntryOrderByRelationAggregateInput
   }
 
   export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -21662,6 +27148,8 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     sessions?: SessionListRelationFilter
     webhookEndpoints?: WebhookEndpointListRelationFilter
+    featureRules?: TenantFeatureRuleListRelationFilter
+    featureAuditEntries?: FeatureAuditEntryListRelationFilter
   }, "id" | "slug" | "subdomain" | "customDomain">
 
   export type TenantOrderByWithAggregationInput = {
@@ -22793,6 +28281,361 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"WebhookEndpoint"> | Date | string
   }
 
+  export type FeatureDefinitionWhereInput = {
+    AND?: FeatureDefinitionWhereInput | FeatureDefinitionWhereInput[]
+    OR?: FeatureDefinitionWhereInput[]
+    NOT?: FeatureDefinitionWhereInput | FeatureDefinitionWhereInput[]
+    id?: StringFilter<"FeatureDefinition"> | string
+    key?: StringFilter<"FeatureDefinition"> | string
+    name?: StringFilter<"FeatureDefinition"> | string
+    description?: StringNullableFilter<"FeatureDefinition"> | string | null
+    tier?: StringFilter<"FeatureDefinition"> | string
+    defaultEnabled?: BoolFilter<"FeatureDefinition"> | boolean
+    createdAt?: DateTimeFilter<"FeatureDefinition"> | Date | string
+    updatedAt?: DateTimeFilter<"FeatureDefinition"> | Date | string
+    createdBy?: StringFilter<"FeatureDefinition"> | string
+    globalRules?: GlobalFeatureRuleListRelationFilter
+    tenantRules?: TenantFeatureRuleListRelationFilter
+    auditEntries?: FeatureAuditEntryListRelationFilter
+  }
+
+  export type FeatureDefinitionOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    tier?: SortOrder
+    defaultEnabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    globalRules?: GlobalFeatureRuleOrderByRelationAggregateInput
+    tenantRules?: TenantFeatureRuleOrderByRelationAggregateInput
+    auditEntries?: FeatureAuditEntryOrderByRelationAggregateInput
+  }
+
+  export type FeatureDefinitionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    key?: string
+    AND?: FeatureDefinitionWhereInput | FeatureDefinitionWhereInput[]
+    OR?: FeatureDefinitionWhereInput[]
+    NOT?: FeatureDefinitionWhereInput | FeatureDefinitionWhereInput[]
+    name?: StringFilter<"FeatureDefinition"> | string
+    description?: StringNullableFilter<"FeatureDefinition"> | string | null
+    tier?: StringFilter<"FeatureDefinition"> | string
+    defaultEnabled?: BoolFilter<"FeatureDefinition"> | boolean
+    createdAt?: DateTimeFilter<"FeatureDefinition"> | Date | string
+    updatedAt?: DateTimeFilter<"FeatureDefinition"> | Date | string
+    createdBy?: StringFilter<"FeatureDefinition"> | string
+    globalRules?: GlobalFeatureRuleListRelationFilter
+    tenantRules?: TenantFeatureRuleListRelationFilter
+    auditEntries?: FeatureAuditEntryListRelationFilter
+  }, "id" | "key">
+
+  export type FeatureDefinitionOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    tier?: SortOrder
+    defaultEnabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    _count?: FeatureDefinitionCountOrderByAggregateInput
+    _max?: FeatureDefinitionMaxOrderByAggregateInput
+    _min?: FeatureDefinitionMinOrderByAggregateInput
+  }
+
+  export type FeatureDefinitionScalarWhereWithAggregatesInput = {
+    AND?: FeatureDefinitionScalarWhereWithAggregatesInput | FeatureDefinitionScalarWhereWithAggregatesInput[]
+    OR?: FeatureDefinitionScalarWhereWithAggregatesInput[]
+    NOT?: FeatureDefinitionScalarWhereWithAggregatesInput | FeatureDefinitionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FeatureDefinition"> | string
+    key?: StringWithAggregatesFilter<"FeatureDefinition"> | string
+    name?: StringWithAggregatesFilter<"FeatureDefinition"> | string
+    description?: StringNullableWithAggregatesFilter<"FeatureDefinition"> | string | null
+    tier?: StringWithAggregatesFilter<"FeatureDefinition"> | string
+    defaultEnabled?: BoolWithAggregatesFilter<"FeatureDefinition"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"FeatureDefinition"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"FeatureDefinition"> | Date | string
+    createdBy?: StringWithAggregatesFilter<"FeatureDefinition"> | string
+  }
+
+  export type GlobalFeatureRuleWhereInput = {
+    AND?: GlobalFeatureRuleWhereInput | GlobalFeatureRuleWhereInput[]
+    OR?: GlobalFeatureRuleWhereInput[]
+    NOT?: GlobalFeatureRuleWhereInput | GlobalFeatureRuleWhereInput[]
+    id?: StringFilter<"GlobalFeatureRule"> | string
+    featureKey?: StringFilter<"GlobalFeatureRule"> | string
+    enabled?: BoolFilter<"GlobalFeatureRule"> | boolean
+    createdAt?: DateTimeFilter<"GlobalFeatureRule"> | Date | string
+    updatedAt?: DateTimeFilter<"GlobalFeatureRule"> | Date | string
+    createdBy?: StringFilter<"GlobalFeatureRule"> | string
+    feature?: XOR<FeatureDefinitionRelationFilter, FeatureDefinitionWhereInput>
+  }
+
+  export type GlobalFeatureRuleOrderByWithRelationInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    feature?: FeatureDefinitionOrderByWithRelationInput
+  }
+
+  export type GlobalFeatureRuleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    featureKey?: string
+    AND?: GlobalFeatureRuleWhereInput | GlobalFeatureRuleWhereInput[]
+    OR?: GlobalFeatureRuleWhereInput[]
+    NOT?: GlobalFeatureRuleWhereInput | GlobalFeatureRuleWhereInput[]
+    enabled?: BoolFilter<"GlobalFeatureRule"> | boolean
+    createdAt?: DateTimeFilter<"GlobalFeatureRule"> | Date | string
+    updatedAt?: DateTimeFilter<"GlobalFeatureRule"> | Date | string
+    createdBy?: StringFilter<"GlobalFeatureRule"> | string
+    feature?: XOR<FeatureDefinitionRelationFilter, FeatureDefinitionWhereInput>
+  }, "id" | "featureKey">
+
+  export type GlobalFeatureRuleOrderByWithAggregationInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    _count?: GlobalFeatureRuleCountOrderByAggregateInput
+    _max?: GlobalFeatureRuleMaxOrderByAggregateInput
+    _min?: GlobalFeatureRuleMinOrderByAggregateInput
+  }
+
+  export type GlobalFeatureRuleScalarWhereWithAggregatesInput = {
+    AND?: GlobalFeatureRuleScalarWhereWithAggregatesInput | GlobalFeatureRuleScalarWhereWithAggregatesInput[]
+    OR?: GlobalFeatureRuleScalarWhereWithAggregatesInput[]
+    NOT?: GlobalFeatureRuleScalarWhereWithAggregatesInput | GlobalFeatureRuleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GlobalFeatureRule"> | string
+    featureKey?: StringWithAggregatesFilter<"GlobalFeatureRule"> | string
+    enabled?: BoolWithAggregatesFilter<"GlobalFeatureRule"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"GlobalFeatureRule"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GlobalFeatureRule"> | Date | string
+    createdBy?: StringWithAggregatesFilter<"GlobalFeatureRule"> | string
+  }
+
+  export type TenantFeatureRuleWhereInput = {
+    AND?: TenantFeatureRuleWhereInput | TenantFeatureRuleWhereInput[]
+    OR?: TenantFeatureRuleWhereInput[]
+    NOT?: TenantFeatureRuleWhereInput | TenantFeatureRuleWhereInput[]
+    id?: StringFilter<"TenantFeatureRule"> | string
+    tenantId?: StringFilter<"TenantFeatureRule"> | string
+    featureKey?: StringFilter<"TenantFeatureRule"> | string
+    enabled?: BoolFilter<"TenantFeatureRule"> | boolean
+    createdAt?: DateTimeFilter<"TenantFeatureRule"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantFeatureRule"> | Date | string
+    createdBy?: StringFilter<"TenantFeatureRule"> | string
+    tenant?: XOR<TenantRelationFilter, TenantWhereInput>
+    feature?: XOR<FeatureDefinitionRelationFilter, FeatureDefinitionWhereInput>
+  }
+
+  export type TenantFeatureRuleOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+    feature?: FeatureDefinitionOrderByWithRelationInput
+  }
+
+  export type TenantFeatureRuleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_featureKey?: TenantFeatureRuleTenantIdFeatureKeyCompoundUniqueInput
+    AND?: TenantFeatureRuleWhereInput | TenantFeatureRuleWhereInput[]
+    OR?: TenantFeatureRuleWhereInput[]
+    NOT?: TenantFeatureRuleWhereInput | TenantFeatureRuleWhereInput[]
+    tenantId?: StringFilter<"TenantFeatureRule"> | string
+    featureKey?: StringFilter<"TenantFeatureRule"> | string
+    enabled?: BoolFilter<"TenantFeatureRule"> | boolean
+    createdAt?: DateTimeFilter<"TenantFeatureRule"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantFeatureRule"> | Date | string
+    createdBy?: StringFilter<"TenantFeatureRule"> | string
+    tenant?: XOR<TenantRelationFilter, TenantWhereInput>
+    feature?: XOR<FeatureDefinitionRelationFilter, FeatureDefinitionWhereInput>
+  }, "id" | "tenantId_featureKey">
+
+  export type TenantFeatureRuleOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    _count?: TenantFeatureRuleCountOrderByAggregateInput
+    _max?: TenantFeatureRuleMaxOrderByAggregateInput
+    _min?: TenantFeatureRuleMinOrderByAggregateInput
+  }
+
+  export type TenantFeatureRuleScalarWhereWithAggregatesInput = {
+    AND?: TenantFeatureRuleScalarWhereWithAggregatesInput | TenantFeatureRuleScalarWhereWithAggregatesInput[]
+    OR?: TenantFeatureRuleScalarWhereWithAggregatesInput[]
+    NOT?: TenantFeatureRuleScalarWhereWithAggregatesInput | TenantFeatureRuleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TenantFeatureRule"> | string
+    tenantId?: StringWithAggregatesFilter<"TenantFeatureRule"> | string
+    featureKey?: StringWithAggregatesFilter<"TenantFeatureRule"> | string
+    enabled?: BoolWithAggregatesFilter<"TenantFeatureRule"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"TenantFeatureRule"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TenantFeatureRule"> | Date | string
+    createdBy?: StringWithAggregatesFilter<"TenantFeatureRule"> | string
+  }
+
+  export type FeatureAuditEntryWhereInput = {
+    AND?: FeatureAuditEntryWhereInput | FeatureAuditEntryWhereInput[]
+    OR?: FeatureAuditEntryWhereInput[]
+    NOT?: FeatureAuditEntryWhereInput | FeatureAuditEntryWhereInput[]
+    id?: StringFilter<"FeatureAuditEntry"> | string
+    featureKey?: StringFilter<"FeatureAuditEntry"> | string
+    scope?: StringFilter<"FeatureAuditEntry"> | string
+    tenantId?: StringNullableFilter<"FeatureAuditEntry"> | string | null
+    beforeValue?: StringNullableFilter<"FeatureAuditEntry"> | string | null
+    afterValue?: StringNullableFilter<"FeatureAuditEntry"> | string | null
+    action?: StringFilter<"FeatureAuditEntry"> | string
+    createdAt?: DateTimeFilter<"FeatureAuditEntry"> | Date | string
+    createdBy?: StringFilter<"FeatureAuditEntry"> | string
+    feature?: XOR<FeatureDefinitionRelationFilter, FeatureDefinitionWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }
+
+  export type FeatureAuditEntryOrderByWithRelationInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    scope?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    beforeValue?: SortOrderInput | SortOrder
+    afterValue?: SortOrderInput | SortOrder
+    action?: SortOrder
+    createdAt?: SortOrder
+    createdBy?: SortOrder
+    feature?: FeatureDefinitionOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type FeatureAuditEntryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FeatureAuditEntryWhereInput | FeatureAuditEntryWhereInput[]
+    OR?: FeatureAuditEntryWhereInput[]
+    NOT?: FeatureAuditEntryWhereInput | FeatureAuditEntryWhereInput[]
+    featureKey?: StringFilter<"FeatureAuditEntry"> | string
+    scope?: StringFilter<"FeatureAuditEntry"> | string
+    tenantId?: StringNullableFilter<"FeatureAuditEntry"> | string | null
+    beforeValue?: StringNullableFilter<"FeatureAuditEntry"> | string | null
+    afterValue?: StringNullableFilter<"FeatureAuditEntry"> | string | null
+    action?: StringFilter<"FeatureAuditEntry"> | string
+    createdAt?: DateTimeFilter<"FeatureAuditEntry"> | Date | string
+    createdBy?: StringFilter<"FeatureAuditEntry"> | string
+    feature?: XOR<FeatureDefinitionRelationFilter, FeatureDefinitionWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }, "id">
+
+  export type FeatureAuditEntryOrderByWithAggregationInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    scope?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    beforeValue?: SortOrderInput | SortOrder
+    afterValue?: SortOrderInput | SortOrder
+    action?: SortOrder
+    createdAt?: SortOrder
+    createdBy?: SortOrder
+    _count?: FeatureAuditEntryCountOrderByAggregateInput
+    _max?: FeatureAuditEntryMaxOrderByAggregateInput
+    _min?: FeatureAuditEntryMinOrderByAggregateInput
+  }
+
+  export type FeatureAuditEntryScalarWhereWithAggregatesInput = {
+    AND?: FeatureAuditEntryScalarWhereWithAggregatesInput | FeatureAuditEntryScalarWhereWithAggregatesInput[]
+    OR?: FeatureAuditEntryScalarWhereWithAggregatesInput[]
+    NOT?: FeatureAuditEntryScalarWhereWithAggregatesInput | FeatureAuditEntryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FeatureAuditEntry"> | string
+    featureKey?: StringWithAggregatesFilter<"FeatureAuditEntry"> | string
+    scope?: StringWithAggregatesFilter<"FeatureAuditEntry"> | string
+    tenantId?: StringNullableWithAggregatesFilter<"FeatureAuditEntry"> | string | null
+    beforeValue?: StringNullableWithAggregatesFilter<"FeatureAuditEntry"> | string | null
+    afterValue?: StringNullableWithAggregatesFilter<"FeatureAuditEntry"> | string | null
+    action?: StringWithAggregatesFilter<"FeatureAuditEntry"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"FeatureAuditEntry"> | Date | string
+    createdBy?: StringWithAggregatesFilter<"FeatureAuditEntry"> | string
+  }
+
+  export type SetupStateWhereInput = {
+    AND?: SetupStateWhereInput | SetupStateWhereInput[]
+    OR?: SetupStateWhereInput[]
+    NOT?: SetupStateWhereInput | SetupStateWhereInput[]
+    id?: StringFilter<"SetupState"> | string
+    isCompleted?: BoolFilter<"SetupState"> | boolean
+    currentStep?: StringNullableFilter<"SetupState"> | string | null
+    contextSnapshot?: StringNullableFilter<"SetupState"> | string | null
+    completedAt?: DateTimeNullableFilter<"SetupState"> | Date | string | null
+    completedBy?: StringNullableFilter<"SetupState"> | string | null
+    createdAt?: DateTimeFilter<"SetupState"> | Date | string
+    updatedAt?: DateTimeFilter<"SetupState"> | Date | string
+  }
+
+  export type SetupStateOrderByWithRelationInput = {
+    id?: SortOrder
+    isCompleted?: SortOrder
+    currentStep?: SortOrderInput | SortOrder
+    contextSnapshot?: SortOrderInput | SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    completedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SetupStateWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SetupStateWhereInput | SetupStateWhereInput[]
+    OR?: SetupStateWhereInput[]
+    NOT?: SetupStateWhereInput | SetupStateWhereInput[]
+    isCompleted?: BoolFilter<"SetupState"> | boolean
+    currentStep?: StringNullableFilter<"SetupState"> | string | null
+    contextSnapshot?: StringNullableFilter<"SetupState"> | string | null
+    completedAt?: DateTimeNullableFilter<"SetupState"> | Date | string | null
+    completedBy?: StringNullableFilter<"SetupState"> | string | null
+    createdAt?: DateTimeFilter<"SetupState"> | Date | string
+    updatedAt?: DateTimeFilter<"SetupState"> | Date | string
+  }, "id">
+
+  export type SetupStateOrderByWithAggregationInput = {
+    id?: SortOrder
+    isCompleted?: SortOrder
+    currentStep?: SortOrderInput | SortOrder
+    contextSnapshot?: SortOrderInput | SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    completedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SetupStateCountOrderByAggregateInput
+    _max?: SetupStateMaxOrderByAggregateInput
+    _min?: SetupStateMinOrderByAggregateInput
+  }
+
+  export type SetupStateScalarWhereWithAggregatesInput = {
+    AND?: SetupStateScalarWhereWithAggregatesInput | SetupStateScalarWhereWithAggregatesInput[]
+    OR?: SetupStateScalarWhereWithAggregatesInput[]
+    NOT?: SetupStateScalarWhereWithAggregatesInput | SetupStateScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SetupState"> | string
+    isCompleted?: BoolWithAggregatesFilter<"SetupState"> | boolean
+    currentStep?: StringNullableWithAggregatesFilter<"SetupState"> | string | null
+    contextSnapshot?: StringNullableWithAggregatesFilter<"SetupState"> | string | null
+    completedAt?: DateTimeNullableWithAggregatesFilter<"SetupState"> | Date | string | null
+    completedBy?: StringNullableWithAggregatesFilter<"SetupState"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SetupState"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SetupState"> | Date | string
+  }
+
   export type AccountCreateInput = {
     id?: string
     type: string
@@ -23285,6 +29128,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateInput = {
@@ -23328,6 +29173,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUpdateInput = {
@@ -23371,6 +29218,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateInput = {
@@ -23414,6 +29263,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateManyInput = {
@@ -24671,6 +30522,391 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FeatureDefinitionCreateInput = {
+    id?: string
+    key: string
+    name: string
+    description?: string | null
+    tier: string
+    defaultEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    globalRules?: GlobalFeatureRuleCreateNestedManyWithoutFeatureInput
+    tenantRules?: TenantFeatureRuleCreateNestedManyWithoutFeatureInput
+    auditEntries?: FeatureAuditEntryCreateNestedManyWithoutFeatureInput
+  }
+
+  export type FeatureDefinitionUncheckedCreateInput = {
+    id?: string
+    key: string
+    name: string
+    description?: string | null
+    tier: string
+    defaultEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    globalRules?: GlobalFeatureRuleUncheckedCreateNestedManyWithoutFeatureInput
+    tenantRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutFeatureInput
+    auditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutFeatureInput
+  }
+
+  export type FeatureDefinitionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    globalRules?: GlobalFeatureRuleUpdateManyWithoutFeatureNestedInput
+    tenantRules?: TenantFeatureRuleUpdateManyWithoutFeatureNestedInput
+    auditEntries?: FeatureAuditEntryUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type FeatureDefinitionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    globalRules?: GlobalFeatureRuleUncheckedUpdateManyWithoutFeatureNestedInput
+    tenantRules?: TenantFeatureRuleUncheckedUpdateManyWithoutFeatureNestedInput
+    auditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type FeatureDefinitionCreateManyInput = {
+    id?: string
+    key: string
+    name: string
+    description?: string | null
+    tier: string
+    defaultEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type FeatureDefinitionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FeatureDefinitionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GlobalFeatureRuleCreateInput = {
+    id?: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    feature: FeatureDefinitionCreateNestedOneWithoutGlobalRulesInput
+  }
+
+  export type GlobalFeatureRuleUncheckedCreateInput = {
+    id?: string
+    featureKey: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type GlobalFeatureRuleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    feature?: FeatureDefinitionUpdateOneRequiredWithoutGlobalRulesNestedInput
+  }
+
+  export type GlobalFeatureRuleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GlobalFeatureRuleCreateManyInput = {
+    id?: string
+    featureKey: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type GlobalFeatureRuleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GlobalFeatureRuleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TenantFeatureRuleCreateInput = {
+    id?: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    tenant: TenantCreateNestedOneWithoutFeatureRulesInput
+    feature: FeatureDefinitionCreateNestedOneWithoutTenantRulesInput
+  }
+
+  export type TenantFeatureRuleUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    featureKey: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type TenantFeatureRuleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    tenant?: TenantUpdateOneRequiredWithoutFeatureRulesNestedInput
+    feature?: FeatureDefinitionUpdateOneRequiredWithoutTenantRulesNestedInput
+  }
+
+  export type TenantFeatureRuleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TenantFeatureRuleCreateManyInput = {
+    id?: string
+    tenantId: string
+    featureKey: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type TenantFeatureRuleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TenantFeatureRuleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FeatureAuditEntryCreateInput = {
+    id?: string
+    scope: string
+    beforeValue?: string | null
+    afterValue?: string | null
+    action: string
+    createdAt?: Date | string
+    createdBy: string
+    feature: FeatureDefinitionCreateNestedOneWithoutAuditEntriesInput
+    tenant?: TenantCreateNestedOneWithoutFeatureAuditEntriesInput
+  }
+
+  export type FeatureAuditEntryUncheckedCreateInput = {
+    id?: string
+    featureKey: string
+    scope: string
+    tenantId?: string | null
+    beforeValue?: string | null
+    afterValue?: string | null
+    action: string
+    createdAt?: Date | string
+    createdBy: string
+  }
+
+  export type FeatureAuditEntryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    feature?: FeatureDefinitionUpdateOneRequiredWithoutAuditEntriesNestedInput
+    tenant?: TenantUpdateOneWithoutFeatureAuditEntriesNestedInput
+  }
+
+  export type FeatureAuditEntryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FeatureAuditEntryCreateManyInput = {
+    id?: string
+    featureKey: string
+    scope: string
+    tenantId?: string | null
+    beforeValue?: string | null
+    afterValue?: string | null
+    action: string
+    createdAt?: Date | string
+    createdBy: string
+  }
+
+  export type FeatureAuditEntryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FeatureAuditEntryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SetupStateCreateInput = {
+    id?: string
+    isCompleted?: boolean
+    currentStep?: string | null
+    contextSnapshot?: string | null
+    completedAt?: Date | string | null
+    completedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SetupStateUncheckedCreateInput = {
+    id?: string
+    isCompleted?: boolean
+    currentStep?: string | null
+    contextSnapshot?: string | null
+    completedAt?: Date | string | null
+    completedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SetupStateUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    currentStep?: NullableStringFieldUpdateOperationsInput | string | null
+    contextSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SetupStateUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    currentStep?: NullableStringFieldUpdateOperationsInput | string | null
+    contextSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SetupStateCreateManyInput = {
+    id?: string
+    isCompleted?: boolean
+    currentStep?: string | null
+    contextSnapshot?: string | null
+    completedAt?: Date | string | null
+    completedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SetupStateUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    currentStep?: NullableStringFieldUpdateOperationsInput | string | null
+    contextSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SetupStateUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    currentStep?: NullableStringFieldUpdateOperationsInput | string | null
+    contextSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -25146,11 +31382,31 @@ export namespace Prisma {
     none?: WebhookEndpointWhereInput
   }
 
+  export type TenantFeatureRuleListRelationFilter = {
+    every?: TenantFeatureRuleWhereInput
+    some?: TenantFeatureRuleWhereInput
+    none?: TenantFeatureRuleWhereInput
+  }
+
+  export type FeatureAuditEntryListRelationFilter = {
+    every?: FeatureAuditEntryWhereInput
+    some?: FeatureAuditEntryWhereInput
+    none?: FeatureAuditEntryWhereInput
+  }
+
   export type ContactReasonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type WebhookEndpointOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TenantFeatureRuleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FeatureAuditEntryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -25865,6 +32121,188 @@ export namespace Prisma {
     failureCount?: SortOrder
   }
 
+  export type GlobalFeatureRuleListRelationFilter = {
+    every?: GlobalFeatureRuleWhereInput
+    some?: GlobalFeatureRuleWhereInput
+    none?: GlobalFeatureRuleWhereInput
+  }
+
+  export type GlobalFeatureRuleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FeatureDefinitionCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    tier?: SortOrder
+    defaultEnabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type FeatureDefinitionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    tier?: SortOrder
+    defaultEnabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type FeatureDefinitionMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    tier?: SortOrder
+    defaultEnabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type FeatureDefinitionRelationFilter = {
+    is?: FeatureDefinitionWhereInput
+    isNot?: FeatureDefinitionWhereInput
+  }
+
+  export type GlobalFeatureRuleCountOrderByAggregateInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type GlobalFeatureRuleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type GlobalFeatureRuleMinOrderByAggregateInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type TenantFeatureRuleTenantIdFeatureKeyCompoundUniqueInput = {
+    tenantId: string
+    featureKey: string
+  }
+
+  export type TenantFeatureRuleCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type TenantFeatureRuleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type TenantFeatureRuleMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    featureKey?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type FeatureAuditEntryCountOrderByAggregateInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    scope?: SortOrder
+    tenantId?: SortOrder
+    beforeValue?: SortOrder
+    afterValue?: SortOrder
+    action?: SortOrder
+    createdAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type FeatureAuditEntryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    scope?: SortOrder
+    tenantId?: SortOrder
+    beforeValue?: SortOrder
+    afterValue?: SortOrder
+    action?: SortOrder
+    createdAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type FeatureAuditEntryMinOrderByAggregateInput = {
+    id?: SortOrder
+    featureKey?: SortOrder
+    scope?: SortOrder
+    tenantId?: SortOrder
+    beforeValue?: SortOrder
+    afterValue?: SortOrder
+    action?: SortOrder
+    createdAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type SetupStateCountOrderByAggregateInput = {
+    id?: SortOrder
+    isCompleted?: SortOrder
+    currentStep?: SortOrder
+    contextSnapshot?: SortOrder
+    completedAt?: SortOrder
+    completedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SetupStateMaxOrderByAggregateInput = {
+    id?: SortOrder
+    isCompleted?: SortOrder
+    currentStep?: SortOrder
+    contextSnapshot?: SortOrder
+    completedAt?: SortOrder
+    completedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SetupStateMinOrderByAggregateInput = {
+    id?: SortOrder
+    isCompleted?: SortOrder
+    currentStep?: SortOrder
+    contextSnapshot?: SortOrder
+    completedAt?: SortOrder
+    completedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -26497,6 +32935,20 @@ export namespace Prisma {
     connect?: WebhookEndpointWhereUniqueInput | WebhookEndpointWhereUniqueInput[]
   }
 
+  export type TenantFeatureRuleCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TenantFeatureRuleCreateWithoutTenantInput, TenantFeatureRuleUncheckedCreateWithoutTenantInput> | TenantFeatureRuleCreateWithoutTenantInput[] | TenantFeatureRuleUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TenantFeatureRuleCreateOrConnectWithoutTenantInput | TenantFeatureRuleCreateOrConnectWithoutTenantInput[]
+    createMany?: TenantFeatureRuleCreateManyTenantInputEnvelope
+    connect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+  }
+
+  export type FeatureAuditEntryCreateNestedManyWithoutTenantInput = {
+    create?: XOR<FeatureAuditEntryCreateWithoutTenantInput, FeatureAuditEntryUncheckedCreateWithoutTenantInput> | FeatureAuditEntryCreateWithoutTenantInput[] | FeatureAuditEntryUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: FeatureAuditEntryCreateOrConnectWithoutTenantInput | FeatureAuditEntryCreateOrConnectWithoutTenantInput[]
+    createMany?: FeatureAuditEntryCreateManyTenantInputEnvelope
+    connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+  }
+
   export type AuditLogUncheckedCreateNestedManyWithoutTenantInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -26551,6 +33003,20 @@ export namespace Prisma {
     connectOrCreate?: WebhookEndpointCreateOrConnectWithoutTenantInput | WebhookEndpointCreateOrConnectWithoutTenantInput[]
     createMany?: WebhookEndpointCreateManyTenantInputEnvelope
     connect?: WebhookEndpointWhereUniqueInput | WebhookEndpointWhereUniqueInput[]
+  }
+
+  export type TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TenantFeatureRuleCreateWithoutTenantInput, TenantFeatureRuleUncheckedCreateWithoutTenantInput> | TenantFeatureRuleCreateWithoutTenantInput[] | TenantFeatureRuleUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TenantFeatureRuleCreateOrConnectWithoutTenantInput | TenantFeatureRuleCreateOrConnectWithoutTenantInput[]
+    createMany?: TenantFeatureRuleCreateManyTenantInputEnvelope
+    connect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+  }
+
+  export type FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<FeatureAuditEntryCreateWithoutTenantInput, FeatureAuditEntryUncheckedCreateWithoutTenantInput> | FeatureAuditEntryCreateWithoutTenantInput[] | FeatureAuditEntryUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: FeatureAuditEntryCreateOrConnectWithoutTenantInput | FeatureAuditEntryCreateOrConnectWithoutTenantInput[]
+    createMany?: FeatureAuditEntryCreateManyTenantInputEnvelope
+    connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
   }
 
   export type AuditLogUpdateManyWithoutTenantNestedInput = {
@@ -26665,6 +33131,34 @@ export namespace Prisma {
     deleteMany?: WebhookEndpointScalarWhereInput | WebhookEndpointScalarWhereInput[]
   }
 
+  export type TenantFeatureRuleUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TenantFeatureRuleCreateWithoutTenantInput, TenantFeatureRuleUncheckedCreateWithoutTenantInput> | TenantFeatureRuleCreateWithoutTenantInput[] | TenantFeatureRuleUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TenantFeatureRuleCreateOrConnectWithoutTenantInput | TenantFeatureRuleCreateOrConnectWithoutTenantInput[]
+    upsert?: TenantFeatureRuleUpsertWithWhereUniqueWithoutTenantInput | TenantFeatureRuleUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TenantFeatureRuleCreateManyTenantInputEnvelope
+    set?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    disconnect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    delete?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    connect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    update?: TenantFeatureRuleUpdateWithWhereUniqueWithoutTenantInput | TenantFeatureRuleUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TenantFeatureRuleUpdateManyWithWhereWithoutTenantInput | TenantFeatureRuleUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TenantFeatureRuleScalarWhereInput | TenantFeatureRuleScalarWhereInput[]
+  }
+
+  export type FeatureAuditEntryUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<FeatureAuditEntryCreateWithoutTenantInput, FeatureAuditEntryUncheckedCreateWithoutTenantInput> | FeatureAuditEntryCreateWithoutTenantInput[] | FeatureAuditEntryUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: FeatureAuditEntryCreateOrConnectWithoutTenantInput | FeatureAuditEntryCreateOrConnectWithoutTenantInput[]
+    upsert?: FeatureAuditEntryUpsertWithWhereUniqueWithoutTenantInput | FeatureAuditEntryUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: FeatureAuditEntryCreateManyTenantInputEnvelope
+    set?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    disconnect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    delete?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    update?: FeatureAuditEntryUpdateWithWhereUniqueWithoutTenantInput | FeatureAuditEntryUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: FeatureAuditEntryUpdateManyWithWhereWithoutTenantInput | FeatureAuditEntryUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: FeatureAuditEntryScalarWhereInput | FeatureAuditEntryScalarWhereInput[]
+  }
+
   export type AuditLogUncheckedUpdateManyWithoutTenantNestedInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -26775,6 +33269,34 @@ export namespace Prisma {
     update?: WebhookEndpointUpdateWithWhereUniqueWithoutTenantInput | WebhookEndpointUpdateWithWhereUniqueWithoutTenantInput[]
     updateMany?: WebhookEndpointUpdateManyWithWhereWithoutTenantInput | WebhookEndpointUpdateManyWithWhereWithoutTenantInput[]
     deleteMany?: WebhookEndpointScalarWhereInput | WebhookEndpointScalarWhereInput[]
+  }
+
+  export type TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TenantFeatureRuleCreateWithoutTenantInput, TenantFeatureRuleUncheckedCreateWithoutTenantInput> | TenantFeatureRuleCreateWithoutTenantInput[] | TenantFeatureRuleUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TenantFeatureRuleCreateOrConnectWithoutTenantInput | TenantFeatureRuleCreateOrConnectWithoutTenantInput[]
+    upsert?: TenantFeatureRuleUpsertWithWhereUniqueWithoutTenantInput | TenantFeatureRuleUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TenantFeatureRuleCreateManyTenantInputEnvelope
+    set?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    disconnect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    delete?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    connect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    update?: TenantFeatureRuleUpdateWithWhereUniqueWithoutTenantInput | TenantFeatureRuleUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TenantFeatureRuleUpdateManyWithWhereWithoutTenantInput | TenantFeatureRuleUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TenantFeatureRuleScalarWhereInput | TenantFeatureRuleScalarWhereInput[]
+  }
+
+  export type FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<FeatureAuditEntryCreateWithoutTenantInput, FeatureAuditEntryUncheckedCreateWithoutTenantInput> | FeatureAuditEntryCreateWithoutTenantInput[] | FeatureAuditEntryUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: FeatureAuditEntryCreateOrConnectWithoutTenantInput | FeatureAuditEntryCreateOrConnectWithoutTenantInput[]
+    upsert?: FeatureAuditEntryUpsertWithWhereUniqueWithoutTenantInput | FeatureAuditEntryUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: FeatureAuditEntryCreateManyTenantInputEnvelope
+    set?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    disconnect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    delete?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    update?: FeatureAuditEntryUpdateWithWhereUniqueWithoutTenantInput | FeatureAuditEntryUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: FeatureAuditEntryUpdateManyWithWhereWithoutTenantInput | FeatureAuditEntryUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: FeatureAuditEntryScalarWhereInput | FeatureAuditEntryScalarWhereInput[]
   }
 
   export type TenantCreateNestedOneWithoutMembershipsInput = {
@@ -27263,6 +33785,204 @@ export namespace Prisma {
     delete?: TenantWhereInput | boolean
     connect?: TenantWhereUniqueInput
     update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutWebhookEndpointsInput, TenantUpdateWithoutWebhookEndpointsInput>, TenantUncheckedUpdateWithoutWebhookEndpointsInput>
+  }
+
+  export type GlobalFeatureRuleCreateNestedManyWithoutFeatureInput = {
+    create?: XOR<GlobalFeatureRuleCreateWithoutFeatureInput, GlobalFeatureRuleUncheckedCreateWithoutFeatureInput> | GlobalFeatureRuleCreateWithoutFeatureInput[] | GlobalFeatureRuleUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: GlobalFeatureRuleCreateOrConnectWithoutFeatureInput | GlobalFeatureRuleCreateOrConnectWithoutFeatureInput[]
+    createMany?: GlobalFeatureRuleCreateManyFeatureInputEnvelope
+    connect?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+  }
+
+  export type TenantFeatureRuleCreateNestedManyWithoutFeatureInput = {
+    create?: XOR<TenantFeatureRuleCreateWithoutFeatureInput, TenantFeatureRuleUncheckedCreateWithoutFeatureInput> | TenantFeatureRuleCreateWithoutFeatureInput[] | TenantFeatureRuleUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: TenantFeatureRuleCreateOrConnectWithoutFeatureInput | TenantFeatureRuleCreateOrConnectWithoutFeatureInput[]
+    createMany?: TenantFeatureRuleCreateManyFeatureInputEnvelope
+    connect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+  }
+
+  export type FeatureAuditEntryCreateNestedManyWithoutFeatureInput = {
+    create?: XOR<FeatureAuditEntryCreateWithoutFeatureInput, FeatureAuditEntryUncheckedCreateWithoutFeatureInput> | FeatureAuditEntryCreateWithoutFeatureInput[] | FeatureAuditEntryUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: FeatureAuditEntryCreateOrConnectWithoutFeatureInput | FeatureAuditEntryCreateOrConnectWithoutFeatureInput[]
+    createMany?: FeatureAuditEntryCreateManyFeatureInputEnvelope
+    connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+  }
+
+  export type GlobalFeatureRuleUncheckedCreateNestedManyWithoutFeatureInput = {
+    create?: XOR<GlobalFeatureRuleCreateWithoutFeatureInput, GlobalFeatureRuleUncheckedCreateWithoutFeatureInput> | GlobalFeatureRuleCreateWithoutFeatureInput[] | GlobalFeatureRuleUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: GlobalFeatureRuleCreateOrConnectWithoutFeatureInput | GlobalFeatureRuleCreateOrConnectWithoutFeatureInput[]
+    createMany?: GlobalFeatureRuleCreateManyFeatureInputEnvelope
+    connect?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+  }
+
+  export type TenantFeatureRuleUncheckedCreateNestedManyWithoutFeatureInput = {
+    create?: XOR<TenantFeatureRuleCreateWithoutFeatureInput, TenantFeatureRuleUncheckedCreateWithoutFeatureInput> | TenantFeatureRuleCreateWithoutFeatureInput[] | TenantFeatureRuleUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: TenantFeatureRuleCreateOrConnectWithoutFeatureInput | TenantFeatureRuleCreateOrConnectWithoutFeatureInput[]
+    createMany?: TenantFeatureRuleCreateManyFeatureInputEnvelope
+    connect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+  }
+
+  export type FeatureAuditEntryUncheckedCreateNestedManyWithoutFeatureInput = {
+    create?: XOR<FeatureAuditEntryCreateWithoutFeatureInput, FeatureAuditEntryUncheckedCreateWithoutFeatureInput> | FeatureAuditEntryCreateWithoutFeatureInput[] | FeatureAuditEntryUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: FeatureAuditEntryCreateOrConnectWithoutFeatureInput | FeatureAuditEntryCreateOrConnectWithoutFeatureInput[]
+    createMany?: FeatureAuditEntryCreateManyFeatureInputEnvelope
+    connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+  }
+
+  export type GlobalFeatureRuleUpdateManyWithoutFeatureNestedInput = {
+    create?: XOR<GlobalFeatureRuleCreateWithoutFeatureInput, GlobalFeatureRuleUncheckedCreateWithoutFeatureInput> | GlobalFeatureRuleCreateWithoutFeatureInput[] | GlobalFeatureRuleUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: GlobalFeatureRuleCreateOrConnectWithoutFeatureInput | GlobalFeatureRuleCreateOrConnectWithoutFeatureInput[]
+    upsert?: GlobalFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput | GlobalFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput[]
+    createMany?: GlobalFeatureRuleCreateManyFeatureInputEnvelope
+    set?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+    disconnect?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+    delete?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+    connect?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+    update?: GlobalFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput | GlobalFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput[]
+    updateMany?: GlobalFeatureRuleUpdateManyWithWhereWithoutFeatureInput | GlobalFeatureRuleUpdateManyWithWhereWithoutFeatureInput[]
+    deleteMany?: GlobalFeatureRuleScalarWhereInput | GlobalFeatureRuleScalarWhereInput[]
+  }
+
+  export type TenantFeatureRuleUpdateManyWithoutFeatureNestedInput = {
+    create?: XOR<TenantFeatureRuleCreateWithoutFeatureInput, TenantFeatureRuleUncheckedCreateWithoutFeatureInput> | TenantFeatureRuleCreateWithoutFeatureInput[] | TenantFeatureRuleUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: TenantFeatureRuleCreateOrConnectWithoutFeatureInput | TenantFeatureRuleCreateOrConnectWithoutFeatureInput[]
+    upsert?: TenantFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput | TenantFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput[]
+    createMany?: TenantFeatureRuleCreateManyFeatureInputEnvelope
+    set?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    disconnect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    delete?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    connect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    update?: TenantFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput | TenantFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput[]
+    updateMany?: TenantFeatureRuleUpdateManyWithWhereWithoutFeatureInput | TenantFeatureRuleUpdateManyWithWhereWithoutFeatureInput[]
+    deleteMany?: TenantFeatureRuleScalarWhereInput | TenantFeatureRuleScalarWhereInput[]
+  }
+
+  export type FeatureAuditEntryUpdateManyWithoutFeatureNestedInput = {
+    create?: XOR<FeatureAuditEntryCreateWithoutFeatureInput, FeatureAuditEntryUncheckedCreateWithoutFeatureInput> | FeatureAuditEntryCreateWithoutFeatureInput[] | FeatureAuditEntryUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: FeatureAuditEntryCreateOrConnectWithoutFeatureInput | FeatureAuditEntryCreateOrConnectWithoutFeatureInput[]
+    upsert?: FeatureAuditEntryUpsertWithWhereUniqueWithoutFeatureInput | FeatureAuditEntryUpsertWithWhereUniqueWithoutFeatureInput[]
+    createMany?: FeatureAuditEntryCreateManyFeatureInputEnvelope
+    set?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    disconnect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    delete?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    update?: FeatureAuditEntryUpdateWithWhereUniqueWithoutFeatureInput | FeatureAuditEntryUpdateWithWhereUniqueWithoutFeatureInput[]
+    updateMany?: FeatureAuditEntryUpdateManyWithWhereWithoutFeatureInput | FeatureAuditEntryUpdateManyWithWhereWithoutFeatureInput[]
+    deleteMany?: FeatureAuditEntryScalarWhereInput | FeatureAuditEntryScalarWhereInput[]
+  }
+
+  export type GlobalFeatureRuleUncheckedUpdateManyWithoutFeatureNestedInput = {
+    create?: XOR<GlobalFeatureRuleCreateWithoutFeatureInput, GlobalFeatureRuleUncheckedCreateWithoutFeatureInput> | GlobalFeatureRuleCreateWithoutFeatureInput[] | GlobalFeatureRuleUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: GlobalFeatureRuleCreateOrConnectWithoutFeatureInput | GlobalFeatureRuleCreateOrConnectWithoutFeatureInput[]
+    upsert?: GlobalFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput | GlobalFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput[]
+    createMany?: GlobalFeatureRuleCreateManyFeatureInputEnvelope
+    set?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+    disconnect?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+    delete?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+    connect?: GlobalFeatureRuleWhereUniqueInput | GlobalFeatureRuleWhereUniqueInput[]
+    update?: GlobalFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput | GlobalFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput[]
+    updateMany?: GlobalFeatureRuleUpdateManyWithWhereWithoutFeatureInput | GlobalFeatureRuleUpdateManyWithWhereWithoutFeatureInput[]
+    deleteMany?: GlobalFeatureRuleScalarWhereInput | GlobalFeatureRuleScalarWhereInput[]
+  }
+
+  export type TenantFeatureRuleUncheckedUpdateManyWithoutFeatureNestedInput = {
+    create?: XOR<TenantFeatureRuleCreateWithoutFeatureInput, TenantFeatureRuleUncheckedCreateWithoutFeatureInput> | TenantFeatureRuleCreateWithoutFeatureInput[] | TenantFeatureRuleUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: TenantFeatureRuleCreateOrConnectWithoutFeatureInput | TenantFeatureRuleCreateOrConnectWithoutFeatureInput[]
+    upsert?: TenantFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput | TenantFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput[]
+    createMany?: TenantFeatureRuleCreateManyFeatureInputEnvelope
+    set?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    disconnect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    delete?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    connect?: TenantFeatureRuleWhereUniqueInput | TenantFeatureRuleWhereUniqueInput[]
+    update?: TenantFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput | TenantFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput[]
+    updateMany?: TenantFeatureRuleUpdateManyWithWhereWithoutFeatureInput | TenantFeatureRuleUpdateManyWithWhereWithoutFeatureInput[]
+    deleteMany?: TenantFeatureRuleScalarWhereInput | TenantFeatureRuleScalarWhereInput[]
+  }
+
+  export type FeatureAuditEntryUncheckedUpdateManyWithoutFeatureNestedInput = {
+    create?: XOR<FeatureAuditEntryCreateWithoutFeatureInput, FeatureAuditEntryUncheckedCreateWithoutFeatureInput> | FeatureAuditEntryCreateWithoutFeatureInput[] | FeatureAuditEntryUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: FeatureAuditEntryCreateOrConnectWithoutFeatureInput | FeatureAuditEntryCreateOrConnectWithoutFeatureInput[]
+    upsert?: FeatureAuditEntryUpsertWithWhereUniqueWithoutFeatureInput | FeatureAuditEntryUpsertWithWhereUniqueWithoutFeatureInput[]
+    createMany?: FeatureAuditEntryCreateManyFeatureInputEnvelope
+    set?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    disconnect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    delete?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+    update?: FeatureAuditEntryUpdateWithWhereUniqueWithoutFeatureInput | FeatureAuditEntryUpdateWithWhereUniqueWithoutFeatureInput[]
+    updateMany?: FeatureAuditEntryUpdateManyWithWhereWithoutFeatureInput | FeatureAuditEntryUpdateManyWithWhereWithoutFeatureInput[]
+    deleteMany?: FeatureAuditEntryScalarWhereInput | FeatureAuditEntryScalarWhereInput[]
+  }
+
+  export type FeatureDefinitionCreateNestedOneWithoutGlobalRulesInput = {
+    create?: XOR<FeatureDefinitionCreateWithoutGlobalRulesInput, FeatureDefinitionUncheckedCreateWithoutGlobalRulesInput>
+    connectOrCreate?: FeatureDefinitionCreateOrConnectWithoutGlobalRulesInput
+    connect?: FeatureDefinitionWhereUniqueInput
+  }
+
+  export type FeatureDefinitionUpdateOneRequiredWithoutGlobalRulesNestedInput = {
+    create?: XOR<FeatureDefinitionCreateWithoutGlobalRulesInput, FeatureDefinitionUncheckedCreateWithoutGlobalRulesInput>
+    connectOrCreate?: FeatureDefinitionCreateOrConnectWithoutGlobalRulesInput
+    upsert?: FeatureDefinitionUpsertWithoutGlobalRulesInput
+    connect?: FeatureDefinitionWhereUniqueInput
+    update?: XOR<XOR<FeatureDefinitionUpdateToOneWithWhereWithoutGlobalRulesInput, FeatureDefinitionUpdateWithoutGlobalRulesInput>, FeatureDefinitionUncheckedUpdateWithoutGlobalRulesInput>
+  }
+
+  export type TenantCreateNestedOneWithoutFeatureRulesInput = {
+    create?: XOR<TenantCreateWithoutFeatureRulesInput, TenantUncheckedCreateWithoutFeatureRulesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutFeatureRulesInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type FeatureDefinitionCreateNestedOneWithoutTenantRulesInput = {
+    create?: XOR<FeatureDefinitionCreateWithoutTenantRulesInput, FeatureDefinitionUncheckedCreateWithoutTenantRulesInput>
+    connectOrCreate?: FeatureDefinitionCreateOrConnectWithoutTenantRulesInput
+    connect?: FeatureDefinitionWhereUniqueInput
+  }
+
+  export type TenantUpdateOneRequiredWithoutFeatureRulesNestedInput = {
+    create?: XOR<TenantCreateWithoutFeatureRulesInput, TenantUncheckedCreateWithoutFeatureRulesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutFeatureRulesInput
+    upsert?: TenantUpsertWithoutFeatureRulesInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutFeatureRulesInput, TenantUpdateWithoutFeatureRulesInput>, TenantUncheckedUpdateWithoutFeatureRulesInput>
+  }
+
+  export type FeatureDefinitionUpdateOneRequiredWithoutTenantRulesNestedInput = {
+    create?: XOR<FeatureDefinitionCreateWithoutTenantRulesInput, FeatureDefinitionUncheckedCreateWithoutTenantRulesInput>
+    connectOrCreate?: FeatureDefinitionCreateOrConnectWithoutTenantRulesInput
+    upsert?: FeatureDefinitionUpsertWithoutTenantRulesInput
+    connect?: FeatureDefinitionWhereUniqueInput
+    update?: XOR<XOR<FeatureDefinitionUpdateToOneWithWhereWithoutTenantRulesInput, FeatureDefinitionUpdateWithoutTenantRulesInput>, FeatureDefinitionUncheckedUpdateWithoutTenantRulesInput>
+  }
+
+  export type FeatureDefinitionCreateNestedOneWithoutAuditEntriesInput = {
+    create?: XOR<FeatureDefinitionCreateWithoutAuditEntriesInput, FeatureDefinitionUncheckedCreateWithoutAuditEntriesInput>
+    connectOrCreate?: FeatureDefinitionCreateOrConnectWithoutAuditEntriesInput
+    connect?: FeatureDefinitionWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutFeatureAuditEntriesInput = {
+    create?: XOR<TenantCreateWithoutFeatureAuditEntriesInput, TenantUncheckedCreateWithoutFeatureAuditEntriesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutFeatureAuditEntriesInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type FeatureDefinitionUpdateOneRequiredWithoutAuditEntriesNestedInput = {
+    create?: XOR<FeatureDefinitionCreateWithoutAuditEntriesInput, FeatureDefinitionUncheckedCreateWithoutAuditEntriesInput>
+    connectOrCreate?: FeatureDefinitionCreateOrConnectWithoutAuditEntriesInput
+    upsert?: FeatureDefinitionUpsertWithoutAuditEntriesInput
+    connect?: FeatureDefinitionWhereUniqueInput
+    update?: XOR<XOR<FeatureDefinitionUpdateToOneWithWhereWithoutAuditEntriesInput, FeatureDefinitionUpdateWithoutAuditEntriesInput>, FeatureDefinitionUncheckedUpdateWithoutAuditEntriesInput>
+  }
+
+  export type TenantUpdateOneWithoutFeatureAuditEntriesNestedInput = {
+    create?: XOR<TenantCreateWithoutFeatureAuditEntriesInput, TenantUncheckedCreateWithoutFeatureAuditEntriesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutFeatureAuditEntriesInput
+    upsert?: TenantUpsertWithoutFeatureAuditEntriesInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutFeatureAuditEntriesInput, TenantUpdateWithoutFeatureAuditEntriesInput>, TenantUncheckedUpdateWithoutFeatureAuditEntriesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -27767,6 +34487,8 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutTenantInput
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSessionsInput = {
@@ -27809,6 +34531,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSessionsInput = {
@@ -27958,6 +34682,8 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutTenantNestedInput
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSessionsInput = {
@@ -28000,6 +34726,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -29123,6 +35851,66 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TenantFeatureRuleCreateWithoutTenantInput = {
+    id?: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    feature: FeatureDefinitionCreateNestedOneWithoutTenantRulesInput
+  }
+
+  export type TenantFeatureRuleUncheckedCreateWithoutTenantInput = {
+    id?: string
+    featureKey: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type TenantFeatureRuleCreateOrConnectWithoutTenantInput = {
+    where: TenantFeatureRuleWhereUniqueInput
+    create: XOR<TenantFeatureRuleCreateWithoutTenantInput, TenantFeatureRuleUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TenantFeatureRuleCreateManyTenantInputEnvelope = {
+    data: TenantFeatureRuleCreateManyTenantInput | TenantFeatureRuleCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FeatureAuditEntryCreateWithoutTenantInput = {
+    id?: string
+    scope: string
+    beforeValue?: string | null
+    afterValue?: string | null
+    action: string
+    createdAt?: Date | string
+    createdBy: string
+    feature: FeatureDefinitionCreateNestedOneWithoutAuditEntriesInput
+  }
+
+  export type FeatureAuditEntryUncheckedCreateWithoutTenantInput = {
+    id?: string
+    featureKey: string
+    scope: string
+    beforeValue?: string | null
+    afterValue?: string | null
+    action: string
+    createdAt?: Date | string
+    createdBy: string
+  }
+
+  export type FeatureAuditEntryCreateOrConnectWithoutTenantInput = {
+    where: FeatureAuditEntryWhereUniqueInput
+    create: XOR<FeatureAuditEntryCreateWithoutTenantInput, FeatureAuditEntryUncheckedCreateWithoutTenantInput>
+  }
+
+  export type FeatureAuditEntryCreateManyTenantInputEnvelope = {
+    data: FeatureAuditEntryCreateManyTenantInput | FeatureAuditEntryCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AuditLogUpsertWithWhereUniqueWithoutTenantInput = {
     where: AuditLogWhereUniqueInput
     update: XOR<AuditLogUpdateWithoutTenantInput, AuditLogUncheckedUpdateWithoutTenantInput>
@@ -29284,6 +36072,66 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"WebhookEndpoint"> | Date | string
   }
 
+  export type TenantFeatureRuleUpsertWithWhereUniqueWithoutTenantInput = {
+    where: TenantFeatureRuleWhereUniqueInput
+    update: XOR<TenantFeatureRuleUpdateWithoutTenantInput, TenantFeatureRuleUncheckedUpdateWithoutTenantInput>
+    create: XOR<TenantFeatureRuleCreateWithoutTenantInput, TenantFeatureRuleUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TenantFeatureRuleUpdateWithWhereUniqueWithoutTenantInput = {
+    where: TenantFeatureRuleWhereUniqueInput
+    data: XOR<TenantFeatureRuleUpdateWithoutTenantInput, TenantFeatureRuleUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type TenantFeatureRuleUpdateManyWithWhereWithoutTenantInput = {
+    where: TenantFeatureRuleScalarWhereInput
+    data: XOR<TenantFeatureRuleUpdateManyMutationInput, TenantFeatureRuleUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type TenantFeatureRuleScalarWhereInput = {
+    AND?: TenantFeatureRuleScalarWhereInput | TenantFeatureRuleScalarWhereInput[]
+    OR?: TenantFeatureRuleScalarWhereInput[]
+    NOT?: TenantFeatureRuleScalarWhereInput | TenantFeatureRuleScalarWhereInput[]
+    id?: StringFilter<"TenantFeatureRule"> | string
+    tenantId?: StringFilter<"TenantFeatureRule"> | string
+    featureKey?: StringFilter<"TenantFeatureRule"> | string
+    enabled?: BoolFilter<"TenantFeatureRule"> | boolean
+    createdAt?: DateTimeFilter<"TenantFeatureRule"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantFeatureRule"> | Date | string
+    createdBy?: StringFilter<"TenantFeatureRule"> | string
+  }
+
+  export type FeatureAuditEntryUpsertWithWhereUniqueWithoutTenantInput = {
+    where: FeatureAuditEntryWhereUniqueInput
+    update: XOR<FeatureAuditEntryUpdateWithoutTenantInput, FeatureAuditEntryUncheckedUpdateWithoutTenantInput>
+    create: XOR<FeatureAuditEntryCreateWithoutTenantInput, FeatureAuditEntryUncheckedCreateWithoutTenantInput>
+  }
+
+  export type FeatureAuditEntryUpdateWithWhereUniqueWithoutTenantInput = {
+    where: FeatureAuditEntryWhereUniqueInput
+    data: XOR<FeatureAuditEntryUpdateWithoutTenantInput, FeatureAuditEntryUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type FeatureAuditEntryUpdateManyWithWhereWithoutTenantInput = {
+    where: FeatureAuditEntryScalarWhereInput
+    data: XOR<FeatureAuditEntryUpdateManyMutationInput, FeatureAuditEntryUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type FeatureAuditEntryScalarWhereInput = {
+    AND?: FeatureAuditEntryScalarWhereInput | FeatureAuditEntryScalarWhereInput[]
+    OR?: FeatureAuditEntryScalarWhereInput[]
+    NOT?: FeatureAuditEntryScalarWhereInput | FeatureAuditEntryScalarWhereInput[]
+    id?: StringFilter<"FeatureAuditEntry"> | string
+    featureKey?: StringFilter<"FeatureAuditEntry"> | string
+    scope?: StringFilter<"FeatureAuditEntry"> | string
+    tenantId?: StringNullableFilter<"FeatureAuditEntry"> | string | null
+    beforeValue?: StringNullableFilter<"FeatureAuditEntry"> | string | null
+    afterValue?: StringNullableFilter<"FeatureAuditEntry"> | string | null
+    action?: StringFilter<"FeatureAuditEntry"> | string
+    createdAt?: DateTimeFilter<"FeatureAuditEntry"> | Date | string
+    createdBy?: StringFilter<"FeatureAuditEntry"> | string
+  }
+
   export type TenantCreateWithoutMembershipsInput = {
     id?: string
     slug: string
@@ -29324,6 +36172,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutMembershipsInput = {
@@ -29366,6 +36216,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutMembershipsInput = {
@@ -29594,6 +36446,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutMembershipsInput = {
@@ -29636,6 +36490,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -29860,6 +36716,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutInvitationsInput = {
@@ -29902,6 +36760,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutInvitationsInput = {
@@ -30130,6 +36990,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutInvitationsInput = {
@@ -30172,6 +37034,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutSentInvitationsInput = {
@@ -30418,6 +37282,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactReasonsInput = {
@@ -30460,6 +37326,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactReasonsInput = {
@@ -30544,6 +37412,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactReasonsInput = {
@@ -30586,6 +37456,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutContactMessagesInput = {
@@ -30713,6 +37585,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactMessagesInput = {
@@ -30755,6 +37629,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactMessagesInput = {
@@ -30956,6 +37832,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactMessagesInput = {
@@ -30998,6 +37876,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type ContactMessageReasonUpsertWithWhereUniqueWithoutContactMessageInput = {
@@ -31346,6 +38226,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutAuditLogsInput = {
@@ -31388,6 +38270,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutAuditLogsInput = {
@@ -31531,6 +38415,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutAuditLogsInput = {
@@ -31573,6 +38459,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutAuditLogsInput = {
@@ -32143,6 +39031,8 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutNotificationsInput = {
@@ -32185,6 +39075,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutNotificationsInput = {
@@ -32362,6 +39254,8 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutNotificationsInput = {
@@ -32404,6 +39298,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type NotificationRecipientUpsertWithWhereUniqueWithoutNotificationInput = {
@@ -32722,6 +39618,8 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutTenantInput
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutWebhookEndpointsInput = {
@@ -32764,6 +39662,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutWebhookEndpointsInput = {
@@ -32822,6 +39722,8 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutTenantNestedInput
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutWebhookEndpointsInput = {
@@ -32864,6 +39766,754 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type GlobalFeatureRuleCreateWithoutFeatureInput = {
+    id?: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type GlobalFeatureRuleUncheckedCreateWithoutFeatureInput = {
+    id?: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type GlobalFeatureRuleCreateOrConnectWithoutFeatureInput = {
+    where: GlobalFeatureRuleWhereUniqueInput
+    create: XOR<GlobalFeatureRuleCreateWithoutFeatureInput, GlobalFeatureRuleUncheckedCreateWithoutFeatureInput>
+  }
+
+  export type GlobalFeatureRuleCreateManyFeatureInputEnvelope = {
+    data: GlobalFeatureRuleCreateManyFeatureInput | GlobalFeatureRuleCreateManyFeatureInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TenantFeatureRuleCreateWithoutFeatureInput = {
+    id?: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    tenant: TenantCreateNestedOneWithoutFeatureRulesInput
+  }
+
+  export type TenantFeatureRuleUncheckedCreateWithoutFeatureInput = {
+    id?: string
+    tenantId: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type TenantFeatureRuleCreateOrConnectWithoutFeatureInput = {
+    where: TenantFeatureRuleWhereUniqueInput
+    create: XOR<TenantFeatureRuleCreateWithoutFeatureInput, TenantFeatureRuleUncheckedCreateWithoutFeatureInput>
+  }
+
+  export type TenantFeatureRuleCreateManyFeatureInputEnvelope = {
+    data: TenantFeatureRuleCreateManyFeatureInput | TenantFeatureRuleCreateManyFeatureInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FeatureAuditEntryCreateWithoutFeatureInput = {
+    id?: string
+    scope: string
+    beforeValue?: string | null
+    afterValue?: string | null
+    action: string
+    createdAt?: Date | string
+    createdBy: string
+    tenant?: TenantCreateNestedOneWithoutFeatureAuditEntriesInput
+  }
+
+  export type FeatureAuditEntryUncheckedCreateWithoutFeatureInput = {
+    id?: string
+    scope: string
+    tenantId?: string | null
+    beforeValue?: string | null
+    afterValue?: string | null
+    action: string
+    createdAt?: Date | string
+    createdBy: string
+  }
+
+  export type FeatureAuditEntryCreateOrConnectWithoutFeatureInput = {
+    where: FeatureAuditEntryWhereUniqueInput
+    create: XOR<FeatureAuditEntryCreateWithoutFeatureInput, FeatureAuditEntryUncheckedCreateWithoutFeatureInput>
+  }
+
+  export type FeatureAuditEntryCreateManyFeatureInputEnvelope = {
+    data: FeatureAuditEntryCreateManyFeatureInput | FeatureAuditEntryCreateManyFeatureInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GlobalFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput = {
+    where: GlobalFeatureRuleWhereUniqueInput
+    update: XOR<GlobalFeatureRuleUpdateWithoutFeatureInput, GlobalFeatureRuleUncheckedUpdateWithoutFeatureInput>
+    create: XOR<GlobalFeatureRuleCreateWithoutFeatureInput, GlobalFeatureRuleUncheckedCreateWithoutFeatureInput>
+  }
+
+  export type GlobalFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput = {
+    where: GlobalFeatureRuleWhereUniqueInput
+    data: XOR<GlobalFeatureRuleUpdateWithoutFeatureInput, GlobalFeatureRuleUncheckedUpdateWithoutFeatureInput>
+  }
+
+  export type GlobalFeatureRuleUpdateManyWithWhereWithoutFeatureInput = {
+    where: GlobalFeatureRuleScalarWhereInput
+    data: XOR<GlobalFeatureRuleUpdateManyMutationInput, GlobalFeatureRuleUncheckedUpdateManyWithoutFeatureInput>
+  }
+
+  export type GlobalFeatureRuleScalarWhereInput = {
+    AND?: GlobalFeatureRuleScalarWhereInput | GlobalFeatureRuleScalarWhereInput[]
+    OR?: GlobalFeatureRuleScalarWhereInput[]
+    NOT?: GlobalFeatureRuleScalarWhereInput | GlobalFeatureRuleScalarWhereInput[]
+    id?: StringFilter<"GlobalFeatureRule"> | string
+    featureKey?: StringFilter<"GlobalFeatureRule"> | string
+    enabled?: BoolFilter<"GlobalFeatureRule"> | boolean
+    createdAt?: DateTimeFilter<"GlobalFeatureRule"> | Date | string
+    updatedAt?: DateTimeFilter<"GlobalFeatureRule"> | Date | string
+    createdBy?: StringFilter<"GlobalFeatureRule"> | string
+  }
+
+  export type TenantFeatureRuleUpsertWithWhereUniqueWithoutFeatureInput = {
+    where: TenantFeatureRuleWhereUniqueInput
+    update: XOR<TenantFeatureRuleUpdateWithoutFeatureInput, TenantFeatureRuleUncheckedUpdateWithoutFeatureInput>
+    create: XOR<TenantFeatureRuleCreateWithoutFeatureInput, TenantFeatureRuleUncheckedCreateWithoutFeatureInput>
+  }
+
+  export type TenantFeatureRuleUpdateWithWhereUniqueWithoutFeatureInput = {
+    where: TenantFeatureRuleWhereUniqueInput
+    data: XOR<TenantFeatureRuleUpdateWithoutFeatureInput, TenantFeatureRuleUncheckedUpdateWithoutFeatureInput>
+  }
+
+  export type TenantFeatureRuleUpdateManyWithWhereWithoutFeatureInput = {
+    where: TenantFeatureRuleScalarWhereInput
+    data: XOR<TenantFeatureRuleUpdateManyMutationInput, TenantFeatureRuleUncheckedUpdateManyWithoutFeatureInput>
+  }
+
+  export type FeatureAuditEntryUpsertWithWhereUniqueWithoutFeatureInput = {
+    where: FeatureAuditEntryWhereUniqueInput
+    update: XOR<FeatureAuditEntryUpdateWithoutFeatureInput, FeatureAuditEntryUncheckedUpdateWithoutFeatureInput>
+    create: XOR<FeatureAuditEntryCreateWithoutFeatureInput, FeatureAuditEntryUncheckedCreateWithoutFeatureInput>
+  }
+
+  export type FeatureAuditEntryUpdateWithWhereUniqueWithoutFeatureInput = {
+    where: FeatureAuditEntryWhereUniqueInput
+    data: XOR<FeatureAuditEntryUpdateWithoutFeatureInput, FeatureAuditEntryUncheckedUpdateWithoutFeatureInput>
+  }
+
+  export type FeatureAuditEntryUpdateManyWithWhereWithoutFeatureInput = {
+    where: FeatureAuditEntryScalarWhereInput
+    data: XOR<FeatureAuditEntryUpdateManyMutationInput, FeatureAuditEntryUncheckedUpdateManyWithoutFeatureInput>
+  }
+
+  export type FeatureDefinitionCreateWithoutGlobalRulesInput = {
+    id?: string
+    key: string
+    name: string
+    description?: string | null
+    tier: string
+    defaultEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    tenantRules?: TenantFeatureRuleCreateNestedManyWithoutFeatureInput
+    auditEntries?: FeatureAuditEntryCreateNestedManyWithoutFeatureInput
+  }
+
+  export type FeatureDefinitionUncheckedCreateWithoutGlobalRulesInput = {
+    id?: string
+    key: string
+    name: string
+    description?: string | null
+    tier: string
+    defaultEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    tenantRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutFeatureInput
+    auditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutFeatureInput
+  }
+
+  export type FeatureDefinitionCreateOrConnectWithoutGlobalRulesInput = {
+    where: FeatureDefinitionWhereUniqueInput
+    create: XOR<FeatureDefinitionCreateWithoutGlobalRulesInput, FeatureDefinitionUncheckedCreateWithoutGlobalRulesInput>
+  }
+
+  export type FeatureDefinitionUpsertWithoutGlobalRulesInput = {
+    update: XOR<FeatureDefinitionUpdateWithoutGlobalRulesInput, FeatureDefinitionUncheckedUpdateWithoutGlobalRulesInput>
+    create: XOR<FeatureDefinitionCreateWithoutGlobalRulesInput, FeatureDefinitionUncheckedCreateWithoutGlobalRulesInput>
+    where?: FeatureDefinitionWhereInput
+  }
+
+  export type FeatureDefinitionUpdateToOneWithWhereWithoutGlobalRulesInput = {
+    where?: FeatureDefinitionWhereInput
+    data: XOR<FeatureDefinitionUpdateWithoutGlobalRulesInput, FeatureDefinitionUncheckedUpdateWithoutGlobalRulesInput>
+  }
+
+  export type FeatureDefinitionUpdateWithoutGlobalRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    tenantRules?: TenantFeatureRuleUpdateManyWithoutFeatureNestedInput
+    auditEntries?: FeatureAuditEntryUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type FeatureDefinitionUncheckedUpdateWithoutGlobalRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    tenantRules?: TenantFeatureRuleUncheckedUpdateManyWithoutFeatureNestedInput
+    auditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type TenantCreateWithoutFeatureRulesInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutFeatureRulesInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutFeatureRulesInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutFeatureRulesInput, TenantUncheckedCreateWithoutFeatureRulesInput>
+  }
+
+  export type FeatureDefinitionCreateWithoutTenantRulesInput = {
+    id?: string
+    key: string
+    name: string
+    description?: string | null
+    tier: string
+    defaultEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    globalRules?: GlobalFeatureRuleCreateNestedManyWithoutFeatureInput
+    auditEntries?: FeatureAuditEntryCreateNestedManyWithoutFeatureInput
+  }
+
+  export type FeatureDefinitionUncheckedCreateWithoutTenantRulesInput = {
+    id?: string
+    key: string
+    name: string
+    description?: string | null
+    tier: string
+    defaultEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    globalRules?: GlobalFeatureRuleUncheckedCreateNestedManyWithoutFeatureInput
+    auditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutFeatureInput
+  }
+
+  export type FeatureDefinitionCreateOrConnectWithoutTenantRulesInput = {
+    where: FeatureDefinitionWhereUniqueInput
+    create: XOR<FeatureDefinitionCreateWithoutTenantRulesInput, FeatureDefinitionUncheckedCreateWithoutTenantRulesInput>
+  }
+
+  export type TenantUpsertWithoutFeatureRulesInput = {
+    update: XOR<TenantUpdateWithoutFeatureRulesInput, TenantUncheckedUpdateWithoutFeatureRulesInput>
+    create: XOR<TenantCreateWithoutFeatureRulesInput, TenantUncheckedCreateWithoutFeatureRulesInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutFeatureRulesInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutFeatureRulesInput, TenantUncheckedUpdateWithoutFeatureRulesInput>
+  }
+
+  export type TenantUpdateWithoutFeatureRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutFeatureRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type FeatureDefinitionUpsertWithoutTenantRulesInput = {
+    update: XOR<FeatureDefinitionUpdateWithoutTenantRulesInput, FeatureDefinitionUncheckedUpdateWithoutTenantRulesInput>
+    create: XOR<FeatureDefinitionCreateWithoutTenantRulesInput, FeatureDefinitionUncheckedCreateWithoutTenantRulesInput>
+    where?: FeatureDefinitionWhereInput
+  }
+
+  export type FeatureDefinitionUpdateToOneWithWhereWithoutTenantRulesInput = {
+    where?: FeatureDefinitionWhereInput
+    data: XOR<FeatureDefinitionUpdateWithoutTenantRulesInput, FeatureDefinitionUncheckedUpdateWithoutTenantRulesInput>
+  }
+
+  export type FeatureDefinitionUpdateWithoutTenantRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    globalRules?: GlobalFeatureRuleUpdateManyWithoutFeatureNestedInput
+    auditEntries?: FeatureAuditEntryUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type FeatureDefinitionUncheckedUpdateWithoutTenantRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    globalRules?: GlobalFeatureRuleUncheckedUpdateManyWithoutFeatureNestedInput
+    auditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type FeatureDefinitionCreateWithoutAuditEntriesInput = {
+    id?: string
+    key: string
+    name: string
+    description?: string | null
+    tier: string
+    defaultEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    globalRules?: GlobalFeatureRuleCreateNestedManyWithoutFeatureInput
+    tenantRules?: TenantFeatureRuleCreateNestedManyWithoutFeatureInput
+  }
+
+  export type FeatureDefinitionUncheckedCreateWithoutAuditEntriesInput = {
+    id?: string
+    key: string
+    name: string
+    description?: string | null
+    tier: string
+    defaultEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    globalRules?: GlobalFeatureRuleUncheckedCreateNestedManyWithoutFeatureInput
+    tenantRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutFeatureInput
+  }
+
+  export type FeatureDefinitionCreateOrConnectWithoutAuditEntriesInput = {
+    where: FeatureDefinitionWhereUniqueInput
+    create: XOR<FeatureDefinitionCreateWithoutAuditEntriesInput, FeatureDefinitionUncheckedCreateWithoutAuditEntriesInput>
+  }
+
+  export type TenantCreateWithoutFeatureAuditEntriesInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutFeatureAuditEntriesInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutFeatureAuditEntriesInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutFeatureAuditEntriesInput, TenantUncheckedCreateWithoutFeatureAuditEntriesInput>
+  }
+
+  export type FeatureDefinitionUpsertWithoutAuditEntriesInput = {
+    update: XOR<FeatureDefinitionUpdateWithoutAuditEntriesInput, FeatureDefinitionUncheckedUpdateWithoutAuditEntriesInput>
+    create: XOR<FeatureDefinitionCreateWithoutAuditEntriesInput, FeatureDefinitionUncheckedCreateWithoutAuditEntriesInput>
+    where?: FeatureDefinitionWhereInput
+  }
+
+  export type FeatureDefinitionUpdateToOneWithWhereWithoutAuditEntriesInput = {
+    where?: FeatureDefinitionWhereInput
+    data: XOR<FeatureDefinitionUpdateWithoutAuditEntriesInput, FeatureDefinitionUncheckedUpdateWithoutAuditEntriesInput>
+  }
+
+  export type FeatureDefinitionUpdateWithoutAuditEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    globalRules?: GlobalFeatureRuleUpdateManyWithoutFeatureNestedInput
+    tenantRules?: TenantFeatureRuleUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type FeatureDefinitionUncheckedUpdateWithoutAuditEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tier?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    globalRules?: GlobalFeatureRuleUncheckedUpdateManyWithoutFeatureNestedInput
+    tenantRules?: TenantFeatureRuleUncheckedUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type TenantUpsertWithoutFeatureAuditEntriesInput = {
+    update: XOR<TenantUpdateWithoutFeatureAuditEntriesInput, TenantUncheckedUpdateWithoutFeatureAuditEntriesInput>
+    create: XOR<TenantCreateWithoutFeatureAuditEntriesInput, TenantUncheckedCreateWithoutFeatureAuditEntriesInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutFeatureAuditEntriesInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutFeatureAuditEntriesInput, TenantUncheckedUpdateWithoutFeatureAuditEntriesInput>
+  }
+
+  export type TenantUpdateWithoutFeatureAuditEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutFeatureAuditEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -33629,6 +41279,26 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type TenantFeatureRuleCreateManyTenantInput = {
+    id?: string
+    featureKey: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type FeatureAuditEntryCreateManyTenantInput = {
+    id?: string
+    featureKey: string
+    scope: string
+    beforeValue?: string | null
+    afterValue?: string | null
+    action: string
+    createdAt?: Date | string
+    createdBy: string
+  }
+
   export type AuditLogUpdateWithoutTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
     action?: StringFieldUpdateOperationsInput | string
@@ -33964,6 +41634,66 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TenantFeatureRuleUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    feature?: FeatureDefinitionUpdateOneRequiredWithoutTenantRulesNestedInput
+  }
+
+  export type TenantFeatureRuleUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TenantFeatureRuleUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FeatureAuditEntryUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    feature?: FeatureDefinitionUpdateOneRequiredWithoutAuditEntriesNestedInput
+  }
+
+  export type FeatureAuditEntryUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FeatureAuditEntryUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    featureKey?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
   export type ContactMessageReasonCreateManyContactReasonInput = {
     id?: string
     contactMessageId: string
@@ -34088,6 +41818,118 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type GlobalFeatureRuleCreateManyFeatureInput = {
+    id?: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type TenantFeatureRuleCreateManyFeatureInput = {
+    id?: string
+    tenantId: string
+    enabled: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+  }
+
+  export type FeatureAuditEntryCreateManyFeatureInput = {
+    id?: string
+    scope: string
+    tenantId?: string | null
+    beforeValue?: string | null
+    afterValue?: string | null
+    action: string
+    createdAt?: Date | string
+    createdBy: string
+  }
+
+  export type GlobalFeatureRuleUpdateWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GlobalFeatureRuleUncheckedUpdateWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GlobalFeatureRuleUncheckedUpdateManyWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TenantFeatureRuleUpdateWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    tenant?: TenantUpdateOneRequiredWithoutFeatureRulesNestedInput
+  }
+
+  export type TenantFeatureRuleUncheckedUpdateWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TenantFeatureRuleUncheckedUpdateManyWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FeatureAuditEntryUpdateWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    tenant?: TenantUpdateOneWithoutFeatureAuditEntriesNestedInput
+  }
+
+  export type FeatureAuditEntryUncheckedUpdateWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FeatureAuditEntryUncheckedUpdateManyWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    beforeValue?: NullableStringFieldUpdateOperationsInput | string | null
+    afterValue?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+  }
+
 
 
   /**
@@ -34113,6 +41955,10 @@ export namespace Prisma {
      * @deprecated Use NotificationCountOutputTypeDefaultArgs instead
      */
     export type NotificationCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NotificationCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use FeatureDefinitionCountOutputTypeDefaultArgs instead
+     */
+    export type FeatureDefinitionCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FeatureDefinitionCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use AccountDefaultArgs instead
      */
@@ -34181,6 +42027,26 @@ export namespace Prisma {
      * @deprecated Use WebhookEndpointDefaultArgs instead
      */
     export type WebhookEndpointArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = WebhookEndpointDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use FeatureDefinitionDefaultArgs instead
+     */
+    export type FeatureDefinitionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FeatureDefinitionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use GlobalFeatureRuleDefaultArgs instead
+     */
+    export type GlobalFeatureRuleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = GlobalFeatureRuleDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TenantFeatureRuleDefaultArgs instead
+     */
+    export type TenantFeatureRuleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TenantFeatureRuleDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use FeatureAuditEntryDefaultArgs instead
+     */
+    export type FeatureAuditEntryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FeatureAuditEntryDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SetupStateDefaultArgs instead
+     */
+    export type SetupStateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SetupStateDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

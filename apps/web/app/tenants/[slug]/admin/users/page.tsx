@@ -638,11 +638,11 @@ export default function TenantUsersPage() {
               </div> <div className="p-4 bg-gray-50 rounded-lg">
                 <p className="text-sm text-gray-600 mb-2">The user should visit:</p>
                 <div className="flex items-center gap-1">
-                  <code className="bg-gray-100 p-2 py-1 rounded-md flex-grow">/invite/{invitationCode}</code>
+                  <code className="bg-gray-100 p-2 py-1 rounded-md flex-grow">/auth/invite/{invitationCode}</code>
                   <Button variant="outline" size="icon" onClick={(e) => 
                     {
                       e.preventDefault();
-                      copyToClipboard(`${window.location.origin}/invite/${invitationCode}`)
+                      copyToClipboard(`${window.location.origin}/auth/invite/${invitationCode}`)
                       toast.success("Copied to clipboard")
                     }
                   } className="text-blue-600 hover:text-blue-700">

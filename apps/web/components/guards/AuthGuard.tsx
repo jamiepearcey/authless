@@ -18,7 +18,7 @@ interface AuthGuardProps {
 export function AuthGuard({ 
   children, 
   fallback = <div>Please sign in to continue</div>,
-  redirectTo = "/signin"
+  redirectTo = "/auth/signin"
 }: AuthGuardProps) {
   const { data: session, status } = useSession();
   const router = useRouter();

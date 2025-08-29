@@ -1,4 +1,4 @@
-import { router, publicProcedure } from "./base";
+import { router, publicProcedure } from "./middleware";
 import { z } from "zod";
 import { userRouter } from "./routers/user";
 import { tenantRouter } from "./routers/tenant";
@@ -7,9 +7,11 @@ import { twoFactorRouter } from "./routers/twoFactor";
 import { contactRouter } from "./routers/contact";
 import { passkeyRouter } from "./routers/passkey";
 import { notificationRouter } from "./routers/notification";
+import { featureToggleRouter } from "./routers/feature-toggle";
+import { setupWizardRouter } from "./routers/setup-wizard";
 
 // Main router that aggregates all feature routers
-export const appRouter = router({
+const appRouter = router({
   // Simple hello endpoint for testing
   hello: publicProcedure
     .input(z.object({ name: z.string() }))
@@ -94,7 +96,34 @@ export const appRouter = router({
   // Real-time notifications (Centrifugo)
   getCentrifugoToken: notificationRouter.getCentrifugoToken,
   subscribeToNotifications: notificationRouter.subscribeToNotifications,
+  
+  // Feature Toggle System
+  getEffectiveFeatures: featureToggleRouter.getEffectiveFeatures,
+  isFeatureEnabled: featureToggleRouter.isFeatureEnabled,
+  createFeatureDefinition: featureToggleRouter.createFeatureDefinition,
+  updateFeatureDefinition: featureToggleRouter.updateFeatureDefinition,
+  deleteFeatureDefinition: featureToggleRouter.deleteFeatureDefinition,
+  listFeatureDefinitions: featureToggleRouter.listFeatureDefinitions,
+  setGlobalFeatureRule: featureToggleRouter.setGlobalFeatureRule,
+  removeGlobalFeatureRule: featureToggleRouter.removeGlobalFeatureRule,
+  getGlobalAuditHistory: featureToggleRouter.getGlobalAuditHistory,
+  getTenantFeatures: featureToggleRouter.getTenantFeatures,
+  setTenantFeatureRule: featureToggleRouter.setTenantFeatureRule,
+  removeTenantFeatureRule: featureToggleRouter.removeTenantFeatureRule,
+  getTenantAuditHistory: featureToggleRouter.getTenantAuditHistory,
+  
+  // Setup Wizard
+  getSetupState: setupWizardRouter.getSetupState,
+  updateWizardStep: setupWizardRouter.updateWizardStep,
+  submitDatabaseConfig: setupWizardRouter.submitDatabaseConfig,
+  createFirstAdmin: setupWizardRouter.createFirstAdmin,
+  submitFeatureSelections: setupWizardRouter.submitFeatureSelections,
+  completeSetup: setupWizardRouter.completeSetup,
+  isSetupRequired: setupWizardRouter.isSetupRequired,
+  getCoreFeatures: setupWizardRouter.getCoreFeatures,
+  resetSetup: setupWizardRouter.resetSetup,
 });
 
-// Export type for client usage
+// Export the router and type for client usage
+export { appRouter };
 export type AppRouter = typeof appRouter;

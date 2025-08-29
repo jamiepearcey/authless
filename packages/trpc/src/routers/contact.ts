@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { router, protectedProcedure, publicProcedure } from "../base";
+import { router, protectedProcedure, publicProcedure } from "../middleware";
 
 export const contactRouter = router({
   // Get contact reasons (public)

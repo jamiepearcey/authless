@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { toast } from "@ui/base";
 import { t } from "@i18n-core";
-import { trpc } from "../../lib/trpc";
+import { trpc } from "../../../../lib/trpc";
 
 interface Passkey {
   id: string;
@@ -179,7 +179,7 @@ export default function PasskeySelectPage() {
 
   const handleAlternativeLogin = () => {
     // Navigate to regular login page
-    router.push(`/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`);
+    router.push(`/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`);
   };
 
   const getDeviceIcon = (passkey: Passkey) => {

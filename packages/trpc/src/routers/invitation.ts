@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { router, tenantAdminProcedure, protectedProcedure, publicProcedure } from "../base";
+import { router, tenantAdminProcedure, protectedProcedure, publicProcedure } from "../middleware";
 import { randomBytes } from "crypto";
 
 export const invitationRouter = router({

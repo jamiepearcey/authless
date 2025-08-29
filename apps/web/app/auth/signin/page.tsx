@@ -262,7 +262,7 @@ export default function SignInPage() {
               <p className="text-sm text-gray-600">
                 {t("Don't have an account?", "signin.page.SignInPage.dont_have_an_account__14ckols")}{" "}
                 <Link
-                  href="/signup"
+                  href="/auth/signup"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   {t("Sign up", "signin.page.SignInPage.sign_up__15ckols")}

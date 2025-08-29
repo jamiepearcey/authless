@@ -130,8 +130,8 @@ export function middleware(request: NextRequest) {
                      request.cookies.get("__Secure-next-auth.session-token");
     
     if (!authToken) {
-      // Redirect to passkey-select page first, which will redirect to signin if no passkeys
-      const passkeySelectUrl = new URL("/passkey-select", request.url);
+      // Redirect to signin/passkey page first, which will redirect to signin if no passkeys
+      const passkeySelectUrl = new URL("/auth/signin/passkey", request.url);
       passkeySelectUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(passkeySelectUrl);
     }

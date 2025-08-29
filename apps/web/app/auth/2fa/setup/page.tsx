@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { Shield, CheckCircle, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button } from "@ui/base";
-import TwoFactorSetup from "../../components/TwoFactorSetup";
+import TwoFactorSetup from "../../../../components/TwoFactorSetup";
 
 export default function Setup2FAPage() {
   const { data: session, status } = useSession();
@@ -14,7 +14,7 @@ export default function Setup2FAPage() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/signin");
+      router.push("/auth/signin");
     }
   }, [status, router]);
 

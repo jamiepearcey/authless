@@ -138,6 +138,8 @@ model Tenant {
   notifications                  Notification[]
   sessions                       Session[]
   webhookEndpoints               WebhookEndpoint[]
+  featureRules                   TenantFeatureRule[]
+  featureAuditEntries           FeatureAuditEntry[]
 
   @@index([slug])
   @@index([subdomain])
@@ -410,4 +412,98 @@ model WebhookEndpoint {
   @@index([isActive])
   @@index([lastTriggeredAt])
   @@index([createdAt])
+}
+
+// Feature Toggle System Models
+
+model FeatureDefinition {
+  id          String @id @default(cuid())
+  key         String @unique // e.g., "notifications", "sso", "discussion_wall"
+  name        String // Human-readable name
+  description String? // Description of the feature
+  tier        String // "Core", "Secondary", "Tenancy-only"
+  defaultEnabled Boolean @default(false) // Default state for new tenants
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   String // User ID who created this feature
+  
+  // Relations
+  globalRules GlobalFeatureRule[]
+  tenantRules TenantFeatureRule[]
+  auditEntries FeatureAuditEntry[]
+  
+  @@index([tier])
+  @@index([defaultEnabled])
+  @@index([createdAt])
+}
+
+model GlobalFeatureRule {
+  id        String @id @default(cuid())
+  featureKey String // References FeatureDefinition.key
+  enabled   Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String // User ID who created/modified this rule
+  
+  // Relations
+  feature   FeatureDefinition @relation(fields: [featureKey], references: [key], onDelete: Cascade)
+  
+  @@unique([featureKey]) // Only one global rule per feature
+  @@index([enabled])
+  @@index([createdAt])
+}
+
+model TenantFeatureRule {
+  id        String @id @default(cuid())
+  tenantId  String
+  featureKey String // References FeatureDefinition.key
+  enabled   Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String // User ID who created/modified this rule
+  
+  // Relations
+  tenant    Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  feature   FeatureDefinition @relation(fields: [featureKey], references: [key], onDelete: Cascade)
+  
+  @@unique([tenantId, featureKey]) // Only one rule per tenant per feature
+  @@index([tenantId])
+  @@index([enabled])
+  @@index([createdAt])
+}
+
+model FeatureAuditEntry {
+  id          String @id @default(cuid())
+  featureKey  String // References FeatureDefinition.key
+  scope       String // "global" or "tenant"
+  tenantId    String? // Null for global scope
+  beforeValue String? // JSON representation of previous state
+  afterValue  String? // JSON representation of new state
+  action      String // "create", "update", "delete", "enable", "disable"
+  createdAt   DateTime @default(now())
+  createdBy   String // User ID who performed the action
+  
+  // Relations
+  feature     FeatureDefinition @relation(fields: [featureKey], references: [key], onDelete: Cascade)
+  tenant      Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  @@index([featureKey])
+  @@index([scope])
+  @@index([tenantId])
+  @@index([createdAt])
+  @@index([createdBy])
+}
+
+model SetupState {
+  id              String @id @default("singleton") // Singleton record
+  isCompleted     Boolean @default(false)
+  currentStep     String? // Current wizard step if in progress
+  contextSnapshot String? // JSON snapshot of wizard context
+  completedAt     DateTime?
+  completedBy     String? // User ID who completed setup
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([isCompleted])
+  @@index([completedAt])
 }

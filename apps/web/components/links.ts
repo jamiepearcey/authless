@@ -1,7 +1,7 @@
 import { t } from "@i18n-core";
 export const navigationLinks = [
   {
-    href: "/features",
+    href: "/pages/features",
     label: t("Features", "components.links.navigationLinks.features__1itlrq"),
   },
   {
@@ -19,25 +19,25 @@ export const quickLinks = [
 ];
 export const legalLinks = [
   {
-    href: "/terms",
+    href: "/pages/terms",
     label: t("Terms of Service", "terms.page.Terms.terms_of_service__22ckfi"),
   },
   {
-    href: "/privacy",
+    href: "/pages/privacy",
     label: t(
       "Privacy Policy",
       "components.links.legalLinks.privacy_policy__1rxb2k",
     ),
   },
   {
-    href: "/cookies",
+    href: "/pages/cookies",
     label: t(
       "Cookie Policy",
       "components.links.legalLinks.cookie_policy__10ird3",
     ),
   },
   {
-    href: "/accessibility",
+    href: "/pages/accessibility",
     label: t(
       "Accessibility",
       "components.links.legalLinks.accessibility__wn0cao",

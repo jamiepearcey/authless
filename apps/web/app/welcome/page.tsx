@@ -28,7 +28,7 @@ export default function WelcomePage() {
   // Redirect if not authenticated
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/signin");
+      router.push("/auth/signin");
     }
   }, [status, router]);
 

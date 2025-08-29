@@ -34,67 +34,6 @@ importers:
         specifier: ^5.0.0
         version: 5.9.2
 
-  apps/api:
-    dependencies:
-      '@db/base':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@i18n-core':
-        specifier: workspace:*
-        version: link:../../packages/i18n-core
-      '@shared/base':
-        specifier: workspace:*
-        version: link:../../packages/shared
-      '@trpc/base':
-        specifier: workspace:*
-        version: link:../../packages/trpc
-      '@trpc/next':
-        specifier: ^11.0.0
-        version: 11.4.4(@tanstack/react-query@5.85.3(react@18.3.1))(@trpc/client@11.4.4(@trpc/server@11.4.4(typescript@5.9.2))(typescript@5.9.2))(@trpc/react-query@11.4.4(@tanstack/react-query@5.85.3(react@18.3.1))(@trpc/client@11.4.4(@trpc/server@11.4.4(typescript@5.9.2))(typescript@5.9.2))(@trpc/server@11.4.4(typescript@5.9.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.2))(@trpc/server@11.4.4(typescript@5.9.2))(next@14.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.2)
-      '@trpc/server':
-        specifier: ^11.0.0
-        version: 11.4.4(typescript@5.9.2)
-      next:
-        specifier: 14.0.0
-        version: 14.0.0(@babel/core@7.28.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: ^18.0.0
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.0.0
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@config/base':
-        specifier: workspace:*
-        version: link:../../packages/config
-      '@testing-library/jest-dom':
-        specifier: ^6.8.0
-        version: 6.8.0
-      '@testing-library/react':
-        specifier: ^16.3.0
-        version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@types/node':
-        specifier: ^20.0.0
-        version: 20.19.11
-      '@types/react':
-        specifier: ^18.0.0
-        version: 18.3.23
-      '@types/react-dom':
-        specifier: ^18.0.0
-        version: 18.3.7(@types/react@18.3.23)
-      eslint:
-        specifier: ^8.0.0
-        version: 8.57.1
-      jsdom:
-        specifier: ^26.1.0
-        version: 26.1.0
-      typescript:
-        specifier: ^5.0.0
-        version: 5.9.2
-      vitest:
-        specifier: ^1.0.0
-        version: 1.6.1(@types/node@20.19.11)(jsdom@26.1.0)
-
   apps/web:
     dependencies:
       '@auth/prisma-adapter':
@@ -392,6 +331,9 @@ importers:
       base32-encode:
         specifier: ^2.0.0
         version: 2.0.0
+      bcryptjs:
+        specifier: ^2.4.3
+        version: 2.4.3
       centrifuge:
         specifier: ^5.4.0
         version: 5.4.0
@@ -405,6 +347,9 @@ importers:
         specifier: ^3.22.0
         version: 3.25.76
     devDependencies:
+      '@types/bcryptjs':
+        specifier: ^2.4.6
+        version: 2.4.6
       vitest:
         specifier: ^1.0.0
         version: 1.6.1(@types/node@20.19.11)(jsdom@26.1.0)

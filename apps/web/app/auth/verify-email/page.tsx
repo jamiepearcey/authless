@@ -37,7 +37,7 @@ export default function VerifyEmailPage() {
       if (response.ok) {
         setSuccess(data.message);
         setTimeout(() => {
-          router.push("/signin");
+          router.push("/auth/signin");
         }, 3000);
       } else {
         setError(data.error || "Failed to verify email");
@@ -64,7 +64,7 @@ export default function VerifyEmailPage() {
               "verify-email.page.VerifyEmailPage.this_email_verification_link_is_invalid_or_has_expired__bttyjo",
             )}
           </p>
-          <Link href="/signin">
+          <Link href="/auth/signin">
             <Button>
               {t(
                 "Go to Sign In",
@@ -132,7 +132,7 @@ export default function VerifyEmailPage() {
 
           <div className="pt-4">
             <Link
-              href="/signin"
+              href="/auth/signin"
               className="text-indigo-600 hover:text-indigo-500"
             >
               {t(

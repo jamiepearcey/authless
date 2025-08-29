@@ -102,12 +102,12 @@ const Navigation = () => {
           </DropdownMenu> :
 
         <div className="flex items-center space-x-2">
-            <Link href="/signin">
+            <Link href="/auth/signin">
               <Button variant="outline">
                 Sign In
               </Button>
             </Link>
-            <Link href="/signup">
+            <Link href="/auth/signup">
               <Button>
                 Sign Up
               </Button>

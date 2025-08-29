@@ -85,10 +85,10 @@ export async function callWhatsAppWebhook(payload: WhatsAppWebhookPayload): Prom
 
 export function constructEmailVerificationUrl(token: string): string {
   const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-  return `${baseUrl}/verify-email?token=${token}`;
+  return `${baseUrl}/auth/verify-email?token=${token}`;
 }
 
 export function constructPasswordResetUrl(token: string): string {
   const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-  return `${baseUrl}/reset-password?token=${token}`;
+  return `${baseUrl}/auth/reset-password?token=${token}`;
 }

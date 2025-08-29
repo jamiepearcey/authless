@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { router, protectedProcedure } from "../base";
+import { router, protectedProcedure } from "../middleware";
 import { randomBytes } from "crypto";
 import base32Encode from "base32-encode";
 import { authenticator } from "otplib";

@@ -34,7 +34,7 @@ export default function SignUpPage() {
       if (response.ok) {
         setSuccess("Account created successfully! You can now sign in.");
         setTimeout(() => {
-          router.push("/signin");
+          router.push("/auth/signin");
         }, 2000);
       } else {
         setError(data.error || "Failed to create account");
@@ -149,7 +149,7 @@ export default function SignUpPage() {
               "signup.page.SignUpPage.already_have_an_account__rtr3cd",
             )}{" "}
             <Link
-              href="/signin"
+              href="/auth/signin"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               {t(

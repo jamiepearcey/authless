@@ -380,6 +380,60 @@ exports.Prisma.WebhookEndpointScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.FeatureDefinitionScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  name: 'name',
+  description: 'description',
+  tier: 'tier',
+  defaultEnabled: 'defaultEnabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy'
+};
+
+exports.Prisma.GlobalFeatureRuleScalarFieldEnum = {
+  id: 'id',
+  featureKey: 'featureKey',
+  enabled: 'enabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy'
+};
+
+exports.Prisma.TenantFeatureRuleScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  featureKey: 'featureKey',
+  enabled: 'enabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy'
+};
+
+exports.Prisma.FeatureAuditEntryScalarFieldEnum = {
+  id: 'id',
+  featureKey: 'featureKey',
+  scope: 'scope',
+  tenantId: 'tenantId',
+  beforeValue: 'beforeValue',
+  afterValue: 'afterValue',
+  action: 'action',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+};
+
+exports.Prisma.SetupStateScalarFieldEnum = {
+  id: 'id',
+  isCompleted: 'isCompleted',
+  currentStep: 'currentStep',
+  contextSnapshot: 'contextSnapshot',
+  completedAt: 'completedAt',
+  completedBy: 'completedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -413,7 +467,12 @@ exports.Prisma.ModelName = {
   AuthenticatorCode: 'AuthenticatorCode',
   Notification: 'Notification',
   NotificationRecipient: 'NotificationRecipient',
-  WebhookEndpoint: 'WebhookEndpoint'
+  WebhookEndpoint: 'WebhookEndpoint',
+  FeatureDefinition: 'FeatureDefinition',
+  GlobalFeatureRule: 'GlobalFeatureRule',
+  TenantFeatureRule: 'TenantFeatureRule',
+  FeatureAuditEntry: 'FeatureAuditEntry',
+  SetupState: 'SetupState'
 };
 
 /**

@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import { t } from "@i18n-core";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, OtpInput } from "@ui/base";
 import { Button } from "@ui/base";
-import { Input } from "@ui/base";
 import { Label } from "@ui/base";
 import { Separator } from "@ui/base";
 import { Checkbox } from "@ui/base";
@@ -48,7 +47,7 @@ export default function Verify2FAPage() {
   const [success, setSuccess] = useState("");
 
   // tRPC mutations
-  const verify2FACode = trpc.verifyTwoFactorCode.useMutation();
+  const verify2FACode = trpc.verifyAuthenticatorCode.useMutation();
 
   // 2FA methods available to the user
   const twoFactorMethods: TwoFactorMethod[] = [
@@ -73,7 +72,7 @@ export default function Verify2FAPage() {
   // Redirect if not authenticated
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/signin");
+      router.push("/auth/signin");
     }
   }, [status, router]);
 
@@ -339,18 +338,6 @@ export default function Verify2FAPage() {
                             </>
                           )}
                         </Button>
-
-                        <div className="flex items-center justify-center">
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={handleResendCode}
-                            className="text-sm"
-                          >
-                            {t("Resend Code", "verify2fa.page.Verify2FAPage.resend_code__16abcde")}
-                          </Button>
-                        </div>
                       </div>
                     </div>
                   </div>

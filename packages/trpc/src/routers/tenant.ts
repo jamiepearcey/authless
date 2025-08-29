@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { router, platformAdminProcedure, tenantMemberProcedure, protectedProcedure } from "../base";
+import { router, platformAdminProcedure, tenantMemberProcedure, protectedProcedure } from "../middleware";
 import { Prisma } from "@prisma/client";
 
 

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { router, protectedProcedure, platformAdminProcedure, tenantAdminProcedure } from "../base";
+import { router, protectedProcedure, platformAdminProcedure, tenantAdminProcedure } from "../middleware";
 import bcrypt from "bcryptjs";
 import { imageUploadService } from "../image-upload-service";
 

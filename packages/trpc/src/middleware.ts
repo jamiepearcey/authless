@@ -2,6 +2,8 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { Context } from "./context";
 
+export { createContext, type Context } from "./context";
+
 export type { AppRouter } from "./main-router";
 
 const t = initTRPC.context<Context>().create();

@@ -98,7 +98,7 @@ export default function ForgotPasswordPage() {
               "forgot-password.page.ForgotPasswordPage.remember_your_password__22wf6z",
             )}{" "}
             <Link
-              href="/signin"
+              href="/auth/signin"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               {t(
