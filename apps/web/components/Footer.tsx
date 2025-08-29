@@ -126,12 +126,6 @@ const Footer = () => {
               "components.footer.Footer.copyright_2025_authless_all_rights_reserved__nvm167"
             )}
           </p>
-          <p className="text-sm text-primary-foreground/60 mt-2">
-            {t(
-              "This product is supplied under the MIT license.",
-              "components.footer.Footer.this_product_is_supplied_under_the_mit_license__mp0xkl"
-            )}
-          </p>
         </div>
       </div>
     </footer>

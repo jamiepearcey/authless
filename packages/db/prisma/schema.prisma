@@ -82,6 +82,10 @@ model User {
   notificationRecipients NotificationRecipient[]
   passkeys               Passkey[]
   sessions               Session[]
+  twoFactorMethods       TwoFactorMethod[]
+  pendingAuths           PendingAuth[]
+  twoFactorCodes         TwoFactorCode[]
+  twoFactorAudits        TwoFactorAudit[]
 
   @@index([email])
   @@index([platformRole])
@@ -140,6 +144,10 @@ model Tenant {
   webhookEndpoints               WebhookEndpoint[]
   featureRules                   TenantFeatureRule[]
   featureAuditEntries           FeatureAuditEntry[]
+  twoFactorMethods               TwoFactorMethod[]
+  pendingAuths                   PendingAuth[]
+  twoFactorCodes                 TwoFactorCode[]
+  twoFactorAudits                TwoFactorAudit[]
 
   @@index([slug])
   @@index([subdomain])
@@ -506,4 +514,99 @@ model SetupState {
   
   @@index([isCompleted])
   @@index([completedAt])
+}
+
+// 2FA Factor model - tracks enabled 2FA methods per user
+model TwoFactorMethod {
+  id           String   @id @default(cuid())
+  userId       String
+  tenantId     String?
+  type         String   // 'totp', 'whatsapp', 'sms', 'email'
+  identifier   String?  // phone number for whatsapp/sms, email for email
+  secret       String?  // TOTP secret or encrypted data
+  isVerified   Boolean  @default(false)
+  isEnabled    Boolean  @default(false)
+  backupCodes  String?  // JSON array of backup codes
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  lastUsedAt   DateTime?
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type, tenantId])
+  @@index([userId])
+  @@index([type])
+  @@index([tenantId])
+}
+
+// Pending 2FA authentication state
+model PendingAuth {
+  id             String   @id @default(cuid())
+  userId         String
+  tenantId       String?
+  nonce          String   @unique
+  requiredFactors String  // JSON array of required factor types
+  createdAt      DateTime @default(now())
+  expiresAt      DateTime
+  ipAddress      String?
+  userAgent      String?
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([nonce])
+  @@index([expiresAt])
+  @@index([tenantId])
+}
+
+// 2FA verification codes (OTP for WhatsApp, SMS, etc.)
+model TwoFactorCode {
+  id          String   @id @default(cuid())
+  userId      String
+  tenantId    String?
+  type        String   // 'whatsapp', 'sms', 'email'
+  codeHash    String   // hashed verification code
+  salt        String   // salt for the hash
+  purpose     String   // 'login_2fa', 'factor_activation'
+  attempts    Int      @default(0)
+  maxAttempts Int      @default(5)
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime
+  usedAt      DateTime?
+  traceId     String?  // for tracking webhook delivery
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([type])
+  @@index([purpose])
+  @@index([expiresAt])
+  @@index([tenantId])
+  @@index([traceId])
+}
+
+// 2FA audit log
+model TwoFactorAudit {
+  id        String   @id @default(cuid())
+  userId    String
+  tenantId  String?
+  action    String   // 'enable', 'disable', 'send', 'verify', 'fail', 'lockout'
+  factorType String  // 'totp', 'whatsapp', 'sms', 'email'
+  success   Boolean
+  ipAddress String?
+  userAgent String?
+  metadata  String?  // JSON for additional context
+  createdAt DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([action])
+  @@index([factorType])
+  @@index([createdAt])
+  @@index([tenantId])
 }

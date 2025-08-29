@@ -9,6 +9,7 @@ import { passkeyRouter } from "./routers/passkey";
 import { notificationRouter } from "./routers/notification";
 import { featureToggleRouter } from "./routers/feature-toggle";
 import { setupWizardRouter } from "./routers/setup-wizard";
+import { authRouter } from "./routers/auth";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -21,6 +22,14 @@ const appRouter = router({
       };
     }),
   
+  // Authentication
+  startPasswordLogin: authRouter.startPasswordLogin,
+  send2faCode: authRouter.send2faCode,
+  verify2faCode: authRouter.verify2faCode,
+  completeAuthentication: authRouter.completeAuthentication,
+  getPendingAuthStatus: authRouter.getPendingAuthStatus,
+  cancelPendingAuth: authRouter.cancelPendingAuth,
+
   // User management
   getUser: userRouter.getUser,
   getCurrentUser: userRouter.getCurrentUser,
@@ -57,6 +66,16 @@ const appRouter = router({
   deleteAuthenticatorCode: twoFactorRouter.deleteAuthenticatorCode,
   verifyAuthenticatorCode: twoFactorRouter.verifyAuthenticatorCode,
   getTwoFactorStatus: twoFactorRouter.getTwoFactorStatus,
+  get2fa: twoFactorRouter.get2fa,
+  enableWhatsapp2fa: twoFactorRouter.enableWhatsapp2fa,
+  verifyWhatsappActivation: twoFactorRouter.verifyWhatsappActivation,
+  disableWhatsapp2fa: twoFactorRouter.disableWhatsapp2fa,
+  sendTest2faCode: twoFactorRouter.sendTest2faCode,
+  migrateLegacyAuthenticators: twoFactorRouter.migrateLegacyAuthenticators,
+  
+  // Legacy compatibility methods
+  setupTwoFactor: twoFactorRouter.setupTwoFactor,
+  verifyTwoFactor: twoFactorRouter.verifyTwoFactor,
   
   // Contact system
   getContactReasons: contactRouter.getContactReasons,

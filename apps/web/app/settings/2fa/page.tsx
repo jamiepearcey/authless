@@ -9,6 +9,7 @@ import { trpc } from "../../../lib/trpc";
 export default function TwoFactorPage() {
   // Get 2FA status from tRPC
   const { data: twoFactorStatus, isLoading } = trpc.getTwoFactorStatus.useQuery();
+  const { data: twoFactorMethods } = trpc.get2fa.useQuery();
 
   if (isLoading) {
     return (
@@ -17,6 +18,9 @@ export default function TwoFactorPage() {
       </div>
     );
   }
+
+  const whatsAppMethod = twoFactorMethods?.find(method => method.type === "whatsapp");
+  const hasWhatsApp = !!whatsAppMethod;
 
   const status = twoFactorStatus || {
     hasPasskeys: false,
@@ -168,35 +172,43 @@ export default function TwoFactorPage() {
             </Link>
           </div>
 
-          {/* WhatsApp Section (Disabled for now) */}
-          <div className="bg-white shadow rounded-lg p-6 opacity-60">
+          {/* WhatsApp Section */}
+          <div className="bg-white shadow rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <MessageCircle className="h-6 w-6 text-gray-400" />
-                <h2 className="text-xl font-semibold text-gray-400">
+                <MessageCircle className="h-6 w-6 text-indigo-600" />
+                <h2 className="text-xl font-semibold text-gray-900">
                   WhatsApp
                 </h2>
-                <XCircle className="h-6 w-6 text-gray-400" />
+                {getStatusIcon(hasWhatsApp)}
               </div>
             </div>
 
             <div className="mb-4">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                Coming Soon
+              <span
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(hasWhatsApp)}`}
+              >
+                {getStatusText(hasWhatsApp)}
               </span>
+              {hasWhatsApp && whatsAppMethod?.identifier && (
+                <span className="ml-2 text-sm text-gray-500">
+                  {whatsAppMethod.identifier}
+                </span>
+              )}
             </div>
 
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-600 mb-6">
               Receive verification codes via WhatsApp for secure two-factor authentication
             </p>
 
-            <Button
-              disabled
-              variant="outline"
-              className="w-full cursor-not-allowed"
-            >
-              Coming Soon
-            </Button>
+            <Link href="/settings/2fa/whatsapp">
+              <Button
+                variant={hasWhatsApp ? "outline" : "default"}
+                className="w-full"
+              >
+                {hasWhatsApp ? "Manage" : "Set Up"}
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

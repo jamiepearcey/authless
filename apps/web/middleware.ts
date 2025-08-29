@@ -120,6 +120,20 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const pathParts = pathname.split("/");
 
+  // Handle /auth routing
+  if (pathname === "/auth") {
+    // Always route to /auth/signin/passkey by default
+    // The page will offer a fallback to /auth/signin if no passkeys are available
+    const passkeyUrl = new URL("/auth/signin/passkey", request.url);
+    
+    // Preserve query parameters (e.g., callbackUrl)
+    request.nextUrl.searchParams.forEach((value, key) => {
+      passkeyUrl.searchParams.set(key, value);
+    });
+    
+    return NextResponse.redirect(passkeyUrl);
+  }
+
   // Check if the path requires authentication
   const protectedPaths = ["/settings", "/admin", "/dashboard"];
   const requiresAuth = protectedPaths.some(path => pathname.startsWith(path));

@@ -434,6 +434,62 @@ exports.Prisma.SetupStateScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TwoFactorMethodScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tenantId: 'tenantId',
+  type: 'type',
+  identifier: 'identifier',
+  secret: 'secret',
+  isVerified: 'isVerified',
+  isEnabled: 'isEnabled',
+  backupCodes: 'backupCodes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  lastUsedAt: 'lastUsedAt'
+};
+
+exports.Prisma.PendingAuthScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tenantId: 'tenantId',
+  nonce: 'nonce',
+  requiredFactors: 'requiredFactors',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent'
+};
+
+exports.Prisma.TwoFactorCodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tenantId: 'tenantId',
+  type: 'type',
+  codeHash: 'codeHash',
+  salt: 'salt',
+  purpose: 'purpose',
+  attempts: 'attempts',
+  maxAttempts: 'maxAttempts',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  traceId: 'traceId'
+};
+
+exports.Prisma.TwoFactorAuditScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tenantId: 'tenantId',
+  action: 'action',
+  factorType: 'factorType',
+  success: 'success',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -472,7 +528,11 @@ exports.Prisma.ModelName = {
   GlobalFeatureRule: 'GlobalFeatureRule',
   TenantFeatureRule: 'TenantFeatureRule',
   FeatureAuditEntry: 'FeatureAuditEntry',
-  SetupState: 'SetupState'
+  SetupState: 'SetupState',
+  TwoFactorMethod: 'TwoFactorMethod',
+  PendingAuth: 'PendingAuth',
+  TwoFactorCode: 'TwoFactorCode',
+  TwoFactorAudit: 'TwoFactorAudit'
 };
 
 /**

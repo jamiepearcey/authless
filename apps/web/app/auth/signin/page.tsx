@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/b
 import { Separator } from "@ui/base";
 import Link from "next/link";
 import { t } from "@i18n-core";
+import { trpc } from "@/lib/trpc";
 import { 
   Mail, 
   Lock, 
@@ -34,6 +35,9 @@ export default function SignInPage() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   const errorParam = searchParams.get("error");
+
+  // tRPC mutation for 2FA-aware login
+  const startPasswordLogin = trpc.startPasswordLogin.useMutation();
 
   // Handle OAuth errors from URL params
   useState(() => {
@@ -61,22 +65,58 @@ export default function SignInPage() {
     setSuccess("");
 
     try {
-      const result = await signIn("credentials", {
-        email,
+      // First try the new 2FA-aware login flow
+      const result = await startPasswordLogin.mutateAsync({
+        identifier: email,
         password,
-        redirect: false,
       });
+      
+      if (result.next === "2fa" && "nonce" in result) {
+        // Redirect to 2FA verification with nonce
+        const verifyUrl = new URL("/auth/2fa/verify", window.location.origin);
+        verifyUrl.searchParams.set("nonce", result.nonce);
+        verifyUrl.searchParams.set("callbackUrl", callbackUrl);
+        router.push(verifyUrl.toString());
+        return;
+      } else if (result.next === "done") {
+        // No 2FA required, proceed with standard NextAuth session
+        const signInResult = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
 
-      if (result?.error) {
-        setError(result.error);
-      } else if (result?.ok) {
-        setSuccess("Sign in successful! Redirecting...");
-        setTimeout(() => {
-          router.push(callbackUrl);
-        }, 1000);
+        if (signInResult?.error) {
+          setError(signInResult.error);
+        } else if (signInResult?.ok) {
+          setSuccess("Sign in successful! Redirecting...");
+          setTimeout(() => {
+            router.push(callbackUrl);
+          }, 1000);
+        }
       }
-    } catch (error) {
-      setError("An error occurred during sign in");
+    } catch (error: any) {
+      // If the new flow fails, fallback to standard NextAuth for compatibility
+      console.log("2FA flow failed, falling back to standard auth:", error);
+      
+      try {
+        const result = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (result?.error) {
+          setError(result.error);
+        } else if (result?.ok) {
+          setSuccess("Sign in successful! Redirecting...");
+          setTimeout(() => {
+            router.push(callbackUrl);
+          }, 1000);
+        }
+      } catch (fallbackError) {
+        setError("An error occurred during sign in");
+      }
     } finally {
       setIsLoading(false);
     }

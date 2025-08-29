@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Button, OtpInput } from "@ui/base";
+import { useState, useEffect } from "react";
+import { Button, OtpInput, ConfirmRemoveDialog } from "@ui/base";
 import { PhoneNumberInput } from "@/components/PhoneNumberInput";
 import {
   MessageCircle,
@@ -9,12 +9,16 @@ import {
   CheckCircle,
   Smartphone,
   Shield,
+  AlertCircle,
+  Trash2,
 } from "lucide-react";
 import Link from "next/link";
 import { t } from "@i18n-core";
+import { trpc } from "@/lib/trpc";
+import { toast } from "@ui/base";
 
 export default function WhatsAppSetupPage() {
-  const [step, setStep] = useState<"setup" | "verify" | "success">("setup");
+  const [step, setStep] = useState<"setup" | "verify" | "success" | "manage">("setup");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("44");
   const [fullPhoneNumber, setFullPhoneNumber] = useState("");
@@ -23,10 +27,26 @@ export default function WhatsAppSetupPage() {
   const [phoneValidationError, setPhoneValidationError] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(false);
 
+  // tRPC queries and mutations
+  const { data: twoFactorMethods, refetch: refetchMethods } = trpc.get2fa.useQuery();
+  const enableWhatsApp = trpc.enableWhatsapp2fa.useMutation();
+  const verifyActivation = trpc.verifyWhatsappActivation.useMutation();
+  const disableWhatsApp = trpc.disableWhatsapp2fa.useMutation();
+
+  // Check if WhatsApp is already enabled
+  const whatsAppMethod = twoFactorMethods?.find(method => method.type === "whatsapp");
+  const isWhatsAppEnabled = !!whatsAppMethod;
+
+  useEffect(() => {
+    if (isWhatsAppEnabled && step === "setup") {
+      setStep("manage");
+    }
+  }, [isWhatsAppEnabled, step]);
+
   const handlePhoneNumberChange = (value: string, code: string, full: string) => {
     setPhoneNumber(value);
     setCountryCode(code);
-    setFullPhoneNumber(full);
+    setFullPhoneNumber(`+${code}${value}`);
   };
 
   const handlePhoneValidationChange = (isValid: boolean, error?: string) => {
@@ -35,18 +55,21 @@ export default function WhatsAppSetupPage() {
   };
 
   const handleSetup = async () => {
-    if (!isPhoneValid) {
+    if (!isPhoneValid || !fullPhoneNumber) {
       setPhoneValidationError("Please enter a valid phone number");
       return;
     }
     
     setIsLoading(true);
     try {
-      // TODO: Call API to send WhatsApp verification code
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
+      await enableWhatsApp.mutateAsync({
+        phoneE164: fullPhoneNumber
+      });
+      toast.success("Verification code sent to your WhatsApp!");
       setStep("verify");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to setup WhatsApp:", error);
+      toast.error(error?.message || "Failed to send verification code");
     } finally {
       setIsLoading(false);
     }
@@ -54,30 +77,55 @@ export default function WhatsAppSetupPage() {
 
   const handleVerify = async () => {
     if (!verificationCode || verificationCode.length !== 6) {
-      alert("Please enter a valid 6-digit code");
+      toast.error("Please enter a valid 6-digit code");
       return;
     }
     setIsLoading(true);
     try {
-      // TODO: Call API to verify the WhatsApp code
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
+      await verifyActivation.mutateAsync({
+        code: verificationCode
+      });
+      toast.success("WhatsApp 2FA enabled successfully!");
       setStep("success");
-    } catch (error) {
+      refetchMethods();
+    } catch (error: any) {
       console.error("Failed to verify WhatsApp code:", error);
-      alert("Invalid verification code. Please try again.");
+      toast.error(error?.message || "Invalid verification code. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleResendCode = async () => {
+    if (!fullPhoneNumber) {
+      toast.error("Phone number is required");
+      return;
+    }
+
     setIsLoading(true);
     try {
-      // TODO: Call API to resend WhatsApp verification code
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
-      alert("New verification code sent to WhatsApp!");
-    } catch (error) {
+      await enableWhatsApp.mutateAsync({
+        phoneE164: fullPhoneNumber
+      });
+      toast.success("New verification code sent to WhatsApp!");
+    } catch (error: any) {
       console.error("Failed to resend WhatsApp code:", error);
+      toast.error(error?.message || "Failed to resend verification code");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDisable = async () => {
+    setIsLoading(true);
+    try {
+      await disableWhatsApp.mutateAsync();
+      toast.success("WhatsApp 2FA disabled");
+      setStep("setup");
+      refetchMethods();
+    } catch (error: any) {
+      console.error("Failed to disable WhatsApp:", error);
+      toast.error(error?.message || "Failed to disable WhatsApp 2FA");
     } finally {
       setIsLoading(false);
     }
@@ -116,6 +164,88 @@ export default function WhatsAppSetupPage() {
                 )}
               </Button>
             </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === "manage") {
+    return (
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="bg-white shadow rounded-lg">
+          <div className="px-4 py-5 sm:p-6">
+            <div className="flex items-center space-x-3 mb-6">
+              <Link
+                href="/settings/2fa"
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Link>
+              <MessageCircle className="h-8 w-8 text-green-600" />
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">
+                  {t(
+                    "WhatsApp 2FA",
+                    "2fa.whatsapp.page.WhatsAppSetupPage.whatsapp_2fa__1h8j9k",
+                  )}
+                </h1>
+                <p className="text-sm text-gray-600">
+                  {t(
+                    "Manage your WhatsApp two-factor authentication",
+                    "2fa.whatsapp.page.WhatsAppSetupPage.manage_whatsapp_2fa__2k9l0m",
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <div className="flex items-center space-x-3">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+                <div>
+                  <p className="text-sm font-medium text-green-800">
+                    WhatsApp 2FA is enabled
+                  </p>
+                  <p className="text-sm text-green-600">
+                    Phone: {whatsAppMethod?.identifier || "Hidden"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex space-x-3">
+              <Button
+                variant="outline"
+                onClick={() => setStep("setup")}
+              >
+                Update Phone Number
+              </Button>
+              <ConfirmRemoveDialog
+                title="Disable WhatsApp 2FA"
+                description="Are you sure you want to disable WhatsApp 2FA? This will reduce your account security and you'll need to set it up again if you want to use it."
+                actionText="Disable WhatsApp 2FA"
+                onConfirm={handleDisable}
+                trigger={
+                  <Button
+                    variant="destructive"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                        Disabling...
+                      </>
+                    ) : (
+                      <>
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Disable WhatsApp 2FA
+                      </>
+                    )}
+                  </Button>
+                }
+              />
+            </div>
           </div>
         </div>
       </div>

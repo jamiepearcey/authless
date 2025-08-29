@@ -2,6 +2,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { router, protectedProcedure, publicProcedure } from "../middleware";
 import * as crypto from "crypto";
+import { twoFactorService } from "../two-factor-service";
 
 // Passkey registration input schema
 const passkeyRegistrationInput = z.object({
@@ -257,10 +258,6 @@ export const passkeyRouter = {
             where: { isActive: true },
             select: { id: true },
           },
-          authenticatorCodes: {
-            where: { isActive: true },
-            select: { id: true },
-          },
         },
       });
 
@@ -271,10 +268,16 @@ export const passkeyRouter = {
         });
       }
 
+      // Use unified system for TOTP methods
+      const totpMethods = await twoFactorService.getUserTOTPMethods(
+        userId,
+        undefined // No tenant ID in passkey context
+      );
+
       return {
         authenticator: {
-          enabled: user.authenticatorCodes.length > 0 || !!user.twoFactorSecret, // Check both new and legacy
-          verified: user.authenticatorCodes.length > 0 || !!user.twoFactorSecret,
+          enabled: totpMethods.length > 0 || !!user.twoFactorSecret, // Check unified system + legacy
+          verified: totpMethods.length > 0 || !!user.twoFactorSecret,
         },
         passkey: {
           enabled: user.passkeys.length > 0,

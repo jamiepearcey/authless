@@ -11,6 +11,7 @@ interface SessionUser {
   name?: string | null;
   image?: string | null;
   platformRole?: string;
+  tenantId?: string;
 }
 
 interface Session {

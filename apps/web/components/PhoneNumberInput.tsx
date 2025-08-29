@@ -254,7 +254,7 @@ export function PhoneNumberInput({
 
   // Update internal state when external value changes
   useEffect(() => {
-    setPhoneNumber(value);
+    setPhoneNumber(formatPhoneNumber(value, selectedCountry.format));
   }, [value]);
 
   // Format phone number according to country pattern
@@ -344,10 +344,11 @@ export function PhoneNumberInput({
     setSelectedCountry(country);
     setIsDropdownOpen(false);
     setSearchQuery(""); // Clear search when country is selected
-    
+      
     // Trigger onChange with new country code
-    const fullNumber = `+${country.dialCode} ${phoneNumber}`;
-    onChange?.(phoneNumber, country.dialCode, fullNumber);
+    const phoneNumberWithoutCountryCode = phoneNumber.replace(/\D/g, '');
+    const fullNumber = `+${country.dialCode} ${phoneNumberWithoutCountryCode}`;
+    onChange?.(phoneNumberWithoutCountryCode, country.dialCode, fullNumber);
     
     // Focus back to phone number input
     setTimeout(() => inputRef.current?.focus(), 100);
@@ -363,10 +364,11 @@ export function PhoneNumberInput({
     const formattedValue = formatPhoneNumber(cleanValue, selectedCountry.format);
     
     setPhoneNumber(formattedValue);
-    
-    // Trigger onChange with formatted value
-    const fullNumber = `+${selectedCountry.dialCode} ${formattedValue}`;
-    onChange?.(formattedValue, selectedCountry.dialCode, fullNumber);
+
+    // Trigger onChange with formatted value  
+    const phoneNumberWithoutCountryCode = formattedValue.replace(/\D/g, '');
+    const fullNumber = `+${selectedCountry.dialCode} ${phoneNumberWithoutCountryCode}`;
+    onChange?.(phoneNumberWithoutCountryCode, selectedCountry.dialCode, fullNumber);
   };
 
   const handlePhoneNumberPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
@@ -383,16 +385,17 @@ export function PhoneNumberInput({
       setPhoneNumber(formattedNumber);
       
       // Trigger onChange
-      const fullNumber = `+${parsed.country.dialCode} ${formattedNumber}`;
-      onChange?.(formattedNumber, parsed.country.dialCode, fullNumber);
+      const cleanValue = pastedText.replace(/[^\d\s\-\(\)\+]/g, '');
+      const fullNumber = `+${parsed.country.dialCode} ${cleanValue}`;
+      onChange?.(cleanValue, parsed.country.dialCode, fullNumber);
     } else {
       // Fallback to normal paste behavior with formatting
       const cleanValue = pastedText.replace(/[^\d\s\-\(\)\+]/g, '');
       const formattedValue = formatPhoneNumber(cleanValue, selectedCountry.format);
       setPhoneNumber(formattedValue);
       
-      const fullNumber = `+${selectedCountry.dialCode} ${formattedValue}`;
-      onChange?.(formattedValue, selectedCountry.dialCode, fullNumber);
+      const fullNumber = `+${selectedCountry.dialCode} ${cleanValue}`;
+      onChange?.(cleanValue, selectedCountry.dialCode, fullNumber);
     }
   };
 

@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { t } from "@i18n-core";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, OtpInput } from "@ui/base";
 import { Button } from "@ui/base";
 import { Label } from "@ui/base";
 import { Separator } from "@ui/base";
-import { Checkbox } from "@ui/base";
 import { 
   Shield, 
   Smartphone, 
@@ -16,10 +15,9 @@ import {
   Key, 
   AlertCircle, 
   CheckCircle,
-  Eye,
-  EyeOff,
   ArrowRight,
-  Smartphone as PhoneIcon
+  Clock,
+  RefreshCw
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
@@ -34,63 +32,120 @@ interface TwoFactorMethod {
 }
 
 export default function Verify2FAPage() {
-  const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const nonce = searchParams.get("nonce");
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
-  const [verificationMode, setVerificationMode] = useState<"initial" | "verifying">("initial");
   const [verificationCode, setVerificationCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [countdown, setCountdown] = useState(0);
 
-  // tRPC mutations
-  const verify2FACode = trpc.verifyAuthenticatorCode.useMutation();
+  // tRPC queries and mutations
+  const { data: pendingAuth, isError: pendingAuthError } = trpc.getPendingAuthStatus.useQuery(
+    { nonce: nonce || "" },
+    { enabled: !!nonce, refetchInterval: false }
+  );
+  const send2faCode = trpc.send2faCode.useMutation();
+  const verify2faCode = trpc.verify2faCode.useMutation();
+  const completeAuthentication = trpc.completeAuthentication.useMutation();
 
-  // 2FA methods available to the user
-  const twoFactorMethods: TwoFactorMethod[] = [
-    {
-      id: "authenticator",
-      key: "authenticator",
-      label: t("Authenticator App", "verify2fa.page.Verify2FAPage.authenticator_app__4abcde"),
-      description: t("Use Google Authenticator, Authy, or similar app", "verify2fa.page.Verify2FAPage.use_google_authy_similar__5abcde"),
-      icon: <Key className="h-5 w-5" />,
-      available: true, // This would be checked against user's 2FA setup
-    },
-    {
-      id: "whatsapp",
-      key: "whatsapp",
-      label: t("WhatsApp", "verify2fa.page.Verify2FAPage.whatsapp__6abcde"),
-      description: t("Receive verification code via WhatsApp", "verify2fa.page.Verify2FAPage.receive_code_via_whatsapp__7abcde"),
-      icon: <MessageCircle className="h-5 w-5" />,
-      available: true, // This would be checked against user's WhatsApp setup
-    }
-  ];
-
-  // Redirect if not authenticated
+  // Redirect if no nonce or invalid pending auth
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (!nonce) {
+      toast.error("Invalid authentication session");
       router.push("/auth/signin");
+      return;
     }
-  }, [status, router]);
+
+    if (pendingAuthError) {
+      toast.error("Authentication session expired");
+      router.push("/auth/signin");
+      return;
+    }
+  }, [nonce, pendingAuthError, router]);
+
+  // Generate available methods based on pending auth
+  const availableMethods = pendingAuth?.requiredFactors.map(factor => {
+    switch (factor) {
+      case "totp":
+        return {
+          id: "totp",
+          key: "totp",
+          label: "Authenticator App",
+          description: "Use Google Authenticator, Authy, or similar app",
+          icon: <Key className="h-5 w-5" />,
+          available: true,
+        };
+      case "whatsapp":
+        return {
+          id: "whatsapp",
+          key: "whatsapp", 
+          label: "WhatsApp",
+          description: "Receive verification code via WhatsApp",
+          icon: <MessageCircle className="h-5 w-5" />,
+          available: true,
+        };
+      case "sms":
+        return {
+          id: "sms",
+          key: "sms",
+          label: "SMS",
+          description: "Receive verification code via SMS",
+          icon: <Smartphone className="h-5 w-5" />,
+          available: true,
+        };
+      default:
+        return null;
+    }
+  }).filter(Boolean) as TwoFactorMethod[] || [];
 
   // Auto-select first available method
   useEffect(() => {
-    if (twoFactorMethods.length > 0 && !selectedMethod) {
-      const firstAvailable = twoFactorMethods.find(method => method.available);
-      if (firstAvailable) {
-        setSelectedMethod(firstAvailable.id);
-      }
+    if (availableMethods.length > 0 && !selectedMethod) {
+      setSelectedMethod(availableMethods[0].id);
     }
-  }, [twoFactorMethods, selectedMethod]);
+  }, [availableMethods, selectedMethod]);
+
+  // Countdown timer for resend
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [countdown]);
 
   const handleMethodSelect = (methodId: string) => {
-    setVerificationMode("initial");
     setSelectedMethod(methodId);
     setError("");
     setVerificationCode("");
+  };
+
+  const handleSendCode = async () => {
+    if (!selectedMethod || !nonce) return;
+    
+    setIsSending(true);
+    setError("");
+
+    try {
+      await send2faCode.mutateAsync({
+        method: selectedMethod as "whatsapp" | "sms" | "email",
+        nonce,
+      });
+
+      toast.success("Verification code sent");
+      setCountdown(60); // 60 second countdown
+    } catch (error: any) {
+      const errorMessage = error?.message || "Failed to send verification code";
+      setError(errorMessage);
+      toast.error(errorMessage);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const handleVerify = async (e: React.FormEvent) => {
@@ -106,65 +161,93 @@ export default function Verify2FAPage() {
       return;
     }
 
+    if (!selectedMethod || !nonce) {
+      setError("Invalid authentication session");
+      return;
+    }
+
     setIsVerifying(true);
     setError("");
 
     try {
-      const result = await verify2FACode.mutateAsync({
+      const result = await verify2faCode.mutateAsync({
+        method: selectedMethod as "whatsapp" | "sms" | "email" | "totp",
         code: verificationCode,
+        nonce,
       });
 
-      if (result.success) {
-        setSuccess(t("Verification successful! Redirecting...", "verify2fa.page.Verify2FAPage.verification_successful_redirecting__13abcde"));
+      if (result.success && result.sessionToken) {
+        setSuccess("Verification successful! Completing authentication...");
         toast.success("2FA verification successful");
         
-        // Redirect after a short delay
-        setTimeout(() => {
-          router.push(callbackUrl);
-        }, 1500);
+        // Complete authentication using the secure session token
+        const completeResult = await completeAuthentication.mutateAsync({
+          sessionToken: result.sessionToken,
+        });
+
+        if (completeResult.success) {
+          // Create NextAuth session with the verified user data
+          const signInResult = await signIn("credentials", {
+            email: completeResult.user.email,
+            password: "", // Password already verified in previous step
+            callbackUrl,
+            redirect: false,
+          });
+
+          if (signInResult?.ok) {
+            router.push(callbackUrl);
+          } else {
+            setError("Failed to complete sign in");
+          }
+        } else {
+          setError("Failed to complete authentication");
+        }
       }
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to verify 2FA code";
+    } catch (error: any) {
+      const errorMessage = error?.message || "Failed to verify 2FA code";
       setError(errorMessage);
-      toast.error(errorMessage);
+      
+      if (errorMessage.includes("locked")) {
+        toast.error("Account temporarily locked due to too many failed attempts");
+      } else {
+        toast.error(errorMessage);
+      }
     } finally {
       setIsVerifying(false);
     }
   };
 
-  const handleSendVerificationCode = async () => {
-    if (!selectedMethod) return;
-    
-    try {
-      // This would trigger sending the verification code
-      // Implementation depends on the selected method
-      toast.success("Verification code sent");
-      setVerificationMode("verifying");
-      setError("");
-    } catch (error) {
-      toast.error("Failed to send verification code");
-    }
-  };
-
   const handleResendCode = async () => {
-    // This would trigger resending the verification code
-    // Implementation depends on the selected method
-    toast.info("Verification code resent");
+    if (countdown > 0) return;
+    await handleSendCode();
   };
 
-  if (status === "loading") {
+  if (!nonce || !pendingAuth) {
     return (
       <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <p className="text-gray-600">Loading authentication session...</p>
         </div>
       </div>
     );
   }
 
-  if (!session?.user) {
-    return null; // Will redirect
+  if (availableMethods.length === 0) {
+    return (
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <Card className="max-w-md w-full">
+          <CardContent className="text-center p-6">
+            <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">No 2FA Methods Available</h2>
+            <p className="text-gray-600 mb-4">No two-factor authentication methods are configured for this account.</p>
+            <Button onClick={() => router.push("/auth/signin")} variant="outline">
+              Back to Sign In
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   return (
@@ -189,167 +272,152 @@ export default function Verify2FAPage() {
             {/* 2FA Method Selection */}
             <div className="space-y-4">
               <Label className="text-base font-medium text-gray-900">
-                {t("Choose verification method:", "verify2fa.page.Verify2FAPage.choose_verification_method__3abcde")}
+                Choose verification method:
               </Label>
               <div className="space-y-3">
-                {twoFactorMethods.map((method) => {
+                {availableMethods.map((method) => {
                   const isSelected = selectedMethod === method.id;
-                  const isAvailable = method.available;
                   
                   return (
                     <div
                       key={method.id}
-                      className={`flex items-start space-x-3 p-4 rounded-lg border transition-all duration-200 cursor-pointer ${
-                        isSelected && isAvailable
+                      className={`flex items-center space-x-3 p-4 rounded-lg border transition-all duration-200 cursor-pointer ${
+                        isSelected
                           ? 'bg-indigo-50 border-indigo-300 shadow-sm' 
-                          : isAvailable
-                          ? 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
-                          : 'border-gray-200 bg-gray-50 cursor-not-allowed opacity-60'
+                          : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
                       }`}
-                      onClick={() => isAvailable && handleMethodSelect(method.id)}
+                      onClick={() => handleMethodSelect(method.id)}
                     >
-                      <Checkbox
-                        id={method.id}
-                        checked={isSelected}
-                        onCheckedChange={() => isAvailable && handleMethodSelect(method.id)}
-                        className="mt-0.5"
-                        disabled={!isAvailable}
-                      />
-                      <div className="flex items-start space-x-3 flex-1">
-                        <div className={`${isSelected && isAvailable ? 'text-indigo-600' : 'text-gray-500'}`}>
-                          {method.icon}
-                        </div>
-                        <div className="space-y-1 flex-1">
-                          <label 
-                            htmlFor={method.id} 
-                            className={`text-sm font-medium block ${
-                              isSelected && isAvailable ? 'text-indigo-600' : 'text-gray-900'
-                            }`}
-                          >
-                            {method.label}
-                          </label>
-                          <p className="text-xs text-gray-600">{method.description}</p>
-                          {!isAvailable && (
-                            <p className="text-xs text-gray-500 italic">{t("Coming soon", "verify2fa.page.Verify2FAPage.coming_soon__10abcde")}</p>
-                          )}
-                        </div>
+                      <div className={`${isSelected ? 'text-indigo-600' : 'text-gray-500'}`}>
+                        {method.icon}
                       </div>
+                      <div className="space-y-1 flex-1">
+                        <p className={`text-sm font-medium ${isSelected ? 'text-indigo-600' : 'text-gray-900'}`}>
+                          {method.label}
+                        </p>
+                        <p className="text-xs text-gray-600">{method.description}</p>
+                      </div>
+                      {isSelected && (
+                        <CheckCircle className="h-5 w-5 text-indigo-600" />
+                      )}
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            {/* Verification Code Section - Fixed Height Container */}
+            {/* Verification Code Section */}
             {selectedMethod && (
               <>
                 <Separator />
-                <div className="h-64 relative overflow-hidden">
-                  {/* Initial State - Send Verification Code */}
-                  <div
-                    className={`absolute inset-0 transition-all duration-300 ease-in-out ${
-                      verificationMode === "initial"
-                        ? "opacity-100 translate-y-0 pointer-events-auto"
-                        : "opacity-0 -translate-y-4 pointer-events-none"
-                    }`}
-                  >
-                    <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-                      <div className="bg-indigo-100 p-4 rounded-full">
-                        <Key className="h-8 w-8 text-indigo-600" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-medium text-gray-900">
-                          {t("Send Verification Code", "verify2fa.page.Verify2FAPage.send_verification_code__20abcde")}
-                        </h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          {t("Click below to send a verification code to your selected method", "verify2fa.page.Verify2FAPage.click_to_send_verification_code__21abcde")}
-                        </p>
-                      </div>
+                
+                {selectedMethod !== "totp" && (
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        Send Verification Code
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-4">
+                        We'll send a 6-digit code to your {selectedMethod === "whatsapp" ? "WhatsApp" : "SMS"}
+                      </p>
                       <Button
-                        onClick={handleSendVerificationCode}
+                        onClick={handleSendCode}
+                        disabled={isSending || countdown > 0}
                         className="px-6 py-2"
                       >
-                        Send Code
+                        {isSending ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                            Sending...
+                          </>
+                        ) : countdown > 0 ? (
+                          <>
+                            <Clock className="h-4 w-4 mr-2" />
+                            Resend in {countdown}s
+                          </>
+                        ) : (
+                          <>
+                            Send Code
+                          </>
+                        )}
                       </Button>
                     </div>
                   </div>
+                )}
 
-                  {/* Verification State - Code Input */}
-                  <div
-                    className={`absolute inset-0 transition-all duration-300 ease-in-out ${
-                      verificationMode === "verifying"
-                        ? "opacity-100 translate-y-0 pointer-events-auto"
-                        : "opacity-0 translate-y-4 pointer-events-none"
-                    }`}
-                  >
-                    <div className="space-y-4 h-full flex flex-col">
-                      <div className="space-y-2">
-                        <Label htmlFor="verificationCode" className="text-sm font-medium text-gray-700">
-                          {t("Verification Code", "verify2fa.page.Verify2FAPage.verification_code__11abcde")}
-                        </Label>
-                        <div className="relative">
-                          <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                          <OtpInput
-                            value={verificationCode}
-                            onChange={(value) => setVerificationCode(value)}
-                            onComplete={(value) => setVerificationCode(value)}
-                            autoFocus
-                            length={6}
-                            isInvalid={verificationCode.length !== 6}
-                            ariaLabel={t("Enter the 6-digit code from your authenticator app", "verify2fa.page.Verify2FAPage.enter_6_digit_code_from_authenticator__19abcde")}
-                            name="otp"
-                            className="ml-14 w-full"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Error/Success Messages */}
-                      {error && (
-                        <div className="flex items-center gap-2 p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-md">
-                          <AlertCircle className="h-4 w-4" />
-                          {error}
-                        </div>
-                      )}
-
-                      {success && (
-                        <div className="flex items-center gap-2 p-3 text-sm text-green-700 bg-green-50 border border-green-200 rounded-md">
-                          <CheckCircle className="h-4 w-4" />
-                          {success}
-                        </div>
-                      )}
-
-                      {/* Action Buttons */}
-                      <div className="space-y-3 mt-auto">
-                        <Button
-                          type="submit"
-                          className="w-full"
-                          disabled={!verificationCode.trim() || verificationCode.length !== 6 || isVerifying}
-                          onClick={handleVerify}
-                        >
-                          {isVerifying ? (
-                            <>
-                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                              {t("Verifying...", "verify2fa.page.Verify2FAPage.verifying__15abcde")}
-                            </>
-                          ) : (
-                            <>
-                              {t("Verify & Continue", "verify2fa.page.Verify2FAPage.verify_continue__14abcde")}
-                              <ArrowRight className="h-4 w-4 ml-2" />
-                            </>
-                          )}
-                        </Button>
-                      </div>
+                <form onSubmit={handleVerify} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="verificationCode" className="text-sm font-medium text-gray-700">
+                      {selectedMethod === "totp" ? "Authenticator Code" : "Verification Code"}
+                    </Label>
+                    <div className="relative">
+                      <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <OtpInput
+                        value={verificationCode}
+                        onChange={setVerificationCode}
+                        onComplete={setVerificationCode}
+                        autoFocus
+                        length={6}
+                        isInvalid={!!error}
+                        ariaLabel="Enter the 6-digit verification code"
+                        name="otp"
+                        className="pl-10"
+                      />
                     </div>
+                    {selectedMethod === "totp" && (
+                      <p className="text-xs text-gray-500">
+                        Enter the 6-digit code from your authenticator app
+                      </p>
+                    )}
                   </div>
-                </div>
+
+                  {/* Error/Success Messages */}
+                  {error && (
+                    <div className="flex items-center gap-2 p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-md">
+                      <AlertCircle className="h-4 w-4" />
+                      {error}
+                    </div>
+                  )}
+
+                  {success && (
+                    <div className="flex items-center gap-2 p-3 text-sm text-green-700 bg-green-50 border border-green-200 rounded-md">
+                      <CheckCircle className="h-4 w-4" />
+                      {success}
+                    </div>
+                  )}
+
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={!verificationCode.trim() || verificationCode.length !== 6 || isVerifying}
+                  >
+                    {isVerifying ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                        Verifying...
+                      </>
+                    ) : (
+                      <>
+                        Verify & Continue
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </>
+                    )}
+                  </Button>
+                </form>
               </>
             )}
 
             {/* Help Text */}
             <div className="text-center">
               <p className="text-xs text-gray-500">
-                {t("Having trouble? Contact support for assistance", "verify2fa.page.Verify2FAPage.having_trouble_contact_support__18abcde")}
+                Having trouble? Contact support for assistance
               </p>
+              <button
+                onClick={() => router.push("/auth/signin")}
+                className="mt-2 text-xs text-indigo-600 hover:text-indigo-800 underline"
+              >
+                Back to Sign In
+              </button>
             </div>
           </CardContent>
         </Card>

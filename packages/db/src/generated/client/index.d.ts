@@ -123,6 +123,26 @@ export type FeatureAuditEntry = $Result.DefaultSelection<Prisma.$FeatureAuditEnt
  * 
  */
 export type SetupState = $Result.DefaultSelection<Prisma.$SetupStatePayload>
+/**
+ * Model TwoFactorMethod
+ * 
+ */
+export type TwoFactorMethod = $Result.DefaultSelection<Prisma.$TwoFactorMethodPayload>
+/**
+ * Model PendingAuth
+ * 
+ */
+export type PendingAuth = $Result.DefaultSelection<Prisma.$PendingAuthPayload>
+/**
+ * Model TwoFactorCode
+ * 
+ */
+export type TwoFactorCode = $Result.DefaultSelection<Prisma.$TwoFactorCodePayload>
+/**
+ * Model TwoFactorAudit
+ * 
+ */
+export type TwoFactorAudit = $Result.DefaultSelection<Prisma.$TwoFactorAuditPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -466,6 +486,46 @@ export class PrismaClient<
     * ```
     */
   get setupState(): Prisma.SetupStateDelegate<ExtArgs>;
+
+  /**
+   * `prisma.twoFactorMethod`: Exposes CRUD operations for the **TwoFactorMethod** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TwoFactorMethods
+    * const twoFactorMethods = await prisma.twoFactorMethod.findMany()
+    * ```
+    */
+  get twoFactorMethod(): Prisma.TwoFactorMethodDelegate<ExtArgs>;
+
+  /**
+   * `prisma.pendingAuth`: Exposes CRUD operations for the **PendingAuth** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PendingAuths
+    * const pendingAuths = await prisma.pendingAuth.findMany()
+    * ```
+    */
+  get pendingAuth(): Prisma.PendingAuthDelegate<ExtArgs>;
+
+  /**
+   * `prisma.twoFactorCode`: Exposes CRUD operations for the **TwoFactorCode** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TwoFactorCodes
+    * const twoFactorCodes = await prisma.twoFactorCode.findMany()
+    * ```
+    */
+  get twoFactorCode(): Prisma.TwoFactorCodeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.twoFactorAudit`: Exposes CRUD operations for the **TwoFactorAudit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TwoFactorAudits
+    * const twoFactorAudits = await prisma.twoFactorAudit.findMany()
+    * ```
+    */
+  get twoFactorAudit(): Prisma.TwoFactorAuditDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -928,7 +988,11 @@ export namespace Prisma {
     GlobalFeatureRule: 'GlobalFeatureRule',
     TenantFeatureRule: 'TenantFeatureRule',
     FeatureAuditEntry: 'FeatureAuditEntry',
-    SetupState: 'SetupState'
+    SetupState: 'SetupState',
+    TwoFactorMethod: 'TwoFactorMethod',
+    PendingAuth: 'PendingAuth',
+    TwoFactorCode: 'TwoFactorCode',
+    TwoFactorAudit: 'TwoFactorAudit'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -944,7 +1008,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState"
+      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2488,6 +2552,286 @@ export namespace Prisma {
           }
         }
       }
+      TwoFactorMethod: {
+        payload: Prisma.$TwoFactorMethodPayload<ExtArgs>
+        fields: Prisma.TwoFactorMethodFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TwoFactorMethodFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TwoFactorMethodFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload>
+          }
+          findFirst: {
+            args: Prisma.TwoFactorMethodFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TwoFactorMethodFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload>
+          }
+          findMany: {
+            args: Prisma.TwoFactorMethodFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload>[]
+          }
+          create: {
+            args: Prisma.TwoFactorMethodCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload>
+          }
+          createMany: {
+            args: Prisma.TwoFactorMethodCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TwoFactorMethodCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload>[]
+          }
+          delete: {
+            args: Prisma.TwoFactorMethodDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload>
+          }
+          update: {
+            args: Prisma.TwoFactorMethodUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload>
+          }
+          deleteMany: {
+            args: Prisma.TwoFactorMethodDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TwoFactorMethodUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TwoFactorMethodUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorMethodPayload>
+          }
+          aggregate: {
+            args: Prisma.TwoFactorMethodAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTwoFactorMethod>
+          }
+          groupBy: {
+            args: Prisma.TwoFactorMethodGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TwoFactorMethodGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TwoFactorMethodCountArgs<ExtArgs>
+            result: $Utils.Optional<TwoFactorMethodCountAggregateOutputType> | number
+          }
+        }
+      }
+      PendingAuth: {
+        payload: Prisma.$PendingAuthPayload<ExtArgs>
+        fields: Prisma.PendingAuthFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PendingAuthFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PendingAuthFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload>
+          }
+          findFirst: {
+            args: Prisma.PendingAuthFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PendingAuthFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload>
+          }
+          findMany: {
+            args: Prisma.PendingAuthFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload>[]
+          }
+          create: {
+            args: Prisma.PendingAuthCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload>
+          }
+          createMany: {
+            args: Prisma.PendingAuthCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PendingAuthCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload>[]
+          }
+          delete: {
+            args: Prisma.PendingAuthDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload>
+          }
+          update: {
+            args: Prisma.PendingAuthUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload>
+          }
+          deleteMany: {
+            args: Prisma.PendingAuthDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PendingAuthUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PendingAuthUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingAuthPayload>
+          }
+          aggregate: {
+            args: Prisma.PendingAuthAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePendingAuth>
+          }
+          groupBy: {
+            args: Prisma.PendingAuthGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PendingAuthGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PendingAuthCountArgs<ExtArgs>
+            result: $Utils.Optional<PendingAuthCountAggregateOutputType> | number
+          }
+        }
+      }
+      TwoFactorCode: {
+        payload: Prisma.$TwoFactorCodePayload<ExtArgs>
+        fields: Prisma.TwoFactorCodeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TwoFactorCodeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TwoFactorCodeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          findFirst: {
+            args: Prisma.TwoFactorCodeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TwoFactorCodeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          findMany: {
+            args: Prisma.TwoFactorCodeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>[]
+          }
+          create: {
+            args: Prisma.TwoFactorCodeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          createMany: {
+            args: Prisma.TwoFactorCodeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TwoFactorCodeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>[]
+          }
+          delete: {
+            args: Prisma.TwoFactorCodeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          update: {
+            args: Prisma.TwoFactorCodeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          deleteMany: {
+            args: Prisma.TwoFactorCodeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TwoFactorCodeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TwoFactorCodeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          aggregate: {
+            args: Prisma.TwoFactorCodeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTwoFactorCode>
+          }
+          groupBy: {
+            args: Prisma.TwoFactorCodeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TwoFactorCodeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TwoFactorCodeCountArgs<ExtArgs>
+            result: $Utils.Optional<TwoFactorCodeCountAggregateOutputType> | number
+          }
+        }
+      }
+      TwoFactorAudit: {
+        payload: Prisma.$TwoFactorAuditPayload<ExtArgs>
+        fields: Prisma.TwoFactorAuditFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TwoFactorAuditFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TwoFactorAuditFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload>
+          }
+          findFirst: {
+            args: Prisma.TwoFactorAuditFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TwoFactorAuditFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload>
+          }
+          findMany: {
+            args: Prisma.TwoFactorAuditFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload>[]
+          }
+          create: {
+            args: Prisma.TwoFactorAuditCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload>
+          }
+          createMany: {
+            args: Prisma.TwoFactorAuditCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TwoFactorAuditCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload>[]
+          }
+          delete: {
+            args: Prisma.TwoFactorAuditDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload>
+          }
+          update: {
+            args: Prisma.TwoFactorAuditUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload>
+          }
+          deleteMany: {
+            args: Prisma.TwoFactorAuditDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TwoFactorAuditUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TwoFactorAuditUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorAuditPayload>
+          }
+          aggregate: {
+            args: Prisma.TwoFactorAuditAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTwoFactorAudit>
+          }
+          groupBy: {
+            args: Prisma.TwoFactorAuditGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TwoFactorAuditGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TwoFactorAuditCountArgs<ExtArgs>
+            result: $Utils.Optional<TwoFactorAuditCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2661,6 +3005,10 @@ export namespace Prisma {
     notificationRecipients: number
     passkeys: number
     sessions: number
+    twoFactorMethods: number
+    pendingAuths: number
+    twoFactorCodes: number
+    twoFactorAudits: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2676,6 +3024,10 @@ export namespace Prisma {
     notificationRecipients?: boolean | UserCountOutputTypeCountNotificationRecipientsArgs
     passkeys?: boolean | UserCountOutputTypeCountPasskeysArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+    twoFactorMethods?: boolean | UserCountOutputTypeCountTwoFactorMethodsArgs
+    pendingAuths?: boolean | UserCountOutputTypeCountPendingAuthsArgs
+    twoFactorCodes?: boolean | UserCountOutputTypeCountTwoFactorCodesArgs
+    twoFactorAudits?: boolean | UserCountOutputTypeCountTwoFactorAuditsArgs
   }
 
   // Custom InputTypes
@@ -2773,6 +3125,34 @@ export namespace Prisma {
     where?: SessionWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTwoFactorMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorMethodWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPendingAuthsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PendingAuthWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTwoFactorCodesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorCodeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTwoFactorAuditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorAuditWhereInput
+  }
+
 
   /**
    * Count Type TenantCountOutputType
@@ -2789,6 +3169,10 @@ export namespace Prisma {
     webhookEndpoints: number
     featureRules: number
     featureAuditEntries: number
+    twoFactorMethods: number
+    pendingAuths: number
+    twoFactorCodes: number
+    twoFactorAudits: number
   }
 
   export type TenantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2802,6 +3186,10 @@ export namespace Prisma {
     webhookEndpoints?: boolean | TenantCountOutputTypeCountWebhookEndpointsArgs
     featureRules?: boolean | TenantCountOutputTypeCountFeatureRulesArgs
     featureAuditEntries?: boolean | TenantCountOutputTypeCountFeatureAuditEntriesArgs
+    twoFactorMethods?: boolean | TenantCountOutputTypeCountTwoFactorMethodsArgs
+    pendingAuths?: boolean | TenantCountOutputTypeCountPendingAuthsArgs
+    twoFactorCodes?: boolean | TenantCountOutputTypeCountTwoFactorCodesArgs
+    twoFactorAudits?: boolean | TenantCountOutputTypeCountTwoFactorAuditsArgs
   }
 
   // Custom InputTypes
@@ -2883,6 +3271,34 @@ export namespace Prisma {
    */
   export type TenantCountOutputTypeCountFeatureAuditEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FeatureAuditEntryWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountTwoFactorMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorMethodWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountPendingAuthsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PendingAuthWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountTwoFactorCodesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorCodeWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountTwoFactorAuditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorAuditWhereInput
   }
 
 
@@ -5390,6 +5806,10 @@ export namespace Prisma {
     notificationRecipients?: boolean | User$notificationRecipientsArgs<ExtArgs>
     passkeys?: boolean | User$passkeysArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    twoFactorMethods?: boolean | User$twoFactorMethodsArgs<ExtArgs>
+    pendingAuths?: boolean | User$pendingAuthsArgs<ExtArgs>
+    twoFactorCodes?: boolean | User$twoFactorCodesArgs<ExtArgs>
+    twoFactorAudits?: boolean | User$twoFactorAuditsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5464,6 +5884,10 @@ export namespace Prisma {
     notificationRecipients?: boolean | User$notificationRecipientsArgs<ExtArgs>
     passkeys?: boolean | User$passkeysArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    twoFactorMethods?: boolean | User$twoFactorMethodsArgs<ExtArgs>
+    pendingAuths?: boolean | User$pendingAuthsArgs<ExtArgs>
+    twoFactorCodes?: boolean | User$twoFactorCodesArgs<ExtArgs>
+    twoFactorAudits?: boolean | User$twoFactorAuditsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5483,6 +5907,10 @@ export namespace Prisma {
       notificationRecipients: Prisma.$NotificationRecipientPayload<ExtArgs>[]
       passkeys: Prisma.$PasskeyPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
+      twoFactorMethods: Prisma.$TwoFactorMethodPayload<ExtArgs>[]
+      pendingAuths: Prisma.$PendingAuthPayload<ExtArgs>[]
+      twoFactorCodes: Prisma.$TwoFactorCodePayload<ExtArgs>[]
+      twoFactorAudits: Prisma.$TwoFactorAuditPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5887,6 +6315,10 @@ export namespace Prisma {
     notificationRecipients<T extends User$notificationRecipientsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationRecipientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationRecipientPayload<ExtArgs>, T, "findMany"> | Null>
     passkeys<T extends User$passkeysArgs<ExtArgs> = {}>(args?: Subset<T, User$passkeysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasskeyPayload<ExtArgs>, T, "findMany"> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany"> | Null>
+    twoFactorMethods<T extends User$twoFactorMethodsArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorMethodsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "findMany"> | Null>
+    pendingAuths<T extends User$pendingAuthsArgs<ExtArgs> = {}>(args?: Subset<T, User$pendingAuthsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findMany"> | Null>
+    twoFactorCodes<T extends User$twoFactorCodesArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorCodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findMany"> | Null>
+    twoFactorAudits<T extends User$twoFactorAuditsArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorAuditsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6493,6 +6925,86 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * User.twoFactorMethods
+   */
+  export type User$twoFactorMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    where?: TwoFactorMethodWhereInput
+    orderBy?: TwoFactorMethodOrderByWithRelationInput | TwoFactorMethodOrderByWithRelationInput[]
+    cursor?: TwoFactorMethodWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TwoFactorMethodScalarFieldEnum | TwoFactorMethodScalarFieldEnum[]
+  }
+
+  /**
+   * User.pendingAuths
+   */
+  export type User$pendingAuthsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    where?: PendingAuthWhereInput
+    orderBy?: PendingAuthOrderByWithRelationInput | PendingAuthOrderByWithRelationInput[]
+    cursor?: PendingAuthWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PendingAuthScalarFieldEnum | PendingAuthScalarFieldEnum[]
+  }
+
+  /**
+   * User.twoFactorCodes
+   */
+  export type User$twoFactorCodesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    where?: TwoFactorCodeWhereInput
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    cursor?: TwoFactorCodeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TwoFactorCodeScalarFieldEnum | TwoFactorCodeScalarFieldEnum[]
+  }
+
+  /**
+   * User.twoFactorAudits
+   */
+  export type User$twoFactorAuditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    where?: TwoFactorAuditWhereInput
+    orderBy?: TwoFactorAuditOrderByWithRelationInput | TwoFactorAuditOrderByWithRelationInput[]
+    cursor?: TwoFactorAuditWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TwoFactorAuditScalarFieldEnum | TwoFactorAuditScalarFieldEnum[]
   }
 
   /**
@@ -7754,6 +8266,10 @@ export namespace Prisma {
     webhookEndpoints?: boolean | Tenant$webhookEndpointsArgs<ExtArgs>
     featureRules?: boolean | Tenant$featureRulesArgs<ExtArgs>
     featureAuditEntries?: boolean | Tenant$featureAuditEntriesArgs<ExtArgs>
+    twoFactorMethods?: boolean | Tenant$twoFactorMethodsArgs<ExtArgs>
+    pendingAuths?: boolean | Tenant$pendingAuthsArgs<ExtArgs>
+    twoFactorCodes?: boolean | Tenant$twoFactorCodesArgs<ExtArgs>
+    twoFactorAudits?: boolean | Tenant$twoFactorAuditsArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tenant"]>
 
@@ -7838,6 +8354,10 @@ export namespace Prisma {
     webhookEndpoints?: boolean | Tenant$webhookEndpointsArgs<ExtArgs>
     featureRules?: boolean | Tenant$featureRulesArgs<ExtArgs>
     featureAuditEntries?: boolean | Tenant$featureAuditEntriesArgs<ExtArgs>
+    twoFactorMethods?: boolean | Tenant$twoFactorMethodsArgs<ExtArgs>
+    pendingAuths?: boolean | Tenant$pendingAuthsArgs<ExtArgs>
+    twoFactorCodes?: boolean | Tenant$twoFactorCodesArgs<ExtArgs>
+    twoFactorAudits?: boolean | Tenant$twoFactorAuditsArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TenantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -7855,6 +8375,10 @@ export namespace Prisma {
       webhookEndpoints: Prisma.$WebhookEndpointPayload<ExtArgs>[]
       featureRules: Prisma.$TenantFeatureRulePayload<ExtArgs>[]
       featureAuditEntries: Prisma.$FeatureAuditEntryPayload<ExtArgs>[]
+      twoFactorMethods: Prisma.$TwoFactorMethodPayload<ExtArgs>[]
+      pendingAuths: Prisma.$PendingAuthPayload<ExtArgs>[]
+      twoFactorCodes: Prisma.$TwoFactorCodePayload<ExtArgs>[]
+      twoFactorAudits: Prisma.$TwoFactorAuditPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8263,6 +8787,10 @@ export namespace Prisma {
     webhookEndpoints<T extends Tenant$webhookEndpointsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$webhookEndpointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WebhookEndpointPayload<ExtArgs>, T, "findMany"> | Null>
     featureRules<T extends Tenant$featureRulesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$featureRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantFeatureRulePayload<ExtArgs>, T, "findMany"> | Null>
     featureAuditEntries<T extends Tenant$featureAuditEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$featureAuditEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeatureAuditEntryPayload<ExtArgs>, T, "findMany"> | Null>
+    twoFactorMethods<T extends Tenant$twoFactorMethodsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$twoFactorMethodsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "findMany"> | Null>
+    pendingAuths<T extends Tenant$pendingAuthsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$pendingAuthsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findMany"> | Null>
+    twoFactorCodes<T extends Tenant$twoFactorCodesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$twoFactorCodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findMany"> | Null>
+    twoFactorAudits<T extends Tenant$twoFactorAuditsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$twoFactorAuditsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8835,6 +9363,86 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FeatureAuditEntryScalarFieldEnum | FeatureAuditEntryScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.twoFactorMethods
+   */
+  export type Tenant$twoFactorMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    where?: TwoFactorMethodWhereInput
+    orderBy?: TwoFactorMethodOrderByWithRelationInput | TwoFactorMethodOrderByWithRelationInput[]
+    cursor?: TwoFactorMethodWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TwoFactorMethodScalarFieldEnum | TwoFactorMethodScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.pendingAuths
+   */
+  export type Tenant$pendingAuthsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    where?: PendingAuthWhereInput
+    orderBy?: PendingAuthOrderByWithRelationInput | PendingAuthOrderByWithRelationInput[]
+    cursor?: PendingAuthWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PendingAuthScalarFieldEnum | PendingAuthScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.twoFactorCodes
+   */
+  export type Tenant$twoFactorCodesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    where?: TwoFactorCodeWhereInput
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    cursor?: TwoFactorCodeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TwoFactorCodeScalarFieldEnum | TwoFactorCodeScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.twoFactorAudits
+   */
+  export type Tenant$twoFactorAuditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    where?: TwoFactorAuditWhereInput
+    orderBy?: TwoFactorAuditOrderByWithRelationInput | TwoFactorAuditOrderByWithRelationInput[]
+    cursor?: TwoFactorAuditWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TwoFactorAuditScalarFieldEnum | TwoFactorAuditScalarFieldEnum[]
   }
 
   /**
@@ -26138,6 +26746,4148 @@ export namespace Prisma {
 
 
   /**
+   * Model TwoFactorMethod
+   */
+
+  export type AggregateTwoFactorMethod = {
+    _count: TwoFactorMethodCountAggregateOutputType | null
+    _min: TwoFactorMethodMinAggregateOutputType | null
+    _max: TwoFactorMethodMaxAggregateOutputType | null
+  }
+
+  export type TwoFactorMethodMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    type: string | null
+    identifier: string | null
+    secret: string | null
+    isVerified: boolean | null
+    isEnabled: boolean | null
+    backupCodes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    lastUsedAt: Date | null
+  }
+
+  export type TwoFactorMethodMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    type: string | null
+    identifier: string | null
+    secret: string | null
+    isVerified: boolean | null
+    isEnabled: boolean | null
+    backupCodes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    lastUsedAt: Date | null
+  }
+
+  export type TwoFactorMethodCountAggregateOutputType = {
+    id: number
+    userId: number
+    tenantId: number
+    type: number
+    identifier: number
+    secret: number
+    isVerified: number
+    isEnabled: number
+    backupCodes: number
+    createdAt: number
+    updatedAt: number
+    lastUsedAt: number
+    _all: number
+  }
+
+
+  export type TwoFactorMethodMinAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    type?: true
+    identifier?: true
+    secret?: true
+    isVerified?: true
+    isEnabled?: true
+    backupCodes?: true
+    createdAt?: true
+    updatedAt?: true
+    lastUsedAt?: true
+  }
+
+  export type TwoFactorMethodMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    type?: true
+    identifier?: true
+    secret?: true
+    isVerified?: true
+    isEnabled?: true
+    backupCodes?: true
+    createdAt?: true
+    updatedAt?: true
+    lastUsedAt?: true
+  }
+
+  export type TwoFactorMethodCountAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    type?: true
+    identifier?: true
+    secret?: true
+    isVerified?: true
+    isEnabled?: true
+    backupCodes?: true
+    createdAt?: true
+    updatedAt?: true
+    lastUsedAt?: true
+    _all?: true
+  }
+
+  export type TwoFactorMethodAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TwoFactorMethod to aggregate.
+     */
+    where?: TwoFactorMethodWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorMethods to fetch.
+     */
+    orderBy?: TwoFactorMethodOrderByWithRelationInput | TwoFactorMethodOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TwoFactorMethodWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorMethods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorMethods.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TwoFactorMethods
+    **/
+    _count?: true | TwoFactorMethodCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TwoFactorMethodMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TwoFactorMethodMaxAggregateInputType
+  }
+
+  export type GetTwoFactorMethodAggregateType<T extends TwoFactorMethodAggregateArgs> = {
+        [P in keyof T & keyof AggregateTwoFactorMethod]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTwoFactorMethod[P]>
+      : GetScalarType<T[P], AggregateTwoFactorMethod[P]>
+  }
+
+
+
+
+  export type TwoFactorMethodGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorMethodWhereInput
+    orderBy?: TwoFactorMethodOrderByWithAggregationInput | TwoFactorMethodOrderByWithAggregationInput[]
+    by: TwoFactorMethodScalarFieldEnum[] | TwoFactorMethodScalarFieldEnum
+    having?: TwoFactorMethodScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TwoFactorMethodCountAggregateInputType | true
+    _min?: TwoFactorMethodMinAggregateInputType
+    _max?: TwoFactorMethodMaxAggregateInputType
+  }
+
+  export type TwoFactorMethodGroupByOutputType = {
+    id: string
+    userId: string
+    tenantId: string | null
+    type: string
+    identifier: string | null
+    secret: string | null
+    isVerified: boolean
+    isEnabled: boolean
+    backupCodes: string | null
+    createdAt: Date
+    updatedAt: Date
+    lastUsedAt: Date | null
+    _count: TwoFactorMethodCountAggregateOutputType | null
+    _min: TwoFactorMethodMinAggregateOutputType | null
+    _max: TwoFactorMethodMaxAggregateOutputType | null
+  }
+
+  type GetTwoFactorMethodGroupByPayload<T extends TwoFactorMethodGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TwoFactorMethodGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TwoFactorMethodGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TwoFactorMethodGroupByOutputType[P]>
+            : GetScalarType<T[P], TwoFactorMethodGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TwoFactorMethodSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    type?: boolean
+    identifier?: boolean
+    secret?: boolean
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    lastUsedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorMethod$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["twoFactorMethod"]>
+
+  export type TwoFactorMethodSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    type?: boolean
+    identifier?: boolean
+    secret?: boolean
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    lastUsedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorMethod$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["twoFactorMethod"]>
+
+  export type TwoFactorMethodSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    type?: boolean
+    identifier?: boolean
+    secret?: boolean
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    lastUsedAt?: boolean
+  }
+
+  export type TwoFactorMethodInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorMethod$tenantArgs<ExtArgs>
+  }
+  export type TwoFactorMethodIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorMethod$tenantArgs<ExtArgs>
+  }
+
+  export type $TwoFactorMethodPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TwoFactorMethod"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      tenantId: string | null
+      type: string
+      identifier: string | null
+      secret: string | null
+      isVerified: boolean
+      isEnabled: boolean
+      backupCodes: string | null
+      createdAt: Date
+      updatedAt: Date
+      lastUsedAt: Date | null
+    }, ExtArgs["result"]["twoFactorMethod"]>
+    composites: {}
+  }
+
+  type TwoFactorMethodGetPayload<S extends boolean | null | undefined | TwoFactorMethodDefaultArgs> = $Result.GetResult<Prisma.$TwoFactorMethodPayload, S>
+
+  type TwoFactorMethodCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TwoFactorMethodFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TwoFactorMethodCountAggregateInputType | true
+    }
+
+  export interface TwoFactorMethodDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TwoFactorMethod'], meta: { name: 'TwoFactorMethod' } }
+    /**
+     * Find zero or one TwoFactorMethod that matches the filter.
+     * @param {TwoFactorMethodFindUniqueArgs} args - Arguments to find a TwoFactorMethod
+     * @example
+     * // Get one TwoFactorMethod
+     * const twoFactorMethod = await prisma.twoFactorMethod.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TwoFactorMethodFindUniqueArgs>(args: SelectSubset<T, TwoFactorMethodFindUniqueArgs<ExtArgs>>): Prisma__TwoFactorMethodClient<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one TwoFactorMethod that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {TwoFactorMethodFindUniqueOrThrowArgs} args - Arguments to find a TwoFactorMethod
+     * @example
+     * // Get one TwoFactorMethod
+     * const twoFactorMethod = await prisma.twoFactorMethod.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TwoFactorMethodFindUniqueOrThrowArgs>(args: SelectSubset<T, TwoFactorMethodFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TwoFactorMethodClient<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first TwoFactorMethod that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorMethodFindFirstArgs} args - Arguments to find a TwoFactorMethod
+     * @example
+     * // Get one TwoFactorMethod
+     * const twoFactorMethod = await prisma.twoFactorMethod.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TwoFactorMethodFindFirstArgs>(args?: SelectSubset<T, TwoFactorMethodFindFirstArgs<ExtArgs>>): Prisma__TwoFactorMethodClient<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first TwoFactorMethod that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorMethodFindFirstOrThrowArgs} args - Arguments to find a TwoFactorMethod
+     * @example
+     * // Get one TwoFactorMethod
+     * const twoFactorMethod = await prisma.twoFactorMethod.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TwoFactorMethodFindFirstOrThrowArgs>(args?: SelectSubset<T, TwoFactorMethodFindFirstOrThrowArgs<ExtArgs>>): Prisma__TwoFactorMethodClient<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more TwoFactorMethods that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorMethodFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TwoFactorMethods
+     * const twoFactorMethods = await prisma.twoFactorMethod.findMany()
+     * 
+     * // Get first 10 TwoFactorMethods
+     * const twoFactorMethods = await prisma.twoFactorMethod.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const twoFactorMethodWithIdOnly = await prisma.twoFactorMethod.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TwoFactorMethodFindManyArgs>(args?: SelectSubset<T, TwoFactorMethodFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a TwoFactorMethod.
+     * @param {TwoFactorMethodCreateArgs} args - Arguments to create a TwoFactorMethod.
+     * @example
+     * // Create one TwoFactorMethod
+     * const TwoFactorMethod = await prisma.twoFactorMethod.create({
+     *   data: {
+     *     // ... data to create a TwoFactorMethod
+     *   }
+     * })
+     * 
+     */
+    create<T extends TwoFactorMethodCreateArgs>(args: SelectSubset<T, TwoFactorMethodCreateArgs<ExtArgs>>): Prisma__TwoFactorMethodClient<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many TwoFactorMethods.
+     * @param {TwoFactorMethodCreateManyArgs} args - Arguments to create many TwoFactorMethods.
+     * @example
+     * // Create many TwoFactorMethods
+     * const twoFactorMethod = await prisma.twoFactorMethod.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TwoFactorMethodCreateManyArgs>(args?: SelectSubset<T, TwoFactorMethodCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TwoFactorMethods and returns the data saved in the database.
+     * @param {TwoFactorMethodCreateManyAndReturnArgs} args - Arguments to create many TwoFactorMethods.
+     * @example
+     * // Create many TwoFactorMethods
+     * const twoFactorMethod = await prisma.twoFactorMethod.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TwoFactorMethods and only return the `id`
+     * const twoFactorMethodWithIdOnly = await prisma.twoFactorMethod.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TwoFactorMethodCreateManyAndReturnArgs>(args?: SelectSubset<T, TwoFactorMethodCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a TwoFactorMethod.
+     * @param {TwoFactorMethodDeleteArgs} args - Arguments to delete one TwoFactorMethod.
+     * @example
+     * // Delete one TwoFactorMethod
+     * const TwoFactorMethod = await prisma.twoFactorMethod.delete({
+     *   where: {
+     *     // ... filter to delete one TwoFactorMethod
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TwoFactorMethodDeleteArgs>(args: SelectSubset<T, TwoFactorMethodDeleteArgs<ExtArgs>>): Prisma__TwoFactorMethodClient<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one TwoFactorMethod.
+     * @param {TwoFactorMethodUpdateArgs} args - Arguments to update one TwoFactorMethod.
+     * @example
+     * // Update one TwoFactorMethod
+     * const twoFactorMethod = await prisma.twoFactorMethod.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TwoFactorMethodUpdateArgs>(args: SelectSubset<T, TwoFactorMethodUpdateArgs<ExtArgs>>): Prisma__TwoFactorMethodClient<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more TwoFactorMethods.
+     * @param {TwoFactorMethodDeleteManyArgs} args - Arguments to filter TwoFactorMethods to delete.
+     * @example
+     * // Delete a few TwoFactorMethods
+     * const { count } = await prisma.twoFactorMethod.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TwoFactorMethodDeleteManyArgs>(args?: SelectSubset<T, TwoFactorMethodDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TwoFactorMethods.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorMethodUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TwoFactorMethods
+     * const twoFactorMethod = await prisma.twoFactorMethod.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TwoFactorMethodUpdateManyArgs>(args: SelectSubset<T, TwoFactorMethodUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TwoFactorMethod.
+     * @param {TwoFactorMethodUpsertArgs} args - Arguments to update or create a TwoFactorMethod.
+     * @example
+     * // Update or create a TwoFactorMethod
+     * const twoFactorMethod = await prisma.twoFactorMethod.upsert({
+     *   create: {
+     *     // ... data to create a TwoFactorMethod
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TwoFactorMethod we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TwoFactorMethodUpsertArgs>(args: SelectSubset<T, TwoFactorMethodUpsertArgs<ExtArgs>>): Prisma__TwoFactorMethodClient<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of TwoFactorMethods.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorMethodCountArgs} args - Arguments to filter TwoFactorMethods to count.
+     * @example
+     * // Count the number of TwoFactorMethods
+     * const count = await prisma.twoFactorMethod.count({
+     *   where: {
+     *     // ... the filter for the TwoFactorMethods we want to count
+     *   }
+     * })
+    **/
+    count<T extends TwoFactorMethodCountArgs>(
+      args?: Subset<T, TwoFactorMethodCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TwoFactorMethodCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TwoFactorMethod.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorMethodAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TwoFactorMethodAggregateArgs>(args: Subset<T, TwoFactorMethodAggregateArgs>): Prisma.PrismaPromise<GetTwoFactorMethodAggregateType<T>>
+
+    /**
+     * Group by TwoFactorMethod.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorMethodGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TwoFactorMethodGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TwoFactorMethodGroupByArgs['orderBy'] }
+        : { orderBy?: TwoFactorMethodGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TwoFactorMethodGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwoFactorMethodGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TwoFactorMethod model
+   */
+  readonly fields: TwoFactorMethodFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TwoFactorMethod.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TwoFactorMethodClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    tenant<T extends TwoFactorMethod$tenantArgs<ExtArgs> = {}>(args?: Subset<T, TwoFactorMethod$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TwoFactorMethod model
+   */ 
+  interface TwoFactorMethodFieldRefs {
+    readonly id: FieldRef<"TwoFactorMethod", 'String'>
+    readonly userId: FieldRef<"TwoFactorMethod", 'String'>
+    readonly tenantId: FieldRef<"TwoFactorMethod", 'String'>
+    readonly type: FieldRef<"TwoFactorMethod", 'String'>
+    readonly identifier: FieldRef<"TwoFactorMethod", 'String'>
+    readonly secret: FieldRef<"TwoFactorMethod", 'String'>
+    readonly isVerified: FieldRef<"TwoFactorMethod", 'Boolean'>
+    readonly isEnabled: FieldRef<"TwoFactorMethod", 'Boolean'>
+    readonly backupCodes: FieldRef<"TwoFactorMethod", 'String'>
+    readonly createdAt: FieldRef<"TwoFactorMethod", 'DateTime'>
+    readonly updatedAt: FieldRef<"TwoFactorMethod", 'DateTime'>
+    readonly lastUsedAt: FieldRef<"TwoFactorMethod", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TwoFactorMethod findUnique
+   */
+  export type TwoFactorMethodFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorMethod to fetch.
+     */
+    where: TwoFactorMethodWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorMethod findUniqueOrThrow
+   */
+  export type TwoFactorMethodFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorMethod to fetch.
+     */
+    where: TwoFactorMethodWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorMethod findFirst
+   */
+  export type TwoFactorMethodFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorMethod to fetch.
+     */
+    where?: TwoFactorMethodWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorMethods to fetch.
+     */
+    orderBy?: TwoFactorMethodOrderByWithRelationInput | TwoFactorMethodOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TwoFactorMethods.
+     */
+    cursor?: TwoFactorMethodWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorMethods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorMethods.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TwoFactorMethods.
+     */
+    distinct?: TwoFactorMethodScalarFieldEnum | TwoFactorMethodScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorMethod findFirstOrThrow
+   */
+  export type TwoFactorMethodFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorMethod to fetch.
+     */
+    where?: TwoFactorMethodWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorMethods to fetch.
+     */
+    orderBy?: TwoFactorMethodOrderByWithRelationInput | TwoFactorMethodOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TwoFactorMethods.
+     */
+    cursor?: TwoFactorMethodWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorMethods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorMethods.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TwoFactorMethods.
+     */
+    distinct?: TwoFactorMethodScalarFieldEnum | TwoFactorMethodScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorMethod findMany
+   */
+  export type TwoFactorMethodFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorMethods to fetch.
+     */
+    where?: TwoFactorMethodWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorMethods to fetch.
+     */
+    orderBy?: TwoFactorMethodOrderByWithRelationInput | TwoFactorMethodOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TwoFactorMethods.
+     */
+    cursor?: TwoFactorMethodWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorMethods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorMethods.
+     */
+    skip?: number
+    distinct?: TwoFactorMethodScalarFieldEnum | TwoFactorMethodScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorMethod create
+   */
+  export type TwoFactorMethodCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TwoFactorMethod.
+     */
+    data: XOR<TwoFactorMethodCreateInput, TwoFactorMethodUncheckedCreateInput>
+  }
+
+  /**
+   * TwoFactorMethod createMany
+   */
+  export type TwoFactorMethodCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TwoFactorMethods.
+     */
+    data: TwoFactorMethodCreateManyInput | TwoFactorMethodCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TwoFactorMethod createManyAndReturn
+   */
+  export type TwoFactorMethodCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many TwoFactorMethods.
+     */
+    data: TwoFactorMethodCreateManyInput | TwoFactorMethodCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TwoFactorMethod update
+   */
+  export type TwoFactorMethodUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TwoFactorMethod.
+     */
+    data: XOR<TwoFactorMethodUpdateInput, TwoFactorMethodUncheckedUpdateInput>
+    /**
+     * Choose, which TwoFactorMethod to update.
+     */
+    where: TwoFactorMethodWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorMethod updateMany
+   */
+  export type TwoFactorMethodUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TwoFactorMethods.
+     */
+    data: XOR<TwoFactorMethodUpdateManyMutationInput, TwoFactorMethodUncheckedUpdateManyInput>
+    /**
+     * Filter which TwoFactorMethods to update
+     */
+    where?: TwoFactorMethodWhereInput
+  }
+
+  /**
+   * TwoFactorMethod upsert
+   */
+  export type TwoFactorMethodUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TwoFactorMethod to update in case it exists.
+     */
+    where: TwoFactorMethodWhereUniqueInput
+    /**
+     * In case the TwoFactorMethod found by the `where` argument doesn't exist, create a new TwoFactorMethod with this data.
+     */
+    create: XOR<TwoFactorMethodCreateInput, TwoFactorMethodUncheckedCreateInput>
+    /**
+     * In case the TwoFactorMethod was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TwoFactorMethodUpdateInput, TwoFactorMethodUncheckedUpdateInput>
+  }
+
+  /**
+   * TwoFactorMethod delete
+   */
+  export type TwoFactorMethodDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+    /**
+     * Filter which TwoFactorMethod to delete.
+     */
+    where: TwoFactorMethodWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorMethod deleteMany
+   */
+  export type TwoFactorMethodDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TwoFactorMethods to delete
+     */
+    where?: TwoFactorMethodWhereInput
+  }
+
+  /**
+   * TwoFactorMethod.tenant
+   */
+  export type TwoFactorMethod$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * TwoFactorMethod without action
+   */
+  export type TwoFactorMethodDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorMethod
+     */
+    select?: TwoFactorMethodSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorMethodInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PendingAuth
+   */
+
+  export type AggregatePendingAuth = {
+    _count: PendingAuthCountAggregateOutputType | null
+    _min: PendingAuthMinAggregateOutputType | null
+    _max: PendingAuthMaxAggregateOutputType | null
+  }
+
+  export type PendingAuthMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    nonce: string | null
+    requiredFactors: string | null
+    createdAt: Date | null
+    expiresAt: Date | null
+    ipAddress: string | null
+    userAgent: string | null
+  }
+
+  export type PendingAuthMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    nonce: string | null
+    requiredFactors: string | null
+    createdAt: Date | null
+    expiresAt: Date | null
+    ipAddress: string | null
+    userAgent: string | null
+  }
+
+  export type PendingAuthCountAggregateOutputType = {
+    id: number
+    userId: number
+    tenantId: number
+    nonce: number
+    requiredFactors: number
+    createdAt: number
+    expiresAt: number
+    ipAddress: number
+    userAgent: number
+    _all: number
+  }
+
+
+  export type PendingAuthMinAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    nonce?: true
+    requiredFactors?: true
+    createdAt?: true
+    expiresAt?: true
+    ipAddress?: true
+    userAgent?: true
+  }
+
+  export type PendingAuthMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    nonce?: true
+    requiredFactors?: true
+    createdAt?: true
+    expiresAt?: true
+    ipAddress?: true
+    userAgent?: true
+  }
+
+  export type PendingAuthCountAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    nonce?: true
+    requiredFactors?: true
+    createdAt?: true
+    expiresAt?: true
+    ipAddress?: true
+    userAgent?: true
+    _all?: true
+  }
+
+  export type PendingAuthAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PendingAuth to aggregate.
+     */
+    where?: PendingAuthWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PendingAuths to fetch.
+     */
+    orderBy?: PendingAuthOrderByWithRelationInput | PendingAuthOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PendingAuthWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PendingAuths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PendingAuths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PendingAuths
+    **/
+    _count?: true | PendingAuthCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PendingAuthMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PendingAuthMaxAggregateInputType
+  }
+
+  export type GetPendingAuthAggregateType<T extends PendingAuthAggregateArgs> = {
+        [P in keyof T & keyof AggregatePendingAuth]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePendingAuth[P]>
+      : GetScalarType<T[P], AggregatePendingAuth[P]>
+  }
+
+
+
+
+  export type PendingAuthGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PendingAuthWhereInput
+    orderBy?: PendingAuthOrderByWithAggregationInput | PendingAuthOrderByWithAggregationInput[]
+    by: PendingAuthScalarFieldEnum[] | PendingAuthScalarFieldEnum
+    having?: PendingAuthScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PendingAuthCountAggregateInputType | true
+    _min?: PendingAuthMinAggregateInputType
+    _max?: PendingAuthMaxAggregateInputType
+  }
+
+  export type PendingAuthGroupByOutputType = {
+    id: string
+    userId: string
+    tenantId: string | null
+    nonce: string
+    requiredFactors: string
+    createdAt: Date
+    expiresAt: Date
+    ipAddress: string | null
+    userAgent: string | null
+    _count: PendingAuthCountAggregateOutputType | null
+    _min: PendingAuthMinAggregateOutputType | null
+    _max: PendingAuthMaxAggregateOutputType | null
+  }
+
+  type GetPendingAuthGroupByPayload<T extends PendingAuthGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PendingAuthGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PendingAuthGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PendingAuthGroupByOutputType[P]>
+            : GetScalarType<T[P], PendingAuthGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PendingAuthSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    nonce?: boolean
+    requiredFactors?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | PendingAuth$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["pendingAuth"]>
+
+  export type PendingAuthSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    nonce?: boolean
+    requiredFactors?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | PendingAuth$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["pendingAuth"]>
+
+  export type PendingAuthSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    nonce?: boolean
+    requiredFactors?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+  }
+
+  export type PendingAuthInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | PendingAuth$tenantArgs<ExtArgs>
+  }
+  export type PendingAuthIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | PendingAuth$tenantArgs<ExtArgs>
+  }
+
+  export type $PendingAuthPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PendingAuth"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      tenantId: string | null
+      nonce: string
+      requiredFactors: string
+      createdAt: Date
+      expiresAt: Date
+      ipAddress: string | null
+      userAgent: string | null
+    }, ExtArgs["result"]["pendingAuth"]>
+    composites: {}
+  }
+
+  type PendingAuthGetPayload<S extends boolean | null | undefined | PendingAuthDefaultArgs> = $Result.GetResult<Prisma.$PendingAuthPayload, S>
+
+  type PendingAuthCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PendingAuthFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PendingAuthCountAggregateInputType | true
+    }
+
+  export interface PendingAuthDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PendingAuth'], meta: { name: 'PendingAuth' } }
+    /**
+     * Find zero or one PendingAuth that matches the filter.
+     * @param {PendingAuthFindUniqueArgs} args - Arguments to find a PendingAuth
+     * @example
+     * // Get one PendingAuth
+     * const pendingAuth = await prisma.pendingAuth.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PendingAuthFindUniqueArgs>(args: SelectSubset<T, PendingAuthFindUniqueArgs<ExtArgs>>): Prisma__PendingAuthClient<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PendingAuth that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PendingAuthFindUniqueOrThrowArgs} args - Arguments to find a PendingAuth
+     * @example
+     * // Get one PendingAuth
+     * const pendingAuth = await prisma.pendingAuth.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PendingAuthFindUniqueOrThrowArgs>(args: SelectSubset<T, PendingAuthFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PendingAuthClient<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PendingAuth that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingAuthFindFirstArgs} args - Arguments to find a PendingAuth
+     * @example
+     * // Get one PendingAuth
+     * const pendingAuth = await prisma.pendingAuth.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PendingAuthFindFirstArgs>(args?: SelectSubset<T, PendingAuthFindFirstArgs<ExtArgs>>): Prisma__PendingAuthClient<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PendingAuth that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingAuthFindFirstOrThrowArgs} args - Arguments to find a PendingAuth
+     * @example
+     * // Get one PendingAuth
+     * const pendingAuth = await prisma.pendingAuth.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PendingAuthFindFirstOrThrowArgs>(args?: SelectSubset<T, PendingAuthFindFirstOrThrowArgs<ExtArgs>>): Prisma__PendingAuthClient<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PendingAuths that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingAuthFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PendingAuths
+     * const pendingAuths = await prisma.pendingAuth.findMany()
+     * 
+     * // Get first 10 PendingAuths
+     * const pendingAuths = await prisma.pendingAuth.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pendingAuthWithIdOnly = await prisma.pendingAuth.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PendingAuthFindManyArgs>(args?: SelectSubset<T, PendingAuthFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PendingAuth.
+     * @param {PendingAuthCreateArgs} args - Arguments to create a PendingAuth.
+     * @example
+     * // Create one PendingAuth
+     * const PendingAuth = await prisma.pendingAuth.create({
+     *   data: {
+     *     // ... data to create a PendingAuth
+     *   }
+     * })
+     * 
+     */
+    create<T extends PendingAuthCreateArgs>(args: SelectSubset<T, PendingAuthCreateArgs<ExtArgs>>): Prisma__PendingAuthClient<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PendingAuths.
+     * @param {PendingAuthCreateManyArgs} args - Arguments to create many PendingAuths.
+     * @example
+     * // Create many PendingAuths
+     * const pendingAuth = await prisma.pendingAuth.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PendingAuthCreateManyArgs>(args?: SelectSubset<T, PendingAuthCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PendingAuths and returns the data saved in the database.
+     * @param {PendingAuthCreateManyAndReturnArgs} args - Arguments to create many PendingAuths.
+     * @example
+     * // Create many PendingAuths
+     * const pendingAuth = await prisma.pendingAuth.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PendingAuths and only return the `id`
+     * const pendingAuthWithIdOnly = await prisma.pendingAuth.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PendingAuthCreateManyAndReturnArgs>(args?: SelectSubset<T, PendingAuthCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a PendingAuth.
+     * @param {PendingAuthDeleteArgs} args - Arguments to delete one PendingAuth.
+     * @example
+     * // Delete one PendingAuth
+     * const PendingAuth = await prisma.pendingAuth.delete({
+     *   where: {
+     *     // ... filter to delete one PendingAuth
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PendingAuthDeleteArgs>(args: SelectSubset<T, PendingAuthDeleteArgs<ExtArgs>>): Prisma__PendingAuthClient<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PendingAuth.
+     * @param {PendingAuthUpdateArgs} args - Arguments to update one PendingAuth.
+     * @example
+     * // Update one PendingAuth
+     * const pendingAuth = await prisma.pendingAuth.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PendingAuthUpdateArgs>(args: SelectSubset<T, PendingAuthUpdateArgs<ExtArgs>>): Prisma__PendingAuthClient<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PendingAuths.
+     * @param {PendingAuthDeleteManyArgs} args - Arguments to filter PendingAuths to delete.
+     * @example
+     * // Delete a few PendingAuths
+     * const { count } = await prisma.pendingAuth.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PendingAuthDeleteManyArgs>(args?: SelectSubset<T, PendingAuthDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PendingAuths.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingAuthUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PendingAuths
+     * const pendingAuth = await prisma.pendingAuth.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PendingAuthUpdateManyArgs>(args: SelectSubset<T, PendingAuthUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PendingAuth.
+     * @param {PendingAuthUpsertArgs} args - Arguments to update or create a PendingAuth.
+     * @example
+     * // Update or create a PendingAuth
+     * const pendingAuth = await prisma.pendingAuth.upsert({
+     *   create: {
+     *     // ... data to create a PendingAuth
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PendingAuth we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PendingAuthUpsertArgs>(args: SelectSubset<T, PendingAuthUpsertArgs<ExtArgs>>): Prisma__PendingAuthClient<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PendingAuths.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingAuthCountArgs} args - Arguments to filter PendingAuths to count.
+     * @example
+     * // Count the number of PendingAuths
+     * const count = await prisma.pendingAuth.count({
+     *   where: {
+     *     // ... the filter for the PendingAuths we want to count
+     *   }
+     * })
+    **/
+    count<T extends PendingAuthCountArgs>(
+      args?: Subset<T, PendingAuthCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PendingAuthCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PendingAuth.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingAuthAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PendingAuthAggregateArgs>(args: Subset<T, PendingAuthAggregateArgs>): Prisma.PrismaPromise<GetPendingAuthAggregateType<T>>
+
+    /**
+     * Group by PendingAuth.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingAuthGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PendingAuthGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PendingAuthGroupByArgs['orderBy'] }
+        : { orderBy?: PendingAuthGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PendingAuthGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPendingAuthGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PendingAuth model
+   */
+  readonly fields: PendingAuthFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PendingAuth.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PendingAuthClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    tenant<T extends PendingAuth$tenantArgs<ExtArgs> = {}>(args?: Subset<T, PendingAuth$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PendingAuth model
+   */ 
+  interface PendingAuthFieldRefs {
+    readonly id: FieldRef<"PendingAuth", 'String'>
+    readonly userId: FieldRef<"PendingAuth", 'String'>
+    readonly tenantId: FieldRef<"PendingAuth", 'String'>
+    readonly nonce: FieldRef<"PendingAuth", 'String'>
+    readonly requiredFactors: FieldRef<"PendingAuth", 'String'>
+    readonly createdAt: FieldRef<"PendingAuth", 'DateTime'>
+    readonly expiresAt: FieldRef<"PendingAuth", 'DateTime'>
+    readonly ipAddress: FieldRef<"PendingAuth", 'String'>
+    readonly userAgent: FieldRef<"PendingAuth", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PendingAuth findUnique
+   */
+  export type PendingAuthFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    /**
+     * Filter, which PendingAuth to fetch.
+     */
+    where: PendingAuthWhereUniqueInput
+  }
+
+  /**
+   * PendingAuth findUniqueOrThrow
+   */
+  export type PendingAuthFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    /**
+     * Filter, which PendingAuth to fetch.
+     */
+    where: PendingAuthWhereUniqueInput
+  }
+
+  /**
+   * PendingAuth findFirst
+   */
+  export type PendingAuthFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    /**
+     * Filter, which PendingAuth to fetch.
+     */
+    where?: PendingAuthWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PendingAuths to fetch.
+     */
+    orderBy?: PendingAuthOrderByWithRelationInput | PendingAuthOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PendingAuths.
+     */
+    cursor?: PendingAuthWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PendingAuths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PendingAuths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PendingAuths.
+     */
+    distinct?: PendingAuthScalarFieldEnum | PendingAuthScalarFieldEnum[]
+  }
+
+  /**
+   * PendingAuth findFirstOrThrow
+   */
+  export type PendingAuthFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    /**
+     * Filter, which PendingAuth to fetch.
+     */
+    where?: PendingAuthWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PendingAuths to fetch.
+     */
+    orderBy?: PendingAuthOrderByWithRelationInput | PendingAuthOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PendingAuths.
+     */
+    cursor?: PendingAuthWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PendingAuths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PendingAuths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PendingAuths.
+     */
+    distinct?: PendingAuthScalarFieldEnum | PendingAuthScalarFieldEnum[]
+  }
+
+  /**
+   * PendingAuth findMany
+   */
+  export type PendingAuthFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    /**
+     * Filter, which PendingAuths to fetch.
+     */
+    where?: PendingAuthWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PendingAuths to fetch.
+     */
+    orderBy?: PendingAuthOrderByWithRelationInput | PendingAuthOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PendingAuths.
+     */
+    cursor?: PendingAuthWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PendingAuths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PendingAuths.
+     */
+    skip?: number
+    distinct?: PendingAuthScalarFieldEnum | PendingAuthScalarFieldEnum[]
+  }
+
+  /**
+   * PendingAuth create
+   */
+  export type PendingAuthCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PendingAuth.
+     */
+    data: XOR<PendingAuthCreateInput, PendingAuthUncheckedCreateInput>
+  }
+
+  /**
+   * PendingAuth createMany
+   */
+  export type PendingAuthCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PendingAuths.
+     */
+    data: PendingAuthCreateManyInput | PendingAuthCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PendingAuth createManyAndReturn
+   */
+  export type PendingAuthCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many PendingAuths.
+     */
+    data: PendingAuthCreateManyInput | PendingAuthCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PendingAuth update
+   */
+  export type PendingAuthUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PendingAuth.
+     */
+    data: XOR<PendingAuthUpdateInput, PendingAuthUncheckedUpdateInput>
+    /**
+     * Choose, which PendingAuth to update.
+     */
+    where: PendingAuthWhereUniqueInput
+  }
+
+  /**
+   * PendingAuth updateMany
+   */
+  export type PendingAuthUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PendingAuths.
+     */
+    data: XOR<PendingAuthUpdateManyMutationInput, PendingAuthUncheckedUpdateManyInput>
+    /**
+     * Filter which PendingAuths to update
+     */
+    where?: PendingAuthWhereInput
+  }
+
+  /**
+   * PendingAuth upsert
+   */
+  export type PendingAuthUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PendingAuth to update in case it exists.
+     */
+    where: PendingAuthWhereUniqueInput
+    /**
+     * In case the PendingAuth found by the `where` argument doesn't exist, create a new PendingAuth with this data.
+     */
+    create: XOR<PendingAuthCreateInput, PendingAuthUncheckedCreateInput>
+    /**
+     * In case the PendingAuth was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PendingAuthUpdateInput, PendingAuthUncheckedUpdateInput>
+  }
+
+  /**
+   * PendingAuth delete
+   */
+  export type PendingAuthDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+    /**
+     * Filter which PendingAuth to delete.
+     */
+    where: PendingAuthWhereUniqueInput
+  }
+
+  /**
+   * PendingAuth deleteMany
+   */
+  export type PendingAuthDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PendingAuths to delete
+     */
+    where?: PendingAuthWhereInput
+  }
+
+  /**
+   * PendingAuth.tenant
+   */
+  export type PendingAuth$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * PendingAuth without action
+   */
+  export type PendingAuthDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingAuth
+     */
+    select?: PendingAuthSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PendingAuthInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TwoFactorCode
+   */
+
+  export type AggregateTwoFactorCode = {
+    _count: TwoFactorCodeCountAggregateOutputType | null
+    _avg: TwoFactorCodeAvgAggregateOutputType | null
+    _sum: TwoFactorCodeSumAggregateOutputType | null
+    _min: TwoFactorCodeMinAggregateOutputType | null
+    _max: TwoFactorCodeMaxAggregateOutputType | null
+  }
+
+  export type TwoFactorCodeAvgAggregateOutputType = {
+    attempts: number | null
+    maxAttempts: number | null
+  }
+
+  export type TwoFactorCodeSumAggregateOutputType = {
+    attempts: number | null
+    maxAttempts: number | null
+  }
+
+  export type TwoFactorCodeMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    type: string | null
+    codeHash: string | null
+    salt: string | null
+    purpose: string | null
+    attempts: number | null
+    maxAttempts: number | null
+    createdAt: Date | null
+    expiresAt: Date | null
+    usedAt: Date | null
+    traceId: string | null
+  }
+
+  export type TwoFactorCodeMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    type: string | null
+    codeHash: string | null
+    salt: string | null
+    purpose: string | null
+    attempts: number | null
+    maxAttempts: number | null
+    createdAt: Date | null
+    expiresAt: Date | null
+    usedAt: Date | null
+    traceId: string | null
+  }
+
+  export type TwoFactorCodeCountAggregateOutputType = {
+    id: number
+    userId: number
+    tenantId: number
+    type: number
+    codeHash: number
+    salt: number
+    purpose: number
+    attempts: number
+    maxAttempts: number
+    createdAt: number
+    expiresAt: number
+    usedAt: number
+    traceId: number
+    _all: number
+  }
+
+
+  export type TwoFactorCodeAvgAggregateInputType = {
+    attempts?: true
+    maxAttempts?: true
+  }
+
+  export type TwoFactorCodeSumAggregateInputType = {
+    attempts?: true
+    maxAttempts?: true
+  }
+
+  export type TwoFactorCodeMinAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    type?: true
+    codeHash?: true
+    salt?: true
+    purpose?: true
+    attempts?: true
+    maxAttempts?: true
+    createdAt?: true
+    expiresAt?: true
+    usedAt?: true
+    traceId?: true
+  }
+
+  export type TwoFactorCodeMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    type?: true
+    codeHash?: true
+    salt?: true
+    purpose?: true
+    attempts?: true
+    maxAttempts?: true
+    createdAt?: true
+    expiresAt?: true
+    usedAt?: true
+    traceId?: true
+  }
+
+  export type TwoFactorCodeCountAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    type?: true
+    codeHash?: true
+    salt?: true
+    purpose?: true
+    attempts?: true
+    maxAttempts?: true
+    createdAt?: true
+    expiresAt?: true
+    usedAt?: true
+    traceId?: true
+    _all?: true
+  }
+
+  export type TwoFactorCodeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TwoFactorCode to aggregate.
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorCodes to fetch.
+     */
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TwoFactorCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TwoFactorCodes
+    **/
+    _count?: true | TwoFactorCodeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TwoFactorCodeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TwoFactorCodeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TwoFactorCodeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TwoFactorCodeMaxAggregateInputType
+  }
+
+  export type GetTwoFactorCodeAggregateType<T extends TwoFactorCodeAggregateArgs> = {
+        [P in keyof T & keyof AggregateTwoFactorCode]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTwoFactorCode[P]>
+      : GetScalarType<T[P], AggregateTwoFactorCode[P]>
+  }
+
+
+
+
+  export type TwoFactorCodeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorCodeWhereInput
+    orderBy?: TwoFactorCodeOrderByWithAggregationInput | TwoFactorCodeOrderByWithAggregationInput[]
+    by: TwoFactorCodeScalarFieldEnum[] | TwoFactorCodeScalarFieldEnum
+    having?: TwoFactorCodeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TwoFactorCodeCountAggregateInputType | true
+    _avg?: TwoFactorCodeAvgAggregateInputType
+    _sum?: TwoFactorCodeSumAggregateInputType
+    _min?: TwoFactorCodeMinAggregateInputType
+    _max?: TwoFactorCodeMaxAggregateInputType
+  }
+
+  export type TwoFactorCodeGroupByOutputType = {
+    id: string
+    userId: string
+    tenantId: string | null
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts: number
+    maxAttempts: number
+    createdAt: Date
+    expiresAt: Date
+    usedAt: Date | null
+    traceId: string | null
+    _count: TwoFactorCodeCountAggregateOutputType | null
+    _avg: TwoFactorCodeAvgAggregateOutputType | null
+    _sum: TwoFactorCodeSumAggregateOutputType | null
+    _min: TwoFactorCodeMinAggregateOutputType | null
+    _max: TwoFactorCodeMaxAggregateOutputType | null
+  }
+
+  type GetTwoFactorCodeGroupByPayload<T extends TwoFactorCodeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TwoFactorCodeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TwoFactorCodeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TwoFactorCodeGroupByOutputType[P]>
+            : GetScalarType<T[P], TwoFactorCodeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TwoFactorCodeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    type?: boolean
+    codeHash?: boolean
+    salt?: boolean
+    purpose?: boolean
+    attempts?: boolean
+    maxAttempts?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    usedAt?: boolean
+    traceId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorCode$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["twoFactorCode"]>
+
+  export type TwoFactorCodeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    type?: boolean
+    codeHash?: boolean
+    salt?: boolean
+    purpose?: boolean
+    attempts?: boolean
+    maxAttempts?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    usedAt?: boolean
+    traceId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorCode$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["twoFactorCode"]>
+
+  export type TwoFactorCodeSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    type?: boolean
+    codeHash?: boolean
+    salt?: boolean
+    purpose?: boolean
+    attempts?: boolean
+    maxAttempts?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    usedAt?: boolean
+    traceId?: boolean
+  }
+
+  export type TwoFactorCodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorCode$tenantArgs<ExtArgs>
+  }
+  export type TwoFactorCodeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorCode$tenantArgs<ExtArgs>
+  }
+
+  export type $TwoFactorCodePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TwoFactorCode"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      tenantId: string | null
+      type: string
+      codeHash: string
+      salt: string
+      purpose: string
+      attempts: number
+      maxAttempts: number
+      createdAt: Date
+      expiresAt: Date
+      usedAt: Date | null
+      traceId: string | null
+    }, ExtArgs["result"]["twoFactorCode"]>
+    composites: {}
+  }
+
+  type TwoFactorCodeGetPayload<S extends boolean | null | undefined | TwoFactorCodeDefaultArgs> = $Result.GetResult<Prisma.$TwoFactorCodePayload, S>
+
+  type TwoFactorCodeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TwoFactorCodeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TwoFactorCodeCountAggregateInputType | true
+    }
+
+  export interface TwoFactorCodeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TwoFactorCode'], meta: { name: 'TwoFactorCode' } }
+    /**
+     * Find zero or one TwoFactorCode that matches the filter.
+     * @param {TwoFactorCodeFindUniqueArgs} args - Arguments to find a TwoFactorCode
+     * @example
+     * // Get one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TwoFactorCodeFindUniqueArgs>(args: SelectSubset<T, TwoFactorCodeFindUniqueArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one TwoFactorCode that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {TwoFactorCodeFindUniqueOrThrowArgs} args - Arguments to find a TwoFactorCode
+     * @example
+     * // Get one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TwoFactorCodeFindUniqueOrThrowArgs>(args: SelectSubset<T, TwoFactorCodeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first TwoFactorCode that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeFindFirstArgs} args - Arguments to find a TwoFactorCode
+     * @example
+     * // Get one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TwoFactorCodeFindFirstArgs>(args?: SelectSubset<T, TwoFactorCodeFindFirstArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first TwoFactorCode that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeFindFirstOrThrowArgs} args - Arguments to find a TwoFactorCode
+     * @example
+     * // Get one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TwoFactorCodeFindFirstOrThrowArgs>(args?: SelectSubset<T, TwoFactorCodeFindFirstOrThrowArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more TwoFactorCodes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TwoFactorCodes
+     * const twoFactorCodes = await prisma.twoFactorCode.findMany()
+     * 
+     * // Get first 10 TwoFactorCodes
+     * const twoFactorCodes = await prisma.twoFactorCode.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const twoFactorCodeWithIdOnly = await prisma.twoFactorCode.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TwoFactorCodeFindManyArgs>(args?: SelectSubset<T, TwoFactorCodeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a TwoFactorCode.
+     * @param {TwoFactorCodeCreateArgs} args - Arguments to create a TwoFactorCode.
+     * @example
+     * // Create one TwoFactorCode
+     * const TwoFactorCode = await prisma.twoFactorCode.create({
+     *   data: {
+     *     // ... data to create a TwoFactorCode
+     *   }
+     * })
+     * 
+     */
+    create<T extends TwoFactorCodeCreateArgs>(args: SelectSubset<T, TwoFactorCodeCreateArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many TwoFactorCodes.
+     * @param {TwoFactorCodeCreateManyArgs} args - Arguments to create many TwoFactorCodes.
+     * @example
+     * // Create many TwoFactorCodes
+     * const twoFactorCode = await prisma.twoFactorCode.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TwoFactorCodeCreateManyArgs>(args?: SelectSubset<T, TwoFactorCodeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TwoFactorCodes and returns the data saved in the database.
+     * @param {TwoFactorCodeCreateManyAndReturnArgs} args - Arguments to create many TwoFactorCodes.
+     * @example
+     * // Create many TwoFactorCodes
+     * const twoFactorCode = await prisma.twoFactorCode.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TwoFactorCodes and only return the `id`
+     * const twoFactorCodeWithIdOnly = await prisma.twoFactorCode.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TwoFactorCodeCreateManyAndReturnArgs>(args?: SelectSubset<T, TwoFactorCodeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a TwoFactorCode.
+     * @param {TwoFactorCodeDeleteArgs} args - Arguments to delete one TwoFactorCode.
+     * @example
+     * // Delete one TwoFactorCode
+     * const TwoFactorCode = await prisma.twoFactorCode.delete({
+     *   where: {
+     *     // ... filter to delete one TwoFactorCode
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TwoFactorCodeDeleteArgs>(args: SelectSubset<T, TwoFactorCodeDeleteArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one TwoFactorCode.
+     * @param {TwoFactorCodeUpdateArgs} args - Arguments to update one TwoFactorCode.
+     * @example
+     * // Update one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TwoFactorCodeUpdateArgs>(args: SelectSubset<T, TwoFactorCodeUpdateArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more TwoFactorCodes.
+     * @param {TwoFactorCodeDeleteManyArgs} args - Arguments to filter TwoFactorCodes to delete.
+     * @example
+     * // Delete a few TwoFactorCodes
+     * const { count } = await prisma.twoFactorCode.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TwoFactorCodeDeleteManyArgs>(args?: SelectSubset<T, TwoFactorCodeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TwoFactorCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TwoFactorCodes
+     * const twoFactorCode = await prisma.twoFactorCode.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TwoFactorCodeUpdateManyArgs>(args: SelectSubset<T, TwoFactorCodeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TwoFactorCode.
+     * @param {TwoFactorCodeUpsertArgs} args - Arguments to update or create a TwoFactorCode.
+     * @example
+     * // Update or create a TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.upsert({
+     *   create: {
+     *     // ... data to create a TwoFactorCode
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TwoFactorCode we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TwoFactorCodeUpsertArgs>(args: SelectSubset<T, TwoFactorCodeUpsertArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of TwoFactorCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeCountArgs} args - Arguments to filter TwoFactorCodes to count.
+     * @example
+     * // Count the number of TwoFactorCodes
+     * const count = await prisma.twoFactorCode.count({
+     *   where: {
+     *     // ... the filter for the TwoFactorCodes we want to count
+     *   }
+     * })
+    **/
+    count<T extends TwoFactorCodeCountArgs>(
+      args?: Subset<T, TwoFactorCodeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TwoFactorCodeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TwoFactorCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TwoFactorCodeAggregateArgs>(args: Subset<T, TwoFactorCodeAggregateArgs>): Prisma.PrismaPromise<GetTwoFactorCodeAggregateType<T>>
+
+    /**
+     * Group by TwoFactorCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TwoFactorCodeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TwoFactorCodeGroupByArgs['orderBy'] }
+        : { orderBy?: TwoFactorCodeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TwoFactorCodeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwoFactorCodeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TwoFactorCode model
+   */
+  readonly fields: TwoFactorCodeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TwoFactorCode.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TwoFactorCodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    tenant<T extends TwoFactorCode$tenantArgs<ExtArgs> = {}>(args?: Subset<T, TwoFactorCode$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TwoFactorCode model
+   */ 
+  interface TwoFactorCodeFieldRefs {
+    readonly id: FieldRef<"TwoFactorCode", 'String'>
+    readonly userId: FieldRef<"TwoFactorCode", 'String'>
+    readonly tenantId: FieldRef<"TwoFactorCode", 'String'>
+    readonly type: FieldRef<"TwoFactorCode", 'String'>
+    readonly codeHash: FieldRef<"TwoFactorCode", 'String'>
+    readonly salt: FieldRef<"TwoFactorCode", 'String'>
+    readonly purpose: FieldRef<"TwoFactorCode", 'String'>
+    readonly attempts: FieldRef<"TwoFactorCode", 'Int'>
+    readonly maxAttempts: FieldRef<"TwoFactorCode", 'Int'>
+    readonly createdAt: FieldRef<"TwoFactorCode", 'DateTime'>
+    readonly expiresAt: FieldRef<"TwoFactorCode", 'DateTime'>
+    readonly usedAt: FieldRef<"TwoFactorCode", 'DateTime'>
+    readonly traceId: FieldRef<"TwoFactorCode", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TwoFactorCode findUnique
+   */
+  export type TwoFactorCodeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCode to fetch.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorCode findUniqueOrThrow
+   */
+  export type TwoFactorCodeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCode to fetch.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorCode findFirst
+   */
+  export type TwoFactorCodeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCode to fetch.
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorCodes to fetch.
+     */
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TwoFactorCodes.
+     */
+    cursor?: TwoFactorCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TwoFactorCodes.
+     */
+    distinct?: TwoFactorCodeScalarFieldEnum | TwoFactorCodeScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorCode findFirstOrThrow
+   */
+  export type TwoFactorCodeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCode to fetch.
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorCodes to fetch.
+     */
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TwoFactorCodes.
+     */
+    cursor?: TwoFactorCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TwoFactorCodes.
+     */
+    distinct?: TwoFactorCodeScalarFieldEnum | TwoFactorCodeScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorCode findMany
+   */
+  export type TwoFactorCodeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCodes to fetch.
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorCodes to fetch.
+     */
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TwoFactorCodes.
+     */
+    cursor?: TwoFactorCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorCodes.
+     */
+    skip?: number
+    distinct?: TwoFactorCodeScalarFieldEnum | TwoFactorCodeScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorCode create
+   */
+  export type TwoFactorCodeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TwoFactorCode.
+     */
+    data: XOR<TwoFactorCodeCreateInput, TwoFactorCodeUncheckedCreateInput>
+  }
+
+  /**
+   * TwoFactorCode createMany
+   */
+  export type TwoFactorCodeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TwoFactorCodes.
+     */
+    data: TwoFactorCodeCreateManyInput | TwoFactorCodeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TwoFactorCode createManyAndReturn
+   */
+  export type TwoFactorCodeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many TwoFactorCodes.
+     */
+    data: TwoFactorCodeCreateManyInput | TwoFactorCodeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TwoFactorCode update
+   */
+  export type TwoFactorCodeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TwoFactorCode.
+     */
+    data: XOR<TwoFactorCodeUpdateInput, TwoFactorCodeUncheckedUpdateInput>
+    /**
+     * Choose, which TwoFactorCode to update.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorCode updateMany
+   */
+  export type TwoFactorCodeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TwoFactorCodes.
+     */
+    data: XOR<TwoFactorCodeUpdateManyMutationInput, TwoFactorCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which TwoFactorCodes to update
+     */
+    where?: TwoFactorCodeWhereInput
+  }
+
+  /**
+   * TwoFactorCode upsert
+   */
+  export type TwoFactorCodeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TwoFactorCode to update in case it exists.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+    /**
+     * In case the TwoFactorCode found by the `where` argument doesn't exist, create a new TwoFactorCode with this data.
+     */
+    create: XOR<TwoFactorCodeCreateInput, TwoFactorCodeUncheckedCreateInput>
+    /**
+     * In case the TwoFactorCode was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TwoFactorCodeUpdateInput, TwoFactorCodeUncheckedUpdateInput>
+  }
+
+  /**
+   * TwoFactorCode delete
+   */
+  export type TwoFactorCodeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter which TwoFactorCode to delete.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorCode deleteMany
+   */
+  export type TwoFactorCodeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TwoFactorCodes to delete
+     */
+    where?: TwoFactorCodeWhereInput
+  }
+
+  /**
+   * TwoFactorCode.tenant
+   */
+  export type TwoFactorCode$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * TwoFactorCode without action
+   */
+  export type TwoFactorCodeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TwoFactorAudit
+   */
+
+  export type AggregateTwoFactorAudit = {
+    _count: TwoFactorAuditCountAggregateOutputType | null
+    _min: TwoFactorAuditMinAggregateOutputType | null
+    _max: TwoFactorAuditMaxAggregateOutputType | null
+  }
+
+  export type TwoFactorAuditMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    action: string | null
+    factorType: string | null
+    success: boolean | null
+    ipAddress: string | null
+    userAgent: string | null
+    metadata: string | null
+    createdAt: Date | null
+  }
+
+  export type TwoFactorAuditMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    action: string | null
+    factorType: string | null
+    success: boolean | null
+    ipAddress: string | null
+    userAgent: string | null
+    metadata: string | null
+    createdAt: Date | null
+  }
+
+  export type TwoFactorAuditCountAggregateOutputType = {
+    id: number
+    userId: number
+    tenantId: number
+    action: number
+    factorType: number
+    success: number
+    ipAddress: number
+    userAgent: number
+    metadata: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type TwoFactorAuditMinAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    action?: true
+    factorType?: true
+    success?: true
+    ipAddress?: true
+    userAgent?: true
+    metadata?: true
+    createdAt?: true
+  }
+
+  export type TwoFactorAuditMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    action?: true
+    factorType?: true
+    success?: true
+    ipAddress?: true
+    userAgent?: true
+    metadata?: true
+    createdAt?: true
+  }
+
+  export type TwoFactorAuditCountAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    action?: true
+    factorType?: true
+    success?: true
+    ipAddress?: true
+    userAgent?: true
+    metadata?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type TwoFactorAuditAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TwoFactorAudit to aggregate.
+     */
+    where?: TwoFactorAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorAudits to fetch.
+     */
+    orderBy?: TwoFactorAuditOrderByWithRelationInput | TwoFactorAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TwoFactorAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorAudits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TwoFactorAudits
+    **/
+    _count?: true | TwoFactorAuditCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TwoFactorAuditMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TwoFactorAuditMaxAggregateInputType
+  }
+
+  export type GetTwoFactorAuditAggregateType<T extends TwoFactorAuditAggregateArgs> = {
+        [P in keyof T & keyof AggregateTwoFactorAudit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTwoFactorAudit[P]>
+      : GetScalarType<T[P], AggregateTwoFactorAudit[P]>
+  }
+
+
+
+
+  export type TwoFactorAuditGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorAuditWhereInput
+    orderBy?: TwoFactorAuditOrderByWithAggregationInput | TwoFactorAuditOrderByWithAggregationInput[]
+    by: TwoFactorAuditScalarFieldEnum[] | TwoFactorAuditScalarFieldEnum
+    having?: TwoFactorAuditScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TwoFactorAuditCountAggregateInputType | true
+    _min?: TwoFactorAuditMinAggregateInputType
+    _max?: TwoFactorAuditMaxAggregateInputType
+  }
+
+  export type TwoFactorAuditGroupByOutputType = {
+    id: string
+    userId: string
+    tenantId: string | null
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress: string | null
+    userAgent: string | null
+    metadata: string | null
+    createdAt: Date
+    _count: TwoFactorAuditCountAggregateOutputType | null
+    _min: TwoFactorAuditMinAggregateOutputType | null
+    _max: TwoFactorAuditMaxAggregateOutputType | null
+  }
+
+  type GetTwoFactorAuditGroupByPayload<T extends TwoFactorAuditGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TwoFactorAuditGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TwoFactorAuditGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TwoFactorAuditGroupByOutputType[P]>
+            : GetScalarType<T[P], TwoFactorAuditGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TwoFactorAuditSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    action?: boolean
+    factorType?: boolean
+    success?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorAudit$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["twoFactorAudit"]>
+
+  export type TwoFactorAuditSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    action?: boolean
+    factorType?: boolean
+    success?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorAudit$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["twoFactorAudit"]>
+
+  export type TwoFactorAuditSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    action?: boolean
+    factorType?: boolean
+    success?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+  }
+
+  export type TwoFactorAuditInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorAudit$tenantArgs<ExtArgs>
+  }
+  export type TwoFactorAuditIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TwoFactorAudit$tenantArgs<ExtArgs>
+  }
+
+  export type $TwoFactorAuditPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TwoFactorAudit"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      tenantId: string | null
+      action: string
+      factorType: string
+      success: boolean
+      ipAddress: string | null
+      userAgent: string | null
+      metadata: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["twoFactorAudit"]>
+    composites: {}
+  }
+
+  type TwoFactorAuditGetPayload<S extends boolean | null | undefined | TwoFactorAuditDefaultArgs> = $Result.GetResult<Prisma.$TwoFactorAuditPayload, S>
+
+  type TwoFactorAuditCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TwoFactorAuditFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TwoFactorAuditCountAggregateInputType | true
+    }
+
+  export interface TwoFactorAuditDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TwoFactorAudit'], meta: { name: 'TwoFactorAudit' } }
+    /**
+     * Find zero or one TwoFactorAudit that matches the filter.
+     * @param {TwoFactorAuditFindUniqueArgs} args - Arguments to find a TwoFactorAudit
+     * @example
+     * // Get one TwoFactorAudit
+     * const twoFactorAudit = await prisma.twoFactorAudit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TwoFactorAuditFindUniqueArgs>(args: SelectSubset<T, TwoFactorAuditFindUniqueArgs<ExtArgs>>): Prisma__TwoFactorAuditClient<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one TwoFactorAudit that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {TwoFactorAuditFindUniqueOrThrowArgs} args - Arguments to find a TwoFactorAudit
+     * @example
+     * // Get one TwoFactorAudit
+     * const twoFactorAudit = await prisma.twoFactorAudit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TwoFactorAuditFindUniqueOrThrowArgs>(args: SelectSubset<T, TwoFactorAuditFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TwoFactorAuditClient<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first TwoFactorAudit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorAuditFindFirstArgs} args - Arguments to find a TwoFactorAudit
+     * @example
+     * // Get one TwoFactorAudit
+     * const twoFactorAudit = await prisma.twoFactorAudit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TwoFactorAuditFindFirstArgs>(args?: SelectSubset<T, TwoFactorAuditFindFirstArgs<ExtArgs>>): Prisma__TwoFactorAuditClient<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first TwoFactorAudit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorAuditFindFirstOrThrowArgs} args - Arguments to find a TwoFactorAudit
+     * @example
+     * // Get one TwoFactorAudit
+     * const twoFactorAudit = await prisma.twoFactorAudit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TwoFactorAuditFindFirstOrThrowArgs>(args?: SelectSubset<T, TwoFactorAuditFindFirstOrThrowArgs<ExtArgs>>): Prisma__TwoFactorAuditClient<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more TwoFactorAudits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorAuditFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TwoFactorAudits
+     * const twoFactorAudits = await prisma.twoFactorAudit.findMany()
+     * 
+     * // Get first 10 TwoFactorAudits
+     * const twoFactorAudits = await prisma.twoFactorAudit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const twoFactorAuditWithIdOnly = await prisma.twoFactorAudit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TwoFactorAuditFindManyArgs>(args?: SelectSubset<T, TwoFactorAuditFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a TwoFactorAudit.
+     * @param {TwoFactorAuditCreateArgs} args - Arguments to create a TwoFactorAudit.
+     * @example
+     * // Create one TwoFactorAudit
+     * const TwoFactorAudit = await prisma.twoFactorAudit.create({
+     *   data: {
+     *     // ... data to create a TwoFactorAudit
+     *   }
+     * })
+     * 
+     */
+    create<T extends TwoFactorAuditCreateArgs>(args: SelectSubset<T, TwoFactorAuditCreateArgs<ExtArgs>>): Prisma__TwoFactorAuditClient<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many TwoFactorAudits.
+     * @param {TwoFactorAuditCreateManyArgs} args - Arguments to create many TwoFactorAudits.
+     * @example
+     * // Create many TwoFactorAudits
+     * const twoFactorAudit = await prisma.twoFactorAudit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TwoFactorAuditCreateManyArgs>(args?: SelectSubset<T, TwoFactorAuditCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TwoFactorAudits and returns the data saved in the database.
+     * @param {TwoFactorAuditCreateManyAndReturnArgs} args - Arguments to create many TwoFactorAudits.
+     * @example
+     * // Create many TwoFactorAudits
+     * const twoFactorAudit = await prisma.twoFactorAudit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TwoFactorAudits and only return the `id`
+     * const twoFactorAuditWithIdOnly = await prisma.twoFactorAudit.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TwoFactorAuditCreateManyAndReturnArgs>(args?: SelectSubset<T, TwoFactorAuditCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a TwoFactorAudit.
+     * @param {TwoFactorAuditDeleteArgs} args - Arguments to delete one TwoFactorAudit.
+     * @example
+     * // Delete one TwoFactorAudit
+     * const TwoFactorAudit = await prisma.twoFactorAudit.delete({
+     *   where: {
+     *     // ... filter to delete one TwoFactorAudit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TwoFactorAuditDeleteArgs>(args: SelectSubset<T, TwoFactorAuditDeleteArgs<ExtArgs>>): Prisma__TwoFactorAuditClient<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one TwoFactorAudit.
+     * @param {TwoFactorAuditUpdateArgs} args - Arguments to update one TwoFactorAudit.
+     * @example
+     * // Update one TwoFactorAudit
+     * const twoFactorAudit = await prisma.twoFactorAudit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TwoFactorAuditUpdateArgs>(args: SelectSubset<T, TwoFactorAuditUpdateArgs<ExtArgs>>): Prisma__TwoFactorAuditClient<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more TwoFactorAudits.
+     * @param {TwoFactorAuditDeleteManyArgs} args - Arguments to filter TwoFactorAudits to delete.
+     * @example
+     * // Delete a few TwoFactorAudits
+     * const { count } = await prisma.twoFactorAudit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TwoFactorAuditDeleteManyArgs>(args?: SelectSubset<T, TwoFactorAuditDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TwoFactorAudits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorAuditUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TwoFactorAudits
+     * const twoFactorAudit = await prisma.twoFactorAudit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TwoFactorAuditUpdateManyArgs>(args: SelectSubset<T, TwoFactorAuditUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TwoFactorAudit.
+     * @param {TwoFactorAuditUpsertArgs} args - Arguments to update or create a TwoFactorAudit.
+     * @example
+     * // Update or create a TwoFactorAudit
+     * const twoFactorAudit = await prisma.twoFactorAudit.upsert({
+     *   create: {
+     *     // ... data to create a TwoFactorAudit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TwoFactorAudit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TwoFactorAuditUpsertArgs>(args: SelectSubset<T, TwoFactorAuditUpsertArgs<ExtArgs>>): Prisma__TwoFactorAuditClient<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of TwoFactorAudits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorAuditCountArgs} args - Arguments to filter TwoFactorAudits to count.
+     * @example
+     * // Count the number of TwoFactorAudits
+     * const count = await prisma.twoFactorAudit.count({
+     *   where: {
+     *     // ... the filter for the TwoFactorAudits we want to count
+     *   }
+     * })
+    **/
+    count<T extends TwoFactorAuditCountArgs>(
+      args?: Subset<T, TwoFactorAuditCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TwoFactorAuditCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TwoFactorAudit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorAuditAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TwoFactorAuditAggregateArgs>(args: Subset<T, TwoFactorAuditAggregateArgs>): Prisma.PrismaPromise<GetTwoFactorAuditAggregateType<T>>
+
+    /**
+     * Group by TwoFactorAudit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorAuditGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TwoFactorAuditGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TwoFactorAuditGroupByArgs['orderBy'] }
+        : { orderBy?: TwoFactorAuditGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TwoFactorAuditGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwoFactorAuditGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TwoFactorAudit model
+   */
+  readonly fields: TwoFactorAuditFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TwoFactorAudit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TwoFactorAuditClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    tenant<T extends TwoFactorAudit$tenantArgs<ExtArgs> = {}>(args?: Subset<T, TwoFactorAudit$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TwoFactorAudit model
+   */ 
+  interface TwoFactorAuditFieldRefs {
+    readonly id: FieldRef<"TwoFactorAudit", 'String'>
+    readonly userId: FieldRef<"TwoFactorAudit", 'String'>
+    readonly tenantId: FieldRef<"TwoFactorAudit", 'String'>
+    readonly action: FieldRef<"TwoFactorAudit", 'String'>
+    readonly factorType: FieldRef<"TwoFactorAudit", 'String'>
+    readonly success: FieldRef<"TwoFactorAudit", 'Boolean'>
+    readonly ipAddress: FieldRef<"TwoFactorAudit", 'String'>
+    readonly userAgent: FieldRef<"TwoFactorAudit", 'String'>
+    readonly metadata: FieldRef<"TwoFactorAudit", 'String'>
+    readonly createdAt: FieldRef<"TwoFactorAudit", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TwoFactorAudit findUnique
+   */
+  export type TwoFactorAuditFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorAudit to fetch.
+     */
+    where: TwoFactorAuditWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorAudit findUniqueOrThrow
+   */
+  export type TwoFactorAuditFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorAudit to fetch.
+     */
+    where: TwoFactorAuditWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorAudit findFirst
+   */
+  export type TwoFactorAuditFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorAudit to fetch.
+     */
+    where?: TwoFactorAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorAudits to fetch.
+     */
+    orderBy?: TwoFactorAuditOrderByWithRelationInput | TwoFactorAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TwoFactorAudits.
+     */
+    cursor?: TwoFactorAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorAudits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TwoFactorAudits.
+     */
+    distinct?: TwoFactorAuditScalarFieldEnum | TwoFactorAuditScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorAudit findFirstOrThrow
+   */
+  export type TwoFactorAuditFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorAudit to fetch.
+     */
+    where?: TwoFactorAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorAudits to fetch.
+     */
+    orderBy?: TwoFactorAuditOrderByWithRelationInput | TwoFactorAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TwoFactorAudits.
+     */
+    cursor?: TwoFactorAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorAudits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TwoFactorAudits.
+     */
+    distinct?: TwoFactorAuditScalarFieldEnum | TwoFactorAuditScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorAudit findMany
+   */
+  export type TwoFactorAuditFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorAudits to fetch.
+     */
+    where?: TwoFactorAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorAudits to fetch.
+     */
+    orderBy?: TwoFactorAuditOrderByWithRelationInput | TwoFactorAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TwoFactorAudits.
+     */
+    cursor?: TwoFactorAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorAudits.
+     */
+    skip?: number
+    distinct?: TwoFactorAuditScalarFieldEnum | TwoFactorAuditScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorAudit create
+   */
+  export type TwoFactorAuditCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TwoFactorAudit.
+     */
+    data: XOR<TwoFactorAuditCreateInput, TwoFactorAuditUncheckedCreateInput>
+  }
+
+  /**
+   * TwoFactorAudit createMany
+   */
+  export type TwoFactorAuditCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TwoFactorAudits.
+     */
+    data: TwoFactorAuditCreateManyInput | TwoFactorAuditCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TwoFactorAudit createManyAndReturn
+   */
+  export type TwoFactorAuditCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many TwoFactorAudits.
+     */
+    data: TwoFactorAuditCreateManyInput | TwoFactorAuditCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TwoFactorAudit update
+   */
+  export type TwoFactorAuditUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TwoFactorAudit.
+     */
+    data: XOR<TwoFactorAuditUpdateInput, TwoFactorAuditUncheckedUpdateInput>
+    /**
+     * Choose, which TwoFactorAudit to update.
+     */
+    where: TwoFactorAuditWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorAudit updateMany
+   */
+  export type TwoFactorAuditUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TwoFactorAudits.
+     */
+    data: XOR<TwoFactorAuditUpdateManyMutationInput, TwoFactorAuditUncheckedUpdateManyInput>
+    /**
+     * Filter which TwoFactorAudits to update
+     */
+    where?: TwoFactorAuditWhereInput
+  }
+
+  /**
+   * TwoFactorAudit upsert
+   */
+  export type TwoFactorAuditUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TwoFactorAudit to update in case it exists.
+     */
+    where: TwoFactorAuditWhereUniqueInput
+    /**
+     * In case the TwoFactorAudit found by the `where` argument doesn't exist, create a new TwoFactorAudit with this data.
+     */
+    create: XOR<TwoFactorAuditCreateInput, TwoFactorAuditUncheckedCreateInput>
+    /**
+     * In case the TwoFactorAudit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TwoFactorAuditUpdateInput, TwoFactorAuditUncheckedUpdateInput>
+  }
+
+  /**
+   * TwoFactorAudit delete
+   */
+  export type TwoFactorAuditDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+    /**
+     * Filter which TwoFactorAudit to delete.
+     */
+    where: TwoFactorAuditWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorAudit deleteMany
+   */
+  export type TwoFactorAuditDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TwoFactorAudits to delete
+     */
+    where?: TwoFactorAuditWhereInput
+  }
+
+  /**
+   * TwoFactorAudit.tenant
+   */
+  export type TwoFactorAudit$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * TwoFactorAudit without action
+   */
+  export type TwoFactorAuditDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorAudit
+     */
+    select?: TwoFactorAuditSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorAuditInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -26529,6 +31279,74 @@ export namespace Prisma {
   export type SetupStateScalarFieldEnum = (typeof SetupStateScalarFieldEnum)[keyof typeof SetupStateScalarFieldEnum]
 
 
+  export const TwoFactorMethodScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    tenantId: 'tenantId',
+    type: 'type',
+    identifier: 'identifier',
+    secret: 'secret',
+    isVerified: 'isVerified',
+    isEnabled: 'isEnabled',
+    backupCodes: 'backupCodes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    lastUsedAt: 'lastUsedAt'
+  };
+
+  export type TwoFactorMethodScalarFieldEnum = (typeof TwoFactorMethodScalarFieldEnum)[keyof typeof TwoFactorMethodScalarFieldEnum]
+
+
+  export const PendingAuthScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    tenantId: 'tenantId',
+    nonce: 'nonce',
+    requiredFactors: 'requiredFactors',
+    createdAt: 'createdAt',
+    expiresAt: 'expiresAt',
+    ipAddress: 'ipAddress',
+    userAgent: 'userAgent'
+  };
+
+  export type PendingAuthScalarFieldEnum = (typeof PendingAuthScalarFieldEnum)[keyof typeof PendingAuthScalarFieldEnum]
+
+
+  export const TwoFactorCodeScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    tenantId: 'tenantId',
+    type: 'type',
+    codeHash: 'codeHash',
+    salt: 'salt',
+    purpose: 'purpose',
+    attempts: 'attempts',
+    maxAttempts: 'maxAttempts',
+    createdAt: 'createdAt',
+    expiresAt: 'expiresAt',
+    usedAt: 'usedAt',
+    traceId: 'traceId'
+  };
+
+  export type TwoFactorCodeScalarFieldEnum = (typeof TwoFactorCodeScalarFieldEnum)[keyof typeof TwoFactorCodeScalarFieldEnum]
+
+
+  export const TwoFactorAuditScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    tenantId: 'tenantId',
+    action: 'action',
+    factorType: 'factorType',
+    success: 'success',
+    ipAddress: 'ipAddress',
+    userAgent: 'userAgent',
+    metadata: 'metadata',
+    createdAt: 'createdAt'
+  };
+
+  export type TwoFactorAuditScalarFieldEnum = (typeof TwoFactorAuditScalarFieldEnum)[keyof typeof TwoFactorAuditScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -26817,6 +31635,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientListRelationFilter
     passkeys?: PasskeyListRelationFilter
     sessions?: SessionListRelationFilter
+    twoFactorMethods?: TwoFactorMethodListRelationFilter
+    pendingAuths?: PendingAuthListRelationFilter
+    twoFactorCodes?: TwoFactorCodeListRelationFilter
+    twoFactorAudits?: TwoFactorAuditListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -26858,6 +31680,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientOrderByRelationAggregateInput
     passkeys?: PasskeyOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
+    twoFactorMethods?: TwoFactorMethodOrderByRelationAggregateInput
+    pendingAuths?: PendingAuthOrderByRelationAggregateInput
+    twoFactorCodes?: TwoFactorCodeOrderByRelationAggregateInput
+    twoFactorAudits?: TwoFactorAuditOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -26902,6 +31728,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientListRelationFilter
     passkeys?: PasskeyListRelationFilter
     sessions?: SessionListRelationFilter
+    twoFactorMethods?: TwoFactorMethodListRelationFilter
+    pendingAuths?: PendingAuthListRelationFilter
+    twoFactorCodes?: TwoFactorCodeListRelationFilter
+    twoFactorAudits?: TwoFactorAuditListRelationFilter
   }, "id" | "email" | "emailVerificationToken" | "passwordResetToken">
 
   export type UserOrderByWithAggregationInput = {
@@ -27057,6 +31887,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointListRelationFilter
     featureRules?: TenantFeatureRuleListRelationFilter
     featureAuditEntries?: FeatureAuditEntryListRelationFilter
+    twoFactorMethods?: TwoFactorMethodListRelationFilter
+    pendingAuths?: PendingAuthListRelationFilter
+    twoFactorCodes?: TwoFactorCodeListRelationFilter
+    twoFactorAudits?: TwoFactorAuditListRelationFilter
   }
 
   export type TenantOrderByWithRelationInput = {
@@ -27102,6 +31936,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointOrderByRelationAggregateInput
     featureRules?: TenantFeatureRuleOrderByRelationAggregateInput
     featureAuditEntries?: FeatureAuditEntryOrderByRelationAggregateInput
+    twoFactorMethods?: TwoFactorMethodOrderByRelationAggregateInput
+    pendingAuths?: PendingAuthOrderByRelationAggregateInput
+    twoFactorCodes?: TwoFactorCodeOrderByRelationAggregateInput
+    twoFactorAudits?: TwoFactorAuditOrderByRelationAggregateInput
   }
 
   export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -27150,6 +31988,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointListRelationFilter
     featureRules?: TenantFeatureRuleListRelationFilter
     featureAuditEntries?: FeatureAuditEntryListRelationFilter
+    twoFactorMethods?: TwoFactorMethodListRelationFilter
+    pendingAuths?: PendingAuthListRelationFilter
+    twoFactorCodes?: TwoFactorCodeListRelationFilter
+    twoFactorAudits?: TwoFactorAuditListRelationFilter
   }, "id" | "slug" | "subdomain" | "customDomain">
 
   export type TenantOrderByWithAggregationInput = {
@@ -28636,6 +33478,361 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"SetupState"> | Date | string
   }
 
+  export type TwoFactorMethodWhereInput = {
+    AND?: TwoFactorMethodWhereInput | TwoFactorMethodWhereInput[]
+    OR?: TwoFactorMethodWhereInput[]
+    NOT?: TwoFactorMethodWhereInput | TwoFactorMethodWhereInput[]
+    id?: StringFilter<"TwoFactorMethod"> | string
+    userId?: StringFilter<"TwoFactorMethod"> | string
+    tenantId?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    type?: StringFilter<"TwoFactorMethod"> | string
+    identifier?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    secret?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    isVerified?: BoolFilter<"TwoFactorMethod"> | boolean
+    isEnabled?: BoolFilter<"TwoFactorMethod"> | boolean
+    backupCodes?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    createdAt?: DateTimeFilter<"TwoFactorMethod"> | Date | string
+    updatedAt?: DateTimeFilter<"TwoFactorMethod"> | Date | string
+    lastUsedAt?: DateTimeNullableFilter<"TwoFactorMethod"> | Date | string | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }
+
+  export type TwoFactorMethodOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    identifier?: SortOrderInput | SortOrder
+    secret?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
+    isEnabled?: SortOrder
+    backupCodes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    lastUsedAt?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type TwoFactorMethodWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_type_tenantId?: TwoFactorMethodUserIdTypeTenantIdCompoundUniqueInput
+    AND?: TwoFactorMethodWhereInput | TwoFactorMethodWhereInput[]
+    OR?: TwoFactorMethodWhereInput[]
+    NOT?: TwoFactorMethodWhereInput | TwoFactorMethodWhereInput[]
+    userId?: StringFilter<"TwoFactorMethod"> | string
+    tenantId?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    type?: StringFilter<"TwoFactorMethod"> | string
+    identifier?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    secret?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    isVerified?: BoolFilter<"TwoFactorMethod"> | boolean
+    isEnabled?: BoolFilter<"TwoFactorMethod"> | boolean
+    backupCodes?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    createdAt?: DateTimeFilter<"TwoFactorMethod"> | Date | string
+    updatedAt?: DateTimeFilter<"TwoFactorMethod"> | Date | string
+    lastUsedAt?: DateTimeNullableFilter<"TwoFactorMethod"> | Date | string | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }, "id" | "userId_type_tenantId">
+
+  export type TwoFactorMethodOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    identifier?: SortOrderInput | SortOrder
+    secret?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
+    isEnabled?: SortOrder
+    backupCodes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    lastUsedAt?: SortOrderInput | SortOrder
+    _count?: TwoFactorMethodCountOrderByAggregateInput
+    _max?: TwoFactorMethodMaxOrderByAggregateInput
+    _min?: TwoFactorMethodMinOrderByAggregateInput
+  }
+
+  export type TwoFactorMethodScalarWhereWithAggregatesInput = {
+    AND?: TwoFactorMethodScalarWhereWithAggregatesInput | TwoFactorMethodScalarWhereWithAggregatesInput[]
+    OR?: TwoFactorMethodScalarWhereWithAggregatesInput[]
+    NOT?: TwoFactorMethodScalarWhereWithAggregatesInput | TwoFactorMethodScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TwoFactorMethod"> | string
+    userId?: StringWithAggregatesFilter<"TwoFactorMethod"> | string
+    tenantId?: StringNullableWithAggregatesFilter<"TwoFactorMethod"> | string | null
+    type?: StringWithAggregatesFilter<"TwoFactorMethod"> | string
+    identifier?: StringNullableWithAggregatesFilter<"TwoFactorMethod"> | string | null
+    secret?: StringNullableWithAggregatesFilter<"TwoFactorMethod"> | string | null
+    isVerified?: BoolWithAggregatesFilter<"TwoFactorMethod"> | boolean
+    isEnabled?: BoolWithAggregatesFilter<"TwoFactorMethod"> | boolean
+    backupCodes?: StringNullableWithAggregatesFilter<"TwoFactorMethod"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"TwoFactorMethod"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TwoFactorMethod"> | Date | string
+    lastUsedAt?: DateTimeNullableWithAggregatesFilter<"TwoFactorMethod"> | Date | string | null
+  }
+
+  export type PendingAuthWhereInput = {
+    AND?: PendingAuthWhereInput | PendingAuthWhereInput[]
+    OR?: PendingAuthWhereInput[]
+    NOT?: PendingAuthWhereInput | PendingAuthWhereInput[]
+    id?: StringFilter<"PendingAuth"> | string
+    userId?: StringFilter<"PendingAuth"> | string
+    tenantId?: StringNullableFilter<"PendingAuth"> | string | null
+    nonce?: StringFilter<"PendingAuth"> | string
+    requiredFactors?: StringFilter<"PendingAuth"> | string
+    createdAt?: DateTimeFilter<"PendingAuth"> | Date | string
+    expiresAt?: DateTimeFilter<"PendingAuth"> | Date | string
+    ipAddress?: StringNullableFilter<"PendingAuth"> | string | null
+    userAgent?: StringNullableFilter<"PendingAuth"> | string | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }
+
+  export type PendingAuthOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    nonce?: SortOrder
+    requiredFactors?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type PendingAuthWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    nonce?: string
+    AND?: PendingAuthWhereInput | PendingAuthWhereInput[]
+    OR?: PendingAuthWhereInput[]
+    NOT?: PendingAuthWhereInput | PendingAuthWhereInput[]
+    userId?: StringFilter<"PendingAuth"> | string
+    tenantId?: StringNullableFilter<"PendingAuth"> | string | null
+    requiredFactors?: StringFilter<"PendingAuth"> | string
+    createdAt?: DateTimeFilter<"PendingAuth"> | Date | string
+    expiresAt?: DateTimeFilter<"PendingAuth"> | Date | string
+    ipAddress?: StringNullableFilter<"PendingAuth"> | string | null
+    userAgent?: StringNullableFilter<"PendingAuth"> | string | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }, "id" | "nonce">
+
+  export type PendingAuthOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    nonce?: SortOrder
+    requiredFactors?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    _count?: PendingAuthCountOrderByAggregateInput
+    _max?: PendingAuthMaxOrderByAggregateInput
+    _min?: PendingAuthMinOrderByAggregateInput
+  }
+
+  export type PendingAuthScalarWhereWithAggregatesInput = {
+    AND?: PendingAuthScalarWhereWithAggregatesInput | PendingAuthScalarWhereWithAggregatesInput[]
+    OR?: PendingAuthScalarWhereWithAggregatesInput[]
+    NOT?: PendingAuthScalarWhereWithAggregatesInput | PendingAuthScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PendingAuth"> | string
+    userId?: StringWithAggregatesFilter<"PendingAuth"> | string
+    tenantId?: StringNullableWithAggregatesFilter<"PendingAuth"> | string | null
+    nonce?: StringWithAggregatesFilter<"PendingAuth"> | string
+    requiredFactors?: StringWithAggregatesFilter<"PendingAuth"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PendingAuth"> | Date | string
+    expiresAt?: DateTimeWithAggregatesFilter<"PendingAuth"> | Date | string
+    ipAddress?: StringNullableWithAggregatesFilter<"PendingAuth"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"PendingAuth"> | string | null
+  }
+
+  export type TwoFactorCodeWhereInput = {
+    AND?: TwoFactorCodeWhereInput | TwoFactorCodeWhereInput[]
+    OR?: TwoFactorCodeWhereInput[]
+    NOT?: TwoFactorCodeWhereInput | TwoFactorCodeWhereInput[]
+    id?: StringFilter<"TwoFactorCode"> | string
+    userId?: StringFilter<"TwoFactorCode"> | string
+    tenantId?: StringNullableFilter<"TwoFactorCode"> | string | null
+    type?: StringFilter<"TwoFactorCode"> | string
+    codeHash?: StringFilter<"TwoFactorCode"> | string
+    salt?: StringFilter<"TwoFactorCode"> | string
+    purpose?: StringFilter<"TwoFactorCode"> | string
+    attempts?: IntFilter<"TwoFactorCode"> | number
+    maxAttempts?: IntFilter<"TwoFactorCode"> | number
+    createdAt?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    expiresAt?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    usedAt?: DateTimeNullableFilter<"TwoFactorCode"> | Date | string | null
+    traceId?: StringNullableFilter<"TwoFactorCode"> | string | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }
+
+  export type TwoFactorCodeOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    codeHash?: SortOrder
+    salt?: SortOrder
+    purpose?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    usedAt?: SortOrderInput | SortOrder
+    traceId?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type TwoFactorCodeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TwoFactorCodeWhereInput | TwoFactorCodeWhereInput[]
+    OR?: TwoFactorCodeWhereInput[]
+    NOT?: TwoFactorCodeWhereInput | TwoFactorCodeWhereInput[]
+    userId?: StringFilter<"TwoFactorCode"> | string
+    tenantId?: StringNullableFilter<"TwoFactorCode"> | string | null
+    type?: StringFilter<"TwoFactorCode"> | string
+    codeHash?: StringFilter<"TwoFactorCode"> | string
+    salt?: StringFilter<"TwoFactorCode"> | string
+    purpose?: StringFilter<"TwoFactorCode"> | string
+    attempts?: IntFilter<"TwoFactorCode"> | number
+    maxAttempts?: IntFilter<"TwoFactorCode"> | number
+    createdAt?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    expiresAt?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    usedAt?: DateTimeNullableFilter<"TwoFactorCode"> | Date | string | null
+    traceId?: StringNullableFilter<"TwoFactorCode"> | string | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }, "id">
+
+  export type TwoFactorCodeOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    codeHash?: SortOrder
+    salt?: SortOrder
+    purpose?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    usedAt?: SortOrderInput | SortOrder
+    traceId?: SortOrderInput | SortOrder
+    _count?: TwoFactorCodeCountOrderByAggregateInput
+    _avg?: TwoFactorCodeAvgOrderByAggregateInput
+    _max?: TwoFactorCodeMaxOrderByAggregateInput
+    _min?: TwoFactorCodeMinOrderByAggregateInput
+    _sum?: TwoFactorCodeSumOrderByAggregateInput
+  }
+
+  export type TwoFactorCodeScalarWhereWithAggregatesInput = {
+    AND?: TwoFactorCodeScalarWhereWithAggregatesInput | TwoFactorCodeScalarWhereWithAggregatesInput[]
+    OR?: TwoFactorCodeScalarWhereWithAggregatesInput[]
+    NOT?: TwoFactorCodeScalarWhereWithAggregatesInput | TwoFactorCodeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TwoFactorCode"> | string
+    userId?: StringWithAggregatesFilter<"TwoFactorCode"> | string
+    tenantId?: StringNullableWithAggregatesFilter<"TwoFactorCode"> | string | null
+    type?: StringWithAggregatesFilter<"TwoFactorCode"> | string
+    codeHash?: StringWithAggregatesFilter<"TwoFactorCode"> | string
+    salt?: StringWithAggregatesFilter<"TwoFactorCode"> | string
+    purpose?: StringWithAggregatesFilter<"TwoFactorCode"> | string
+    attempts?: IntWithAggregatesFilter<"TwoFactorCode"> | number
+    maxAttempts?: IntWithAggregatesFilter<"TwoFactorCode"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"TwoFactorCode"> | Date | string
+    expiresAt?: DateTimeWithAggregatesFilter<"TwoFactorCode"> | Date | string
+    usedAt?: DateTimeNullableWithAggregatesFilter<"TwoFactorCode"> | Date | string | null
+    traceId?: StringNullableWithAggregatesFilter<"TwoFactorCode"> | string | null
+  }
+
+  export type TwoFactorAuditWhereInput = {
+    AND?: TwoFactorAuditWhereInput | TwoFactorAuditWhereInput[]
+    OR?: TwoFactorAuditWhereInput[]
+    NOT?: TwoFactorAuditWhereInput | TwoFactorAuditWhereInput[]
+    id?: StringFilter<"TwoFactorAudit"> | string
+    userId?: StringFilter<"TwoFactorAudit"> | string
+    tenantId?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    action?: StringFilter<"TwoFactorAudit"> | string
+    factorType?: StringFilter<"TwoFactorAudit"> | string
+    success?: BoolFilter<"TwoFactorAudit"> | boolean
+    ipAddress?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    userAgent?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    metadata?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    createdAt?: DateTimeFilter<"TwoFactorAudit"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }
+
+  export type TwoFactorAuditOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    action?: SortOrder
+    factorType?: SortOrder
+    success?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type TwoFactorAuditWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TwoFactorAuditWhereInput | TwoFactorAuditWhereInput[]
+    OR?: TwoFactorAuditWhereInput[]
+    NOT?: TwoFactorAuditWhereInput | TwoFactorAuditWhereInput[]
+    userId?: StringFilter<"TwoFactorAudit"> | string
+    tenantId?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    action?: StringFilter<"TwoFactorAudit"> | string
+    factorType?: StringFilter<"TwoFactorAudit"> | string
+    success?: BoolFilter<"TwoFactorAudit"> | boolean
+    ipAddress?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    userAgent?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    metadata?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    createdAt?: DateTimeFilter<"TwoFactorAudit"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }, "id">
+
+  export type TwoFactorAuditOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    action?: SortOrder
+    factorType?: SortOrder
+    success?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: TwoFactorAuditCountOrderByAggregateInput
+    _max?: TwoFactorAuditMaxOrderByAggregateInput
+    _min?: TwoFactorAuditMinOrderByAggregateInput
+  }
+
+  export type TwoFactorAuditScalarWhereWithAggregatesInput = {
+    AND?: TwoFactorAuditScalarWhereWithAggregatesInput | TwoFactorAuditScalarWhereWithAggregatesInput[]
+    OR?: TwoFactorAuditScalarWhereWithAggregatesInput[]
+    NOT?: TwoFactorAuditScalarWhereWithAggregatesInput | TwoFactorAuditScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TwoFactorAudit"> | string
+    userId?: StringWithAggregatesFilter<"TwoFactorAudit"> | string
+    tenantId?: StringNullableWithAggregatesFilter<"TwoFactorAudit"> | string | null
+    action?: StringWithAggregatesFilter<"TwoFactorAudit"> | string
+    factorType?: StringWithAggregatesFilter<"TwoFactorAudit"> | string
+    success?: BoolWithAggregatesFilter<"TwoFactorAudit"> | boolean
+    ipAddress?: StringNullableWithAggregatesFilter<"TwoFactorAudit"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"TwoFactorAudit"> | string | null
+    metadata?: StringNullableWithAggregatesFilter<"TwoFactorAudit"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"TwoFactorAudit"> | Date | string
+  }
+
   export type AccountCreateInput = {
     id?: string
     type: string
@@ -28833,6 +34030,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -28874,6 +34075,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -28915,6 +34120,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -28956,6 +34165,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -29130,6 +34343,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateInput = {
@@ -29175,6 +34392,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUpdateInput = {
@@ -29220,6 +34441,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateInput = {
@@ -29265,6 +34490,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateManyInput = {
@@ -30907,6 +36136,390 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TwoFactorMethodCreateInput = {
+    id?: string
+    type: string
+    identifier?: string | null
+    secret?: string | null
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lastUsedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutTwoFactorMethodsInput
+    tenant?: TenantCreateNestedOneWithoutTwoFactorMethodsInput
+  }
+
+  export type TwoFactorMethodUncheckedCreateInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    type: string
+    identifier?: string | null
+    secret?: string | null
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lastUsedAt?: Date | string | null
+  }
+
+  export type TwoFactorMethodUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutTwoFactorMethodsNestedInput
+    tenant?: TenantUpdateOneWithoutTwoFactorMethodsNestedInput
+  }
+
+  export type TwoFactorMethodUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TwoFactorMethodCreateManyInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    type: string
+    identifier?: string | null
+    secret?: string | null
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lastUsedAt?: Date | string | null
+  }
+
+  export type TwoFactorMethodUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TwoFactorMethodUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PendingAuthCreateInput = {
+    id?: string
+    nonce: string
+    requiredFactors: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    user: UserCreateNestedOneWithoutPendingAuthsInput
+    tenant?: TenantCreateNestedOneWithoutPendingAuthsInput
+  }
+
+  export type PendingAuthUncheckedCreateInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    nonce: string
+    requiredFactors: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type PendingAuthUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutPendingAuthsNestedInput
+    tenant?: TenantUpdateOneWithoutPendingAuthsNestedInput
+  }
+
+  export type PendingAuthUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PendingAuthCreateManyInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    nonce: string
+    requiredFactors: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type PendingAuthUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PendingAuthUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorCodeCreateInput = {
+    id?: string
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts?: number
+    maxAttempts?: number
+    createdAt?: Date | string
+    expiresAt: Date | string
+    usedAt?: Date | string | null
+    traceId?: string | null
+    user: UserCreateNestedOneWithoutTwoFactorCodesInput
+    tenant?: TenantCreateNestedOneWithoutTwoFactorCodesInput
+  }
+
+  export type TwoFactorCodeUncheckedCreateInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts?: number
+    maxAttempts?: number
+    createdAt?: Date | string
+    expiresAt: Date | string
+    usedAt?: Date | string | null
+    traceId?: string | null
+  }
+
+  export type TwoFactorCodeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutTwoFactorCodesNestedInput
+    tenant?: TenantUpdateOneWithoutTwoFactorCodesNestedInput
+  }
+
+  export type TwoFactorCodeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorCodeCreateManyInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts?: number
+    maxAttempts?: number
+    createdAt?: Date | string
+    expiresAt: Date | string
+    usedAt?: Date | string | null
+    traceId?: string | null
+  }
+
+  export type TwoFactorCodeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorCodeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorAuditCreateInput = {
+    id?: string
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress?: string | null
+    userAgent?: string | null
+    metadata?: string | null
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutTwoFactorAuditsInput
+    tenant?: TenantCreateNestedOneWithoutTwoFactorAuditsInput
+  }
+
+  export type TwoFactorAuditUncheckedCreateInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress?: string | null
+    userAgent?: string | null
+    metadata?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TwoFactorAuditUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTwoFactorAuditsNestedInput
+    tenant?: TenantUpdateOneWithoutTwoFactorAuditsNestedInput
+  }
+
+  export type TwoFactorAuditUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorAuditCreateManyInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress?: string | null
+    userAgent?: string | null
+    metadata?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TwoFactorAuditUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorAuditUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -31198,6 +36811,30 @@ export namespace Prisma {
     none?: SessionWhereInput
   }
 
+  export type TwoFactorMethodListRelationFilter = {
+    every?: TwoFactorMethodWhereInput
+    some?: TwoFactorMethodWhereInput
+    none?: TwoFactorMethodWhereInput
+  }
+
+  export type PendingAuthListRelationFilter = {
+    every?: PendingAuthWhereInput
+    some?: PendingAuthWhereInput
+    none?: PendingAuthWhereInput
+  }
+
+  export type TwoFactorCodeListRelationFilter = {
+    every?: TwoFactorCodeWhereInput
+    some?: TwoFactorCodeWhereInput
+    none?: TwoFactorCodeWhereInput
+  }
+
+  export type TwoFactorAuditListRelationFilter = {
+    every?: TwoFactorAuditWhereInput
+    some?: TwoFactorAuditWhereInput
+    none?: TwoFactorAuditWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -31235,6 +36872,22 @@ export namespace Prisma {
   }
 
   export type SessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TwoFactorMethodOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PendingAuthOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TwoFactorCodeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TwoFactorAuditOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -32303,6 +37956,190 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type TwoFactorMethodUserIdTypeTenantIdCompoundUniqueInput = {
+    userId: string
+    type: string
+    tenantId: string
+  }
+
+  export type TwoFactorMethodCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    type?: SortOrder
+    identifier?: SortOrder
+    secret?: SortOrder
+    isVerified?: SortOrder
+    isEnabled?: SortOrder
+    backupCodes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    lastUsedAt?: SortOrder
+  }
+
+  export type TwoFactorMethodMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    type?: SortOrder
+    identifier?: SortOrder
+    secret?: SortOrder
+    isVerified?: SortOrder
+    isEnabled?: SortOrder
+    backupCodes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    lastUsedAt?: SortOrder
+  }
+
+  export type TwoFactorMethodMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    type?: SortOrder
+    identifier?: SortOrder
+    secret?: SortOrder
+    isVerified?: SortOrder
+    isEnabled?: SortOrder
+    backupCodes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    lastUsedAt?: SortOrder
+  }
+
+  export type PendingAuthCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    nonce?: SortOrder
+    requiredFactors?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+  }
+
+  export type PendingAuthMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    nonce?: SortOrder
+    requiredFactors?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+  }
+
+  export type PendingAuthMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    nonce?: SortOrder
+    requiredFactors?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+  }
+
+  export type TwoFactorCodeCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    type?: SortOrder
+    codeHash?: SortOrder
+    salt?: SortOrder
+    purpose?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    usedAt?: SortOrder
+    traceId?: SortOrder
+  }
+
+  export type TwoFactorCodeAvgOrderByAggregateInput = {
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+  }
+
+  export type TwoFactorCodeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    type?: SortOrder
+    codeHash?: SortOrder
+    salt?: SortOrder
+    purpose?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    usedAt?: SortOrder
+    traceId?: SortOrder
+  }
+
+  export type TwoFactorCodeMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    type?: SortOrder
+    codeHash?: SortOrder
+    salt?: SortOrder
+    purpose?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    usedAt?: SortOrder
+    traceId?: SortOrder
+  }
+
+  export type TwoFactorCodeSumOrderByAggregateInput = {
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+  }
+
+  export type TwoFactorAuditCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    action?: SortOrder
+    factorType?: SortOrder
+    success?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TwoFactorAuditMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    action?: SortOrder
+    factorType?: SortOrder
+    success?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TwoFactorAuditMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    action?: SortOrder
+    factorType?: SortOrder
+    success?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -32451,6 +38288,34 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
+  export type TwoFactorMethodCreateNestedManyWithoutUserInput = {
+    create?: XOR<TwoFactorMethodCreateWithoutUserInput, TwoFactorMethodUncheckedCreateWithoutUserInput> | TwoFactorMethodCreateWithoutUserInput[] | TwoFactorMethodUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutUserInput | TwoFactorMethodCreateOrConnectWithoutUserInput[]
+    createMany?: TwoFactorMethodCreateManyUserInputEnvelope
+    connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+  }
+
+  export type PendingAuthCreateNestedManyWithoutUserInput = {
+    create?: XOR<PendingAuthCreateWithoutUserInput, PendingAuthUncheckedCreateWithoutUserInput> | PendingAuthCreateWithoutUserInput[] | PendingAuthUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PendingAuthCreateOrConnectWithoutUserInput | PendingAuthCreateOrConnectWithoutUserInput[]
+    createMany?: PendingAuthCreateManyUserInputEnvelope
+    connect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+  }
+
+  export type TwoFactorCodeCreateNestedManyWithoutUserInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput> | TwoFactorCodeCreateWithoutUserInput[] | TwoFactorCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutUserInput | TwoFactorCodeCreateOrConnectWithoutUserInput[]
+    createMany?: TwoFactorCodeCreateManyUserInputEnvelope
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+  }
+
+  export type TwoFactorAuditCreateNestedManyWithoutUserInput = {
+    create?: XOR<TwoFactorAuditCreateWithoutUserInput, TwoFactorAuditUncheckedCreateWithoutUserInput> | TwoFactorAuditCreateWithoutUserInput[] | TwoFactorAuditUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutUserInput | TwoFactorAuditCreateOrConnectWithoutUserInput[]
+    createMany?: TwoFactorAuditCreateManyUserInputEnvelope
+    connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -32533,6 +38398,34 @@ export namespace Prisma {
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TwoFactorMethodCreateWithoutUserInput, TwoFactorMethodUncheckedCreateWithoutUserInput> | TwoFactorMethodCreateWithoutUserInput[] | TwoFactorMethodUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutUserInput | TwoFactorMethodCreateOrConnectWithoutUserInput[]
+    createMany?: TwoFactorMethodCreateManyUserInputEnvelope
+    connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+  }
+
+  export type PendingAuthUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PendingAuthCreateWithoutUserInput, PendingAuthUncheckedCreateWithoutUserInput> | PendingAuthCreateWithoutUserInput[] | PendingAuthUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PendingAuthCreateOrConnectWithoutUserInput | PendingAuthCreateOrConnectWithoutUserInput[]
+    createMany?: PendingAuthCreateManyUserInputEnvelope
+    connect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+  }
+
+  export type TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput> | TwoFactorCodeCreateWithoutUserInput[] | TwoFactorCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutUserInput | TwoFactorCodeCreateOrConnectWithoutUserInput[]
+    createMany?: TwoFactorCodeCreateManyUserInputEnvelope
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+  }
+
+  export type TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TwoFactorAuditCreateWithoutUserInput, TwoFactorAuditUncheckedCreateWithoutUserInput> | TwoFactorAuditCreateWithoutUserInput[] | TwoFactorAuditUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutUserInput | TwoFactorAuditCreateOrConnectWithoutUserInput[]
+    createMany?: TwoFactorAuditCreateManyUserInputEnvelope
+    connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -32711,6 +38604,62 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type TwoFactorMethodUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TwoFactorMethodCreateWithoutUserInput, TwoFactorMethodUncheckedCreateWithoutUserInput> | TwoFactorMethodCreateWithoutUserInput[] | TwoFactorMethodUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutUserInput | TwoFactorMethodCreateOrConnectWithoutUserInput[]
+    upsert?: TwoFactorMethodUpsertWithWhereUniqueWithoutUserInput | TwoFactorMethodUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TwoFactorMethodCreateManyUserInputEnvelope
+    set?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    disconnect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    delete?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    update?: TwoFactorMethodUpdateWithWhereUniqueWithoutUserInput | TwoFactorMethodUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TwoFactorMethodUpdateManyWithWhereWithoutUserInput | TwoFactorMethodUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
+  }
+
+  export type PendingAuthUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PendingAuthCreateWithoutUserInput, PendingAuthUncheckedCreateWithoutUserInput> | PendingAuthCreateWithoutUserInput[] | PendingAuthUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PendingAuthCreateOrConnectWithoutUserInput | PendingAuthCreateOrConnectWithoutUserInput[]
+    upsert?: PendingAuthUpsertWithWhereUniqueWithoutUserInput | PendingAuthUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PendingAuthCreateManyUserInputEnvelope
+    set?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    disconnect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    delete?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    connect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    update?: PendingAuthUpdateWithWhereUniqueWithoutUserInput | PendingAuthUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PendingAuthUpdateManyWithWhereWithoutUserInput | PendingAuthUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PendingAuthScalarWhereInput | PendingAuthScalarWhereInput[]
+  }
+
+  export type TwoFactorCodeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput> | TwoFactorCodeCreateWithoutUserInput[] | TwoFactorCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutUserInput | TwoFactorCodeCreateOrConnectWithoutUserInput[]
+    upsert?: TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput | TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TwoFactorCodeCreateManyUserInputEnvelope
+    set?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    disconnect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    delete?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    update?: TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput | TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TwoFactorCodeUpdateManyWithWhereWithoutUserInput | TwoFactorCodeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
+  }
+
+  export type TwoFactorAuditUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TwoFactorAuditCreateWithoutUserInput, TwoFactorAuditUncheckedCreateWithoutUserInput> | TwoFactorAuditCreateWithoutUserInput[] | TwoFactorAuditUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutUserInput | TwoFactorAuditCreateOrConnectWithoutUserInput[]
+    upsert?: TwoFactorAuditUpsertWithWhereUniqueWithoutUserInput | TwoFactorAuditUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TwoFactorAuditCreateManyUserInputEnvelope
+    set?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    disconnect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    delete?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    update?: TwoFactorAuditUpdateWithWhereUniqueWithoutUserInput | TwoFactorAuditUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TwoFactorAuditUpdateManyWithWhereWithoutUserInput | TwoFactorAuditUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -32879,6 +38828,62 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TwoFactorMethodCreateWithoutUserInput, TwoFactorMethodUncheckedCreateWithoutUserInput> | TwoFactorMethodCreateWithoutUserInput[] | TwoFactorMethodUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutUserInput | TwoFactorMethodCreateOrConnectWithoutUserInput[]
+    upsert?: TwoFactorMethodUpsertWithWhereUniqueWithoutUserInput | TwoFactorMethodUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TwoFactorMethodCreateManyUserInputEnvelope
+    set?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    disconnect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    delete?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    update?: TwoFactorMethodUpdateWithWhereUniqueWithoutUserInput | TwoFactorMethodUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TwoFactorMethodUpdateManyWithWhereWithoutUserInput | TwoFactorMethodUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
+  }
+
+  export type PendingAuthUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PendingAuthCreateWithoutUserInput, PendingAuthUncheckedCreateWithoutUserInput> | PendingAuthCreateWithoutUserInput[] | PendingAuthUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PendingAuthCreateOrConnectWithoutUserInput | PendingAuthCreateOrConnectWithoutUserInput[]
+    upsert?: PendingAuthUpsertWithWhereUniqueWithoutUserInput | PendingAuthUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PendingAuthCreateManyUserInputEnvelope
+    set?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    disconnect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    delete?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    connect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    update?: PendingAuthUpdateWithWhereUniqueWithoutUserInput | PendingAuthUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PendingAuthUpdateManyWithWhereWithoutUserInput | PendingAuthUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PendingAuthScalarWhereInput | PendingAuthScalarWhereInput[]
+  }
+
+  export type TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput> | TwoFactorCodeCreateWithoutUserInput[] | TwoFactorCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutUserInput | TwoFactorCodeCreateOrConnectWithoutUserInput[]
+    upsert?: TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput | TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TwoFactorCodeCreateManyUserInputEnvelope
+    set?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    disconnect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    delete?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    update?: TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput | TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TwoFactorCodeUpdateManyWithWhereWithoutUserInput | TwoFactorCodeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
+  }
+
+  export type TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TwoFactorAuditCreateWithoutUserInput, TwoFactorAuditUncheckedCreateWithoutUserInput> | TwoFactorAuditCreateWithoutUserInput[] | TwoFactorAuditUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutUserInput | TwoFactorAuditCreateOrConnectWithoutUserInput[]
+    upsert?: TwoFactorAuditUpsertWithWhereUniqueWithoutUserInput | TwoFactorAuditUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TwoFactorAuditCreateManyUserInputEnvelope
+    set?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    disconnect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    delete?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    update?: TwoFactorAuditUpdateWithWhereUniqueWithoutUserInput | TwoFactorAuditUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TwoFactorAuditUpdateManyWithWhereWithoutUserInput | TwoFactorAuditUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
+  }
+
   export type AuditLogCreateNestedManyWithoutTenantInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -32949,6 +38954,34 @@ export namespace Prisma {
     connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
   }
 
+  export type TwoFactorMethodCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TwoFactorMethodCreateWithoutTenantInput, TwoFactorMethodUncheckedCreateWithoutTenantInput> | TwoFactorMethodCreateWithoutTenantInput[] | TwoFactorMethodUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutTenantInput | TwoFactorMethodCreateOrConnectWithoutTenantInput[]
+    createMany?: TwoFactorMethodCreateManyTenantInputEnvelope
+    connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+  }
+
+  export type PendingAuthCreateNestedManyWithoutTenantInput = {
+    create?: XOR<PendingAuthCreateWithoutTenantInput, PendingAuthUncheckedCreateWithoutTenantInput> | PendingAuthCreateWithoutTenantInput[] | PendingAuthUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PendingAuthCreateOrConnectWithoutTenantInput | PendingAuthCreateOrConnectWithoutTenantInput[]
+    createMany?: PendingAuthCreateManyTenantInputEnvelope
+    connect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+  }
+
+  export type TwoFactorCodeCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutTenantInput, TwoFactorCodeUncheckedCreateWithoutTenantInput> | TwoFactorCodeCreateWithoutTenantInput[] | TwoFactorCodeUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutTenantInput | TwoFactorCodeCreateOrConnectWithoutTenantInput[]
+    createMany?: TwoFactorCodeCreateManyTenantInputEnvelope
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+  }
+
+  export type TwoFactorAuditCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TwoFactorAuditCreateWithoutTenantInput, TwoFactorAuditUncheckedCreateWithoutTenantInput> | TwoFactorAuditCreateWithoutTenantInput[] | TwoFactorAuditUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutTenantInput | TwoFactorAuditCreateOrConnectWithoutTenantInput[]
+    createMany?: TwoFactorAuditCreateManyTenantInputEnvelope
+    connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+  }
+
   export type AuditLogUncheckedCreateNestedManyWithoutTenantInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -33017,6 +39050,34 @@ export namespace Prisma {
     connectOrCreate?: FeatureAuditEntryCreateOrConnectWithoutTenantInput | FeatureAuditEntryCreateOrConnectWithoutTenantInput[]
     createMany?: FeatureAuditEntryCreateManyTenantInputEnvelope
     connect?: FeatureAuditEntryWhereUniqueInput | FeatureAuditEntryWhereUniqueInput[]
+  }
+
+  export type TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TwoFactorMethodCreateWithoutTenantInput, TwoFactorMethodUncheckedCreateWithoutTenantInput> | TwoFactorMethodCreateWithoutTenantInput[] | TwoFactorMethodUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutTenantInput | TwoFactorMethodCreateOrConnectWithoutTenantInput[]
+    createMany?: TwoFactorMethodCreateManyTenantInputEnvelope
+    connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+  }
+
+  export type PendingAuthUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<PendingAuthCreateWithoutTenantInput, PendingAuthUncheckedCreateWithoutTenantInput> | PendingAuthCreateWithoutTenantInput[] | PendingAuthUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PendingAuthCreateOrConnectWithoutTenantInput | PendingAuthCreateOrConnectWithoutTenantInput[]
+    createMany?: PendingAuthCreateManyTenantInputEnvelope
+    connect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+  }
+
+  export type TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutTenantInput, TwoFactorCodeUncheckedCreateWithoutTenantInput> | TwoFactorCodeCreateWithoutTenantInput[] | TwoFactorCodeUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutTenantInput | TwoFactorCodeCreateOrConnectWithoutTenantInput[]
+    createMany?: TwoFactorCodeCreateManyTenantInputEnvelope
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+  }
+
+  export type TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TwoFactorAuditCreateWithoutTenantInput, TwoFactorAuditUncheckedCreateWithoutTenantInput> | TwoFactorAuditCreateWithoutTenantInput[] | TwoFactorAuditUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutTenantInput | TwoFactorAuditCreateOrConnectWithoutTenantInput[]
+    createMany?: TwoFactorAuditCreateManyTenantInputEnvelope
+    connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
   }
 
   export type AuditLogUpdateManyWithoutTenantNestedInput = {
@@ -33159,6 +39220,62 @@ export namespace Prisma {
     deleteMany?: FeatureAuditEntryScalarWhereInput | FeatureAuditEntryScalarWhereInput[]
   }
 
+  export type TwoFactorMethodUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TwoFactorMethodCreateWithoutTenantInput, TwoFactorMethodUncheckedCreateWithoutTenantInput> | TwoFactorMethodCreateWithoutTenantInput[] | TwoFactorMethodUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutTenantInput | TwoFactorMethodCreateOrConnectWithoutTenantInput[]
+    upsert?: TwoFactorMethodUpsertWithWhereUniqueWithoutTenantInput | TwoFactorMethodUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TwoFactorMethodCreateManyTenantInputEnvelope
+    set?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    disconnect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    delete?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    update?: TwoFactorMethodUpdateWithWhereUniqueWithoutTenantInput | TwoFactorMethodUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TwoFactorMethodUpdateManyWithWhereWithoutTenantInput | TwoFactorMethodUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
+  }
+
+  export type PendingAuthUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<PendingAuthCreateWithoutTenantInput, PendingAuthUncheckedCreateWithoutTenantInput> | PendingAuthCreateWithoutTenantInput[] | PendingAuthUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PendingAuthCreateOrConnectWithoutTenantInput | PendingAuthCreateOrConnectWithoutTenantInput[]
+    upsert?: PendingAuthUpsertWithWhereUniqueWithoutTenantInput | PendingAuthUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: PendingAuthCreateManyTenantInputEnvelope
+    set?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    disconnect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    delete?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    connect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    update?: PendingAuthUpdateWithWhereUniqueWithoutTenantInput | PendingAuthUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: PendingAuthUpdateManyWithWhereWithoutTenantInput | PendingAuthUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: PendingAuthScalarWhereInput | PendingAuthScalarWhereInput[]
+  }
+
+  export type TwoFactorCodeUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutTenantInput, TwoFactorCodeUncheckedCreateWithoutTenantInput> | TwoFactorCodeCreateWithoutTenantInput[] | TwoFactorCodeUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutTenantInput | TwoFactorCodeCreateOrConnectWithoutTenantInput[]
+    upsert?: TwoFactorCodeUpsertWithWhereUniqueWithoutTenantInput | TwoFactorCodeUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TwoFactorCodeCreateManyTenantInputEnvelope
+    set?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    disconnect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    delete?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    update?: TwoFactorCodeUpdateWithWhereUniqueWithoutTenantInput | TwoFactorCodeUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TwoFactorCodeUpdateManyWithWhereWithoutTenantInput | TwoFactorCodeUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
+  }
+
+  export type TwoFactorAuditUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TwoFactorAuditCreateWithoutTenantInput, TwoFactorAuditUncheckedCreateWithoutTenantInput> | TwoFactorAuditCreateWithoutTenantInput[] | TwoFactorAuditUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutTenantInput | TwoFactorAuditCreateOrConnectWithoutTenantInput[]
+    upsert?: TwoFactorAuditUpsertWithWhereUniqueWithoutTenantInput | TwoFactorAuditUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TwoFactorAuditCreateManyTenantInputEnvelope
+    set?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    disconnect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    delete?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    update?: TwoFactorAuditUpdateWithWhereUniqueWithoutTenantInput | TwoFactorAuditUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TwoFactorAuditUpdateManyWithWhereWithoutTenantInput | TwoFactorAuditUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
+  }
+
   export type AuditLogUncheckedUpdateManyWithoutTenantNestedInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -33297,6 +39414,62 @@ export namespace Prisma {
     update?: FeatureAuditEntryUpdateWithWhereUniqueWithoutTenantInput | FeatureAuditEntryUpdateWithWhereUniqueWithoutTenantInput[]
     updateMany?: FeatureAuditEntryUpdateManyWithWhereWithoutTenantInput | FeatureAuditEntryUpdateManyWithWhereWithoutTenantInput[]
     deleteMany?: FeatureAuditEntryScalarWhereInput | FeatureAuditEntryScalarWhereInput[]
+  }
+
+  export type TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TwoFactorMethodCreateWithoutTenantInput, TwoFactorMethodUncheckedCreateWithoutTenantInput> | TwoFactorMethodCreateWithoutTenantInput[] | TwoFactorMethodUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutTenantInput | TwoFactorMethodCreateOrConnectWithoutTenantInput[]
+    upsert?: TwoFactorMethodUpsertWithWhereUniqueWithoutTenantInput | TwoFactorMethodUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TwoFactorMethodCreateManyTenantInputEnvelope
+    set?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    disconnect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    delete?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+    update?: TwoFactorMethodUpdateWithWhereUniqueWithoutTenantInput | TwoFactorMethodUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TwoFactorMethodUpdateManyWithWhereWithoutTenantInput | TwoFactorMethodUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
+  }
+
+  export type PendingAuthUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<PendingAuthCreateWithoutTenantInput, PendingAuthUncheckedCreateWithoutTenantInput> | PendingAuthCreateWithoutTenantInput[] | PendingAuthUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PendingAuthCreateOrConnectWithoutTenantInput | PendingAuthCreateOrConnectWithoutTenantInput[]
+    upsert?: PendingAuthUpsertWithWhereUniqueWithoutTenantInput | PendingAuthUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: PendingAuthCreateManyTenantInputEnvelope
+    set?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    disconnect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    delete?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    connect?: PendingAuthWhereUniqueInput | PendingAuthWhereUniqueInput[]
+    update?: PendingAuthUpdateWithWhereUniqueWithoutTenantInput | PendingAuthUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: PendingAuthUpdateManyWithWhereWithoutTenantInput | PendingAuthUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: PendingAuthScalarWhereInput | PendingAuthScalarWhereInput[]
+  }
+
+  export type TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutTenantInput, TwoFactorCodeUncheckedCreateWithoutTenantInput> | TwoFactorCodeCreateWithoutTenantInput[] | TwoFactorCodeUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutTenantInput | TwoFactorCodeCreateOrConnectWithoutTenantInput[]
+    upsert?: TwoFactorCodeUpsertWithWhereUniqueWithoutTenantInput | TwoFactorCodeUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TwoFactorCodeCreateManyTenantInputEnvelope
+    set?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    disconnect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    delete?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    update?: TwoFactorCodeUpdateWithWhereUniqueWithoutTenantInput | TwoFactorCodeUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TwoFactorCodeUpdateManyWithWhereWithoutTenantInput | TwoFactorCodeUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
+  }
+
+  export type TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TwoFactorAuditCreateWithoutTenantInput, TwoFactorAuditUncheckedCreateWithoutTenantInput> | TwoFactorAuditCreateWithoutTenantInput[] | TwoFactorAuditUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutTenantInput | TwoFactorAuditCreateOrConnectWithoutTenantInput[]
+    upsert?: TwoFactorAuditUpsertWithWhereUniqueWithoutTenantInput | TwoFactorAuditUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TwoFactorAuditCreateManyTenantInputEnvelope
+    set?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    disconnect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    delete?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+    update?: TwoFactorAuditUpdateWithWhereUniqueWithoutTenantInput | TwoFactorAuditUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TwoFactorAuditUpdateManyWithWhereWithoutTenantInput | TwoFactorAuditUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
   }
 
   export type TenantCreateNestedOneWithoutMembershipsInput = {
@@ -33985,6 +40158,126 @@ export namespace Prisma {
     update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutFeatureAuditEntriesInput, TenantUpdateWithoutFeatureAuditEntriesInput>, TenantUncheckedUpdateWithoutFeatureAuditEntriesInput>
   }
 
+  export type UserCreateNestedOneWithoutTwoFactorMethodsInput = {
+    create?: XOR<UserCreateWithoutTwoFactorMethodsInput, UserUncheckedCreateWithoutTwoFactorMethodsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTwoFactorMethodsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutTwoFactorMethodsInput = {
+    create?: XOR<TenantCreateWithoutTwoFactorMethodsInput, TenantUncheckedCreateWithoutTwoFactorMethodsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutTwoFactorMethodsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTwoFactorMethodsNestedInput = {
+    create?: XOR<UserCreateWithoutTwoFactorMethodsInput, UserUncheckedCreateWithoutTwoFactorMethodsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTwoFactorMethodsInput
+    upsert?: UserUpsertWithoutTwoFactorMethodsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTwoFactorMethodsInput, UserUpdateWithoutTwoFactorMethodsInput>, UserUncheckedUpdateWithoutTwoFactorMethodsInput>
+  }
+
+  export type TenantUpdateOneWithoutTwoFactorMethodsNestedInput = {
+    create?: XOR<TenantCreateWithoutTwoFactorMethodsInput, TenantUncheckedCreateWithoutTwoFactorMethodsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutTwoFactorMethodsInput
+    upsert?: TenantUpsertWithoutTwoFactorMethodsInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutTwoFactorMethodsInput, TenantUpdateWithoutTwoFactorMethodsInput>, TenantUncheckedUpdateWithoutTwoFactorMethodsInput>
+  }
+
+  export type UserCreateNestedOneWithoutPendingAuthsInput = {
+    create?: XOR<UserCreateWithoutPendingAuthsInput, UserUncheckedCreateWithoutPendingAuthsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPendingAuthsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutPendingAuthsInput = {
+    create?: XOR<TenantCreateWithoutPendingAuthsInput, TenantUncheckedCreateWithoutPendingAuthsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutPendingAuthsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPendingAuthsNestedInput = {
+    create?: XOR<UserCreateWithoutPendingAuthsInput, UserUncheckedCreateWithoutPendingAuthsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPendingAuthsInput
+    upsert?: UserUpsertWithoutPendingAuthsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPendingAuthsInput, UserUpdateWithoutPendingAuthsInput>, UserUncheckedUpdateWithoutPendingAuthsInput>
+  }
+
+  export type TenantUpdateOneWithoutPendingAuthsNestedInput = {
+    create?: XOR<TenantCreateWithoutPendingAuthsInput, TenantUncheckedCreateWithoutPendingAuthsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutPendingAuthsInput
+    upsert?: TenantUpsertWithoutPendingAuthsInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutPendingAuthsInput, TenantUpdateWithoutPendingAuthsInput>, TenantUncheckedUpdateWithoutPendingAuthsInput>
+  }
+
+  export type UserCreateNestedOneWithoutTwoFactorCodesInput = {
+    create?: XOR<UserCreateWithoutTwoFactorCodesInput, UserUncheckedCreateWithoutTwoFactorCodesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTwoFactorCodesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutTwoFactorCodesInput = {
+    create?: XOR<TenantCreateWithoutTwoFactorCodesInput, TenantUncheckedCreateWithoutTwoFactorCodesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutTwoFactorCodesInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTwoFactorCodesNestedInput = {
+    create?: XOR<UserCreateWithoutTwoFactorCodesInput, UserUncheckedCreateWithoutTwoFactorCodesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTwoFactorCodesInput
+    upsert?: UserUpsertWithoutTwoFactorCodesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTwoFactorCodesInput, UserUpdateWithoutTwoFactorCodesInput>, UserUncheckedUpdateWithoutTwoFactorCodesInput>
+  }
+
+  export type TenantUpdateOneWithoutTwoFactorCodesNestedInput = {
+    create?: XOR<TenantCreateWithoutTwoFactorCodesInput, TenantUncheckedCreateWithoutTwoFactorCodesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutTwoFactorCodesInput
+    upsert?: TenantUpsertWithoutTwoFactorCodesInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutTwoFactorCodesInput, TenantUpdateWithoutTwoFactorCodesInput>, TenantUncheckedUpdateWithoutTwoFactorCodesInput>
+  }
+
+  export type UserCreateNestedOneWithoutTwoFactorAuditsInput = {
+    create?: XOR<UserCreateWithoutTwoFactorAuditsInput, UserUncheckedCreateWithoutTwoFactorAuditsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTwoFactorAuditsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutTwoFactorAuditsInput = {
+    create?: XOR<TenantCreateWithoutTwoFactorAuditsInput, TenantUncheckedCreateWithoutTwoFactorAuditsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutTwoFactorAuditsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTwoFactorAuditsNestedInput = {
+    create?: XOR<UserCreateWithoutTwoFactorAuditsInput, UserUncheckedCreateWithoutTwoFactorAuditsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTwoFactorAuditsInput
+    upsert?: UserUpsertWithoutTwoFactorAuditsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTwoFactorAuditsInput, UserUpdateWithoutTwoFactorAuditsInput>, UserUncheckedUpdateWithoutTwoFactorAuditsInput>
+  }
+
+  export type TenantUpdateOneWithoutTwoFactorAuditsNestedInput = {
+    create?: XOR<TenantCreateWithoutTwoFactorAuditsInput, TenantUncheckedCreateWithoutTwoFactorAuditsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutTwoFactorAuditsInput
+    upsert?: TenantUpsertWithoutTwoFactorAuditsInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutTwoFactorAuditsInput, TenantUpdateWithoutTwoFactorAuditsInput>, TenantUncheckedUpdateWithoutTwoFactorAuditsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -34224,6 +40517,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -34264,6 +40561,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -34320,6 +40621,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -34360,6 +40665,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -34400,6 +40709,10 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -34440,6 +40753,10 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -34489,6 +40806,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSessionsInput = {
@@ -34533,6 +40854,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSessionsInput = {
@@ -34589,6 +40914,10 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -34629,6 +40958,10 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutSessionsInput = {
@@ -34684,6 +41017,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSessionsInput = {
@@ -34728,6 +41065,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -35180,6 +41521,150 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TwoFactorMethodCreateWithoutUserInput = {
+    id?: string
+    type: string
+    identifier?: string | null
+    secret?: string | null
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lastUsedAt?: Date | string | null
+    tenant?: TenantCreateNestedOneWithoutTwoFactorMethodsInput
+  }
+
+  export type TwoFactorMethodUncheckedCreateWithoutUserInput = {
+    id?: string
+    tenantId?: string | null
+    type: string
+    identifier?: string | null
+    secret?: string | null
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lastUsedAt?: Date | string | null
+  }
+
+  export type TwoFactorMethodCreateOrConnectWithoutUserInput = {
+    where: TwoFactorMethodWhereUniqueInput
+    create: XOR<TwoFactorMethodCreateWithoutUserInput, TwoFactorMethodUncheckedCreateWithoutUserInput>
+  }
+
+  export type TwoFactorMethodCreateManyUserInputEnvelope = {
+    data: TwoFactorMethodCreateManyUserInput | TwoFactorMethodCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PendingAuthCreateWithoutUserInput = {
+    id?: string
+    nonce: string
+    requiredFactors: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    tenant?: TenantCreateNestedOneWithoutPendingAuthsInput
+  }
+
+  export type PendingAuthUncheckedCreateWithoutUserInput = {
+    id?: string
+    tenantId?: string | null
+    nonce: string
+    requiredFactors: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type PendingAuthCreateOrConnectWithoutUserInput = {
+    where: PendingAuthWhereUniqueInput
+    create: XOR<PendingAuthCreateWithoutUserInput, PendingAuthUncheckedCreateWithoutUserInput>
+  }
+
+  export type PendingAuthCreateManyUserInputEnvelope = {
+    data: PendingAuthCreateManyUserInput | PendingAuthCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TwoFactorCodeCreateWithoutUserInput = {
+    id?: string
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts?: number
+    maxAttempts?: number
+    createdAt?: Date | string
+    expiresAt: Date | string
+    usedAt?: Date | string | null
+    traceId?: string | null
+    tenant?: TenantCreateNestedOneWithoutTwoFactorCodesInput
+  }
+
+  export type TwoFactorCodeUncheckedCreateWithoutUserInput = {
+    id?: string
+    tenantId?: string | null
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts?: number
+    maxAttempts?: number
+    createdAt?: Date | string
+    expiresAt: Date | string
+    usedAt?: Date | string | null
+    traceId?: string | null
+  }
+
+  export type TwoFactorCodeCreateOrConnectWithoutUserInput = {
+    where: TwoFactorCodeWhereUniqueInput
+    create: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput>
+  }
+
+  export type TwoFactorCodeCreateManyUserInputEnvelope = {
+    data: TwoFactorCodeCreateManyUserInput | TwoFactorCodeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TwoFactorAuditCreateWithoutUserInput = {
+    id?: string
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress?: string | null
+    userAgent?: string | null
+    metadata?: string | null
+    createdAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutTwoFactorAuditsInput
+  }
+
+  export type TwoFactorAuditUncheckedCreateWithoutUserInput = {
+    id?: string
+    tenantId?: string | null
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress?: string | null
+    userAgent?: string | null
+    metadata?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TwoFactorAuditCreateOrConnectWithoutUserInput = {
+    where: TwoFactorAuditWhereUniqueInput
+    create: XOR<TwoFactorAuditCreateWithoutUserInput, TwoFactorAuditUncheckedCreateWithoutUserInput>
+  }
+
+  export type TwoFactorAuditCreateManyUserInputEnvelope = {
+    data: TwoFactorAuditCreateManyUserInput | TwoFactorAuditCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -35543,6 +42028,138 @@ export namespace Prisma {
     userId?: StringFilter<"Session"> | string
     tenantId?: StringNullableFilter<"Session"> | string | null
     expires?: DateTimeFilter<"Session"> | Date | string
+  }
+
+  export type TwoFactorMethodUpsertWithWhereUniqueWithoutUserInput = {
+    where: TwoFactorMethodWhereUniqueInput
+    update: XOR<TwoFactorMethodUpdateWithoutUserInput, TwoFactorMethodUncheckedUpdateWithoutUserInput>
+    create: XOR<TwoFactorMethodCreateWithoutUserInput, TwoFactorMethodUncheckedCreateWithoutUserInput>
+  }
+
+  export type TwoFactorMethodUpdateWithWhereUniqueWithoutUserInput = {
+    where: TwoFactorMethodWhereUniqueInput
+    data: XOR<TwoFactorMethodUpdateWithoutUserInput, TwoFactorMethodUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TwoFactorMethodUpdateManyWithWhereWithoutUserInput = {
+    where: TwoFactorMethodScalarWhereInput
+    data: XOR<TwoFactorMethodUpdateManyMutationInput, TwoFactorMethodUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TwoFactorMethodScalarWhereInput = {
+    AND?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
+    OR?: TwoFactorMethodScalarWhereInput[]
+    NOT?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
+    id?: StringFilter<"TwoFactorMethod"> | string
+    userId?: StringFilter<"TwoFactorMethod"> | string
+    tenantId?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    type?: StringFilter<"TwoFactorMethod"> | string
+    identifier?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    secret?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    isVerified?: BoolFilter<"TwoFactorMethod"> | boolean
+    isEnabled?: BoolFilter<"TwoFactorMethod"> | boolean
+    backupCodes?: StringNullableFilter<"TwoFactorMethod"> | string | null
+    createdAt?: DateTimeFilter<"TwoFactorMethod"> | Date | string
+    updatedAt?: DateTimeFilter<"TwoFactorMethod"> | Date | string
+    lastUsedAt?: DateTimeNullableFilter<"TwoFactorMethod"> | Date | string | null
+  }
+
+  export type PendingAuthUpsertWithWhereUniqueWithoutUserInput = {
+    where: PendingAuthWhereUniqueInput
+    update: XOR<PendingAuthUpdateWithoutUserInput, PendingAuthUncheckedUpdateWithoutUserInput>
+    create: XOR<PendingAuthCreateWithoutUserInput, PendingAuthUncheckedCreateWithoutUserInput>
+  }
+
+  export type PendingAuthUpdateWithWhereUniqueWithoutUserInput = {
+    where: PendingAuthWhereUniqueInput
+    data: XOR<PendingAuthUpdateWithoutUserInput, PendingAuthUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PendingAuthUpdateManyWithWhereWithoutUserInput = {
+    where: PendingAuthScalarWhereInput
+    data: XOR<PendingAuthUpdateManyMutationInput, PendingAuthUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PendingAuthScalarWhereInput = {
+    AND?: PendingAuthScalarWhereInput | PendingAuthScalarWhereInput[]
+    OR?: PendingAuthScalarWhereInput[]
+    NOT?: PendingAuthScalarWhereInput | PendingAuthScalarWhereInput[]
+    id?: StringFilter<"PendingAuth"> | string
+    userId?: StringFilter<"PendingAuth"> | string
+    tenantId?: StringNullableFilter<"PendingAuth"> | string | null
+    nonce?: StringFilter<"PendingAuth"> | string
+    requiredFactors?: StringFilter<"PendingAuth"> | string
+    createdAt?: DateTimeFilter<"PendingAuth"> | Date | string
+    expiresAt?: DateTimeFilter<"PendingAuth"> | Date | string
+    ipAddress?: StringNullableFilter<"PendingAuth"> | string | null
+    userAgent?: StringNullableFilter<"PendingAuth"> | string | null
+  }
+
+  export type TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput = {
+    where: TwoFactorCodeWhereUniqueInput
+    update: XOR<TwoFactorCodeUpdateWithoutUserInput, TwoFactorCodeUncheckedUpdateWithoutUserInput>
+    create: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput>
+  }
+
+  export type TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput = {
+    where: TwoFactorCodeWhereUniqueInput
+    data: XOR<TwoFactorCodeUpdateWithoutUserInput, TwoFactorCodeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TwoFactorCodeUpdateManyWithWhereWithoutUserInput = {
+    where: TwoFactorCodeScalarWhereInput
+    data: XOR<TwoFactorCodeUpdateManyMutationInput, TwoFactorCodeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TwoFactorCodeScalarWhereInput = {
+    AND?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
+    OR?: TwoFactorCodeScalarWhereInput[]
+    NOT?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
+    id?: StringFilter<"TwoFactorCode"> | string
+    userId?: StringFilter<"TwoFactorCode"> | string
+    tenantId?: StringNullableFilter<"TwoFactorCode"> | string | null
+    type?: StringFilter<"TwoFactorCode"> | string
+    codeHash?: StringFilter<"TwoFactorCode"> | string
+    salt?: StringFilter<"TwoFactorCode"> | string
+    purpose?: StringFilter<"TwoFactorCode"> | string
+    attempts?: IntFilter<"TwoFactorCode"> | number
+    maxAttempts?: IntFilter<"TwoFactorCode"> | number
+    createdAt?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    expiresAt?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    usedAt?: DateTimeNullableFilter<"TwoFactorCode"> | Date | string | null
+    traceId?: StringNullableFilter<"TwoFactorCode"> | string | null
+  }
+
+  export type TwoFactorAuditUpsertWithWhereUniqueWithoutUserInput = {
+    where: TwoFactorAuditWhereUniqueInput
+    update: XOR<TwoFactorAuditUpdateWithoutUserInput, TwoFactorAuditUncheckedUpdateWithoutUserInput>
+    create: XOR<TwoFactorAuditCreateWithoutUserInput, TwoFactorAuditUncheckedCreateWithoutUserInput>
+  }
+
+  export type TwoFactorAuditUpdateWithWhereUniqueWithoutUserInput = {
+    where: TwoFactorAuditWhereUniqueInput
+    data: XOR<TwoFactorAuditUpdateWithoutUserInput, TwoFactorAuditUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TwoFactorAuditUpdateManyWithWhereWithoutUserInput = {
+    where: TwoFactorAuditScalarWhereInput
+    data: XOR<TwoFactorAuditUpdateManyMutationInput, TwoFactorAuditUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TwoFactorAuditScalarWhereInput = {
+    AND?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
+    OR?: TwoFactorAuditScalarWhereInput[]
+    NOT?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
+    id?: StringFilter<"TwoFactorAudit"> | string
+    userId?: StringFilter<"TwoFactorAudit"> | string
+    tenantId?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    action?: StringFilter<"TwoFactorAudit"> | string
+    factorType?: StringFilter<"TwoFactorAudit"> | string
+    success?: BoolFilter<"TwoFactorAudit"> | boolean
+    ipAddress?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    userAgent?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    metadata?: StringNullableFilter<"TwoFactorAudit"> | string | null
+    createdAt?: DateTimeFilter<"TwoFactorAudit"> | Date | string
   }
 
   export type AuditLogCreateWithoutTenantInput = {
@@ -35911,6 +42528,150 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TwoFactorMethodCreateWithoutTenantInput = {
+    id?: string
+    type: string
+    identifier?: string | null
+    secret?: string | null
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lastUsedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutTwoFactorMethodsInput
+  }
+
+  export type TwoFactorMethodUncheckedCreateWithoutTenantInput = {
+    id?: string
+    userId: string
+    type: string
+    identifier?: string | null
+    secret?: string | null
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lastUsedAt?: Date | string | null
+  }
+
+  export type TwoFactorMethodCreateOrConnectWithoutTenantInput = {
+    where: TwoFactorMethodWhereUniqueInput
+    create: XOR<TwoFactorMethodCreateWithoutTenantInput, TwoFactorMethodUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TwoFactorMethodCreateManyTenantInputEnvelope = {
+    data: TwoFactorMethodCreateManyTenantInput | TwoFactorMethodCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PendingAuthCreateWithoutTenantInput = {
+    id?: string
+    nonce: string
+    requiredFactors: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    user: UserCreateNestedOneWithoutPendingAuthsInput
+  }
+
+  export type PendingAuthUncheckedCreateWithoutTenantInput = {
+    id?: string
+    userId: string
+    nonce: string
+    requiredFactors: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type PendingAuthCreateOrConnectWithoutTenantInput = {
+    where: PendingAuthWhereUniqueInput
+    create: XOR<PendingAuthCreateWithoutTenantInput, PendingAuthUncheckedCreateWithoutTenantInput>
+  }
+
+  export type PendingAuthCreateManyTenantInputEnvelope = {
+    data: PendingAuthCreateManyTenantInput | PendingAuthCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TwoFactorCodeCreateWithoutTenantInput = {
+    id?: string
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts?: number
+    maxAttempts?: number
+    createdAt?: Date | string
+    expiresAt: Date | string
+    usedAt?: Date | string | null
+    traceId?: string | null
+    user: UserCreateNestedOneWithoutTwoFactorCodesInput
+  }
+
+  export type TwoFactorCodeUncheckedCreateWithoutTenantInput = {
+    id?: string
+    userId: string
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts?: number
+    maxAttempts?: number
+    createdAt?: Date | string
+    expiresAt: Date | string
+    usedAt?: Date | string | null
+    traceId?: string | null
+  }
+
+  export type TwoFactorCodeCreateOrConnectWithoutTenantInput = {
+    where: TwoFactorCodeWhereUniqueInput
+    create: XOR<TwoFactorCodeCreateWithoutTenantInput, TwoFactorCodeUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TwoFactorCodeCreateManyTenantInputEnvelope = {
+    data: TwoFactorCodeCreateManyTenantInput | TwoFactorCodeCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TwoFactorAuditCreateWithoutTenantInput = {
+    id?: string
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress?: string | null
+    userAgent?: string | null
+    metadata?: string | null
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutTwoFactorAuditsInput
+  }
+
+  export type TwoFactorAuditUncheckedCreateWithoutTenantInput = {
+    id?: string
+    userId: string
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress?: string | null
+    userAgent?: string | null
+    metadata?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TwoFactorAuditCreateOrConnectWithoutTenantInput = {
+    where: TwoFactorAuditWhereUniqueInput
+    create: XOR<TwoFactorAuditCreateWithoutTenantInput, TwoFactorAuditUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TwoFactorAuditCreateManyTenantInputEnvelope = {
+    data: TwoFactorAuditCreateManyTenantInput | TwoFactorAuditCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AuditLogUpsertWithWhereUniqueWithoutTenantInput = {
     where: AuditLogWhereUniqueInput
     update: XOR<AuditLogUpdateWithoutTenantInput, AuditLogUncheckedUpdateWithoutTenantInput>
@@ -36132,6 +42893,70 @@ export namespace Prisma {
     createdBy?: StringFilter<"FeatureAuditEntry"> | string
   }
 
+  export type TwoFactorMethodUpsertWithWhereUniqueWithoutTenantInput = {
+    where: TwoFactorMethodWhereUniqueInput
+    update: XOR<TwoFactorMethodUpdateWithoutTenantInput, TwoFactorMethodUncheckedUpdateWithoutTenantInput>
+    create: XOR<TwoFactorMethodCreateWithoutTenantInput, TwoFactorMethodUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TwoFactorMethodUpdateWithWhereUniqueWithoutTenantInput = {
+    where: TwoFactorMethodWhereUniqueInput
+    data: XOR<TwoFactorMethodUpdateWithoutTenantInput, TwoFactorMethodUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type TwoFactorMethodUpdateManyWithWhereWithoutTenantInput = {
+    where: TwoFactorMethodScalarWhereInput
+    data: XOR<TwoFactorMethodUpdateManyMutationInput, TwoFactorMethodUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type PendingAuthUpsertWithWhereUniqueWithoutTenantInput = {
+    where: PendingAuthWhereUniqueInput
+    update: XOR<PendingAuthUpdateWithoutTenantInput, PendingAuthUncheckedUpdateWithoutTenantInput>
+    create: XOR<PendingAuthCreateWithoutTenantInput, PendingAuthUncheckedCreateWithoutTenantInput>
+  }
+
+  export type PendingAuthUpdateWithWhereUniqueWithoutTenantInput = {
+    where: PendingAuthWhereUniqueInput
+    data: XOR<PendingAuthUpdateWithoutTenantInput, PendingAuthUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type PendingAuthUpdateManyWithWhereWithoutTenantInput = {
+    where: PendingAuthScalarWhereInput
+    data: XOR<PendingAuthUpdateManyMutationInput, PendingAuthUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type TwoFactorCodeUpsertWithWhereUniqueWithoutTenantInput = {
+    where: TwoFactorCodeWhereUniqueInput
+    update: XOR<TwoFactorCodeUpdateWithoutTenantInput, TwoFactorCodeUncheckedUpdateWithoutTenantInput>
+    create: XOR<TwoFactorCodeCreateWithoutTenantInput, TwoFactorCodeUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TwoFactorCodeUpdateWithWhereUniqueWithoutTenantInput = {
+    where: TwoFactorCodeWhereUniqueInput
+    data: XOR<TwoFactorCodeUpdateWithoutTenantInput, TwoFactorCodeUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type TwoFactorCodeUpdateManyWithWhereWithoutTenantInput = {
+    where: TwoFactorCodeScalarWhereInput
+    data: XOR<TwoFactorCodeUpdateManyMutationInput, TwoFactorCodeUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type TwoFactorAuditUpsertWithWhereUniqueWithoutTenantInput = {
+    where: TwoFactorAuditWhereUniqueInput
+    update: XOR<TwoFactorAuditUpdateWithoutTenantInput, TwoFactorAuditUncheckedUpdateWithoutTenantInput>
+    create: XOR<TwoFactorAuditCreateWithoutTenantInput, TwoFactorAuditUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TwoFactorAuditUpdateWithWhereUniqueWithoutTenantInput = {
+    where: TwoFactorAuditWhereUniqueInput
+    data: XOR<TwoFactorAuditUpdateWithoutTenantInput, TwoFactorAuditUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type TwoFactorAuditUpdateManyWithWhereWithoutTenantInput = {
+    where: TwoFactorAuditScalarWhereInput
+    data: XOR<TwoFactorAuditUpdateManyMutationInput, TwoFactorAuditUncheckedUpdateManyWithoutTenantInput>
+  }
+
   export type TenantCreateWithoutMembershipsInput = {
     id?: string
     slug: string
@@ -36174,6 +42999,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutMembershipsInput = {
@@ -36218,6 +43047,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutMembershipsInput = {
@@ -36263,6 +43096,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -36303,6 +43140,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -36348,6 +43189,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInvitedMembershipsInput = {
@@ -36388,6 +43233,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutInvitedMembershipsInput = {
@@ -36448,6 +43297,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutMembershipsInput = {
@@ -36492,6 +43345,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -36543,6 +43400,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -36583,6 +43444,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutInvitedMembershipsInput = {
@@ -36634,6 +43499,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvitedMembershipsInput = {
@@ -36674,6 +43543,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantCreateWithoutInvitationsInput = {
@@ -36718,6 +43591,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutInvitationsInput = {
@@ -36762,6 +43639,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutInvitationsInput = {
@@ -36807,6 +43688,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentInvitationsInput = {
@@ -36847,6 +43732,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentInvitationsInput = {
@@ -36892,6 +43781,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAcceptedInvitationsInput = {
@@ -36932,6 +43825,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAcceptedInvitationsInput = {
@@ -36992,6 +43889,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutInvitationsInput = {
@@ -37036,6 +43937,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutSentInvitationsInput = {
@@ -37087,6 +43992,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentInvitationsInput = {
@@ -37127,6 +44036,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutAcceptedInvitationsInput = {
@@ -37178,6 +44091,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAcceptedInvitationsInput = {
@@ -37218,6 +44135,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ContactMessageReasonCreateWithoutContactReasonInput = {
@@ -37284,6 +44205,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactReasonsInput = {
@@ -37328,6 +44253,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactReasonsInput = {
@@ -37414,6 +44343,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactReasonsInput = {
@@ -37458,6 +44391,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutContactMessagesInput = {
@@ -37498,6 +44435,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutContactMessagesInput = {
@@ -37538,6 +44479,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutContactMessagesInput = {
@@ -37587,6 +44532,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactMessagesInput = {
@@ -37631,6 +44580,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactMessagesInput = {
@@ -37739,6 +44692,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutContactMessagesInput = {
@@ -37779,6 +44736,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutContactMessagesInput = {
@@ -37834,6 +44795,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactMessagesInput = {
@@ -37878,6 +44843,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type ContactMessageReasonUpsertWithWhereUniqueWithoutContactMessageInput = {
@@ -38228,6 +45197,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutAuditLogsInput = {
@@ -38272,6 +45245,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutAuditLogsInput = {
@@ -38317,6 +45294,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -38357,6 +45338,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -38417,6 +45402,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutAuditLogsInput = {
@@ -38461,6 +45450,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutAuditLogsInput = {
@@ -38512,6 +45505,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -38552,6 +45549,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPasskeysInput = {
@@ -38592,6 +45593,10 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPasskeysInput = {
@@ -38632,6 +45637,10 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPasskeysInput = {
@@ -38688,6 +45697,10 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPasskeysInput = {
@@ -38728,6 +45741,10 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAuthenticatorCodesInput = {
@@ -38768,6 +45785,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuthenticatorCodesInput = {
@@ -38808,6 +45829,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuthenticatorCodesInput = {
@@ -38864,6 +45889,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuthenticatorCodesInput = {
@@ -38904,6 +45933,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -38944,6 +45977,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -38984,6 +46021,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -39033,6 +46074,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutNotificationsInput = {
@@ -39077,6 +46122,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutNotificationsInput = {
@@ -39161,6 +46210,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -39201,6 +46254,10 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutNotificationsInput = {
@@ -39256,6 +46313,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutNotificationsInput = {
@@ -39300,6 +46361,10 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type NotificationRecipientUpsertWithWhereUniqueWithoutNotificationInput = {
@@ -39356,6 +46421,10 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationRecipientsInput = {
@@ -39396,6 +46465,10 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationRecipientsInput = {
@@ -39491,6 +46564,10 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationRecipientsInput = {
@@ -39531,6 +46608,10 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type NotificationUpsertWithoutRecipientsInput = {
@@ -39620,6 +46701,10 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutWebhookEndpointsInput = {
@@ -39664,6 +46749,10 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutWebhookEndpointsInput = {
@@ -39724,6 +46813,10 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutWebhookEndpointsInput = {
@@ -39768,6 +46861,10 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type GlobalFeatureRuleCreateWithoutFeatureInput = {
@@ -40030,6 +47127,10 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFeatureRulesInput = {
@@ -40074,6 +47175,10 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFeatureRulesInput = {
@@ -40167,6 +47272,10 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFeatureRulesInput = {
@@ -40211,6 +47320,10 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type FeatureDefinitionUpsertWithoutTenantRulesInput = {
@@ -40327,6 +47440,10 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFeatureAuditEntriesInput = {
@@ -40371,6 +47488,10 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
     featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFeatureAuditEntriesInput = {
@@ -40470,6 +47591,10 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFeatureAuditEntriesInput = {
@@ -40514,6 +47639,1610 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
     featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type UserCreateWithoutTwoFactorMethodsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTwoFactorMethodsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTwoFactorMethodsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTwoFactorMethodsInput, UserUncheckedCreateWithoutTwoFactorMethodsInput>
+  }
+
+  export type TenantCreateWithoutTwoFactorMethodsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutTwoFactorMethodsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutTwoFactorMethodsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutTwoFactorMethodsInput, TenantUncheckedCreateWithoutTwoFactorMethodsInput>
+  }
+
+  export type UserUpsertWithoutTwoFactorMethodsInput = {
+    update: XOR<UserUpdateWithoutTwoFactorMethodsInput, UserUncheckedUpdateWithoutTwoFactorMethodsInput>
+    create: XOR<UserCreateWithoutTwoFactorMethodsInput, UserUncheckedCreateWithoutTwoFactorMethodsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTwoFactorMethodsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTwoFactorMethodsInput, UserUncheckedUpdateWithoutTwoFactorMethodsInput>
+  }
+
+  export type UserUpdateWithoutTwoFactorMethodsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTwoFactorMethodsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type TenantUpsertWithoutTwoFactorMethodsInput = {
+    update: XOR<TenantUpdateWithoutTwoFactorMethodsInput, TenantUncheckedUpdateWithoutTwoFactorMethodsInput>
+    create: XOR<TenantCreateWithoutTwoFactorMethodsInput, TenantUncheckedCreateWithoutTwoFactorMethodsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutTwoFactorMethodsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutTwoFactorMethodsInput, TenantUncheckedUpdateWithoutTwoFactorMethodsInput>
+  }
+
+  export type TenantUpdateWithoutTwoFactorMethodsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutTwoFactorMethodsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type UserCreateWithoutPendingAuthsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPendingAuthsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPendingAuthsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPendingAuthsInput, UserUncheckedCreateWithoutPendingAuthsInput>
+  }
+
+  export type TenantCreateWithoutPendingAuthsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutPendingAuthsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutPendingAuthsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutPendingAuthsInput, TenantUncheckedCreateWithoutPendingAuthsInput>
+  }
+
+  export type UserUpsertWithoutPendingAuthsInput = {
+    update: XOR<UserUpdateWithoutPendingAuthsInput, UserUncheckedUpdateWithoutPendingAuthsInput>
+    create: XOR<UserCreateWithoutPendingAuthsInput, UserUncheckedCreateWithoutPendingAuthsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPendingAuthsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPendingAuthsInput, UserUncheckedUpdateWithoutPendingAuthsInput>
+  }
+
+  export type UserUpdateWithoutPendingAuthsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPendingAuthsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type TenantUpsertWithoutPendingAuthsInput = {
+    update: XOR<TenantUpdateWithoutPendingAuthsInput, TenantUncheckedUpdateWithoutPendingAuthsInput>
+    create: XOR<TenantCreateWithoutPendingAuthsInput, TenantUncheckedCreateWithoutPendingAuthsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutPendingAuthsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutPendingAuthsInput, TenantUncheckedUpdateWithoutPendingAuthsInput>
+  }
+
+  export type TenantUpdateWithoutPendingAuthsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutPendingAuthsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type UserCreateWithoutTwoFactorCodesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTwoFactorCodesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTwoFactorCodesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTwoFactorCodesInput, UserUncheckedCreateWithoutTwoFactorCodesInput>
+  }
+
+  export type TenantCreateWithoutTwoFactorCodesInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutTwoFactorCodesInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutTwoFactorCodesInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutTwoFactorCodesInput, TenantUncheckedCreateWithoutTwoFactorCodesInput>
+  }
+
+  export type UserUpsertWithoutTwoFactorCodesInput = {
+    update: XOR<UserUpdateWithoutTwoFactorCodesInput, UserUncheckedUpdateWithoutTwoFactorCodesInput>
+    create: XOR<UserCreateWithoutTwoFactorCodesInput, UserUncheckedCreateWithoutTwoFactorCodesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTwoFactorCodesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTwoFactorCodesInput, UserUncheckedUpdateWithoutTwoFactorCodesInput>
+  }
+
+  export type UserUpdateWithoutTwoFactorCodesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTwoFactorCodesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type TenantUpsertWithoutTwoFactorCodesInput = {
+    update: XOR<TenantUpdateWithoutTwoFactorCodesInput, TenantUncheckedUpdateWithoutTwoFactorCodesInput>
+    create: XOR<TenantCreateWithoutTwoFactorCodesInput, TenantUncheckedCreateWithoutTwoFactorCodesInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutTwoFactorCodesInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutTwoFactorCodesInput, TenantUncheckedUpdateWithoutTwoFactorCodesInput>
+  }
+
+  export type TenantUpdateWithoutTwoFactorCodesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutTwoFactorCodesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type UserCreateWithoutTwoFactorAuditsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTwoFactorAuditsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTwoFactorAuditsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTwoFactorAuditsInput, UserUncheckedCreateWithoutTwoFactorAuditsInput>
+  }
+
+  export type TenantCreateWithoutTwoFactorAuditsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutTwoFactorAuditsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutTwoFactorAuditsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutTwoFactorAuditsInput, TenantUncheckedCreateWithoutTwoFactorAuditsInput>
+  }
+
+  export type UserUpsertWithoutTwoFactorAuditsInput = {
+    update: XOR<UserUpdateWithoutTwoFactorAuditsInput, UserUncheckedUpdateWithoutTwoFactorAuditsInput>
+    create: XOR<UserCreateWithoutTwoFactorAuditsInput, UserUncheckedCreateWithoutTwoFactorAuditsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTwoFactorAuditsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTwoFactorAuditsInput, UserUncheckedUpdateWithoutTwoFactorAuditsInput>
+  }
+
+  export type UserUpdateWithoutTwoFactorAuditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTwoFactorAuditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type TenantUpsertWithoutTwoFactorAuditsInput = {
+    update: XOR<TenantUpdateWithoutTwoFactorAuditsInput, TenantUncheckedUpdateWithoutTwoFactorAuditsInput>
+    create: XOR<TenantCreateWithoutTwoFactorAuditsInput, TenantUncheckedCreateWithoutTwoFactorAuditsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutTwoFactorAuditsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutTwoFactorAuditsInput, TenantUncheckedUpdateWithoutTwoFactorAuditsInput>
+  }
+
+  export type TenantUpdateWithoutTwoFactorAuditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutTwoFactorAuditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -40676,6 +49405,58 @@ export namespace Prisma {
     sessionToken: string
     tenantId?: string | null
     expires: Date | string
+  }
+
+  export type TwoFactorMethodCreateManyUserInput = {
+    id?: string
+    tenantId?: string | null
+    type: string
+    identifier?: string | null
+    secret?: string | null
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lastUsedAt?: Date | string | null
+  }
+
+  export type PendingAuthCreateManyUserInput = {
+    id?: string
+    tenantId?: string | null
+    nonce: string
+    requiredFactors: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type TwoFactorCodeCreateManyUserInput = {
+    id?: string
+    tenantId?: string | null
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts?: number
+    maxAttempts?: number
+    createdAt?: Date | string
+    expiresAt: Date | string
+    usedAt?: Date | string | null
+    traceId?: string | null
+  }
+
+  export type TwoFactorAuditCreateManyUserInput = {
+    id?: string
+    tenantId?: string | null
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress?: string | null
+    userAgent?: string | null
+    metadata?: string | null
+    createdAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -41170,6 +49951,162 @@ export namespace Prisma {
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TwoFactorMethodUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tenant?: TenantUpdateOneWithoutTwoFactorMethodsNestedInput
+  }
+
+  export type TwoFactorMethodUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TwoFactorMethodUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PendingAuthUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    tenant?: TenantUpdateOneWithoutPendingAuthsNestedInput
+  }
+
+  export type PendingAuthUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PendingAuthUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorCodeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+    tenant?: TenantUpdateOneWithoutTwoFactorCodesNestedInput
+  }
+
+  export type TwoFactorCodeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorCodeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorAuditUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutTwoFactorAuditsNestedInput
+  }
+
+  export type TwoFactorAuditUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorAuditUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AuditLogCreateManyTenantInput = {
     id?: string
     userId: string
@@ -41297,6 +50234,58 @@ export namespace Prisma {
     action: string
     createdAt?: Date | string
     createdBy: string
+  }
+
+  export type TwoFactorMethodCreateManyTenantInput = {
+    id?: string
+    userId: string
+    type: string
+    identifier?: string | null
+    secret?: string | null
+    isVerified?: boolean
+    isEnabled?: boolean
+    backupCodes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lastUsedAt?: Date | string | null
+  }
+
+  export type PendingAuthCreateManyTenantInput = {
+    id?: string
+    userId: string
+    nonce: string
+    requiredFactors: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type TwoFactorCodeCreateManyTenantInput = {
+    id?: string
+    userId: string
+    type: string
+    codeHash: string
+    salt: string
+    purpose: string
+    attempts?: number
+    maxAttempts?: number
+    createdAt?: Date | string
+    expiresAt: Date | string
+    usedAt?: Date | string | null
+    traceId?: string | null
+  }
+
+  export type TwoFactorAuditCreateManyTenantInput = {
+    id?: string
+    userId: string
+    action: string
+    factorType: string
+    success: boolean
+    ipAddress?: string | null
+    userAgent?: string | null
+    metadata?: string | null
+    createdAt?: Date | string
   }
 
   export type AuditLogUpdateWithoutTenantInput = {
@@ -41694,6 +50683,162 @@ export namespace Prisma {
     createdBy?: StringFieldUpdateOperationsInput | string
   }
 
+  export type TwoFactorMethodUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutTwoFactorMethodsNestedInput
+  }
+
+  export type TwoFactorMethodUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TwoFactorMethodUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    identifier?: NullableStringFieldUpdateOperationsInput | string | null
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    backupCodes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PendingAuthUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutPendingAuthsNestedInput
+  }
+
+  export type PendingAuthUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PendingAuthUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    nonce?: StringFieldUpdateOperationsInput | string
+    requiredFactors?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorCodeUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutTwoFactorCodesNestedInput
+  }
+
+  export type TwoFactorCodeUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorCodeUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    codeHash?: StringFieldUpdateOperationsInput | string
+    salt?: StringFieldUpdateOperationsInput | string
+    purpose?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TwoFactorAuditUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTwoFactorAuditsNestedInput
+  }
+
+  export type TwoFactorAuditUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorAuditUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    factorType?: StringFieldUpdateOperationsInput | string
+    success?: BoolFieldUpdateOperationsInput | boolean
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ContactMessageReasonCreateManyContactReasonInput = {
     id?: string
     contactMessageId: string
@@ -42047,6 +51192,22 @@ export namespace Prisma {
      * @deprecated Use SetupStateDefaultArgs instead
      */
     export type SetupStateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SetupStateDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TwoFactorMethodDefaultArgs instead
+     */
+    export type TwoFactorMethodArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TwoFactorMethodDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PendingAuthDefaultArgs instead
+     */
+    export type PendingAuthArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PendingAuthDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TwoFactorCodeDefaultArgs instead
+     */
+    export type TwoFactorCodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TwoFactorCodeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TwoFactorAuditDefaultArgs instead
+     */
+    export type TwoFactorAuditArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TwoFactorAuditDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

@@ -45,7 +45,7 @@ export default function AuthenticatorSetupPage() {
       setSecret("");
       setTempName("");
       // Auto-reset to add step after 3 seconds
-      setTimeout(() => setStep("add"), 3000);
+      setTimeout(() => setStep("add"), 7000);
     },
     onError: (error) => {
       toast.error("Invalid verification code. Please try again.");
