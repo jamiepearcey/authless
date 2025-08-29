@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Bell, Check, Archive, X, Loader2 } from "lucide-react";
+import { Bell, Check, Archive, Loader2 } from "lucide-react";
 import { Button } from "./button";
 import { Badge } from "./badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -39,6 +38,7 @@ interface NotificationBellProps {
   notifications: Notification[];
   onMarkAsRead: (notificationId: string) => Promise<void>;
   onMarkAllAsRead: () => Promise<void>;
+  onViewAllNotifications: () => void;
   onArchive: (notificationId: string) => Promise<void>;
   isLoading?: boolean;
 }
@@ -50,9 +50,9 @@ export function NotificationBell({
   onMarkAllAsRead,
   onArchive,
   isLoading = false,
+  onViewAllNotifications,
 }: NotificationBellProps) {
   const [isOpen, setIsOpen] = useState(false);
-
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case "success":
@@ -248,7 +248,10 @@ export function NotificationBell({
                 variant="outline"
                 size="sm"
                 className="w-full"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false)
+                  onViewAllNotifications()
+                }}
               >
                 View all notifications
               </Button>

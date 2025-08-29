@@ -4,7 +4,8 @@ import { useParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
-import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, EyeOff, User } from "lucide-react";
+import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, EyeOff, User, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
@@ -258,20 +259,26 @@ export default function TenantUsersPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center space-x-4 mb-4">
-          <BreadcrumbNavigation
-            items={[
-              { label: "Tenants", href: "/tenants" },
-              { label: tenantSlug, href: `/tenants/${tenantSlug}` },
-              { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
-              { label: "Users", current: true },
-            ]}
-            showHome={false}
-          />
-        </div>
-        
         <div className="flex justify-between items-center">
-          <div>
+          <div>   <div className="flex items-center space-x-4 mb-4">
+                <Link 
+                  href={`/tenants/${tenantSlug}/admin`}
+                  className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+                >
+                  <ArrowLeft className="h-5 w-5 mr-2" />
+                  Back to Admin
+                </Link>
+                <div className="h-6 w-px bg-gray-300" />
+                <BreadcrumbNavigation
+                  items={[
+                    { label: "Tenants", href: "/tenants" },
+                    { label: tenantSlug, href: `/tenants/${tenantSlug}` },
+                    { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
+                    { label: "Users", current: true },
+                  ]}
+                  showHome={false}
+                />
+              </div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <Users className="h-8 w-8 text-indigo-600" />
               <span>User Management</span>

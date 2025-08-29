@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Bell, Plus, Filter, Search, Loader2, Inbox, Trash2, Edit, CheckSquare, Square, Check } from "lucide-react";
+import { Bell, Plus, Filter, Search, Loader2, Inbox, Trash2, Edit, CheckSquare, Square, Check, ArrowLeft } from "lucide-react";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
@@ -10,6 +10,7 @@ import { Badge } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import Link from "next/link";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 export default function AdminNotificationsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -250,7 +251,23 @@ export default function AdminNotificationsPage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
-            <div>
+            <div>   <div className="flex items-center space-x-4 mb-4">
+                <Link 
+                  href="/admin"
+                  className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+                >
+                  <ArrowLeft className="h-5 w-5 mr-2" />
+                  Back to Admin
+                </Link>
+                <div className="h-6 w-px bg-gray-300" />
+                <BreadcrumbNavigation
+                  items={[
+                    { label: "Admin", href: "/admin" },
+                    { label: "Notifications", href: "/admin/notifications", current: true }
+                  ]}
+                  showHome={false}
+                />
+              </div>
               <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
                 <Bell className="h-8 w-8 text-indigo-600" />
                 <span>Admin Notifications</span>

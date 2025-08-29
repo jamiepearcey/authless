@@ -9,11 +9,11 @@ import TenantSwitcher from "./TenantSwitcher";
 import { navigationLinks } from "./links";
 import { trpc } from "@/lib/trpc";
 import { useBasicNotificationSubscription, useCentrifugo, NotificationMessage } from "@/hooks/useNotificationSubscription";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const { data: session, status } = useSession();
-  const [realtimeNotifications, setRealtimeNotifications] = useState<NotificationMessage['notification'][]>([]);
-  
+  const router = useRouter();
   // Get notification data
   const { data: unreadCount, refetch: refetchUnreadCount } = trpc.getUnreadCount.useQuery();
   const { data: notificationsData, refetch: refetchNotifications } = trpc.getUserNotifications.useQuery({ limit: 5 });
@@ -125,6 +125,7 @@ export default function Header() {
                   notifications={allNotifications}
                   onMarkAsRead={handleMarkAsRead}
                   onMarkAllAsRead={handleMarkAllAsRead}
+                  onViewAllNotifications={() => router.push("/notifications")}
                   onArchive={handleArchive}
                   isLoading={false}
                 />

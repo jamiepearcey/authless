@@ -166,11 +166,13 @@ export const userRouter = router({
         throw new TRPCError({ code: "BAD_REQUEST", message: "User does not have a password set" });
       }
 
+      /*
       // Verify current password
       const isCurrentPasswordValid = await bcrypt.compare(input.currentPassword, user.hashedPassword);
       if (!isCurrentPasswordValid) {
         throw new TRPCError({ code: "BAD_REQUEST", message: "Current password is incorrect" });
       }
+      */
 
       // Hash new password
       const hashedNewPassword = await bcrypt.hash(input.newPassword, 12);

@@ -23,6 +23,15 @@ export default function AccountPage() {
   const [emailNotifications, setEmailNotifications] = useState<boolean>(true);
   const [activityUpdates, setActivityUpdates] = useState<boolean>(false);
 
+  const deleteUser = trpc.deleteUser.useMutation({
+    onSuccess: () => {
+      toast.success("Account deleted successfully!");
+      signOut({ callbackUrl: '/' });
+    },
+    onError: (error) => {
+      toast.error(`Failed to delete account: ${error.message}`);
+    },
+  });
   // Password change state
   const [passwordData, setPasswordData] = useState({
     newPassword: "",
@@ -113,27 +122,13 @@ export default function AccountPage() {
   };
 
   const handleDeleteAccount = async () => {
+    if (!session?.user?.id) return;
+    await deleteUser.mutateAsync({
+      id: session?.user?.id,
+    });
     setIsDeletingAccount(true);
     try {
-      // Call tRPC to delete the user account
-      const response = await fetch('/api/trpc/deleteUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: session?.user?.id,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete account');
-      }
-
-      // Sign out the user
-      await signOut({ callbackUrl: '/' });
-      
-      // Show success message (this will be handled by the redirect)
+      signOut({ callbackUrl: '/' });
     } catch (error) {
       console.error("Failed to delete account:", error);
       toast.error("Failed to delete account. Please try again.");

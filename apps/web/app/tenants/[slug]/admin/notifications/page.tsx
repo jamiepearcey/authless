@@ -21,7 +21,7 @@ export default function TenantAdminNotificationsPage() {
               className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
             >
               <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Tenant Admin
+              Back to Admin
             </Link>
             <div className="h-6 w-px bg-gray-300" />
             <BreadcrumbNavigation
