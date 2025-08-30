@@ -1,8 +1,12 @@
 import { t } from "@i18n-core";
 export const navigationLinks = [
   {
-    href: "/pages/features",
+    href: "/features",
     label: t("Features", "components.links.navigationLinks.features__1itlrq"),
+  },
+  {
+    href: "/pricing",
+    label: t("Pricing", "components.links.navigationLinks.pricing__1itlrq"),
   },
   {
     href: "/contact",

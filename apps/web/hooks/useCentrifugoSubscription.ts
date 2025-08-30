@@ -1,6 +1,6 @@
 // hooks/useCentrifugoSubscription.ts
 import { useEffect, useMemo, useRef, useState } from "react";
-import { centrifugoManager } from "@/lib/centrifugo-manager";
+import { subscriptionManager } from "@/lib/centrifugo-subscription-manager";
 
 // shape of local state this hook keeps per subscriber
 export type SubscriptionState<T> = {
@@ -53,70 +53,59 @@ export function useCentrifugoSubscription<T>(
 
   // attach our per-hook handler
   useEffect(() => {
-    console.log(`🔍 [useCentrifugoSubscription] useEffect triggered for ${channel}:`, {
-      channel,
-      enabled,
-      hasClient: !!centrifugoManager.client,
-      isConnected: centrifugoManager.isConnected
-    });
-    
-    if (!enabled) {
-      console.log(`🔍 [useCentrifugoSubscription] Subscription disabled for ${channel}`);
-      return;
-    }
-    
-    if (!channel) {
-      console.log(`🔍 [useCentrifugoSubscription] No channel provided for ${channel}`);
-      return;
-    }
-    
-    if (!centrifugoManager.client || !centrifugoManager.isConnected) {
-      console.log(`🔍 [useCentrifugoSubscription] Not ready for ${channel}:`, {
-        hasClient: !!centrifugoManager.client,
-        isConnected: centrifugoManager.isConnected
-      });
+    if (!enabled || !channel) {
+      setState(s => ({ ...s, isSubscribed: false, error: undefined }));
       return;
     }
 
-    console.log(`🔍 [useCentrifugoSubscription] Setting up subscription for ${channel}`);
     setState(s => ({ ...s, isSubscribed: true, error: undefined }));
 
-    const dispose = centrifugoManager.addHandler(channel, (raw) => {
-      console.log(`[useCentrifugoSubscription] Message received on ${channel}:`, raw);
-      
-      // drop state updates when paused, but still call user handler if present
-      const msg = raw as T;
+    try {
+      const unsubscribe = subscriptionManager.subscribe(channel, (raw) => {      
+        // drop state updates when paused, but still call user handler if present
+        const msg = raw as T;
 
-      // call user-provided handler first (doesn't affect local state)
-      try { 
-        console.log(`[useCentrifugoSubscription] Calling user handler for ${channel}`);
-        onEventRef.current?.(msg); 
-      } catch (e) {
-        console.error("[useCentrifugoSubscription] onEvent error", e);
-      }
+        // call user-provided handler first (doesn't affect local state)
+        try { 
+          onEventRef.current?.(msg); 
+        } catch (e) {
+          console.error("[Centrifugo] onEvent error", e);
+        }
 
-      if (pausedRef.current) {
-        console.log(`[useCentrifugoSubscription] Subscription paused for ${channel}`);
-        return;
-      }
+        if (pausedRef.current) {
+          return;
+        }
 
-      setState(prev => {
-        const base = {
-          ...prev,
-          last: msg,
-          receivedAt: Date.now(),
-        };
-        return autoClearOnMessage
-          ? { ...base, unread: 0 }
-          : { ...base, unread: prev.unread + 1 };
+        setState(prev => {
+          const base = {
+            ...prev,
+            last: msg,
+            receivedAt: Date.now(),
+          };
+          return autoClearOnMessage
+            ? { ...base, unread: 0 }
+            : { ...base, unread: prev.unread + 1 };
+        });
       });
-    });
 
-    return () => {
-      console.log(`🔍 [useCentrifugoSubscription] Cleaning up subscription for ${channel}`);
-      try { dispose?.(); } catch {}
-      setState(s => ({ ...s, isSubscribed: false }));
-    };
+      return () => {
+        try { 
+          unsubscribe(); 
+          setState(s => ({ ...s, isSubscribed: false }));
+        } catch (error) {
+          console.error("[Centrifugo] Unsubscribe error", error);
+          setState(s => ({ ...s, isSubscribed: false, error: error instanceof Error ? error.message : 'Unsubscribe failed' }));
+        }
+      };
+    } catch (error) {
+      console.error("[Centrifugo] Subscribe error", error);
+      setState(s => ({ 
+        ...s, 
+        isSubscribed: false, 
+        error: error instanceof Error ? error.message : 'Subscription failed' 
+      }));
+      return;
+    }
   }, [channel, enabled]);
 
   // helpers the consumer can call

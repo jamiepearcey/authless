@@ -72,17 +72,12 @@ export function useNotificationSubscription(
 
   const userId = session?.user?.id;
 
-  console.log("🔍 [useNotificationSubscription] Hook called with:", {
-    userId,
-    isConnected,
-    enabled,
-    includeGlobal,
-    includeUser,
-    includeTenant,
-    includeRole,
-    tenantId,
-    role
-  });
+  // Only log on debug mode to reduce noise
+  if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined' && (window as any).__CENTRIFUGO_DEBUG) {
+    console.log("🔍 [useNotificationSubscription] Hook called with:", {
+      userId, isConnected, enabled, includeGlobal, includeUser
+    });
+  }
 
   // Generate channel names based on options
   const channels = useMemo(() => {
@@ -104,7 +99,10 @@ export function useNotificationSubscription(
       channelList.push(`notifications:tenant:${tenantId}:role:${role}`);
     }
     
-    console.log('📡 [useNotificationSubscription] Generated channels:', channelList, { userId, includeGlobal, includeUser });
+    // Only log channels in debug mode
+    if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined' && (window as any).__CENTRIFUGO_DEBUG) {
+      console.log('📡 [useNotificationSubscription] Generated channels:', channelList);
+    }
     return channelList;
   }, [includeGlobal, includeUser, includeTenant, includeRole, userId, tenantId, role]);
 
@@ -209,22 +207,11 @@ export function useNotificationSubscription(
 export function useBasicNotificationSubscription(
   onNotification: (message: NotificationMessage) => void
 ) {
-  console.log("🔍 [useBasicNotificationSubscription] Hook called with callback:", !!onNotification);
-  
-  const result = useNotificationSubscription(onNotification, {
+  return useNotificationSubscription(onNotification, {
     includeGlobal: true,
     includeUser: true,
     enabled: true,
   });
-  
-  console.log("🔍 [useBasicNotificationSubscription] Result:", {
-    isSubscribed: result.isSubscribed,
-    isConnected: result.isConnected,
-    hasErrors: result.hasErrors,
-    channels: result.channels
-  });
-  
-  return result;
 }
 
 /**

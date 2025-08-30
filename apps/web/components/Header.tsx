@@ -25,8 +25,6 @@ export default function Header() {
 
   // Real-time notification handler
   const handleRealtimeNotification = useCallback((message: NotificationMessage) => {
-    console.log('Received real-time notification:', message);
-    
     if (message.type === 'notification_created') {
       refetchUnreadCount();
       refetchNotifications();
@@ -38,13 +36,6 @@ export default function Header() {
   
   // Subscribe to real-time notifications
   const { isSubscribed, hasErrors } = useBasicNotificationSubscription(handleRealtimeNotification);
-
-  // Log connection status (for debugging)
-  useEffect(() => {
-    if (session?.user?.id) {
-      console.log('Centrifugo connection status:', { isSubscribed, isConnected, hasErrors });
-    }
-  }, [isSubscribed, isConnected, hasErrors, session?.user?.id]);
 
   // Combine server-side and real-time notifications
   const allNotifications = notificationsData?.items ?? []

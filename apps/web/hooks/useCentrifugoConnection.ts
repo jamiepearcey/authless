@@ -9,47 +9,44 @@ export function useCentrifugoConnection() {
   const getToken = trpc.getCentrifugoToken.useMutation();
   const [error, setError] = useState<string | null>(null);
 
+  const connectionAttemptedRef = useRef(false);
+
   const connect = useCallback(async () => {
-    console.log("[useCentrifugoConnection] Connect called:", { 
-      status, 
-      userId: session?.user?.id,
-      isConnected: centrifugoManager.isConnected,
-      isConnecting: centrifugoManager.isConnecting 
-    });
-    
     if (status !== "authenticated" || !session?.user?.id) {
-      console.log("[useCentrifugoConnection] Not authenticated or no user ID");
       return;
     }
+    
     if (centrifugoManager.isConnected || centrifugoManager.isConnecting) {
-      console.log("[useCentrifugoConnection] Already connected or connecting");
       return;
     }
+
+    // Prevent multiple simultaneous attempts
+    if (connectionAttemptedRef.current) {
+      return;
+    }
+
+    connectionAttemptedRef.current = true;
 
     try {
-      console.log("[useCentrifugoConnection] Getting token...");
       const { token, centrifugoUrl } = await getToken.mutateAsync();
-      console.log("[useCentrifugoConnection] Token received, connecting to:", centrifugoUrl);
-      
       await centrifugoManager.connect(centrifugoUrl, token);
       setError(null);
-      console.log("[useCentrifugoConnection] Connection successful");
     } catch (e: any) {
-      console.error("[useCentrifugoConnection] Connect failed:", e);
+      console.error("[Centrifugo] Connect failed:", e);
       setError(e?.message ?? "Failed to connect");
+      connectionAttemptedRef.current = false; // Reset on error
     }
-  }, [status, session?.user?.id, getToken]);
+  }, [status, session?.user?.id]); // Removed getToken from dependencies
 
   useEffect(() => {
-    console.log("useEffect", status, session?.user?.id);
-    if (status === "authenticated" && session?.user?.id) {
+    if (status === "authenticated" && session?.user?.id && !connectionAttemptedRef.current) {
       connect();
     }
-    // optional cleanup on unmount:
-    return () => { /* keep connection if app-wide; or call centrifugoManager.disconnect() */ };
+    // Reset connection attempt flag when session changes
+    if (status !== "authenticated") {
+      connectionAttemptedRef.current = false;
+    }
   }, [status, session?.user?.id, connect]);
-
-  console.log("useCentrifugoConnection", centrifugoManager.isConnected, centrifugoManager.isConnecting, error);
   return {
     isConnected: centrifugoManager.isConnected,
     isConnecting: centrifugoManager.isConnecting,

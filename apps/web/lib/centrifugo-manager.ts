@@ -69,20 +69,31 @@ class CentrifugoManager {
   addHandler(channel: string, handler: Handler): () => void {
     if (!this.cf) throw new Error("Centrifuge not connected");
 
-    console.log(`🔍 [centrifugoManager] Adding handler for channel: ${channel}`);
+    centrifugoDebugger.log('subscription', `Adding handler for channel: ${channel}`);
 
     let entry = this.channels.get(channel);
     if (!entry) {
-      console.log(`🔍 [centrifugoManager] Creating new subscription for channel: ${channel}`);
+      centrifugoDebugger.log('subscription', `Creating new subscription for channel: ${channel}`);
+      
+      // Check if a subscription already exists in Centrifuge to prevent duplicate subscription error
+      const existingSubs = this.cf.subscriptions();
+      if (existingSubs[channel]) {
+        centrifugoDebugger.log('subscription', `Subscription already exists in Centrifuge for ${channel}, cleaning up`);
+        try {
+          existingSubs[channel].unsubscribe();
+        } catch (e) {
+          centrifugoDebugger.log('error', `Failed to cleanup existing subscription for ${channel}`, e);
+        }
+      }
+
       const sub = this.cf.newSubscription(channel);
 
       sub.on("publication", (ctx) => {
         centrifugoDebugger.log('message', 'Message received', ctx.data, channel);
-        console.log(`🔍 [centrifugoManager] Publication received on ${channel}:`, ctx.data);
         // fan-out to all handlers for this channel
         const e = this.channels.get(channel);
         if (!e) return;
-        console.log(`🔍 [centrifugoManager] Fanning out to ${e.handlers.size} handlers for ${channel}`);
+        centrifugoDebugger.log('message', `Fanning out to ${e.handlers.size} handlers for ${channel}`);
         for (const h of e.handlers) {
           try { h(ctx.data); } catch (err) { 
             centrifugoDebugger.log('error', 'Handler error', err, channel);
@@ -92,35 +103,31 @@ class CentrifugoManager {
 
       sub.on("subscribed", (ctx) => { 
         centrifugoDebugger.log('subscription', 'Subscribed successfully', ctx, channel);
-        console.log(`🔍 [centrifugoManager] Successfully subscribed to ${channel}`);
       });
       sub.on("subscribing", (ctx) => { 
         centrifugoDebugger.log('subscription', 'Subscribing...', ctx, channel);
-        console.log(`🔍 [centrifugoManager] Subscribing to ${channel}...`);
       });
       sub.on("unsubscribed", (ctx) => { 
         centrifugoDebugger.log('subscription', 'Unsubscribed', ctx, channel);
-        console.log(`🔍 [centrifugoManager] Unsubscribed from ${channel}`);
       });
       sub.on("error", (err) => { 
         centrifugoDebugger.log('error', 'Subscription error', err, channel);
-        console.error(`🔍 [centrifugoManager] Subscription error on ${channel}:`, err);
       });
 
       sub.subscribe();
       entry = { sub, handlers: new Set() };
       this.channels.set(channel, entry);
     } else {
-      console.log(`🔍 [centrifugoManager] Reusing existing subscription for channel: ${channel}`);
+      centrifugoDebugger.log('subscription', `Reusing existing subscription for channel: ${channel}`);
     }
 
     // attach this hook's handler
     entry.handlers.add(handler);
-    console.log(`🔍 [centrifugoManager] Added handler for ${channel}, total handlers: ${entry.handlers.size}`);
+    centrifugoDebugger.log('subscription', `Added handler for ${channel}, total handlers: ${entry.handlers.size}`);
 
     // disposer for this handler only
     return () => {
-      console.log(`🔍 [centrifugoManager] Removing handler for channel: ${channel}`);
+      centrifugoDebugger.log('subscription', `Removing handler for channel: ${channel}`);
       const e = this.channels.get(channel);
       if (!e) return;
 
@@ -128,11 +135,11 @@ class CentrifugoManager {
 
       // if no handlers remain, we can free the subscription
       if (e.handlers.size === 0) {
-        console.log(`🔍 [centrifugoManager] No more handlers for ${channel}, cleaning up subscription`);
+        centrifugoDebugger.log('subscription', `No more handlers for ${channel}, cleaning up subscription`);
         try { e.sub.unsubscribe(); } catch {}
         this.channels.delete(channel);
       } else {
-        console.log(`🔍 [centrifugoManager] ${e.handlers.size} handlers remaining for ${channel}`);
+        centrifugoDebugger.log('subscription', `${e.handlers.size} handlers remaining for ${channel}`);
       }
     };
   }

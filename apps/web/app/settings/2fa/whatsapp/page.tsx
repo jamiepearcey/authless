@@ -26,6 +26,7 @@ export default function WhatsAppSetupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [phoneValidationError, setPhoneValidationError] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false); // Track if user is updating phone number
 
   // tRPC queries and mutations
   const { data: twoFactorMethods, refetch: refetchMethods } = trpc.get2fa.useQuery();
@@ -38,10 +39,10 @@ export default function WhatsAppSetupPage() {
   const isWhatsAppEnabled = !!whatsAppMethod;
 
   useEffect(() => {
-    if (isWhatsAppEnabled && step === "setup") {
+    if (isWhatsAppEnabled && step === "setup" && !isUpdating) {
       setStep("manage");
     }
-  }, [isWhatsAppEnabled, step]);
+  }, [isWhatsAppEnabled, step, isUpdating]);
 
   const handlePhoneNumberChange = (value: string, code: string, full: string) => {
     setPhoneNumber(value);
@@ -87,6 +88,7 @@ export default function WhatsAppSetupPage() {
       });
       toast.success("WhatsApp 2FA enabled successfully!");
       setStep("success");
+      setIsUpdating(false); // Reset updating flag
       refetchMethods();
     } catch (error: any) {
       console.error("Failed to verify WhatsApp code:", error);
@@ -122,6 +124,7 @@ export default function WhatsAppSetupPage() {
       await disableWhatsApp.mutateAsync();
       toast.success("WhatsApp 2FA disabled");
       setStep("setup");
+      setIsUpdating(false); // Reset updating flag
       refetchMethods();
     } catch (error: any) {
       console.error("Failed to disable WhatsApp:", error);
@@ -217,7 +220,10 @@ export default function WhatsAppSetupPage() {
             <div className="mt-6 flex space-x-3">
               <Button
                 variant="outline"
-                onClick={() => setStep("setup")}
+                onClick={() => {
+                  setIsUpdating(true);
+                  setStep("setup");
+                }}
               >
                 Update Phone Number
               </Button>
@@ -265,10 +271,13 @@ export default function WhatsAppSetupPage() {
             </Link>
             <MessageCircle className="h-6 w-6 text-indigo-600" />
             <h3 className="text-lg leading-6 font-medium text-gray-900">
-              {t(
-                "Set Up WhatsApp 2FA",
-                "2fa.whatsapp.page.WhatsAppSetupPage.set_up_whatsapp_2fa__262t7e",
-              )}
+              {isUpdating 
+                ? "Update WhatsApp Phone Number"
+                : t(
+                    "Set Up WhatsApp 2FA",
+                    "2fa.whatsapp.page.WhatsAppSetupPage.set_up_whatsapp_2fa__262t7e",
+                  )
+              }
             </h3>
           </div>
 
@@ -475,13 +484,29 @@ export default function WhatsAppSetupPage() {
                   </ul>
                 </div>
 
-                <Button
-                  onClick={handleSetup}
-                  disabled={isLoading || !isPhoneValid}
-                  className="w-full"
-                >
-                  {isLoading ? "Setting up..." : "Send Verification Code"}
-                </Button>
+                <div className="space-y-3">
+                  <Button
+                    onClick={handleSetup}
+                    disabled={isLoading || !isPhoneValid}
+                    className="w-full"
+                  >
+                    {isLoading ? "Setting up..." : "Send Verification Code"}
+                  </Button>
+                  
+                  {isUpdating && (
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setIsUpdating(false);
+                        setStep("manage");
+                      }}
+                      disabled={isLoading}
+                      className="w-full"
+                    >
+                      Cancel Update
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -563,7 +588,7 @@ export default function WhatsAppSetupPage() {
                 </Button>
               </div>
 
-              <div className="text-center">
+              <div className="text-center space-y-2">
                 <button
                   onClick={() => setStep("setup")}
                   className="text-sm text-indigo-600 hover:text-indigo-500"
@@ -573,6 +598,20 @@ export default function WhatsAppSetupPage() {
                     "2fa.authenticator.page.AuthenticatorSetupPage.back_to_setup__1tpmli",
                   )}
                 </button>
+                
+                {isUpdating && (
+                  <div>
+                    <button
+                      onClick={() => {
+                        setIsUpdating(false);
+                        setStep("manage");
+                      }}
+                      className="text-sm text-gray-600 hover:text-gray-500"
+                    >
+                      Cancel Update
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

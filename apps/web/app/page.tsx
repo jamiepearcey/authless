@@ -1,3 +1,5 @@
+"use client";
+
 import { t } from "@i18n-core";
 import Link from "next/link";
 import { Button } from "@ui/base";
@@ -19,37 +21,88 @@ import {
   Database,
   Layout,
   Palette,
-  Timer
+  Timer,
+  DollarSign
 } from "lucide-react";
-import { HelloWorld } from "./hello-world";
+import { HelloWorld } from "../components/TrpcHelloWorld";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef } from "react";
 
 export default function HomePage() {
   console.log("HomePage where?", typeof window === "undefined" ? "server" : "browser");
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
   return (
     <div className="min-h-[100dvh] flex flex-col">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
+      <section ref={heroRef} className="relative overflow-hidden">
+        <motion.div 
+          className="absolute inset-0 -z-10"
+          style={{ y, opacity }}
+        >
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-cyan-50" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(120,119,198,0.15),transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,165,0,0.1),transparent_50%)]" />
-        </div>
+        </motion.div>
         
         <div className="mx-auto max-w-7xl px-4 py-20 md:py-32 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-100 to-cyan-100 px-4 py-2 text-sm font-medium text-indigo-700 mb-8">
-            <Star className="h-4 w-4" />
+          <motion.div 
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-100 to-cyan-100 px-4 py-2 text-sm font-medium text-indigo-700 mb-8"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25, delay: 0.05 }}
+          >
+            <motion.div
+              animate={{ rotate: [0, 3, -3, 0] }}
+              transition={{ 
+                duration: 6, 
+                repeat: Infinity, 
+                ease: "easeInOut",
+                repeatDelay: 2
+              }}
+            >
+              <Star className="h-4 w-4" />
+            </motion.div>
             Self-hostable • No per-user fees • Enterprise-grade
-          </div>
+          </motion.div>
 
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+          <motion.h1 
+            className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 350, damping: 30, delay: 0.1 }}
+          >
             The{" "}
-            <span className="bg-gradient-to-r from-indigo-600 to-cyan-600 bg-clip-text text-transparent">
+            <motion.span 
+              className="bg-gradient-to-r from-indigo-600 to-cyan-600 bg-clip-text text-transparent"
+              initial={{ backgroundPosition: "0% 50%" }}
+              animate={{ backgroundPosition: "100% 50%" }}
+              transition={{ 
+                duration: 8, 
+                repeat: Infinity, 
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }}
+              style={{ backgroundSize: "200% 200%" }}
+            >
               SaaS Kernel
-            </span>{" "}
+            </motion.span>{" "}
             That Ships Day One
-          </h1>
+          </motion.h1>
 
-          <p className="mx-auto max-w-4xl text-xl md:text-2xl text-gray-600 leading-relaxed mb-12">
+          <motion.p 
+            className="mx-auto max-w-4xl text-xl md:text-2xl text-gray-600 leading-relaxed mb-12"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0.15 }}
+          >
             <strong>Authless</strong> is a self-hostable SaaS foundation that packages{" "}
             <span className="font-semibold text-indigo-600">enterprise auth</span>, {" "}
             <span className="font-semibold text-cyan-600">multi-tenancy</span>, {" "}
@@ -61,22 +114,39 @@ export default function HomePage() {
             <span className="text-lg text-gray-500 mt-2 block">
               Escape per-user pricing traps. Start building your product, not plumbing.
             </span>
-          </p>
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Button asChild size="lg" className="text-lg px-8 py-6 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 shadow-lg hover:shadow-xl transition-all duration-300">
-              <Link href="/setup">
-                <Rocket className="mr-2 h-5 w-5" />
-                Deploy in 2 Minutes
+          <motion.div 
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.2 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 500, damping: 25 }}
+            >
+              <Button asChild size="lg" className="text-lg px-8 py-6 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 shadow-lg hover:shadow-xl transition-all duration-300">
+                <Link href="/setup">
+                  <Rocket className="mr-2 h-5 w-5" />
+                  Deploy in 2 Minutes
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 rounded-xl border-2 hover:bg-gray-50">
-              <Link href="#live-demo">
-                <Github className="mr-2 h-5 w-5" />
-                Try Live Demo
-              </Link>
-            </Button>
-          </div>
+            </motion.div>
+                        <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 500, damping: 25 }}
+            >
+              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 rounded-xl border-2 hover:bg-gray-50">
+                <Link href="/features">
+                  <Star className="mr-2 h-5 w-5" />
+                  Explore Features
+                </Link>
+              </Button>
+            </motion.div>
+          </motion.div>
 
           {/* Value Metrics */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-gray-500">
@@ -180,7 +250,13 @@ export default function HomePage() {
       {/* Core Features */}
       <section id="features" className="py-20">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               The Complete SaaS Foundation
             </h2>
@@ -188,24 +264,56 @@ export default function HomePage() {
               Everything you need to launch an enterprise-grade SaaS: authentication, multi-tenancy, 
               i18n, notifications, support, audit, and feature flags in one self-hostable package.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Authentication */}
-            <div className="group p-8 rounded-2xl border-2 border-gray-100 hover:border-indigo-200 hover:shadow-lg transition-all duration-300">
-              <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mb-6">
+            <motion.div 
+              className="group p-8 rounded-2xl border-2 border-gray-100 hover:border-indigo-200 hover:shadow-lg transition-all duration-200"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0.05 }}
+              whileHover={{ 
+                y: -3,
+                transition: { type: "spring", stiffness: 400, damping: 25 }
+              }}
+            >
+              <motion.div 
+                className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mb-6"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              >
                 <Lock className="h-7 w-7 text-white" />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-bold mb-3">Enterprise Authentication</h3>
               <p className="text-gray-600 mb-4">
                 Passkeys, TOTP, WhatsApp OTP, Google/GitHub OAuth, tenant SSO (OpenID), and device management.
               </p>
               <div className="flex flex-wrap gap-2 text-sm">
-                <span className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded">Passkeys</span>
-                <span className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded">Tenant SSO</span>
-                <span className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded">WhatsApp OTP</span>
+                <motion.span 
+                  className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                >
+                  Passkeys
+                </motion.span>
+                <motion.span 
+                  className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                >
+                  Tenant SSO
+                </motion.span>
+                <motion.span 
+                  className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                >
+                  WhatsApp OTP
+                </motion.span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Multi-tenancy */}
             <div className="group p-8 rounded-2xl border-2 border-gray-100 hover:border-cyan-200 hover:shadow-lg transition-all duration-300">
@@ -481,13 +589,32 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <Button asChild size="lg" className="text-xl px-12 py-8 rounded-2xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 shadow-xl hover:shadow-2xl transition-all duration-300">
-              <Link href="/setup">
-                <Rocket className="mr-3 h-6 w-6" />
-                Deploy Authless Now
-                <ArrowRight className="ml-3 h-6 w-6" />
-              </Link>
-            </Button>
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              <Button asChild size="lg" className="text-xl px-12 py-8 rounded-2xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 shadow-xl hover:shadow-2xl transition-all duration-300">
+                <Link href="/setup">
+                  <Rocket className="mr-3 h-6 w-6" />
+                  Deploy Authless Now
+                  <ArrowRight className="ml-3 h-6 w-6" />
+                </Link>
+              </Button>
+            </motion.div>
+            
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              <Button asChild size="lg" variant="outline" className="text-xl px-12 py-8 rounded-2xl border-2 hover:bg-gray-50">
+                <Link href="/pricing">
+                  <DollarSign className="mr-3 h-6 w-6" />
+                  View Pricing
+                </Link>
+              </Button>
+            </motion.div>
           </div>
 
           <div className="text-sm text-gray-500">

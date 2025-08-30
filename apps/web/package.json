@@ -26,6 +26,7 @@
     "@ui/base": "workspace:*",
     "centrifuge": "^5.4.0",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.23.12",
     "jsonwebtoken": "^9.0.0",
     "lucide-react": "^0.539.0",
     "next": "14.0.0",
