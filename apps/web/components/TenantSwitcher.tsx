@@ -35,39 +35,60 @@ export default function TenantSwitcher() {
   const [userTenants, setUserTenants] = useState<UserTenant[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+
+  const isPlatformAdmin = (session?.user as any)?.platformRole === 'admin';
+
   const { data: tenantsData } = trpc.getUserTenants.useQuery(
     undefined, 
     { enabled: !!session?.user }
   );
 
+  // Get all tenants if platform admin
+  const { data: allTenants } = trpc.getAllTenants.useQuery(
+    undefined,
+    { enabled: !!session?.user && isPlatformAdmin }
+  );
+
   // Get current tenant from URL or session
   useEffect(() => {
-    if (tenantsData) {
-      setUserTenants(tenantsData);
+    if (tenantsData || (isPlatformAdmin && allTenants)) {
+      const dataToUse = isPlatformAdmin && allTenants ? 
+        allTenants.map(tenant => ({
+          tenant,
+          role: 'admin',
+          isAdmin: true,
+          createdAt: tenant.createdAt,
+          lastActiveAt: tenant.updatedAt
+        })) : 
+        tenantsData;
       
-      // Determine current tenant from URL or session
-      const pathParts = pathname.split('/');
-      let currentTenantSlug: string | null = null;
-      
-      // Check for path-based tenant (/tenants/[slug])
-      if (pathParts[1] === 'tenants' && pathParts[2]) {
-        currentTenantSlug = pathParts[2];
-      }
-      
-      // Check for subdomain-based tenant (would need additional logic in production)
-      // For now, use the first tenant or platform context
-      
-      if (currentTenantSlug) {
-        const tenant = tenantsData.find(ut => ut.tenant.slug === currentTenantSlug);
-        if (tenant) {
-          setCurrentTenant(tenant.tenant);
+      if (dataToUse) {
+        setUserTenants(dataToUse);
+        
+        // Determine current tenant from URL or session
+        const pathParts = pathname.split('/');
+        let currentTenantSlug: string | null = null;
+        
+        // Check for path-based tenant (/tenants/[slug])
+        if (pathParts[1] === 'tenants' && pathParts[2]) {
+          currentTenantSlug = pathParts[2];
         }
-      } else if (tenantsData.length > 0) {
-        // Default to first tenant if no specific tenant in URL
-        setCurrentTenant(tenantsData[0].tenant);
+        
+        // Check for subdomain-based tenant (would need additional logic in production)
+        // For now, use the first tenant or platform context
+        
+        if (currentTenantSlug) {
+          const tenant = dataToUse.find(ut => ut.tenant.slug === currentTenantSlug);
+          if (tenant) {
+            setCurrentTenant(tenant.tenant);
+          }
+        } else if (dataToUse.length > 0) {
+          // Default to first tenant if no specific tenant in URL
+          setCurrentTenant(dataToUse[0].tenant);
+        }
       }
     }
-  }, [tenantsData, pathname]);
+  }, [tenantsData, allTenants, isPlatformAdmin, pathname]);
 
   const handleTenantSwitch = async (tenant: Tenant) => {
     setIsLoading(true);
@@ -114,12 +135,34 @@ export default function TenantSwitcher() {
     }
   };
 
-  if (!session?.user || userTenants.length === 0) {
-    return null;
+  if (!session?.user) {
+    return (
+      <div className="w-full p-2 text-center text-sm text-gray-500 bg-gray-100 rounded border">
+        Loading...
+      </div>
+    );
   }
 
-  const isPlatformAdmin = (session.user as any)?.platformRole === 'admin';
-  const currentTenantData = userTenants.find(ut => ut.tenant.id === currentTenant?.id);
+  // For platform admins, use all tenants; for regular users, use their memberships
+  const availableTenants = isPlatformAdmin && allTenants ? 
+    allTenants.map(tenant => ({
+      tenant,
+      role: 'admin',
+      isAdmin: true,
+      createdAt: tenant.createdAt,
+      lastActiveAt: tenant.updatedAt
+    })) : 
+    userTenants;
+  
+  if (availableTenants.length === 0 && !isPlatformAdmin) {
+    return (
+      <div className="w-full p-2 text-center text-sm text-gray-500 bg-gray-100 rounded border">
+        No workspaces
+      </div>
+    );
+  }
+
+  const currentTenantData = availableTenants.find(ut => ut.tenant.id === currentTenant?.id);
 
   return (
     <DropdownMenu>
@@ -202,7 +245,7 @@ export default function TenantSwitcher() {
         )}
         
         {/* Other Tenants */}
-        {userTenants
+        {availableTenants
           .filter(ut => ut.tenant.id !== currentTenant?.id)
           .map((userTenant) => (
             <DropdownMenuItem 
@@ -237,13 +280,13 @@ export default function TenantSwitcher() {
                   </div>
                 </div>
               </div>
-            </DropdownMenuItem>
+            </DropdownMenuItem> 
           ))}
         
         <DropdownMenuSeparator />
         
         {/* Platform Admin Actions */}
-        {false &&isPlatformAdmin && (
+        {false && isPlatformAdmin && (
           <>
             <DropdownMenuLabel className="flex items-center gap-2 text-xs text-gray-500">
               <Globe className="h-3 w-3" />

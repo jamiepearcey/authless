@@ -1,10 +1,9 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { router, platformAdminProcedure, tenantMemberProcedure, protectedProcedure } from "../middleware";
-import { Prisma } from "@prisma/client";
+import { PrismaClient } from "@db/base";
 
-
-const tenantSelect = Prisma.validator<Prisma.TenantSelect>()({
+const tenantSelect = {
   id: true,
   name: true,
   slug: true,
@@ -23,14 +22,13 @@ const tenantSelect = Prisma.validator<Prisma.TenantSelect>()({
   website: true,
   industry: true,
   size: true,
+  contactEmail: true,
   subdomain: true,
   customDomain: true,
   timezone: true,
   locale: true,
   theme: true
-});
-
-type TenantDTO = Prisma.TenantGetPayload<{ select: typeof tenantSelect }>;
+} as const;
 
 
 export const tenantRouter = router({
@@ -46,6 +44,7 @@ export const tenantRouter = router({
       website: z.string().optional(),
       industry: z.string().optional(),
       size: z.string().optional(),
+      contactEmail: z.string().email().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
       try {
@@ -88,6 +87,7 @@ export const tenantRouter = router({
             website: input.website,
             industry: input.industry,
             size: input.size,
+            contactEmail: input.contactEmail,
           },
         });
         
@@ -159,6 +159,7 @@ export const tenantRouter = router({
         website: z.string().url().optional(),
         industry: z.string().optional(),
         size: z.string().optional(),
+        contactEmail: z.string().email().optional(),
         plan: z.enum(["free", "pro", "enterprise"]).optional(),
         status: z.enum(["active", "suspended", "deleted"]).optional(),
         invitePolicy: z.enum(["admin_only", "open"]).optional(),
@@ -307,12 +308,12 @@ export const tenantRouter = router({
       const { limit, offset, status, plan } = input;
       
       // Build where clause
-      const where: Prisma.TenantWhereInput = { status: { not: "deleted" } };
+      const where: any = { status: { not: "deleted" } };
       if (status && status !== "all") {
-        where.status = status as any;
+        where.status = status;
       }
       if (plan && plan !== "all") {
-        where.plan = plan as any;
+        where.plan = plan;
       }
       
       // Get total count for pagination

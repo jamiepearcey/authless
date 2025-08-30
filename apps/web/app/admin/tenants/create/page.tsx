@@ -27,6 +27,7 @@ export default function CreateTenantPage() {
     website: "",
     industry: "",
     size: "",
+    contactEmail: "",
   });
 
   const createTenant = trpc.createTenant.useMutation({
@@ -60,6 +61,7 @@ export default function CreateTenantPage() {
         website: formData.website.trim() || undefined,
         industry: formData.industry.trim() || undefined,
         size: formData.size.trim() || undefined,
+        contactEmail: formData.contactEmail.trim() || undefined,
       });
     } finally {
       setIsSubmitting(false);

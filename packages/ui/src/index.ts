@@ -21,7 +21,7 @@ export { Slider } from "./components/slider";
 export { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/tabs";
 export { Textarea } from "./components/textarea";
 export { Toast, ToastAction, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from "./components/toast";
-export { Toaster } from "./components/toaster";
+export { Toaster as CustomToaster } from "./components/toaster";
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./components/tooltip";
 export { Progress } from "./components/progress";
 export { Separator } from "./components/separator";
@@ -31,7 +31,7 @@ export { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 export { ValidationSlot } from "./components/validation-slot";
 export { OtpInput } from "./components/otp-input";
 export { PasswordSettingsCard } from "./components/password-settings-card";
-export { toast } from "./components/sonner";
+export { Toaster, toast } from "./components/sonner";
 export { ConfirmDeleteAccountDialog } from "./components/confirm-delete-accont";
 export { ConfirmRemoveDialog } from "./components/confirm-remove-dialog";
 export { NotificationBell } from "./components/notification-bell";

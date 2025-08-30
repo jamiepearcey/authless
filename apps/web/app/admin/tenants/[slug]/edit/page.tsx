@@ -33,6 +33,7 @@ export default function EditTenantPage() {
     ssoEnabled: false,
     primaryColor: "",
     secondaryColor: "",
+    contactEmail: "",
   });
 
   const { data: tenant, isLoading } = trpc.getTenant.useQuery(
@@ -55,6 +56,7 @@ export default function EditTenantPage() {
         ssoEnabled: tenant.ssoEnabled || false,
         primaryColor: tenant.primaryColor || "",
         secondaryColor: tenant.secondaryColor || "",
+        contactEmail: tenant.contactEmail || "",
       });
     }
   }, [tenant]);
@@ -99,6 +101,7 @@ export default function EditTenantPage() {
           website: formData.website.trim() || undefined,
           industry: formData.industry.trim() || undefined,
           size: formData.size.trim() || undefined,
+          contactEmail: formData.contactEmail.trim() || undefined,
           plan: formData.plan as any,
           status: formData.status as any,
           invitePolicy: formData.invitePolicy as any,
@@ -217,6 +220,25 @@ export default function EditTenantPage() {
                     placeholder="https://example.com"
                     className="mt-1"
                   />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="contactEmail" className="text-sm font-medium text-gray-700">
+                    {t("Contact Email", "admin.tenants.edit.page.EditTenantPage.contact_email__10ckols")}
+                  </Label>
+                  <Input
+                    id="contactEmail"
+                    type="email"
+                    value={formData.contactEmail}
+                    onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))}
+                    placeholder="contact@example.com"
+                    className="mt-1"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    {t("Email for support and business inquiries", "admin.tenants.edit.page.EditTenantPage.email_for_support_and_business_inquiries__11ckols")}
+                  </p>
                 </div>
               </div>
 

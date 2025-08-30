@@ -123,7 +123,38 @@ const ContactPage = () => {
         refetchMessages();
       }
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to send message";
+      let errorMessage = "Failed to send message";
+      
+      // Try to extract meaningful error message from tRPC/Zod errors
+      if (error instanceof Error) {
+        try {
+          // Try to parse the error message as JSON (tRPC often stringifies Zod errors)
+          const parsed = JSON.parse(error.message);
+          if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].message) {
+            // Zod validation error array
+            errorMessage = parsed[0].message;
+          } else {
+            errorMessage = error.message;
+          }
+        } catch {
+          // If parsing fails, use the raw error message
+          errorMessage = error.message;
+        }
+      } else if (typeof error === "object" && error !== null) {
+        // Handle tRPC error with shape
+        if ("shape" in error) {
+          const zodErrors = (error as any).shape?.zodError?.fieldErrors;
+          if (zodErrors) {
+            const firstField = Object.keys(zodErrors)[0];
+            if (firstField && Array.isArray(zodErrors[firstField]) && zodErrors[firstField][0]) {
+              errorMessage = zodErrors[firstField][0];
+            }
+          }
+        } else if ("message" in error && typeof (error as any).message === "string") {
+          errorMessage = (error as any).message;
+        }
+      }
+      
       toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);

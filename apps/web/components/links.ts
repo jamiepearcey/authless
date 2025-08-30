@@ -9,6 +9,10 @@ export const navigationLinks = [
     label: t("Pricing", "components.links.navigationLinks.pricing__1itlrq"),
   },
   {
+    href: "/faq",
+    label: t("FAQ", "components.links.navigationLinks.faq__1itlrq"),
+  },
+  {
     href: "/contact",
     label: t("Contact", "components.links.navigationLinks.contact__1itlrq"),
   },

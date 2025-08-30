@@ -10,6 +10,10 @@ import { notificationRouter } from "./routers/notification";
 import { featureToggleRouter } from "./routers/feature-toggle";
 import { setupWizardRouter } from "./routers/setup-wizard";
 import { authRouter } from "./routers/auth";
+import { supportCaseRouter } from "./routers/support-case";
+import { supportOptionRouter } from "./routers/support-option";
+import { n8nWebhookRouter } from "./routers/n8n-webhook";
+import { supportNotificationsRouter } from "./routers/support-notifications";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -141,6 +145,42 @@ const appRouter = router({
   isSetupRequired: setupWizardRouter.isSetupRequired,
   getCoreFeatures: setupWizardRouter.getCoreFeatures,
   resetSetup: setupWizardRouter.resetSetup,
+  
+  // Support Resolution Center - Cases
+  getAllCases: supportCaseRouter.getAllCases,
+  getCaseById: supportCaseRouter.getCaseById,
+  createCase: supportCaseRouter.createCase,
+  updateCaseStatus: supportCaseRouter.updateCaseStatus,
+  assignCase: supportCaseRouter.assignCase,
+  addCaseMessage: supportCaseRouter.addCaseMessage,
+  getCaseMessages: supportCaseRouter.getCaseMessages,
+  getCaseMetrics: supportCaseRouter.getCaseMetrics,
+  convertContactMessageToCase: supportCaseRouter.convertContactMessageToCase,
+  
+  // Support Resolution Center - Options
+  getGlobalSupportOptions: supportOptionRouter.getGlobalSupportOptions,
+  createGlobalSupportOption: supportOptionRouter.createGlobalSupportOption,
+  updateGlobalSupportOption: supportOptionRouter.updateGlobalSupportOption,
+  deleteGlobalSupportOption: supportOptionRouter.deleteGlobalSupportOption,
+  getTenantSupportOptions: supportOptionRouter.getTenantSupportOptions,
+  createTenantSupportOption: supportOptionRouter.createTenantSupportOption,
+  updateTenantSupportOption: supportOptionRouter.updateTenantSupportOption,
+  deleteTenantSupportOption: supportOptionRouter.deleteTenantSupportOption,
+  getAvailableSupportOptions: supportOptionRouter.getAvailableSupportOptions,
+  testSupportOptionRouting: supportOptionRouter.testSupportOptionRouting,
+  
+  // Support Resolution Center - n8n Integration
+  receiveInboundMessage: n8nWebhookRouter.receiveInboundMessage,
+  sendOutboundMessage: n8nWebhookRouter.sendOutboundMessage,
+  updateDeliveryStatus: n8nWebhookRouter.updateDeliveryStatus,
+  configureN8nWebhooks: n8nWebhookRouter.configureN8nWebhooks,
+  getN8nConfiguration: n8nWebhookRouter.getN8nConfiguration,
+  
+  // Support Resolution Center - Notifications
+  createSupportNotification: supportNotificationsRouter.createSupportNotification,
+  getUserSupportNotificationPreferences: supportNotificationsRouter.getUserSupportNotificationPreferences,
+  updateUserSupportNotificationPreferences: supportNotificationsRouter.updateUserSupportNotificationPreferences,
+  notifyCaseParticipants: supportNotificationsRouter.notifyCaseParticipants,
 });
 
 // Export the router and type for client usage

@@ -143,6 +143,36 @@ export type TwoFactorCode = $Result.DefaultSelection<Prisma.$TwoFactorCodePayloa
  * 
  */
 export type TwoFactorAudit = $Result.DefaultSelection<Prisma.$TwoFactorAuditPayload>
+/**
+ * Model SupportCase
+ * 
+ */
+export type SupportCase = $Result.DefaultSelection<Prisma.$SupportCasePayload>
+/**
+ * Model SupportOption
+ * 
+ */
+export type SupportOption = $Result.DefaultSelection<Prisma.$SupportOptionPayload>
+/**
+ * Model CaseMessage
+ * 
+ */
+export type CaseMessage = $Result.DefaultSelection<Prisma.$CaseMessagePayload>
+/**
+ * Model CaseStatusHistory
+ * 
+ */
+export type CaseStatusHistory = $Result.DefaultSelection<Prisma.$CaseStatusHistoryPayload>
+/**
+ * Model CaseMetrics
+ * 
+ */
+export type CaseMetrics = $Result.DefaultSelection<Prisma.$CaseMetricsPayload>
+/**
+ * Model SupportConfiguration
+ * 
+ */
+export type SupportConfiguration = $Result.DefaultSelection<Prisma.$SupportConfigurationPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -526,6 +556,66 @@ export class PrismaClient<
     * ```
     */
   get twoFactorAudit(): Prisma.TwoFactorAuditDelegate<ExtArgs>;
+
+  /**
+   * `prisma.supportCase`: Exposes CRUD operations for the **SupportCase** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SupportCases
+    * const supportCases = await prisma.supportCase.findMany()
+    * ```
+    */
+  get supportCase(): Prisma.SupportCaseDelegate<ExtArgs>;
+
+  /**
+   * `prisma.supportOption`: Exposes CRUD operations for the **SupportOption** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SupportOptions
+    * const supportOptions = await prisma.supportOption.findMany()
+    * ```
+    */
+  get supportOption(): Prisma.SupportOptionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.caseMessage`: Exposes CRUD operations for the **CaseMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CaseMessages
+    * const caseMessages = await prisma.caseMessage.findMany()
+    * ```
+    */
+  get caseMessage(): Prisma.CaseMessageDelegate<ExtArgs>;
+
+  /**
+   * `prisma.caseStatusHistory`: Exposes CRUD operations for the **CaseStatusHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CaseStatusHistories
+    * const caseStatusHistories = await prisma.caseStatusHistory.findMany()
+    * ```
+    */
+  get caseStatusHistory(): Prisma.CaseStatusHistoryDelegate<ExtArgs>;
+
+  /**
+   * `prisma.caseMetrics`: Exposes CRUD operations for the **CaseMetrics** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CaseMetrics
+    * const caseMetrics = await prisma.caseMetrics.findMany()
+    * ```
+    */
+  get caseMetrics(): Prisma.CaseMetricsDelegate<ExtArgs>;
+
+  /**
+   * `prisma.supportConfiguration`: Exposes CRUD operations for the **SupportConfiguration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SupportConfigurations
+    * const supportConfigurations = await prisma.supportConfiguration.findMany()
+    * ```
+    */
+  get supportConfiguration(): Prisma.SupportConfigurationDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -992,7 +1082,13 @@ export namespace Prisma {
     TwoFactorMethod: 'TwoFactorMethod',
     PendingAuth: 'PendingAuth',
     TwoFactorCode: 'TwoFactorCode',
-    TwoFactorAudit: 'TwoFactorAudit'
+    TwoFactorAudit: 'TwoFactorAudit',
+    SupportCase: 'SupportCase',
+    SupportOption: 'SupportOption',
+    CaseMessage: 'CaseMessage',
+    CaseStatusHistory: 'CaseStatusHistory',
+    CaseMetrics: 'CaseMetrics',
+    SupportConfiguration: 'SupportConfiguration'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1008,7 +1104,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit"
+      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit" | "supportCase" | "supportOption" | "caseMessage" | "caseStatusHistory" | "caseMetrics" | "supportConfiguration"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2832,6 +2928,426 @@ export namespace Prisma {
           }
         }
       }
+      SupportCase: {
+        payload: Prisma.$SupportCasePayload<ExtArgs>
+        fields: Prisma.SupportCaseFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SupportCaseFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SupportCaseFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload>
+          }
+          findFirst: {
+            args: Prisma.SupportCaseFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SupportCaseFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload>
+          }
+          findMany: {
+            args: Prisma.SupportCaseFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload>[]
+          }
+          create: {
+            args: Prisma.SupportCaseCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload>
+          }
+          createMany: {
+            args: Prisma.SupportCaseCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SupportCaseCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload>[]
+          }
+          delete: {
+            args: Prisma.SupportCaseDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload>
+          }
+          update: {
+            args: Prisma.SupportCaseUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload>
+          }
+          deleteMany: {
+            args: Prisma.SupportCaseDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SupportCaseUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SupportCaseUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportCasePayload>
+          }
+          aggregate: {
+            args: Prisma.SupportCaseAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSupportCase>
+          }
+          groupBy: {
+            args: Prisma.SupportCaseGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SupportCaseGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SupportCaseCountArgs<ExtArgs>
+            result: $Utils.Optional<SupportCaseCountAggregateOutputType> | number
+          }
+        }
+      }
+      SupportOption: {
+        payload: Prisma.$SupportOptionPayload<ExtArgs>
+        fields: Prisma.SupportOptionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SupportOptionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SupportOptionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload>
+          }
+          findFirst: {
+            args: Prisma.SupportOptionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SupportOptionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload>
+          }
+          findMany: {
+            args: Prisma.SupportOptionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload>[]
+          }
+          create: {
+            args: Prisma.SupportOptionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload>
+          }
+          createMany: {
+            args: Prisma.SupportOptionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SupportOptionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload>[]
+          }
+          delete: {
+            args: Prisma.SupportOptionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload>
+          }
+          update: {
+            args: Prisma.SupportOptionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SupportOptionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SupportOptionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SupportOptionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportOptionPayload>
+          }
+          aggregate: {
+            args: Prisma.SupportOptionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSupportOption>
+          }
+          groupBy: {
+            args: Prisma.SupportOptionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SupportOptionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SupportOptionCountArgs<ExtArgs>
+            result: $Utils.Optional<SupportOptionCountAggregateOutputType> | number
+          }
+        }
+      }
+      CaseMessage: {
+        payload: Prisma.$CaseMessagePayload<ExtArgs>
+        fields: Prisma.CaseMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CaseMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CaseMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.CaseMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CaseMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload>
+          }
+          findMany: {
+            args: Prisma.CaseMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload>[]
+          }
+          create: {
+            args: Prisma.CaseMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload>
+          }
+          createMany: {
+            args: Prisma.CaseMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CaseMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload>[]
+          }
+          delete: {
+            args: Prisma.CaseMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload>
+          }
+          update: {
+            args: Prisma.CaseMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.CaseMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CaseMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CaseMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.CaseMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCaseMessage>
+          }
+          groupBy: {
+            args: Prisma.CaseMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CaseMessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CaseMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<CaseMessageCountAggregateOutputType> | number
+          }
+        }
+      }
+      CaseStatusHistory: {
+        payload: Prisma.$CaseStatusHistoryPayload<ExtArgs>
+        fields: Prisma.CaseStatusHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CaseStatusHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CaseStatusHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.CaseStatusHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CaseStatusHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.CaseStatusHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.CaseStatusHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.CaseStatusHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CaseStatusHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.CaseStatusHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload>
+          }
+          update: {
+            args: Prisma.CaseStatusHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.CaseStatusHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CaseStatusHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CaseStatusHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseStatusHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.CaseStatusHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCaseStatusHistory>
+          }
+          groupBy: {
+            args: Prisma.CaseStatusHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CaseStatusHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CaseStatusHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<CaseStatusHistoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      CaseMetrics: {
+        payload: Prisma.$CaseMetricsPayload<ExtArgs>
+        fields: Prisma.CaseMetricsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CaseMetricsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CaseMetricsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload>
+          }
+          findFirst: {
+            args: Prisma.CaseMetricsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CaseMetricsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload>
+          }
+          findMany: {
+            args: Prisma.CaseMetricsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload>[]
+          }
+          create: {
+            args: Prisma.CaseMetricsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload>
+          }
+          createMany: {
+            args: Prisma.CaseMetricsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CaseMetricsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload>[]
+          }
+          delete: {
+            args: Prisma.CaseMetricsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload>
+          }
+          update: {
+            args: Prisma.CaseMetricsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload>
+          }
+          deleteMany: {
+            args: Prisma.CaseMetricsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CaseMetricsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CaseMetricsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CaseMetricsPayload>
+          }
+          aggregate: {
+            args: Prisma.CaseMetricsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCaseMetrics>
+          }
+          groupBy: {
+            args: Prisma.CaseMetricsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CaseMetricsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CaseMetricsCountArgs<ExtArgs>
+            result: $Utils.Optional<CaseMetricsCountAggregateOutputType> | number
+          }
+        }
+      }
+      SupportConfiguration: {
+        payload: Prisma.$SupportConfigurationPayload<ExtArgs>
+        fields: Prisma.SupportConfigurationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SupportConfigurationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SupportConfigurationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload>
+          }
+          findFirst: {
+            args: Prisma.SupportConfigurationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SupportConfigurationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload>
+          }
+          findMany: {
+            args: Prisma.SupportConfigurationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload>[]
+          }
+          create: {
+            args: Prisma.SupportConfigurationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload>
+          }
+          createMany: {
+            args: Prisma.SupportConfigurationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SupportConfigurationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload>[]
+          }
+          delete: {
+            args: Prisma.SupportConfigurationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload>
+          }
+          update: {
+            args: Prisma.SupportConfigurationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload>
+          }
+          deleteMany: {
+            args: Prisma.SupportConfigurationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SupportConfigurationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SupportConfigurationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportConfigurationPayload>
+          }
+          aggregate: {
+            args: Prisma.SupportConfigurationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSupportConfiguration>
+          }
+          groupBy: {
+            args: Prisma.SupportConfigurationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SupportConfigurationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SupportConfigurationCountArgs<ExtArgs>
+            result: $Utils.Optional<SupportConfigurationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3006,6 +3522,9 @@ export namespace Prisma {
     passkeys: number
     sessions: number
     twoFactorMethods: number
+    assignedCases: number
+    caseStatusChanges: number
+    caseMetrics: number
     pendingAuths: number
     twoFactorCodes: number
     twoFactorAudits: number
@@ -3025,6 +3544,9 @@ export namespace Prisma {
     passkeys?: boolean | UserCountOutputTypeCountPasskeysArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     twoFactorMethods?: boolean | UserCountOutputTypeCountTwoFactorMethodsArgs
+    assignedCases?: boolean | UserCountOutputTypeCountAssignedCasesArgs
+    caseStatusChanges?: boolean | UserCountOutputTypeCountCaseStatusChangesArgs
+    caseMetrics?: boolean | UserCountOutputTypeCountCaseMetricsArgs
     pendingAuths?: boolean | UserCountOutputTypeCountPendingAuthsArgs
     twoFactorCodes?: boolean | UserCountOutputTypeCountTwoFactorCodesArgs
     twoFactorAudits?: boolean | UserCountOutputTypeCountTwoFactorAuditsArgs
@@ -3135,6 +3657,27 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountAssignedCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportCaseWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCaseStatusChangesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseStatusHistoryWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCaseMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseMetricsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountPendingAuthsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PendingAuthWhereInput
   }
@@ -3173,6 +3716,10 @@ export namespace Prisma {
     pendingAuths: number
     twoFactorCodes: number
     twoFactorAudits: number
+    supportOptions: number
+    supportCases: number
+    caseMetrics: number
+    supportConfigurations: number
   }
 
   export type TenantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3190,6 +3737,10 @@ export namespace Prisma {
     pendingAuths?: boolean | TenantCountOutputTypeCountPendingAuthsArgs
     twoFactorCodes?: boolean | TenantCountOutputTypeCountTwoFactorCodesArgs
     twoFactorAudits?: boolean | TenantCountOutputTypeCountTwoFactorAuditsArgs
+    supportOptions?: boolean | TenantCountOutputTypeCountSupportOptionsArgs
+    supportCases?: boolean | TenantCountOutputTypeCountSupportCasesArgs
+    caseMetrics?: boolean | TenantCountOutputTypeCountCaseMetricsArgs
+    supportConfigurations?: boolean | TenantCountOutputTypeCountSupportConfigurationsArgs
   }
 
   // Custom InputTypes
@@ -3301,6 +3852,34 @@ export namespace Prisma {
     where?: TwoFactorAuditWhereInput
   }
 
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountSupportOptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportOptionWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountSupportCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportCaseWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountCaseMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseMetricsWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountSupportConfigurationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportConfigurationWhereInput
+  }
+
 
   /**
    * Count Type ContactReasonCountOutputType
@@ -3370,6 +3949,37 @@ export namespace Prisma {
    */
   export type ContactMessageCountOutputTypeCountRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ContactReplyWhereInput
+  }
+
+
+  /**
+   * Count Type ContactReplyCountOutputType
+   */
+
+  export type ContactReplyCountOutputType = {
+    caseMessages: number
+  }
+
+  export type ContactReplyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    caseMessages?: boolean | ContactReplyCountOutputTypeCountCaseMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ContactReplyCountOutputType without action
+   */
+  export type ContactReplyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactReplyCountOutputType
+     */
+    select?: ContactReplyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ContactReplyCountOutputType without action
+   */
+  export type ContactReplyCountOutputTypeCountCaseMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseMessageWhereInput
   }
 
 
@@ -3450,6 +4060,95 @@ export namespace Prisma {
    */
   export type FeatureDefinitionCountOutputTypeCountAuditEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FeatureAuditEntryWhereInput
+  }
+
+
+  /**
+   * Count Type SupportCaseCountOutputType
+   */
+
+  export type SupportCaseCountOutputType = {
+    messages: number
+    statusHistory: number
+  }
+
+  export type SupportCaseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    messages?: boolean | SupportCaseCountOutputTypeCountMessagesArgs
+    statusHistory?: boolean | SupportCaseCountOutputTypeCountStatusHistoryArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SupportCaseCountOutputType without action
+   */
+  export type SupportCaseCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCaseCountOutputType
+     */
+    select?: SupportCaseCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SupportCaseCountOutputType without action
+   */
+  export type SupportCaseCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseMessageWhereInput
+  }
+
+  /**
+   * SupportCaseCountOutputType without action
+   */
+  export type SupportCaseCountOutputTypeCountStatusHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseStatusHistoryWhereInput
+  }
+
+
+  /**
+   * Count Type SupportOptionCountOutputType
+   */
+
+  export type SupportOptionCountOutputType = {
+    children: number
+    cases: number
+    metrics: number
+  }
+
+  export type SupportOptionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    children?: boolean | SupportOptionCountOutputTypeCountChildrenArgs
+    cases?: boolean | SupportOptionCountOutputTypeCountCasesArgs
+    metrics?: boolean | SupportOptionCountOutputTypeCountMetricsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SupportOptionCountOutputType without action
+   */
+  export type SupportOptionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOptionCountOutputType
+     */
+    select?: SupportOptionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SupportOptionCountOutputType without action
+   */
+  export type SupportOptionCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportOptionWhereInput
+  }
+
+  /**
+   * SupportOptionCountOutputType without action
+   */
+  export type SupportOptionCountOutputTypeCountCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportCaseWhereInput
+  }
+
+  /**
+   * SupportOptionCountOutputType without action
+   */
+  export type SupportOptionCountOutputTypeCountMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseMetricsWhereInput
   }
 
 
@@ -5497,6 +6196,8 @@ export namespace Prisma {
     marketingEmails: boolean | null
     securityAlerts: boolean | null
     activityUpdates: boolean | null
+    notifySupportRepliesUI: boolean | null
+    notifySupportRepliesEmail: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5526,6 +6227,8 @@ export namespace Prisma {
     marketingEmails: boolean | null
     securityAlerts: boolean | null
     activityUpdates: boolean | null
+    notifySupportRepliesUI: boolean | null
+    notifySupportRepliesEmail: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5555,6 +6258,8 @@ export namespace Prisma {
     marketingEmails: number
     securityAlerts: number
     activityUpdates: number
+    notifySupportRepliesUI: number
+    notifySupportRepliesEmail: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5586,6 +6291,8 @@ export namespace Prisma {
     marketingEmails?: true
     securityAlerts?: true
     activityUpdates?: true
+    notifySupportRepliesUI?: true
+    notifySupportRepliesEmail?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5615,6 +6322,8 @@ export namespace Prisma {
     marketingEmails?: true
     securityAlerts?: true
     activityUpdates?: true
+    notifySupportRepliesUI?: true
+    notifySupportRepliesEmail?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5644,6 +6353,8 @@ export namespace Prisma {
     marketingEmails?: true
     securityAlerts?: true
     activityUpdates?: true
+    notifySupportRepliesUI?: true
+    notifySupportRepliesEmail?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5746,6 +6457,8 @@ export namespace Prisma {
     marketingEmails: boolean
     securityAlerts: boolean
     activityUpdates: boolean
+    notifySupportRepliesUI: boolean
+    notifySupportRepliesEmail: boolean
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -5792,6 +6505,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -5807,6 +6522,9 @@ export namespace Prisma {
     passkeys?: boolean | User$passkeysArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     twoFactorMethods?: boolean | User$twoFactorMethodsArgs<ExtArgs>
+    assignedCases?: boolean | User$assignedCasesArgs<ExtArgs>
+    caseStatusChanges?: boolean | User$caseStatusChangesArgs<ExtArgs>
+    caseMetrics?: boolean | User$caseMetricsArgs<ExtArgs>
     pendingAuths?: boolean | User$pendingAuthsArgs<ExtArgs>
     twoFactorCodes?: boolean | User$twoFactorCodesArgs<ExtArgs>
     twoFactorAudits?: boolean | User$twoFactorAuditsArgs<ExtArgs>
@@ -5838,6 +6556,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -5867,6 +6587,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -5885,6 +6607,9 @@ export namespace Prisma {
     passkeys?: boolean | User$passkeysArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     twoFactorMethods?: boolean | User$twoFactorMethodsArgs<ExtArgs>
+    assignedCases?: boolean | User$assignedCasesArgs<ExtArgs>
+    caseStatusChanges?: boolean | User$caseStatusChangesArgs<ExtArgs>
+    caseMetrics?: boolean | User$caseMetricsArgs<ExtArgs>
     pendingAuths?: boolean | User$pendingAuthsArgs<ExtArgs>
     twoFactorCodes?: boolean | User$twoFactorCodesArgs<ExtArgs>
     twoFactorAudits?: boolean | User$twoFactorAuditsArgs<ExtArgs>
@@ -5908,6 +6633,9 @@ export namespace Prisma {
       passkeys: Prisma.$PasskeyPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       twoFactorMethods: Prisma.$TwoFactorMethodPayload<ExtArgs>[]
+      assignedCases: Prisma.$SupportCasePayload<ExtArgs>[]
+      caseStatusChanges: Prisma.$CaseStatusHistoryPayload<ExtArgs>[]
+      caseMetrics: Prisma.$CaseMetricsPayload<ExtArgs>[]
       pendingAuths: Prisma.$PendingAuthPayload<ExtArgs>[]
       twoFactorCodes: Prisma.$TwoFactorCodePayload<ExtArgs>[]
       twoFactorAudits: Prisma.$TwoFactorAuditPayload<ExtArgs>[]
@@ -5937,6 +6665,8 @@ export namespace Prisma {
       marketingEmails: boolean
       securityAlerts: boolean
       activityUpdates: boolean
+      notifySupportRepliesUI: boolean
+      notifySupportRepliesEmail: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -6316,6 +7046,9 @@ export namespace Prisma {
     passkeys<T extends User$passkeysArgs<ExtArgs> = {}>(args?: Subset<T, User$passkeysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasskeyPayload<ExtArgs>, T, "findMany"> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany"> | Null>
     twoFactorMethods<T extends User$twoFactorMethodsArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorMethodsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "findMany"> | Null>
+    assignedCases<T extends User$assignedCasesArgs<ExtArgs> = {}>(args?: Subset<T, User$assignedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findMany"> | Null>
+    caseStatusChanges<T extends User$caseStatusChangesArgs<ExtArgs> = {}>(args?: Subset<T, User$caseStatusChangesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "findMany"> | Null>
+    caseMetrics<T extends User$caseMetricsArgs<ExtArgs> = {}>(args?: Subset<T, User$caseMetricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findMany"> | Null>
     pendingAuths<T extends User$pendingAuthsArgs<ExtArgs> = {}>(args?: Subset<T, User$pendingAuthsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findMany"> | Null>
     twoFactorCodes<T extends User$twoFactorCodesArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorCodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findMany"> | Null>
     twoFactorAudits<T extends User$twoFactorAuditsArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorAuditsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findMany"> | Null>
@@ -6372,6 +7105,8 @@ export namespace Prisma {
     readonly marketingEmails: FieldRef<"User", 'Boolean'>
     readonly securityAlerts: FieldRef<"User", 'Boolean'>
     readonly activityUpdates: FieldRef<"User", 'Boolean'>
+    readonly notifySupportRepliesUI: FieldRef<"User", 'Boolean'>
+    readonly notifySupportRepliesEmail: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -6945,6 +7680,66 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TwoFactorMethodScalarFieldEnum | TwoFactorMethodScalarFieldEnum[]
+  }
+
+  /**
+   * User.assignedCases
+   */
+  export type User$assignedCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    where?: SupportCaseWhereInput
+    orderBy?: SupportCaseOrderByWithRelationInput | SupportCaseOrderByWithRelationInput[]
+    cursor?: SupportCaseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportCaseScalarFieldEnum | SupportCaseScalarFieldEnum[]
+  }
+
+  /**
+   * User.caseStatusChanges
+   */
+  export type User$caseStatusChangesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    where?: CaseStatusHistoryWhereInput
+    orderBy?: CaseStatusHistoryOrderByWithRelationInput | CaseStatusHistoryOrderByWithRelationInput[]
+    cursor?: CaseStatusHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CaseStatusHistoryScalarFieldEnum | CaseStatusHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * User.caseMetrics
+   */
+  export type User$caseMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    where?: CaseMetricsWhereInput
+    orderBy?: CaseMetricsOrderByWithRelationInput | CaseMetricsOrderByWithRelationInput[]
+    cursor?: CaseMetricsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CaseMetricsScalarFieldEnum | CaseMetricsScalarFieldEnum[]
   }
 
   /**
@@ -7915,6 +8710,7 @@ export namespace Prisma {
     website: string | null
     industry: string | null
     size: string | null
+    contactEmail: string | null
     createdAt: Date | null
     updatedAt: Date | null
     suspendedAt: Date | null
@@ -7950,6 +8746,7 @@ export namespace Prisma {
     website: string | null
     industry: string | null
     size: string | null
+    contactEmail: string | null
     createdAt: Date | null
     updatedAt: Date | null
     suspendedAt: Date | null
@@ -7985,6 +8782,7 @@ export namespace Prisma {
     website: number
     industry: number
     size: number
+    contactEmail: number
     createdAt: number
     updatedAt: number
     suspendedAt: number
@@ -8022,6 +8820,7 @@ export namespace Prisma {
     website?: true
     industry?: true
     size?: true
+    contactEmail?: true
     createdAt?: true
     updatedAt?: true
     suspendedAt?: true
@@ -8057,6 +8856,7 @@ export namespace Prisma {
     website?: true
     industry?: true
     size?: true
+    contactEmail?: true
     createdAt?: true
     updatedAt?: true
     suspendedAt?: true
@@ -8092,6 +8892,7 @@ export namespace Prisma {
     website?: true
     industry?: true
     size?: true
+    contactEmail?: true
     createdAt?: true
     updatedAt?: true
     suspendedAt?: true
@@ -8200,6 +9001,7 @@ export namespace Prisma {
     website: string | null
     industry: string | null
     size: string | null
+    contactEmail: string | null
     createdAt: Date
     updatedAt: Date
     suspendedAt: Date | null
@@ -8252,6 +9054,7 @@ export namespace Prisma {
     website?: boolean
     industry?: boolean
     size?: boolean
+    contactEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     suspendedAt?: boolean
@@ -8270,6 +9073,10 @@ export namespace Prisma {
     pendingAuths?: boolean | Tenant$pendingAuthsArgs<ExtArgs>
     twoFactorCodes?: boolean | Tenant$twoFactorCodesArgs<ExtArgs>
     twoFactorAudits?: boolean | Tenant$twoFactorAuditsArgs<ExtArgs>
+    supportOptions?: boolean | Tenant$supportOptionsArgs<ExtArgs>
+    supportCases?: boolean | Tenant$supportCasesArgs<ExtArgs>
+    caseMetrics?: boolean | Tenant$caseMetricsArgs<ExtArgs>
+    supportConfigurations?: boolean | Tenant$supportConfigurationsArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tenant"]>
 
@@ -8302,6 +9109,7 @@ export namespace Prisma {
     website?: boolean
     industry?: boolean
     size?: boolean
+    contactEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     suspendedAt?: boolean
@@ -8337,6 +9145,7 @@ export namespace Prisma {
     website?: boolean
     industry?: boolean
     size?: boolean
+    contactEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     suspendedAt?: boolean
@@ -8358,6 +9167,10 @@ export namespace Prisma {
     pendingAuths?: boolean | Tenant$pendingAuthsArgs<ExtArgs>
     twoFactorCodes?: boolean | Tenant$twoFactorCodesArgs<ExtArgs>
     twoFactorAudits?: boolean | Tenant$twoFactorAuditsArgs<ExtArgs>
+    supportOptions?: boolean | Tenant$supportOptionsArgs<ExtArgs>
+    supportCases?: boolean | Tenant$supportCasesArgs<ExtArgs>
+    caseMetrics?: boolean | Tenant$caseMetricsArgs<ExtArgs>
+    supportConfigurations?: boolean | Tenant$supportConfigurationsArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TenantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8379,6 +9192,10 @@ export namespace Prisma {
       pendingAuths: Prisma.$PendingAuthPayload<ExtArgs>[]
       twoFactorCodes: Prisma.$TwoFactorCodePayload<ExtArgs>[]
       twoFactorAudits: Prisma.$TwoFactorAuditPayload<ExtArgs>[]
+      supportOptions: Prisma.$SupportOptionPayload<ExtArgs>[]
+      supportCases: Prisma.$SupportCasePayload<ExtArgs>[]
+      caseMetrics: Prisma.$CaseMetricsPayload<ExtArgs>[]
+      supportConfigurations: Prisma.$SupportConfigurationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8409,6 +9226,7 @@ export namespace Prisma {
       website: string | null
       industry: string | null
       size: string | null
+      contactEmail: string | null
       createdAt: Date
       updatedAt: Date
       suspendedAt: Date | null
@@ -8791,6 +9609,10 @@ export namespace Prisma {
     pendingAuths<T extends Tenant$pendingAuthsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$pendingAuthsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findMany"> | Null>
     twoFactorCodes<T extends Tenant$twoFactorCodesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$twoFactorCodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findMany"> | Null>
     twoFactorAudits<T extends Tenant$twoFactorAuditsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$twoFactorAuditsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findMany"> | Null>
+    supportOptions<T extends Tenant$supportOptionsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$supportOptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findMany"> | Null>
+    supportCases<T extends Tenant$supportCasesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$supportCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findMany"> | Null>
+    caseMetrics<T extends Tenant$caseMetricsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$caseMetricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findMany"> | Null>
+    supportConfigurations<T extends Tenant$supportConfigurationsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$supportConfigurationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8848,6 +9670,7 @@ export namespace Prisma {
     readonly website: FieldRef<"Tenant", 'String'>
     readonly industry: FieldRef<"Tenant", 'String'>
     readonly size: FieldRef<"Tenant", 'String'>
+    readonly contactEmail: FieldRef<"Tenant", 'String'>
     readonly createdAt: FieldRef<"Tenant", 'DateTime'>
     readonly updatedAt: FieldRef<"Tenant", 'DateTime'>
     readonly suspendedAt: FieldRef<"Tenant", 'DateTime'>
@@ -9443,6 +10266,86 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TwoFactorAuditScalarFieldEnum | TwoFactorAuditScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.supportOptions
+   */
+  export type Tenant$supportOptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    where?: SupportOptionWhereInput
+    orderBy?: SupportOptionOrderByWithRelationInput | SupportOptionOrderByWithRelationInput[]
+    cursor?: SupportOptionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportOptionScalarFieldEnum | SupportOptionScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.supportCases
+   */
+  export type Tenant$supportCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    where?: SupportCaseWhereInput
+    orderBy?: SupportCaseOrderByWithRelationInput | SupportCaseOrderByWithRelationInput[]
+    cursor?: SupportCaseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportCaseScalarFieldEnum | SupportCaseScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.caseMetrics
+   */
+  export type Tenant$caseMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    where?: CaseMetricsWhereInput
+    orderBy?: CaseMetricsOrderByWithRelationInput | CaseMetricsOrderByWithRelationInput[]
+    cursor?: CaseMetricsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CaseMetricsScalarFieldEnum | CaseMetricsScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.supportConfigurations
+   */
+  export type Tenant$supportConfigurationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    where?: SupportConfigurationWhereInput
+    orderBy?: SupportConfigurationOrderByWithRelationInput | SupportConfigurationOrderByWithRelationInput[]
+    cursor?: SupportConfigurationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportConfigurationScalarFieldEnum | SupportConfigurationScalarFieldEnum[]
   }
 
   /**
@@ -12884,6 +13787,7 @@ export namespace Prisma {
     tenant?: boolean | ContactMessage$tenantArgs<ExtArgs>
     reasons?: boolean | ContactMessage$reasonsArgs<ExtArgs>
     replies?: boolean | ContactMessage$repliesArgs<ExtArgs>
+    supportCase?: boolean | ContactMessage$supportCaseArgs<ExtArgs>
     _count?: boolean | ContactMessageCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["contactMessage"]>
 
@@ -12932,6 +13836,7 @@ export namespace Prisma {
     tenant?: boolean | ContactMessage$tenantArgs<ExtArgs>
     reasons?: boolean | ContactMessage$reasonsArgs<ExtArgs>
     replies?: boolean | ContactMessage$repliesArgs<ExtArgs>
+    supportCase?: boolean | ContactMessage$supportCaseArgs<ExtArgs>
     _count?: boolean | ContactMessageCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ContactMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12946,6 +13851,7 @@ export namespace Prisma {
       tenant: Prisma.$TenantPayload<ExtArgs> | null
       reasons: Prisma.$ContactMessageReasonPayload<ExtArgs>[]
       replies: Prisma.$ContactReplyPayload<ExtArgs>[]
+      supportCase: Prisma.$SupportCasePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -13332,6 +14238,7 @@ export namespace Prisma {
     tenant<T extends ContactMessage$tenantArgs<ExtArgs> = {}>(args?: Subset<T, ContactMessage$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     reasons<T extends ContactMessage$reasonsArgs<ExtArgs> = {}>(args?: Subset<T, ContactMessage$reasonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactMessageReasonPayload<ExtArgs>, T, "findMany"> | Null>
     replies<T extends ContactMessage$repliesArgs<ExtArgs> = {}>(args?: Subset<T, ContactMessage$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactReplyPayload<ExtArgs>, T, "findMany"> | Null>
+    supportCase<T extends ContactMessage$supportCaseArgs<ExtArgs> = {}>(args?: Subset<T, ContactMessage$supportCaseArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13762,6 +14669,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ContactReplyScalarFieldEnum | ContactReplyScalarFieldEnum[]
+  }
+
+  /**
+   * ContactMessage.supportCase
+   */
+  export type ContactMessage$supportCaseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    where?: SupportCaseWhereInput
   }
 
   /**
@@ -14895,6 +15817,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     contactMessage?: boolean | ContactMessageDefaultArgs<ExtArgs>
+    caseMessages?: boolean | ContactReply$caseMessagesArgs<ExtArgs>
+    _count?: boolean | ContactReplyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["contactReply"]>
 
   export type ContactReplySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14922,6 +15846,8 @@ export namespace Prisma {
 
   export type ContactReplyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     contactMessage?: boolean | ContactMessageDefaultArgs<ExtArgs>
+    caseMessages?: boolean | ContactReply$caseMessagesArgs<ExtArgs>
+    _count?: boolean | ContactReplyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ContactReplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     contactMessage?: boolean | ContactMessageDefaultArgs<ExtArgs>
@@ -14931,6 +15857,7 @@ export namespace Prisma {
     name: "ContactReply"
     objects: {
       contactMessage: Prisma.$ContactMessagePayload<ExtArgs>
+      caseMessages: Prisma.$CaseMessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15306,6 +16233,7 @@ export namespace Prisma {
   export interface Prisma__ContactReplyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     contactMessage<T extends ContactMessageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContactMessageDefaultArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    caseMessages<T extends ContactReply$caseMessagesArgs<ExtArgs> = {}>(args?: Subset<T, ContactReply$caseMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15658,6 +16586,26 @@ export namespace Prisma {
      * Filter which ContactReplies to delete
      */
     where?: ContactReplyWhereInput
+  }
+
+  /**
+   * ContactReply.caseMessages
+   */
+  export type ContactReply$caseMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    where?: CaseMessageWhereInput
+    orderBy?: CaseMessageOrderByWithRelationInput | CaseMessageOrderByWithRelationInput[]
+    cursor?: CaseMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CaseMessageScalarFieldEnum | CaseMessageScalarFieldEnum[]
   }
 
   /**
@@ -30888,6 +31836,6596 @@ export namespace Prisma {
 
 
   /**
+   * Model SupportCase
+   */
+
+  export type AggregateSupportCase = {
+    _count: SupportCaseCountAggregateOutputType | null
+    _min: SupportCaseMinAggregateOutputType | null
+    _max: SupportCaseMaxAggregateOutputType | null
+  }
+
+  export type SupportCaseMinAggregateOutputType = {
+    id: string | null
+    contactMessageId: string | null
+    caseNumber: string | null
+    title: string | null
+    description: string | null
+    status: string | null
+    priority: string | null
+    assigneeId: string | null
+    tenantId: string | null
+    supportOptionId: string | null
+    threadingKey: string | null
+    source: string | null
+    firstResponseAt: Date | null
+    resolvedAt: Date | null
+    closedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupportCaseMaxAggregateOutputType = {
+    id: string | null
+    contactMessageId: string | null
+    caseNumber: string | null
+    title: string | null
+    description: string | null
+    status: string | null
+    priority: string | null
+    assigneeId: string | null
+    tenantId: string | null
+    supportOptionId: string | null
+    threadingKey: string | null
+    source: string | null
+    firstResponseAt: Date | null
+    resolvedAt: Date | null
+    closedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupportCaseCountAggregateOutputType = {
+    id: number
+    contactMessageId: number
+    caseNumber: number
+    title: number
+    description: number
+    status: number
+    priority: number
+    assigneeId: number
+    tenantId: number
+    supportOptionId: number
+    threadingKey: number
+    source: number
+    sourceMetadata: number
+    firstResponseAt: number
+    resolvedAt: number
+    closedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SupportCaseMinAggregateInputType = {
+    id?: true
+    contactMessageId?: true
+    caseNumber?: true
+    title?: true
+    description?: true
+    status?: true
+    priority?: true
+    assigneeId?: true
+    tenantId?: true
+    supportOptionId?: true
+    threadingKey?: true
+    source?: true
+    firstResponseAt?: true
+    resolvedAt?: true
+    closedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupportCaseMaxAggregateInputType = {
+    id?: true
+    contactMessageId?: true
+    caseNumber?: true
+    title?: true
+    description?: true
+    status?: true
+    priority?: true
+    assigneeId?: true
+    tenantId?: true
+    supportOptionId?: true
+    threadingKey?: true
+    source?: true
+    firstResponseAt?: true
+    resolvedAt?: true
+    closedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupportCaseCountAggregateInputType = {
+    id?: true
+    contactMessageId?: true
+    caseNumber?: true
+    title?: true
+    description?: true
+    status?: true
+    priority?: true
+    assigneeId?: true
+    tenantId?: true
+    supportOptionId?: true
+    threadingKey?: true
+    source?: true
+    sourceMetadata?: true
+    firstResponseAt?: true
+    resolvedAt?: true
+    closedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SupportCaseAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SupportCase to aggregate.
+     */
+    where?: SupportCaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportCases to fetch.
+     */
+    orderBy?: SupportCaseOrderByWithRelationInput | SupportCaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SupportCaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportCases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportCases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SupportCases
+    **/
+    _count?: true | SupportCaseCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SupportCaseMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SupportCaseMaxAggregateInputType
+  }
+
+  export type GetSupportCaseAggregateType<T extends SupportCaseAggregateArgs> = {
+        [P in keyof T & keyof AggregateSupportCase]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSupportCase[P]>
+      : GetScalarType<T[P], AggregateSupportCase[P]>
+  }
+
+
+
+
+  export type SupportCaseGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportCaseWhereInput
+    orderBy?: SupportCaseOrderByWithAggregationInput | SupportCaseOrderByWithAggregationInput[]
+    by: SupportCaseScalarFieldEnum[] | SupportCaseScalarFieldEnum
+    having?: SupportCaseScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SupportCaseCountAggregateInputType | true
+    _min?: SupportCaseMinAggregateInputType
+    _max?: SupportCaseMaxAggregateInputType
+  }
+
+  export type SupportCaseGroupByOutputType = {
+    id: string
+    contactMessageId: string | null
+    caseNumber: string
+    title: string
+    description: string | null
+    status: string
+    priority: string
+    assigneeId: string | null
+    tenantId: string | null
+    supportOptionId: string | null
+    threadingKey: string | null
+    source: string
+    sourceMetadata: JsonValue | null
+    firstResponseAt: Date | null
+    resolvedAt: Date | null
+    closedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SupportCaseCountAggregateOutputType | null
+    _min: SupportCaseMinAggregateOutputType | null
+    _max: SupportCaseMaxAggregateOutputType | null
+  }
+
+  type GetSupportCaseGroupByPayload<T extends SupportCaseGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SupportCaseGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SupportCaseGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SupportCaseGroupByOutputType[P]>
+            : GetScalarType<T[P], SupportCaseGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SupportCaseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contactMessageId?: boolean
+    caseNumber?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    assigneeId?: boolean
+    tenantId?: boolean
+    supportOptionId?: boolean
+    threadingKey?: boolean
+    source?: boolean
+    sourceMetadata?: boolean
+    firstResponseAt?: boolean
+    resolvedAt?: boolean
+    closedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    contactMessage?: boolean | SupportCase$contactMessageArgs<ExtArgs>
+    assignee?: boolean | SupportCase$assigneeArgs<ExtArgs>
+    tenant?: boolean | SupportCase$tenantArgs<ExtArgs>
+    supportOption?: boolean | SupportCase$supportOptionArgs<ExtArgs>
+    messages?: boolean | SupportCase$messagesArgs<ExtArgs>
+    statusHistory?: boolean | SupportCase$statusHistoryArgs<ExtArgs>
+    _count?: boolean | SupportCaseCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["supportCase"]>
+
+  export type SupportCaseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contactMessageId?: boolean
+    caseNumber?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    assigneeId?: boolean
+    tenantId?: boolean
+    supportOptionId?: boolean
+    threadingKey?: boolean
+    source?: boolean
+    sourceMetadata?: boolean
+    firstResponseAt?: boolean
+    resolvedAt?: boolean
+    closedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    contactMessage?: boolean | SupportCase$contactMessageArgs<ExtArgs>
+    assignee?: boolean | SupportCase$assigneeArgs<ExtArgs>
+    tenant?: boolean | SupportCase$tenantArgs<ExtArgs>
+    supportOption?: boolean | SupportCase$supportOptionArgs<ExtArgs>
+  }, ExtArgs["result"]["supportCase"]>
+
+  export type SupportCaseSelectScalar = {
+    id?: boolean
+    contactMessageId?: boolean
+    caseNumber?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    assigneeId?: boolean
+    tenantId?: boolean
+    supportOptionId?: boolean
+    threadingKey?: boolean
+    source?: boolean
+    sourceMetadata?: boolean
+    firstResponseAt?: boolean
+    resolvedAt?: boolean
+    closedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SupportCaseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contactMessage?: boolean | SupportCase$contactMessageArgs<ExtArgs>
+    assignee?: boolean | SupportCase$assigneeArgs<ExtArgs>
+    tenant?: boolean | SupportCase$tenantArgs<ExtArgs>
+    supportOption?: boolean | SupportCase$supportOptionArgs<ExtArgs>
+    messages?: boolean | SupportCase$messagesArgs<ExtArgs>
+    statusHistory?: boolean | SupportCase$statusHistoryArgs<ExtArgs>
+    _count?: boolean | SupportCaseCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SupportCaseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contactMessage?: boolean | SupportCase$contactMessageArgs<ExtArgs>
+    assignee?: boolean | SupportCase$assigneeArgs<ExtArgs>
+    tenant?: boolean | SupportCase$tenantArgs<ExtArgs>
+    supportOption?: boolean | SupportCase$supportOptionArgs<ExtArgs>
+  }
+
+  export type $SupportCasePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SupportCase"
+    objects: {
+      contactMessage: Prisma.$ContactMessagePayload<ExtArgs> | null
+      assignee: Prisma.$UserPayload<ExtArgs> | null
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+      supportOption: Prisma.$SupportOptionPayload<ExtArgs> | null
+      messages: Prisma.$CaseMessagePayload<ExtArgs>[]
+      statusHistory: Prisma.$CaseStatusHistoryPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      contactMessageId: string | null
+      caseNumber: string
+      title: string
+      description: string | null
+      status: string
+      priority: string
+      assigneeId: string | null
+      tenantId: string | null
+      supportOptionId: string | null
+      threadingKey: string | null
+      source: string
+      sourceMetadata: Prisma.JsonValue | null
+      firstResponseAt: Date | null
+      resolvedAt: Date | null
+      closedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["supportCase"]>
+    composites: {}
+  }
+
+  type SupportCaseGetPayload<S extends boolean | null | undefined | SupportCaseDefaultArgs> = $Result.GetResult<Prisma.$SupportCasePayload, S>
+
+  type SupportCaseCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SupportCaseFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SupportCaseCountAggregateInputType | true
+    }
+
+  export interface SupportCaseDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SupportCase'], meta: { name: 'SupportCase' } }
+    /**
+     * Find zero or one SupportCase that matches the filter.
+     * @param {SupportCaseFindUniqueArgs} args - Arguments to find a SupportCase
+     * @example
+     * // Get one SupportCase
+     * const supportCase = await prisma.supportCase.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SupportCaseFindUniqueArgs>(args: SelectSubset<T, SupportCaseFindUniqueArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SupportCase that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SupportCaseFindUniqueOrThrowArgs} args - Arguments to find a SupportCase
+     * @example
+     * // Get one SupportCase
+     * const supportCase = await prisma.supportCase.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SupportCaseFindUniqueOrThrowArgs>(args: SelectSubset<T, SupportCaseFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SupportCase that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportCaseFindFirstArgs} args - Arguments to find a SupportCase
+     * @example
+     * // Get one SupportCase
+     * const supportCase = await prisma.supportCase.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SupportCaseFindFirstArgs>(args?: SelectSubset<T, SupportCaseFindFirstArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SupportCase that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportCaseFindFirstOrThrowArgs} args - Arguments to find a SupportCase
+     * @example
+     * // Get one SupportCase
+     * const supportCase = await prisma.supportCase.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SupportCaseFindFirstOrThrowArgs>(args?: SelectSubset<T, SupportCaseFindFirstOrThrowArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SupportCases that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportCaseFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SupportCases
+     * const supportCases = await prisma.supportCase.findMany()
+     * 
+     * // Get first 10 SupportCases
+     * const supportCases = await prisma.supportCase.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const supportCaseWithIdOnly = await prisma.supportCase.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SupportCaseFindManyArgs>(args?: SelectSubset<T, SupportCaseFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SupportCase.
+     * @param {SupportCaseCreateArgs} args - Arguments to create a SupportCase.
+     * @example
+     * // Create one SupportCase
+     * const SupportCase = await prisma.supportCase.create({
+     *   data: {
+     *     // ... data to create a SupportCase
+     *   }
+     * })
+     * 
+     */
+    create<T extends SupportCaseCreateArgs>(args: SelectSubset<T, SupportCaseCreateArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SupportCases.
+     * @param {SupportCaseCreateManyArgs} args - Arguments to create many SupportCases.
+     * @example
+     * // Create many SupportCases
+     * const supportCase = await prisma.supportCase.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SupportCaseCreateManyArgs>(args?: SelectSubset<T, SupportCaseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SupportCases and returns the data saved in the database.
+     * @param {SupportCaseCreateManyAndReturnArgs} args - Arguments to create many SupportCases.
+     * @example
+     * // Create many SupportCases
+     * const supportCase = await prisma.supportCase.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SupportCases and only return the `id`
+     * const supportCaseWithIdOnly = await prisma.supportCase.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SupportCaseCreateManyAndReturnArgs>(args?: SelectSubset<T, SupportCaseCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SupportCase.
+     * @param {SupportCaseDeleteArgs} args - Arguments to delete one SupportCase.
+     * @example
+     * // Delete one SupportCase
+     * const SupportCase = await prisma.supportCase.delete({
+     *   where: {
+     *     // ... filter to delete one SupportCase
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SupportCaseDeleteArgs>(args: SelectSubset<T, SupportCaseDeleteArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SupportCase.
+     * @param {SupportCaseUpdateArgs} args - Arguments to update one SupportCase.
+     * @example
+     * // Update one SupportCase
+     * const supportCase = await prisma.supportCase.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SupportCaseUpdateArgs>(args: SelectSubset<T, SupportCaseUpdateArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SupportCases.
+     * @param {SupportCaseDeleteManyArgs} args - Arguments to filter SupportCases to delete.
+     * @example
+     * // Delete a few SupportCases
+     * const { count } = await prisma.supportCase.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SupportCaseDeleteManyArgs>(args?: SelectSubset<T, SupportCaseDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SupportCases.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportCaseUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SupportCases
+     * const supportCase = await prisma.supportCase.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SupportCaseUpdateManyArgs>(args: SelectSubset<T, SupportCaseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SupportCase.
+     * @param {SupportCaseUpsertArgs} args - Arguments to update or create a SupportCase.
+     * @example
+     * // Update or create a SupportCase
+     * const supportCase = await prisma.supportCase.upsert({
+     *   create: {
+     *     // ... data to create a SupportCase
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SupportCase we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SupportCaseUpsertArgs>(args: SelectSubset<T, SupportCaseUpsertArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SupportCases.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportCaseCountArgs} args - Arguments to filter SupportCases to count.
+     * @example
+     * // Count the number of SupportCases
+     * const count = await prisma.supportCase.count({
+     *   where: {
+     *     // ... the filter for the SupportCases we want to count
+     *   }
+     * })
+    **/
+    count<T extends SupportCaseCountArgs>(
+      args?: Subset<T, SupportCaseCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SupportCaseCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SupportCase.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportCaseAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SupportCaseAggregateArgs>(args: Subset<T, SupportCaseAggregateArgs>): Prisma.PrismaPromise<GetSupportCaseAggregateType<T>>
+
+    /**
+     * Group by SupportCase.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportCaseGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SupportCaseGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SupportCaseGroupByArgs['orderBy'] }
+        : { orderBy?: SupportCaseGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SupportCaseGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSupportCaseGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SupportCase model
+   */
+  readonly fields: SupportCaseFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SupportCase.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SupportCaseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    contactMessage<T extends SupportCase$contactMessageArgs<ExtArgs> = {}>(args?: Subset<T, SupportCase$contactMessageArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    assignee<T extends SupportCase$assigneeArgs<ExtArgs> = {}>(args?: Subset<T, SupportCase$assigneeArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    tenant<T extends SupportCase$tenantArgs<ExtArgs> = {}>(args?: Subset<T, SupportCase$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    supportOption<T extends SupportCase$supportOptionArgs<ExtArgs> = {}>(args?: Subset<T, SupportCase$supportOptionArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    messages<T extends SupportCase$messagesArgs<ExtArgs> = {}>(args?: Subset<T, SupportCase$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "findMany"> | Null>
+    statusHistory<T extends SupportCase$statusHistoryArgs<ExtArgs> = {}>(args?: Subset<T, SupportCase$statusHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SupportCase model
+   */ 
+  interface SupportCaseFieldRefs {
+    readonly id: FieldRef<"SupportCase", 'String'>
+    readonly contactMessageId: FieldRef<"SupportCase", 'String'>
+    readonly caseNumber: FieldRef<"SupportCase", 'String'>
+    readonly title: FieldRef<"SupportCase", 'String'>
+    readonly description: FieldRef<"SupportCase", 'String'>
+    readonly status: FieldRef<"SupportCase", 'String'>
+    readonly priority: FieldRef<"SupportCase", 'String'>
+    readonly assigneeId: FieldRef<"SupportCase", 'String'>
+    readonly tenantId: FieldRef<"SupportCase", 'String'>
+    readonly supportOptionId: FieldRef<"SupportCase", 'String'>
+    readonly threadingKey: FieldRef<"SupportCase", 'String'>
+    readonly source: FieldRef<"SupportCase", 'String'>
+    readonly sourceMetadata: FieldRef<"SupportCase", 'Json'>
+    readonly firstResponseAt: FieldRef<"SupportCase", 'DateTime'>
+    readonly resolvedAt: FieldRef<"SupportCase", 'DateTime'>
+    readonly closedAt: FieldRef<"SupportCase", 'DateTime'>
+    readonly createdAt: FieldRef<"SupportCase", 'DateTime'>
+    readonly updatedAt: FieldRef<"SupportCase", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SupportCase findUnique
+   */
+  export type SupportCaseFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportCase to fetch.
+     */
+    where: SupportCaseWhereUniqueInput
+  }
+
+  /**
+   * SupportCase findUniqueOrThrow
+   */
+  export type SupportCaseFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportCase to fetch.
+     */
+    where: SupportCaseWhereUniqueInput
+  }
+
+  /**
+   * SupportCase findFirst
+   */
+  export type SupportCaseFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportCase to fetch.
+     */
+    where?: SupportCaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportCases to fetch.
+     */
+    orderBy?: SupportCaseOrderByWithRelationInput | SupportCaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SupportCases.
+     */
+    cursor?: SupportCaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportCases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportCases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SupportCases.
+     */
+    distinct?: SupportCaseScalarFieldEnum | SupportCaseScalarFieldEnum[]
+  }
+
+  /**
+   * SupportCase findFirstOrThrow
+   */
+  export type SupportCaseFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportCase to fetch.
+     */
+    where?: SupportCaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportCases to fetch.
+     */
+    orderBy?: SupportCaseOrderByWithRelationInput | SupportCaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SupportCases.
+     */
+    cursor?: SupportCaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportCases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportCases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SupportCases.
+     */
+    distinct?: SupportCaseScalarFieldEnum | SupportCaseScalarFieldEnum[]
+  }
+
+  /**
+   * SupportCase findMany
+   */
+  export type SupportCaseFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportCases to fetch.
+     */
+    where?: SupportCaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportCases to fetch.
+     */
+    orderBy?: SupportCaseOrderByWithRelationInput | SupportCaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SupportCases.
+     */
+    cursor?: SupportCaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportCases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportCases.
+     */
+    skip?: number
+    distinct?: SupportCaseScalarFieldEnum | SupportCaseScalarFieldEnum[]
+  }
+
+  /**
+   * SupportCase create
+   */
+  export type SupportCaseCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SupportCase.
+     */
+    data: XOR<SupportCaseCreateInput, SupportCaseUncheckedCreateInput>
+  }
+
+  /**
+   * SupportCase createMany
+   */
+  export type SupportCaseCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SupportCases.
+     */
+    data: SupportCaseCreateManyInput | SupportCaseCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SupportCase createManyAndReturn
+   */
+  export type SupportCaseCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SupportCases.
+     */
+    data: SupportCaseCreateManyInput | SupportCaseCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SupportCase update
+   */
+  export type SupportCaseUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SupportCase.
+     */
+    data: XOR<SupportCaseUpdateInput, SupportCaseUncheckedUpdateInput>
+    /**
+     * Choose, which SupportCase to update.
+     */
+    where: SupportCaseWhereUniqueInput
+  }
+
+  /**
+   * SupportCase updateMany
+   */
+  export type SupportCaseUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SupportCases.
+     */
+    data: XOR<SupportCaseUpdateManyMutationInput, SupportCaseUncheckedUpdateManyInput>
+    /**
+     * Filter which SupportCases to update
+     */
+    where?: SupportCaseWhereInput
+  }
+
+  /**
+   * SupportCase upsert
+   */
+  export type SupportCaseUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SupportCase to update in case it exists.
+     */
+    where: SupportCaseWhereUniqueInput
+    /**
+     * In case the SupportCase found by the `where` argument doesn't exist, create a new SupportCase with this data.
+     */
+    create: XOR<SupportCaseCreateInput, SupportCaseUncheckedCreateInput>
+    /**
+     * In case the SupportCase was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SupportCaseUpdateInput, SupportCaseUncheckedUpdateInput>
+  }
+
+  /**
+   * SupportCase delete
+   */
+  export type SupportCaseDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    /**
+     * Filter which SupportCase to delete.
+     */
+    where: SupportCaseWhereUniqueInput
+  }
+
+  /**
+   * SupportCase deleteMany
+   */
+  export type SupportCaseDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SupportCases to delete
+     */
+    where?: SupportCaseWhereInput
+  }
+
+  /**
+   * SupportCase.contactMessage
+   */
+  export type SupportCase$contactMessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    where?: ContactMessageWhereInput
+  }
+
+  /**
+   * SupportCase.assignee
+   */
+  export type SupportCase$assigneeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * SupportCase.tenant
+   */
+  export type SupportCase$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * SupportCase.supportOption
+   */
+  export type SupportCase$supportOptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    where?: SupportOptionWhereInput
+  }
+
+  /**
+   * SupportCase.messages
+   */
+  export type SupportCase$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    where?: CaseMessageWhereInput
+    orderBy?: CaseMessageOrderByWithRelationInput | CaseMessageOrderByWithRelationInput[]
+    cursor?: CaseMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CaseMessageScalarFieldEnum | CaseMessageScalarFieldEnum[]
+  }
+
+  /**
+   * SupportCase.statusHistory
+   */
+  export type SupportCase$statusHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    where?: CaseStatusHistoryWhereInput
+    orderBy?: CaseStatusHistoryOrderByWithRelationInput | CaseStatusHistoryOrderByWithRelationInput[]
+    cursor?: CaseStatusHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CaseStatusHistoryScalarFieldEnum | CaseStatusHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * SupportCase without action
+   */
+  export type SupportCaseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SupportOption
+   */
+
+  export type AggregateSupportOption = {
+    _count: SupportOptionCountAggregateOutputType | null
+    _avg: SupportOptionAvgAggregateOutputType | null
+    _sum: SupportOptionSumAggregateOutputType | null
+    _min: SupportOptionMinAggregateOutputType | null
+    _max: SupportOptionMaxAggregateOutputType | null
+  }
+
+  export type SupportOptionAvgAggregateOutputType = {
+    sortOrder: number | null
+  }
+
+  export type SupportOptionSumAggregateOutputType = {
+    sortOrder: number | null
+  }
+
+  export type SupportOptionMinAggregateOutputType = {
+    id: string | null
+    key: string | null
+    label: string | null
+    description: string | null
+    icon: string | null
+    isActive: boolean | null
+    isGlobal: boolean | null
+    tenantId: string | null
+    parentOptionId: string | null
+    sortOrder: number | null
+    isHidden: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupportOptionMaxAggregateOutputType = {
+    id: string | null
+    key: string | null
+    label: string | null
+    description: string | null
+    icon: string | null
+    isActive: boolean | null
+    isGlobal: boolean | null
+    tenantId: string | null
+    parentOptionId: string | null
+    sortOrder: number | null
+    isHidden: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupportOptionCountAggregateOutputType = {
+    id: number
+    key: number
+    label: number
+    description: number
+    icon: number
+    isActive: number
+    isGlobal: number
+    tenantId: number
+    parentOptionId: number
+    sortOrder: number
+    isHidden: number
+    routingConfig: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SupportOptionAvgAggregateInputType = {
+    sortOrder?: true
+  }
+
+  export type SupportOptionSumAggregateInputType = {
+    sortOrder?: true
+  }
+
+  export type SupportOptionMinAggregateInputType = {
+    id?: true
+    key?: true
+    label?: true
+    description?: true
+    icon?: true
+    isActive?: true
+    isGlobal?: true
+    tenantId?: true
+    parentOptionId?: true
+    sortOrder?: true
+    isHidden?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupportOptionMaxAggregateInputType = {
+    id?: true
+    key?: true
+    label?: true
+    description?: true
+    icon?: true
+    isActive?: true
+    isGlobal?: true
+    tenantId?: true
+    parentOptionId?: true
+    sortOrder?: true
+    isHidden?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupportOptionCountAggregateInputType = {
+    id?: true
+    key?: true
+    label?: true
+    description?: true
+    icon?: true
+    isActive?: true
+    isGlobal?: true
+    tenantId?: true
+    parentOptionId?: true
+    sortOrder?: true
+    isHidden?: true
+    routingConfig?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SupportOptionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SupportOption to aggregate.
+     */
+    where?: SupportOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportOptions to fetch.
+     */
+    orderBy?: SupportOptionOrderByWithRelationInput | SupportOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SupportOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SupportOptions
+    **/
+    _count?: true | SupportOptionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SupportOptionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SupportOptionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SupportOptionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SupportOptionMaxAggregateInputType
+  }
+
+  export type GetSupportOptionAggregateType<T extends SupportOptionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSupportOption]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSupportOption[P]>
+      : GetScalarType<T[P], AggregateSupportOption[P]>
+  }
+
+
+
+
+  export type SupportOptionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportOptionWhereInput
+    orderBy?: SupportOptionOrderByWithAggregationInput | SupportOptionOrderByWithAggregationInput[]
+    by: SupportOptionScalarFieldEnum[] | SupportOptionScalarFieldEnum
+    having?: SupportOptionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SupportOptionCountAggregateInputType | true
+    _avg?: SupportOptionAvgAggregateInputType
+    _sum?: SupportOptionSumAggregateInputType
+    _min?: SupportOptionMinAggregateInputType
+    _max?: SupportOptionMaxAggregateInputType
+  }
+
+  export type SupportOptionGroupByOutputType = {
+    id: string
+    key: string
+    label: string
+    description: string | null
+    icon: string | null
+    isActive: boolean
+    isGlobal: boolean
+    tenantId: string | null
+    parentOptionId: string | null
+    sortOrder: number
+    isHidden: boolean
+    routingConfig: JsonValue
+    createdAt: Date
+    updatedAt: Date
+    _count: SupportOptionCountAggregateOutputType | null
+    _avg: SupportOptionAvgAggregateOutputType | null
+    _sum: SupportOptionSumAggregateOutputType | null
+    _min: SupportOptionMinAggregateOutputType | null
+    _max: SupportOptionMaxAggregateOutputType | null
+  }
+
+  type GetSupportOptionGroupByPayload<T extends SupportOptionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SupportOptionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SupportOptionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SupportOptionGroupByOutputType[P]>
+            : GetScalarType<T[P], SupportOptionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SupportOptionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    label?: boolean
+    description?: boolean
+    icon?: boolean
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: boolean
+    parentOptionId?: boolean
+    sortOrder?: boolean
+    isHidden?: boolean
+    routingConfig?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | SupportOption$tenantArgs<ExtArgs>
+    parent?: boolean | SupportOption$parentArgs<ExtArgs>
+    children?: boolean | SupportOption$childrenArgs<ExtArgs>
+    cases?: boolean | SupportOption$casesArgs<ExtArgs>
+    metrics?: boolean | SupportOption$metricsArgs<ExtArgs>
+    _count?: boolean | SupportOptionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["supportOption"]>
+
+  export type SupportOptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    label?: boolean
+    description?: boolean
+    icon?: boolean
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: boolean
+    parentOptionId?: boolean
+    sortOrder?: boolean
+    isHidden?: boolean
+    routingConfig?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | SupportOption$tenantArgs<ExtArgs>
+    parent?: boolean | SupportOption$parentArgs<ExtArgs>
+  }, ExtArgs["result"]["supportOption"]>
+
+  export type SupportOptionSelectScalar = {
+    id?: boolean
+    key?: boolean
+    label?: boolean
+    description?: boolean
+    icon?: boolean
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: boolean
+    parentOptionId?: boolean
+    sortOrder?: boolean
+    isHidden?: boolean
+    routingConfig?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SupportOptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | SupportOption$tenantArgs<ExtArgs>
+    parent?: boolean | SupportOption$parentArgs<ExtArgs>
+    children?: boolean | SupportOption$childrenArgs<ExtArgs>
+    cases?: boolean | SupportOption$casesArgs<ExtArgs>
+    metrics?: boolean | SupportOption$metricsArgs<ExtArgs>
+    _count?: boolean | SupportOptionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SupportOptionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | SupportOption$tenantArgs<ExtArgs>
+    parent?: boolean | SupportOption$parentArgs<ExtArgs>
+  }
+
+  export type $SupportOptionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SupportOption"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+      parent: Prisma.$SupportOptionPayload<ExtArgs> | null
+      children: Prisma.$SupportOptionPayload<ExtArgs>[]
+      cases: Prisma.$SupportCasePayload<ExtArgs>[]
+      metrics: Prisma.$CaseMetricsPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      key: string
+      label: string
+      description: string | null
+      icon: string | null
+      isActive: boolean
+      isGlobal: boolean
+      tenantId: string | null
+      parentOptionId: string | null
+      sortOrder: number
+      isHidden: boolean
+      routingConfig: Prisma.JsonValue
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["supportOption"]>
+    composites: {}
+  }
+
+  type SupportOptionGetPayload<S extends boolean | null | undefined | SupportOptionDefaultArgs> = $Result.GetResult<Prisma.$SupportOptionPayload, S>
+
+  type SupportOptionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SupportOptionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SupportOptionCountAggregateInputType | true
+    }
+
+  export interface SupportOptionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SupportOption'], meta: { name: 'SupportOption' } }
+    /**
+     * Find zero or one SupportOption that matches the filter.
+     * @param {SupportOptionFindUniqueArgs} args - Arguments to find a SupportOption
+     * @example
+     * // Get one SupportOption
+     * const supportOption = await prisma.supportOption.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SupportOptionFindUniqueArgs>(args: SelectSubset<T, SupportOptionFindUniqueArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SupportOption that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SupportOptionFindUniqueOrThrowArgs} args - Arguments to find a SupportOption
+     * @example
+     * // Get one SupportOption
+     * const supportOption = await prisma.supportOption.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SupportOptionFindUniqueOrThrowArgs>(args: SelectSubset<T, SupportOptionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SupportOption that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportOptionFindFirstArgs} args - Arguments to find a SupportOption
+     * @example
+     * // Get one SupportOption
+     * const supportOption = await prisma.supportOption.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SupportOptionFindFirstArgs>(args?: SelectSubset<T, SupportOptionFindFirstArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SupportOption that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportOptionFindFirstOrThrowArgs} args - Arguments to find a SupportOption
+     * @example
+     * // Get one SupportOption
+     * const supportOption = await prisma.supportOption.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SupportOptionFindFirstOrThrowArgs>(args?: SelectSubset<T, SupportOptionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SupportOptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportOptionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SupportOptions
+     * const supportOptions = await prisma.supportOption.findMany()
+     * 
+     * // Get first 10 SupportOptions
+     * const supportOptions = await prisma.supportOption.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const supportOptionWithIdOnly = await prisma.supportOption.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SupportOptionFindManyArgs>(args?: SelectSubset<T, SupportOptionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SupportOption.
+     * @param {SupportOptionCreateArgs} args - Arguments to create a SupportOption.
+     * @example
+     * // Create one SupportOption
+     * const SupportOption = await prisma.supportOption.create({
+     *   data: {
+     *     // ... data to create a SupportOption
+     *   }
+     * })
+     * 
+     */
+    create<T extends SupportOptionCreateArgs>(args: SelectSubset<T, SupportOptionCreateArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SupportOptions.
+     * @param {SupportOptionCreateManyArgs} args - Arguments to create many SupportOptions.
+     * @example
+     * // Create many SupportOptions
+     * const supportOption = await prisma.supportOption.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SupportOptionCreateManyArgs>(args?: SelectSubset<T, SupportOptionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SupportOptions and returns the data saved in the database.
+     * @param {SupportOptionCreateManyAndReturnArgs} args - Arguments to create many SupportOptions.
+     * @example
+     * // Create many SupportOptions
+     * const supportOption = await prisma.supportOption.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SupportOptions and only return the `id`
+     * const supportOptionWithIdOnly = await prisma.supportOption.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SupportOptionCreateManyAndReturnArgs>(args?: SelectSubset<T, SupportOptionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SupportOption.
+     * @param {SupportOptionDeleteArgs} args - Arguments to delete one SupportOption.
+     * @example
+     * // Delete one SupportOption
+     * const SupportOption = await prisma.supportOption.delete({
+     *   where: {
+     *     // ... filter to delete one SupportOption
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SupportOptionDeleteArgs>(args: SelectSubset<T, SupportOptionDeleteArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SupportOption.
+     * @param {SupportOptionUpdateArgs} args - Arguments to update one SupportOption.
+     * @example
+     * // Update one SupportOption
+     * const supportOption = await prisma.supportOption.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SupportOptionUpdateArgs>(args: SelectSubset<T, SupportOptionUpdateArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SupportOptions.
+     * @param {SupportOptionDeleteManyArgs} args - Arguments to filter SupportOptions to delete.
+     * @example
+     * // Delete a few SupportOptions
+     * const { count } = await prisma.supportOption.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SupportOptionDeleteManyArgs>(args?: SelectSubset<T, SupportOptionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SupportOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportOptionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SupportOptions
+     * const supportOption = await prisma.supportOption.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SupportOptionUpdateManyArgs>(args: SelectSubset<T, SupportOptionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SupportOption.
+     * @param {SupportOptionUpsertArgs} args - Arguments to update or create a SupportOption.
+     * @example
+     * // Update or create a SupportOption
+     * const supportOption = await prisma.supportOption.upsert({
+     *   create: {
+     *     // ... data to create a SupportOption
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SupportOption we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SupportOptionUpsertArgs>(args: SelectSubset<T, SupportOptionUpsertArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SupportOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportOptionCountArgs} args - Arguments to filter SupportOptions to count.
+     * @example
+     * // Count the number of SupportOptions
+     * const count = await prisma.supportOption.count({
+     *   where: {
+     *     // ... the filter for the SupportOptions we want to count
+     *   }
+     * })
+    **/
+    count<T extends SupportOptionCountArgs>(
+      args?: Subset<T, SupportOptionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SupportOptionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SupportOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportOptionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SupportOptionAggregateArgs>(args: Subset<T, SupportOptionAggregateArgs>): Prisma.PrismaPromise<GetSupportOptionAggregateType<T>>
+
+    /**
+     * Group by SupportOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportOptionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SupportOptionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SupportOptionGroupByArgs['orderBy'] }
+        : { orderBy?: SupportOptionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SupportOptionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSupportOptionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SupportOption model
+   */
+  readonly fields: SupportOptionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SupportOption.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SupportOptionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends SupportOption$tenantArgs<ExtArgs> = {}>(args?: Subset<T, SupportOption$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    parent<T extends SupportOption$parentArgs<ExtArgs> = {}>(args?: Subset<T, SupportOption$parentArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    children<T extends SupportOption$childrenArgs<ExtArgs> = {}>(args?: Subset<T, SupportOption$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findMany"> | Null>
+    cases<T extends SupportOption$casesArgs<ExtArgs> = {}>(args?: Subset<T, SupportOption$casesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findMany"> | Null>
+    metrics<T extends SupportOption$metricsArgs<ExtArgs> = {}>(args?: Subset<T, SupportOption$metricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SupportOption model
+   */ 
+  interface SupportOptionFieldRefs {
+    readonly id: FieldRef<"SupportOption", 'String'>
+    readonly key: FieldRef<"SupportOption", 'String'>
+    readonly label: FieldRef<"SupportOption", 'String'>
+    readonly description: FieldRef<"SupportOption", 'String'>
+    readonly icon: FieldRef<"SupportOption", 'String'>
+    readonly isActive: FieldRef<"SupportOption", 'Boolean'>
+    readonly isGlobal: FieldRef<"SupportOption", 'Boolean'>
+    readonly tenantId: FieldRef<"SupportOption", 'String'>
+    readonly parentOptionId: FieldRef<"SupportOption", 'String'>
+    readonly sortOrder: FieldRef<"SupportOption", 'Int'>
+    readonly isHidden: FieldRef<"SupportOption", 'Boolean'>
+    readonly routingConfig: FieldRef<"SupportOption", 'Json'>
+    readonly createdAt: FieldRef<"SupportOption", 'DateTime'>
+    readonly updatedAt: FieldRef<"SupportOption", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SupportOption findUnique
+   */
+  export type SupportOptionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportOption to fetch.
+     */
+    where: SupportOptionWhereUniqueInput
+  }
+
+  /**
+   * SupportOption findUniqueOrThrow
+   */
+  export type SupportOptionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportOption to fetch.
+     */
+    where: SupportOptionWhereUniqueInput
+  }
+
+  /**
+   * SupportOption findFirst
+   */
+  export type SupportOptionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportOption to fetch.
+     */
+    where?: SupportOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportOptions to fetch.
+     */
+    orderBy?: SupportOptionOrderByWithRelationInput | SupportOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SupportOptions.
+     */
+    cursor?: SupportOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SupportOptions.
+     */
+    distinct?: SupportOptionScalarFieldEnum | SupportOptionScalarFieldEnum[]
+  }
+
+  /**
+   * SupportOption findFirstOrThrow
+   */
+  export type SupportOptionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportOption to fetch.
+     */
+    where?: SupportOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportOptions to fetch.
+     */
+    orderBy?: SupportOptionOrderByWithRelationInput | SupportOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SupportOptions.
+     */
+    cursor?: SupportOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SupportOptions.
+     */
+    distinct?: SupportOptionScalarFieldEnum | SupportOptionScalarFieldEnum[]
+  }
+
+  /**
+   * SupportOption findMany
+   */
+  export type SupportOptionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportOptions to fetch.
+     */
+    where?: SupportOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportOptions to fetch.
+     */
+    orderBy?: SupportOptionOrderByWithRelationInput | SupportOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SupportOptions.
+     */
+    cursor?: SupportOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportOptions.
+     */
+    skip?: number
+    distinct?: SupportOptionScalarFieldEnum | SupportOptionScalarFieldEnum[]
+  }
+
+  /**
+   * SupportOption create
+   */
+  export type SupportOptionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SupportOption.
+     */
+    data: XOR<SupportOptionCreateInput, SupportOptionUncheckedCreateInput>
+  }
+
+  /**
+   * SupportOption createMany
+   */
+  export type SupportOptionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SupportOptions.
+     */
+    data: SupportOptionCreateManyInput | SupportOptionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SupportOption createManyAndReturn
+   */
+  export type SupportOptionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SupportOptions.
+     */
+    data: SupportOptionCreateManyInput | SupportOptionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SupportOption update
+   */
+  export type SupportOptionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SupportOption.
+     */
+    data: XOR<SupportOptionUpdateInput, SupportOptionUncheckedUpdateInput>
+    /**
+     * Choose, which SupportOption to update.
+     */
+    where: SupportOptionWhereUniqueInput
+  }
+
+  /**
+   * SupportOption updateMany
+   */
+  export type SupportOptionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SupportOptions.
+     */
+    data: XOR<SupportOptionUpdateManyMutationInput, SupportOptionUncheckedUpdateManyInput>
+    /**
+     * Filter which SupportOptions to update
+     */
+    where?: SupportOptionWhereInput
+  }
+
+  /**
+   * SupportOption upsert
+   */
+  export type SupportOptionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SupportOption to update in case it exists.
+     */
+    where: SupportOptionWhereUniqueInput
+    /**
+     * In case the SupportOption found by the `where` argument doesn't exist, create a new SupportOption with this data.
+     */
+    create: XOR<SupportOptionCreateInput, SupportOptionUncheckedCreateInput>
+    /**
+     * In case the SupportOption was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SupportOptionUpdateInput, SupportOptionUncheckedUpdateInput>
+  }
+
+  /**
+   * SupportOption delete
+   */
+  export type SupportOptionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    /**
+     * Filter which SupportOption to delete.
+     */
+    where: SupportOptionWhereUniqueInput
+  }
+
+  /**
+   * SupportOption deleteMany
+   */
+  export type SupportOptionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SupportOptions to delete
+     */
+    where?: SupportOptionWhereInput
+  }
+
+  /**
+   * SupportOption.tenant
+   */
+  export type SupportOption$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * SupportOption.parent
+   */
+  export type SupportOption$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    where?: SupportOptionWhereInput
+  }
+
+  /**
+   * SupportOption.children
+   */
+  export type SupportOption$childrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    where?: SupportOptionWhereInput
+    orderBy?: SupportOptionOrderByWithRelationInput | SupportOptionOrderByWithRelationInput[]
+    cursor?: SupportOptionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportOptionScalarFieldEnum | SupportOptionScalarFieldEnum[]
+  }
+
+  /**
+   * SupportOption.cases
+   */
+  export type SupportOption$casesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportCase
+     */
+    select?: SupportCaseSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportCaseInclude<ExtArgs> | null
+    where?: SupportCaseWhereInput
+    orderBy?: SupportCaseOrderByWithRelationInput | SupportCaseOrderByWithRelationInput[]
+    cursor?: SupportCaseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportCaseScalarFieldEnum | SupportCaseScalarFieldEnum[]
+  }
+
+  /**
+   * SupportOption.metrics
+   */
+  export type SupportOption$metricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    where?: CaseMetricsWhereInput
+    orderBy?: CaseMetricsOrderByWithRelationInput | CaseMetricsOrderByWithRelationInput[]
+    cursor?: CaseMetricsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CaseMetricsScalarFieldEnum | CaseMetricsScalarFieldEnum[]
+  }
+
+  /**
+   * SupportOption without action
+   */
+  export type SupportOptionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CaseMessage
+   */
+
+  export type AggregateCaseMessage = {
+    _count: CaseMessageCountAggregateOutputType | null
+    _min: CaseMessageMinAggregateOutputType | null
+    _max: CaseMessageMaxAggregateOutputType | null
+  }
+
+  export type CaseMessageMinAggregateOutputType = {
+    id: string | null
+    caseId: string | null
+    contactReplyId: string | null
+    direction: string | null
+    channel: string | null
+    fromAddress: string | null
+    toAddress: string | null
+    subject: string | null
+    content: string | null
+    isInternal: boolean | null
+    messageId: string | null
+    deliveryStatus: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CaseMessageMaxAggregateOutputType = {
+    id: string | null
+    caseId: string | null
+    contactReplyId: string | null
+    direction: string | null
+    channel: string | null
+    fromAddress: string | null
+    toAddress: string | null
+    subject: string | null
+    content: string | null
+    isInternal: boolean | null
+    messageId: string | null
+    deliveryStatus: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CaseMessageCountAggregateOutputType = {
+    id: number
+    caseId: number
+    contactReplyId: number
+    direction: number
+    channel: number
+    fromAddress: number
+    toAddress: number
+    subject: number
+    content: number
+    isInternal: number
+    messageId: number
+    threadingData: number
+    attachments: number
+    deliveryStatus: number
+    deliveryMetadata: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CaseMessageMinAggregateInputType = {
+    id?: true
+    caseId?: true
+    contactReplyId?: true
+    direction?: true
+    channel?: true
+    fromAddress?: true
+    toAddress?: true
+    subject?: true
+    content?: true
+    isInternal?: true
+    messageId?: true
+    deliveryStatus?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CaseMessageMaxAggregateInputType = {
+    id?: true
+    caseId?: true
+    contactReplyId?: true
+    direction?: true
+    channel?: true
+    fromAddress?: true
+    toAddress?: true
+    subject?: true
+    content?: true
+    isInternal?: true
+    messageId?: true
+    deliveryStatus?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CaseMessageCountAggregateInputType = {
+    id?: true
+    caseId?: true
+    contactReplyId?: true
+    direction?: true
+    channel?: true
+    fromAddress?: true
+    toAddress?: true
+    subject?: true
+    content?: true
+    isInternal?: true
+    messageId?: true
+    threadingData?: true
+    attachments?: true
+    deliveryStatus?: true
+    deliveryMetadata?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CaseMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CaseMessage to aggregate.
+     */
+    where?: CaseMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseMessages to fetch.
+     */
+    orderBy?: CaseMessageOrderByWithRelationInput | CaseMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CaseMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CaseMessages
+    **/
+    _count?: true | CaseMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CaseMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CaseMessageMaxAggregateInputType
+  }
+
+  export type GetCaseMessageAggregateType<T extends CaseMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateCaseMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCaseMessage[P]>
+      : GetScalarType<T[P], AggregateCaseMessage[P]>
+  }
+
+
+
+
+  export type CaseMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseMessageWhereInput
+    orderBy?: CaseMessageOrderByWithAggregationInput | CaseMessageOrderByWithAggregationInput[]
+    by: CaseMessageScalarFieldEnum[] | CaseMessageScalarFieldEnum
+    having?: CaseMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CaseMessageCountAggregateInputType | true
+    _min?: CaseMessageMinAggregateInputType
+    _max?: CaseMessageMaxAggregateInputType
+  }
+
+  export type CaseMessageGroupByOutputType = {
+    id: string
+    caseId: string
+    contactReplyId: string | null
+    direction: string
+    channel: string
+    fromAddress: string | null
+    toAddress: string | null
+    subject: string | null
+    content: string
+    isInternal: boolean
+    messageId: string | null
+    threadingData: JsonValue | null
+    attachments: JsonValue | null
+    deliveryStatus: string | null
+    deliveryMetadata: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CaseMessageCountAggregateOutputType | null
+    _min: CaseMessageMinAggregateOutputType | null
+    _max: CaseMessageMaxAggregateOutputType | null
+  }
+
+  type GetCaseMessageGroupByPayload<T extends CaseMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CaseMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CaseMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CaseMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], CaseMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CaseMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    caseId?: boolean
+    contactReplyId?: boolean
+    direction?: boolean
+    channel?: boolean
+    fromAddress?: boolean
+    toAddress?: boolean
+    subject?: boolean
+    content?: boolean
+    isInternal?: boolean
+    messageId?: boolean
+    threadingData?: boolean
+    attachments?: boolean
+    deliveryStatus?: boolean
+    deliveryMetadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    case?: boolean | SupportCaseDefaultArgs<ExtArgs>
+    contactReply?: boolean | CaseMessage$contactReplyArgs<ExtArgs>
+  }, ExtArgs["result"]["caseMessage"]>
+
+  export type CaseMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    caseId?: boolean
+    contactReplyId?: boolean
+    direction?: boolean
+    channel?: boolean
+    fromAddress?: boolean
+    toAddress?: boolean
+    subject?: boolean
+    content?: boolean
+    isInternal?: boolean
+    messageId?: boolean
+    threadingData?: boolean
+    attachments?: boolean
+    deliveryStatus?: boolean
+    deliveryMetadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    case?: boolean | SupportCaseDefaultArgs<ExtArgs>
+    contactReply?: boolean | CaseMessage$contactReplyArgs<ExtArgs>
+  }, ExtArgs["result"]["caseMessage"]>
+
+  export type CaseMessageSelectScalar = {
+    id?: boolean
+    caseId?: boolean
+    contactReplyId?: boolean
+    direction?: boolean
+    channel?: boolean
+    fromAddress?: boolean
+    toAddress?: boolean
+    subject?: boolean
+    content?: boolean
+    isInternal?: boolean
+    messageId?: boolean
+    threadingData?: boolean
+    attachments?: boolean
+    deliveryStatus?: boolean
+    deliveryMetadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CaseMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    case?: boolean | SupportCaseDefaultArgs<ExtArgs>
+    contactReply?: boolean | CaseMessage$contactReplyArgs<ExtArgs>
+  }
+  export type CaseMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    case?: boolean | SupportCaseDefaultArgs<ExtArgs>
+    contactReply?: boolean | CaseMessage$contactReplyArgs<ExtArgs>
+  }
+
+  export type $CaseMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CaseMessage"
+    objects: {
+      case: Prisma.$SupportCasePayload<ExtArgs>
+      contactReply: Prisma.$ContactReplyPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      caseId: string
+      contactReplyId: string | null
+      direction: string
+      channel: string
+      fromAddress: string | null
+      toAddress: string | null
+      subject: string | null
+      content: string
+      isInternal: boolean
+      messageId: string | null
+      threadingData: Prisma.JsonValue | null
+      attachments: Prisma.JsonValue | null
+      deliveryStatus: string | null
+      deliveryMetadata: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["caseMessage"]>
+    composites: {}
+  }
+
+  type CaseMessageGetPayload<S extends boolean | null | undefined | CaseMessageDefaultArgs> = $Result.GetResult<Prisma.$CaseMessagePayload, S>
+
+  type CaseMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CaseMessageFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CaseMessageCountAggregateInputType | true
+    }
+
+  export interface CaseMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CaseMessage'], meta: { name: 'CaseMessage' } }
+    /**
+     * Find zero or one CaseMessage that matches the filter.
+     * @param {CaseMessageFindUniqueArgs} args - Arguments to find a CaseMessage
+     * @example
+     * // Get one CaseMessage
+     * const caseMessage = await prisma.caseMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CaseMessageFindUniqueArgs>(args: SelectSubset<T, CaseMessageFindUniqueArgs<ExtArgs>>): Prisma__CaseMessageClient<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one CaseMessage that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {CaseMessageFindUniqueOrThrowArgs} args - Arguments to find a CaseMessage
+     * @example
+     * // Get one CaseMessage
+     * const caseMessage = await prisma.caseMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CaseMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, CaseMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CaseMessageClient<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first CaseMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMessageFindFirstArgs} args - Arguments to find a CaseMessage
+     * @example
+     * // Get one CaseMessage
+     * const caseMessage = await prisma.caseMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CaseMessageFindFirstArgs>(args?: SelectSubset<T, CaseMessageFindFirstArgs<ExtArgs>>): Prisma__CaseMessageClient<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first CaseMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMessageFindFirstOrThrowArgs} args - Arguments to find a CaseMessage
+     * @example
+     * // Get one CaseMessage
+     * const caseMessage = await prisma.caseMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CaseMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, CaseMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__CaseMessageClient<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more CaseMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CaseMessages
+     * const caseMessages = await prisma.caseMessage.findMany()
+     * 
+     * // Get first 10 CaseMessages
+     * const caseMessages = await prisma.caseMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const caseMessageWithIdOnly = await prisma.caseMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CaseMessageFindManyArgs>(args?: SelectSubset<T, CaseMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a CaseMessage.
+     * @param {CaseMessageCreateArgs} args - Arguments to create a CaseMessage.
+     * @example
+     * // Create one CaseMessage
+     * const CaseMessage = await prisma.caseMessage.create({
+     *   data: {
+     *     // ... data to create a CaseMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends CaseMessageCreateArgs>(args: SelectSubset<T, CaseMessageCreateArgs<ExtArgs>>): Prisma__CaseMessageClient<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many CaseMessages.
+     * @param {CaseMessageCreateManyArgs} args - Arguments to create many CaseMessages.
+     * @example
+     * // Create many CaseMessages
+     * const caseMessage = await prisma.caseMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CaseMessageCreateManyArgs>(args?: SelectSubset<T, CaseMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CaseMessages and returns the data saved in the database.
+     * @param {CaseMessageCreateManyAndReturnArgs} args - Arguments to create many CaseMessages.
+     * @example
+     * // Create many CaseMessages
+     * const caseMessage = await prisma.caseMessage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CaseMessages and only return the `id`
+     * const caseMessageWithIdOnly = await prisma.caseMessage.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CaseMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, CaseMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a CaseMessage.
+     * @param {CaseMessageDeleteArgs} args - Arguments to delete one CaseMessage.
+     * @example
+     * // Delete one CaseMessage
+     * const CaseMessage = await prisma.caseMessage.delete({
+     *   where: {
+     *     // ... filter to delete one CaseMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CaseMessageDeleteArgs>(args: SelectSubset<T, CaseMessageDeleteArgs<ExtArgs>>): Prisma__CaseMessageClient<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one CaseMessage.
+     * @param {CaseMessageUpdateArgs} args - Arguments to update one CaseMessage.
+     * @example
+     * // Update one CaseMessage
+     * const caseMessage = await prisma.caseMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CaseMessageUpdateArgs>(args: SelectSubset<T, CaseMessageUpdateArgs<ExtArgs>>): Prisma__CaseMessageClient<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more CaseMessages.
+     * @param {CaseMessageDeleteManyArgs} args - Arguments to filter CaseMessages to delete.
+     * @example
+     * // Delete a few CaseMessages
+     * const { count } = await prisma.caseMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CaseMessageDeleteManyArgs>(args?: SelectSubset<T, CaseMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CaseMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CaseMessages
+     * const caseMessage = await prisma.caseMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CaseMessageUpdateManyArgs>(args: SelectSubset<T, CaseMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CaseMessage.
+     * @param {CaseMessageUpsertArgs} args - Arguments to update or create a CaseMessage.
+     * @example
+     * // Update or create a CaseMessage
+     * const caseMessage = await prisma.caseMessage.upsert({
+     *   create: {
+     *     // ... data to create a CaseMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CaseMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CaseMessageUpsertArgs>(args: SelectSubset<T, CaseMessageUpsertArgs<ExtArgs>>): Prisma__CaseMessageClient<$Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of CaseMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMessageCountArgs} args - Arguments to filter CaseMessages to count.
+     * @example
+     * // Count the number of CaseMessages
+     * const count = await prisma.caseMessage.count({
+     *   where: {
+     *     // ... the filter for the CaseMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends CaseMessageCountArgs>(
+      args?: Subset<T, CaseMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CaseMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CaseMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CaseMessageAggregateArgs>(args: Subset<T, CaseMessageAggregateArgs>): Prisma.PrismaPromise<GetCaseMessageAggregateType<T>>
+
+    /**
+     * Group by CaseMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CaseMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CaseMessageGroupByArgs['orderBy'] }
+        : { orderBy?: CaseMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CaseMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCaseMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CaseMessage model
+   */
+  readonly fields: CaseMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CaseMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CaseMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    case<T extends SupportCaseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SupportCaseDefaultArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    contactReply<T extends CaseMessage$contactReplyArgs<ExtArgs> = {}>(args?: Subset<T, CaseMessage$contactReplyArgs<ExtArgs>>): Prisma__ContactReplyClient<$Result.GetResult<Prisma.$ContactReplyPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CaseMessage model
+   */ 
+  interface CaseMessageFieldRefs {
+    readonly id: FieldRef<"CaseMessage", 'String'>
+    readonly caseId: FieldRef<"CaseMessage", 'String'>
+    readonly contactReplyId: FieldRef<"CaseMessage", 'String'>
+    readonly direction: FieldRef<"CaseMessage", 'String'>
+    readonly channel: FieldRef<"CaseMessage", 'String'>
+    readonly fromAddress: FieldRef<"CaseMessage", 'String'>
+    readonly toAddress: FieldRef<"CaseMessage", 'String'>
+    readonly subject: FieldRef<"CaseMessage", 'String'>
+    readonly content: FieldRef<"CaseMessage", 'String'>
+    readonly isInternal: FieldRef<"CaseMessage", 'Boolean'>
+    readonly messageId: FieldRef<"CaseMessage", 'String'>
+    readonly threadingData: FieldRef<"CaseMessage", 'Json'>
+    readonly attachments: FieldRef<"CaseMessage", 'Json'>
+    readonly deliveryStatus: FieldRef<"CaseMessage", 'String'>
+    readonly deliveryMetadata: FieldRef<"CaseMessage", 'Json'>
+    readonly createdAt: FieldRef<"CaseMessage", 'DateTime'>
+    readonly updatedAt: FieldRef<"CaseMessage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CaseMessage findUnique
+   */
+  export type CaseMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMessage to fetch.
+     */
+    where: CaseMessageWhereUniqueInput
+  }
+
+  /**
+   * CaseMessage findUniqueOrThrow
+   */
+  export type CaseMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMessage to fetch.
+     */
+    where: CaseMessageWhereUniqueInput
+  }
+
+  /**
+   * CaseMessage findFirst
+   */
+  export type CaseMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMessage to fetch.
+     */
+    where?: CaseMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseMessages to fetch.
+     */
+    orderBy?: CaseMessageOrderByWithRelationInput | CaseMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CaseMessages.
+     */
+    cursor?: CaseMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CaseMessages.
+     */
+    distinct?: CaseMessageScalarFieldEnum | CaseMessageScalarFieldEnum[]
+  }
+
+  /**
+   * CaseMessage findFirstOrThrow
+   */
+  export type CaseMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMessage to fetch.
+     */
+    where?: CaseMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseMessages to fetch.
+     */
+    orderBy?: CaseMessageOrderByWithRelationInput | CaseMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CaseMessages.
+     */
+    cursor?: CaseMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CaseMessages.
+     */
+    distinct?: CaseMessageScalarFieldEnum | CaseMessageScalarFieldEnum[]
+  }
+
+  /**
+   * CaseMessage findMany
+   */
+  export type CaseMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMessages to fetch.
+     */
+    where?: CaseMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseMessages to fetch.
+     */
+    orderBy?: CaseMessageOrderByWithRelationInput | CaseMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CaseMessages.
+     */
+    cursor?: CaseMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseMessages.
+     */
+    skip?: number
+    distinct?: CaseMessageScalarFieldEnum | CaseMessageScalarFieldEnum[]
+  }
+
+  /**
+   * CaseMessage create
+   */
+  export type CaseMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CaseMessage.
+     */
+    data: XOR<CaseMessageCreateInput, CaseMessageUncheckedCreateInput>
+  }
+
+  /**
+   * CaseMessage createMany
+   */
+  export type CaseMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CaseMessages.
+     */
+    data: CaseMessageCreateManyInput | CaseMessageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CaseMessage createManyAndReturn
+   */
+  export type CaseMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many CaseMessages.
+     */
+    data: CaseMessageCreateManyInput | CaseMessageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CaseMessage update
+   */
+  export type CaseMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CaseMessage.
+     */
+    data: XOR<CaseMessageUpdateInput, CaseMessageUncheckedUpdateInput>
+    /**
+     * Choose, which CaseMessage to update.
+     */
+    where: CaseMessageWhereUniqueInput
+  }
+
+  /**
+   * CaseMessage updateMany
+   */
+  export type CaseMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CaseMessages.
+     */
+    data: XOR<CaseMessageUpdateManyMutationInput, CaseMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which CaseMessages to update
+     */
+    where?: CaseMessageWhereInput
+  }
+
+  /**
+   * CaseMessage upsert
+   */
+  export type CaseMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CaseMessage to update in case it exists.
+     */
+    where: CaseMessageWhereUniqueInput
+    /**
+     * In case the CaseMessage found by the `where` argument doesn't exist, create a new CaseMessage with this data.
+     */
+    create: XOR<CaseMessageCreateInput, CaseMessageUncheckedCreateInput>
+    /**
+     * In case the CaseMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CaseMessageUpdateInput, CaseMessageUncheckedUpdateInput>
+  }
+
+  /**
+   * CaseMessage delete
+   */
+  export type CaseMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+    /**
+     * Filter which CaseMessage to delete.
+     */
+    where: CaseMessageWhereUniqueInput
+  }
+
+  /**
+   * CaseMessage deleteMany
+   */
+  export type CaseMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CaseMessages to delete
+     */
+    where?: CaseMessageWhereInput
+  }
+
+  /**
+   * CaseMessage.contactReply
+   */
+  export type CaseMessage$contactReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactReply
+     */
+    select?: ContactReplySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactReplyInclude<ExtArgs> | null
+    where?: ContactReplyWhereInput
+  }
+
+  /**
+   * CaseMessage without action
+   */
+  export type CaseMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMessage
+     */
+    select?: CaseMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CaseStatusHistory
+   */
+
+  export type AggregateCaseStatusHistory = {
+    _count: CaseStatusHistoryCountAggregateOutputType | null
+    _min: CaseStatusHistoryMinAggregateOutputType | null
+    _max: CaseStatusHistoryMaxAggregateOutputType | null
+  }
+
+  export type CaseStatusHistoryMinAggregateOutputType = {
+    id: string | null
+    caseId: string | null
+    fromStatus: string | null
+    toStatus: string | null
+    changedBy: string | null
+    reason: string | null
+    createdAt: Date | null
+  }
+
+  export type CaseStatusHistoryMaxAggregateOutputType = {
+    id: string | null
+    caseId: string | null
+    fromStatus: string | null
+    toStatus: string | null
+    changedBy: string | null
+    reason: string | null
+    createdAt: Date | null
+  }
+
+  export type CaseStatusHistoryCountAggregateOutputType = {
+    id: number
+    caseId: number
+    fromStatus: number
+    toStatus: number
+    changedBy: number
+    reason: number
+    metadata: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CaseStatusHistoryMinAggregateInputType = {
+    id?: true
+    caseId?: true
+    fromStatus?: true
+    toStatus?: true
+    changedBy?: true
+    reason?: true
+    createdAt?: true
+  }
+
+  export type CaseStatusHistoryMaxAggregateInputType = {
+    id?: true
+    caseId?: true
+    fromStatus?: true
+    toStatus?: true
+    changedBy?: true
+    reason?: true
+    createdAt?: true
+  }
+
+  export type CaseStatusHistoryCountAggregateInputType = {
+    id?: true
+    caseId?: true
+    fromStatus?: true
+    toStatus?: true
+    changedBy?: true
+    reason?: true
+    metadata?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CaseStatusHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CaseStatusHistory to aggregate.
+     */
+    where?: CaseStatusHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseStatusHistories to fetch.
+     */
+    orderBy?: CaseStatusHistoryOrderByWithRelationInput | CaseStatusHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CaseStatusHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseStatusHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseStatusHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CaseStatusHistories
+    **/
+    _count?: true | CaseStatusHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CaseStatusHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CaseStatusHistoryMaxAggregateInputType
+  }
+
+  export type GetCaseStatusHistoryAggregateType<T extends CaseStatusHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateCaseStatusHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCaseStatusHistory[P]>
+      : GetScalarType<T[P], AggregateCaseStatusHistory[P]>
+  }
+
+
+
+
+  export type CaseStatusHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseStatusHistoryWhereInput
+    orderBy?: CaseStatusHistoryOrderByWithAggregationInput | CaseStatusHistoryOrderByWithAggregationInput[]
+    by: CaseStatusHistoryScalarFieldEnum[] | CaseStatusHistoryScalarFieldEnum
+    having?: CaseStatusHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CaseStatusHistoryCountAggregateInputType | true
+    _min?: CaseStatusHistoryMinAggregateInputType
+    _max?: CaseStatusHistoryMaxAggregateInputType
+  }
+
+  export type CaseStatusHistoryGroupByOutputType = {
+    id: string
+    caseId: string
+    fromStatus: string | null
+    toStatus: string
+    changedBy: string | null
+    reason: string | null
+    metadata: JsonValue | null
+    createdAt: Date
+    _count: CaseStatusHistoryCountAggregateOutputType | null
+    _min: CaseStatusHistoryMinAggregateOutputType | null
+    _max: CaseStatusHistoryMaxAggregateOutputType | null
+  }
+
+  type GetCaseStatusHistoryGroupByPayload<T extends CaseStatusHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CaseStatusHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CaseStatusHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CaseStatusHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], CaseStatusHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CaseStatusHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    caseId?: boolean
+    fromStatus?: boolean
+    toStatus?: boolean
+    changedBy?: boolean
+    reason?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    case?: boolean | SupportCaseDefaultArgs<ExtArgs>
+    user?: boolean | CaseStatusHistory$userArgs<ExtArgs>
+  }, ExtArgs["result"]["caseStatusHistory"]>
+
+  export type CaseStatusHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    caseId?: boolean
+    fromStatus?: boolean
+    toStatus?: boolean
+    changedBy?: boolean
+    reason?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    case?: boolean | SupportCaseDefaultArgs<ExtArgs>
+    user?: boolean | CaseStatusHistory$userArgs<ExtArgs>
+  }, ExtArgs["result"]["caseStatusHistory"]>
+
+  export type CaseStatusHistorySelectScalar = {
+    id?: boolean
+    caseId?: boolean
+    fromStatus?: boolean
+    toStatus?: boolean
+    changedBy?: boolean
+    reason?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+  }
+
+  export type CaseStatusHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    case?: boolean | SupportCaseDefaultArgs<ExtArgs>
+    user?: boolean | CaseStatusHistory$userArgs<ExtArgs>
+  }
+  export type CaseStatusHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    case?: boolean | SupportCaseDefaultArgs<ExtArgs>
+    user?: boolean | CaseStatusHistory$userArgs<ExtArgs>
+  }
+
+  export type $CaseStatusHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CaseStatusHistory"
+    objects: {
+      case: Prisma.$SupportCasePayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      caseId: string
+      fromStatus: string | null
+      toStatus: string
+      changedBy: string | null
+      reason: string | null
+      metadata: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["caseStatusHistory"]>
+    composites: {}
+  }
+
+  type CaseStatusHistoryGetPayload<S extends boolean | null | undefined | CaseStatusHistoryDefaultArgs> = $Result.GetResult<Prisma.$CaseStatusHistoryPayload, S>
+
+  type CaseStatusHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CaseStatusHistoryFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CaseStatusHistoryCountAggregateInputType | true
+    }
+
+  export interface CaseStatusHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CaseStatusHistory'], meta: { name: 'CaseStatusHistory' } }
+    /**
+     * Find zero or one CaseStatusHistory that matches the filter.
+     * @param {CaseStatusHistoryFindUniqueArgs} args - Arguments to find a CaseStatusHistory
+     * @example
+     * // Get one CaseStatusHistory
+     * const caseStatusHistory = await prisma.caseStatusHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CaseStatusHistoryFindUniqueArgs>(args: SelectSubset<T, CaseStatusHistoryFindUniqueArgs<ExtArgs>>): Prisma__CaseStatusHistoryClient<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one CaseStatusHistory that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {CaseStatusHistoryFindUniqueOrThrowArgs} args - Arguments to find a CaseStatusHistory
+     * @example
+     * // Get one CaseStatusHistory
+     * const caseStatusHistory = await prisma.caseStatusHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CaseStatusHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, CaseStatusHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CaseStatusHistoryClient<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first CaseStatusHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseStatusHistoryFindFirstArgs} args - Arguments to find a CaseStatusHistory
+     * @example
+     * // Get one CaseStatusHistory
+     * const caseStatusHistory = await prisma.caseStatusHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CaseStatusHistoryFindFirstArgs>(args?: SelectSubset<T, CaseStatusHistoryFindFirstArgs<ExtArgs>>): Prisma__CaseStatusHistoryClient<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first CaseStatusHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseStatusHistoryFindFirstOrThrowArgs} args - Arguments to find a CaseStatusHistory
+     * @example
+     * // Get one CaseStatusHistory
+     * const caseStatusHistory = await prisma.caseStatusHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CaseStatusHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, CaseStatusHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__CaseStatusHistoryClient<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more CaseStatusHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseStatusHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CaseStatusHistories
+     * const caseStatusHistories = await prisma.caseStatusHistory.findMany()
+     * 
+     * // Get first 10 CaseStatusHistories
+     * const caseStatusHistories = await prisma.caseStatusHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const caseStatusHistoryWithIdOnly = await prisma.caseStatusHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CaseStatusHistoryFindManyArgs>(args?: SelectSubset<T, CaseStatusHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a CaseStatusHistory.
+     * @param {CaseStatusHistoryCreateArgs} args - Arguments to create a CaseStatusHistory.
+     * @example
+     * // Create one CaseStatusHistory
+     * const CaseStatusHistory = await prisma.caseStatusHistory.create({
+     *   data: {
+     *     // ... data to create a CaseStatusHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends CaseStatusHistoryCreateArgs>(args: SelectSubset<T, CaseStatusHistoryCreateArgs<ExtArgs>>): Prisma__CaseStatusHistoryClient<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many CaseStatusHistories.
+     * @param {CaseStatusHistoryCreateManyArgs} args - Arguments to create many CaseStatusHistories.
+     * @example
+     * // Create many CaseStatusHistories
+     * const caseStatusHistory = await prisma.caseStatusHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CaseStatusHistoryCreateManyArgs>(args?: SelectSubset<T, CaseStatusHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CaseStatusHistories and returns the data saved in the database.
+     * @param {CaseStatusHistoryCreateManyAndReturnArgs} args - Arguments to create many CaseStatusHistories.
+     * @example
+     * // Create many CaseStatusHistories
+     * const caseStatusHistory = await prisma.caseStatusHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CaseStatusHistories and only return the `id`
+     * const caseStatusHistoryWithIdOnly = await prisma.caseStatusHistory.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CaseStatusHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, CaseStatusHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a CaseStatusHistory.
+     * @param {CaseStatusHistoryDeleteArgs} args - Arguments to delete one CaseStatusHistory.
+     * @example
+     * // Delete one CaseStatusHistory
+     * const CaseStatusHistory = await prisma.caseStatusHistory.delete({
+     *   where: {
+     *     // ... filter to delete one CaseStatusHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CaseStatusHistoryDeleteArgs>(args: SelectSubset<T, CaseStatusHistoryDeleteArgs<ExtArgs>>): Prisma__CaseStatusHistoryClient<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one CaseStatusHistory.
+     * @param {CaseStatusHistoryUpdateArgs} args - Arguments to update one CaseStatusHistory.
+     * @example
+     * // Update one CaseStatusHistory
+     * const caseStatusHistory = await prisma.caseStatusHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CaseStatusHistoryUpdateArgs>(args: SelectSubset<T, CaseStatusHistoryUpdateArgs<ExtArgs>>): Prisma__CaseStatusHistoryClient<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more CaseStatusHistories.
+     * @param {CaseStatusHistoryDeleteManyArgs} args - Arguments to filter CaseStatusHistories to delete.
+     * @example
+     * // Delete a few CaseStatusHistories
+     * const { count } = await prisma.caseStatusHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CaseStatusHistoryDeleteManyArgs>(args?: SelectSubset<T, CaseStatusHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CaseStatusHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseStatusHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CaseStatusHistories
+     * const caseStatusHistory = await prisma.caseStatusHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CaseStatusHistoryUpdateManyArgs>(args: SelectSubset<T, CaseStatusHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CaseStatusHistory.
+     * @param {CaseStatusHistoryUpsertArgs} args - Arguments to update or create a CaseStatusHistory.
+     * @example
+     * // Update or create a CaseStatusHistory
+     * const caseStatusHistory = await prisma.caseStatusHistory.upsert({
+     *   create: {
+     *     // ... data to create a CaseStatusHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CaseStatusHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CaseStatusHistoryUpsertArgs>(args: SelectSubset<T, CaseStatusHistoryUpsertArgs<ExtArgs>>): Prisma__CaseStatusHistoryClient<$Result.GetResult<Prisma.$CaseStatusHistoryPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of CaseStatusHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseStatusHistoryCountArgs} args - Arguments to filter CaseStatusHistories to count.
+     * @example
+     * // Count the number of CaseStatusHistories
+     * const count = await prisma.caseStatusHistory.count({
+     *   where: {
+     *     // ... the filter for the CaseStatusHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends CaseStatusHistoryCountArgs>(
+      args?: Subset<T, CaseStatusHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CaseStatusHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CaseStatusHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseStatusHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CaseStatusHistoryAggregateArgs>(args: Subset<T, CaseStatusHistoryAggregateArgs>): Prisma.PrismaPromise<GetCaseStatusHistoryAggregateType<T>>
+
+    /**
+     * Group by CaseStatusHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseStatusHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CaseStatusHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CaseStatusHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: CaseStatusHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CaseStatusHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCaseStatusHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CaseStatusHistory model
+   */
+  readonly fields: CaseStatusHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CaseStatusHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CaseStatusHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    case<T extends SupportCaseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SupportCaseDefaultArgs<ExtArgs>>): Prisma__SupportCaseClient<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    user<T extends CaseStatusHistory$userArgs<ExtArgs> = {}>(args?: Subset<T, CaseStatusHistory$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CaseStatusHistory model
+   */ 
+  interface CaseStatusHistoryFieldRefs {
+    readonly id: FieldRef<"CaseStatusHistory", 'String'>
+    readonly caseId: FieldRef<"CaseStatusHistory", 'String'>
+    readonly fromStatus: FieldRef<"CaseStatusHistory", 'String'>
+    readonly toStatus: FieldRef<"CaseStatusHistory", 'String'>
+    readonly changedBy: FieldRef<"CaseStatusHistory", 'String'>
+    readonly reason: FieldRef<"CaseStatusHistory", 'String'>
+    readonly metadata: FieldRef<"CaseStatusHistory", 'Json'>
+    readonly createdAt: FieldRef<"CaseStatusHistory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CaseStatusHistory findUnique
+   */
+  export type CaseStatusHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseStatusHistory to fetch.
+     */
+    where: CaseStatusHistoryWhereUniqueInput
+  }
+
+  /**
+   * CaseStatusHistory findUniqueOrThrow
+   */
+  export type CaseStatusHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseStatusHistory to fetch.
+     */
+    where: CaseStatusHistoryWhereUniqueInput
+  }
+
+  /**
+   * CaseStatusHistory findFirst
+   */
+  export type CaseStatusHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseStatusHistory to fetch.
+     */
+    where?: CaseStatusHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseStatusHistories to fetch.
+     */
+    orderBy?: CaseStatusHistoryOrderByWithRelationInput | CaseStatusHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CaseStatusHistories.
+     */
+    cursor?: CaseStatusHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseStatusHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseStatusHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CaseStatusHistories.
+     */
+    distinct?: CaseStatusHistoryScalarFieldEnum | CaseStatusHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * CaseStatusHistory findFirstOrThrow
+   */
+  export type CaseStatusHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseStatusHistory to fetch.
+     */
+    where?: CaseStatusHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseStatusHistories to fetch.
+     */
+    orderBy?: CaseStatusHistoryOrderByWithRelationInput | CaseStatusHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CaseStatusHistories.
+     */
+    cursor?: CaseStatusHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseStatusHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseStatusHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CaseStatusHistories.
+     */
+    distinct?: CaseStatusHistoryScalarFieldEnum | CaseStatusHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * CaseStatusHistory findMany
+   */
+  export type CaseStatusHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseStatusHistories to fetch.
+     */
+    where?: CaseStatusHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseStatusHistories to fetch.
+     */
+    orderBy?: CaseStatusHistoryOrderByWithRelationInput | CaseStatusHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CaseStatusHistories.
+     */
+    cursor?: CaseStatusHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseStatusHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseStatusHistories.
+     */
+    skip?: number
+    distinct?: CaseStatusHistoryScalarFieldEnum | CaseStatusHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * CaseStatusHistory create
+   */
+  export type CaseStatusHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CaseStatusHistory.
+     */
+    data: XOR<CaseStatusHistoryCreateInput, CaseStatusHistoryUncheckedCreateInput>
+  }
+
+  /**
+   * CaseStatusHistory createMany
+   */
+  export type CaseStatusHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CaseStatusHistories.
+     */
+    data: CaseStatusHistoryCreateManyInput | CaseStatusHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CaseStatusHistory createManyAndReturn
+   */
+  export type CaseStatusHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many CaseStatusHistories.
+     */
+    data: CaseStatusHistoryCreateManyInput | CaseStatusHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CaseStatusHistory update
+   */
+  export type CaseStatusHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CaseStatusHistory.
+     */
+    data: XOR<CaseStatusHistoryUpdateInput, CaseStatusHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which CaseStatusHistory to update.
+     */
+    where: CaseStatusHistoryWhereUniqueInput
+  }
+
+  /**
+   * CaseStatusHistory updateMany
+   */
+  export type CaseStatusHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CaseStatusHistories.
+     */
+    data: XOR<CaseStatusHistoryUpdateManyMutationInput, CaseStatusHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which CaseStatusHistories to update
+     */
+    where?: CaseStatusHistoryWhereInput
+  }
+
+  /**
+   * CaseStatusHistory upsert
+   */
+  export type CaseStatusHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CaseStatusHistory to update in case it exists.
+     */
+    where: CaseStatusHistoryWhereUniqueInput
+    /**
+     * In case the CaseStatusHistory found by the `where` argument doesn't exist, create a new CaseStatusHistory with this data.
+     */
+    create: XOR<CaseStatusHistoryCreateInput, CaseStatusHistoryUncheckedCreateInput>
+    /**
+     * In case the CaseStatusHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CaseStatusHistoryUpdateInput, CaseStatusHistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * CaseStatusHistory delete
+   */
+  export type CaseStatusHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which CaseStatusHistory to delete.
+     */
+    where: CaseStatusHistoryWhereUniqueInput
+  }
+
+  /**
+   * CaseStatusHistory deleteMany
+   */
+  export type CaseStatusHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CaseStatusHistories to delete
+     */
+    where?: CaseStatusHistoryWhereInput
+  }
+
+  /**
+   * CaseStatusHistory.user
+   */
+  export type CaseStatusHistory$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * CaseStatusHistory without action
+   */
+  export type CaseStatusHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseStatusHistory
+     */
+    select?: CaseStatusHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseStatusHistoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CaseMetrics
+   */
+
+  export type AggregateCaseMetrics = {
+    _count: CaseMetricsCountAggregateOutputType | null
+    _avg: CaseMetricsAvgAggregateOutputType | null
+    _sum: CaseMetricsSumAggregateOutputType | null
+    _min: CaseMetricsMinAggregateOutputType | null
+    _max: CaseMetricsMaxAggregateOutputType | null
+  }
+
+  export type CaseMetricsAvgAggregateOutputType = {
+    totalCases: number | null
+    openCases: number | null
+    pendingCases: number | null
+    resolvedCases: number | null
+    closedCases: number | null
+    avgFirstResponseTime: number | null
+    avgResolutionTime: number | null
+  }
+
+  export type CaseMetricsSumAggregateOutputType = {
+    totalCases: number | null
+    openCases: number | null
+    pendingCases: number | null
+    resolvedCases: number | null
+    closedCases: number | null
+    avgFirstResponseTime: number | null
+    avgResolutionTime: number | null
+  }
+
+  export type CaseMetricsMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    date: Date | null
+    supportOptionId: string | null
+    assigneeId: string | null
+    totalCases: number | null
+    openCases: number | null
+    pendingCases: number | null
+    resolvedCases: number | null
+    closedCases: number | null
+    avgFirstResponseTime: number | null
+    avgResolutionTime: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CaseMetricsMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    date: Date | null
+    supportOptionId: string | null
+    assigneeId: string | null
+    totalCases: number | null
+    openCases: number | null
+    pendingCases: number | null
+    resolvedCases: number | null
+    closedCases: number | null
+    avgFirstResponseTime: number | null
+    avgResolutionTime: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CaseMetricsCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    date: number
+    supportOptionId: number
+    assigneeId: number
+    totalCases: number
+    openCases: number
+    pendingCases: number
+    resolvedCases: number
+    closedCases: number
+    avgFirstResponseTime: number
+    avgResolutionTime: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CaseMetricsAvgAggregateInputType = {
+    totalCases?: true
+    openCases?: true
+    pendingCases?: true
+    resolvedCases?: true
+    closedCases?: true
+    avgFirstResponseTime?: true
+    avgResolutionTime?: true
+  }
+
+  export type CaseMetricsSumAggregateInputType = {
+    totalCases?: true
+    openCases?: true
+    pendingCases?: true
+    resolvedCases?: true
+    closedCases?: true
+    avgFirstResponseTime?: true
+    avgResolutionTime?: true
+  }
+
+  export type CaseMetricsMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    date?: true
+    supportOptionId?: true
+    assigneeId?: true
+    totalCases?: true
+    openCases?: true
+    pendingCases?: true
+    resolvedCases?: true
+    closedCases?: true
+    avgFirstResponseTime?: true
+    avgResolutionTime?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CaseMetricsMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    date?: true
+    supportOptionId?: true
+    assigneeId?: true
+    totalCases?: true
+    openCases?: true
+    pendingCases?: true
+    resolvedCases?: true
+    closedCases?: true
+    avgFirstResponseTime?: true
+    avgResolutionTime?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CaseMetricsCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    date?: true
+    supportOptionId?: true
+    assigneeId?: true
+    totalCases?: true
+    openCases?: true
+    pendingCases?: true
+    resolvedCases?: true
+    closedCases?: true
+    avgFirstResponseTime?: true
+    avgResolutionTime?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CaseMetricsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CaseMetrics to aggregate.
+     */
+    where?: CaseMetricsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseMetrics to fetch.
+     */
+    orderBy?: CaseMetricsOrderByWithRelationInput | CaseMetricsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CaseMetricsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CaseMetrics
+    **/
+    _count?: true | CaseMetricsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CaseMetricsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CaseMetricsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CaseMetricsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CaseMetricsMaxAggregateInputType
+  }
+
+  export type GetCaseMetricsAggregateType<T extends CaseMetricsAggregateArgs> = {
+        [P in keyof T & keyof AggregateCaseMetrics]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCaseMetrics[P]>
+      : GetScalarType<T[P], AggregateCaseMetrics[P]>
+  }
+
+
+
+
+  export type CaseMetricsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CaseMetricsWhereInput
+    orderBy?: CaseMetricsOrderByWithAggregationInput | CaseMetricsOrderByWithAggregationInput[]
+    by: CaseMetricsScalarFieldEnum[] | CaseMetricsScalarFieldEnum
+    having?: CaseMetricsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CaseMetricsCountAggregateInputType | true
+    _avg?: CaseMetricsAvgAggregateInputType
+    _sum?: CaseMetricsSumAggregateInputType
+    _min?: CaseMetricsMinAggregateInputType
+    _max?: CaseMetricsMaxAggregateInputType
+  }
+
+  export type CaseMetricsGroupByOutputType = {
+    id: string
+    tenantId: string | null
+    date: Date
+    supportOptionId: string | null
+    assigneeId: string | null
+    totalCases: number
+    openCases: number
+    pendingCases: number
+    resolvedCases: number
+    closedCases: number
+    avgFirstResponseTime: number | null
+    avgResolutionTime: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CaseMetricsCountAggregateOutputType | null
+    _avg: CaseMetricsAvgAggregateOutputType | null
+    _sum: CaseMetricsSumAggregateOutputType | null
+    _min: CaseMetricsMinAggregateOutputType | null
+    _max: CaseMetricsMaxAggregateOutputType | null
+  }
+
+  type GetCaseMetricsGroupByPayload<T extends CaseMetricsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CaseMetricsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CaseMetricsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CaseMetricsGroupByOutputType[P]>
+            : GetScalarType<T[P], CaseMetricsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CaseMetricsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    date?: boolean
+    supportOptionId?: boolean
+    assigneeId?: boolean
+    totalCases?: boolean
+    openCases?: boolean
+    pendingCases?: boolean
+    resolvedCases?: boolean
+    closedCases?: boolean
+    avgFirstResponseTime?: boolean
+    avgResolutionTime?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | CaseMetrics$tenantArgs<ExtArgs>
+    supportOption?: boolean | CaseMetrics$supportOptionArgs<ExtArgs>
+    assignee?: boolean | CaseMetrics$assigneeArgs<ExtArgs>
+  }, ExtArgs["result"]["caseMetrics"]>
+
+  export type CaseMetricsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    date?: boolean
+    supportOptionId?: boolean
+    assigneeId?: boolean
+    totalCases?: boolean
+    openCases?: boolean
+    pendingCases?: boolean
+    resolvedCases?: boolean
+    closedCases?: boolean
+    avgFirstResponseTime?: boolean
+    avgResolutionTime?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | CaseMetrics$tenantArgs<ExtArgs>
+    supportOption?: boolean | CaseMetrics$supportOptionArgs<ExtArgs>
+    assignee?: boolean | CaseMetrics$assigneeArgs<ExtArgs>
+  }, ExtArgs["result"]["caseMetrics"]>
+
+  export type CaseMetricsSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    date?: boolean
+    supportOptionId?: boolean
+    assigneeId?: boolean
+    totalCases?: boolean
+    openCases?: boolean
+    pendingCases?: boolean
+    resolvedCases?: boolean
+    closedCases?: boolean
+    avgFirstResponseTime?: boolean
+    avgResolutionTime?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CaseMetricsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | CaseMetrics$tenantArgs<ExtArgs>
+    supportOption?: boolean | CaseMetrics$supportOptionArgs<ExtArgs>
+    assignee?: boolean | CaseMetrics$assigneeArgs<ExtArgs>
+  }
+  export type CaseMetricsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | CaseMetrics$tenantArgs<ExtArgs>
+    supportOption?: boolean | CaseMetrics$supportOptionArgs<ExtArgs>
+    assignee?: boolean | CaseMetrics$assigneeArgs<ExtArgs>
+  }
+
+  export type $CaseMetricsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CaseMetrics"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+      supportOption: Prisma.$SupportOptionPayload<ExtArgs> | null
+      assignee: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string | null
+      date: Date
+      supportOptionId: string | null
+      assigneeId: string | null
+      totalCases: number
+      openCases: number
+      pendingCases: number
+      resolvedCases: number
+      closedCases: number
+      avgFirstResponseTime: number | null
+      avgResolutionTime: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["caseMetrics"]>
+    composites: {}
+  }
+
+  type CaseMetricsGetPayload<S extends boolean | null | undefined | CaseMetricsDefaultArgs> = $Result.GetResult<Prisma.$CaseMetricsPayload, S>
+
+  type CaseMetricsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CaseMetricsFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CaseMetricsCountAggregateInputType | true
+    }
+
+  export interface CaseMetricsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CaseMetrics'], meta: { name: 'CaseMetrics' } }
+    /**
+     * Find zero or one CaseMetrics that matches the filter.
+     * @param {CaseMetricsFindUniqueArgs} args - Arguments to find a CaseMetrics
+     * @example
+     * // Get one CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CaseMetricsFindUniqueArgs>(args: SelectSubset<T, CaseMetricsFindUniqueArgs<ExtArgs>>): Prisma__CaseMetricsClient<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one CaseMetrics that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {CaseMetricsFindUniqueOrThrowArgs} args - Arguments to find a CaseMetrics
+     * @example
+     * // Get one CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CaseMetricsFindUniqueOrThrowArgs>(args: SelectSubset<T, CaseMetricsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CaseMetricsClient<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first CaseMetrics that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMetricsFindFirstArgs} args - Arguments to find a CaseMetrics
+     * @example
+     * // Get one CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CaseMetricsFindFirstArgs>(args?: SelectSubset<T, CaseMetricsFindFirstArgs<ExtArgs>>): Prisma__CaseMetricsClient<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first CaseMetrics that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMetricsFindFirstOrThrowArgs} args - Arguments to find a CaseMetrics
+     * @example
+     * // Get one CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CaseMetricsFindFirstOrThrowArgs>(args?: SelectSubset<T, CaseMetricsFindFirstOrThrowArgs<ExtArgs>>): Prisma__CaseMetricsClient<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more CaseMetrics that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMetricsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.findMany()
+     * 
+     * // Get first 10 CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const caseMetricsWithIdOnly = await prisma.caseMetrics.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CaseMetricsFindManyArgs>(args?: SelectSubset<T, CaseMetricsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a CaseMetrics.
+     * @param {CaseMetricsCreateArgs} args - Arguments to create a CaseMetrics.
+     * @example
+     * // Create one CaseMetrics
+     * const CaseMetrics = await prisma.caseMetrics.create({
+     *   data: {
+     *     // ... data to create a CaseMetrics
+     *   }
+     * })
+     * 
+     */
+    create<T extends CaseMetricsCreateArgs>(args: SelectSubset<T, CaseMetricsCreateArgs<ExtArgs>>): Prisma__CaseMetricsClient<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many CaseMetrics.
+     * @param {CaseMetricsCreateManyArgs} args - Arguments to create many CaseMetrics.
+     * @example
+     * // Create many CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CaseMetricsCreateManyArgs>(args?: SelectSubset<T, CaseMetricsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CaseMetrics and returns the data saved in the database.
+     * @param {CaseMetricsCreateManyAndReturnArgs} args - Arguments to create many CaseMetrics.
+     * @example
+     * // Create many CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CaseMetrics and only return the `id`
+     * const caseMetricsWithIdOnly = await prisma.caseMetrics.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CaseMetricsCreateManyAndReturnArgs>(args?: SelectSubset<T, CaseMetricsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a CaseMetrics.
+     * @param {CaseMetricsDeleteArgs} args - Arguments to delete one CaseMetrics.
+     * @example
+     * // Delete one CaseMetrics
+     * const CaseMetrics = await prisma.caseMetrics.delete({
+     *   where: {
+     *     // ... filter to delete one CaseMetrics
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CaseMetricsDeleteArgs>(args: SelectSubset<T, CaseMetricsDeleteArgs<ExtArgs>>): Prisma__CaseMetricsClient<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one CaseMetrics.
+     * @param {CaseMetricsUpdateArgs} args - Arguments to update one CaseMetrics.
+     * @example
+     * // Update one CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CaseMetricsUpdateArgs>(args: SelectSubset<T, CaseMetricsUpdateArgs<ExtArgs>>): Prisma__CaseMetricsClient<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more CaseMetrics.
+     * @param {CaseMetricsDeleteManyArgs} args - Arguments to filter CaseMetrics to delete.
+     * @example
+     * // Delete a few CaseMetrics
+     * const { count } = await prisma.caseMetrics.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CaseMetricsDeleteManyArgs>(args?: SelectSubset<T, CaseMetricsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CaseMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMetricsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CaseMetricsUpdateManyArgs>(args: SelectSubset<T, CaseMetricsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CaseMetrics.
+     * @param {CaseMetricsUpsertArgs} args - Arguments to update or create a CaseMetrics.
+     * @example
+     * // Update or create a CaseMetrics
+     * const caseMetrics = await prisma.caseMetrics.upsert({
+     *   create: {
+     *     // ... data to create a CaseMetrics
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CaseMetrics we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CaseMetricsUpsertArgs>(args: SelectSubset<T, CaseMetricsUpsertArgs<ExtArgs>>): Prisma__CaseMetricsClient<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of CaseMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMetricsCountArgs} args - Arguments to filter CaseMetrics to count.
+     * @example
+     * // Count the number of CaseMetrics
+     * const count = await prisma.caseMetrics.count({
+     *   where: {
+     *     // ... the filter for the CaseMetrics we want to count
+     *   }
+     * })
+    **/
+    count<T extends CaseMetricsCountArgs>(
+      args?: Subset<T, CaseMetricsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CaseMetricsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CaseMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMetricsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CaseMetricsAggregateArgs>(args: Subset<T, CaseMetricsAggregateArgs>): Prisma.PrismaPromise<GetCaseMetricsAggregateType<T>>
+
+    /**
+     * Group by CaseMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CaseMetricsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CaseMetricsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CaseMetricsGroupByArgs['orderBy'] }
+        : { orderBy?: CaseMetricsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CaseMetricsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCaseMetricsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CaseMetrics model
+   */
+  readonly fields: CaseMetricsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CaseMetrics.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CaseMetricsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends CaseMetrics$tenantArgs<ExtArgs> = {}>(args?: Subset<T, CaseMetrics$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    supportOption<T extends CaseMetrics$supportOptionArgs<ExtArgs> = {}>(args?: Subset<T, CaseMetrics$supportOptionArgs<ExtArgs>>): Prisma__SupportOptionClient<$Result.GetResult<Prisma.$SupportOptionPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    assignee<T extends CaseMetrics$assigneeArgs<ExtArgs> = {}>(args?: Subset<T, CaseMetrics$assigneeArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CaseMetrics model
+   */ 
+  interface CaseMetricsFieldRefs {
+    readonly id: FieldRef<"CaseMetrics", 'String'>
+    readonly tenantId: FieldRef<"CaseMetrics", 'String'>
+    readonly date: FieldRef<"CaseMetrics", 'DateTime'>
+    readonly supportOptionId: FieldRef<"CaseMetrics", 'String'>
+    readonly assigneeId: FieldRef<"CaseMetrics", 'String'>
+    readonly totalCases: FieldRef<"CaseMetrics", 'Int'>
+    readonly openCases: FieldRef<"CaseMetrics", 'Int'>
+    readonly pendingCases: FieldRef<"CaseMetrics", 'Int'>
+    readonly resolvedCases: FieldRef<"CaseMetrics", 'Int'>
+    readonly closedCases: FieldRef<"CaseMetrics", 'Int'>
+    readonly avgFirstResponseTime: FieldRef<"CaseMetrics", 'Int'>
+    readonly avgResolutionTime: FieldRef<"CaseMetrics", 'Int'>
+    readonly createdAt: FieldRef<"CaseMetrics", 'DateTime'>
+    readonly updatedAt: FieldRef<"CaseMetrics", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CaseMetrics findUnique
+   */
+  export type CaseMetricsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMetrics to fetch.
+     */
+    where: CaseMetricsWhereUniqueInput
+  }
+
+  /**
+   * CaseMetrics findUniqueOrThrow
+   */
+  export type CaseMetricsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMetrics to fetch.
+     */
+    where: CaseMetricsWhereUniqueInput
+  }
+
+  /**
+   * CaseMetrics findFirst
+   */
+  export type CaseMetricsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMetrics to fetch.
+     */
+    where?: CaseMetricsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseMetrics to fetch.
+     */
+    orderBy?: CaseMetricsOrderByWithRelationInput | CaseMetricsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CaseMetrics.
+     */
+    cursor?: CaseMetricsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CaseMetrics.
+     */
+    distinct?: CaseMetricsScalarFieldEnum | CaseMetricsScalarFieldEnum[]
+  }
+
+  /**
+   * CaseMetrics findFirstOrThrow
+   */
+  export type CaseMetricsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMetrics to fetch.
+     */
+    where?: CaseMetricsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseMetrics to fetch.
+     */
+    orderBy?: CaseMetricsOrderByWithRelationInput | CaseMetricsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CaseMetrics.
+     */
+    cursor?: CaseMetricsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CaseMetrics.
+     */
+    distinct?: CaseMetricsScalarFieldEnum | CaseMetricsScalarFieldEnum[]
+  }
+
+  /**
+   * CaseMetrics findMany
+   */
+  export type CaseMetricsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    /**
+     * Filter, which CaseMetrics to fetch.
+     */
+    where?: CaseMetricsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CaseMetrics to fetch.
+     */
+    orderBy?: CaseMetricsOrderByWithRelationInput | CaseMetricsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CaseMetrics.
+     */
+    cursor?: CaseMetricsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CaseMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CaseMetrics.
+     */
+    skip?: number
+    distinct?: CaseMetricsScalarFieldEnum | CaseMetricsScalarFieldEnum[]
+  }
+
+  /**
+   * CaseMetrics create
+   */
+  export type CaseMetricsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CaseMetrics.
+     */
+    data: XOR<CaseMetricsCreateInput, CaseMetricsUncheckedCreateInput>
+  }
+
+  /**
+   * CaseMetrics createMany
+   */
+  export type CaseMetricsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CaseMetrics.
+     */
+    data: CaseMetricsCreateManyInput | CaseMetricsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CaseMetrics createManyAndReturn
+   */
+  export type CaseMetricsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many CaseMetrics.
+     */
+    data: CaseMetricsCreateManyInput | CaseMetricsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CaseMetrics update
+   */
+  export type CaseMetricsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CaseMetrics.
+     */
+    data: XOR<CaseMetricsUpdateInput, CaseMetricsUncheckedUpdateInput>
+    /**
+     * Choose, which CaseMetrics to update.
+     */
+    where: CaseMetricsWhereUniqueInput
+  }
+
+  /**
+   * CaseMetrics updateMany
+   */
+  export type CaseMetricsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CaseMetrics.
+     */
+    data: XOR<CaseMetricsUpdateManyMutationInput, CaseMetricsUncheckedUpdateManyInput>
+    /**
+     * Filter which CaseMetrics to update
+     */
+    where?: CaseMetricsWhereInput
+  }
+
+  /**
+   * CaseMetrics upsert
+   */
+  export type CaseMetricsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CaseMetrics to update in case it exists.
+     */
+    where: CaseMetricsWhereUniqueInput
+    /**
+     * In case the CaseMetrics found by the `where` argument doesn't exist, create a new CaseMetrics with this data.
+     */
+    create: XOR<CaseMetricsCreateInput, CaseMetricsUncheckedCreateInput>
+    /**
+     * In case the CaseMetrics was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CaseMetricsUpdateInput, CaseMetricsUncheckedUpdateInput>
+  }
+
+  /**
+   * CaseMetrics delete
+   */
+  export type CaseMetricsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+    /**
+     * Filter which CaseMetrics to delete.
+     */
+    where: CaseMetricsWhereUniqueInput
+  }
+
+  /**
+   * CaseMetrics deleteMany
+   */
+  export type CaseMetricsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CaseMetrics to delete
+     */
+    where?: CaseMetricsWhereInput
+  }
+
+  /**
+   * CaseMetrics.tenant
+   */
+  export type CaseMetrics$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * CaseMetrics.supportOption
+   */
+  export type CaseMetrics$supportOptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportOption
+     */
+    select?: SupportOptionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportOptionInclude<ExtArgs> | null
+    where?: SupportOptionWhereInput
+  }
+
+  /**
+   * CaseMetrics.assignee
+   */
+  export type CaseMetrics$assigneeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * CaseMetrics without action
+   */
+  export type CaseMetricsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CaseMetrics
+     */
+    select?: CaseMetricsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CaseMetricsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SupportConfiguration
+   */
+
+  export type AggregateSupportConfiguration = {
+    _count: SupportConfigurationCountAggregateOutputType | null
+    _min: SupportConfigurationMinAggregateOutputType | null
+    _max: SupportConfigurationMaxAggregateOutputType | null
+  }
+
+  export type SupportConfigurationMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    key: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupportConfigurationMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    key: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupportConfigurationCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    key: number
+    value: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SupportConfigurationMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    key?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupportConfigurationMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    key?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupportConfigurationCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    key?: true
+    value?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SupportConfigurationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SupportConfiguration to aggregate.
+     */
+    where?: SupportConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportConfigurations to fetch.
+     */
+    orderBy?: SupportConfigurationOrderByWithRelationInput | SupportConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SupportConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SupportConfigurations
+    **/
+    _count?: true | SupportConfigurationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SupportConfigurationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SupportConfigurationMaxAggregateInputType
+  }
+
+  export type GetSupportConfigurationAggregateType<T extends SupportConfigurationAggregateArgs> = {
+        [P in keyof T & keyof AggregateSupportConfiguration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSupportConfiguration[P]>
+      : GetScalarType<T[P], AggregateSupportConfiguration[P]>
+  }
+
+
+
+
+  export type SupportConfigurationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportConfigurationWhereInput
+    orderBy?: SupportConfigurationOrderByWithAggregationInput | SupportConfigurationOrderByWithAggregationInput[]
+    by: SupportConfigurationScalarFieldEnum[] | SupportConfigurationScalarFieldEnum
+    having?: SupportConfigurationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SupportConfigurationCountAggregateInputType | true
+    _min?: SupportConfigurationMinAggregateInputType
+    _max?: SupportConfigurationMaxAggregateInputType
+  }
+
+  export type SupportConfigurationGroupByOutputType = {
+    id: string
+    tenantId: string | null
+    key: string
+    value: JsonValue
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SupportConfigurationCountAggregateOutputType | null
+    _min: SupportConfigurationMinAggregateOutputType | null
+    _max: SupportConfigurationMaxAggregateOutputType | null
+  }
+
+  type GetSupportConfigurationGroupByPayload<T extends SupportConfigurationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SupportConfigurationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SupportConfigurationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SupportConfigurationGroupByOutputType[P]>
+            : GetScalarType<T[P], SupportConfigurationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SupportConfigurationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    key?: boolean
+    value?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | SupportConfiguration$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["supportConfiguration"]>
+
+  export type SupportConfigurationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    key?: boolean
+    value?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | SupportConfiguration$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["supportConfiguration"]>
+
+  export type SupportConfigurationSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    key?: boolean
+    value?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SupportConfigurationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | SupportConfiguration$tenantArgs<ExtArgs>
+  }
+  export type SupportConfigurationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | SupportConfiguration$tenantArgs<ExtArgs>
+  }
+
+  export type $SupportConfigurationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SupportConfiguration"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string | null
+      key: string
+      value: Prisma.JsonValue
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["supportConfiguration"]>
+    composites: {}
+  }
+
+  type SupportConfigurationGetPayload<S extends boolean | null | undefined | SupportConfigurationDefaultArgs> = $Result.GetResult<Prisma.$SupportConfigurationPayload, S>
+
+  type SupportConfigurationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SupportConfigurationFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SupportConfigurationCountAggregateInputType | true
+    }
+
+  export interface SupportConfigurationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SupportConfiguration'], meta: { name: 'SupportConfiguration' } }
+    /**
+     * Find zero or one SupportConfiguration that matches the filter.
+     * @param {SupportConfigurationFindUniqueArgs} args - Arguments to find a SupportConfiguration
+     * @example
+     * // Get one SupportConfiguration
+     * const supportConfiguration = await prisma.supportConfiguration.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SupportConfigurationFindUniqueArgs>(args: SelectSubset<T, SupportConfigurationFindUniqueArgs<ExtArgs>>): Prisma__SupportConfigurationClient<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SupportConfiguration that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SupportConfigurationFindUniqueOrThrowArgs} args - Arguments to find a SupportConfiguration
+     * @example
+     * // Get one SupportConfiguration
+     * const supportConfiguration = await prisma.supportConfiguration.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SupportConfigurationFindUniqueOrThrowArgs>(args: SelectSubset<T, SupportConfigurationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SupportConfigurationClient<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SupportConfiguration that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportConfigurationFindFirstArgs} args - Arguments to find a SupportConfiguration
+     * @example
+     * // Get one SupportConfiguration
+     * const supportConfiguration = await prisma.supportConfiguration.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SupportConfigurationFindFirstArgs>(args?: SelectSubset<T, SupportConfigurationFindFirstArgs<ExtArgs>>): Prisma__SupportConfigurationClient<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SupportConfiguration that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportConfigurationFindFirstOrThrowArgs} args - Arguments to find a SupportConfiguration
+     * @example
+     * // Get one SupportConfiguration
+     * const supportConfiguration = await prisma.supportConfiguration.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SupportConfigurationFindFirstOrThrowArgs>(args?: SelectSubset<T, SupportConfigurationFindFirstOrThrowArgs<ExtArgs>>): Prisma__SupportConfigurationClient<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SupportConfigurations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportConfigurationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SupportConfigurations
+     * const supportConfigurations = await prisma.supportConfiguration.findMany()
+     * 
+     * // Get first 10 SupportConfigurations
+     * const supportConfigurations = await prisma.supportConfiguration.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const supportConfigurationWithIdOnly = await prisma.supportConfiguration.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SupportConfigurationFindManyArgs>(args?: SelectSubset<T, SupportConfigurationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SupportConfiguration.
+     * @param {SupportConfigurationCreateArgs} args - Arguments to create a SupportConfiguration.
+     * @example
+     * // Create one SupportConfiguration
+     * const SupportConfiguration = await prisma.supportConfiguration.create({
+     *   data: {
+     *     // ... data to create a SupportConfiguration
+     *   }
+     * })
+     * 
+     */
+    create<T extends SupportConfigurationCreateArgs>(args: SelectSubset<T, SupportConfigurationCreateArgs<ExtArgs>>): Prisma__SupportConfigurationClient<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SupportConfigurations.
+     * @param {SupportConfigurationCreateManyArgs} args - Arguments to create many SupportConfigurations.
+     * @example
+     * // Create many SupportConfigurations
+     * const supportConfiguration = await prisma.supportConfiguration.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SupportConfigurationCreateManyArgs>(args?: SelectSubset<T, SupportConfigurationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SupportConfigurations and returns the data saved in the database.
+     * @param {SupportConfigurationCreateManyAndReturnArgs} args - Arguments to create many SupportConfigurations.
+     * @example
+     * // Create many SupportConfigurations
+     * const supportConfiguration = await prisma.supportConfiguration.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SupportConfigurations and only return the `id`
+     * const supportConfigurationWithIdOnly = await prisma.supportConfiguration.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SupportConfigurationCreateManyAndReturnArgs>(args?: SelectSubset<T, SupportConfigurationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SupportConfiguration.
+     * @param {SupportConfigurationDeleteArgs} args - Arguments to delete one SupportConfiguration.
+     * @example
+     * // Delete one SupportConfiguration
+     * const SupportConfiguration = await prisma.supportConfiguration.delete({
+     *   where: {
+     *     // ... filter to delete one SupportConfiguration
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SupportConfigurationDeleteArgs>(args: SelectSubset<T, SupportConfigurationDeleteArgs<ExtArgs>>): Prisma__SupportConfigurationClient<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SupportConfiguration.
+     * @param {SupportConfigurationUpdateArgs} args - Arguments to update one SupportConfiguration.
+     * @example
+     * // Update one SupportConfiguration
+     * const supportConfiguration = await prisma.supportConfiguration.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SupportConfigurationUpdateArgs>(args: SelectSubset<T, SupportConfigurationUpdateArgs<ExtArgs>>): Prisma__SupportConfigurationClient<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SupportConfigurations.
+     * @param {SupportConfigurationDeleteManyArgs} args - Arguments to filter SupportConfigurations to delete.
+     * @example
+     * // Delete a few SupportConfigurations
+     * const { count } = await prisma.supportConfiguration.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SupportConfigurationDeleteManyArgs>(args?: SelectSubset<T, SupportConfigurationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SupportConfigurations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportConfigurationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SupportConfigurations
+     * const supportConfiguration = await prisma.supportConfiguration.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SupportConfigurationUpdateManyArgs>(args: SelectSubset<T, SupportConfigurationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SupportConfiguration.
+     * @param {SupportConfigurationUpsertArgs} args - Arguments to update or create a SupportConfiguration.
+     * @example
+     * // Update or create a SupportConfiguration
+     * const supportConfiguration = await prisma.supportConfiguration.upsert({
+     *   create: {
+     *     // ... data to create a SupportConfiguration
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SupportConfiguration we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SupportConfigurationUpsertArgs>(args: SelectSubset<T, SupportConfigurationUpsertArgs<ExtArgs>>): Prisma__SupportConfigurationClient<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SupportConfigurations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportConfigurationCountArgs} args - Arguments to filter SupportConfigurations to count.
+     * @example
+     * // Count the number of SupportConfigurations
+     * const count = await prisma.supportConfiguration.count({
+     *   where: {
+     *     // ... the filter for the SupportConfigurations we want to count
+     *   }
+     * })
+    **/
+    count<T extends SupportConfigurationCountArgs>(
+      args?: Subset<T, SupportConfigurationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SupportConfigurationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SupportConfiguration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportConfigurationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SupportConfigurationAggregateArgs>(args: Subset<T, SupportConfigurationAggregateArgs>): Prisma.PrismaPromise<GetSupportConfigurationAggregateType<T>>
+
+    /**
+     * Group by SupportConfiguration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportConfigurationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SupportConfigurationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SupportConfigurationGroupByArgs['orderBy'] }
+        : { orderBy?: SupportConfigurationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SupportConfigurationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSupportConfigurationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SupportConfiguration model
+   */
+  readonly fields: SupportConfigurationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SupportConfiguration.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SupportConfigurationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends SupportConfiguration$tenantArgs<ExtArgs> = {}>(args?: Subset<T, SupportConfiguration$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SupportConfiguration model
+   */ 
+  interface SupportConfigurationFieldRefs {
+    readonly id: FieldRef<"SupportConfiguration", 'String'>
+    readonly tenantId: FieldRef<"SupportConfiguration", 'String'>
+    readonly key: FieldRef<"SupportConfiguration", 'String'>
+    readonly value: FieldRef<"SupportConfiguration", 'Json'>
+    readonly description: FieldRef<"SupportConfiguration", 'String'>
+    readonly createdAt: FieldRef<"SupportConfiguration", 'DateTime'>
+    readonly updatedAt: FieldRef<"SupportConfiguration", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SupportConfiguration findUnique
+   */
+  export type SupportConfigurationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportConfiguration to fetch.
+     */
+    where: SupportConfigurationWhereUniqueInput
+  }
+
+  /**
+   * SupportConfiguration findUniqueOrThrow
+   */
+  export type SupportConfigurationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportConfiguration to fetch.
+     */
+    where: SupportConfigurationWhereUniqueInput
+  }
+
+  /**
+   * SupportConfiguration findFirst
+   */
+  export type SupportConfigurationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportConfiguration to fetch.
+     */
+    where?: SupportConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportConfigurations to fetch.
+     */
+    orderBy?: SupportConfigurationOrderByWithRelationInput | SupportConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SupportConfigurations.
+     */
+    cursor?: SupportConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SupportConfigurations.
+     */
+    distinct?: SupportConfigurationScalarFieldEnum | SupportConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * SupportConfiguration findFirstOrThrow
+   */
+  export type SupportConfigurationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportConfiguration to fetch.
+     */
+    where?: SupportConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportConfigurations to fetch.
+     */
+    orderBy?: SupportConfigurationOrderByWithRelationInput | SupportConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SupportConfigurations.
+     */
+    cursor?: SupportConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SupportConfigurations.
+     */
+    distinct?: SupportConfigurationScalarFieldEnum | SupportConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * SupportConfiguration findMany
+   */
+  export type SupportConfigurationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportConfigurations to fetch.
+     */
+    where?: SupportConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportConfigurations to fetch.
+     */
+    orderBy?: SupportConfigurationOrderByWithRelationInput | SupportConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SupportConfigurations.
+     */
+    cursor?: SupportConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportConfigurations.
+     */
+    skip?: number
+    distinct?: SupportConfigurationScalarFieldEnum | SupportConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * SupportConfiguration create
+   */
+  export type SupportConfigurationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SupportConfiguration.
+     */
+    data: XOR<SupportConfigurationCreateInput, SupportConfigurationUncheckedCreateInput>
+  }
+
+  /**
+   * SupportConfiguration createMany
+   */
+  export type SupportConfigurationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SupportConfigurations.
+     */
+    data: SupportConfigurationCreateManyInput | SupportConfigurationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SupportConfiguration createManyAndReturn
+   */
+  export type SupportConfigurationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SupportConfigurations.
+     */
+    data: SupportConfigurationCreateManyInput | SupportConfigurationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SupportConfiguration update
+   */
+  export type SupportConfigurationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SupportConfiguration.
+     */
+    data: XOR<SupportConfigurationUpdateInput, SupportConfigurationUncheckedUpdateInput>
+    /**
+     * Choose, which SupportConfiguration to update.
+     */
+    where: SupportConfigurationWhereUniqueInput
+  }
+
+  /**
+   * SupportConfiguration updateMany
+   */
+  export type SupportConfigurationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SupportConfigurations.
+     */
+    data: XOR<SupportConfigurationUpdateManyMutationInput, SupportConfigurationUncheckedUpdateManyInput>
+    /**
+     * Filter which SupportConfigurations to update
+     */
+    where?: SupportConfigurationWhereInput
+  }
+
+  /**
+   * SupportConfiguration upsert
+   */
+  export type SupportConfigurationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SupportConfiguration to update in case it exists.
+     */
+    where: SupportConfigurationWhereUniqueInput
+    /**
+     * In case the SupportConfiguration found by the `where` argument doesn't exist, create a new SupportConfiguration with this data.
+     */
+    create: XOR<SupportConfigurationCreateInput, SupportConfigurationUncheckedCreateInput>
+    /**
+     * In case the SupportConfiguration was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SupportConfigurationUpdateInput, SupportConfigurationUncheckedUpdateInput>
+  }
+
+  /**
+   * SupportConfiguration delete
+   */
+  export type SupportConfigurationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter which SupportConfiguration to delete.
+     */
+    where: SupportConfigurationWhereUniqueInput
+  }
+
+  /**
+   * SupportConfiguration deleteMany
+   */
+  export type SupportConfigurationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SupportConfigurations to delete
+     */
+    where?: SupportConfigurationWhereInput
+  }
+
+  /**
+   * SupportConfiguration.tenant
+   */
+  export type SupportConfiguration$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * SupportConfiguration without action
+   */
+  export type SupportConfigurationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportConfiguration
+     */
+    select?: SupportConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportConfigurationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -30955,6 +38493,8 @@ export namespace Prisma {
     marketingEmails: 'marketingEmails',
     securityAlerts: 'securityAlerts',
     activityUpdates: 'activityUpdates',
+    notifySupportRepliesUI: 'notifySupportRepliesUI',
+    notifySupportRepliesEmail: 'notifySupportRepliesEmail',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -31000,6 +38540,7 @@ export namespace Prisma {
     website: 'website',
     industry: 'industry',
     size: 'size',
+    contactEmail: 'contactEmail',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     suspendedAt: 'suspendedAt',
@@ -31347,12 +38888,141 @@ export namespace Prisma {
   export type TwoFactorAuditScalarFieldEnum = (typeof TwoFactorAuditScalarFieldEnum)[keyof typeof TwoFactorAuditScalarFieldEnum]
 
 
+  export const SupportCaseScalarFieldEnum: {
+    id: 'id',
+    contactMessageId: 'contactMessageId',
+    caseNumber: 'caseNumber',
+    title: 'title',
+    description: 'description',
+    status: 'status',
+    priority: 'priority',
+    assigneeId: 'assigneeId',
+    tenantId: 'tenantId',
+    supportOptionId: 'supportOptionId',
+    threadingKey: 'threadingKey',
+    source: 'source',
+    sourceMetadata: 'sourceMetadata',
+    firstResponseAt: 'firstResponseAt',
+    resolvedAt: 'resolvedAt',
+    closedAt: 'closedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SupportCaseScalarFieldEnum = (typeof SupportCaseScalarFieldEnum)[keyof typeof SupportCaseScalarFieldEnum]
+
+
+  export const SupportOptionScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    label: 'label',
+    description: 'description',
+    icon: 'icon',
+    isActive: 'isActive',
+    isGlobal: 'isGlobal',
+    tenantId: 'tenantId',
+    parentOptionId: 'parentOptionId',
+    sortOrder: 'sortOrder',
+    isHidden: 'isHidden',
+    routingConfig: 'routingConfig',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SupportOptionScalarFieldEnum = (typeof SupportOptionScalarFieldEnum)[keyof typeof SupportOptionScalarFieldEnum]
+
+
+  export const CaseMessageScalarFieldEnum: {
+    id: 'id',
+    caseId: 'caseId',
+    contactReplyId: 'contactReplyId',
+    direction: 'direction',
+    channel: 'channel',
+    fromAddress: 'fromAddress',
+    toAddress: 'toAddress',
+    subject: 'subject',
+    content: 'content',
+    isInternal: 'isInternal',
+    messageId: 'messageId',
+    threadingData: 'threadingData',
+    attachments: 'attachments',
+    deliveryStatus: 'deliveryStatus',
+    deliveryMetadata: 'deliveryMetadata',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CaseMessageScalarFieldEnum = (typeof CaseMessageScalarFieldEnum)[keyof typeof CaseMessageScalarFieldEnum]
+
+
+  export const CaseStatusHistoryScalarFieldEnum: {
+    id: 'id',
+    caseId: 'caseId',
+    fromStatus: 'fromStatus',
+    toStatus: 'toStatus',
+    changedBy: 'changedBy',
+    reason: 'reason',
+    metadata: 'metadata',
+    createdAt: 'createdAt'
+  };
+
+  export type CaseStatusHistoryScalarFieldEnum = (typeof CaseStatusHistoryScalarFieldEnum)[keyof typeof CaseStatusHistoryScalarFieldEnum]
+
+
+  export const CaseMetricsScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    date: 'date',
+    supportOptionId: 'supportOptionId',
+    assigneeId: 'assigneeId',
+    totalCases: 'totalCases',
+    openCases: 'openCases',
+    pendingCases: 'pendingCases',
+    resolvedCases: 'resolvedCases',
+    closedCases: 'closedCases',
+    avgFirstResponseTime: 'avgFirstResponseTime',
+    avgResolutionTime: 'avgResolutionTime',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CaseMetricsScalarFieldEnum = (typeof CaseMetricsScalarFieldEnum)[keyof typeof CaseMetricsScalarFieldEnum]
+
+
+  export const SupportConfigurationScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    key: 'key',
+    value: 'value',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SupportConfigurationScalarFieldEnum = (typeof SupportConfigurationScalarFieldEnum)[keyof typeof SupportConfigurationScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -31369,6 +39039,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -31422,6 +39101,13 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
     
 
 
@@ -31621,6 +39307,8 @@ export namespace Prisma {
     marketingEmails?: BoolFilter<"User"> | boolean
     securityAlerts?: BoolFilter<"User"> | boolean
     activityUpdates?: BoolFilter<"User"> | boolean
+    notifySupportRepliesUI?: BoolFilter<"User"> | boolean
+    notifySupportRepliesEmail?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -31636,6 +39324,9 @@ export namespace Prisma {
     passkeys?: PasskeyListRelationFilter
     sessions?: SessionListRelationFilter
     twoFactorMethods?: TwoFactorMethodListRelationFilter
+    assignedCases?: SupportCaseListRelationFilter
+    caseStatusChanges?: CaseStatusHistoryListRelationFilter
+    caseMetrics?: CaseMetricsListRelationFilter
     pendingAuths?: PendingAuthListRelationFilter
     twoFactorCodes?: TwoFactorCodeListRelationFilter
     twoFactorAudits?: TwoFactorAuditListRelationFilter
@@ -31666,6 +39357,8 @@ export namespace Prisma {
     marketingEmails?: SortOrder
     securityAlerts?: SortOrder
     activityUpdates?: SortOrder
+    notifySupportRepliesUI?: SortOrder
+    notifySupportRepliesEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
@@ -31681,6 +39374,9 @@ export namespace Prisma {
     passkeys?: PasskeyOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     twoFactorMethods?: TwoFactorMethodOrderByRelationAggregateInput
+    assignedCases?: SupportCaseOrderByRelationAggregateInput
+    caseStatusChanges?: CaseStatusHistoryOrderByRelationAggregateInput
+    caseMetrics?: CaseMetricsOrderByRelationAggregateInput
     pendingAuths?: PendingAuthOrderByRelationAggregateInput
     twoFactorCodes?: TwoFactorCodeOrderByRelationAggregateInput
     twoFactorAudits?: TwoFactorAuditOrderByRelationAggregateInput
@@ -31714,6 +39410,8 @@ export namespace Prisma {
     marketingEmails?: BoolFilter<"User"> | boolean
     securityAlerts?: BoolFilter<"User"> | boolean
     activityUpdates?: BoolFilter<"User"> | boolean
+    notifySupportRepliesUI?: BoolFilter<"User"> | boolean
+    notifySupportRepliesEmail?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -31729,6 +39427,9 @@ export namespace Prisma {
     passkeys?: PasskeyListRelationFilter
     sessions?: SessionListRelationFilter
     twoFactorMethods?: TwoFactorMethodListRelationFilter
+    assignedCases?: SupportCaseListRelationFilter
+    caseStatusChanges?: CaseStatusHistoryListRelationFilter
+    caseMetrics?: CaseMetricsListRelationFilter
     pendingAuths?: PendingAuthListRelationFilter
     twoFactorCodes?: TwoFactorCodeListRelationFilter
     twoFactorAudits?: TwoFactorAuditListRelationFilter
@@ -31759,6 +39460,8 @@ export namespace Prisma {
     marketingEmails?: SortOrder
     securityAlerts?: SortOrder
     activityUpdates?: SortOrder
+    notifySupportRepliesUI?: SortOrder
+    notifySupportRepliesEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -31794,6 +39497,8 @@ export namespace Prisma {
     marketingEmails?: BoolWithAggregatesFilter<"User"> | boolean
     securityAlerts?: BoolWithAggregatesFilter<"User"> | boolean
     activityUpdates?: BoolWithAggregatesFilter<"User"> | boolean
+    notifySupportRepliesUI?: BoolWithAggregatesFilter<"User"> | boolean
+    notifySupportRepliesEmail?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -31873,6 +39578,7 @@ export namespace Prisma {
     website?: StringNullableFilter<"Tenant"> | string | null
     industry?: StringNullableFilter<"Tenant"> | string | null
     size?: StringNullableFilter<"Tenant"> | string | null
+    contactEmail?: StringNullableFilter<"Tenant"> | string | null
     createdAt?: DateTimeFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeFilter<"Tenant"> | Date | string
     suspendedAt?: DateTimeNullableFilter<"Tenant"> | Date | string | null
@@ -31891,6 +39597,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthListRelationFilter
     twoFactorCodes?: TwoFactorCodeListRelationFilter
     twoFactorAudits?: TwoFactorAuditListRelationFilter
+    supportOptions?: SupportOptionListRelationFilter
+    supportCases?: SupportCaseListRelationFilter
+    caseMetrics?: CaseMetricsListRelationFilter
+    supportConfigurations?: SupportConfigurationListRelationFilter
   }
 
   export type TenantOrderByWithRelationInput = {
@@ -31922,6 +39632,7 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     industry?: SortOrderInput | SortOrder
     size?: SortOrderInput | SortOrder
+    contactEmail?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     suspendedAt?: SortOrderInput | SortOrder
@@ -31940,6 +39651,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthOrderByRelationAggregateInput
     twoFactorCodes?: TwoFactorCodeOrderByRelationAggregateInput
     twoFactorAudits?: TwoFactorAuditOrderByRelationAggregateInput
+    supportOptions?: SupportOptionOrderByRelationAggregateInput
+    supportCases?: SupportCaseOrderByRelationAggregateInput
+    caseMetrics?: CaseMetricsOrderByRelationAggregateInput
+    supportConfigurations?: SupportConfigurationOrderByRelationAggregateInput
   }
 
   export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -31974,6 +39689,7 @@ export namespace Prisma {
     website?: StringNullableFilter<"Tenant"> | string | null
     industry?: StringNullableFilter<"Tenant"> | string | null
     size?: StringNullableFilter<"Tenant"> | string | null
+    contactEmail?: StringNullableFilter<"Tenant"> | string | null
     createdAt?: DateTimeFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeFilter<"Tenant"> | Date | string
     suspendedAt?: DateTimeNullableFilter<"Tenant"> | Date | string | null
@@ -31992,6 +39708,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthListRelationFilter
     twoFactorCodes?: TwoFactorCodeListRelationFilter
     twoFactorAudits?: TwoFactorAuditListRelationFilter
+    supportOptions?: SupportOptionListRelationFilter
+    supportCases?: SupportCaseListRelationFilter
+    caseMetrics?: CaseMetricsListRelationFilter
+    supportConfigurations?: SupportConfigurationListRelationFilter
   }, "id" | "slug" | "subdomain" | "customDomain">
 
   export type TenantOrderByWithAggregationInput = {
@@ -32023,6 +39743,7 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     industry?: SortOrderInput | SortOrder
     size?: SortOrderInput | SortOrder
+    contactEmail?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     suspendedAt?: SortOrderInput | SortOrder
@@ -32064,6 +39785,7 @@ export namespace Prisma {
     website?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
     industry?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
     size?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
+    contactEmail?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Tenant"> | Date | string
     suspendedAt?: DateTimeNullableWithAggregatesFilter<"Tenant"> | Date | string | null
@@ -32377,6 +40099,7 @@ export namespace Prisma {
     tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
     reasons?: ContactMessageReasonListRelationFilter
     replies?: ContactReplyListRelationFilter
+    supportCase?: XOR<SupportCaseNullableRelationFilter, SupportCaseWhereInput> | null
   }
 
   export type ContactMessageOrderByWithRelationInput = {
@@ -32400,6 +40123,7 @@ export namespace Prisma {
     tenant?: TenantOrderByWithRelationInput
     reasons?: ContactMessageReasonOrderByRelationAggregateInput
     replies?: ContactReplyOrderByRelationAggregateInput
+    supportCase?: SupportCaseOrderByWithRelationInput
   }
 
   export type ContactMessageWhereUniqueInput = Prisma.AtLeast<{
@@ -32426,6 +40150,7 @@ export namespace Prisma {
     tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
     reasons?: ContactMessageReasonListRelationFilter
     replies?: ContactReplyListRelationFilter
+    supportCase?: XOR<SupportCaseNullableRelationFilter, SupportCaseWhereInput> | null
   }, "id">
 
   export type ContactMessageOrderByWithAggregationInput = {
@@ -32539,6 +40264,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ContactReply"> | Date | string
     updatedAt?: DateTimeFilter<"ContactReply"> | Date | string
     contactMessage?: XOR<ContactMessageRelationFilter, ContactMessageWhereInput>
+    caseMessages?: CaseMessageListRelationFilter
   }
 
   export type ContactReplyOrderByWithRelationInput = {
@@ -32551,6 +40277,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     contactMessage?: ContactMessageOrderByWithRelationInput
+    caseMessages?: CaseMessageOrderByRelationAggregateInput
   }
 
   export type ContactReplyWhereUniqueInput = Prisma.AtLeast<{
@@ -32566,6 +40293,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ContactReply"> | Date | string
     updatedAt?: DateTimeFilter<"ContactReply"> | Date | string
     contactMessage?: XOR<ContactMessageRelationFilter, ContactMessageWhereInput>
+    caseMessages?: CaseMessageListRelationFilter
   }, "id">
 
   export type ContactReplyOrderByWithAggregationInput = {
@@ -33833,6 +41561,622 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"TwoFactorAudit"> | Date | string
   }
 
+  export type SupportCaseWhereInput = {
+    AND?: SupportCaseWhereInput | SupportCaseWhereInput[]
+    OR?: SupportCaseWhereInput[]
+    NOT?: SupportCaseWhereInput | SupportCaseWhereInput[]
+    id?: StringFilter<"SupportCase"> | string
+    contactMessageId?: StringNullableFilter<"SupportCase"> | string | null
+    caseNumber?: StringFilter<"SupportCase"> | string
+    title?: StringFilter<"SupportCase"> | string
+    description?: StringNullableFilter<"SupportCase"> | string | null
+    status?: StringFilter<"SupportCase"> | string
+    priority?: StringFilter<"SupportCase"> | string
+    assigneeId?: StringNullableFilter<"SupportCase"> | string | null
+    tenantId?: StringNullableFilter<"SupportCase"> | string | null
+    supportOptionId?: StringNullableFilter<"SupportCase"> | string | null
+    threadingKey?: StringNullableFilter<"SupportCase"> | string | null
+    source?: StringFilter<"SupportCase"> | string
+    sourceMetadata?: JsonNullableFilter<"SupportCase">
+    firstResponseAt?: DateTimeNullableFilter<"SupportCase"> | Date | string | null
+    resolvedAt?: DateTimeNullableFilter<"SupportCase"> | Date | string | null
+    closedAt?: DateTimeNullableFilter<"SupportCase"> | Date | string | null
+    createdAt?: DateTimeFilter<"SupportCase"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportCase"> | Date | string
+    contactMessage?: XOR<ContactMessageNullableRelationFilter, ContactMessageWhereInput> | null
+    assignee?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+    supportOption?: XOR<SupportOptionNullableRelationFilter, SupportOptionWhereInput> | null
+    messages?: CaseMessageListRelationFilter
+    statusHistory?: CaseStatusHistoryListRelationFilter
+  }
+
+  export type SupportCaseOrderByWithRelationInput = {
+    id?: SortOrder
+    contactMessageId?: SortOrderInput | SortOrder
+    caseNumber?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    assigneeId?: SortOrderInput | SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    supportOptionId?: SortOrderInput | SortOrder
+    threadingKey?: SortOrderInput | SortOrder
+    source?: SortOrder
+    sourceMetadata?: SortOrderInput | SortOrder
+    firstResponseAt?: SortOrderInput | SortOrder
+    resolvedAt?: SortOrderInput | SortOrder
+    closedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    contactMessage?: ContactMessageOrderByWithRelationInput
+    assignee?: UserOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+    supportOption?: SupportOptionOrderByWithRelationInput
+    messages?: CaseMessageOrderByRelationAggregateInput
+    statusHistory?: CaseStatusHistoryOrderByRelationAggregateInput
+  }
+
+  export type SupportCaseWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    contactMessageId?: string
+    caseNumber?: string
+    threadingKey?: string
+    AND?: SupportCaseWhereInput | SupportCaseWhereInput[]
+    OR?: SupportCaseWhereInput[]
+    NOT?: SupportCaseWhereInput | SupportCaseWhereInput[]
+    title?: StringFilter<"SupportCase"> | string
+    description?: StringNullableFilter<"SupportCase"> | string | null
+    status?: StringFilter<"SupportCase"> | string
+    priority?: StringFilter<"SupportCase"> | string
+    assigneeId?: StringNullableFilter<"SupportCase"> | string | null
+    tenantId?: StringNullableFilter<"SupportCase"> | string | null
+    supportOptionId?: StringNullableFilter<"SupportCase"> | string | null
+    source?: StringFilter<"SupportCase"> | string
+    sourceMetadata?: JsonNullableFilter<"SupportCase">
+    firstResponseAt?: DateTimeNullableFilter<"SupportCase"> | Date | string | null
+    resolvedAt?: DateTimeNullableFilter<"SupportCase"> | Date | string | null
+    closedAt?: DateTimeNullableFilter<"SupportCase"> | Date | string | null
+    createdAt?: DateTimeFilter<"SupportCase"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportCase"> | Date | string
+    contactMessage?: XOR<ContactMessageNullableRelationFilter, ContactMessageWhereInput> | null
+    assignee?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+    supportOption?: XOR<SupportOptionNullableRelationFilter, SupportOptionWhereInput> | null
+    messages?: CaseMessageListRelationFilter
+    statusHistory?: CaseStatusHistoryListRelationFilter
+  }, "id" | "contactMessageId" | "caseNumber" | "threadingKey">
+
+  export type SupportCaseOrderByWithAggregationInput = {
+    id?: SortOrder
+    contactMessageId?: SortOrderInput | SortOrder
+    caseNumber?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    assigneeId?: SortOrderInput | SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    supportOptionId?: SortOrderInput | SortOrder
+    threadingKey?: SortOrderInput | SortOrder
+    source?: SortOrder
+    sourceMetadata?: SortOrderInput | SortOrder
+    firstResponseAt?: SortOrderInput | SortOrder
+    resolvedAt?: SortOrderInput | SortOrder
+    closedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SupportCaseCountOrderByAggregateInput
+    _max?: SupportCaseMaxOrderByAggregateInput
+    _min?: SupportCaseMinOrderByAggregateInput
+  }
+
+  export type SupportCaseScalarWhereWithAggregatesInput = {
+    AND?: SupportCaseScalarWhereWithAggregatesInput | SupportCaseScalarWhereWithAggregatesInput[]
+    OR?: SupportCaseScalarWhereWithAggregatesInput[]
+    NOT?: SupportCaseScalarWhereWithAggregatesInput | SupportCaseScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SupportCase"> | string
+    contactMessageId?: StringNullableWithAggregatesFilter<"SupportCase"> | string | null
+    caseNumber?: StringWithAggregatesFilter<"SupportCase"> | string
+    title?: StringWithAggregatesFilter<"SupportCase"> | string
+    description?: StringNullableWithAggregatesFilter<"SupportCase"> | string | null
+    status?: StringWithAggregatesFilter<"SupportCase"> | string
+    priority?: StringWithAggregatesFilter<"SupportCase"> | string
+    assigneeId?: StringNullableWithAggregatesFilter<"SupportCase"> | string | null
+    tenantId?: StringNullableWithAggregatesFilter<"SupportCase"> | string | null
+    supportOptionId?: StringNullableWithAggregatesFilter<"SupportCase"> | string | null
+    threadingKey?: StringNullableWithAggregatesFilter<"SupportCase"> | string | null
+    source?: StringWithAggregatesFilter<"SupportCase"> | string
+    sourceMetadata?: JsonNullableWithAggregatesFilter<"SupportCase">
+    firstResponseAt?: DateTimeNullableWithAggregatesFilter<"SupportCase"> | Date | string | null
+    resolvedAt?: DateTimeNullableWithAggregatesFilter<"SupportCase"> | Date | string | null
+    closedAt?: DateTimeNullableWithAggregatesFilter<"SupportCase"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SupportCase"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SupportCase"> | Date | string
+  }
+
+  export type SupportOptionWhereInput = {
+    AND?: SupportOptionWhereInput | SupportOptionWhereInput[]
+    OR?: SupportOptionWhereInput[]
+    NOT?: SupportOptionWhereInput | SupportOptionWhereInput[]
+    id?: StringFilter<"SupportOption"> | string
+    key?: StringFilter<"SupportOption"> | string
+    label?: StringFilter<"SupportOption"> | string
+    description?: StringNullableFilter<"SupportOption"> | string | null
+    icon?: StringNullableFilter<"SupportOption"> | string | null
+    isActive?: BoolFilter<"SupportOption"> | boolean
+    isGlobal?: BoolFilter<"SupportOption"> | boolean
+    tenantId?: StringNullableFilter<"SupportOption"> | string | null
+    parentOptionId?: StringNullableFilter<"SupportOption"> | string | null
+    sortOrder?: IntFilter<"SupportOption"> | number
+    isHidden?: BoolFilter<"SupportOption"> | boolean
+    routingConfig?: JsonFilter<"SupportOption">
+    createdAt?: DateTimeFilter<"SupportOption"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportOption"> | Date | string
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+    parent?: XOR<SupportOptionNullableRelationFilter, SupportOptionWhereInput> | null
+    children?: SupportOptionListRelationFilter
+    cases?: SupportCaseListRelationFilter
+    metrics?: CaseMetricsListRelationFilter
+  }
+
+  export type SupportOptionOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    description?: SortOrderInput | SortOrder
+    icon?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    isGlobal?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    parentOptionId?: SortOrderInput | SortOrder
+    sortOrder?: SortOrder
+    isHidden?: SortOrder
+    routingConfig?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+    parent?: SupportOptionOrderByWithRelationInput
+    children?: SupportOptionOrderByRelationAggregateInput
+    cases?: SupportCaseOrderByRelationAggregateInput
+    metrics?: CaseMetricsOrderByRelationAggregateInput
+  }
+
+  export type SupportOptionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    key?: string
+    tenant_key?: SupportOptionTenant_keyCompoundUniqueInput
+    AND?: SupportOptionWhereInput | SupportOptionWhereInput[]
+    OR?: SupportOptionWhereInput[]
+    NOT?: SupportOptionWhereInput | SupportOptionWhereInput[]
+    label?: StringFilter<"SupportOption"> | string
+    description?: StringNullableFilter<"SupportOption"> | string | null
+    icon?: StringNullableFilter<"SupportOption"> | string | null
+    isActive?: BoolFilter<"SupportOption"> | boolean
+    isGlobal?: BoolFilter<"SupportOption"> | boolean
+    tenantId?: StringNullableFilter<"SupportOption"> | string | null
+    parentOptionId?: StringNullableFilter<"SupportOption"> | string | null
+    sortOrder?: IntFilter<"SupportOption"> | number
+    isHidden?: BoolFilter<"SupportOption"> | boolean
+    routingConfig?: JsonFilter<"SupportOption">
+    createdAt?: DateTimeFilter<"SupportOption"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportOption"> | Date | string
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+    parent?: XOR<SupportOptionNullableRelationFilter, SupportOptionWhereInput> | null
+    children?: SupportOptionListRelationFilter
+    cases?: SupportCaseListRelationFilter
+    metrics?: CaseMetricsListRelationFilter
+  }, "id" | "global_key" | "tenant_key">
+
+  export type SupportOptionOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    description?: SortOrderInput | SortOrder
+    icon?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    isGlobal?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    parentOptionId?: SortOrderInput | SortOrder
+    sortOrder?: SortOrder
+    isHidden?: SortOrder
+    routingConfig?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SupportOptionCountOrderByAggregateInput
+    _avg?: SupportOptionAvgOrderByAggregateInput
+    _max?: SupportOptionMaxOrderByAggregateInput
+    _min?: SupportOptionMinOrderByAggregateInput
+    _sum?: SupportOptionSumOrderByAggregateInput
+  }
+
+  export type SupportOptionScalarWhereWithAggregatesInput = {
+    AND?: SupportOptionScalarWhereWithAggregatesInput | SupportOptionScalarWhereWithAggregatesInput[]
+    OR?: SupportOptionScalarWhereWithAggregatesInput[]
+    NOT?: SupportOptionScalarWhereWithAggregatesInput | SupportOptionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SupportOption"> | string
+    key?: StringWithAggregatesFilter<"SupportOption"> | string
+    label?: StringWithAggregatesFilter<"SupportOption"> | string
+    description?: StringNullableWithAggregatesFilter<"SupportOption"> | string | null
+    icon?: StringNullableWithAggregatesFilter<"SupportOption"> | string | null
+    isActive?: BoolWithAggregatesFilter<"SupportOption"> | boolean
+    isGlobal?: BoolWithAggregatesFilter<"SupportOption"> | boolean
+    tenantId?: StringNullableWithAggregatesFilter<"SupportOption"> | string | null
+    parentOptionId?: StringNullableWithAggregatesFilter<"SupportOption"> | string | null
+    sortOrder?: IntWithAggregatesFilter<"SupportOption"> | number
+    isHidden?: BoolWithAggregatesFilter<"SupportOption"> | boolean
+    routingConfig?: JsonWithAggregatesFilter<"SupportOption">
+    createdAt?: DateTimeWithAggregatesFilter<"SupportOption"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SupportOption"> | Date | string
+  }
+
+  export type CaseMessageWhereInput = {
+    AND?: CaseMessageWhereInput | CaseMessageWhereInput[]
+    OR?: CaseMessageWhereInput[]
+    NOT?: CaseMessageWhereInput | CaseMessageWhereInput[]
+    id?: StringFilter<"CaseMessage"> | string
+    caseId?: StringFilter<"CaseMessage"> | string
+    contactReplyId?: StringNullableFilter<"CaseMessage"> | string | null
+    direction?: StringFilter<"CaseMessage"> | string
+    channel?: StringFilter<"CaseMessage"> | string
+    fromAddress?: StringNullableFilter<"CaseMessage"> | string | null
+    toAddress?: StringNullableFilter<"CaseMessage"> | string | null
+    subject?: StringNullableFilter<"CaseMessage"> | string | null
+    content?: StringFilter<"CaseMessage"> | string
+    isInternal?: BoolFilter<"CaseMessage"> | boolean
+    messageId?: StringNullableFilter<"CaseMessage"> | string | null
+    threadingData?: JsonNullableFilter<"CaseMessage">
+    attachments?: JsonNullableFilter<"CaseMessage">
+    deliveryStatus?: StringNullableFilter<"CaseMessage"> | string | null
+    deliveryMetadata?: JsonNullableFilter<"CaseMessage">
+    createdAt?: DateTimeFilter<"CaseMessage"> | Date | string
+    updatedAt?: DateTimeFilter<"CaseMessage"> | Date | string
+    case?: XOR<SupportCaseRelationFilter, SupportCaseWhereInput>
+    contactReply?: XOR<ContactReplyNullableRelationFilter, ContactReplyWhereInput> | null
+  }
+
+  export type CaseMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    contactReplyId?: SortOrderInput | SortOrder
+    direction?: SortOrder
+    channel?: SortOrder
+    fromAddress?: SortOrderInput | SortOrder
+    toAddress?: SortOrderInput | SortOrder
+    subject?: SortOrderInput | SortOrder
+    content?: SortOrder
+    isInternal?: SortOrder
+    messageId?: SortOrderInput | SortOrder
+    threadingData?: SortOrderInput | SortOrder
+    attachments?: SortOrderInput | SortOrder
+    deliveryStatus?: SortOrderInput | SortOrder
+    deliveryMetadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    case?: SupportCaseOrderByWithRelationInput
+    contactReply?: ContactReplyOrderByWithRelationInput
+  }
+
+  export type CaseMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CaseMessageWhereInput | CaseMessageWhereInput[]
+    OR?: CaseMessageWhereInput[]
+    NOT?: CaseMessageWhereInput | CaseMessageWhereInput[]
+    caseId?: StringFilter<"CaseMessage"> | string
+    contactReplyId?: StringNullableFilter<"CaseMessage"> | string | null
+    direction?: StringFilter<"CaseMessage"> | string
+    channel?: StringFilter<"CaseMessage"> | string
+    fromAddress?: StringNullableFilter<"CaseMessage"> | string | null
+    toAddress?: StringNullableFilter<"CaseMessage"> | string | null
+    subject?: StringNullableFilter<"CaseMessage"> | string | null
+    content?: StringFilter<"CaseMessage"> | string
+    isInternal?: BoolFilter<"CaseMessage"> | boolean
+    messageId?: StringNullableFilter<"CaseMessage"> | string | null
+    threadingData?: JsonNullableFilter<"CaseMessage">
+    attachments?: JsonNullableFilter<"CaseMessage">
+    deliveryStatus?: StringNullableFilter<"CaseMessage"> | string | null
+    deliveryMetadata?: JsonNullableFilter<"CaseMessage">
+    createdAt?: DateTimeFilter<"CaseMessage"> | Date | string
+    updatedAt?: DateTimeFilter<"CaseMessage"> | Date | string
+    case?: XOR<SupportCaseRelationFilter, SupportCaseWhereInput>
+    contactReply?: XOR<ContactReplyNullableRelationFilter, ContactReplyWhereInput> | null
+  }, "id">
+
+  export type CaseMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    contactReplyId?: SortOrderInput | SortOrder
+    direction?: SortOrder
+    channel?: SortOrder
+    fromAddress?: SortOrderInput | SortOrder
+    toAddress?: SortOrderInput | SortOrder
+    subject?: SortOrderInput | SortOrder
+    content?: SortOrder
+    isInternal?: SortOrder
+    messageId?: SortOrderInput | SortOrder
+    threadingData?: SortOrderInput | SortOrder
+    attachments?: SortOrderInput | SortOrder
+    deliveryStatus?: SortOrderInput | SortOrder
+    deliveryMetadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CaseMessageCountOrderByAggregateInput
+    _max?: CaseMessageMaxOrderByAggregateInput
+    _min?: CaseMessageMinOrderByAggregateInput
+  }
+
+  export type CaseMessageScalarWhereWithAggregatesInput = {
+    AND?: CaseMessageScalarWhereWithAggregatesInput | CaseMessageScalarWhereWithAggregatesInput[]
+    OR?: CaseMessageScalarWhereWithAggregatesInput[]
+    NOT?: CaseMessageScalarWhereWithAggregatesInput | CaseMessageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CaseMessage"> | string
+    caseId?: StringWithAggregatesFilter<"CaseMessage"> | string
+    contactReplyId?: StringNullableWithAggregatesFilter<"CaseMessage"> | string | null
+    direction?: StringWithAggregatesFilter<"CaseMessage"> | string
+    channel?: StringWithAggregatesFilter<"CaseMessage"> | string
+    fromAddress?: StringNullableWithAggregatesFilter<"CaseMessage"> | string | null
+    toAddress?: StringNullableWithAggregatesFilter<"CaseMessage"> | string | null
+    subject?: StringNullableWithAggregatesFilter<"CaseMessage"> | string | null
+    content?: StringWithAggregatesFilter<"CaseMessage"> | string
+    isInternal?: BoolWithAggregatesFilter<"CaseMessage"> | boolean
+    messageId?: StringNullableWithAggregatesFilter<"CaseMessage"> | string | null
+    threadingData?: JsonNullableWithAggregatesFilter<"CaseMessage">
+    attachments?: JsonNullableWithAggregatesFilter<"CaseMessage">
+    deliveryStatus?: StringNullableWithAggregatesFilter<"CaseMessage"> | string | null
+    deliveryMetadata?: JsonNullableWithAggregatesFilter<"CaseMessage">
+    createdAt?: DateTimeWithAggregatesFilter<"CaseMessage"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CaseMessage"> | Date | string
+  }
+
+  export type CaseStatusHistoryWhereInput = {
+    AND?: CaseStatusHistoryWhereInput | CaseStatusHistoryWhereInput[]
+    OR?: CaseStatusHistoryWhereInput[]
+    NOT?: CaseStatusHistoryWhereInput | CaseStatusHistoryWhereInput[]
+    id?: StringFilter<"CaseStatusHistory"> | string
+    caseId?: StringFilter<"CaseStatusHistory"> | string
+    fromStatus?: StringNullableFilter<"CaseStatusHistory"> | string | null
+    toStatus?: StringFilter<"CaseStatusHistory"> | string
+    changedBy?: StringNullableFilter<"CaseStatusHistory"> | string | null
+    reason?: StringNullableFilter<"CaseStatusHistory"> | string | null
+    metadata?: JsonNullableFilter<"CaseStatusHistory">
+    createdAt?: DateTimeFilter<"CaseStatusHistory"> | Date | string
+    case?: XOR<SupportCaseRelationFilter, SupportCaseWhereInput>
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }
+
+  export type CaseStatusHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    fromStatus?: SortOrderInput | SortOrder
+    toStatus?: SortOrder
+    changedBy?: SortOrderInput | SortOrder
+    reason?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    case?: SupportCaseOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type CaseStatusHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CaseStatusHistoryWhereInput | CaseStatusHistoryWhereInput[]
+    OR?: CaseStatusHistoryWhereInput[]
+    NOT?: CaseStatusHistoryWhereInput | CaseStatusHistoryWhereInput[]
+    caseId?: StringFilter<"CaseStatusHistory"> | string
+    fromStatus?: StringNullableFilter<"CaseStatusHistory"> | string | null
+    toStatus?: StringFilter<"CaseStatusHistory"> | string
+    changedBy?: StringNullableFilter<"CaseStatusHistory"> | string | null
+    reason?: StringNullableFilter<"CaseStatusHistory"> | string | null
+    metadata?: JsonNullableFilter<"CaseStatusHistory">
+    createdAt?: DateTimeFilter<"CaseStatusHistory"> | Date | string
+    case?: XOR<SupportCaseRelationFilter, SupportCaseWhereInput>
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type CaseStatusHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    fromStatus?: SortOrderInput | SortOrder
+    toStatus?: SortOrder
+    changedBy?: SortOrderInput | SortOrder
+    reason?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: CaseStatusHistoryCountOrderByAggregateInput
+    _max?: CaseStatusHistoryMaxOrderByAggregateInput
+    _min?: CaseStatusHistoryMinOrderByAggregateInput
+  }
+
+  export type CaseStatusHistoryScalarWhereWithAggregatesInput = {
+    AND?: CaseStatusHistoryScalarWhereWithAggregatesInput | CaseStatusHistoryScalarWhereWithAggregatesInput[]
+    OR?: CaseStatusHistoryScalarWhereWithAggregatesInput[]
+    NOT?: CaseStatusHistoryScalarWhereWithAggregatesInput | CaseStatusHistoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CaseStatusHistory"> | string
+    caseId?: StringWithAggregatesFilter<"CaseStatusHistory"> | string
+    fromStatus?: StringNullableWithAggregatesFilter<"CaseStatusHistory"> | string | null
+    toStatus?: StringWithAggregatesFilter<"CaseStatusHistory"> | string
+    changedBy?: StringNullableWithAggregatesFilter<"CaseStatusHistory"> | string | null
+    reason?: StringNullableWithAggregatesFilter<"CaseStatusHistory"> | string | null
+    metadata?: JsonNullableWithAggregatesFilter<"CaseStatusHistory">
+    createdAt?: DateTimeWithAggregatesFilter<"CaseStatusHistory"> | Date | string
+  }
+
+  export type CaseMetricsWhereInput = {
+    AND?: CaseMetricsWhereInput | CaseMetricsWhereInput[]
+    OR?: CaseMetricsWhereInput[]
+    NOT?: CaseMetricsWhereInput | CaseMetricsWhereInput[]
+    id?: StringFilter<"CaseMetrics"> | string
+    tenantId?: StringNullableFilter<"CaseMetrics"> | string | null
+    date?: DateTimeFilter<"CaseMetrics"> | Date | string
+    supportOptionId?: StringNullableFilter<"CaseMetrics"> | string | null
+    assigneeId?: StringNullableFilter<"CaseMetrics"> | string | null
+    totalCases?: IntFilter<"CaseMetrics"> | number
+    openCases?: IntFilter<"CaseMetrics"> | number
+    pendingCases?: IntFilter<"CaseMetrics"> | number
+    resolvedCases?: IntFilter<"CaseMetrics"> | number
+    closedCases?: IntFilter<"CaseMetrics"> | number
+    avgFirstResponseTime?: IntNullableFilter<"CaseMetrics"> | number | null
+    avgResolutionTime?: IntNullableFilter<"CaseMetrics"> | number | null
+    createdAt?: DateTimeFilter<"CaseMetrics"> | Date | string
+    updatedAt?: DateTimeFilter<"CaseMetrics"> | Date | string
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+    supportOption?: XOR<SupportOptionNullableRelationFilter, SupportOptionWhereInput> | null
+    assignee?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }
+
+  export type CaseMetricsOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    date?: SortOrder
+    supportOptionId?: SortOrderInput | SortOrder
+    assigneeId?: SortOrderInput | SortOrder
+    totalCases?: SortOrder
+    openCases?: SortOrder
+    pendingCases?: SortOrder
+    resolvedCases?: SortOrder
+    closedCases?: SortOrder
+    avgFirstResponseTime?: SortOrderInput | SortOrder
+    avgResolutionTime?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+    supportOption?: SupportOptionOrderByWithRelationInput
+    assignee?: UserOrderByWithRelationInput
+  }
+
+  export type CaseMetricsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_date_supportOptionId_assigneeId?: CaseMetricsTenantIdDateSupportOptionIdAssigneeIdCompoundUniqueInput
+    AND?: CaseMetricsWhereInput | CaseMetricsWhereInput[]
+    OR?: CaseMetricsWhereInput[]
+    NOT?: CaseMetricsWhereInput | CaseMetricsWhereInput[]
+    tenantId?: StringNullableFilter<"CaseMetrics"> | string | null
+    date?: DateTimeFilter<"CaseMetrics"> | Date | string
+    supportOptionId?: StringNullableFilter<"CaseMetrics"> | string | null
+    assigneeId?: StringNullableFilter<"CaseMetrics"> | string | null
+    totalCases?: IntFilter<"CaseMetrics"> | number
+    openCases?: IntFilter<"CaseMetrics"> | number
+    pendingCases?: IntFilter<"CaseMetrics"> | number
+    resolvedCases?: IntFilter<"CaseMetrics"> | number
+    closedCases?: IntFilter<"CaseMetrics"> | number
+    avgFirstResponseTime?: IntNullableFilter<"CaseMetrics"> | number | null
+    avgResolutionTime?: IntNullableFilter<"CaseMetrics"> | number | null
+    createdAt?: DateTimeFilter<"CaseMetrics"> | Date | string
+    updatedAt?: DateTimeFilter<"CaseMetrics"> | Date | string
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+    supportOption?: XOR<SupportOptionNullableRelationFilter, SupportOptionWhereInput> | null
+    assignee?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }, "id" | "tenantId_date_supportOptionId_assigneeId">
+
+  export type CaseMetricsOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    date?: SortOrder
+    supportOptionId?: SortOrderInput | SortOrder
+    assigneeId?: SortOrderInput | SortOrder
+    totalCases?: SortOrder
+    openCases?: SortOrder
+    pendingCases?: SortOrder
+    resolvedCases?: SortOrder
+    closedCases?: SortOrder
+    avgFirstResponseTime?: SortOrderInput | SortOrder
+    avgResolutionTime?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CaseMetricsCountOrderByAggregateInput
+    _avg?: CaseMetricsAvgOrderByAggregateInput
+    _max?: CaseMetricsMaxOrderByAggregateInput
+    _min?: CaseMetricsMinOrderByAggregateInput
+    _sum?: CaseMetricsSumOrderByAggregateInput
+  }
+
+  export type CaseMetricsScalarWhereWithAggregatesInput = {
+    AND?: CaseMetricsScalarWhereWithAggregatesInput | CaseMetricsScalarWhereWithAggregatesInput[]
+    OR?: CaseMetricsScalarWhereWithAggregatesInput[]
+    NOT?: CaseMetricsScalarWhereWithAggregatesInput | CaseMetricsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CaseMetrics"> | string
+    tenantId?: StringNullableWithAggregatesFilter<"CaseMetrics"> | string | null
+    date?: DateTimeWithAggregatesFilter<"CaseMetrics"> | Date | string
+    supportOptionId?: StringNullableWithAggregatesFilter<"CaseMetrics"> | string | null
+    assigneeId?: StringNullableWithAggregatesFilter<"CaseMetrics"> | string | null
+    totalCases?: IntWithAggregatesFilter<"CaseMetrics"> | number
+    openCases?: IntWithAggregatesFilter<"CaseMetrics"> | number
+    pendingCases?: IntWithAggregatesFilter<"CaseMetrics"> | number
+    resolvedCases?: IntWithAggregatesFilter<"CaseMetrics"> | number
+    closedCases?: IntWithAggregatesFilter<"CaseMetrics"> | number
+    avgFirstResponseTime?: IntNullableWithAggregatesFilter<"CaseMetrics"> | number | null
+    avgResolutionTime?: IntNullableWithAggregatesFilter<"CaseMetrics"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"CaseMetrics"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CaseMetrics"> | Date | string
+  }
+
+  export type SupportConfigurationWhereInput = {
+    AND?: SupportConfigurationWhereInput | SupportConfigurationWhereInput[]
+    OR?: SupportConfigurationWhereInput[]
+    NOT?: SupportConfigurationWhereInput | SupportConfigurationWhereInput[]
+    id?: StringFilter<"SupportConfiguration"> | string
+    tenantId?: StringNullableFilter<"SupportConfiguration"> | string | null
+    key?: StringFilter<"SupportConfiguration"> | string
+    value?: JsonFilter<"SupportConfiguration">
+    description?: StringNullableFilter<"SupportConfiguration"> | string | null
+    createdAt?: DateTimeFilter<"SupportConfiguration"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportConfiguration"> | Date | string
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }
+
+  export type SupportConfigurationOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type SupportConfigurationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    key?: string
+    tenant_config_key?: SupportConfigurationTenant_config_keyCompoundUniqueInput
+    AND?: SupportConfigurationWhereInput | SupportConfigurationWhereInput[]
+    OR?: SupportConfigurationWhereInput[]
+    NOT?: SupportConfigurationWhereInput | SupportConfigurationWhereInput[]
+    tenantId?: StringNullableFilter<"SupportConfiguration"> | string | null
+    value?: JsonFilter<"SupportConfiguration">
+    description?: StringNullableFilter<"SupportConfiguration"> | string | null
+    createdAt?: DateTimeFilter<"SupportConfiguration"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportConfiguration"> | Date | string
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }, "id" | "global_config_key" | "tenant_config_key">
+
+  export type SupportConfigurationOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SupportConfigurationCountOrderByAggregateInput
+    _max?: SupportConfigurationMaxOrderByAggregateInput
+    _min?: SupportConfigurationMinOrderByAggregateInput
+  }
+
+  export type SupportConfigurationScalarWhereWithAggregatesInput = {
+    AND?: SupportConfigurationScalarWhereWithAggregatesInput | SupportConfigurationScalarWhereWithAggregatesInput[]
+    OR?: SupportConfigurationScalarWhereWithAggregatesInput[]
+    NOT?: SupportConfigurationScalarWhereWithAggregatesInput | SupportConfigurationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SupportConfiguration"> | string
+    tenantId?: StringNullableWithAggregatesFilter<"SupportConfiguration"> | string | null
+    key?: StringWithAggregatesFilter<"SupportConfiguration"> | string
+    value?: JsonWithAggregatesFilter<"SupportConfiguration">
+    description?: StringNullableWithAggregatesFilter<"SupportConfiguration"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SupportConfiguration"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SupportConfiguration"> | Date | string
+  }
+
   export type AccountCreateInput = {
     id?: string
     type: string
@@ -34016,6 +42360,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -34031,6 +42377,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -34061,6 +42410,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -34076,6 +42427,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -34106,6 +42460,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -34121,6 +42477,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -34151,6 +42510,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -34166,6 +42527,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -34196,6 +42560,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -34225,6 +42591,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -34254,6 +42622,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -34329,6 +42699,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -34347,6 +42718,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateInput = {
@@ -34378,6 +42753,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -34396,6 +42772,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUpdateInput = {
@@ -34427,6 +42807,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34445,6 +42826,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateInput = {
@@ -34476,6 +42861,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34494,6 +42880,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateManyInput = {
@@ -34525,6 +42915,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -34560,6 +42951,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34595,6 +42987,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34925,6 +43318,7 @@ export namespace Prisma {
     tenant?: TenantCreateNestedOneWithoutContactMessagesInput
     reasons?: ContactMessageReasonCreateNestedManyWithoutContactMessageInput
     replies?: ContactReplyCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageUncheckedCreateInput = {
@@ -34946,6 +43340,7 @@ export namespace Prisma {
     tags?: string | null
     reasons?: ContactMessageReasonUncheckedCreateNestedManyWithoutContactMessageInput
     replies?: ContactReplyUncheckedCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseUncheckedCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageUpdateInput = {
@@ -34967,6 +43362,7 @@ export namespace Prisma {
     tenant?: TenantUpdateOneWithoutContactMessagesNestedInput
     reasons?: ContactMessageReasonUpdateManyWithoutContactMessageNestedInput
     replies?: ContactReplyUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUpdateOneWithoutContactMessageNestedInput
   }
 
   export type ContactMessageUncheckedUpdateInput = {
@@ -34988,6 +43384,7 @@ export namespace Prisma {
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     reasons?: ContactMessageReasonUncheckedUpdateManyWithoutContactMessageNestedInput
     replies?: ContactReplyUncheckedUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUncheckedUpdateOneWithoutContactMessageNestedInput
   }
 
   export type ContactMessageCreateManyInput = {
@@ -35101,6 +43498,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     contactMessage: ContactMessageCreateNestedOneWithoutRepliesInput
+    caseMessages?: CaseMessageCreateNestedManyWithoutContactReplyInput
   }
 
   export type ContactReplyUncheckedCreateInput = {
@@ -35112,6 +43510,7 @@ export namespace Prisma {
     attachments?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    caseMessages?: CaseMessageUncheckedCreateNestedManyWithoutContactReplyInput
   }
 
   export type ContactReplyUpdateInput = {
@@ -35123,6 +43522,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contactMessage?: ContactMessageUpdateOneRequiredWithoutRepliesNestedInput
+    caseMessages?: CaseMessageUpdateManyWithoutContactReplyNestedInput
   }
 
   export type ContactReplyUncheckedUpdateInput = {
@@ -35134,6 +43534,7 @@ export namespace Prisma {
     attachments?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    caseMessages?: CaseMessageUncheckedUpdateManyWithoutContactReplyNestedInput
   }
 
   export type ContactReplyCreateManyInput = {
@@ -36520,6 +44921,684 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SupportCaseCreateInput = {
+    id?: string
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contactMessage?: ContactMessageCreateNestedOneWithoutSupportCaseInput
+    assignee?: UserCreateNestedOneWithoutAssignedCasesInput
+    tenant?: TenantCreateNestedOneWithoutSupportCasesInput
+    supportOption?: SupportOptionCreateNestedOneWithoutCasesInput
+    messages?: CaseMessageCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseUncheckedCreateInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    assigneeId?: string | null
+    tenantId?: string | null
+    supportOptionId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: CaseMessageUncheckedCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryUncheckedCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactMessage?: ContactMessageUpdateOneWithoutSupportCaseNestedInput
+    assignee?: UserUpdateOneWithoutAssignedCasesNestedInput
+    tenant?: TenantUpdateOneWithoutSupportCasesNestedInput
+    supportOption?: SupportOptionUpdateOneWithoutCasesNestedInput
+    messages?: CaseMessageUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: CaseMessageUncheckedUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUncheckedUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseCreateManyInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    assigneeId?: string | null
+    tenantId?: string | null
+    supportOptionId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportCaseUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportCaseUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportOptionCreateInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutSupportOptionsInput
+    parent?: SupportOptionCreateNestedOneWithoutChildrenInput
+    children?: SupportOptionCreateNestedManyWithoutParentInput
+    cases?: SupportCaseCreateNestedManyWithoutSupportOptionInput
+    metrics?: CaseMetricsCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionUncheckedCreateInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: string | null
+    parentOptionId?: string | null
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: SupportOptionUncheckedCreateNestedManyWithoutParentInput
+    cases?: SupportCaseUncheckedCreateNestedManyWithoutSupportOptionInput
+    metrics?: CaseMetricsUncheckedCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutSupportOptionsNestedInput
+    parent?: SupportOptionUpdateOneWithoutChildrenNestedInput
+    children?: SupportOptionUpdateManyWithoutParentNestedInput
+    cases?: SupportCaseUpdateManyWithoutSupportOptionNestedInput
+    metrics?: CaseMetricsUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: SupportOptionUncheckedUpdateManyWithoutParentNestedInput
+    cases?: SupportCaseUncheckedUpdateManyWithoutSupportOptionNestedInput
+    metrics?: CaseMetricsUncheckedUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionCreateManyInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: string | null
+    parentOptionId?: string | null
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportOptionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportOptionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMessageCreateInput = {
+    id?: string
+    direction: string
+    channel: string
+    fromAddress?: string | null
+    toAddress?: string | null
+    subject?: string | null
+    content: string
+    isInternal?: boolean
+    messageId?: string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    case: SupportCaseCreateNestedOneWithoutMessagesInput
+    contactReply?: ContactReplyCreateNestedOneWithoutCaseMessagesInput
+  }
+
+  export type CaseMessageUncheckedCreateInput = {
+    id?: string
+    caseId: string
+    contactReplyId?: string | null
+    direction: string
+    channel: string
+    fromAddress?: string | null
+    toAddress?: string | null
+    subject?: string | null
+    content: string
+    isInternal?: boolean
+    messageId?: string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMessageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    case?: SupportCaseUpdateOneRequiredWithoutMessagesNestedInput
+    contactReply?: ContactReplyUpdateOneWithoutCaseMessagesNestedInput
+  }
+
+  export type CaseMessageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseId?: StringFieldUpdateOperationsInput | string
+    contactReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMessageCreateManyInput = {
+    id?: string
+    caseId: string
+    contactReplyId?: string | null
+    direction: string
+    channel: string
+    fromAddress?: string | null
+    toAddress?: string | null
+    subject?: string | null
+    content: string
+    isInternal?: boolean
+    messageId?: string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMessageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMessageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseId?: StringFieldUpdateOperationsInput | string
+    contactReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseStatusHistoryCreateInput = {
+    id?: string
+    fromStatus?: string | null
+    toStatus: string
+    reason?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    case: SupportCaseCreateNestedOneWithoutStatusHistoryInput
+    user?: UserCreateNestedOneWithoutCaseStatusChangesInput
+  }
+
+  export type CaseStatusHistoryUncheckedCreateInput = {
+    id?: string
+    caseId: string
+    fromStatus?: string | null
+    toStatus: string
+    changedBy?: string | null
+    reason?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CaseStatusHistoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    case?: SupportCaseUpdateOneRequiredWithoutStatusHistoryNestedInput
+    user?: UserUpdateOneWithoutCaseStatusChangesNestedInput
+  }
+
+  export type CaseStatusHistoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseId?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseStatusHistoryCreateManyInput = {
+    id?: string
+    caseId: string
+    fromStatus?: string | null
+    toStatus: string
+    changedBy?: string | null
+    reason?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CaseStatusHistoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseStatusHistoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseId?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMetricsCreateInput = {
+    id?: string
+    date: Date | string
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutCaseMetricsInput
+    supportOption?: SupportOptionCreateNestedOneWithoutMetricsInput
+    assignee?: UserCreateNestedOneWithoutCaseMetricsInput
+  }
+
+  export type CaseMetricsUncheckedCreateInput = {
+    id?: string
+    tenantId?: string | null
+    date: Date | string
+    supportOptionId?: string | null
+    assigneeId?: string | null
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMetricsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutCaseMetricsNestedInput
+    supportOption?: SupportOptionUpdateOneWithoutMetricsNestedInput
+    assignee?: UserUpdateOneWithoutCaseMetricsNestedInput
+  }
+
+  export type CaseMetricsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMetricsCreateManyInput = {
+    id?: string
+    tenantId?: string | null
+    date: Date | string
+    supportOptionId?: string | null
+    assigneeId?: string | null
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMetricsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMetricsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportConfigurationCreateInput = {
+    id?: string
+    key: string
+    value: JsonNullValueInput | InputJsonValue
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutSupportConfigurationsInput
+  }
+
+  export type SupportConfigurationUncheckedCreateInput = {
+    id?: string
+    tenantId?: string | null
+    key: string
+    value: JsonNullValueInput | InputJsonValue
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportConfigurationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: JsonNullValueInput | InputJsonValue
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutSupportConfigurationsNestedInput
+  }
+
+  export type SupportConfigurationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    key?: StringFieldUpdateOperationsInput | string
+    value?: JsonNullValueInput | InputJsonValue
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportConfigurationCreateManyInput = {
+    id?: string
+    tenantId?: string | null
+    key: string
+    value: JsonNullValueInput | InputJsonValue
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportConfigurationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: JsonNullValueInput | InputJsonValue
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportConfigurationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    key?: StringFieldUpdateOperationsInput | string
+    value?: JsonNullValueInput | InputJsonValue
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -36817,6 +45896,24 @@ export namespace Prisma {
     none?: TwoFactorMethodWhereInput
   }
 
+  export type SupportCaseListRelationFilter = {
+    every?: SupportCaseWhereInput
+    some?: SupportCaseWhereInput
+    none?: SupportCaseWhereInput
+  }
+
+  export type CaseStatusHistoryListRelationFilter = {
+    every?: CaseStatusHistoryWhereInput
+    some?: CaseStatusHistoryWhereInput
+    none?: CaseStatusHistoryWhereInput
+  }
+
+  export type CaseMetricsListRelationFilter = {
+    every?: CaseMetricsWhereInput
+    some?: CaseMetricsWhereInput
+    none?: CaseMetricsWhereInput
+  }
+
   export type PendingAuthListRelationFilter = {
     every?: PendingAuthWhereInput
     some?: PendingAuthWhereInput
@@ -36879,6 +45976,18 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type SupportCaseOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CaseStatusHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CaseMetricsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type PendingAuthOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -36916,6 +46025,8 @@ export namespace Prisma {
     marketingEmails?: SortOrder
     securityAlerts?: SortOrder
     activityUpdates?: SortOrder
+    notifySupportRepliesUI?: SortOrder
+    notifySupportRepliesEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -36945,6 +46056,8 @@ export namespace Prisma {
     marketingEmails?: SortOrder
     securityAlerts?: SortOrder
     activityUpdates?: SortOrder
+    notifySupportRepliesUI?: SortOrder
+    notifySupportRepliesEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -36974,6 +46087,8 @@ export namespace Prisma {
     marketingEmails?: SortOrder
     securityAlerts?: SortOrder
     activityUpdates?: SortOrder
+    notifySupportRepliesUI?: SortOrder
+    notifySupportRepliesEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -37047,6 +46162,18 @@ export namespace Prisma {
     none?: FeatureAuditEntryWhereInput
   }
 
+  export type SupportOptionListRelationFilter = {
+    every?: SupportOptionWhereInput
+    some?: SupportOptionWhereInput
+    none?: SupportOptionWhereInput
+  }
+
+  export type SupportConfigurationListRelationFilter = {
+    every?: SupportConfigurationWhereInput
+    some?: SupportConfigurationWhereInput
+    none?: SupportConfigurationWhereInput
+  }
+
   export type ContactReasonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -37060,6 +46187,14 @@ export namespace Prisma {
   }
 
   export type FeatureAuditEntryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SupportOptionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SupportConfigurationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -37092,6 +46227,7 @@ export namespace Prisma {
     website?: SortOrder
     industry?: SortOrder
     size?: SortOrder
+    contactEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     suspendedAt?: SortOrder
@@ -37127,6 +46263,7 @@ export namespace Prisma {
     website?: SortOrder
     industry?: SortOrder
     size?: SortOrder
+    contactEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     suspendedAt?: SortOrder
@@ -37162,6 +46299,7 @@ export namespace Prisma {
     website?: SortOrder
     industry?: SortOrder
     size?: SortOrder
+    contactEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     suspendedAt?: SortOrder
@@ -37366,6 +46504,11 @@ export namespace Prisma {
     none?: ContactReplyWhereInput
   }
 
+  export type SupportCaseNullableRelationFilter = {
+    is?: SupportCaseWhereInput | null
+    isNot?: SupportCaseWhereInput | null
+  }
+
   export type ContactReplyOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -37461,6 +46604,16 @@ export namespace Prisma {
     contactMessageId?: SortOrder
     contactReasonId?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type CaseMessageListRelationFilter = {
+    every?: CaseMessageWhereInput
+    some?: CaseMessageWhereInput
+    none?: CaseMessageWhereInput
+  }
+
+  export type CaseMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ContactReplyCountOrderByAggregateInput = {
@@ -38139,6 +47292,439 @@ export namespace Prisma {
     metadata?: SortOrder
     createdAt?: SortOrder
   }
+  export type JsonNullableFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type ContactMessageNullableRelationFilter = {
+    is?: ContactMessageWhereInput | null
+    isNot?: ContactMessageWhereInput | null
+  }
+
+  export type SupportOptionNullableRelationFilter = {
+    is?: SupportOptionWhereInput | null
+    isNot?: SupportOptionWhereInput | null
+  }
+
+  export type SupportCaseCountOrderByAggregateInput = {
+    id?: SortOrder
+    contactMessageId?: SortOrder
+    caseNumber?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    assigneeId?: SortOrder
+    tenantId?: SortOrder
+    supportOptionId?: SortOrder
+    threadingKey?: SortOrder
+    source?: SortOrder
+    sourceMetadata?: SortOrder
+    firstResponseAt?: SortOrder
+    resolvedAt?: SortOrder
+    closedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupportCaseMaxOrderByAggregateInput = {
+    id?: SortOrder
+    contactMessageId?: SortOrder
+    caseNumber?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    assigneeId?: SortOrder
+    tenantId?: SortOrder
+    supportOptionId?: SortOrder
+    threadingKey?: SortOrder
+    source?: SortOrder
+    firstResponseAt?: SortOrder
+    resolvedAt?: SortOrder
+    closedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupportCaseMinOrderByAggregateInput = {
+    id?: SortOrder
+    contactMessageId?: SortOrder
+    caseNumber?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    assigneeId?: SortOrder
+    tenantId?: SortOrder
+    supportOptionId?: SortOrder
+    threadingKey?: SortOrder
+    source?: SortOrder
+    firstResponseAt?: SortOrder
+    resolvedAt?: SortOrder
+    closedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+  export type JsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type SupportOptionTenant_keyCompoundUniqueInput = {
+    tenantId: string
+    key: string
+  }
+
+  export type SupportOptionCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    isActive?: SortOrder
+    isGlobal?: SortOrder
+    tenantId?: SortOrder
+    parentOptionId?: SortOrder
+    sortOrder?: SortOrder
+    isHidden?: SortOrder
+    routingConfig?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupportOptionAvgOrderByAggregateInput = {
+    sortOrder?: SortOrder
+  }
+
+  export type SupportOptionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    isActive?: SortOrder
+    isGlobal?: SortOrder
+    tenantId?: SortOrder
+    parentOptionId?: SortOrder
+    sortOrder?: SortOrder
+    isHidden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupportOptionMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    isActive?: SortOrder
+    isGlobal?: SortOrder
+    tenantId?: SortOrder
+    parentOptionId?: SortOrder
+    sortOrder?: SortOrder
+    isHidden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupportOptionSumOrderByAggregateInput = {
+    sortOrder?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type SupportCaseRelationFilter = {
+    is?: SupportCaseWhereInput
+    isNot?: SupportCaseWhereInput
+  }
+
+  export type ContactReplyNullableRelationFilter = {
+    is?: ContactReplyWhereInput | null
+    isNot?: ContactReplyWhereInput | null
+  }
+
+  export type CaseMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    contactReplyId?: SortOrder
+    direction?: SortOrder
+    channel?: SortOrder
+    fromAddress?: SortOrder
+    toAddress?: SortOrder
+    subject?: SortOrder
+    content?: SortOrder
+    isInternal?: SortOrder
+    messageId?: SortOrder
+    threadingData?: SortOrder
+    attachments?: SortOrder
+    deliveryStatus?: SortOrder
+    deliveryMetadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CaseMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    contactReplyId?: SortOrder
+    direction?: SortOrder
+    channel?: SortOrder
+    fromAddress?: SortOrder
+    toAddress?: SortOrder
+    subject?: SortOrder
+    content?: SortOrder
+    isInternal?: SortOrder
+    messageId?: SortOrder
+    deliveryStatus?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CaseMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    contactReplyId?: SortOrder
+    direction?: SortOrder
+    channel?: SortOrder
+    fromAddress?: SortOrder
+    toAddress?: SortOrder
+    subject?: SortOrder
+    content?: SortOrder
+    isInternal?: SortOrder
+    messageId?: SortOrder
+    deliveryStatus?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CaseStatusHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    fromStatus?: SortOrder
+    toStatus?: SortOrder
+    changedBy?: SortOrder
+    reason?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CaseStatusHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    fromStatus?: SortOrder
+    toStatus?: SortOrder
+    changedBy?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CaseStatusHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    caseId?: SortOrder
+    fromStatus?: SortOrder
+    toStatus?: SortOrder
+    changedBy?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CaseMetricsTenantIdDateSupportOptionIdAssigneeIdCompoundUniqueInput = {
+    tenantId: string
+    date: Date | string
+    supportOptionId: string
+    assigneeId: string
+  }
+
+  export type CaseMetricsCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    date?: SortOrder
+    supportOptionId?: SortOrder
+    assigneeId?: SortOrder
+    totalCases?: SortOrder
+    openCases?: SortOrder
+    pendingCases?: SortOrder
+    resolvedCases?: SortOrder
+    closedCases?: SortOrder
+    avgFirstResponseTime?: SortOrder
+    avgResolutionTime?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CaseMetricsAvgOrderByAggregateInput = {
+    totalCases?: SortOrder
+    openCases?: SortOrder
+    pendingCases?: SortOrder
+    resolvedCases?: SortOrder
+    closedCases?: SortOrder
+    avgFirstResponseTime?: SortOrder
+    avgResolutionTime?: SortOrder
+  }
+
+  export type CaseMetricsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    date?: SortOrder
+    supportOptionId?: SortOrder
+    assigneeId?: SortOrder
+    totalCases?: SortOrder
+    openCases?: SortOrder
+    pendingCases?: SortOrder
+    resolvedCases?: SortOrder
+    closedCases?: SortOrder
+    avgFirstResponseTime?: SortOrder
+    avgResolutionTime?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CaseMetricsMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    date?: SortOrder
+    supportOptionId?: SortOrder
+    assigneeId?: SortOrder
+    totalCases?: SortOrder
+    openCases?: SortOrder
+    pendingCases?: SortOrder
+    resolvedCases?: SortOrder
+    closedCases?: SortOrder
+    avgFirstResponseTime?: SortOrder
+    avgResolutionTime?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CaseMetricsSumOrderByAggregateInput = {
+    totalCases?: SortOrder
+    openCases?: SortOrder
+    pendingCases?: SortOrder
+    resolvedCases?: SortOrder
+    closedCases?: SortOrder
+    avgFirstResponseTime?: SortOrder
+    avgResolutionTime?: SortOrder
+  }
+
+  export type SupportConfigurationTenant_config_keyCompoundUniqueInput = {
+    tenantId: string
+    key: string
+  }
+
+  export type SupportConfigurationCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupportConfigurationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    key?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupportConfigurationMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    key?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
@@ -38295,6 +47881,27 @@ export namespace Prisma {
     connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
   }
 
+  export type SupportCaseCreateNestedManyWithoutAssigneeInput = {
+    create?: XOR<SupportCaseCreateWithoutAssigneeInput, SupportCaseUncheckedCreateWithoutAssigneeInput> | SupportCaseCreateWithoutAssigneeInput[] | SupportCaseUncheckedCreateWithoutAssigneeInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutAssigneeInput | SupportCaseCreateOrConnectWithoutAssigneeInput[]
+    createMany?: SupportCaseCreateManyAssigneeInputEnvelope
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+  }
+
+  export type CaseStatusHistoryCreateNestedManyWithoutUserInput = {
+    create?: XOR<CaseStatusHistoryCreateWithoutUserInput, CaseStatusHistoryUncheckedCreateWithoutUserInput> | CaseStatusHistoryCreateWithoutUserInput[] | CaseStatusHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CaseStatusHistoryCreateOrConnectWithoutUserInput | CaseStatusHistoryCreateOrConnectWithoutUserInput[]
+    createMany?: CaseStatusHistoryCreateManyUserInputEnvelope
+    connect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+  }
+
+  export type CaseMetricsCreateNestedManyWithoutAssigneeInput = {
+    create?: XOR<CaseMetricsCreateWithoutAssigneeInput, CaseMetricsUncheckedCreateWithoutAssigneeInput> | CaseMetricsCreateWithoutAssigneeInput[] | CaseMetricsUncheckedCreateWithoutAssigneeInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutAssigneeInput | CaseMetricsCreateOrConnectWithoutAssigneeInput[]
+    createMany?: CaseMetricsCreateManyAssigneeInputEnvelope
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+  }
+
   export type PendingAuthCreateNestedManyWithoutUserInput = {
     create?: XOR<PendingAuthCreateWithoutUserInput, PendingAuthUncheckedCreateWithoutUserInput> | PendingAuthCreateWithoutUserInput[] | PendingAuthUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PendingAuthCreateOrConnectWithoutUserInput | PendingAuthCreateOrConnectWithoutUserInput[]
@@ -38405,6 +48012,27 @@ export namespace Prisma {
     connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutUserInput | TwoFactorMethodCreateOrConnectWithoutUserInput[]
     createMany?: TwoFactorMethodCreateManyUserInputEnvelope
     connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+  }
+
+  export type SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput = {
+    create?: XOR<SupportCaseCreateWithoutAssigneeInput, SupportCaseUncheckedCreateWithoutAssigneeInput> | SupportCaseCreateWithoutAssigneeInput[] | SupportCaseUncheckedCreateWithoutAssigneeInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutAssigneeInput | SupportCaseCreateOrConnectWithoutAssigneeInput[]
+    createMany?: SupportCaseCreateManyAssigneeInputEnvelope
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+  }
+
+  export type CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CaseStatusHistoryCreateWithoutUserInput, CaseStatusHistoryUncheckedCreateWithoutUserInput> | CaseStatusHistoryCreateWithoutUserInput[] | CaseStatusHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CaseStatusHistoryCreateOrConnectWithoutUserInput | CaseStatusHistoryCreateOrConnectWithoutUserInput[]
+    createMany?: CaseStatusHistoryCreateManyUserInputEnvelope
+    connect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+  }
+
+  export type CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput = {
+    create?: XOR<CaseMetricsCreateWithoutAssigneeInput, CaseMetricsUncheckedCreateWithoutAssigneeInput> | CaseMetricsCreateWithoutAssigneeInput[] | CaseMetricsUncheckedCreateWithoutAssigneeInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutAssigneeInput | CaseMetricsCreateOrConnectWithoutAssigneeInput[]
+    createMany?: CaseMetricsCreateManyAssigneeInputEnvelope
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
   }
 
   export type PendingAuthUncheckedCreateNestedManyWithoutUserInput = {
@@ -38616,6 +48244,48 @@ export namespace Prisma {
     update?: TwoFactorMethodUpdateWithWhereUniqueWithoutUserInput | TwoFactorMethodUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TwoFactorMethodUpdateManyWithWhereWithoutUserInput | TwoFactorMethodUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
+  }
+
+  export type SupportCaseUpdateManyWithoutAssigneeNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutAssigneeInput, SupportCaseUncheckedCreateWithoutAssigneeInput> | SupportCaseCreateWithoutAssigneeInput[] | SupportCaseUncheckedCreateWithoutAssigneeInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutAssigneeInput | SupportCaseCreateOrConnectWithoutAssigneeInput[]
+    upsert?: SupportCaseUpsertWithWhereUniqueWithoutAssigneeInput | SupportCaseUpsertWithWhereUniqueWithoutAssigneeInput[]
+    createMany?: SupportCaseCreateManyAssigneeInputEnvelope
+    set?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    disconnect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    delete?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    update?: SupportCaseUpdateWithWhereUniqueWithoutAssigneeInput | SupportCaseUpdateWithWhereUniqueWithoutAssigneeInput[]
+    updateMany?: SupportCaseUpdateManyWithWhereWithoutAssigneeInput | SupportCaseUpdateManyWithWhereWithoutAssigneeInput[]
+    deleteMany?: SupportCaseScalarWhereInput | SupportCaseScalarWhereInput[]
+  }
+
+  export type CaseStatusHistoryUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CaseStatusHistoryCreateWithoutUserInput, CaseStatusHistoryUncheckedCreateWithoutUserInput> | CaseStatusHistoryCreateWithoutUserInput[] | CaseStatusHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CaseStatusHistoryCreateOrConnectWithoutUserInput | CaseStatusHistoryCreateOrConnectWithoutUserInput[]
+    upsert?: CaseStatusHistoryUpsertWithWhereUniqueWithoutUserInput | CaseStatusHistoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CaseStatusHistoryCreateManyUserInputEnvelope
+    set?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    disconnect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    delete?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    connect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    update?: CaseStatusHistoryUpdateWithWhereUniqueWithoutUserInput | CaseStatusHistoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CaseStatusHistoryUpdateManyWithWhereWithoutUserInput | CaseStatusHistoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CaseStatusHistoryScalarWhereInput | CaseStatusHistoryScalarWhereInput[]
+  }
+
+  export type CaseMetricsUpdateManyWithoutAssigneeNestedInput = {
+    create?: XOR<CaseMetricsCreateWithoutAssigneeInput, CaseMetricsUncheckedCreateWithoutAssigneeInput> | CaseMetricsCreateWithoutAssigneeInput[] | CaseMetricsUncheckedCreateWithoutAssigneeInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutAssigneeInput | CaseMetricsCreateOrConnectWithoutAssigneeInput[]
+    upsert?: CaseMetricsUpsertWithWhereUniqueWithoutAssigneeInput | CaseMetricsUpsertWithWhereUniqueWithoutAssigneeInput[]
+    createMany?: CaseMetricsCreateManyAssigneeInputEnvelope
+    set?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    disconnect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    delete?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    update?: CaseMetricsUpdateWithWhereUniqueWithoutAssigneeInput | CaseMetricsUpdateWithWhereUniqueWithoutAssigneeInput[]
+    updateMany?: CaseMetricsUpdateManyWithWhereWithoutAssigneeInput | CaseMetricsUpdateManyWithWhereWithoutAssigneeInput[]
+    deleteMany?: CaseMetricsScalarWhereInput | CaseMetricsScalarWhereInput[]
   }
 
   export type PendingAuthUpdateManyWithoutUserNestedInput = {
@@ -38842,6 +48512,48 @@ export namespace Prisma {
     deleteMany?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
   }
 
+  export type SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutAssigneeInput, SupportCaseUncheckedCreateWithoutAssigneeInput> | SupportCaseCreateWithoutAssigneeInput[] | SupportCaseUncheckedCreateWithoutAssigneeInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutAssigneeInput | SupportCaseCreateOrConnectWithoutAssigneeInput[]
+    upsert?: SupportCaseUpsertWithWhereUniqueWithoutAssigneeInput | SupportCaseUpsertWithWhereUniqueWithoutAssigneeInput[]
+    createMany?: SupportCaseCreateManyAssigneeInputEnvelope
+    set?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    disconnect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    delete?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    update?: SupportCaseUpdateWithWhereUniqueWithoutAssigneeInput | SupportCaseUpdateWithWhereUniqueWithoutAssigneeInput[]
+    updateMany?: SupportCaseUpdateManyWithWhereWithoutAssigneeInput | SupportCaseUpdateManyWithWhereWithoutAssigneeInput[]
+    deleteMany?: SupportCaseScalarWhereInput | SupportCaseScalarWhereInput[]
+  }
+
+  export type CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CaseStatusHistoryCreateWithoutUserInput, CaseStatusHistoryUncheckedCreateWithoutUserInput> | CaseStatusHistoryCreateWithoutUserInput[] | CaseStatusHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CaseStatusHistoryCreateOrConnectWithoutUserInput | CaseStatusHistoryCreateOrConnectWithoutUserInput[]
+    upsert?: CaseStatusHistoryUpsertWithWhereUniqueWithoutUserInput | CaseStatusHistoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CaseStatusHistoryCreateManyUserInputEnvelope
+    set?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    disconnect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    delete?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    connect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    update?: CaseStatusHistoryUpdateWithWhereUniqueWithoutUserInput | CaseStatusHistoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CaseStatusHistoryUpdateManyWithWhereWithoutUserInput | CaseStatusHistoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CaseStatusHistoryScalarWhereInput | CaseStatusHistoryScalarWhereInput[]
+  }
+
+  export type CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput = {
+    create?: XOR<CaseMetricsCreateWithoutAssigneeInput, CaseMetricsUncheckedCreateWithoutAssigneeInput> | CaseMetricsCreateWithoutAssigneeInput[] | CaseMetricsUncheckedCreateWithoutAssigneeInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutAssigneeInput | CaseMetricsCreateOrConnectWithoutAssigneeInput[]
+    upsert?: CaseMetricsUpsertWithWhereUniqueWithoutAssigneeInput | CaseMetricsUpsertWithWhereUniqueWithoutAssigneeInput[]
+    createMany?: CaseMetricsCreateManyAssigneeInputEnvelope
+    set?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    disconnect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    delete?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    update?: CaseMetricsUpdateWithWhereUniqueWithoutAssigneeInput | CaseMetricsUpdateWithWhereUniqueWithoutAssigneeInput[]
+    updateMany?: CaseMetricsUpdateManyWithWhereWithoutAssigneeInput | CaseMetricsUpdateManyWithWhereWithoutAssigneeInput[]
+    deleteMany?: CaseMetricsScalarWhereInput | CaseMetricsScalarWhereInput[]
+  }
+
   export type PendingAuthUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<PendingAuthCreateWithoutUserInput, PendingAuthUncheckedCreateWithoutUserInput> | PendingAuthCreateWithoutUserInput[] | PendingAuthUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PendingAuthCreateOrConnectWithoutUserInput | PendingAuthCreateOrConnectWithoutUserInput[]
@@ -38982,6 +48694,34 @@ export namespace Prisma {
     connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
   }
 
+  export type SupportOptionCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SupportOptionCreateWithoutTenantInput, SupportOptionUncheckedCreateWithoutTenantInput> | SupportOptionCreateWithoutTenantInput[] | SupportOptionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutTenantInput | SupportOptionCreateOrConnectWithoutTenantInput[]
+    createMany?: SupportOptionCreateManyTenantInputEnvelope
+    connect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+  }
+
+  export type SupportCaseCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SupportCaseCreateWithoutTenantInput, SupportCaseUncheckedCreateWithoutTenantInput> | SupportCaseCreateWithoutTenantInput[] | SupportCaseUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutTenantInput | SupportCaseCreateOrConnectWithoutTenantInput[]
+    createMany?: SupportCaseCreateManyTenantInputEnvelope
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+  }
+
+  export type CaseMetricsCreateNestedManyWithoutTenantInput = {
+    create?: XOR<CaseMetricsCreateWithoutTenantInput, CaseMetricsUncheckedCreateWithoutTenantInput> | CaseMetricsCreateWithoutTenantInput[] | CaseMetricsUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutTenantInput | CaseMetricsCreateOrConnectWithoutTenantInput[]
+    createMany?: CaseMetricsCreateManyTenantInputEnvelope
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+  }
+
+  export type SupportConfigurationCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SupportConfigurationCreateWithoutTenantInput, SupportConfigurationUncheckedCreateWithoutTenantInput> | SupportConfigurationCreateWithoutTenantInput[] | SupportConfigurationUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportConfigurationCreateOrConnectWithoutTenantInput | SupportConfigurationCreateOrConnectWithoutTenantInput[]
+    createMany?: SupportConfigurationCreateManyTenantInputEnvelope
+    connect?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+  }
+
   export type AuditLogUncheckedCreateNestedManyWithoutTenantInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -39078,6 +48818,34 @@ export namespace Prisma {
     connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutTenantInput | TwoFactorAuditCreateOrConnectWithoutTenantInput[]
     createMany?: TwoFactorAuditCreateManyTenantInputEnvelope
     connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+  }
+
+  export type SupportOptionUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SupportOptionCreateWithoutTenantInput, SupportOptionUncheckedCreateWithoutTenantInput> | SupportOptionCreateWithoutTenantInput[] | SupportOptionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutTenantInput | SupportOptionCreateOrConnectWithoutTenantInput[]
+    createMany?: SupportOptionCreateManyTenantInputEnvelope
+    connect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+  }
+
+  export type SupportCaseUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SupportCaseCreateWithoutTenantInput, SupportCaseUncheckedCreateWithoutTenantInput> | SupportCaseCreateWithoutTenantInput[] | SupportCaseUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutTenantInput | SupportCaseCreateOrConnectWithoutTenantInput[]
+    createMany?: SupportCaseCreateManyTenantInputEnvelope
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+  }
+
+  export type CaseMetricsUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<CaseMetricsCreateWithoutTenantInput, CaseMetricsUncheckedCreateWithoutTenantInput> | CaseMetricsCreateWithoutTenantInput[] | CaseMetricsUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutTenantInput | CaseMetricsCreateOrConnectWithoutTenantInput[]
+    createMany?: CaseMetricsCreateManyTenantInputEnvelope
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+  }
+
+  export type SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SupportConfigurationCreateWithoutTenantInput, SupportConfigurationUncheckedCreateWithoutTenantInput> | SupportConfigurationCreateWithoutTenantInput[] | SupportConfigurationUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportConfigurationCreateOrConnectWithoutTenantInput | SupportConfigurationCreateOrConnectWithoutTenantInput[]
+    createMany?: SupportConfigurationCreateManyTenantInputEnvelope
+    connect?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
   }
 
   export type AuditLogUpdateManyWithoutTenantNestedInput = {
@@ -39276,6 +49044,62 @@ export namespace Prisma {
     deleteMany?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
   }
 
+  export type SupportOptionUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SupportOptionCreateWithoutTenantInput, SupportOptionUncheckedCreateWithoutTenantInput> | SupportOptionCreateWithoutTenantInput[] | SupportOptionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutTenantInput | SupportOptionCreateOrConnectWithoutTenantInput[]
+    upsert?: SupportOptionUpsertWithWhereUniqueWithoutTenantInput | SupportOptionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SupportOptionCreateManyTenantInputEnvelope
+    set?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    disconnect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    delete?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    connect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    update?: SupportOptionUpdateWithWhereUniqueWithoutTenantInput | SupportOptionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SupportOptionUpdateManyWithWhereWithoutTenantInput | SupportOptionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SupportOptionScalarWhereInput | SupportOptionScalarWhereInput[]
+  }
+
+  export type SupportCaseUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutTenantInput, SupportCaseUncheckedCreateWithoutTenantInput> | SupportCaseCreateWithoutTenantInput[] | SupportCaseUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutTenantInput | SupportCaseCreateOrConnectWithoutTenantInput[]
+    upsert?: SupportCaseUpsertWithWhereUniqueWithoutTenantInput | SupportCaseUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SupportCaseCreateManyTenantInputEnvelope
+    set?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    disconnect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    delete?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    update?: SupportCaseUpdateWithWhereUniqueWithoutTenantInput | SupportCaseUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SupportCaseUpdateManyWithWhereWithoutTenantInput | SupportCaseUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SupportCaseScalarWhereInput | SupportCaseScalarWhereInput[]
+  }
+
+  export type CaseMetricsUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<CaseMetricsCreateWithoutTenantInput, CaseMetricsUncheckedCreateWithoutTenantInput> | CaseMetricsCreateWithoutTenantInput[] | CaseMetricsUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutTenantInput | CaseMetricsCreateOrConnectWithoutTenantInput[]
+    upsert?: CaseMetricsUpsertWithWhereUniqueWithoutTenantInput | CaseMetricsUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: CaseMetricsCreateManyTenantInputEnvelope
+    set?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    disconnect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    delete?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    update?: CaseMetricsUpdateWithWhereUniqueWithoutTenantInput | CaseMetricsUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: CaseMetricsUpdateManyWithWhereWithoutTenantInput | CaseMetricsUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: CaseMetricsScalarWhereInput | CaseMetricsScalarWhereInput[]
+  }
+
+  export type SupportConfigurationUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SupportConfigurationCreateWithoutTenantInput, SupportConfigurationUncheckedCreateWithoutTenantInput> | SupportConfigurationCreateWithoutTenantInput[] | SupportConfigurationUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportConfigurationCreateOrConnectWithoutTenantInput | SupportConfigurationCreateOrConnectWithoutTenantInput[]
+    upsert?: SupportConfigurationUpsertWithWhereUniqueWithoutTenantInput | SupportConfigurationUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SupportConfigurationCreateManyTenantInputEnvelope
+    set?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+    disconnect?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+    delete?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+    connect?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+    update?: SupportConfigurationUpdateWithWhereUniqueWithoutTenantInput | SupportConfigurationUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SupportConfigurationUpdateManyWithWhereWithoutTenantInput | SupportConfigurationUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SupportConfigurationScalarWhereInput | SupportConfigurationScalarWhereInput[]
+  }
+
   export type AuditLogUncheckedUpdateManyWithoutTenantNestedInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -39472,6 +49296,62 @@ export namespace Prisma {
     deleteMany?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
   }
 
+  export type SupportOptionUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SupportOptionCreateWithoutTenantInput, SupportOptionUncheckedCreateWithoutTenantInput> | SupportOptionCreateWithoutTenantInput[] | SupportOptionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutTenantInput | SupportOptionCreateOrConnectWithoutTenantInput[]
+    upsert?: SupportOptionUpsertWithWhereUniqueWithoutTenantInput | SupportOptionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SupportOptionCreateManyTenantInputEnvelope
+    set?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    disconnect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    delete?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    connect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    update?: SupportOptionUpdateWithWhereUniqueWithoutTenantInput | SupportOptionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SupportOptionUpdateManyWithWhereWithoutTenantInput | SupportOptionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SupportOptionScalarWhereInput | SupportOptionScalarWhereInput[]
+  }
+
+  export type SupportCaseUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutTenantInput, SupportCaseUncheckedCreateWithoutTenantInput> | SupportCaseCreateWithoutTenantInput[] | SupportCaseUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutTenantInput | SupportCaseCreateOrConnectWithoutTenantInput[]
+    upsert?: SupportCaseUpsertWithWhereUniqueWithoutTenantInput | SupportCaseUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SupportCaseCreateManyTenantInputEnvelope
+    set?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    disconnect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    delete?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    update?: SupportCaseUpdateWithWhereUniqueWithoutTenantInput | SupportCaseUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SupportCaseUpdateManyWithWhereWithoutTenantInput | SupportCaseUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SupportCaseScalarWhereInput | SupportCaseScalarWhereInput[]
+  }
+
+  export type CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<CaseMetricsCreateWithoutTenantInput, CaseMetricsUncheckedCreateWithoutTenantInput> | CaseMetricsCreateWithoutTenantInput[] | CaseMetricsUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutTenantInput | CaseMetricsCreateOrConnectWithoutTenantInput[]
+    upsert?: CaseMetricsUpsertWithWhereUniqueWithoutTenantInput | CaseMetricsUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: CaseMetricsCreateManyTenantInputEnvelope
+    set?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    disconnect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    delete?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    update?: CaseMetricsUpdateWithWhereUniqueWithoutTenantInput | CaseMetricsUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: CaseMetricsUpdateManyWithWhereWithoutTenantInput | CaseMetricsUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: CaseMetricsScalarWhereInput | CaseMetricsScalarWhereInput[]
+  }
+
+  export type SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SupportConfigurationCreateWithoutTenantInput, SupportConfigurationUncheckedCreateWithoutTenantInput> | SupportConfigurationCreateWithoutTenantInput[] | SupportConfigurationUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SupportConfigurationCreateOrConnectWithoutTenantInput | SupportConfigurationCreateOrConnectWithoutTenantInput[]
+    upsert?: SupportConfigurationUpsertWithWhereUniqueWithoutTenantInput | SupportConfigurationUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SupportConfigurationCreateManyTenantInputEnvelope
+    set?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+    disconnect?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+    delete?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+    connect?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+    update?: SupportConfigurationUpdateWithWhereUniqueWithoutTenantInput | SupportConfigurationUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SupportConfigurationUpdateManyWithWhereWithoutTenantInput | SupportConfigurationUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SupportConfigurationScalarWhereInput | SupportConfigurationScalarWhereInput[]
+  }
+
   export type TenantCreateNestedOneWithoutMembershipsInput = {
     create?: XOR<TenantCreateWithoutMembershipsInput, TenantUncheckedCreateWithoutMembershipsInput>
     connectOrCreate?: TenantCreateOrConnectWithoutMembershipsInput
@@ -39652,6 +49532,12 @@ export namespace Prisma {
     connect?: ContactReplyWhereUniqueInput | ContactReplyWhereUniqueInput[]
   }
 
+  export type SupportCaseCreateNestedOneWithoutContactMessageInput = {
+    create?: XOR<SupportCaseCreateWithoutContactMessageInput, SupportCaseUncheckedCreateWithoutContactMessageInput>
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutContactMessageInput
+    connect?: SupportCaseWhereUniqueInput
+  }
+
   export type ContactMessageReasonUncheckedCreateNestedManyWithoutContactMessageInput = {
     create?: XOR<ContactMessageReasonCreateWithoutContactMessageInput, ContactMessageReasonUncheckedCreateWithoutContactMessageInput> | ContactMessageReasonCreateWithoutContactMessageInput[] | ContactMessageReasonUncheckedCreateWithoutContactMessageInput[]
     connectOrCreate?: ContactMessageReasonCreateOrConnectWithoutContactMessageInput | ContactMessageReasonCreateOrConnectWithoutContactMessageInput[]
@@ -39664,6 +49550,12 @@ export namespace Prisma {
     connectOrCreate?: ContactReplyCreateOrConnectWithoutContactMessageInput | ContactReplyCreateOrConnectWithoutContactMessageInput[]
     createMany?: ContactReplyCreateManyContactMessageInputEnvelope
     connect?: ContactReplyWhereUniqueInput | ContactReplyWhereUniqueInput[]
+  }
+
+  export type SupportCaseUncheckedCreateNestedOneWithoutContactMessageInput = {
+    create?: XOR<SupportCaseCreateWithoutContactMessageInput, SupportCaseUncheckedCreateWithoutContactMessageInput>
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutContactMessageInput
+    connect?: SupportCaseWhereUniqueInput
   }
 
   export type UserUpdateOneWithoutContactMessagesNestedInput = {
@@ -39714,6 +49606,16 @@ export namespace Prisma {
     deleteMany?: ContactReplyScalarWhereInput | ContactReplyScalarWhereInput[]
   }
 
+  export type SupportCaseUpdateOneWithoutContactMessageNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutContactMessageInput, SupportCaseUncheckedCreateWithoutContactMessageInput>
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutContactMessageInput
+    upsert?: SupportCaseUpsertWithoutContactMessageInput
+    disconnect?: SupportCaseWhereInput | boolean
+    delete?: SupportCaseWhereInput | boolean
+    connect?: SupportCaseWhereUniqueInput
+    update?: XOR<XOR<SupportCaseUpdateToOneWithWhereWithoutContactMessageInput, SupportCaseUpdateWithoutContactMessageInput>, SupportCaseUncheckedUpdateWithoutContactMessageInput>
+  }
+
   export type ContactMessageReasonUncheckedUpdateManyWithoutContactMessageNestedInput = {
     create?: XOR<ContactMessageReasonCreateWithoutContactMessageInput, ContactMessageReasonUncheckedCreateWithoutContactMessageInput> | ContactMessageReasonCreateWithoutContactMessageInput[] | ContactMessageReasonUncheckedCreateWithoutContactMessageInput[]
     connectOrCreate?: ContactMessageReasonCreateOrConnectWithoutContactMessageInput | ContactMessageReasonCreateOrConnectWithoutContactMessageInput[]
@@ -39740,6 +49642,16 @@ export namespace Prisma {
     update?: ContactReplyUpdateWithWhereUniqueWithoutContactMessageInput | ContactReplyUpdateWithWhereUniqueWithoutContactMessageInput[]
     updateMany?: ContactReplyUpdateManyWithWhereWithoutContactMessageInput | ContactReplyUpdateManyWithWhereWithoutContactMessageInput[]
     deleteMany?: ContactReplyScalarWhereInput | ContactReplyScalarWhereInput[]
+  }
+
+  export type SupportCaseUncheckedUpdateOneWithoutContactMessageNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutContactMessageInput, SupportCaseUncheckedCreateWithoutContactMessageInput>
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutContactMessageInput
+    upsert?: SupportCaseUpsertWithoutContactMessageInput
+    disconnect?: SupportCaseWhereInput | boolean
+    delete?: SupportCaseWhereInput | boolean
+    connect?: SupportCaseWhereUniqueInput
+    update?: XOR<XOR<SupportCaseUpdateToOneWithWhereWithoutContactMessageInput, SupportCaseUpdateWithoutContactMessageInput>, SupportCaseUncheckedUpdateWithoutContactMessageInput>
   }
 
   export type ContactMessageCreateNestedOneWithoutReasonsInput = {
@@ -39776,12 +49688,54 @@ export namespace Prisma {
     connect?: ContactMessageWhereUniqueInput
   }
 
+  export type CaseMessageCreateNestedManyWithoutContactReplyInput = {
+    create?: XOR<CaseMessageCreateWithoutContactReplyInput, CaseMessageUncheckedCreateWithoutContactReplyInput> | CaseMessageCreateWithoutContactReplyInput[] | CaseMessageUncheckedCreateWithoutContactReplyInput[]
+    connectOrCreate?: CaseMessageCreateOrConnectWithoutContactReplyInput | CaseMessageCreateOrConnectWithoutContactReplyInput[]
+    createMany?: CaseMessageCreateManyContactReplyInputEnvelope
+    connect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+  }
+
+  export type CaseMessageUncheckedCreateNestedManyWithoutContactReplyInput = {
+    create?: XOR<CaseMessageCreateWithoutContactReplyInput, CaseMessageUncheckedCreateWithoutContactReplyInput> | CaseMessageCreateWithoutContactReplyInput[] | CaseMessageUncheckedCreateWithoutContactReplyInput[]
+    connectOrCreate?: CaseMessageCreateOrConnectWithoutContactReplyInput | CaseMessageCreateOrConnectWithoutContactReplyInput[]
+    createMany?: CaseMessageCreateManyContactReplyInputEnvelope
+    connect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+  }
+
   export type ContactMessageUpdateOneRequiredWithoutRepliesNestedInput = {
     create?: XOR<ContactMessageCreateWithoutRepliesInput, ContactMessageUncheckedCreateWithoutRepliesInput>
     connectOrCreate?: ContactMessageCreateOrConnectWithoutRepliesInput
     upsert?: ContactMessageUpsertWithoutRepliesInput
     connect?: ContactMessageWhereUniqueInput
     update?: XOR<XOR<ContactMessageUpdateToOneWithWhereWithoutRepliesInput, ContactMessageUpdateWithoutRepliesInput>, ContactMessageUncheckedUpdateWithoutRepliesInput>
+  }
+
+  export type CaseMessageUpdateManyWithoutContactReplyNestedInput = {
+    create?: XOR<CaseMessageCreateWithoutContactReplyInput, CaseMessageUncheckedCreateWithoutContactReplyInput> | CaseMessageCreateWithoutContactReplyInput[] | CaseMessageUncheckedCreateWithoutContactReplyInput[]
+    connectOrCreate?: CaseMessageCreateOrConnectWithoutContactReplyInput | CaseMessageCreateOrConnectWithoutContactReplyInput[]
+    upsert?: CaseMessageUpsertWithWhereUniqueWithoutContactReplyInput | CaseMessageUpsertWithWhereUniqueWithoutContactReplyInput[]
+    createMany?: CaseMessageCreateManyContactReplyInputEnvelope
+    set?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    disconnect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    delete?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    connect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    update?: CaseMessageUpdateWithWhereUniqueWithoutContactReplyInput | CaseMessageUpdateWithWhereUniqueWithoutContactReplyInput[]
+    updateMany?: CaseMessageUpdateManyWithWhereWithoutContactReplyInput | CaseMessageUpdateManyWithWhereWithoutContactReplyInput[]
+    deleteMany?: CaseMessageScalarWhereInput | CaseMessageScalarWhereInput[]
+  }
+
+  export type CaseMessageUncheckedUpdateManyWithoutContactReplyNestedInput = {
+    create?: XOR<CaseMessageCreateWithoutContactReplyInput, CaseMessageUncheckedCreateWithoutContactReplyInput> | CaseMessageCreateWithoutContactReplyInput[] | CaseMessageUncheckedCreateWithoutContactReplyInput[]
+    connectOrCreate?: CaseMessageCreateOrConnectWithoutContactReplyInput | CaseMessageCreateOrConnectWithoutContactReplyInput[]
+    upsert?: CaseMessageUpsertWithWhereUniqueWithoutContactReplyInput | CaseMessageUpsertWithWhereUniqueWithoutContactReplyInput[]
+    createMany?: CaseMessageCreateManyContactReplyInputEnvelope
+    set?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    disconnect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    delete?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    connect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    update?: CaseMessageUpdateWithWhereUniqueWithoutContactReplyInput | CaseMessageUpdateWithWhereUniqueWithoutContactReplyInput[]
+    updateMany?: CaseMessageUpdateManyWithWhereWithoutContactReplyInput | CaseMessageUpdateManyWithWhereWithoutContactReplyInput[]
+    deleteMany?: CaseMessageScalarWhereInput | CaseMessageScalarWhereInput[]
   }
 
   export type TenantCreateNestedOneWithoutAuditLogsInput = {
@@ -40278,6 +50232,436 @@ export namespace Prisma {
     update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutTwoFactorAuditsInput, TenantUpdateWithoutTwoFactorAuditsInput>, TenantUncheckedUpdateWithoutTwoFactorAuditsInput>
   }
 
+  export type ContactMessageCreateNestedOneWithoutSupportCaseInput = {
+    create?: XOR<ContactMessageCreateWithoutSupportCaseInput, ContactMessageUncheckedCreateWithoutSupportCaseInput>
+    connectOrCreate?: ContactMessageCreateOrConnectWithoutSupportCaseInput
+    connect?: ContactMessageWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutAssignedCasesInput = {
+    create?: XOR<UserCreateWithoutAssignedCasesInput, UserUncheckedCreateWithoutAssignedCasesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssignedCasesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutSupportCasesInput = {
+    create?: XOR<TenantCreateWithoutSupportCasesInput, TenantUncheckedCreateWithoutSupportCasesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSupportCasesInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type SupportOptionCreateNestedOneWithoutCasesInput = {
+    create?: XOR<SupportOptionCreateWithoutCasesInput, SupportOptionUncheckedCreateWithoutCasesInput>
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutCasesInput
+    connect?: SupportOptionWhereUniqueInput
+  }
+
+  export type CaseMessageCreateNestedManyWithoutCaseInput = {
+    create?: XOR<CaseMessageCreateWithoutCaseInput, CaseMessageUncheckedCreateWithoutCaseInput> | CaseMessageCreateWithoutCaseInput[] | CaseMessageUncheckedCreateWithoutCaseInput[]
+    connectOrCreate?: CaseMessageCreateOrConnectWithoutCaseInput | CaseMessageCreateOrConnectWithoutCaseInput[]
+    createMany?: CaseMessageCreateManyCaseInputEnvelope
+    connect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+  }
+
+  export type CaseStatusHistoryCreateNestedManyWithoutCaseInput = {
+    create?: XOR<CaseStatusHistoryCreateWithoutCaseInput, CaseStatusHistoryUncheckedCreateWithoutCaseInput> | CaseStatusHistoryCreateWithoutCaseInput[] | CaseStatusHistoryUncheckedCreateWithoutCaseInput[]
+    connectOrCreate?: CaseStatusHistoryCreateOrConnectWithoutCaseInput | CaseStatusHistoryCreateOrConnectWithoutCaseInput[]
+    createMany?: CaseStatusHistoryCreateManyCaseInputEnvelope
+    connect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+  }
+
+  export type CaseMessageUncheckedCreateNestedManyWithoutCaseInput = {
+    create?: XOR<CaseMessageCreateWithoutCaseInput, CaseMessageUncheckedCreateWithoutCaseInput> | CaseMessageCreateWithoutCaseInput[] | CaseMessageUncheckedCreateWithoutCaseInput[]
+    connectOrCreate?: CaseMessageCreateOrConnectWithoutCaseInput | CaseMessageCreateOrConnectWithoutCaseInput[]
+    createMany?: CaseMessageCreateManyCaseInputEnvelope
+    connect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+  }
+
+  export type CaseStatusHistoryUncheckedCreateNestedManyWithoutCaseInput = {
+    create?: XOR<CaseStatusHistoryCreateWithoutCaseInput, CaseStatusHistoryUncheckedCreateWithoutCaseInput> | CaseStatusHistoryCreateWithoutCaseInput[] | CaseStatusHistoryUncheckedCreateWithoutCaseInput[]
+    connectOrCreate?: CaseStatusHistoryCreateOrConnectWithoutCaseInput | CaseStatusHistoryCreateOrConnectWithoutCaseInput[]
+    createMany?: CaseStatusHistoryCreateManyCaseInputEnvelope
+    connect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+  }
+
+  export type ContactMessageUpdateOneWithoutSupportCaseNestedInput = {
+    create?: XOR<ContactMessageCreateWithoutSupportCaseInput, ContactMessageUncheckedCreateWithoutSupportCaseInput>
+    connectOrCreate?: ContactMessageCreateOrConnectWithoutSupportCaseInput
+    upsert?: ContactMessageUpsertWithoutSupportCaseInput
+    disconnect?: ContactMessageWhereInput | boolean
+    delete?: ContactMessageWhereInput | boolean
+    connect?: ContactMessageWhereUniqueInput
+    update?: XOR<XOR<ContactMessageUpdateToOneWithWhereWithoutSupportCaseInput, ContactMessageUpdateWithoutSupportCaseInput>, ContactMessageUncheckedUpdateWithoutSupportCaseInput>
+  }
+
+  export type UserUpdateOneWithoutAssignedCasesNestedInput = {
+    create?: XOR<UserCreateWithoutAssignedCasesInput, UserUncheckedCreateWithoutAssignedCasesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssignedCasesInput
+    upsert?: UserUpsertWithoutAssignedCasesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssignedCasesInput, UserUpdateWithoutAssignedCasesInput>, UserUncheckedUpdateWithoutAssignedCasesInput>
+  }
+
+  export type TenantUpdateOneWithoutSupportCasesNestedInput = {
+    create?: XOR<TenantCreateWithoutSupportCasesInput, TenantUncheckedCreateWithoutSupportCasesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSupportCasesInput
+    upsert?: TenantUpsertWithoutSupportCasesInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSupportCasesInput, TenantUpdateWithoutSupportCasesInput>, TenantUncheckedUpdateWithoutSupportCasesInput>
+  }
+
+  export type SupportOptionUpdateOneWithoutCasesNestedInput = {
+    create?: XOR<SupportOptionCreateWithoutCasesInput, SupportOptionUncheckedCreateWithoutCasesInput>
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutCasesInput
+    upsert?: SupportOptionUpsertWithoutCasesInput
+    disconnect?: SupportOptionWhereInput | boolean
+    delete?: SupportOptionWhereInput | boolean
+    connect?: SupportOptionWhereUniqueInput
+    update?: XOR<XOR<SupportOptionUpdateToOneWithWhereWithoutCasesInput, SupportOptionUpdateWithoutCasesInput>, SupportOptionUncheckedUpdateWithoutCasesInput>
+  }
+
+  export type CaseMessageUpdateManyWithoutCaseNestedInput = {
+    create?: XOR<CaseMessageCreateWithoutCaseInput, CaseMessageUncheckedCreateWithoutCaseInput> | CaseMessageCreateWithoutCaseInput[] | CaseMessageUncheckedCreateWithoutCaseInput[]
+    connectOrCreate?: CaseMessageCreateOrConnectWithoutCaseInput | CaseMessageCreateOrConnectWithoutCaseInput[]
+    upsert?: CaseMessageUpsertWithWhereUniqueWithoutCaseInput | CaseMessageUpsertWithWhereUniqueWithoutCaseInput[]
+    createMany?: CaseMessageCreateManyCaseInputEnvelope
+    set?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    disconnect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    delete?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    connect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    update?: CaseMessageUpdateWithWhereUniqueWithoutCaseInput | CaseMessageUpdateWithWhereUniqueWithoutCaseInput[]
+    updateMany?: CaseMessageUpdateManyWithWhereWithoutCaseInput | CaseMessageUpdateManyWithWhereWithoutCaseInput[]
+    deleteMany?: CaseMessageScalarWhereInput | CaseMessageScalarWhereInput[]
+  }
+
+  export type CaseStatusHistoryUpdateManyWithoutCaseNestedInput = {
+    create?: XOR<CaseStatusHistoryCreateWithoutCaseInput, CaseStatusHistoryUncheckedCreateWithoutCaseInput> | CaseStatusHistoryCreateWithoutCaseInput[] | CaseStatusHistoryUncheckedCreateWithoutCaseInput[]
+    connectOrCreate?: CaseStatusHistoryCreateOrConnectWithoutCaseInput | CaseStatusHistoryCreateOrConnectWithoutCaseInput[]
+    upsert?: CaseStatusHistoryUpsertWithWhereUniqueWithoutCaseInput | CaseStatusHistoryUpsertWithWhereUniqueWithoutCaseInput[]
+    createMany?: CaseStatusHistoryCreateManyCaseInputEnvelope
+    set?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    disconnect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    delete?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    connect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    update?: CaseStatusHistoryUpdateWithWhereUniqueWithoutCaseInput | CaseStatusHistoryUpdateWithWhereUniqueWithoutCaseInput[]
+    updateMany?: CaseStatusHistoryUpdateManyWithWhereWithoutCaseInput | CaseStatusHistoryUpdateManyWithWhereWithoutCaseInput[]
+    deleteMany?: CaseStatusHistoryScalarWhereInput | CaseStatusHistoryScalarWhereInput[]
+  }
+
+  export type CaseMessageUncheckedUpdateManyWithoutCaseNestedInput = {
+    create?: XOR<CaseMessageCreateWithoutCaseInput, CaseMessageUncheckedCreateWithoutCaseInput> | CaseMessageCreateWithoutCaseInput[] | CaseMessageUncheckedCreateWithoutCaseInput[]
+    connectOrCreate?: CaseMessageCreateOrConnectWithoutCaseInput | CaseMessageCreateOrConnectWithoutCaseInput[]
+    upsert?: CaseMessageUpsertWithWhereUniqueWithoutCaseInput | CaseMessageUpsertWithWhereUniqueWithoutCaseInput[]
+    createMany?: CaseMessageCreateManyCaseInputEnvelope
+    set?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    disconnect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    delete?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    connect?: CaseMessageWhereUniqueInput | CaseMessageWhereUniqueInput[]
+    update?: CaseMessageUpdateWithWhereUniqueWithoutCaseInput | CaseMessageUpdateWithWhereUniqueWithoutCaseInput[]
+    updateMany?: CaseMessageUpdateManyWithWhereWithoutCaseInput | CaseMessageUpdateManyWithWhereWithoutCaseInput[]
+    deleteMany?: CaseMessageScalarWhereInput | CaseMessageScalarWhereInput[]
+  }
+
+  export type CaseStatusHistoryUncheckedUpdateManyWithoutCaseNestedInput = {
+    create?: XOR<CaseStatusHistoryCreateWithoutCaseInput, CaseStatusHistoryUncheckedCreateWithoutCaseInput> | CaseStatusHistoryCreateWithoutCaseInput[] | CaseStatusHistoryUncheckedCreateWithoutCaseInput[]
+    connectOrCreate?: CaseStatusHistoryCreateOrConnectWithoutCaseInput | CaseStatusHistoryCreateOrConnectWithoutCaseInput[]
+    upsert?: CaseStatusHistoryUpsertWithWhereUniqueWithoutCaseInput | CaseStatusHistoryUpsertWithWhereUniqueWithoutCaseInput[]
+    createMany?: CaseStatusHistoryCreateManyCaseInputEnvelope
+    set?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    disconnect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    delete?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    connect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
+    update?: CaseStatusHistoryUpdateWithWhereUniqueWithoutCaseInput | CaseStatusHistoryUpdateWithWhereUniqueWithoutCaseInput[]
+    updateMany?: CaseStatusHistoryUpdateManyWithWhereWithoutCaseInput | CaseStatusHistoryUpdateManyWithWhereWithoutCaseInput[]
+    deleteMany?: CaseStatusHistoryScalarWhereInput | CaseStatusHistoryScalarWhereInput[]
+  }
+
+  export type TenantCreateNestedOneWithoutSupportOptionsInput = {
+    create?: XOR<TenantCreateWithoutSupportOptionsInput, TenantUncheckedCreateWithoutSupportOptionsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSupportOptionsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type SupportOptionCreateNestedOneWithoutChildrenInput = {
+    create?: XOR<SupportOptionCreateWithoutChildrenInput, SupportOptionUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutChildrenInput
+    connect?: SupportOptionWhereUniqueInput
+  }
+
+  export type SupportOptionCreateNestedManyWithoutParentInput = {
+    create?: XOR<SupportOptionCreateWithoutParentInput, SupportOptionUncheckedCreateWithoutParentInput> | SupportOptionCreateWithoutParentInput[] | SupportOptionUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutParentInput | SupportOptionCreateOrConnectWithoutParentInput[]
+    createMany?: SupportOptionCreateManyParentInputEnvelope
+    connect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+  }
+
+  export type SupportCaseCreateNestedManyWithoutSupportOptionInput = {
+    create?: XOR<SupportCaseCreateWithoutSupportOptionInput, SupportCaseUncheckedCreateWithoutSupportOptionInput> | SupportCaseCreateWithoutSupportOptionInput[] | SupportCaseUncheckedCreateWithoutSupportOptionInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutSupportOptionInput | SupportCaseCreateOrConnectWithoutSupportOptionInput[]
+    createMany?: SupportCaseCreateManySupportOptionInputEnvelope
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+  }
+
+  export type CaseMetricsCreateNestedManyWithoutSupportOptionInput = {
+    create?: XOR<CaseMetricsCreateWithoutSupportOptionInput, CaseMetricsUncheckedCreateWithoutSupportOptionInput> | CaseMetricsCreateWithoutSupportOptionInput[] | CaseMetricsUncheckedCreateWithoutSupportOptionInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutSupportOptionInput | CaseMetricsCreateOrConnectWithoutSupportOptionInput[]
+    createMany?: CaseMetricsCreateManySupportOptionInputEnvelope
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+  }
+
+  export type SupportOptionUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<SupportOptionCreateWithoutParentInput, SupportOptionUncheckedCreateWithoutParentInput> | SupportOptionCreateWithoutParentInput[] | SupportOptionUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutParentInput | SupportOptionCreateOrConnectWithoutParentInput[]
+    createMany?: SupportOptionCreateManyParentInputEnvelope
+    connect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+  }
+
+  export type SupportCaseUncheckedCreateNestedManyWithoutSupportOptionInput = {
+    create?: XOR<SupportCaseCreateWithoutSupportOptionInput, SupportCaseUncheckedCreateWithoutSupportOptionInput> | SupportCaseCreateWithoutSupportOptionInput[] | SupportCaseUncheckedCreateWithoutSupportOptionInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutSupportOptionInput | SupportCaseCreateOrConnectWithoutSupportOptionInput[]
+    createMany?: SupportCaseCreateManySupportOptionInputEnvelope
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+  }
+
+  export type CaseMetricsUncheckedCreateNestedManyWithoutSupportOptionInput = {
+    create?: XOR<CaseMetricsCreateWithoutSupportOptionInput, CaseMetricsUncheckedCreateWithoutSupportOptionInput> | CaseMetricsCreateWithoutSupportOptionInput[] | CaseMetricsUncheckedCreateWithoutSupportOptionInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutSupportOptionInput | CaseMetricsCreateOrConnectWithoutSupportOptionInput[]
+    createMany?: CaseMetricsCreateManySupportOptionInputEnvelope
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+  }
+
+  export type TenantUpdateOneWithoutSupportOptionsNestedInput = {
+    create?: XOR<TenantCreateWithoutSupportOptionsInput, TenantUncheckedCreateWithoutSupportOptionsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSupportOptionsInput
+    upsert?: TenantUpsertWithoutSupportOptionsInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSupportOptionsInput, TenantUpdateWithoutSupportOptionsInput>, TenantUncheckedUpdateWithoutSupportOptionsInput>
+  }
+
+  export type SupportOptionUpdateOneWithoutChildrenNestedInput = {
+    create?: XOR<SupportOptionCreateWithoutChildrenInput, SupportOptionUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutChildrenInput
+    upsert?: SupportOptionUpsertWithoutChildrenInput
+    disconnect?: SupportOptionWhereInput | boolean
+    delete?: SupportOptionWhereInput | boolean
+    connect?: SupportOptionWhereUniqueInput
+    update?: XOR<XOR<SupportOptionUpdateToOneWithWhereWithoutChildrenInput, SupportOptionUpdateWithoutChildrenInput>, SupportOptionUncheckedUpdateWithoutChildrenInput>
+  }
+
+  export type SupportOptionUpdateManyWithoutParentNestedInput = {
+    create?: XOR<SupportOptionCreateWithoutParentInput, SupportOptionUncheckedCreateWithoutParentInput> | SupportOptionCreateWithoutParentInput[] | SupportOptionUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutParentInput | SupportOptionCreateOrConnectWithoutParentInput[]
+    upsert?: SupportOptionUpsertWithWhereUniqueWithoutParentInput | SupportOptionUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: SupportOptionCreateManyParentInputEnvelope
+    set?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    disconnect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    delete?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    connect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    update?: SupportOptionUpdateWithWhereUniqueWithoutParentInput | SupportOptionUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: SupportOptionUpdateManyWithWhereWithoutParentInput | SupportOptionUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: SupportOptionScalarWhereInput | SupportOptionScalarWhereInput[]
+  }
+
+  export type SupportCaseUpdateManyWithoutSupportOptionNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutSupportOptionInput, SupportCaseUncheckedCreateWithoutSupportOptionInput> | SupportCaseCreateWithoutSupportOptionInput[] | SupportCaseUncheckedCreateWithoutSupportOptionInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutSupportOptionInput | SupportCaseCreateOrConnectWithoutSupportOptionInput[]
+    upsert?: SupportCaseUpsertWithWhereUniqueWithoutSupportOptionInput | SupportCaseUpsertWithWhereUniqueWithoutSupportOptionInput[]
+    createMany?: SupportCaseCreateManySupportOptionInputEnvelope
+    set?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    disconnect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    delete?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    update?: SupportCaseUpdateWithWhereUniqueWithoutSupportOptionInput | SupportCaseUpdateWithWhereUniqueWithoutSupportOptionInput[]
+    updateMany?: SupportCaseUpdateManyWithWhereWithoutSupportOptionInput | SupportCaseUpdateManyWithWhereWithoutSupportOptionInput[]
+    deleteMany?: SupportCaseScalarWhereInput | SupportCaseScalarWhereInput[]
+  }
+
+  export type CaseMetricsUpdateManyWithoutSupportOptionNestedInput = {
+    create?: XOR<CaseMetricsCreateWithoutSupportOptionInput, CaseMetricsUncheckedCreateWithoutSupportOptionInput> | CaseMetricsCreateWithoutSupportOptionInput[] | CaseMetricsUncheckedCreateWithoutSupportOptionInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutSupportOptionInput | CaseMetricsCreateOrConnectWithoutSupportOptionInput[]
+    upsert?: CaseMetricsUpsertWithWhereUniqueWithoutSupportOptionInput | CaseMetricsUpsertWithWhereUniqueWithoutSupportOptionInput[]
+    createMany?: CaseMetricsCreateManySupportOptionInputEnvelope
+    set?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    disconnect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    delete?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    update?: CaseMetricsUpdateWithWhereUniqueWithoutSupportOptionInput | CaseMetricsUpdateWithWhereUniqueWithoutSupportOptionInput[]
+    updateMany?: CaseMetricsUpdateManyWithWhereWithoutSupportOptionInput | CaseMetricsUpdateManyWithWhereWithoutSupportOptionInput[]
+    deleteMany?: CaseMetricsScalarWhereInput | CaseMetricsScalarWhereInput[]
+  }
+
+  export type SupportOptionUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<SupportOptionCreateWithoutParentInput, SupportOptionUncheckedCreateWithoutParentInput> | SupportOptionCreateWithoutParentInput[] | SupportOptionUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutParentInput | SupportOptionCreateOrConnectWithoutParentInput[]
+    upsert?: SupportOptionUpsertWithWhereUniqueWithoutParentInput | SupportOptionUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: SupportOptionCreateManyParentInputEnvelope
+    set?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    disconnect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    delete?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    connect?: SupportOptionWhereUniqueInput | SupportOptionWhereUniqueInput[]
+    update?: SupportOptionUpdateWithWhereUniqueWithoutParentInput | SupportOptionUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: SupportOptionUpdateManyWithWhereWithoutParentInput | SupportOptionUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: SupportOptionScalarWhereInput | SupportOptionScalarWhereInput[]
+  }
+
+  export type SupportCaseUncheckedUpdateManyWithoutSupportOptionNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutSupportOptionInput, SupportCaseUncheckedCreateWithoutSupportOptionInput> | SupportCaseCreateWithoutSupportOptionInput[] | SupportCaseUncheckedCreateWithoutSupportOptionInput[]
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutSupportOptionInput | SupportCaseCreateOrConnectWithoutSupportOptionInput[]
+    upsert?: SupportCaseUpsertWithWhereUniqueWithoutSupportOptionInput | SupportCaseUpsertWithWhereUniqueWithoutSupportOptionInput[]
+    createMany?: SupportCaseCreateManySupportOptionInputEnvelope
+    set?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    disconnect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    delete?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    connect?: SupportCaseWhereUniqueInput | SupportCaseWhereUniqueInput[]
+    update?: SupportCaseUpdateWithWhereUniqueWithoutSupportOptionInput | SupportCaseUpdateWithWhereUniqueWithoutSupportOptionInput[]
+    updateMany?: SupportCaseUpdateManyWithWhereWithoutSupportOptionInput | SupportCaseUpdateManyWithWhereWithoutSupportOptionInput[]
+    deleteMany?: SupportCaseScalarWhereInput | SupportCaseScalarWhereInput[]
+  }
+
+  export type CaseMetricsUncheckedUpdateManyWithoutSupportOptionNestedInput = {
+    create?: XOR<CaseMetricsCreateWithoutSupportOptionInput, CaseMetricsUncheckedCreateWithoutSupportOptionInput> | CaseMetricsCreateWithoutSupportOptionInput[] | CaseMetricsUncheckedCreateWithoutSupportOptionInput[]
+    connectOrCreate?: CaseMetricsCreateOrConnectWithoutSupportOptionInput | CaseMetricsCreateOrConnectWithoutSupportOptionInput[]
+    upsert?: CaseMetricsUpsertWithWhereUniqueWithoutSupportOptionInput | CaseMetricsUpsertWithWhereUniqueWithoutSupportOptionInput[]
+    createMany?: CaseMetricsCreateManySupportOptionInputEnvelope
+    set?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    disconnect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    delete?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    connect?: CaseMetricsWhereUniqueInput | CaseMetricsWhereUniqueInput[]
+    update?: CaseMetricsUpdateWithWhereUniqueWithoutSupportOptionInput | CaseMetricsUpdateWithWhereUniqueWithoutSupportOptionInput[]
+    updateMany?: CaseMetricsUpdateManyWithWhereWithoutSupportOptionInput | CaseMetricsUpdateManyWithWhereWithoutSupportOptionInput[]
+    deleteMany?: CaseMetricsScalarWhereInput | CaseMetricsScalarWhereInput[]
+  }
+
+  export type SupportCaseCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<SupportCaseCreateWithoutMessagesInput, SupportCaseUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutMessagesInput
+    connect?: SupportCaseWhereUniqueInput
+  }
+
+  export type ContactReplyCreateNestedOneWithoutCaseMessagesInput = {
+    create?: XOR<ContactReplyCreateWithoutCaseMessagesInput, ContactReplyUncheckedCreateWithoutCaseMessagesInput>
+    connectOrCreate?: ContactReplyCreateOrConnectWithoutCaseMessagesInput
+    connect?: ContactReplyWhereUniqueInput
+  }
+
+  export type SupportCaseUpdateOneRequiredWithoutMessagesNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutMessagesInput, SupportCaseUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutMessagesInput
+    upsert?: SupportCaseUpsertWithoutMessagesInput
+    connect?: SupportCaseWhereUniqueInput
+    update?: XOR<XOR<SupportCaseUpdateToOneWithWhereWithoutMessagesInput, SupportCaseUpdateWithoutMessagesInput>, SupportCaseUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type ContactReplyUpdateOneWithoutCaseMessagesNestedInput = {
+    create?: XOR<ContactReplyCreateWithoutCaseMessagesInput, ContactReplyUncheckedCreateWithoutCaseMessagesInput>
+    connectOrCreate?: ContactReplyCreateOrConnectWithoutCaseMessagesInput
+    upsert?: ContactReplyUpsertWithoutCaseMessagesInput
+    disconnect?: ContactReplyWhereInput | boolean
+    delete?: ContactReplyWhereInput | boolean
+    connect?: ContactReplyWhereUniqueInput
+    update?: XOR<XOR<ContactReplyUpdateToOneWithWhereWithoutCaseMessagesInput, ContactReplyUpdateWithoutCaseMessagesInput>, ContactReplyUncheckedUpdateWithoutCaseMessagesInput>
+  }
+
+  export type SupportCaseCreateNestedOneWithoutStatusHistoryInput = {
+    create?: XOR<SupportCaseCreateWithoutStatusHistoryInput, SupportCaseUncheckedCreateWithoutStatusHistoryInput>
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutStatusHistoryInput
+    connect?: SupportCaseWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCaseStatusChangesInput = {
+    create?: XOR<UserCreateWithoutCaseStatusChangesInput, UserUncheckedCreateWithoutCaseStatusChangesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCaseStatusChangesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SupportCaseUpdateOneRequiredWithoutStatusHistoryNestedInput = {
+    create?: XOR<SupportCaseCreateWithoutStatusHistoryInput, SupportCaseUncheckedCreateWithoutStatusHistoryInput>
+    connectOrCreate?: SupportCaseCreateOrConnectWithoutStatusHistoryInput
+    upsert?: SupportCaseUpsertWithoutStatusHistoryInput
+    connect?: SupportCaseWhereUniqueInput
+    update?: XOR<XOR<SupportCaseUpdateToOneWithWhereWithoutStatusHistoryInput, SupportCaseUpdateWithoutStatusHistoryInput>, SupportCaseUncheckedUpdateWithoutStatusHistoryInput>
+  }
+
+  export type UserUpdateOneWithoutCaseStatusChangesNestedInput = {
+    create?: XOR<UserCreateWithoutCaseStatusChangesInput, UserUncheckedCreateWithoutCaseStatusChangesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCaseStatusChangesInput
+    upsert?: UserUpsertWithoutCaseStatusChangesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCaseStatusChangesInput, UserUpdateWithoutCaseStatusChangesInput>, UserUncheckedUpdateWithoutCaseStatusChangesInput>
+  }
+
+  export type TenantCreateNestedOneWithoutCaseMetricsInput = {
+    create?: XOR<TenantCreateWithoutCaseMetricsInput, TenantUncheckedCreateWithoutCaseMetricsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutCaseMetricsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type SupportOptionCreateNestedOneWithoutMetricsInput = {
+    create?: XOR<SupportOptionCreateWithoutMetricsInput, SupportOptionUncheckedCreateWithoutMetricsInput>
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutMetricsInput
+    connect?: SupportOptionWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCaseMetricsInput = {
+    create?: XOR<UserCreateWithoutCaseMetricsInput, UserUncheckedCreateWithoutCaseMetricsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCaseMetricsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantUpdateOneWithoutCaseMetricsNestedInput = {
+    create?: XOR<TenantCreateWithoutCaseMetricsInput, TenantUncheckedCreateWithoutCaseMetricsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutCaseMetricsInput
+    upsert?: TenantUpsertWithoutCaseMetricsInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutCaseMetricsInput, TenantUpdateWithoutCaseMetricsInput>, TenantUncheckedUpdateWithoutCaseMetricsInput>
+  }
+
+  export type SupportOptionUpdateOneWithoutMetricsNestedInput = {
+    create?: XOR<SupportOptionCreateWithoutMetricsInput, SupportOptionUncheckedCreateWithoutMetricsInput>
+    connectOrCreate?: SupportOptionCreateOrConnectWithoutMetricsInput
+    upsert?: SupportOptionUpsertWithoutMetricsInput
+    disconnect?: SupportOptionWhereInput | boolean
+    delete?: SupportOptionWhereInput | boolean
+    connect?: SupportOptionWhereUniqueInput
+    update?: XOR<XOR<SupportOptionUpdateToOneWithWhereWithoutMetricsInput, SupportOptionUpdateWithoutMetricsInput>, SupportOptionUncheckedUpdateWithoutMetricsInput>
+  }
+
+  export type UserUpdateOneWithoutCaseMetricsNestedInput = {
+    create?: XOR<UserCreateWithoutCaseMetricsInput, UserUncheckedCreateWithoutCaseMetricsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCaseMetricsInput
+    upsert?: UserUpsertWithoutCaseMetricsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCaseMetricsInput, UserUpdateWithoutCaseMetricsInput>, UserUncheckedUpdateWithoutCaseMetricsInput>
+  }
+
+  export type TenantCreateNestedOneWithoutSupportConfigurationsInput = {
+    create?: XOR<TenantCreateWithoutSupportConfigurationsInput, TenantUncheckedCreateWithoutSupportConfigurationsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSupportConfigurationsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type TenantUpdateOneWithoutSupportConfigurationsNestedInput = {
+    create?: XOR<TenantCreateWithoutSupportConfigurationsInput, TenantUncheckedCreateWithoutSupportConfigurationsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSupportConfigurationsInput
+    upsert?: TenantUpsertWithoutSupportConfigurationsInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSupportConfigurationsInput, TenantUpdateWithoutSupportConfigurationsInput>, TenantUncheckedUpdateWithoutSupportConfigurationsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -40478,6 +50862,50 @@ export namespace Prisma {
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+  export type NestedJsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type UserCreateWithoutAccountsInput = {
     id?: string
@@ -40504,6 +50932,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -40518,6 +50948,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -40548,6 +50981,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -40562,6 +50997,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -40608,6 +51046,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -40622,6 +51062,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -40652,6 +51095,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -40666,6 +51111,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -40696,6 +51144,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -40710,6 +51160,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -40740,6 +51193,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -40754,6 +51209,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -40793,6 +51251,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -40810,6 +51269,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSessionsInput = {
@@ -40841,6 +51304,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -40858,6 +51322,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSessionsInput = {
@@ -40901,6 +51369,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -40915,6 +51385,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -40945,6 +51418,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -40959,6 +51434,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -41004,6 +51482,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -41021,6 +51500,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSessionsInput = {
@@ -41052,6 +51535,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -41069,6 +51553,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -41195,6 +51683,7 @@ export namespace Prisma {
     tenant?: TenantCreateNestedOneWithoutContactMessagesInput
     reasons?: ContactMessageReasonCreateNestedManyWithoutContactMessageInput
     replies?: ContactReplyCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageUncheckedCreateWithoutUserInput = {
@@ -41215,6 +51704,7 @@ export namespace Prisma {
     tags?: string | null
     reasons?: ContactMessageReasonUncheckedCreateNestedManyWithoutContactMessageInput
     replies?: ContactReplyUncheckedCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseUncheckedCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageCreateOrConnectWithoutUserInput = {
@@ -41556,6 +52046,132 @@ export namespace Prisma {
 
   export type TwoFactorMethodCreateManyUserInputEnvelope = {
     data: TwoFactorMethodCreateManyUserInput | TwoFactorMethodCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SupportCaseCreateWithoutAssigneeInput = {
+    id?: string
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contactMessage?: ContactMessageCreateNestedOneWithoutSupportCaseInput
+    tenant?: TenantCreateNestedOneWithoutSupportCasesInput
+    supportOption?: SupportOptionCreateNestedOneWithoutCasesInput
+    messages?: CaseMessageCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseUncheckedCreateWithoutAssigneeInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    tenantId?: string | null
+    supportOptionId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: CaseMessageUncheckedCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryUncheckedCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseCreateOrConnectWithoutAssigneeInput = {
+    where: SupportCaseWhereUniqueInput
+    create: XOR<SupportCaseCreateWithoutAssigneeInput, SupportCaseUncheckedCreateWithoutAssigneeInput>
+  }
+
+  export type SupportCaseCreateManyAssigneeInputEnvelope = {
+    data: SupportCaseCreateManyAssigneeInput | SupportCaseCreateManyAssigneeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CaseStatusHistoryCreateWithoutUserInput = {
+    id?: string
+    fromStatus?: string | null
+    toStatus: string
+    reason?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    case: SupportCaseCreateNestedOneWithoutStatusHistoryInput
+  }
+
+  export type CaseStatusHistoryUncheckedCreateWithoutUserInput = {
+    id?: string
+    caseId: string
+    fromStatus?: string | null
+    toStatus: string
+    reason?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CaseStatusHistoryCreateOrConnectWithoutUserInput = {
+    where: CaseStatusHistoryWhereUniqueInput
+    create: XOR<CaseStatusHistoryCreateWithoutUserInput, CaseStatusHistoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type CaseStatusHistoryCreateManyUserInputEnvelope = {
+    data: CaseStatusHistoryCreateManyUserInput | CaseStatusHistoryCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CaseMetricsCreateWithoutAssigneeInput = {
+    id?: string
+    date: Date | string
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutCaseMetricsInput
+    supportOption?: SupportOptionCreateNestedOneWithoutMetricsInput
+  }
+
+  export type CaseMetricsUncheckedCreateWithoutAssigneeInput = {
+    id?: string
+    tenantId?: string | null
+    date: Date | string
+    supportOptionId?: string | null
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMetricsCreateOrConnectWithoutAssigneeInput = {
+    where: CaseMetricsWhereUniqueInput
+    create: XOR<CaseMetricsCreateWithoutAssigneeInput, CaseMetricsUncheckedCreateWithoutAssigneeInput>
+  }
+
+  export type CaseMetricsCreateManyAssigneeInputEnvelope = {
+    data: CaseMetricsCreateManyAssigneeInput | CaseMetricsCreateManyAssigneeInput[]
     skipDuplicates?: boolean
   }
 
@@ -42064,6 +52680,112 @@ export namespace Prisma {
     lastUsedAt?: DateTimeNullableFilter<"TwoFactorMethod"> | Date | string | null
   }
 
+  export type SupportCaseUpsertWithWhereUniqueWithoutAssigneeInput = {
+    where: SupportCaseWhereUniqueInput
+    update: XOR<SupportCaseUpdateWithoutAssigneeInput, SupportCaseUncheckedUpdateWithoutAssigneeInput>
+    create: XOR<SupportCaseCreateWithoutAssigneeInput, SupportCaseUncheckedCreateWithoutAssigneeInput>
+  }
+
+  export type SupportCaseUpdateWithWhereUniqueWithoutAssigneeInput = {
+    where: SupportCaseWhereUniqueInput
+    data: XOR<SupportCaseUpdateWithoutAssigneeInput, SupportCaseUncheckedUpdateWithoutAssigneeInput>
+  }
+
+  export type SupportCaseUpdateManyWithWhereWithoutAssigneeInput = {
+    where: SupportCaseScalarWhereInput
+    data: XOR<SupportCaseUpdateManyMutationInput, SupportCaseUncheckedUpdateManyWithoutAssigneeInput>
+  }
+
+  export type SupportCaseScalarWhereInput = {
+    AND?: SupportCaseScalarWhereInput | SupportCaseScalarWhereInput[]
+    OR?: SupportCaseScalarWhereInput[]
+    NOT?: SupportCaseScalarWhereInput | SupportCaseScalarWhereInput[]
+    id?: StringFilter<"SupportCase"> | string
+    contactMessageId?: StringNullableFilter<"SupportCase"> | string | null
+    caseNumber?: StringFilter<"SupportCase"> | string
+    title?: StringFilter<"SupportCase"> | string
+    description?: StringNullableFilter<"SupportCase"> | string | null
+    status?: StringFilter<"SupportCase"> | string
+    priority?: StringFilter<"SupportCase"> | string
+    assigneeId?: StringNullableFilter<"SupportCase"> | string | null
+    tenantId?: StringNullableFilter<"SupportCase"> | string | null
+    supportOptionId?: StringNullableFilter<"SupportCase"> | string | null
+    threadingKey?: StringNullableFilter<"SupportCase"> | string | null
+    source?: StringFilter<"SupportCase"> | string
+    sourceMetadata?: JsonNullableFilter<"SupportCase">
+    firstResponseAt?: DateTimeNullableFilter<"SupportCase"> | Date | string | null
+    resolvedAt?: DateTimeNullableFilter<"SupportCase"> | Date | string | null
+    closedAt?: DateTimeNullableFilter<"SupportCase"> | Date | string | null
+    createdAt?: DateTimeFilter<"SupportCase"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportCase"> | Date | string
+  }
+
+  export type CaseStatusHistoryUpsertWithWhereUniqueWithoutUserInput = {
+    where: CaseStatusHistoryWhereUniqueInput
+    update: XOR<CaseStatusHistoryUpdateWithoutUserInput, CaseStatusHistoryUncheckedUpdateWithoutUserInput>
+    create: XOR<CaseStatusHistoryCreateWithoutUserInput, CaseStatusHistoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type CaseStatusHistoryUpdateWithWhereUniqueWithoutUserInput = {
+    where: CaseStatusHistoryWhereUniqueInput
+    data: XOR<CaseStatusHistoryUpdateWithoutUserInput, CaseStatusHistoryUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CaseStatusHistoryUpdateManyWithWhereWithoutUserInput = {
+    where: CaseStatusHistoryScalarWhereInput
+    data: XOR<CaseStatusHistoryUpdateManyMutationInput, CaseStatusHistoryUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CaseStatusHistoryScalarWhereInput = {
+    AND?: CaseStatusHistoryScalarWhereInput | CaseStatusHistoryScalarWhereInput[]
+    OR?: CaseStatusHistoryScalarWhereInput[]
+    NOT?: CaseStatusHistoryScalarWhereInput | CaseStatusHistoryScalarWhereInput[]
+    id?: StringFilter<"CaseStatusHistory"> | string
+    caseId?: StringFilter<"CaseStatusHistory"> | string
+    fromStatus?: StringNullableFilter<"CaseStatusHistory"> | string | null
+    toStatus?: StringFilter<"CaseStatusHistory"> | string
+    changedBy?: StringNullableFilter<"CaseStatusHistory"> | string | null
+    reason?: StringNullableFilter<"CaseStatusHistory"> | string | null
+    metadata?: JsonNullableFilter<"CaseStatusHistory">
+    createdAt?: DateTimeFilter<"CaseStatusHistory"> | Date | string
+  }
+
+  export type CaseMetricsUpsertWithWhereUniqueWithoutAssigneeInput = {
+    where: CaseMetricsWhereUniqueInput
+    update: XOR<CaseMetricsUpdateWithoutAssigneeInput, CaseMetricsUncheckedUpdateWithoutAssigneeInput>
+    create: XOR<CaseMetricsCreateWithoutAssigneeInput, CaseMetricsUncheckedCreateWithoutAssigneeInput>
+  }
+
+  export type CaseMetricsUpdateWithWhereUniqueWithoutAssigneeInput = {
+    where: CaseMetricsWhereUniqueInput
+    data: XOR<CaseMetricsUpdateWithoutAssigneeInput, CaseMetricsUncheckedUpdateWithoutAssigneeInput>
+  }
+
+  export type CaseMetricsUpdateManyWithWhereWithoutAssigneeInput = {
+    where: CaseMetricsScalarWhereInput
+    data: XOR<CaseMetricsUpdateManyMutationInput, CaseMetricsUncheckedUpdateManyWithoutAssigneeInput>
+  }
+
+  export type CaseMetricsScalarWhereInput = {
+    AND?: CaseMetricsScalarWhereInput | CaseMetricsScalarWhereInput[]
+    OR?: CaseMetricsScalarWhereInput[]
+    NOT?: CaseMetricsScalarWhereInput | CaseMetricsScalarWhereInput[]
+    id?: StringFilter<"CaseMetrics"> | string
+    tenantId?: StringNullableFilter<"CaseMetrics"> | string | null
+    date?: DateTimeFilter<"CaseMetrics"> | Date | string
+    supportOptionId?: StringNullableFilter<"CaseMetrics"> | string | null
+    assigneeId?: StringNullableFilter<"CaseMetrics"> | string | null
+    totalCases?: IntFilter<"CaseMetrics"> | number
+    openCases?: IntFilter<"CaseMetrics"> | number
+    pendingCases?: IntFilter<"CaseMetrics"> | number
+    resolvedCases?: IntFilter<"CaseMetrics"> | number
+    closedCases?: IntFilter<"CaseMetrics"> | number
+    avgFirstResponseTime?: IntNullableFilter<"CaseMetrics"> | number | null
+    avgResolutionTime?: IntNullableFilter<"CaseMetrics"> | number | null
+    createdAt?: DateTimeFilter<"CaseMetrics"> | Date | string
+    updatedAt?: DateTimeFilter<"CaseMetrics"> | Date | string
+  }
+
   export type PendingAuthUpsertWithWhereUniqueWithoutUserInput = {
     where: PendingAuthWhereUniqueInput
     update: XOR<PendingAuthUpdateWithoutUserInput, PendingAuthUncheckedUpdateWithoutUserInput>
@@ -42218,6 +52940,7 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutContactMessagesInput
     reasons?: ContactMessageReasonCreateNestedManyWithoutContactMessageInput
     replies?: ContactReplyCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageUncheckedCreateWithoutTenantInput = {
@@ -42238,6 +52961,7 @@ export namespace Prisma {
     tags?: string | null
     reasons?: ContactMessageReasonUncheckedCreateNestedManyWithoutContactMessageInput
     replies?: ContactReplyUncheckedCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseUncheckedCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageCreateOrConnectWithoutTenantInput = {
@@ -42672,6 +53396,178 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SupportOptionCreateWithoutTenantInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parent?: SupportOptionCreateNestedOneWithoutChildrenInput
+    children?: SupportOptionCreateNestedManyWithoutParentInput
+    cases?: SupportCaseCreateNestedManyWithoutSupportOptionInput
+    metrics?: CaseMetricsCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionUncheckedCreateWithoutTenantInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    parentOptionId?: string | null
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: SupportOptionUncheckedCreateNestedManyWithoutParentInput
+    cases?: SupportCaseUncheckedCreateNestedManyWithoutSupportOptionInput
+    metrics?: CaseMetricsUncheckedCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionCreateOrConnectWithoutTenantInput = {
+    where: SupportOptionWhereUniqueInput
+    create: XOR<SupportOptionCreateWithoutTenantInput, SupportOptionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SupportOptionCreateManyTenantInputEnvelope = {
+    data: SupportOptionCreateManyTenantInput | SupportOptionCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SupportCaseCreateWithoutTenantInput = {
+    id?: string
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contactMessage?: ContactMessageCreateNestedOneWithoutSupportCaseInput
+    assignee?: UserCreateNestedOneWithoutAssignedCasesInput
+    supportOption?: SupportOptionCreateNestedOneWithoutCasesInput
+    messages?: CaseMessageCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseUncheckedCreateWithoutTenantInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    assigneeId?: string | null
+    supportOptionId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: CaseMessageUncheckedCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryUncheckedCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseCreateOrConnectWithoutTenantInput = {
+    where: SupportCaseWhereUniqueInput
+    create: XOR<SupportCaseCreateWithoutTenantInput, SupportCaseUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SupportCaseCreateManyTenantInputEnvelope = {
+    data: SupportCaseCreateManyTenantInput | SupportCaseCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CaseMetricsCreateWithoutTenantInput = {
+    id?: string
+    date: Date | string
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    supportOption?: SupportOptionCreateNestedOneWithoutMetricsInput
+    assignee?: UserCreateNestedOneWithoutCaseMetricsInput
+  }
+
+  export type CaseMetricsUncheckedCreateWithoutTenantInput = {
+    id?: string
+    date: Date | string
+    supportOptionId?: string | null
+    assigneeId?: string | null
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMetricsCreateOrConnectWithoutTenantInput = {
+    where: CaseMetricsWhereUniqueInput
+    create: XOR<CaseMetricsCreateWithoutTenantInput, CaseMetricsUncheckedCreateWithoutTenantInput>
+  }
+
+  export type CaseMetricsCreateManyTenantInputEnvelope = {
+    data: CaseMetricsCreateManyTenantInput | CaseMetricsCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SupportConfigurationCreateWithoutTenantInput = {
+    id?: string
+    key: string
+    value: JsonNullValueInput | InputJsonValue
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportConfigurationUncheckedCreateWithoutTenantInput = {
+    id?: string
+    key: string
+    value: JsonNullValueInput | InputJsonValue
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportConfigurationCreateOrConnectWithoutTenantInput = {
+    where: SupportConfigurationWhereUniqueInput
+    create: XOR<SupportConfigurationCreateWithoutTenantInput, SupportConfigurationUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SupportConfigurationCreateManyTenantInputEnvelope = {
+    data: SupportConfigurationCreateManyTenantInput | SupportConfigurationCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AuditLogUpsertWithWhereUniqueWithoutTenantInput = {
     where: AuditLogWhereUniqueInput
     update: XOR<AuditLogUpdateWithoutTenantInput, AuditLogUncheckedUpdateWithoutTenantInput>
@@ -42957,6 +53853,103 @@ export namespace Prisma {
     data: XOR<TwoFactorAuditUpdateManyMutationInput, TwoFactorAuditUncheckedUpdateManyWithoutTenantInput>
   }
 
+  export type SupportOptionUpsertWithWhereUniqueWithoutTenantInput = {
+    where: SupportOptionWhereUniqueInput
+    update: XOR<SupportOptionUpdateWithoutTenantInput, SupportOptionUncheckedUpdateWithoutTenantInput>
+    create: XOR<SupportOptionCreateWithoutTenantInput, SupportOptionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SupportOptionUpdateWithWhereUniqueWithoutTenantInput = {
+    where: SupportOptionWhereUniqueInput
+    data: XOR<SupportOptionUpdateWithoutTenantInput, SupportOptionUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type SupportOptionUpdateManyWithWhereWithoutTenantInput = {
+    where: SupportOptionScalarWhereInput
+    data: XOR<SupportOptionUpdateManyMutationInput, SupportOptionUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type SupportOptionScalarWhereInput = {
+    AND?: SupportOptionScalarWhereInput | SupportOptionScalarWhereInput[]
+    OR?: SupportOptionScalarWhereInput[]
+    NOT?: SupportOptionScalarWhereInput | SupportOptionScalarWhereInput[]
+    id?: StringFilter<"SupportOption"> | string
+    key?: StringFilter<"SupportOption"> | string
+    label?: StringFilter<"SupportOption"> | string
+    description?: StringNullableFilter<"SupportOption"> | string | null
+    icon?: StringNullableFilter<"SupportOption"> | string | null
+    isActive?: BoolFilter<"SupportOption"> | boolean
+    isGlobal?: BoolFilter<"SupportOption"> | boolean
+    tenantId?: StringNullableFilter<"SupportOption"> | string | null
+    parentOptionId?: StringNullableFilter<"SupportOption"> | string | null
+    sortOrder?: IntFilter<"SupportOption"> | number
+    isHidden?: BoolFilter<"SupportOption"> | boolean
+    routingConfig?: JsonFilter<"SupportOption">
+    createdAt?: DateTimeFilter<"SupportOption"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportOption"> | Date | string
+  }
+
+  export type SupportCaseUpsertWithWhereUniqueWithoutTenantInput = {
+    where: SupportCaseWhereUniqueInput
+    update: XOR<SupportCaseUpdateWithoutTenantInput, SupportCaseUncheckedUpdateWithoutTenantInput>
+    create: XOR<SupportCaseCreateWithoutTenantInput, SupportCaseUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SupportCaseUpdateWithWhereUniqueWithoutTenantInput = {
+    where: SupportCaseWhereUniqueInput
+    data: XOR<SupportCaseUpdateWithoutTenantInput, SupportCaseUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type SupportCaseUpdateManyWithWhereWithoutTenantInput = {
+    where: SupportCaseScalarWhereInput
+    data: XOR<SupportCaseUpdateManyMutationInput, SupportCaseUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type CaseMetricsUpsertWithWhereUniqueWithoutTenantInput = {
+    where: CaseMetricsWhereUniqueInput
+    update: XOR<CaseMetricsUpdateWithoutTenantInput, CaseMetricsUncheckedUpdateWithoutTenantInput>
+    create: XOR<CaseMetricsCreateWithoutTenantInput, CaseMetricsUncheckedCreateWithoutTenantInput>
+  }
+
+  export type CaseMetricsUpdateWithWhereUniqueWithoutTenantInput = {
+    where: CaseMetricsWhereUniqueInput
+    data: XOR<CaseMetricsUpdateWithoutTenantInput, CaseMetricsUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type CaseMetricsUpdateManyWithWhereWithoutTenantInput = {
+    where: CaseMetricsScalarWhereInput
+    data: XOR<CaseMetricsUpdateManyMutationInput, CaseMetricsUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type SupportConfigurationUpsertWithWhereUniqueWithoutTenantInput = {
+    where: SupportConfigurationWhereUniqueInput
+    update: XOR<SupportConfigurationUpdateWithoutTenantInput, SupportConfigurationUncheckedUpdateWithoutTenantInput>
+    create: XOR<SupportConfigurationCreateWithoutTenantInput, SupportConfigurationUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SupportConfigurationUpdateWithWhereUniqueWithoutTenantInput = {
+    where: SupportConfigurationWhereUniqueInput
+    data: XOR<SupportConfigurationUpdateWithoutTenantInput, SupportConfigurationUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type SupportConfigurationUpdateManyWithWhereWithoutTenantInput = {
+    where: SupportConfigurationScalarWhereInput
+    data: XOR<SupportConfigurationUpdateManyMutationInput, SupportConfigurationUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type SupportConfigurationScalarWhereInput = {
+    AND?: SupportConfigurationScalarWhereInput | SupportConfigurationScalarWhereInput[]
+    OR?: SupportConfigurationScalarWhereInput[]
+    NOT?: SupportConfigurationScalarWhereInput | SupportConfigurationScalarWhereInput[]
+    id?: StringFilter<"SupportConfiguration"> | string
+    tenantId?: StringNullableFilter<"SupportConfiguration"> | string | null
+    key?: StringFilter<"SupportConfiguration"> | string
+    value?: JsonFilter<"SupportConfiguration">
+    description?: StringNullableFilter<"SupportConfiguration"> | string | null
+    createdAt?: DateTimeFilter<"SupportConfiguration"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportConfiguration"> | Date | string
+  }
+
   export type TenantCreateWithoutMembershipsInput = {
     id?: string
     slug: string
@@ -42986,6 +53979,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -43003,6 +53997,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutMembershipsInput = {
@@ -43034,6 +54032,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -43051,6 +54050,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutMembershipsInput = {
@@ -43083,6 +54086,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -43097,6 +54102,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -43127,6 +54135,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -43141,6 +54151,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -43176,6 +54189,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -43190,6 +54205,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -43220,6 +54238,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -43234,6 +54254,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -43284,6 +54307,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -43301,6 +54325,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutMembershipsInput = {
@@ -43332,6 +54360,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -43349,6 +54378,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -43387,6 +54420,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -43401,6 +54436,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -43431,6 +54469,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -43445,6 +54485,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -43486,6 +54529,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -43500,6 +54545,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -43530,6 +54578,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -43544,6 +54594,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -43578,6 +54631,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -43595,6 +54649,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutInvitationsInput = {
@@ -43626,6 +54684,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -43643,6 +54702,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutInvitationsInput = {
@@ -43675,6 +54738,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -43689,6 +54754,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -43719,6 +54787,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -43733,6 +54803,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -43768,6 +54841,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -43782,6 +54857,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -43812,6 +54890,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -43826,6 +54906,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -43876,6 +54959,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -43893,6 +54977,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutInvitationsInput = {
@@ -43924,6 +55012,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -43941,6 +55030,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutSentInvitationsInput = {
@@ -43979,6 +55072,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -43993,6 +55088,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -44023,6 +55121,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -44037,6 +55137,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -44078,6 +55181,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -44092,6 +55197,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -44122,6 +55230,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -44136,6 +55246,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -44192,6 +55305,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -44209,6 +55323,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactReasonsInput = {
@@ -44240,6 +55358,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -44257,6 +55376,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactReasonsInput = {
@@ -44330,6 +55453,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -44347,6 +55471,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactReasonsInput = {
@@ -44378,6 +55506,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -44395,6 +55524,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutContactMessagesInput = {
@@ -44422,6 +55555,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -44436,6 +55571,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -44466,6 +55604,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -44480,6 +55620,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -44519,6 +55662,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -44536,6 +55680,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactMessagesInput = {
@@ -44567,6 +55715,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -44584,6 +55733,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactMessagesInput = {
@@ -44621,6 +55774,7 @@ export namespace Prisma {
     attachments?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    caseMessages?: CaseMessageCreateNestedManyWithoutContactReplyInput
   }
 
   export type ContactReplyUncheckedCreateWithoutContactMessageInput = {
@@ -44631,6 +55785,7 @@ export namespace Prisma {
     attachments?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    caseMessages?: CaseMessageUncheckedCreateNestedManyWithoutContactReplyInput
   }
 
   export type ContactReplyCreateOrConnectWithoutContactMessageInput = {
@@ -44641,6 +55796,55 @@ export namespace Prisma {
   export type ContactReplyCreateManyContactMessageInputEnvelope = {
     data: ContactReplyCreateManyContactMessageInput | ContactReplyCreateManyContactMessageInput[]
     skipDuplicates?: boolean
+  }
+
+  export type SupportCaseCreateWithoutContactMessageInput = {
+    id?: string
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignee?: UserCreateNestedOneWithoutAssignedCasesInput
+    tenant?: TenantCreateNestedOneWithoutSupportCasesInput
+    supportOption?: SupportOptionCreateNestedOneWithoutCasesInput
+    messages?: CaseMessageCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseUncheckedCreateWithoutContactMessageInput = {
+    id?: string
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    assigneeId?: string | null
+    tenantId?: string | null
+    supportOptionId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: CaseMessageUncheckedCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryUncheckedCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseCreateOrConnectWithoutContactMessageInput = {
+    where: SupportCaseWhereUniqueInput
+    create: XOR<SupportCaseCreateWithoutContactMessageInput, SupportCaseUncheckedCreateWithoutContactMessageInput>
   }
 
   export type UserUpsertWithoutContactMessagesInput = {
@@ -44679,6 +55883,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -44693,6 +55899,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -44723,6 +55932,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -44737,6 +55948,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -44782,6 +55996,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -44799,6 +56014,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactMessagesInput = {
@@ -44830,6 +56049,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -44847,6 +56067,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type ContactMessageReasonUpsertWithWhereUniqueWithoutContactMessageInput = {
@@ -44895,6 +56119,61 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ContactReply"> | Date | string
   }
 
+  export type SupportCaseUpsertWithoutContactMessageInput = {
+    update: XOR<SupportCaseUpdateWithoutContactMessageInput, SupportCaseUncheckedUpdateWithoutContactMessageInput>
+    create: XOR<SupportCaseCreateWithoutContactMessageInput, SupportCaseUncheckedCreateWithoutContactMessageInput>
+    where?: SupportCaseWhereInput
+  }
+
+  export type SupportCaseUpdateToOneWithWhereWithoutContactMessageInput = {
+    where?: SupportCaseWhereInput
+    data: XOR<SupportCaseUpdateWithoutContactMessageInput, SupportCaseUncheckedUpdateWithoutContactMessageInput>
+  }
+
+  export type SupportCaseUpdateWithoutContactMessageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignee?: UserUpdateOneWithoutAssignedCasesNestedInput
+    tenant?: TenantUpdateOneWithoutSupportCasesNestedInput
+    supportOption?: SupportOptionUpdateOneWithoutCasesNestedInput
+    messages?: CaseMessageUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateWithoutContactMessageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: CaseMessageUncheckedUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUncheckedUpdateManyWithoutCaseNestedInput
+  }
+
   export type ContactMessageCreateWithoutReasonsInput = {
     id?: string
     name: string
@@ -44913,6 +56192,7 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutContactMessagesInput
     tenant?: TenantCreateNestedOneWithoutContactMessagesInput
     replies?: ContactReplyCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageUncheckedCreateWithoutReasonsInput = {
@@ -44933,6 +56213,7 @@ export namespace Prisma {
     resolvedAt?: Date | string | null
     tags?: string | null
     replies?: ContactReplyUncheckedCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseUncheckedCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageCreateOrConnectWithoutReasonsInput = {
@@ -45000,6 +56281,7 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutContactMessagesNestedInput
     tenant?: TenantUpdateOneWithoutContactMessagesNestedInput
     replies?: ContactReplyUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUpdateOneWithoutContactMessageNestedInput
   }
 
   export type ContactMessageUncheckedUpdateWithoutReasonsInput = {
@@ -45020,6 +56302,7 @@ export namespace Prisma {
     resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     replies?: ContactReplyUncheckedUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUncheckedUpdateOneWithoutContactMessageNestedInput
   }
 
   export type ContactReasonUpsertWithoutContactMessagesInput = {
@@ -45077,6 +56360,7 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutContactMessagesInput
     tenant?: TenantCreateNestedOneWithoutContactMessagesInput
     reasons?: ContactMessageReasonCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageUncheckedCreateWithoutRepliesInput = {
@@ -45097,11 +56381,60 @@ export namespace Prisma {
     resolvedAt?: Date | string | null
     tags?: string | null
     reasons?: ContactMessageReasonUncheckedCreateNestedManyWithoutContactMessageInput
+    supportCase?: SupportCaseUncheckedCreateNestedOneWithoutContactMessageInput
   }
 
   export type ContactMessageCreateOrConnectWithoutRepliesInput = {
     where: ContactMessageWhereUniqueInput
     create: XOR<ContactMessageCreateWithoutRepliesInput, ContactMessageUncheckedCreateWithoutRepliesInput>
+  }
+
+  export type CaseMessageCreateWithoutContactReplyInput = {
+    id?: string
+    direction: string
+    channel: string
+    fromAddress?: string | null
+    toAddress?: string | null
+    subject?: string | null
+    content: string
+    isInternal?: boolean
+    messageId?: string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    case: SupportCaseCreateNestedOneWithoutMessagesInput
+  }
+
+  export type CaseMessageUncheckedCreateWithoutContactReplyInput = {
+    id?: string
+    caseId: string
+    direction: string
+    channel: string
+    fromAddress?: string | null
+    toAddress?: string | null
+    subject?: string | null
+    content: string
+    isInternal?: boolean
+    messageId?: string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMessageCreateOrConnectWithoutContactReplyInput = {
+    where: CaseMessageWhereUniqueInput
+    create: XOR<CaseMessageCreateWithoutContactReplyInput, CaseMessageUncheckedCreateWithoutContactReplyInput>
+  }
+
+  export type CaseMessageCreateManyContactReplyInputEnvelope = {
+    data: CaseMessageCreateManyContactReplyInput | CaseMessageCreateManyContactReplyInput[]
+    skipDuplicates?: boolean
   }
 
   export type ContactMessageUpsertWithoutRepliesInput = {
@@ -45133,6 +56466,7 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutContactMessagesNestedInput
     tenant?: TenantUpdateOneWithoutContactMessagesNestedInput
     reasons?: ContactMessageReasonUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUpdateOneWithoutContactMessageNestedInput
   }
 
   export type ContactMessageUncheckedUpdateWithoutRepliesInput = {
@@ -45153,6 +56487,46 @@ export namespace Prisma {
     resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     reasons?: ContactMessageReasonUncheckedUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUncheckedUpdateOneWithoutContactMessageNestedInput
+  }
+
+  export type CaseMessageUpsertWithWhereUniqueWithoutContactReplyInput = {
+    where: CaseMessageWhereUniqueInput
+    update: XOR<CaseMessageUpdateWithoutContactReplyInput, CaseMessageUncheckedUpdateWithoutContactReplyInput>
+    create: XOR<CaseMessageCreateWithoutContactReplyInput, CaseMessageUncheckedCreateWithoutContactReplyInput>
+  }
+
+  export type CaseMessageUpdateWithWhereUniqueWithoutContactReplyInput = {
+    where: CaseMessageWhereUniqueInput
+    data: XOR<CaseMessageUpdateWithoutContactReplyInput, CaseMessageUncheckedUpdateWithoutContactReplyInput>
+  }
+
+  export type CaseMessageUpdateManyWithWhereWithoutContactReplyInput = {
+    where: CaseMessageScalarWhereInput
+    data: XOR<CaseMessageUpdateManyMutationInput, CaseMessageUncheckedUpdateManyWithoutContactReplyInput>
+  }
+
+  export type CaseMessageScalarWhereInput = {
+    AND?: CaseMessageScalarWhereInput | CaseMessageScalarWhereInput[]
+    OR?: CaseMessageScalarWhereInput[]
+    NOT?: CaseMessageScalarWhereInput | CaseMessageScalarWhereInput[]
+    id?: StringFilter<"CaseMessage"> | string
+    caseId?: StringFilter<"CaseMessage"> | string
+    contactReplyId?: StringNullableFilter<"CaseMessage"> | string | null
+    direction?: StringFilter<"CaseMessage"> | string
+    channel?: StringFilter<"CaseMessage"> | string
+    fromAddress?: StringNullableFilter<"CaseMessage"> | string | null
+    toAddress?: StringNullableFilter<"CaseMessage"> | string | null
+    subject?: StringNullableFilter<"CaseMessage"> | string | null
+    content?: StringFilter<"CaseMessage"> | string
+    isInternal?: BoolFilter<"CaseMessage"> | boolean
+    messageId?: StringNullableFilter<"CaseMessage"> | string | null
+    threadingData?: JsonNullableFilter<"CaseMessage">
+    attachments?: JsonNullableFilter<"CaseMessage">
+    deliveryStatus?: StringNullableFilter<"CaseMessage"> | string | null
+    deliveryMetadata?: JsonNullableFilter<"CaseMessage">
+    createdAt?: DateTimeFilter<"CaseMessage"> | Date | string
+    updatedAt?: DateTimeFilter<"CaseMessage"> | Date | string
   }
 
   export type TenantCreateWithoutAuditLogsInput = {
@@ -45184,6 +56558,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -45201,6 +56576,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutAuditLogsInput = {
@@ -45232,6 +56611,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -45249,6 +56629,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutAuditLogsInput = {
@@ -45281,6 +56665,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -45295,6 +56681,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -45325,6 +56714,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -45339,6 +56730,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -45389,6 +56783,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -45406,6 +56801,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutAuditLogsInput = {
@@ -45437,6 +56836,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -45454,6 +56854,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutAuditLogsInput = {
@@ -45492,6 +56896,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -45506,6 +56912,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -45536,6 +56945,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -45550,6 +56961,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -45580,6 +56994,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -45594,6 +57010,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -45624,6 +57043,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -45638,6 +57059,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -45684,6 +57108,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -45698,6 +57124,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -45728,6 +57157,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -45742,6 +57173,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -45772,6 +57206,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -45786,6 +57222,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -45816,6 +57255,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -45830,6 +57271,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -45876,6 +57320,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -45890,6 +57336,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -45920,6 +57369,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -45934,6 +57385,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -45964,6 +57418,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -45978,6 +57434,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -46008,6 +57467,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -46022,6 +57483,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -46061,6 +57525,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -46078,6 +57543,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutNotificationsInput = {
@@ -46109,6 +57578,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -46126,6 +57596,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutNotificationsInput = {
@@ -46197,6 +57671,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -46211,6 +57687,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -46241,6 +57720,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -46255,6 +57736,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -46300,6 +57784,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -46317,6 +57802,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutNotificationsInput = {
@@ -46348,6 +57837,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -46365,6 +57855,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type NotificationRecipientUpsertWithWhereUniqueWithoutNotificationInput = {
@@ -46408,6 +57902,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -46422,6 +57918,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -46452,6 +57951,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -46466,6 +57967,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -46551,6 +58055,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -46565,6 +58071,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -46595,6 +58104,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -46609,6 +58120,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -46688,6 +58202,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -46705,6 +58220,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutWebhookEndpointsInput = {
@@ -46736,6 +58255,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -46753,6 +58273,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutWebhookEndpointsInput = {
@@ -46800,6 +58324,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -46817,6 +58342,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutWebhookEndpointsInput = {
@@ -46848,6 +58377,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -46865,6 +58395,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type GlobalFeatureRuleCreateWithoutFeatureInput = {
@@ -47114,6 +58648,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -47131,6 +58666,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFeatureRulesInput = {
@@ -47162,6 +58701,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -47179,6 +58719,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFeatureRulesInput = {
@@ -47259,6 +58803,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47276,6 +58821,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFeatureRulesInput = {
@@ -47307,6 +58856,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47324,6 +58874,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type FeatureDefinitionUpsertWithoutTenantRulesInput = {
@@ -47427,6 +58981,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -47444,6 +58999,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFeatureAuditEntriesInput = {
@@ -47475,6 +59034,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -47492,6 +59052,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFeatureAuditEntriesInput = {
@@ -47578,6 +59142,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47595,6 +59160,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFeatureAuditEntriesInput = {
@@ -47626,6 +59195,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47643,6 +59213,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTwoFactorMethodsInput = {
@@ -47670,6 +59244,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -47684,6 +59260,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
@@ -47714,6 +59293,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -47728,6 +59309,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
@@ -47767,6 +59351,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -47784,6 +59369,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutTwoFactorMethodsInput = {
@@ -47815,6 +59404,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -47832,6 +59422,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutTwoFactorMethodsInput = {
@@ -47875,6 +59469,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -47889,6 +59485,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
@@ -47919,6 +59518,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -47933,6 +59534,9 @@ export namespace Prisma {
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
@@ -47978,6 +59582,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47995,6 +59600,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutTwoFactorMethodsInput = {
@@ -48026,6 +59635,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -48043,6 +59653,10 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutPendingAuthsInput = {
@@ -48070,6 +59684,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -48085,6 +59701,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
@@ -48114,6 +59733,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -48129,6 +59750,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
@@ -48167,6 +59791,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -48184,6 +59809,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutPendingAuthsInput = {
@@ -48215,6 +59844,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -48232,6 +59862,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutPendingAuthsInput = {
@@ -48275,6 +59909,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -48290,6 +59926,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
@@ -48319,6 +59958,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -48334,6 +59975,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -48378,6 +60022,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -48395,6 +60040,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutPendingAuthsInput = {
@@ -48426,6 +60075,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -48443,6 +60093,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTwoFactorCodesInput = {
@@ -48470,6 +60124,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -48485,6 +60141,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
   }
@@ -48514,6 +60173,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -48529,6 +60190,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
   }
@@ -48567,6 +60231,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -48584,6 +60249,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutTwoFactorCodesInput = {
@@ -48615,6 +60284,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -48632,6 +60302,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutTwoFactorCodesInput = {
@@ -48675,6 +60349,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -48690,6 +60366,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
   }
@@ -48719,6 +60398,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -48734,6 +60415,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -48778,6 +60462,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -48795,6 +60480,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutTwoFactorCodesInput = {
@@ -48826,6 +60515,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -48843,6 +60533,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTwoFactorAuditsInput = {
@@ -48870,6 +60564,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -48885,6 +60581,9 @@ export namespace Prisma {
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
   }
@@ -48914,6 +60613,8 @@ export namespace Prisma {
     marketingEmails?: boolean
     securityAlerts?: boolean
     activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -48929,6 +60630,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
   }
@@ -48967,6 +60671,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -48984,6 +60689,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutTwoFactorAuditsInput = {
@@ -49015,6 +60724,7 @@ export namespace Prisma {
     website?: string | null
     industry?: string | null
     size?: string | null
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     suspendedAt?: Date | string | null
@@ -49032,6 +60742,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutTwoFactorAuditsInput = {
@@ -49075,6 +60789,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -49090,6 +60806,9 @@ export namespace Prisma {
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
   }
@@ -49119,6 +60838,8 @@ export namespace Prisma {
     marketingEmails?: BoolFieldUpdateOperationsInput | boolean
     securityAlerts?: BoolFieldUpdateOperationsInput | boolean
     activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -49134,6 +60855,9 @@ export namespace Prisma {
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -49178,6 +60902,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49195,6 +60920,10 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutTwoFactorAuditsInput = {
@@ -49226,6 +60955,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     industry?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49243,6 +60973,2504 @@ export namespace Prisma {
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type ContactMessageCreateWithoutSupportCaseInput = {
+    id?: string
+    name: string
+    email: string
+    subject: string
+    message: string
+    status?: string
+    priority?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedTo?: string | null
+    category?: string | null
+    dueDate?: Date | string | null
+    resolvedAt?: Date | string | null
+    tags?: string | null
+    user?: UserCreateNestedOneWithoutContactMessagesInput
+    tenant?: TenantCreateNestedOneWithoutContactMessagesInput
+    reasons?: ContactMessageReasonCreateNestedManyWithoutContactMessageInput
+    replies?: ContactReplyCreateNestedManyWithoutContactMessageInput
+  }
+
+  export type ContactMessageUncheckedCreateWithoutSupportCaseInput = {
+    id?: string
+    name: string
+    email: string
+    subject: string
+    message: string
+    userId?: string | null
+    tenantId?: string | null
+    status?: string
+    priority?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedTo?: string | null
+    category?: string | null
+    dueDate?: Date | string | null
+    resolvedAt?: Date | string | null
+    tags?: string | null
+    reasons?: ContactMessageReasonUncheckedCreateNestedManyWithoutContactMessageInput
+    replies?: ContactReplyUncheckedCreateNestedManyWithoutContactMessageInput
+  }
+
+  export type ContactMessageCreateOrConnectWithoutSupportCaseInput = {
+    where: ContactMessageWhereUniqueInput
+    create: XOR<ContactMessageCreateWithoutSupportCaseInput, ContactMessageUncheckedCreateWithoutSupportCaseInput>
+  }
+
+  export type UserCreateWithoutAssignedCasesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAssignedCasesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAssignedCasesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAssignedCasesInput, UserUncheckedCreateWithoutAssignedCasesInput>
+  }
+
+  export type TenantCreateWithoutSupportCasesInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutSupportCasesInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutSupportCasesInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutSupportCasesInput, TenantUncheckedCreateWithoutSupportCasesInput>
+  }
+
+  export type SupportOptionCreateWithoutCasesInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutSupportOptionsInput
+    parent?: SupportOptionCreateNestedOneWithoutChildrenInput
+    children?: SupportOptionCreateNestedManyWithoutParentInput
+    metrics?: CaseMetricsCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionUncheckedCreateWithoutCasesInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: string | null
+    parentOptionId?: string | null
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: SupportOptionUncheckedCreateNestedManyWithoutParentInput
+    metrics?: CaseMetricsUncheckedCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionCreateOrConnectWithoutCasesInput = {
+    where: SupportOptionWhereUniqueInput
+    create: XOR<SupportOptionCreateWithoutCasesInput, SupportOptionUncheckedCreateWithoutCasesInput>
+  }
+
+  export type CaseMessageCreateWithoutCaseInput = {
+    id?: string
+    direction: string
+    channel: string
+    fromAddress?: string | null
+    toAddress?: string | null
+    subject?: string | null
+    content: string
+    isInternal?: boolean
+    messageId?: string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contactReply?: ContactReplyCreateNestedOneWithoutCaseMessagesInput
+  }
+
+  export type CaseMessageUncheckedCreateWithoutCaseInput = {
+    id?: string
+    contactReplyId?: string | null
+    direction: string
+    channel: string
+    fromAddress?: string | null
+    toAddress?: string | null
+    subject?: string | null
+    content: string
+    isInternal?: boolean
+    messageId?: string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMessageCreateOrConnectWithoutCaseInput = {
+    where: CaseMessageWhereUniqueInput
+    create: XOR<CaseMessageCreateWithoutCaseInput, CaseMessageUncheckedCreateWithoutCaseInput>
+  }
+
+  export type CaseMessageCreateManyCaseInputEnvelope = {
+    data: CaseMessageCreateManyCaseInput | CaseMessageCreateManyCaseInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CaseStatusHistoryCreateWithoutCaseInput = {
+    id?: string
+    fromStatus?: string | null
+    toStatus: string
+    reason?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    user?: UserCreateNestedOneWithoutCaseStatusChangesInput
+  }
+
+  export type CaseStatusHistoryUncheckedCreateWithoutCaseInput = {
+    id?: string
+    fromStatus?: string | null
+    toStatus: string
+    changedBy?: string | null
+    reason?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CaseStatusHistoryCreateOrConnectWithoutCaseInput = {
+    where: CaseStatusHistoryWhereUniqueInput
+    create: XOR<CaseStatusHistoryCreateWithoutCaseInput, CaseStatusHistoryUncheckedCreateWithoutCaseInput>
+  }
+
+  export type CaseStatusHistoryCreateManyCaseInputEnvelope = {
+    data: CaseStatusHistoryCreateManyCaseInput | CaseStatusHistoryCreateManyCaseInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ContactMessageUpsertWithoutSupportCaseInput = {
+    update: XOR<ContactMessageUpdateWithoutSupportCaseInput, ContactMessageUncheckedUpdateWithoutSupportCaseInput>
+    create: XOR<ContactMessageCreateWithoutSupportCaseInput, ContactMessageUncheckedCreateWithoutSupportCaseInput>
+    where?: ContactMessageWhereInput
+  }
+
+  export type ContactMessageUpdateToOneWithWhereWithoutSupportCaseInput = {
+    where?: ContactMessageWhereInput
+    data: XOR<ContactMessageUpdateWithoutSupportCaseInput, ContactMessageUncheckedUpdateWithoutSupportCaseInput>
+  }
+
+  export type ContactMessageUpdateWithoutSupportCaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneWithoutContactMessagesNestedInput
+    tenant?: TenantUpdateOneWithoutContactMessagesNestedInput
+    reasons?: ContactMessageReasonUpdateManyWithoutContactMessageNestedInput
+    replies?: ContactReplyUpdateManyWithoutContactMessageNestedInput
+  }
+
+  export type ContactMessageUncheckedUpdateWithoutSupportCaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    reasons?: ContactMessageReasonUncheckedUpdateManyWithoutContactMessageNestedInput
+    replies?: ContactReplyUncheckedUpdateManyWithoutContactMessageNestedInput
+  }
+
+  export type UserUpsertWithoutAssignedCasesInput = {
+    update: XOR<UserUpdateWithoutAssignedCasesInput, UserUncheckedUpdateWithoutAssignedCasesInput>
+    create: XOR<UserCreateWithoutAssignedCasesInput, UserUncheckedCreateWithoutAssignedCasesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAssignedCasesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAssignedCasesInput, UserUncheckedUpdateWithoutAssignedCasesInput>
+  }
+
+  export type UserUpdateWithoutAssignedCasesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAssignedCasesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type TenantUpsertWithoutSupportCasesInput = {
+    update: XOR<TenantUpdateWithoutSupportCasesInput, TenantUncheckedUpdateWithoutSupportCasesInput>
+    create: XOR<TenantCreateWithoutSupportCasesInput, TenantUncheckedCreateWithoutSupportCasesInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutSupportCasesInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutSupportCasesInput, TenantUncheckedUpdateWithoutSupportCasesInput>
+  }
+
+  export type TenantUpdateWithoutSupportCasesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutSupportCasesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type SupportOptionUpsertWithoutCasesInput = {
+    update: XOR<SupportOptionUpdateWithoutCasesInput, SupportOptionUncheckedUpdateWithoutCasesInput>
+    create: XOR<SupportOptionCreateWithoutCasesInput, SupportOptionUncheckedCreateWithoutCasesInput>
+    where?: SupportOptionWhereInput
+  }
+
+  export type SupportOptionUpdateToOneWithWhereWithoutCasesInput = {
+    where?: SupportOptionWhereInput
+    data: XOR<SupportOptionUpdateWithoutCasesInput, SupportOptionUncheckedUpdateWithoutCasesInput>
+  }
+
+  export type SupportOptionUpdateWithoutCasesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutSupportOptionsNestedInput
+    parent?: SupportOptionUpdateOneWithoutChildrenNestedInput
+    children?: SupportOptionUpdateManyWithoutParentNestedInput
+    metrics?: CaseMetricsUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionUncheckedUpdateWithoutCasesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: SupportOptionUncheckedUpdateManyWithoutParentNestedInput
+    metrics?: CaseMetricsUncheckedUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type CaseMessageUpsertWithWhereUniqueWithoutCaseInput = {
+    where: CaseMessageWhereUniqueInput
+    update: XOR<CaseMessageUpdateWithoutCaseInput, CaseMessageUncheckedUpdateWithoutCaseInput>
+    create: XOR<CaseMessageCreateWithoutCaseInput, CaseMessageUncheckedCreateWithoutCaseInput>
+  }
+
+  export type CaseMessageUpdateWithWhereUniqueWithoutCaseInput = {
+    where: CaseMessageWhereUniqueInput
+    data: XOR<CaseMessageUpdateWithoutCaseInput, CaseMessageUncheckedUpdateWithoutCaseInput>
+  }
+
+  export type CaseMessageUpdateManyWithWhereWithoutCaseInput = {
+    where: CaseMessageScalarWhereInput
+    data: XOR<CaseMessageUpdateManyMutationInput, CaseMessageUncheckedUpdateManyWithoutCaseInput>
+  }
+
+  export type CaseStatusHistoryUpsertWithWhereUniqueWithoutCaseInput = {
+    where: CaseStatusHistoryWhereUniqueInput
+    update: XOR<CaseStatusHistoryUpdateWithoutCaseInput, CaseStatusHistoryUncheckedUpdateWithoutCaseInput>
+    create: XOR<CaseStatusHistoryCreateWithoutCaseInput, CaseStatusHistoryUncheckedCreateWithoutCaseInput>
+  }
+
+  export type CaseStatusHistoryUpdateWithWhereUniqueWithoutCaseInput = {
+    where: CaseStatusHistoryWhereUniqueInput
+    data: XOR<CaseStatusHistoryUpdateWithoutCaseInput, CaseStatusHistoryUncheckedUpdateWithoutCaseInput>
+  }
+
+  export type CaseStatusHistoryUpdateManyWithWhereWithoutCaseInput = {
+    where: CaseStatusHistoryScalarWhereInput
+    data: XOR<CaseStatusHistoryUpdateManyMutationInput, CaseStatusHistoryUncheckedUpdateManyWithoutCaseInput>
+  }
+
+  export type TenantCreateWithoutSupportOptionsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutSupportOptionsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutSupportOptionsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutSupportOptionsInput, TenantUncheckedCreateWithoutSupportOptionsInput>
+  }
+
+  export type SupportOptionCreateWithoutChildrenInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutSupportOptionsInput
+    parent?: SupportOptionCreateNestedOneWithoutChildrenInput
+    cases?: SupportCaseCreateNestedManyWithoutSupportOptionInput
+    metrics?: CaseMetricsCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionUncheckedCreateWithoutChildrenInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: string | null
+    parentOptionId?: string | null
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cases?: SupportCaseUncheckedCreateNestedManyWithoutSupportOptionInput
+    metrics?: CaseMetricsUncheckedCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionCreateOrConnectWithoutChildrenInput = {
+    where: SupportOptionWhereUniqueInput
+    create: XOR<SupportOptionCreateWithoutChildrenInput, SupportOptionUncheckedCreateWithoutChildrenInput>
+  }
+
+  export type SupportOptionCreateWithoutParentInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutSupportOptionsInput
+    children?: SupportOptionCreateNestedManyWithoutParentInput
+    cases?: SupportCaseCreateNestedManyWithoutSupportOptionInput
+    metrics?: CaseMetricsCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionUncheckedCreateWithoutParentInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: string | null
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: SupportOptionUncheckedCreateNestedManyWithoutParentInput
+    cases?: SupportCaseUncheckedCreateNestedManyWithoutSupportOptionInput
+    metrics?: CaseMetricsUncheckedCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionCreateOrConnectWithoutParentInput = {
+    where: SupportOptionWhereUniqueInput
+    create: XOR<SupportOptionCreateWithoutParentInput, SupportOptionUncheckedCreateWithoutParentInput>
+  }
+
+  export type SupportOptionCreateManyParentInputEnvelope = {
+    data: SupportOptionCreateManyParentInput | SupportOptionCreateManyParentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SupportCaseCreateWithoutSupportOptionInput = {
+    id?: string
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contactMessage?: ContactMessageCreateNestedOneWithoutSupportCaseInput
+    assignee?: UserCreateNestedOneWithoutAssignedCasesInput
+    tenant?: TenantCreateNestedOneWithoutSupportCasesInput
+    messages?: CaseMessageCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseUncheckedCreateWithoutSupportOptionInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    assigneeId?: string | null
+    tenantId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: CaseMessageUncheckedCreateNestedManyWithoutCaseInput
+    statusHistory?: CaseStatusHistoryUncheckedCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseCreateOrConnectWithoutSupportOptionInput = {
+    where: SupportCaseWhereUniqueInput
+    create: XOR<SupportCaseCreateWithoutSupportOptionInput, SupportCaseUncheckedCreateWithoutSupportOptionInput>
+  }
+
+  export type SupportCaseCreateManySupportOptionInputEnvelope = {
+    data: SupportCaseCreateManySupportOptionInput | SupportCaseCreateManySupportOptionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CaseMetricsCreateWithoutSupportOptionInput = {
+    id?: string
+    date: Date | string
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutCaseMetricsInput
+    assignee?: UserCreateNestedOneWithoutCaseMetricsInput
+  }
+
+  export type CaseMetricsUncheckedCreateWithoutSupportOptionInput = {
+    id?: string
+    tenantId?: string | null
+    date: Date | string
+    assigneeId?: string | null
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMetricsCreateOrConnectWithoutSupportOptionInput = {
+    where: CaseMetricsWhereUniqueInput
+    create: XOR<CaseMetricsCreateWithoutSupportOptionInput, CaseMetricsUncheckedCreateWithoutSupportOptionInput>
+  }
+
+  export type CaseMetricsCreateManySupportOptionInputEnvelope = {
+    data: CaseMetricsCreateManySupportOptionInput | CaseMetricsCreateManySupportOptionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TenantUpsertWithoutSupportOptionsInput = {
+    update: XOR<TenantUpdateWithoutSupportOptionsInput, TenantUncheckedUpdateWithoutSupportOptionsInput>
+    create: XOR<TenantCreateWithoutSupportOptionsInput, TenantUncheckedCreateWithoutSupportOptionsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutSupportOptionsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutSupportOptionsInput, TenantUncheckedUpdateWithoutSupportOptionsInput>
+  }
+
+  export type TenantUpdateWithoutSupportOptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutSupportOptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type SupportOptionUpsertWithoutChildrenInput = {
+    update: XOR<SupportOptionUpdateWithoutChildrenInput, SupportOptionUncheckedUpdateWithoutChildrenInput>
+    create: XOR<SupportOptionCreateWithoutChildrenInput, SupportOptionUncheckedCreateWithoutChildrenInput>
+    where?: SupportOptionWhereInput
+  }
+
+  export type SupportOptionUpdateToOneWithWhereWithoutChildrenInput = {
+    where?: SupportOptionWhereInput
+    data: XOR<SupportOptionUpdateWithoutChildrenInput, SupportOptionUncheckedUpdateWithoutChildrenInput>
+  }
+
+  export type SupportOptionUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutSupportOptionsNestedInput
+    parent?: SupportOptionUpdateOneWithoutChildrenNestedInput
+    cases?: SupportCaseUpdateManyWithoutSupportOptionNestedInput
+    metrics?: CaseMetricsUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionUncheckedUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cases?: SupportCaseUncheckedUpdateManyWithoutSupportOptionNestedInput
+    metrics?: CaseMetricsUncheckedUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionUpsertWithWhereUniqueWithoutParentInput = {
+    where: SupportOptionWhereUniqueInput
+    update: XOR<SupportOptionUpdateWithoutParentInput, SupportOptionUncheckedUpdateWithoutParentInput>
+    create: XOR<SupportOptionCreateWithoutParentInput, SupportOptionUncheckedCreateWithoutParentInput>
+  }
+
+  export type SupportOptionUpdateWithWhereUniqueWithoutParentInput = {
+    where: SupportOptionWhereUniqueInput
+    data: XOR<SupportOptionUpdateWithoutParentInput, SupportOptionUncheckedUpdateWithoutParentInput>
+  }
+
+  export type SupportOptionUpdateManyWithWhereWithoutParentInput = {
+    where: SupportOptionScalarWhereInput
+    data: XOR<SupportOptionUpdateManyMutationInput, SupportOptionUncheckedUpdateManyWithoutParentInput>
+  }
+
+  export type SupportCaseUpsertWithWhereUniqueWithoutSupportOptionInput = {
+    where: SupportCaseWhereUniqueInput
+    update: XOR<SupportCaseUpdateWithoutSupportOptionInput, SupportCaseUncheckedUpdateWithoutSupportOptionInput>
+    create: XOR<SupportCaseCreateWithoutSupportOptionInput, SupportCaseUncheckedCreateWithoutSupportOptionInput>
+  }
+
+  export type SupportCaseUpdateWithWhereUniqueWithoutSupportOptionInput = {
+    where: SupportCaseWhereUniqueInput
+    data: XOR<SupportCaseUpdateWithoutSupportOptionInput, SupportCaseUncheckedUpdateWithoutSupportOptionInput>
+  }
+
+  export type SupportCaseUpdateManyWithWhereWithoutSupportOptionInput = {
+    where: SupportCaseScalarWhereInput
+    data: XOR<SupportCaseUpdateManyMutationInput, SupportCaseUncheckedUpdateManyWithoutSupportOptionInput>
+  }
+
+  export type CaseMetricsUpsertWithWhereUniqueWithoutSupportOptionInput = {
+    where: CaseMetricsWhereUniqueInput
+    update: XOR<CaseMetricsUpdateWithoutSupportOptionInput, CaseMetricsUncheckedUpdateWithoutSupportOptionInput>
+    create: XOR<CaseMetricsCreateWithoutSupportOptionInput, CaseMetricsUncheckedCreateWithoutSupportOptionInput>
+  }
+
+  export type CaseMetricsUpdateWithWhereUniqueWithoutSupportOptionInput = {
+    where: CaseMetricsWhereUniqueInput
+    data: XOR<CaseMetricsUpdateWithoutSupportOptionInput, CaseMetricsUncheckedUpdateWithoutSupportOptionInput>
+  }
+
+  export type CaseMetricsUpdateManyWithWhereWithoutSupportOptionInput = {
+    where: CaseMetricsScalarWhereInput
+    data: XOR<CaseMetricsUpdateManyMutationInput, CaseMetricsUncheckedUpdateManyWithoutSupportOptionInput>
+  }
+
+  export type SupportCaseCreateWithoutMessagesInput = {
+    id?: string
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contactMessage?: ContactMessageCreateNestedOneWithoutSupportCaseInput
+    assignee?: UserCreateNestedOneWithoutAssignedCasesInput
+    tenant?: TenantCreateNestedOneWithoutSupportCasesInput
+    supportOption?: SupportOptionCreateNestedOneWithoutCasesInput
+    statusHistory?: CaseStatusHistoryCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseUncheckedCreateWithoutMessagesInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    assigneeId?: string | null
+    tenantId?: string | null
+    supportOptionId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    statusHistory?: CaseStatusHistoryUncheckedCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseCreateOrConnectWithoutMessagesInput = {
+    where: SupportCaseWhereUniqueInput
+    create: XOR<SupportCaseCreateWithoutMessagesInput, SupportCaseUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type ContactReplyCreateWithoutCaseMessagesInput = {
+    id?: string
+    message: string
+    isFromUser?: boolean
+    isInternal?: boolean
+    attachments?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contactMessage: ContactMessageCreateNestedOneWithoutRepliesInput
+  }
+
+  export type ContactReplyUncheckedCreateWithoutCaseMessagesInput = {
+    id?: string
+    contactMessageId: string
+    message: string
+    isFromUser?: boolean
+    isInternal?: boolean
+    attachments?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ContactReplyCreateOrConnectWithoutCaseMessagesInput = {
+    where: ContactReplyWhereUniqueInput
+    create: XOR<ContactReplyCreateWithoutCaseMessagesInput, ContactReplyUncheckedCreateWithoutCaseMessagesInput>
+  }
+
+  export type SupportCaseUpsertWithoutMessagesInput = {
+    update: XOR<SupportCaseUpdateWithoutMessagesInput, SupportCaseUncheckedUpdateWithoutMessagesInput>
+    create: XOR<SupportCaseCreateWithoutMessagesInput, SupportCaseUncheckedCreateWithoutMessagesInput>
+    where?: SupportCaseWhereInput
+  }
+
+  export type SupportCaseUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: SupportCaseWhereInput
+    data: XOR<SupportCaseUpdateWithoutMessagesInput, SupportCaseUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type SupportCaseUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactMessage?: ContactMessageUpdateOneWithoutSupportCaseNestedInput
+    assignee?: UserUpdateOneWithoutAssignedCasesNestedInput
+    tenant?: TenantUpdateOneWithoutSupportCasesNestedInput
+    supportOption?: SupportOptionUpdateOneWithoutCasesNestedInput
+    statusHistory?: CaseStatusHistoryUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    statusHistory?: CaseStatusHistoryUncheckedUpdateManyWithoutCaseNestedInput
+  }
+
+  export type ContactReplyUpsertWithoutCaseMessagesInput = {
+    update: XOR<ContactReplyUpdateWithoutCaseMessagesInput, ContactReplyUncheckedUpdateWithoutCaseMessagesInput>
+    create: XOR<ContactReplyCreateWithoutCaseMessagesInput, ContactReplyUncheckedCreateWithoutCaseMessagesInput>
+    where?: ContactReplyWhereInput
+  }
+
+  export type ContactReplyUpdateToOneWithWhereWithoutCaseMessagesInput = {
+    where?: ContactReplyWhereInput
+    data: XOR<ContactReplyUpdateWithoutCaseMessagesInput, ContactReplyUncheckedUpdateWithoutCaseMessagesInput>
+  }
+
+  export type ContactReplyUpdateWithoutCaseMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isFromUser?: BoolFieldUpdateOperationsInput | boolean
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    attachments?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactMessage?: ContactMessageUpdateOneRequiredWithoutRepliesNestedInput
+  }
+
+  export type ContactReplyUncheckedUpdateWithoutCaseMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isFromUser?: BoolFieldUpdateOperationsInput | boolean
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    attachments?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportCaseCreateWithoutStatusHistoryInput = {
+    id?: string
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contactMessage?: ContactMessageCreateNestedOneWithoutSupportCaseInput
+    assignee?: UserCreateNestedOneWithoutAssignedCasesInput
+    tenant?: TenantCreateNestedOneWithoutSupportCasesInput
+    supportOption?: SupportOptionCreateNestedOneWithoutCasesInput
+    messages?: CaseMessageCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseUncheckedCreateWithoutStatusHistoryInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    assigneeId?: string | null
+    tenantId?: string | null
+    supportOptionId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: CaseMessageUncheckedCreateNestedManyWithoutCaseInput
+  }
+
+  export type SupportCaseCreateOrConnectWithoutStatusHistoryInput = {
+    where: SupportCaseWhereUniqueInput
+    create: XOR<SupportCaseCreateWithoutStatusHistoryInput, SupportCaseUncheckedCreateWithoutStatusHistoryInput>
+  }
+
+  export type UserCreateWithoutCaseStatusChangesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCaseStatusChangesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCaseStatusChangesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCaseStatusChangesInput, UserUncheckedCreateWithoutCaseStatusChangesInput>
+  }
+
+  export type SupportCaseUpsertWithoutStatusHistoryInput = {
+    update: XOR<SupportCaseUpdateWithoutStatusHistoryInput, SupportCaseUncheckedUpdateWithoutStatusHistoryInput>
+    create: XOR<SupportCaseCreateWithoutStatusHistoryInput, SupportCaseUncheckedCreateWithoutStatusHistoryInput>
+    where?: SupportCaseWhereInput
+  }
+
+  export type SupportCaseUpdateToOneWithWhereWithoutStatusHistoryInput = {
+    where?: SupportCaseWhereInput
+    data: XOR<SupportCaseUpdateWithoutStatusHistoryInput, SupportCaseUncheckedUpdateWithoutStatusHistoryInput>
+  }
+
+  export type SupportCaseUpdateWithoutStatusHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactMessage?: ContactMessageUpdateOneWithoutSupportCaseNestedInput
+    assignee?: UserUpdateOneWithoutAssignedCasesNestedInput
+    tenant?: TenantUpdateOneWithoutSupportCasesNestedInput
+    supportOption?: SupportOptionUpdateOneWithoutCasesNestedInput
+    messages?: CaseMessageUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateWithoutStatusHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: CaseMessageUncheckedUpdateManyWithoutCaseNestedInput
+  }
+
+  export type UserUpsertWithoutCaseStatusChangesInput = {
+    update: XOR<UserUpdateWithoutCaseStatusChangesInput, UserUncheckedUpdateWithoutCaseStatusChangesInput>
+    create: XOR<UserCreateWithoutCaseStatusChangesInput, UserUncheckedCreateWithoutCaseStatusChangesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCaseStatusChangesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCaseStatusChangesInput, UserUncheckedUpdateWithoutCaseStatusChangesInput>
+  }
+
+  export type UserUpdateWithoutCaseStatusChangesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCaseStatusChangesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type TenantCreateWithoutCaseMetricsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutCaseMetricsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutCaseMetricsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutCaseMetricsInput, TenantUncheckedCreateWithoutCaseMetricsInput>
+  }
+
+  export type SupportOptionCreateWithoutMetricsInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutSupportOptionsInput
+    parent?: SupportOptionCreateNestedOneWithoutChildrenInput
+    children?: SupportOptionCreateNestedManyWithoutParentInput
+    cases?: SupportCaseCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionUncheckedCreateWithoutMetricsInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: string | null
+    parentOptionId?: string | null
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: SupportOptionUncheckedCreateNestedManyWithoutParentInput
+    cases?: SupportCaseUncheckedCreateNestedManyWithoutSupportOptionInput
+  }
+
+  export type SupportOptionCreateOrConnectWithoutMetricsInput = {
+    where: SupportOptionWhereUniqueInput
+    create: XOR<SupportOptionCreateWithoutMetricsInput, SupportOptionUncheckedCreateWithoutMetricsInput>
+  }
+
+  export type UserCreateWithoutCaseMetricsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCaseMetricsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCaseMetricsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCaseMetricsInput, UserUncheckedCreateWithoutCaseMetricsInput>
+  }
+
+  export type TenantUpsertWithoutCaseMetricsInput = {
+    update: XOR<TenantUpdateWithoutCaseMetricsInput, TenantUncheckedUpdateWithoutCaseMetricsInput>
+    create: XOR<TenantCreateWithoutCaseMetricsInput, TenantUncheckedCreateWithoutCaseMetricsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutCaseMetricsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutCaseMetricsInput, TenantUncheckedUpdateWithoutCaseMetricsInput>
+  }
+
+  export type TenantUpdateWithoutCaseMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutCaseMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type SupportOptionUpsertWithoutMetricsInput = {
+    update: XOR<SupportOptionUpdateWithoutMetricsInput, SupportOptionUncheckedUpdateWithoutMetricsInput>
+    create: XOR<SupportOptionCreateWithoutMetricsInput, SupportOptionUncheckedCreateWithoutMetricsInput>
+    where?: SupportOptionWhereInput
+  }
+
+  export type SupportOptionUpdateToOneWithWhereWithoutMetricsInput = {
+    where?: SupportOptionWhereInput
+    data: XOR<SupportOptionUpdateWithoutMetricsInput, SupportOptionUncheckedUpdateWithoutMetricsInput>
+  }
+
+  export type SupportOptionUpdateWithoutMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutSupportOptionsNestedInput
+    parent?: SupportOptionUpdateOneWithoutChildrenNestedInput
+    children?: SupportOptionUpdateManyWithoutParentNestedInput
+    cases?: SupportCaseUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionUncheckedUpdateWithoutMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: SupportOptionUncheckedUpdateManyWithoutParentNestedInput
+    cases?: SupportCaseUncheckedUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type UserUpsertWithoutCaseMetricsInput = {
+    update: XOR<UserUpdateWithoutCaseMetricsInput, UserUncheckedUpdateWithoutCaseMetricsInput>
+    create: XOR<UserCreateWithoutCaseMetricsInput, UserUncheckedCreateWithoutCaseMetricsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCaseMetricsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCaseMetricsInput, UserUncheckedUpdateWithoutCaseMetricsInput>
+  }
+
+  export type UserUpdateWithoutCaseMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCaseMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type TenantCreateWithoutSupportConfigurationsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutSupportConfigurationsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutSupportConfigurationsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutSupportConfigurationsInput, TenantUncheckedCreateWithoutSupportConfigurationsInput>
+  }
+
+  export type TenantUpsertWithoutSupportConfigurationsInput = {
+    update: XOR<TenantUpdateWithoutSupportConfigurationsInput, TenantUncheckedUpdateWithoutSupportConfigurationsInput>
+    create: XOR<TenantCreateWithoutSupportConfigurationsInput, TenantUncheckedCreateWithoutSupportConfigurationsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutSupportConfigurationsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutSupportConfigurationsInput, TenantUncheckedUpdateWithoutSupportConfigurationsInput>
+  }
+
+  export type TenantUpdateWithoutSupportConfigurationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutSupportConfigurationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -49421,6 +63649,52 @@ export namespace Prisma {
     lastUsedAt?: Date | string | null
   }
 
+  export type SupportCaseCreateManyAssigneeInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    tenantId?: string | null
+    supportOptionId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseStatusHistoryCreateManyUserInput = {
+    id?: string
+    caseId: string
+    fromStatus?: string | null
+    toStatus: string
+    reason?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CaseMetricsCreateManyAssigneeInput = {
+    id?: string
+    tenantId?: string | null
+    date: Date | string
+    supportOptionId?: string | null
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type PendingAuthCreateManyUserInput = {
     id?: string
     tenantId?: string | null
@@ -49591,6 +63865,7 @@ export namespace Prisma {
     tenant?: TenantUpdateOneWithoutContactMessagesNestedInput
     reasons?: ContactMessageReasonUpdateManyWithoutContactMessageNestedInput
     replies?: ContactReplyUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUpdateOneWithoutContactMessageNestedInput
   }
 
   export type ContactMessageUncheckedUpdateWithoutUserInput = {
@@ -49611,6 +63886,7 @@ export namespace Prisma {
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     reasons?: ContactMessageReasonUncheckedUpdateManyWithoutContactMessageNestedInput
     replies?: ContactReplyUncheckedUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUncheckedUpdateOneWithoutContactMessageNestedInput
   }
 
   export type ContactMessageUncheckedUpdateManyWithoutUserInput = {
@@ -49993,6 +64269,148 @@ export namespace Prisma {
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type SupportCaseUpdateWithoutAssigneeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactMessage?: ContactMessageUpdateOneWithoutSupportCaseNestedInput
+    tenant?: TenantUpdateOneWithoutSupportCasesNestedInput
+    supportOption?: SupportOptionUpdateOneWithoutCasesNestedInput
+    messages?: CaseMessageUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateWithoutAssigneeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: CaseMessageUncheckedUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUncheckedUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateManyWithoutAssigneeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseStatusHistoryUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    case?: SupportCaseUpdateOneRequiredWithoutStatusHistoryNestedInput
+  }
+
+  export type CaseStatusHistoryUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseId?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseStatusHistoryUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseId?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMetricsUpdateWithoutAssigneeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutCaseMetricsNestedInput
+    supportOption?: SupportOptionUpdateOneWithoutMetricsNestedInput
+  }
+
+  export type CaseMetricsUncheckedUpdateWithoutAssigneeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMetricsUncheckedUpdateManyWithoutAssigneeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PendingAuthUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     nonce?: StringFieldUpdateOperationsInput | string
@@ -50288,6 +64706,67 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type SupportOptionCreateManyTenantInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    parentOptionId?: string | null
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportCaseCreateManyTenantInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    assigneeId?: string | null
+    supportOptionId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMetricsCreateManyTenantInput = {
+    id?: string
+    date: Date | string
+    supportOptionId?: string | null
+    assigneeId?: string | null
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportConfigurationCreateManyTenantInput = {
+    id?: string
+    key: string
+    value: JsonNullValueInput | InputJsonValue
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AuditLogUpdateWithoutTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
     action?: StringFieldUpdateOperationsInput | string
@@ -50348,6 +64827,7 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutContactMessagesNestedInput
     reasons?: ContactMessageReasonUpdateManyWithoutContactMessageNestedInput
     replies?: ContactReplyUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUpdateOneWithoutContactMessageNestedInput
   }
 
   export type ContactMessageUncheckedUpdateWithoutTenantInput = {
@@ -50368,6 +64848,7 @@ export namespace Prisma {
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     reasons?: ContactMessageReasonUncheckedUpdateManyWithoutContactMessageNestedInput
     replies?: ContactReplyUncheckedUpdateManyWithoutContactMessageNestedInput
+    supportCase?: SupportCaseUncheckedUpdateOneWithoutContactMessageNestedInput
   }
 
   export type ContactMessageUncheckedUpdateManyWithoutTenantInput = {
@@ -50839,6 +65320,199 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SupportOptionUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: SupportOptionUpdateOneWithoutChildrenNestedInput
+    children?: SupportOptionUpdateManyWithoutParentNestedInput
+    cases?: SupportCaseUpdateManyWithoutSupportOptionNestedInput
+    metrics?: CaseMetricsUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    parentOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: SupportOptionUncheckedUpdateManyWithoutParentNestedInput
+    cases?: SupportCaseUncheckedUpdateManyWithoutSupportOptionNestedInput
+    metrics?: CaseMetricsUncheckedUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    parentOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportCaseUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactMessage?: ContactMessageUpdateOneWithoutSupportCaseNestedInput
+    assignee?: UserUpdateOneWithoutAssignedCasesNestedInput
+    supportOption?: SupportOptionUpdateOneWithoutCasesNestedInput
+    messages?: CaseMessageUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: CaseMessageUncheckedUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUncheckedUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMetricsUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    supportOption?: SupportOptionUpdateOneWithoutMetricsNestedInput
+    assignee?: UserUpdateOneWithoutCaseMetricsNestedInput
+  }
+
+  export type CaseMetricsUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMetricsUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    supportOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportConfigurationUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: JsonNullValueInput | InputJsonValue
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportConfigurationUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: JsonNullValueInput | InputJsonValue
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportConfigurationUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: JsonNullValueInput | InputJsonValue
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ContactMessageReasonCreateManyContactReasonInput = {
     id?: string
     contactMessageId: string
@@ -50905,6 +65579,7 @@ export namespace Prisma {
     attachments?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    caseMessages?: CaseMessageUpdateManyWithoutContactReplyNestedInput
   }
 
   export type ContactReplyUncheckedUpdateWithoutContactMessageInput = {
@@ -50915,6 +65590,7 @@ export namespace Prisma {
     attachments?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    caseMessages?: CaseMessageUncheckedUpdateManyWithoutContactReplyNestedInput
   }
 
   export type ContactReplyUncheckedUpdateManyWithoutContactMessageInput = {
@@ -50923,6 +65599,82 @@ export namespace Prisma {
     isFromUser?: BoolFieldUpdateOperationsInput | boolean
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     attachments?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMessageCreateManyContactReplyInput = {
+    id?: string
+    caseId: string
+    direction: string
+    channel: string
+    fromAddress?: string | null
+    toAddress?: string | null
+    subject?: string | null
+    content: string
+    isInternal?: boolean
+    messageId?: string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMessageUpdateWithoutContactReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    case?: SupportCaseUpdateOneRequiredWithoutMessagesNestedInput
+  }
+
+  export type CaseMessageUncheckedUpdateWithoutContactReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseId?: StringFieldUpdateOperationsInput | string
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMessageUncheckedUpdateManyWithoutContactReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseId?: StringFieldUpdateOperationsInput | string
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -51075,6 +65827,340 @@ export namespace Prisma {
     createdBy?: StringFieldUpdateOperationsInput | string
   }
 
+  export type CaseMessageCreateManyCaseInput = {
+    id?: string
+    contactReplyId?: string | null
+    direction: string
+    channel: string
+    fromAddress?: string | null
+    toAddress?: string | null
+    subject?: string | null
+    content: string
+    isInternal?: boolean
+    messageId?: string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseStatusHistoryCreateManyCaseInput = {
+    id?: string
+    fromStatus?: string | null
+    toStatus: string
+    changedBy?: string | null
+    reason?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CaseMessageUpdateWithoutCaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactReply?: ContactReplyUpdateOneWithoutCaseMessagesNestedInput
+  }
+
+  export type CaseMessageUncheckedUpdateWithoutCaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMessageUncheckedUpdateManyWithoutCaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    direction?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    messageId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingData?: NullableJsonNullValueInput | InputJsonValue
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryMetadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseStatusHistoryUpdateWithoutCaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutCaseStatusChangesNestedInput
+  }
+
+  export type CaseStatusHistoryUncheckedUpdateWithoutCaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseStatusHistoryUncheckedUpdateManyWithoutCaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    toStatus?: StringFieldUpdateOperationsInput | string
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportOptionCreateManyParentInput = {
+    id?: string
+    key: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    isActive?: boolean
+    isGlobal?: boolean
+    tenantId?: string | null
+    sortOrder?: number
+    isHidden?: boolean
+    routingConfig: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportCaseCreateManySupportOptionInput = {
+    id?: string
+    contactMessageId?: string | null
+    caseNumber: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    assigneeId?: string | null
+    tenantId?: string | null
+    threadingKey?: string | null
+    source?: string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: Date | string | null
+    resolvedAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CaseMetricsCreateManySupportOptionInput = {
+    id?: string
+    tenantId?: string | null
+    date: Date | string
+    assigneeId?: string | null
+    totalCases?: number
+    openCases?: number
+    pendingCases?: number
+    resolvedCases?: number
+    closedCases?: number
+    avgFirstResponseTime?: number | null
+    avgResolutionTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportOptionUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutSupportOptionsNestedInput
+    children?: SupportOptionUpdateManyWithoutParentNestedInput
+    cases?: SupportCaseUpdateManyWithoutSupportOptionNestedInput
+    metrics?: CaseMetricsUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionUncheckedUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: SupportOptionUncheckedUpdateManyWithoutParentNestedInput
+    cases?: SupportCaseUncheckedUpdateManyWithoutSupportOptionNestedInput
+    metrics?: CaseMetricsUncheckedUpdateManyWithoutSupportOptionNestedInput
+  }
+
+  export type SupportOptionUncheckedUpdateManyWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isGlobal?: BoolFieldUpdateOperationsInput | boolean
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    routingConfig?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportCaseUpdateWithoutSupportOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactMessage?: ContactMessageUpdateOneWithoutSupportCaseNestedInput
+    assignee?: UserUpdateOneWithoutAssignedCasesNestedInput
+    tenant?: TenantUpdateOneWithoutSupportCasesNestedInput
+    messages?: CaseMessageUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateWithoutSupportOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: CaseMessageUncheckedUpdateManyWithoutCaseNestedInput
+    statusHistory?: CaseStatusHistoryUncheckedUpdateManyWithoutCaseNestedInput
+  }
+
+  export type SupportCaseUncheckedUpdateManyWithoutSupportOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    caseNumber?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    threadingKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    sourceMetadata?: NullableJsonNullValueInput | InputJsonValue
+    firstResponseAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMetricsUpdateWithoutSupportOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutCaseMetricsNestedInput
+    assignee?: UserUpdateOneWithoutCaseMetricsNestedInput
+  }
+
+  export type CaseMetricsUncheckedUpdateWithoutSupportOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CaseMetricsUncheckedUpdateManyWithoutSupportOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalCases?: IntFieldUpdateOperationsInput | number
+    openCases?: IntFieldUpdateOperationsInput | number
+    pendingCases?: IntFieldUpdateOperationsInput | number
+    resolvedCases?: IntFieldUpdateOperationsInput | number
+    closedCases?: IntFieldUpdateOperationsInput | number
+    avgFirstResponseTime?: NullableIntFieldUpdateOperationsInput | number | null
+    avgResolutionTime?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -51097,6 +66183,10 @@ export namespace Prisma {
      */
     export type ContactMessageCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContactMessageCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use ContactReplyCountOutputTypeDefaultArgs instead
+     */
+    export type ContactReplyCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContactReplyCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use NotificationCountOutputTypeDefaultArgs instead
      */
     export type NotificationCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NotificationCountOutputTypeDefaultArgs<ExtArgs>
@@ -51104,6 +66194,14 @@ export namespace Prisma {
      * @deprecated Use FeatureDefinitionCountOutputTypeDefaultArgs instead
      */
     export type FeatureDefinitionCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FeatureDefinitionCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SupportCaseCountOutputTypeDefaultArgs instead
+     */
+    export type SupportCaseCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SupportCaseCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SupportOptionCountOutputTypeDefaultArgs instead
+     */
+    export type SupportOptionCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SupportOptionCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use AccountDefaultArgs instead
      */
@@ -51208,6 +66306,30 @@ export namespace Prisma {
      * @deprecated Use TwoFactorAuditDefaultArgs instead
      */
     export type TwoFactorAuditArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TwoFactorAuditDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SupportCaseDefaultArgs instead
+     */
+    export type SupportCaseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SupportCaseDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SupportOptionDefaultArgs instead
+     */
+    export type SupportOptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SupportOptionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CaseMessageDefaultArgs instead
+     */
+    export type CaseMessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CaseMessageDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CaseStatusHistoryDefaultArgs instead
+     */
+    export type CaseStatusHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CaseStatusHistoryDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CaseMetricsDefaultArgs instead
+     */
+    export type CaseMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CaseMetricsDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SupportConfigurationDefaultArgs instead
+     */
+    export type SupportConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SupportConfigurationDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

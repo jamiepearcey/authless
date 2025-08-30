@@ -10,7 +10,7 @@ import Link from "next/link";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Copy } from "lucide-react";
-import { copyToClipboard } from "@shared/base";
+import { copyToClipboard, User } from "@shared/base";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import {
   DropdownMenu,
@@ -66,8 +66,8 @@ export default function TenantUsersPage() {
   const [showInvitationCode, setShowInvitationCode] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [invitationCode, setInvitationCode] = useState("");
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
+  const [userToDelete, setUserToDelete] = useState<UserData | null>(null);
   const [inviteData, setInviteData] = useState({
     email: "",
     role: "member",
@@ -404,11 +404,11 @@ export default function TenantUsersPage() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => openUserDetails(membership.user as User)}>
+                      <DropdownMenuItem onClick={() => openUserDetails(membership.user as UserData)}>
                         <Eye className="h-4 w-4 mr-2" />
                         View Details
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => openEditForm(membership.user as User)}>
+                      <DropdownMenuItem onClick={() => openEditForm(membership.user as UserData)}>
                         <Edit className="h-4 w-4 mr-2" />
                         Edit User
                       </DropdownMenuItem>
@@ -421,7 +421,7 @@ export default function TenantUsersPage() {
                       <DropdownMenuSeparator />
                       <DropdownMenuItem 
                         className="text-red-600"
-                        onClick={() => openDeleteConfirm(membership.user as User)}
+                        onClick={() => openDeleteConfirm(membership.user as UserData)}
                       >
                         <Trash2 className="h-4 w-4 mr-2" />
                         Remove User

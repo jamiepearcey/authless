@@ -170,6 +170,8 @@ exports.Prisma.UserScalarFieldEnum = {
   marketingEmails: 'marketingEmails',
   securityAlerts: 'securityAlerts',
   activityUpdates: 'activityUpdates',
+  notifySupportRepliesUI: 'notifySupportRepliesUI',
+  notifySupportRepliesEmail: 'notifySupportRepliesEmail',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -209,6 +211,7 @@ exports.Prisma.TenantScalarFieldEnum = {
   website: 'website',
   industry: 'industry',
   size: 'size',
+  contactEmail: 'contactEmail',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   suspendedAt: 'suspendedAt',
@@ -490,9 +493,114 @@ exports.Prisma.TwoFactorAuditScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.SupportCaseScalarFieldEnum = {
+  id: 'id',
+  contactMessageId: 'contactMessageId',
+  caseNumber: 'caseNumber',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  assigneeId: 'assigneeId',
+  tenantId: 'tenantId',
+  supportOptionId: 'supportOptionId',
+  threadingKey: 'threadingKey',
+  source: 'source',
+  sourceMetadata: 'sourceMetadata',
+  firstResponseAt: 'firstResponseAt',
+  resolvedAt: 'resolvedAt',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SupportOptionScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  label: 'label',
+  description: 'description',
+  icon: 'icon',
+  isActive: 'isActive',
+  isGlobal: 'isGlobal',
+  tenantId: 'tenantId',
+  parentOptionId: 'parentOptionId',
+  sortOrder: 'sortOrder',
+  isHidden: 'isHidden',
+  routingConfig: 'routingConfig',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CaseMessageScalarFieldEnum = {
+  id: 'id',
+  caseId: 'caseId',
+  contactReplyId: 'contactReplyId',
+  direction: 'direction',
+  channel: 'channel',
+  fromAddress: 'fromAddress',
+  toAddress: 'toAddress',
+  subject: 'subject',
+  content: 'content',
+  isInternal: 'isInternal',
+  messageId: 'messageId',
+  threadingData: 'threadingData',
+  attachments: 'attachments',
+  deliveryStatus: 'deliveryStatus',
+  deliveryMetadata: 'deliveryMetadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CaseStatusHistoryScalarFieldEnum = {
+  id: 'id',
+  caseId: 'caseId',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  changedBy: 'changedBy',
+  reason: 'reason',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CaseMetricsScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  date: 'date',
+  supportOptionId: 'supportOptionId',
+  assigneeId: 'assigneeId',
+  totalCases: 'totalCases',
+  openCases: 'openCases',
+  pendingCases: 'pendingCases',
+  resolvedCases: 'resolvedCases',
+  closedCases: 'closedCases',
+  avgFirstResponseTime: 'avgFirstResponseTime',
+  avgResolutionTime: 'avgResolutionTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SupportConfigurationScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  key: 'key',
+  value: 'value',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -503,6 +611,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 
 
@@ -532,7 +646,13 @@ exports.Prisma.ModelName = {
   TwoFactorMethod: 'TwoFactorMethod',
   PendingAuth: 'PendingAuth',
   TwoFactorCode: 'TwoFactorCode',
-  TwoFactorAudit: 'TwoFactorAudit'
+  TwoFactorAudit: 'TwoFactorAudit',
+  SupportCase: 'SupportCase',
+  SupportOption: 'SupportOption',
+  CaseMessage: 'CaseMessage',
+  CaseStatusHistory: 'CaseStatusHistory',
+  CaseMetrics: 'CaseMetrics',
+  SupportConfiguration: 'SupportConfiguration'
 };
 
 /**

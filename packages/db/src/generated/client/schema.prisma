@@ -68,6 +68,10 @@ model User {
   securityAlerts     Boolean @default(true)
   activityUpdates    Boolean @default(false)
 
+  // Support notification preferences  
+  notifySupportRepliesUI    Boolean @default(true)
+  notifySupportRepliesEmail Boolean @default(true)
+
   createdAt              DateTime                @default(now())
   updatedAt              DateTime                @updatedAt
   accounts               Account[]
@@ -83,9 +87,14 @@ model User {
   passkeys               Passkey[]
   sessions               Session[]
   twoFactorMethods       TwoFactorMethod[]
-  pendingAuths           PendingAuth[]
-  twoFactorCodes         TwoFactorCode[]
-  twoFactorAudits        TwoFactorAudit[]
+
+  // Support system relations
+  assignedCases     SupportCase[]       @relation("CaseAssignee")
+  caseStatusChanges CaseStatusHistory[] @relation("StatusChangedBy")
+  caseMetrics       CaseMetrics[]       @relation("CaseMetricsAssignee")
+  pendingAuths      PendingAuth[]
+  twoFactorCodes    TwoFactorCode[]
+  twoFactorAudits   TwoFactorAudit[]
 
   @@index([email])
   @@index([platformRole])
@@ -130,6 +139,7 @@ model Tenant {
   website                        String?
   industry                       String?
   size                           String?
+  contactEmail                   String? // Contact email for support and business inquiries
   createdAt                      DateTime            @default(now())
   updatedAt                      DateTime            @updatedAt
   suspendedAt                    DateTime?
@@ -148,6 +158,12 @@ model Tenant {
   pendingAuths                   PendingAuth[]
   twoFactorCodes                 TwoFactorCode[]
   twoFactorAudits                TwoFactorAudit[]
+
+  // Support system relations
+  supportOptions        SupportOption[]
+  supportCases          SupportCase[]
+  caseMetrics           CaseMetrics[]
+  supportConfigurations SupportConfiguration[]
 
   @@index([slug])
   @@index([subdomain])
@@ -229,26 +245,27 @@ model ContactReason {
 }
 
 model ContactMessage {
-  id         String                 @id @default(cuid())
-  name       String
-  email      String
-  subject    String
-  message    String
-  userId     String?
-  tenantId   String?
-  status     String                 @default("open")
-  priority   String                 @default("normal")
-  createdAt  DateTime               @default(now())
-  updatedAt  DateTime               @updatedAt
-  assignedTo String?
-  category   String?
-  dueDate    DateTime?
-  resolvedAt DateTime?
-  tags       String?
-  user       User?                  @relation(fields: [userId], references: [id])
-  tenant     Tenant?                @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  reasons    ContactMessageReason[]
-  replies    ContactReply[]
+  id          String                 @id @default(cuid())
+  name        String
+  email       String
+  subject     String
+  message     String
+  userId      String?
+  tenantId    String?
+  status      String                 @default("open")
+  priority    String                 @default("normal")
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+  assignedTo  String?
+  category    String?
+  dueDate     DateTime?
+  resolvedAt  DateTime?
+  tags        String?
+  user        User?                  @relation(fields: [userId], references: [id])
+  tenant      Tenant?                @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  reasons     ContactMessageReason[]
+  replies     ContactReply[]
+  supportCase SupportCase? // One-to-one relation to support case
 
   @@index([userId])
   @@index([tenantId])
@@ -283,6 +300,7 @@ model ContactReply {
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
   contactMessage   ContactMessage @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
+  caseMessages     CaseMessage[]
 
   @@index([contactMessageId])
   @@index([isFromUser])
@@ -608,5 +626,176 @@ model TwoFactorAudit {
   @@index([action])
   @@index([factorType])
   @@index([createdAt])
+  @@index([tenantId])
+}
+
+// ==========================================
+// SUPPORT RESOLUTION CENTER MODELS
+// ==========================================
+
+// Support Cases - Resolution lifecycle management for support interactions
+model SupportCase {
+  id               String    @id @default(cuid())
+  contactMessageId String?   @unique // Link to existing ContactMessage
+  caseNumber       String    @unique // Human-readable case number
+  title            String // Case title
+  description      String? // Extended case description
+  status           String    @default("OPEN") // OPEN, PENDING, RESOLVED, CLOSED
+  priority         String    @default("NORMAL") // LOW, NORMAL, HIGH, URGENT
+  assigneeId       String? // Optional assignee
+  tenantId         String? // Tenant context
+  supportOptionId  String? // Support option used
+  threadingKey     String?   @unique // Stable key for threading messages
+  source           String    @default("CONTACT_FORM") // CONTACT_FORM, EMAIL, SMS, WHATSAPP, WEBHOOK
+  sourceMetadata   Json? // Provider-specific metadata
+  firstResponseAt  DateTime?
+  resolvedAt       DateTime?
+  closedAt         DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  // Relations
+  contactMessage ContactMessage?     @relation(fields: [contactMessageId], references: [id], onDelete: SetNull)
+  assignee       User?               @relation("CaseAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  tenant         Tenant?             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  supportOption  SupportOption?      @relation(fields: [supportOptionId], references: [id], onDelete: SetNull)
+  messages       CaseMessage[]
+  statusHistory  CaseStatusHistory[]
+
+  @@index([status])
+  @@index([assigneeId])
+  @@index([tenantId])
+  @@index([threadingKey])
+  @@index([createdAt])
+  @@index([source])
+  @@index([priority])
+}
+
+// Support Options - Routing configuration for support requests
+model SupportOption {
+  id             String   @id @default(cuid())
+  key            String // Unique key (e.g., 'billing', 'technical')
+  label          String // Display name
+  description    String? // Help text
+  icon           String? // Icon name/class
+  isActive       Boolean  @default(true)
+  isGlobal       Boolean  @default(true) // Platform vs tenant option
+  tenantId       String? // NULL for global options
+  parentOptionId String? // For tenant overrides
+  sortOrder      Int      @default(0)
+  isHidden       Boolean  @default(false) // Hidden but available for routing
+  routingConfig  Json // Routing configuration (emails, webhooks, etc.)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  tenant   Tenant?         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  parent   SupportOption?  @relation("OptionHierarchy", fields: [parentOptionId], references: [id], onDelete: SetNull)
+  children SupportOption[] @relation("OptionHierarchy")
+  cases    SupportCase[]
+  metrics  CaseMetrics[]
+
+  @@unique([key], name: "global_key")
+  @@unique([tenantId, key], name: "tenant_key")
+  @@index([tenantId])
+  @@index([isActive])
+  @@index([parentOptionId])
+  @@index([sortOrder])
+}
+
+// Case Messages - Unified thread for case communications
+model CaseMessage {
+  id               String   @id @default(cuid())
+  caseId           String
+  contactReplyId   String? // Link to existing ContactReply if applicable
+  direction        String // INBOUND, OUTBOUND
+  channel          String // EMAIL, SMS, WHATSAPP, UI, SYSTEM
+  fromAddress      String? // Email, phone number, user ID, etc.
+  toAddress        String?
+  subject          String? // For email messages
+  content          String
+  isInternal       Boolean  @default(false) // Internal notes vs customer-visible
+  messageId        String? // Provider message ID for deduplication
+  threadingData    Json? // Headers, references for threading
+  attachments      Json? // Array of attachment metadata
+  deliveryStatus   String?  @default("PENDING") // PENDING, SENT, DELIVERED, FAILED
+  deliveryMetadata Json? // Provider delivery receipts/errors
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  case         SupportCase   @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  contactReply ContactReply? @relation(fields: [contactReplyId], references: [id], onDelete: SetNull)
+
+  @@index([caseId])
+  @@index([createdAt])
+  @@index([direction])
+  @@index([messageId]) // For deduplication
+  @@index([channel])
+  @@index([deliveryStatus])
+}
+
+// Case Status History - Audit trail for status changes
+model CaseStatusHistory {
+  id         String   @id @default(cuid())
+  caseId     String
+  fromStatus String?
+  toStatus   String
+  changedBy  String? // User who changed the status
+  reason     String? // Optional reason for change
+  metadata   Json? // Additional context
+  createdAt  DateTime @default(now())
+
+  // Relations
+  case SupportCase @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  user User?       @relation("StatusChangedBy", fields: [changedBy], references: [id], onDelete: SetNull)
+
+  @@index([caseId])
+  @@index([createdAt])
+  @@index([toStatus])
+}
+
+// Case Metrics - Pre-aggregated metrics for analytics
+model CaseMetrics {
+  id                   String   @id @default(cuid())
+  tenantId             String?
+  date                 DateTime @db.Date // Daily aggregation
+  supportOptionId      String?
+  assigneeId           String?
+  totalCases           Int      @default(0)
+  openCases            Int      @default(0)
+  pendingCases         Int      @default(0)
+  resolvedCases        Int      @default(0)
+  closedCases          Int      @default(0)
+  avgFirstResponseTime Int? // in minutes
+  avgResolutionTime    Int? // in minutes
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // Relations
+  tenant        Tenant?        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  supportOption SupportOption? @relation(fields: [supportOptionId], references: [id], onDelete: SetNull)
+  assignee      User?          @relation("CaseMetricsAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+
+  @@unique([tenantId, date, supportOptionId, assigneeId])
+  @@index([date])
+  @@index([tenantId])
+}
+
+// Support Configuration - System and tenant policies  
+model SupportConfiguration {
+  id          String   @id @default(cuid())
+  tenantId    String? // NULL for global config
+  key         String
+  value       Json
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([key], name: "global_config_key")
+  @@unique([tenantId, key], name: "tenant_config_key")
   @@index([tenantId])
 }

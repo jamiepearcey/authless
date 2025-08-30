@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { router, protectedProcedure, publicProcedure } from "../middleware";
+import { SupportCaseService } from "../support-case-service";
 
 export const contactRouter = router({
   // Get contact reasons (public)
@@ -91,8 +92,41 @@ export const contactRouter = router({
             },
           });
         }
+
+        // Auto-create support case from contact message
+        try {
+          const supportCaseService = new SupportCaseService(ctx.db);
+          const caseId = await supportCaseService.createCaseFromContactMessage(contactMessage.id);
+          
+          // Auto-assign case if configured
+          await supportCaseService.autoAssignCase(caseId);
+          
+          console.log(`Auto-created support case ${caseId} from contact message ${contactMessage.id}`);
+        } catch (caseError) {
+          // Don't fail the contact submission if case creation fails
+          console.error("Failed to auto-create support case:", caseError);
+          
+          await ctx.db.auditLog.create({
+            data: {
+              tenantId: input.tenantId,
+              userId: input.userId || "anonymous",
+              action: "support_case_auto_creation_failed",
+              resourceType: "contact_message", 
+              resourceId: contactMessage.id,
+              details: JSON.stringify({ 
+                error: String(caseError),
+                contactMessageId: contactMessage.id 
+              }),
+              severity: "warning",
+            },
+          });
+        }
         
-        return { success: true, message: "Message submitted successfully" };
+        return { 
+          success: true, 
+          message: "Message submitted successfully",
+          contactMessageId: contactMessage.id,
+        };
       } catch (error) {
         if (error instanceof TRPCError) throw error;
         
