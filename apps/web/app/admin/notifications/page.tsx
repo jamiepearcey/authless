@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Bell, Plus, Filter, Search, Loader2, Inbox, Trash2, Edit, CheckSquare, Square, Check, ArrowLeft } from "lucide-react";
+import { Bell, Filter, Search, Loader2, Inbox, Trash2, Edit, ArrowLeft } from "lucide-react";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
@@ -46,7 +46,7 @@ export default function AdminNotificationsPage() {
   );
 
   // Get webhook endpoints
-  const { data: webhooks, refetch: refetchWebhooks } = trpc.getWebhookEndpoints.useQuery({});
+  const { data: webhooks } = trpc.getWebhookEndpoints.useQuery({});
 
   // Mutations
   const deleteNotificationMutation = trpc.deleteNotification.useMutation({

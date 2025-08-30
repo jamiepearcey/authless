@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { t } from "@i18n-core";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
-import { Label } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Badge } from "@ui/base";
 import { 
@@ -20,7 +19,6 @@ import {
   AlertTriangle
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { toast } from "@ui/base";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 export default function AdminTenantsPage() {
@@ -33,23 +31,23 @@ export default function AdminTenantsPage() {
   const limit = 20;
   const offset = (currentPage - 1) * limit;
 
-  const { data: tenantsData, isLoading, refetch } = trpc.getTenants.useQuery({
+  const { data: tenantsData, isLoading } = trpc.getTenants.useQuery({
     limit,
     offset,
     status: selectedStatus === "all" ? undefined : selectedStatus,
     plan: selectedPlan === "all" ? undefined : selectedPlan,
   });
 
-  // Tenant creation mutation (used in handleCreateTenant)
-  const createTenant = trpc.createTenant.useMutation({
-    onSuccess: () => {
-      toast.success("Tenant created successfully");
-      refetch();
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  // TODO: Implement inline tenant creation if needed in the future
+  // const createTenant = trpc.createTenant.useMutation({
+  //   onSuccess: () => {
+  //     toast.success("Tenant created successfully");
+  //     refetch();
+  //   },
+  //   onError: (error) => {
+  //     toast.error(error.message);
+  //   },
+  // });
 
   const handleCreateTenant = () => {
     router.push("/admin/tenants/create");

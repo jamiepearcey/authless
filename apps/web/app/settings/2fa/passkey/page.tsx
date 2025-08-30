@@ -36,7 +36,7 @@ interface Passkey {
 export default function PasskeySetupPage() {
   const { data: session } = useSession();
   const [step, setStep] = useState<"list" | "setup" | "verify" | "success">("list");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [supportedMethods, setSupportedMethods] = useState<string[]>([]);
   const [newPasskeyName, setNewPasskeyName] = useState("");
   const [isAddingPasskey, setIsAddingPasskey] = useState(false);
@@ -151,8 +151,8 @@ export default function PasskeySetupPage() {
       const response = credential.response as AuthenticatorAttestationResponse;
       const credentialId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
       const publicKey = btoa(String.fromCharCode(...new Uint8Array(response.getPublicKey() || new ArrayBuffer(0))));
-      const clientDataJSON = btoa(String.fromCharCode(...new Uint8Array(response.clientDataJSON)));
-      const attestationObject = btoa(String.fromCharCode(...new Uint8Array(response.attestationObject)));
+      // const clientDataJSON = btoa(String.fromCharCode(...new Uint8Array(response.clientDataJSON)));
+      // const attestationObject = btoa(String.fromCharCode(...new Uint8Array(response.attestationObject)));
 
       // Get transports if available (this is a newer API)
       let transports: string[] | undefined;

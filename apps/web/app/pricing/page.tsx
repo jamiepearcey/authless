@@ -7,20 +7,16 @@ import {
   X,
   Star,
   Rocket,
-  Shield,
   Users,
-  Globe,
-  Zap,
   Crown,
   Building,
   ArrowRight,
   DollarSign,
   TrendingUp,
-  Server,
-  Lock
+  Zap
 } from "lucide-react";
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const PricingCard = ({ 
   title, 
@@ -282,7 +278,6 @@ const ComparisonTable = () => {
 };
 
 export default function PricingPage() {
-  const [isAnnual, setIsAnnual] = useState(false);
   const heroRef = useRef(null);
 
   return (

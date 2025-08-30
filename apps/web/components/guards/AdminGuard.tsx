@@ -22,7 +22,7 @@ export function AdminGuard({
   fallback = <div>Access denied</div>,
   redirectTo 
 }: AdminGuardProps) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const { isAdmin, isLoading } = useIsAdmin(tenantId);
   const router = useRouter();
 

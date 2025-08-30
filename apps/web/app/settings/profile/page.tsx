@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, toast } from "@ui/base";
+import { Button, Input, Label, Textarea, toast } from "@ui/base";
 import { User, Camera, Save } from "lucide-react";
-import { t } from "@i18n-core";
 import { trpc } from "@/lib/trpc";
 import { ProfilePhotoUploadDialog } from "@/components/ProfilePhotoUploadDialog";
 
@@ -78,15 +77,10 @@ export default function ProfilePage() {
   const handleProfilePhotoUpload = async (imageFile: File) => {
     if (!session?.user?.id) return;
     
-    try {
-      await updateProfilePhoto.mutateAsync({
-        userId: session.user.id,
-        imageFile,
-      });
-    } catch (error) {
-      // Error is handled by the mutation
-      throw error;
-    }
+    await updateProfilePhoto.mutateAsync({
+      userId: session.user.id,
+      imageFile,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

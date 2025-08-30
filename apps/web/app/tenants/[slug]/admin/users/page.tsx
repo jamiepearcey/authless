@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
-import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, EyeOff, User, ArrowLeft } from "lucide-react";
+import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 import { trpc } from "@/lib/trpc";
@@ -38,7 +38,7 @@ import {
   AlertDialogTitle,
 } from "@ui/base";
 
-interface User {
+interface UserData {
   id: string;
   name: string | null;
   email: string;
@@ -220,7 +220,7 @@ export default function TenantUsersPage() {
     }
   };
 
-  const openEditForm = (user: User) => {
+  const openEditForm = (user: UserData) => {
     setSelectedUser(user);
     setEditData({
       name: user.name || "",
@@ -230,12 +230,12 @@ export default function TenantUsersPage() {
     setShowEditForm(true);
   };
 
-  const openUserDetails = (user: User) => {
+  const openUserDetails = (user: UserData) => {
     setSelectedUser(user);
     setShowUserDetails(true);
   };
 
-  const openDeleteConfirm = (user: User) => {
+  const openDeleteConfirm = (user: UserData) => {
     setUserToDelete(user);
     setShowDeleteConfirm(true);
   };

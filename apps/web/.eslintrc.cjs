@@ -1,7 +1,6 @@
 module.exports = {
   extends: [
-    "eslint:recommended",
-    "@typescript-eslint/recommended"
+    "eslint:recommended"
   ],
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint"],
@@ -17,6 +16,7 @@ module.exports = {
     browser: true,
     es2022: true
   },
+  ignorePatterns: ["node_modules/", "dist/", ".next/", "*.config.js", "tailwind.config.ts"],
   rules: {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",

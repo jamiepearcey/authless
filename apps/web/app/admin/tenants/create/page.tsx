@@ -30,7 +30,7 @@ export default function CreateTenantPage() {
   });
 
   const createTenant = trpc.createTenant.useMutation({
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Tenant created successfully!");
       router.push(`/admin/tenants`);
     },

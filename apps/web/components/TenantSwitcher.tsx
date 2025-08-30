@@ -35,7 +35,7 @@ export default function TenantSwitcher() {
   const [userTenants, setUserTenants] = useState<UserTenant[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data: tenantsData, refetch: refetchTenants } = trpc.getUserTenants.useQuery(
+  const { data: tenantsData } = trpc.getUserTenants.useQuery(
     undefined, 
     { enabled: !!session?.user }
   );
@@ -78,7 +78,7 @@ export default function TenantSwitcher() {
       // Navigate to tenant-specific URL
       if (pathname.startsWith('/tenants/')) {
         // Replace current tenant slug with new one
-        const newPath = pathname.replace(/^\/tenants\/[^\/]+/, `/tenants/${tenant.slug}`);
+        const newPath = pathname.replace(/^\/tenants\/[^/]+/, `/tenants/${tenant.slug}`);
         router.push(newPath);
       } else {
         // Navigate to tenant path

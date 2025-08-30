@@ -20,7 +20,7 @@ export function AuthGuard({
   fallback = <div>Please sign in to continue</div>,
   redirectTo = "/auth/signin"
 }: AuthGuardProps) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {

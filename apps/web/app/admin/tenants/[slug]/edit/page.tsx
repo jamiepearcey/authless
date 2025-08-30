@@ -9,7 +9,7 @@ import { Label } from "@ui/base";
 import { Textarea } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
-import { ArrowLeft, Building2, Save, Trash2 } from "lucide-react";
+import { ArrowLeft, Building2, Save } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
@@ -20,7 +20,6 @@ export default function EditTenantPage() {
   const tenantSlug = params.slug as string;
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -70,15 +69,16 @@ export default function EditTenantPage() {
     },
   });
 
-  const deleteTenant = trpc.deleteTenant.useMutation({
-    onSuccess: () => {
-      toast.success("Tenant deleted successfully!");
-      router.push("/admin/tenants");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  // TODO: Implement delete functionality when needed
+  // const deleteTenant = trpc.deleteTenant.useMutation({
+  //   onSuccess: () => {
+  //     toast.success("Tenant deleted successfully!");
+  //     router.push("/admin/tenants");
+  //   },
+  //   onError: (error) => {
+  //     toast.error(error.message);
+  //   },
+  // });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,19 +113,17 @@ export default function EditTenantPage() {
     }
   };
 
-  const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete this tenant? This action cannot be undone.")) {
-      return;
-    }
-
-    setIsDeleting(true);
-    
-    try {
-      await deleteTenant.mutateAsync({ slug: tenantSlug });
-    } finally {
-      setIsDeleting(false);
-    }
-  };
+  // TODO: Implement delete functionality when needed
+  // const handleDelete = async () => {
+  //   if (!confirm("Are you sure you want to delete this tenant? This action cannot be undone.")) {
+  //     return;
+  //   }
+  //   try {
+  //     await deleteTenant.mutateAsync({ slug: tenantSlug });
+  //   } catch (error) {
+  //     // Handle error
+  //   }
+  // };
 
   if (isLoading) {
     return (

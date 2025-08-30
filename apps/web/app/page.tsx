@@ -1,6 +1,5 @@
 "use client";
 
-import { t } from "@i18n-core";
 import Link from "next/link";
 import { Button } from "@ui/base";
 import { 
@@ -17,15 +16,13 @@ import {
   Rocket,
   Lock,
   MessageCircle,
-  Smartphone,
   Database,
-  Layout,
   Palette,
   Timer,
   DollarSign
 } from "lucide-react";
 import { HelloWorld } from "../components/TrpcHelloWorld";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 export default function HomePage() {

@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Button, Input, Label, toast, Badge, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@ui/base";
-import { Mail, Bell, Trash2, Globe, Lock, Eye, EyeOff, Save } from "lucide-react";
-import { t, useLocale } from "@i18n-core";
+import { Mail, Bell, Trash2, Globe, Lock, Save } from "lucide-react";
+import { useLocale } from "@i18n-core";
 import { trpc } from "@/lib/trpc";
 
 export default function AccountPage() {
@@ -16,8 +16,7 @@ export default function AccountPage() {
   // NEW: preferences state
   const { locale, switchLocale } = useLocale();
   const [timezone, setTimezone] = useState<string>("UTC");
-  const [isProfilePublic, setIsProfilePublic] = useState<boolean>(false);
-  const [showActivity, setShowActivity] = useState<boolean>(false);
+  // Removed unused state variables
   const [securityAlerts, setSecurityAlerts] = useState<boolean>(true);
   const [marketingCommunications, setMarketingCommunications] = useState<boolean>(false);
   const [emailNotifications, setEmailNotifications] = useState<boolean>(true);

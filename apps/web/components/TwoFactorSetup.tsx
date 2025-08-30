@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
-import { t } from "@i18n-core";
+import { useState } from "react";
+// import { t } from "@i18n-core";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, OtpInput } from "@ui/base";
 import { Button, Input, Label } from "@ui/base";
 import { Badge } from "@ui/base";

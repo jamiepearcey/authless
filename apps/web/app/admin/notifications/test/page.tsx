@@ -7,7 +7,7 @@ import { Label } from "@ui/base";
 import { Textarea } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
-import { Badge } from "@ui/base";           
+           
 import { trpc } from "../../../../lib/trpc";
 import { Loader2, Send, Users, User, Building, Shield, Globe } from "lucide-react";
 import { toast } from "@ui/base";
@@ -56,7 +56,7 @@ export default function TestNotificationsPage() {
         targetType: "global",
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast("Error sending notification");
       setIsLoading(false);
     },

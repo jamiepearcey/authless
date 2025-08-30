@@ -24,10 +24,9 @@ export async function POST(request: NextRequest) {
     }
 
     const token = authHeader.substring(7);
-    let decoded: any;
 
     try {
-      decoded = verify(token, WEBHOOK_SECRET);
+      verify(token, WEBHOOK_SECRET);
     } catch (error) {
       return NextResponse.json(
         { error: "Invalid or expired token" },

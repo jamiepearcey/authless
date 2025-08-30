@@ -54,8 +54,10 @@ class CentrifugoManager {
 
   disconnect() {
     // Unsubscribe each channel (cleans up on server, keeps local handlers intact)
-    for (const [ch, entry] of this.channels) {
-      try { entry.sub.unsubscribe(); } catch {}
+    for (const [, entry] of this.channels) {
+      try { entry.sub.unsubscribe(); } catch {
+        // ignore
+      }
       // keep handlers set; if you want hard reset:
       // this.channels.delete(ch)
     }
@@ -136,7 +138,9 @@ class CentrifugoManager {
       // if no handlers remain, we can free the subscription
       if (e.handlers.size === 0) {
         centrifugoDebugger.log('subscription', `No more handlers for ${channel}, cleaning up subscription`);
-        try { e.sub.unsubscribe(); } catch {}
+        try { e.sub.unsubscribe(); } catch {
+          // ignore
+        }
         this.channels.delete(channel);
       } else {
         centrifugoDebugger.log('subscription', `${e.handlers.size} handlers remaining for ${channel}`);

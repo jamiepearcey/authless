@@ -11,7 +11,7 @@ import { Textarea } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { useCentrifugo, useBasicNotificationSubscription, NotificationMessage } from "@/hooks/useNotificationSubscription";
 import { CentrifugoDebugPanel } from "@/components/CentrifugoDebugPanel";
-import { ArrowLeft, Bell, Plus, Send, Settings, Activity, Users, Globe, Loader2 } from "lucide-react";
+import { ArrowLeft, Bell, Plus, Send, Activity, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
@@ -153,15 +153,6 @@ export default function NotificationManagementPage() {
     addToLog("🧹 Cleared received notifications");
   };
 
-  const getTargetTypeIcon = (type: string) => {
-    switch (type) {
-      case 'global': return <Globe className="h-4 w-4" />;
-      case 'user': return <Users className="h-4 w-4" />;
-      case 'tenant': return <Settings className="h-4 w-4" />;
-      case 'role': return <Activity className="h-4 w-4" />;
-      default: return <Bell className="h-4 w-4" />;
-    }
-  };
 
   return (
     <div className=" bg-gray-50 py-8">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@ui/base";
-import { Shield, QrCode, Key, MessageCircle, CheckCircle, XCircle } from "lucide-react";
+import { QrCode, Key, MessageCircle, CheckCircle, XCircle } from "lucide-react";
 import { t } from "@i18n-core";
 import { trpc } from "../../../lib/trpc";
 

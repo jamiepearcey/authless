@@ -1,7 +1,7 @@
 "use client";
 
 import { NotificationTemplateForm } from "@/components/NotificationTemplateForm";
-import { ArrowLeft, Bell, FileText, Settings } from "lucide-react";
+import { ArrowLeft, Bell, Settings } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";

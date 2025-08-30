@@ -9,7 +9,6 @@ import {
   CheckCircle,
   Smartphone,
   Shield,
-  AlertCircle,
   Trash2,
 } from "lucide-react";
 import Link from "next/link";
@@ -20,11 +19,11 @@ import { toast } from "@ui/base";
 export default function WhatsAppSetupPage() {
   const [step, setStep] = useState<"setup" | "verify" | "success" | "manage">("setup");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [countryCode, setCountryCode] = useState("44");
+  const [, setCountryCode] = useState("44");
   const [fullPhoneNumber, setFullPhoneNumber] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [phoneValidationError, setPhoneValidationError] = useState("");
+  const [, setPhoneValidationError] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false); // Track if user is updating phone number
 
@@ -44,7 +43,7 @@ export default function WhatsAppSetupPage() {
     }
   }, [isWhatsAppEnabled, step, isUpdating]);
 
-  const handlePhoneNumberChange = (value: string, code: string, full: string) => {
+  const handlePhoneNumberChange = (value: string, code: string) => {
     setPhoneNumber(value);
     setCountryCode(code);
     setFullPhoneNumber(`+${code}${value}`);

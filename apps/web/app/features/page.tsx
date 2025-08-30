@@ -3,32 +3,18 @@
 import Link from "next/link";
 import { Button } from "@ui/base";
 import { 
-  ArrowRight, 
   Shield, 
-  Zap, 
-  Server, 
   Globe, 
   Check, 
   Star,
   Users,
-  Code,
-  Rocket,
-  Lock,
   MessageCircle,
   Database,
-  Palette,
-  Timer,
   Settings,
   Bell,
-  Phone,
-  Mail,
-  Eye,
-  Target,
-  BarChart3,
-  FileText,
-  Layers,
   Workflow,
-  Cloud
+  Cloud,
+  Rocket
 } from "lucide-react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";

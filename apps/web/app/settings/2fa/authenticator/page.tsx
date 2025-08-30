@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Button, OtpInput, toast, Input, Card, ConfirmRemoveDialog } from "@ui/base";
-import { QrCode, ArrowLeft, CheckCircle, Plus, Trash2, Smartphone } from "lucide-react";
+import { useState } from "react";
+import { Button, OtpInput, toast, ConfirmRemoveDialog } from "@ui/base";
+import { QrCode, ArrowLeft, CheckCircle, Plus, Smartphone } from "lucide-react";
 import Link from "next/link";
 import { t } from "@i18n-core";
 import { trpc } from "@/lib/trpc";
@@ -47,7 +47,7 @@ export default function AuthenticatorSetupPage() {
       // Auto-reset to add step after 3 seconds
       setTimeout(() => setStep("add"), 7000);
     },
-    onError: (error) => {
+    onError: () => {
       toast.error("Invalid verification code. Please try again.");
     },
   });

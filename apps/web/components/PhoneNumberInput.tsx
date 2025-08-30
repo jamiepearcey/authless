@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { ChevronDown, Phone, AlertCircle, Search } from "lucide-react";
+import { Phone, AlertCircle, Search } from "lucide-react";
 
 export interface CountryCode {
   code: string;
@@ -157,7 +157,7 @@ export function PhoneNumberInput({
   value = "",
   onChange,
   onValidationChange,
-  placeholder = "Enter phone number",
+  // placeholder = "Enter phone number",
   className = "",
   disabled = false,
   required = false,
@@ -358,7 +358,7 @@ export function PhoneNumberInput({
     const inputValue = e.target.value;
     
     // Allow only digits, spaces, hyphens, parentheses, and plus signs
-    const cleanValue = inputValue.replace(/[^\d\s\-\(\)\+]/g, '');
+    const cleanValue = inputValue.replace(/[^\d\s\-()+]/g, '');
     
     // Auto-format as user types
     const formattedValue = formatPhoneNumber(cleanValue, selectedCountry.format);
@@ -385,12 +385,12 @@ export function PhoneNumberInput({
       setPhoneNumber(formattedNumber);
       
       // Trigger onChange
-      const cleanValue = pastedText.replace(/[^\d\s\-\(\)\+]/g, '');
+      const cleanValue = pastedText.replace(/[^\d\s\-()+]/g, '');
       const fullNumber = `+${parsed.country.dialCode} ${cleanValue}`;
       onChange?.(cleanValue, parsed.country.dialCode, fullNumber);
     } else {
       // Fallback to normal paste behavior with formatting
-      const cleanValue = pastedText.replace(/[^\d\s\-\(\)\+]/g, '');
+      const cleanValue = pastedText.replace(/[^\d\s\-()+]/g, '');
       const formattedValue = formatPhoneNumber(cleanValue, selectedCountry.format);
       setPhoneNumber(formattedValue);
       
@@ -411,7 +411,7 @@ export function PhoneNumberInput({
     }
     
     // Only allow digits, space, hyphen, parentheses
-    if (!/[\d\s\-\(\)]/.test(e.key)) {
+    if (!/[\d\s\-()]/.test(e.key)) {
       e.preventDefault();
     }
   };

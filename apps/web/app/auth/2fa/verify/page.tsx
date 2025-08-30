@@ -16,8 +16,7 @@ import {
   AlertCircle, 
   CheckCircle,
   ArrowRight,
-  Clock,
-  RefreshCw
+  Clock
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
@@ -217,10 +216,6 @@ export default function Verify2FAPage() {
     }
   };
 
-  const handleResendCode = async () => {
-    if (countdown > 0) return;
-    await handleSendCode();
-  };
 
   if (!nonce || !pendingAuth) {
     return (

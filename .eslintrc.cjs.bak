@@ -17,9 +17,18 @@ module.exports = {
     browser: true,
     es2022: true
   },
+  ignorePatterns: ["node_modules/", "dist/", ".next/", "*.config.js"],
   rules: {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "no-undef": "off" // TypeScript handles this
-  }
+  },
+  overrides: [
+    {
+      files: ["**/*.ts", "**/*.tsx"],
+      rules: {
+        "no-undef": "off" // TypeScript handles this
+      }
+    }
+  ]
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
-import { useState, useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import Link from "next/link";
 import { Button, NotificationBell } from "@ui/base";
 import { Settings, User, LogOut, Shield, Building2 } from "lucide-react";
@@ -32,10 +32,10 @@ export default function Header() {
   }, [refetchUnreadCount, refetchNotifications]);
 
   // Get Centrifugo connection status
-  const { isConnected } = useCentrifugo();
+  useCentrifugo();
   
   // Subscribe to real-time notifications
-  const { isSubscribed, hasErrors } = useBasicNotificationSubscription(handleRealtimeNotification);
+  useBasicNotificationSubscription(handleRealtimeNotification);
 
   // Combine server-side and real-time notifications
   const allNotifications = notificationsData?.items ?? []

@@ -5,23 +5,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import { Button } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
-import { Separator } from "@ui/base";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@ui/base";
 import { 
   Key, 
-  Smartphone, 
-  Laptop, 
-  Monitor, 
   Trash2, 
   LogOut,
   ArrowRight,
   User,
-  Shield,
-  AlertCircle,
   CheckCircle
 } from "lucide-react";
 import { toast } from "@ui/base";
-import { t } from "@i18n-core";
 import { trpc } from "../../../../lib/trpc";
 
 interface Passkey {
@@ -168,7 +161,7 @@ export default function PasskeySelectPage() {
     }
   };
 
-  const handleRemoveAccount = async (accountId: string) => {
+  const handleRemoveAccount = async () => {
     try {
       // In a real implementation, this would call the tRPC endpoint to remove the account
       toast.success("Account removed successfully");
@@ -182,33 +175,7 @@ export default function PasskeySelectPage() {
     router.push(`/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`);
   };
 
-  const getDeviceIcon = (passkey: Passkey) => {
-    const name = passkey.name.toLowerCase();
-    if (name.includes("iphone") || name.includes("android") || name.includes("phone")) {
-      return <Smartphone className="h-5 w-5" />;
-    } else if (name.includes("macbook") || name.includes("laptop")) {
-      return <Laptop className="h-5 w-5" />;
-    } else if (name.includes("desktop") || name.includes("pc")) {
-      return <Monitor className="h-5 w-5" />;
-    } else {
-      return <Key className="h-5 w-5" />;
-    }
-  };
 
-  const formatLastUsed = (lastUsedAt: string | null) => {
-    if (!lastUsedAt) return "Never used";
-    
-    const date = new Date(lastUsedAt);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "Yesterday";
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    return `${Math.floor(diffDays / 30)} months ago`;
-  };
 
   // Show loading state while checking accounts
   if (isLoadingAccounts) {
@@ -336,7 +303,7 @@ export default function PasskeySelectPage() {
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction 
-                      onClick={() => handleRemoveAccount(selectedAccount.id)}
+                      onClick={() => handleRemoveAccount()}
                       className="bg-red-600 hover:bg-red-700"
                     >
                       Remove Account

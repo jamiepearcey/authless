@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
-import { Badge } from "@ui/base";
+// import { Badge } from "@ui/base";
 import { ArrowLeft, Building2, Palette, Shield, Zap } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
@@ -91,31 +91,31 @@ export default function TenantSettingsPage() {
     }
   };
 
-  const getPlanBadge = (plan: string) => {
-    switch (plan) {
-      case "free":
-        return <Badge variant="secondary">Free</Badge>;
-      case "pro":
-        return <Badge variant="default" className="bg-blue-100 text-blue-700 border-blue-200">Pro</Badge>;
-      case "enterprise":
-        return <Badge variant="default" className="bg-purple-100 text-purple-700 border-purple-200">Enterprise</Badge>;
-      default:
-        return <Badge variant="outline">{plan}</Badge>;
-    }
-  };
+  // const getPlanBadge = (plan: string) => {
+  //   switch (plan) {
+  //     case "free":
+  //       return <Badge variant="secondary">Free</Badge>;
+  //     case "pro":
+  //       return <Badge variant="default" className="bg-blue-100 text-blue-700 border-blue-200">Pro</Badge>;
+  //     case "enterprise":
+  //       return <Badge variant="default" className="bg-purple-100 text-purple-700 border-purple-200">Enterprise</Badge>;
+  //     default:
+  //       return <Badge variant="outline">{plan}</Badge>;
+  //   }
+  // };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "active":
-        return <Badge variant="default" className="bg-green-100 text-green-700 border-green-200">Active</Badge>;
-      case "suspended":
-        return <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200">Suspended</Badge>;
-      case "pending":
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-700 border-yellow-200">Pending</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
-  };
+  // const getStatusBadge = (status: string) => {
+  //   switch (status) {
+  //     case "active":
+  //       return <Badge variant="default" className="bg-green-100 text-green-700 border-green-200">Active</Badge>;
+  //     case "suspended":
+  //       return <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200">Suspended</Badge>;
+  //     case "pending":
+  //       return <Badge variant="secondary" className="bg-yellow-100 text-yellow-700 border-yellow-200">Pending</Badge>;
+  //     default:
+  //       return <Badge variant="outline">{status}</Badge>;
+  //   }
+  // };
 
   if (!tenant) {
     return (

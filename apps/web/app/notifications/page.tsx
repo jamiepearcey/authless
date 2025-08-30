@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Bell, Filter, Search, Check, Archive, Loader2, Inbox } from "lucide-react";
+import { Bell, Filter, Search, Check, Loader2, Inbox } from "lucide-react";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";

@@ -8,7 +8,7 @@ import { Input } from "@ui/base";
 import { Textarea } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { trpc } from "@/lib/trpc";
-import { Plus, Send, Settings, Activity, Users, Globe, Loader2, Bell } from "lucide-react";
+import { Send, Settings, Activity, Users, Globe, Loader2, Bell } from "lucide-react";
 import { toast } from "@ui/base";
 
 interface NotificationTemplateFormProps {

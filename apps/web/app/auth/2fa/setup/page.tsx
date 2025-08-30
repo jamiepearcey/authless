@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Shield, CheckCircle, ArrowRight } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/base";
 import { Button } from "@ui/base";
 import TwoFactorSetup from "../../../../components/TwoFactorSetup";
 
