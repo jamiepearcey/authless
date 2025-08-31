@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Button } from "@ui/base";
@@ -30,6 +30,7 @@ export default function SignInPage() {
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isOAuthLoading, setIsOAuthLoading] = useState<string | null>(null);
+  const [checkingSSO, setCheckingSSO] = useState(true);
   
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -38,6 +39,43 @@ export default function SignInPage() {
 
   // tRPC mutation for 2FA-aware login
   const startPasswordLogin = trpc.startPasswordLogin.useMutation();
+
+  // Check for tenant SSO configuration and redirect if needed
+  useEffect(() => {
+    const checkTenantSSO = async () => {
+      try {
+        // Get tenant slug from headers (set by middleware)
+        const tenantSlug = window.location.hostname.split('.')[0];
+        
+        // Skip SSO check for localhost or main domain
+        if (tenantSlug === 'localhost' || window.location.hostname === process.env.NEXT_PUBLIC_MAIN_DOMAIN) {
+          setCheckingSSO(false);
+          return;
+        }
+
+        // Check if tenant has SSO configured
+        const response = await fetch(`/api/check-tenant-sso?slug=${tenantSlug}`);
+        if (response.ok) {
+          const { hasSSO, ssoEnabled } = await response.json();
+          
+          if (hasSSO && ssoEnabled) {
+            // Redirect to SSO flow
+            const ssoUrl = new URL(`/auth/sso/${tenantSlug}`, window.location.origin);
+            ssoUrl.searchParams.set('callbackUrl', callbackUrl);
+            router.push(ssoUrl.toString());
+            return;
+          }
+        }
+      } catch (error) {
+        console.error('Error checking tenant SSO:', error);
+        // Continue with normal sign-in flow on error
+      } finally {
+        setCheckingSSO(false);
+      }
+    };
+
+    checkTenantSSO();
+  }, [router, callbackUrl]);
 
   // Handle OAuth errors from URL params
   useState(() => {
@@ -136,6 +174,22 @@ export default function SignInPage() {
       setIsOAuthLoading(null);
     }
   };
+
+  // Show loading spinner while checking for SSO
+  if (checkingSSO) {
+    return (
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <Card className="shadow-lg">
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mb-4"></div>
+              <p className="text-gray-600">Checking authentication options...</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

@@ -15,6 +15,7 @@ import { supportOptionRouter } from "./routers/support-option";
 import { n8nWebhookRouter } from "./routers/n8n-webhook";
 import { supportNotificationsRouter } from "./routers/support-notifications";
 import { tenantSupportRoutingRouter } from "./routers/tenant-support-routing";
+import { tenantSsoRouter } from "./routers/tenant-sso";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -55,6 +56,14 @@ const appRouter = router({
   getTenantMemberships: tenantRouter.getTenantMemberships,
   getUserTenants: tenantRouter.getUserTenants,
   getTenantRoles: tenantRouter.getTenantRoles,
+
+  // Tenant SSO Management
+  getSsoConfiguration: tenantSsoRouter.getSsoConfiguration,
+  upsertSsoConfiguration: tenantSsoRouter.upsertSsoConfiguration,
+  testSsoConfiguration: tenantSsoRouter.testSsoConfiguration,
+  deleteSsoConfiguration: tenantSsoRouter.deleteSsoConfiguration,
+  getSsoAuditLogs: tenantSsoRouter.getSsoAuditLogs,
+  getSsoProviders: tenantSsoRouter.getSsoProviders,
 
   // User invitations and tenant user management
   inviteUser: invitationRouter.inviteUser,

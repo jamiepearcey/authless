@@ -95,6 +95,7 @@ model User {
   pendingAuths           PendingAuth[]
   twoFactorCodes         TwoFactorCode[]
   twoFactorAudits        TwoFactorAudit[]
+  ssoAuditLogs           SsoAuditLog[]
 
   @@index([email])
   @@index([platformRole])
@@ -165,6 +166,10 @@ model Tenant {
   caseMetrics                    CaseMetrics[]
   supportConfigurations          SupportConfiguration[]
   supportRouting                 TenantSupportRouting[]
+  
+  // SSO configuration
+  ssoConfiguration               TenantSsoConfiguration?
+  ssoAuditLogs                   SsoAuditLog[]
 
   @@index([slug])
   @@index([subdomain])
@@ -173,6 +178,98 @@ model Tenant {
   @@index([createdAt])
   @@index([suspendedAt])
   @@index([deletedAt])
+}
+
+model TenantSsoConfiguration {
+  id                    String   @id @default(cuid())
+  tenantId              String   @unique
+  
+  // Basic SSO configuration
+  provider              String   // "saml", "oidc", "azure-ad", "google-workspace", "okta", "auth0", etc.
+  providerName          String   // Display name for the provider
+  isEnabled             Boolean  @default(false)
+  enforceSSO            Boolean  @default(false) // If true, disable password login for this tenant
+  
+  // SAML Configuration
+  samlEntityId          String?  // SAML Entity ID
+  samlSsoUrl            String?  // SAML SSO URL
+  samlSloUrl            String?  // SAML SLO URL (optional)
+  samlCertificate       String?  // X.509 Certificate (PEM format)
+  samlSigningCert       String?  // Signing certificate if different
+  samlNameIdFormat      String?  // Name ID format
+  samlAttributeMapping  Json?    // Attribute mappings for user data
+  
+  // OIDC Configuration
+  oidcIssuer            String?  // OIDC Issuer URL
+  oidcClientId          String?  // OIDC Client ID
+  oidcClientSecret      String?  // OIDC Client Secret (encrypted)
+  oidcScopes            String?  // Space-separated scopes
+  oidcTokenEndpoint     String?  // Token endpoint URL
+  oidcAuthEndpoint      String?  // Authorization endpoint URL
+  oidcUserinfoEndpoint  String?  // Userinfo endpoint URL
+  oidcJwksUri           String?  // JWKS URI for token verification
+  
+  // Generic OAuth2 Configuration (for providers like Azure AD)
+  oauth2ClientId        String?
+  oauth2ClientSecret    String?  // Encrypted
+  oauth2AuthUrl         String?
+  oauth2TokenUrl        String?
+  oauth2UserInfoUrl     String?
+  oauth2Scopes          String?
+  
+  // User provisioning settings
+  autoProvisionUsers    Boolean  @default(true)   // Auto-create users on first SSO login
+  defaultRole           String   @default("member") // Default role for new SSO users
+  allowedDomains        String?  // Comma-separated list of allowed email domains
+  userAttributeMapping  Json?    // Mapping of SSO attributes to user fields
+  
+  // Security settings
+  signAssertions        Boolean  @default(true)   // Require signed SAML assertions
+  signRequests          Boolean  @default(false)  // Sign SAML requests
+  encryptAssertions     Boolean  @default(false)  // Encrypt SAML assertions
+  sessionTimeout        Int?     @default(480)    // Session timeout in minutes
+  
+  // Audit and metadata
+  lastSyncAt            DateTime?
+  lastLoginAt           DateTime?
+  totalLogins           Int      @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  createdBy             String   // User ID who configured SSO
+  updatedBy             String   // User ID who last updated SSO
+  
+  // Relations
+  tenant                Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  @@index([tenantId])
+  @@index([provider])
+  @@index([isEnabled])
+}
+
+model SsoAuditLog {
+  id                String   @id @default(cuid())
+  tenantId          String
+  userId            String?  // User involved in the SSO event (if applicable)
+  event             String   // "login_attempt", "login_success", "login_failure", "config_updated", etc.
+  provider          String   // SSO provider used
+  ipAddress         String?
+  userAgent         String?
+  samlRequestId     String?  // SAML request ID for correlation
+  samlResponseId    String?  // SAML response ID for correlation
+  errorMessage      String?  // Error details for failed attempts
+  attributes        Json?    // Additional attributes from SSO response
+  sessionId         String?  // Session ID created
+  createdAt         DateTime @default(now())
+  
+  // Relations
+  tenant            Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user              User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([tenantId])
+  @@index([userId])
+  @@index([event])
+  @@index([provider])
+  @@index([createdAt])
 }
 
 model Membership {

@@ -4,12 +4,534 @@ import { useParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 // import { Badge } from "@ui/base";
-import { ArrowLeft, Building2, Palette, Shield, Zap } from "lucide-react";
+import { ArrowLeft, Building2, Palette, Shield, Zap, AlertCircle, CheckCircle, Eye, EyeOff, TestTube } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import Link from "next/link";
+
+// SSO Configuration Component
+function  SsoConfiguration({ tenantId, tenantSlug }: { tenantId: string; tenantSlug: string }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [showSecrets, setShowSecrets] = useState(false);
+  const [ssoFormData, setSsoFormData] = useState({
+    provider: "none" as "none" | "saml" | "oidc" | "azure-ad" | "google-workspace",
+    providerName: "",
+    isEnabled: false,
+    enforceSSO: false,
+    // SAML fields
+    samlSsoUrl: "",
+    samlEntityId: "",
+    samlX509Certificate: "",
+    samlSignRequests: false,
+    samlEncryptAssertions: false,
+    // OIDC fields
+    oidcIssuer: "",
+    oidcClientId: "",
+    oidcClientSecret: "",
+    oidcScope: "openid profile email",
+    // Attribute mapping
+    attributeMapping: {
+      email: "email",
+      firstName: "given_name",
+      lastName: "family_name",
+      displayName: "name"
+    }
+  });
+
+  const { data: ssoConfig, refetch: refetchSsoConfig } = trpc.getSsoConfiguration.useQuery(
+    { tenantId },
+    { enabled: !!tenantId }
+  );
+
+  // const { data: ssoProviders } = trpc.getSsoProviders.useQuery();
+
+  const upsertSsoConfig = trpc.upsertSsoConfiguration.useMutation({
+    onSuccess: () => {
+      toast.success("SSO configuration saved successfully!");
+      setIsEditing(false);
+      refetchSsoConfig();
+    },
+    onError: (error) => {
+      toast.error(`Failed to save SSO configuration: ${error.message}`);
+    },
+  });
+
+  const testSsoConfig = trpc.testSsoConfiguration.useMutation({
+    onSuccess: (result) => {
+      if (result.valid) {
+        toast.success("SSO configuration test passed!");
+      } else {
+        toast.error(`SSO test failed: ${result.errors.map((error: any) => error.error).join(", ")}`);
+      }
+    },
+    onError: (error) => {
+      toast.error(`Test failed: ${error.message}`);
+    },
+  });
+
+  const deleteSsoConfig = trpc.deleteSsoConfiguration.useMutation({
+    onSuccess: () => {
+      toast.success("SSO configuration deleted successfully!");
+      refetchSsoConfig();
+      setSsoFormData({
+        provider: "none",
+        providerName: "",
+        isEnabled: false,
+        enforceSSO: false,
+        samlSsoUrl: "",
+        samlEntityId: "",
+        samlX509Certificate: "",
+        samlSignRequests: false,
+        samlEncryptAssertions: false,
+        oidcIssuer: "",
+        oidcClientId: "",
+        oidcClientSecret: "",
+        oidcScope: "openid profile email",
+        attributeMapping: {
+          email: "email",
+          firstName: "given_name",
+          lastName: "family_name",
+          displayName: "name"
+        }
+      });
+    },
+    onError: (error) => {
+      toast.error(`Failed to delete SSO configuration: ${error.message}`);
+    },
+  });
+
+  // Initialize form data when SSO config loads
+  useState(() => {
+    if (ssoConfig && !isEditing) {
+      setSsoFormData({
+        provider: ssoConfig.provider as any || "none",
+        providerName: ssoConfig.providerName || "",
+        isEnabled: ssoConfig.isEnabled || false,
+        enforceSSO: ssoConfig.enforceSSO || false,
+        samlSsoUrl: ssoConfig.samlSsoUrl || "",
+        samlEntityId: ssoConfig.samlEntityId || "",
+        samlX509Certificate: ssoConfig.samlCertificate || "",
+        samlSignRequests: ssoConfig.signRequests || false,
+        samlEncryptAssertions: ssoConfig.encryptAssertions || false,
+        oidcIssuer: ssoConfig.oidcIssuer || "",
+        oidcClientId: ssoConfig.oidcClientId || "",
+        oidcClientSecret: ssoConfig.oidcClientSecret || "",
+        oidcScope: ssoConfig.oidcScopes || "openid profile email",
+        attributeMapping: (() => {
+          try {
+            return JSON.parse((ssoConfig?.samlAttributeMapping as string) || "{}");
+          } catch {
+            return {
+              email: "email",
+              firstName: "given_name",
+              lastName: "family_name",
+              displayName: "name"
+            };
+          }
+        })()
+      });
+    }
+  });
+
+  const handleSsoSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      await upsertSsoConfig.mutateAsync({
+        tenantId,
+        configuration: ssoFormData as any
+      });
+    } catch (error) {
+      // Handled by mutation
+    }
+  };
+
+  const handleTestConfiguration = async () => {
+    try {
+      await testSsoConfig.mutateAsync({ tenantId, configuration: ssoFormData as any });
+    } catch (error) {
+      // Handled by mutation
+    }
+  };
+
+  const handleDeleteConfiguration = async () => {
+    if (window.confirm("Are you sure you want to delete this SSO configuration? This action cannot be undone.")) {
+      try {
+        await deleteSsoConfig.mutateAsync({ tenantId });
+      } catch (error) {
+        // Handled by mutation
+      }
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Shield className="h-5 w-5" />
+          Single Sign-On (SSO)
+        </CardTitle>
+        <CardDescription>
+          Configure single sign-on authentication for your workspace users
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSsoSubmit} className="space-y-6">
+          {/* SSO Status */}
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+              <div className="flex items-center gap-2">
+                {ssoFormData.isEnabled ? (
+                  <CheckCircle className="h-5 w-5 text-green-600" />
+                ) : (
+                  <AlertCircle className="h-5 w-5 text-gray-400" />
+                )}
+                <span className="font-medium">
+                  SSO Status: {ssoFormData.isEnabled ? "Enabled" : "Disabled"}
+                </span>
+              </div>
+              {ssoFormData.isEnabled && ssoFormData.provider !== "none" && (
+                <p className="text-sm text-gray-600 mt-1">
+                  Provider: {ssoFormData.providerName || ssoFormData.provider}
+                </p>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              {!isEditing ? (
+                <Button type="button" onClick={() => setIsEditing(true)}>
+                  Configure SSO
+                </Button>
+              ) : (
+                <div className="flex gap-2">
+                  <Button type="button" variant="outline" onClick={() => setIsEditing(false)}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={upsertSsoConfig.isPending}>
+                    {upsertSsoConfig.isPending ? "Saving..." : "Save Configuration"}
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {isEditing && (
+            <div className="space-y-6">
+              {/* Basic Configuration */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="provider">SSO Provider</Label>
+                  <Select 
+                    value={ssoFormData.provider} 
+                    onValueChange={(value) => setSsoFormData(prev => ({ ...prev, provider: value as any }))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">No SSO</SelectItem>
+                      <SelectItem value="saml">SAML 2.0</SelectItem>
+                      <SelectItem value="oidc">OpenID Connect</SelectItem>
+                      <SelectItem value="azure-ad">Microsoft Azure AD</SelectItem>
+                      <SelectItem value="google-workspace">Google Workspace</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="providerName">Provider Display Name</Label>
+                  <Input
+                    id="providerName"
+                    value={ssoFormData.providerName}
+                    onChange={(e) => setSsoFormData(prev => ({ ...prev, providerName: e.target.value }))}
+                    placeholder="e.g., Company SSO, Azure AD"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="isEnabled"
+                    checked={ssoFormData.isEnabled}
+                    onChange={(e) => setSsoFormData(prev => ({ ...prev, isEnabled: e.target.checked }))}
+                    className="rounded border-gray-300"
+                  />
+                  <Label htmlFor="isEnabled">Enable SSO for this workspace</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="enforceSSO"
+                    checked={ssoFormData.enforceSSO}
+                    onChange={(e) => setSsoFormData(prev => ({ ...prev, enforceSSO: e.target.checked }))}
+                    className="rounded border-gray-300"
+                    disabled={!ssoFormData.isEnabled}
+                  />
+                  <Label htmlFor="enforceSSO">Enforce SSO (disable password login)</Label>
+                </div>
+              </div>
+
+              {/* Provider-specific Configuration */}
+              {ssoFormData.provider === "saml" && (
+                <div className="space-y-4">
+                  <h4 className="font-medium text-lg">SAML Configuration</h4>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <Label htmlFor="samlSsoUrl">SSO URL</Label>
+                      <Input
+                        id="samlSsoUrl"
+                        value={ssoFormData.samlSsoUrl}
+                        onChange={(e) => setSsoFormData(prev => ({ ...prev, samlSsoUrl: e.target.value }))}
+                        placeholder="https://your-idp.com/sso/saml"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="samlEntityId">Entity ID</Label>
+                      <Input
+                        id="samlEntityId"
+                        value={ssoFormData.samlEntityId}
+                        onChange={(e) => setSsoFormData(prev => ({ ...prev, samlEntityId: e.target.value }))}
+                        placeholder="urn:your-idp:entity-id"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="samlX509Certificate">X.509 Certificate</Label>
+                      <Textarea
+                        id="samlX509Certificate"
+                        value={ssoFormData.samlX509Certificate}
+                        onChange={(e) => setSsoFormData(prev => ({ ...prev, samlX509Certificate: e.target.value }))}
+                        placeholder="-----BEGIN CERTIFICATE-----&#10;...&#10;-----END CERTIFICATE-----"
+                        rows={5}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          id="samlSignRequests"
+                          checked={ssoFormData.samlSignRequests}
+                          onChange={(e) => setSsoFormData(prev => ({ ...prev, samlSignRequests: e.target.checked }))}
+                          className="rounded border-gray-300"
+                        />
+                        <Label htmlFor="samlSignRequests">Sign SAML requests</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          id="samlEncryptAssertions"
+                          checked={ssoFormData.samlEncryptAssertions}
+                          onChange={(e) => setSsoFormData(prev => ({ ...prev, samlEncryptAssertions: e.target.checked }))}
+                          className="rounded border-gray-300"
+                        />
+                        <Label htmlFor="samlEncryptAssertions">Encrypt SAML assertions</Label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {(ssoFormData.provider === "oidc" || ssoFormData.provider === "azure-ad" || ssoFormData.provider === "google-workspace") && (
+                <div className="space-y-4">
+                  <h4 className="font-medium text-lg">
+                    {ssoFormData.provider === "oidc" ? "OpenID Connect" : 
+                     ssoFormData.provider === "azure-ad" ? "Azure AD" : "Google Workspace"} Configuration
+                  </h4>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <Label htmlFor="oidcIssuer">
+                        {ssoFormData.provider === "azure-ad" ? "Tenant ID / Issuer" : "Issuer URL"}
+                      </Label>
+                      <Input
+                        id="oidcIssuer"
+                        value={ssoFormData.oidcIssuer}
+                        onChange={(e) => setSsoFormData(prev => ({ ...prev, oidcIssuer: e.target.value }))}
+                        placeholder={
+                          ssoFormData.provider === "azure-ad" 
+                            ? "https://login.microsoftonline.com/{tenant-id}" 
+                            : "https://your-oidc-provider.com"
+                        }
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="oidcClientId">Client ID</Label>
+                        <Input
+                          id="oidcClientId"
+                          value={ssoFormData.oidcClientId}
+                          onChange={(e) => setSsoFormData(prev => ({ ...prev, oidcClientId: e.target.value }))}
+                          placeholder="your-client-id"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="oidcClientSecret">Client Secret</Label>
+                        <div className="relative">
+                          <Input
+                            id="oidcClientSecret"
+                            type={showSecrets ? "text" : "password"}
+                            value={ssoFormData.oidcClientSecret}
+                            onChange={(e) => setSsoFormData(prev => ({ ...prev, oidcClientSecret: e.target.value }))}
+                            placeholder="your-client-secret"
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2"
+                            onClick={() => setShowSecrets(!showSecrets)}
+                          >
+                            {showSecrets ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="oidcScope">Scopes</Label>
+                      <Input
+                        id="oidcScope"
+                        value={ssoFormData.oidcScope}
+                        onChange={(e) => setSsoFormData(prev => ({ ...prev, oidcScope: e.target.value }))}
+                        placeholder="openid profile email"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Attribute Mapping */}
+              {ssoFormData.provider !== "none" && (
+                <div className="space-y-4">
+                  <h4 className="font-medium text-lg">User Attribute Mapping</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="emailMapping">Email Attribute</Label>
+                      <Input
+                        id="emailMapping"
+                        value={ssoFormData.attributeMapping.email}
+                        onChange={(e) => setSsoFormData(prev => ({ 
+                          ...prev, 
+                          attributeMapping: { ...prev.attributeMapping, email: e.target.value }
+                        }))}
+                        placeholder="email"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="firstNameMapping">First Name Attribute</Label>
+                      <Input
+                        id="firstNameMapping"
+                        value={ssoFormData.attributeMapping.firstName}
+                        onChange={(e) => setSsoFormData(prev => ({ 
+                          ...prev, 
+                          attributeMapping: { ...prev.attributeMapping, firstName: e.target.value }
+                        }))}
+                        placeholder="given_name"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="lastNameMapping">Last Name Attribute</Label>
+                      <Input
+                        id="lastNameMapping"
+                        value={ssoFormData.attributeMapping.lastName}
+                        onChange={(e) => setSsoFormData(prev => ({ 
+                          ...prev, 
+                          attributeMapping: { ...prev.attributeMapping, lastName: e.target.value }
+                        }))}
+                        placeholder="family_name"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="displayNameMapping">Display Name Attribute</Label>
+                      <Input
+                        id="displayNameMapping"
+                        value={ssoFormData.attributeMapping.displayName}
+                        onChange={(e) => setSsoFormData(prev => ({ 
+                          ...prev, 
+                          attributeMapping: { ...prev.attributeMapping, displayName: e.target.value }
+                        }))}
+                        placeholder="name"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-between pt-4 border-t">
+                <div className="flex gap-2">
+                  {ssoConfig && ssoFormData.provider !== "none" && (
+                    <>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={handleTestConfiguration}
+                        disabled={testSsoConfig.isPending}
+                      >
+                        <TestTube className="h-4 w-4 mr-2" />
+                        {testSsoConfig.isPending ? "Testing..." : "Test Configuration"}
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={handleDeleteConfiguration}
+                        disabled={deleteSsoConfig.isPending}
+                      >
+                        {deleteSsoConfig.isPending ? "Deleting..." : "Delete Configuration"}
+                      </Button>
+                    </>
+                  )}
+                </div>
+                <div className="flex gap-2">
+                  <Button type="button" variant="outline" onClick={() => setIsEditing(false)}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={upsertSsoConfig.isPending}>
+                    {upsertSsoConfig.isPending ? "Saving..." : "Save Configuration"}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SSO Info for non-editing state */}
+          {!isEditing && ssoConfig && ssoFormData.provider !== "none" && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="font-medium">Provider:</span>
+                  <p className="text-gray-600">{ssoFormData.providerName || ssoFormData.provider}</p>
+                </div>
+                <div>
+                  <span className="font-medium">Enforce SSO:</span>
+                  <p className="text-gray-600">{ssoFormData.enforceSSO ? "Yes" : "No"}</p>
+                </div>
+              </div>
+              
+              {/* SSO URLs for reference */}
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h5 className="font-medium mb-2">Integration URLs</h5>
+                <div className="space-y-2 text-sm">
+                  <div>
+                    <span className="font-medium">SSO Login URL:</span>
+                    <code className="ml-2 px-2 py-1 bg-gray-100 rounded text-xs">
+                      {`${window.location.origin}/auth/sso/${tenantSlug}`}
+                    </code>
+                  </div>
+                  <div>
+                    <span className="font-medium">Callback URL:</span>
+                    <code className="ml-2 px-2 py-1 bg-gray-100 rounded text-xs">
+                      {`${window.location.origin}/auth/callback/sso/${tenantSlug}`}
+                    </code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </form>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function TenantSettingsPage() {
   const params = useParams();
@@ -462,46 +984,15 @@ export default function TenantSettingsPage() {
 
         {/* Integrations Settings */}
         <TabsContent value="integrations" className="space-y-6">
+          <SsoConfiguration tenantId={tenant.id} tenantSlug={tenantSlug} />
+          
           <Card>
             <CardHeader>
-              <CardTitle>Third-party Integrations</CardTitle>
-              <CardDescription>Connect external services and SSO providers</CardDescription>
+              <CardTitle>Other Integrations</CardTitle>
+              <CardDescription>Connect additional external services</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="ssoEnabled"
-                    checked={formData.ssoEnabled}
-                    onChange={(e) => setFormData(prev => ({ ...prev, ssoEnabled: e.target.checked }))}
-                    className="rounded border-gray-300"
-                  />
-                  <Label htmlFor="ssoEnabled">Enable Single Sign-On (SSO)</Label>
-                </div>
-
-                {formData.ssoEnabled && (
-                  <div>
-                    <Label htmlFor="ssoProvider">SSO Provider</Label>
-                    <Select 
-                      value={formData.ssoProvider} 
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, ssoProvider: value as "none" | "google" | "azure" | "okta" | "onelogin" | "custom"  }))}
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="none">Select Provider</SelectItem>
-                        <SelectItem value="google">Google Workspace</SelectItem>
-                        <SelectItem value="azure">Microsoft Azure AD</SelectItem>
-                        <SelectItem value="okta">Okta</SelectItem>
-                        <SelectItem value="onelogin">OneLogin</SelectItem>
-                        <SelectItem value="custom">Custom SAML</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-
                 <div className="flex items-center space-x-2">
                   <input
                     type="checkbox"

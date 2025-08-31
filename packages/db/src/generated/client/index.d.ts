@@ -39,6 +39,16 @@ export type VerificationToken = $Result.DefaultSelection<Prisma.$VerificationTok
  */
 export type Tenant = $Result.DefaultSelection<Prisma.$TenantPayload>
 /**
+ * Model TenantSsoConfiguration
+ * 
+ */
+export type TenantSsoConfiguration = $Result.DefaultSelection<Prisma.$TenantSsoConfigurationPayload>
+/**
+ * Model SsoAuditLog
+ * 
+ */
+export type SsoAuditLog = $Result.DefaultSelection<Prisma.$SsoAuditLogPayload>
+/**
  * Model Membership
  * 
  */
@@ -351,6 +361,26 @@ export class PrismaClient<
     * ```
     */
   get tenant(): Prisma.TenantDelegate<ExtArgs>;
+
+  /**
+   * `prisma.tenantSsoConfiguration`: Exposes CRUD operations for the **TenantSsoConfiguration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TenantSsoConfigurations
+    * const tenantSsoConfigurations = await prisma.tenantSsoConfiguration.findMany()
+    * ```
+    */
+  get tenantSsoConfiguration(): Prisma.TenantSsoConfigurationDelegate<ExtArgs>;
+
+  /**
+   * `prisma.ssoAuditLog`: Exposes CRUD operations for the **SsoAuditLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SsoAuditLogs
+    * const ssoAuditLogs = await prisma.ssoAuditLog.findMany()
+    * ```
+    */
+  get ssoAuditLog(): Prisma.SsoAuditLogDelegate<ExtArgs>;
 
   /**
    * `prisma.membership`: Exposes CRUD operations for the **Membership** model.
@@ -1077,6 +1107,8 @@ export namespace Prisma {
     User: 'User',
     VerificationToken: 'VerificationToken',
     Tenant: 'Tenant',
+    TenantSsoConfiguration: 'TenantSsoConfiguration',
+    SsoAuditLog: 'SsoAuditLog',
     Membership: 'Membership',
     Invitation: 'Invitation',
     ContactReason: 'ContactReason',
@@ -1120,7 +1152,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit" | "supportCase" | "supportOption" | "caseMessage" | "caseStatusHistory" | "caseMetrics" | "supportConfiguration" | "tenantSupportRouting"
+      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "tenantSsoConfiguration" | "ssoAuditLog" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit" | "supportCase" | "supportOption" | "caseMessage" | "caseStatusHistory" | "caseMetrics" | "supportConfiguration" | "tenantSupportRouting"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1471,6 +1503,146 @@ export namespace Prisma {
           count: {
             args: Prisma.TenantCountArgs<ExtArgs>
             result: $Utils.Optional<TenantCountAggregateOutputType> | number
+          }
+        }
+      }
+      TenantSsoConfiguration: {
+        payload: Prisma.$TenantSsoConfigurationPayload<ExtArgs>
+        fields: Prisma.TenantSsoConfigurationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TenantSsoConfigurationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TenantSsoConfigurationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload>
+          }
+          findFirst: {
+            args: Prisma.TenantSsoConfigurationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TenantSsoConfigurationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload>
+          }
+          findMany: {
+            args: Prisma.TenantSsoConfigurationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload>[]
+          }
+          create: {
+            args: Prisma.TenantSsoConfigurationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload>
+          }
+          createMany: {
+            args: Prisma.TenantSsoConfigurationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TenantSsoConfigurationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload>[]
+          }
+          delete: {
+            args: Prisma.TenantSsoConfigurationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload>
+          }
+          update: {
+            args: Prisma.TenantSsoConfigurationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload>
+          }
+          deleteMany: {
+            args: Prisma.TenantSsoConfigurationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TenantSsoConfigurationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TenantSsoConfigurationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSsoConfigurationPayload>
+          }
+          aggregate: {
+            args: Prisma.TenantSsoConfigurationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTenantSsoConfiguration>
+          }
+          groupBy: {
+            args: Prisma.TenantSsoConfigurationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TenantSsoConfigurationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TenantSsoConfigurationCountArgs<ExtArgs>
+            result: $Utils.Optional<TenantSsoConfigurationCountAggregateOutputType> | number
+          }
+        }
+      }
+      SsoAuditLog: {
+        payload: Prisma.$SsoAuditLogPayload<ExtArgs>
+        fields: Prisma.SsoAuditLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SsoAuditLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SsoAuditLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload>
+          }
+          findFirst: {
+            args: Prisma.SsoAuditLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SsoAuditLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload>
+          }
+          findMany: {
+            args: Prisma.SsoAuditLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload>[]
+          }
+          create: {
+            args: Prisma.SsoAuditLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload>
+          }
+          createMany: {
+            args: Prisma.SsoAuditLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SsoAuditLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload>[]
+          }
+          delete: {
+            args: Prisma.SsoAuditLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload>
+          }
+          update: {
+            args: Prisma.SsoAuditLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.SsoAuditLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SsoAuditLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SsoAuditLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SsoAuditLogPayload>
+          }
+          aggregate: {
+            args: Prisma.SsoAuditLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSsoAuditLog>
+          }
+          groupBy: {
+            args: Prisma.SsoAuditLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SsoAuditLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SsoAuditLogCountArgs<ExtArgs>
+            result: $Utils.Optional<SsoAuditLogCountAggregateOutputType> | number
           }
         }
       }
@@ -3614,6 +3786,7 @@ export namespace Prisma {
     pendingAuths: number
     twoFactorCodes: number
     twoFactorAudits: number
+    ssoAuditLogs: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3636,6 +3809,7 @@ export namespace Prisma {
     pendingAuths?: boolean | UserCountOutputTypeCountPendingAuthsArgs
     twoFactorCodes?: boolean | UserCountOutputTypeCountTwoFactorCodesArgs
     twoFactorAudits?: boolean | UserCountOutputTypeCountTwoFactorAuditsArgs
+    ssoAuditLogs?: boolean | UserCountOutputTypeCountSsoAuditLogsArgs
   }
 
   // Custom InputTypes
@@ -3782,6 +3956,13 @@ export namespace Prisma {
     where?: TwoFactorAuditWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSsoAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SsoAuditLogWhereInput
+  }
+
 
   /**
    * Count Type TenantCountOutputType
@@ -3807,6 +3988,7 @@ export namespace Prisma {
     caseMetrics: number
     supportConfigurations: number
     supportRouting: number
+    ssoAuditLogs: number
   }
 
   export type TenantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3829,6 +4011,7 @@ export namespace Prisma {
     caseMetrics?: boolean | TenantCountOutputTypeCountCaseMetricsArgs
     supportConfigurations?: boolean | TenantCountOutputTypeCountSupportConfigurationsArgs
     supportRouting?: boolean | TenantCountOutputTypeCountSupportRoutingArgs
+    ssoAuditLogs?: boolean | TenantCountOutputTypeCountSsoAuditLogsArgs
   }
 
   // Custom InputTypes
@@ -3973,6 +4156,13 @@ export namespace Prisma {
    */
   export type TenantCountOutputTypeCountSupportRoutingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TenantSupportRoutingWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountSsoAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SsoAuditLogWhereInput
   }
 
 
@@ -6623,6 +6813,7 @@ export namespace Prisma {
     pendingAuths?: boolean | User$pendingAuthsArgs<ExtArgs>
     twoFactorCodes?: boolean | User$twoFactorCodesArgs<ExtArgs>
     twoFactorAudits?: boolean | User$twoFactorAuditsArgs<ExtArgs>
+    ssoAuditLogs?: boolean | User$ssoAuditLogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -6708,6 +6899,7 @@ export namespace Prisma {
     pendingAuths?: boolean | User$pendingAuthsArgs<ExtArgs>
     twoFactorCodes?: boolean | User$twoFactorCodesArgs<ExtArgs>
     twoFactorAudits?: boolean | User$twoFactorAuditsArgs<ExtArgs>
+    ssoAuditLogs?: boolean | User$ssoAuditLogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6734,6 +6926,7 @@ export namespace Prisma {
       pendingAuths: Prisma.$PendingAuthPayload<ExtArgs>[]
       twoFactorCodes: Prisma.$TwoFactorCodePayload<ExtArgs>[]
       twoFactorAudits: Prisma.$TwoFactorAuditPayload<ExtArgs>[]
+      ssoAuditLogs: Prisma.$SsoAuditLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7147,6 +7340,7 @@ export namespace Prisma {
     pendingAuths<T extends User$pendingAuthsArgs<ExtArgs> = {}>(args?: Subset<T, User$pendingAuthsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findMany"> | Null>
     twoFactorCodes<T extends User$twoFactorCodesArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorCodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findMany"> | Null>
     twoFactorAudits<T extends User$twoFactorAuditsArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorAuditsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findMany"> | Null>
+    ssoAuditLogs<T extends User$ssoAuditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$ssoAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7895,6 +8089,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TwoFactorAuditScalarFieldEnum | TwoFactorAuditScalarFieldEnum[]
+  }
+
+  /**
+   * User.ssoAuditLogs
+   */
+  export type User$ssoAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    where?: SsoAuditLogWhereInput
+    orderBy?: SsoAuditLogOrderByWithRelationInput | SsoAuditLogOrderByWithRelationInput[]
+    cursor?: SsoAuditLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SsoAuditLogScalarFieldEnum | SsoAuditLogScalarFieldEnum[]
   }
 
   /**
@@ -9173,6 +9387,8 @@ export namespace Prisma {
     caseMetrics?: boolean | Tenant$caseMetricsArgs<ExtArgs>
     supportConfigurations?: boolean | Tenant$supportConfigurationsArgs<ExtArgs>
     supportRouting?: boolean | Tenant$supportRoutingArgs<ExtArgs>
+    ssoConfiguration?: boolean | Tenant$ssoConfigurationArgs<ExtArgs>
+    ssoAuditLogs?: boolean | Tenant$ssoAuditLogsArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tenant"]>
 
@@ -9268,6 +9484,8 @@ export namespace Prisma {
     caseMetrics?: boolean | Tenant$caseMetricsArgs<ExtArgs>
     supportConfigurations?: boolean | Tenant$supportConfigurationsArgs<ExtArgs>
     supportRouting?: boolean | Tenant$supportRoutingArgs<ExtArgs>
+    ssoConfiguration?: boolean | Tenant$ssoConfigurationArgs<ExtArgs>
+    ssoAuditLogs?: boolean | Tenant$ssoAuditLogsArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TenantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -9294,6 +9512,8 @@ export namespace Prisma {
       caseMetrics: Prisma.$CaseMetricsPayload<ExtArgs>[]
       supportConfigurations: Prisma.$SupportConfigurationPayload<ExtArgs>[]
       supportRouting: Prisma.$TenantSupportRoutingPayload<ExtArgs>[]
+      ssoConfiguration: Prisma.$TenantSsoConfigurationPayload<ExtArgs> | null
+      ssoAuditLogs: Prisma.$SsoAuditLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9712,6 +9932,8 @@ export namespace Prisma {
     caseMetrics<T extends Tenant$caseMetricsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$caseMetricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findMany"> | Null>
     supportConfigurations<T extends Tenant$supportConfigurationsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$supportConfigurationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "findMany"> | Null>
     supportRouting<T extends Tenant$supportRoutingArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$supportRoutingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "findMany"> | Null>
+    ssoConfiguration<T extends Tenant$ssoConfigurationArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$ssoConfigurationArgs<ExtArgs>>): Prisma__TenantSsoConfigurationClient<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    ssoAuditLogs<T extends Tenant$ssoAuditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$ssoAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10468,6 +10690,41 @@ export namespace Prisma {
   }
 
   /**
+   * Tenant.ssoConfiguration
+   */
+  export type Tenant$ssoConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    where?: TenantSsoConfigurationWhereInput
+  }
+
+  /**
+   * Tenant.ssoAuditLogs
+   */
+  export type Tenant$ssoAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    where?: SsoAuditLogWhereInput
+    orderBy?: SsoAuditLogOrderByWithRelationInput | SsoAuditLogOrderByWithRelationInput[]
+    cursor?: SsoAuditLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SsoAuditLogScalarFieldEnum | SsoAuditLogScalarFieldEnum[]
+  }
+
+  /**
    * Tenant without action
    */
   export type TenantDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10479,6 +10736,2459 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TenantInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TenantSsoConfiguration
+   */
+
+  export type AggregateTenantSsoConfiguration = {
+    _count: TenantSsoConfigurationCountAggregateOutputType | null
+    _avg: TenantSsoConfigurationAvgAggregateOutputType | null
+    _sum: TenantSsoConfigurationSumAggregateOutputType | null
+    _min: TenantSsoConfigurationMinAggregateOutputType | null
+    _max: TenantSsoConfigurationMaxAggregateOutputType | null
+  }
+
+  export type TenantSsoConfigurationAvgAggregateOutputType = {
+    sessionTimeout: number | null
+    totalLogins: number | null
+  }
+
+  export type TenantSsoConfigurationSumAggregateOutputType = {
+    sessionTimeout: number | null
+    totalLogins: number | null
+  }
+
+  export type TenantSsoConfigurationMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    provider: string | null
+    providerName: string | null
+    isEnabled: boolean | null
+    enforceSSO: boolean | null
+    samlEntityId: string | null
+    samlSsoUrl: string | null
+    samlSloUrl: string | null
+    samlCertificate: string | null
+    samlSigningCert: string | null
+    samlNameIdFormat: string | null
+    oidcIssuer: string | null
+    oidcClientId: string | null
+    oidcClientSecret: string | null
+    oidcScopes: string | null
+    oidcTokenEndpoint: string | null
+    oidcAuthEndpoint: string | null
+    oidcUserinfoEndpoint: string | null
+    oidcJwksUri: string | null
+    oauth2ClientId: string | null
+    oauth2ClientSecret: string | null
+    oauth2AuthUrl: string | null
+    oauth2TokenUrl: string | null
+    oauth2UserInfoUrl: string | null
+    oauth2Scopes: string | null
+    autoProvisionUsers: boolean | null
+    defaultRole: string | null
+    allowedDomains: string | null
+    signAssertions: boolean | null
+    signRequests: boolean | null
+    encryptAssertions: boolean | null
+    sessionTimeout: number | null
+    lastSyncAt: Date | null
+    lastLoginAt: Date | null
+    totalLogins: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdBy: string | null
+    updatedBy: string | null
+  }
+
+  export type TenantSsoConfigurationMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    provider: string | null
+    providerName: string | null
+    isEnabled: boolean | null
+    enforceSSO: boolean | null
+    samlEntityId: string | null
+    samlSsoUrl: string | null
+    samlSloUrl: string | null
+    samlCertificate: string | null
+    samlSigningCert: string | null
+    samlNameIdFormat: string | null
+    oidcIssuer: string | null
+    oidcClientId: string | null
+    oidcClientSecret: string | null
+    oidcScopes: string | null
+    oidcTokenEndpoint: string | null
+    oidcAuthEndpoint: string | null
+    oidcUserinfoEndpoint: string | null
+    oidcJwksUri: string | null
+    oauth2ClientId: string | null
+    oauth2ClientSecret: string | null
+    oauth2AuthUrl: string | null
+    oauth2TokenUrl: string | null
+    oauth2UserInfoUrl: string | null
+    oauth2Scopes: string | null
+    autoProvisionUsers: boolean | null
+    defaultRole: string | null
+    allowedDomains: string | null
+    signAssertions: boolean | null
+    signRequests: boolean | null
+    encryptAssertions: boolean | null
+    sessionTimeout: number | null
+    lastSyncAt: Date | null
+    lastLoginAt: Date | null
+    totalLogins: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdBy: string | null
+    updatedBy: string | null
+  }
+
+  export type TenantSsoConfigurationCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    provider: number
+    providerName: number
+    isEnabled: number
+    enforceSSO: number
+    samlEntityId: number
+    samlSsoUrl: number
+    samlSloUrl: number
+    samlCertificate: number
+    samlSigningCert: number
+    samlNameIdFormat: number
+    samlAttributeMapping: number
+    oidcIssuer: number
+    oidcClientId: number
+    oidcClientSecret: number
+    oidcScopes: number
+    oidcTokenEndpoint: number
+    oidcAuthEndpoint: number
+    oidcUserinfoEndpoint: number
+    oidcJwksUri: number
+    oauth2ClientId: number
+    oauth2ClientSecret: number
+    oauth2AuthUrl: number
+    oauth2TokenUrl: number
+    oauth2UserInfoUrl: number
+    oauth2Scopes: number
+    autoProvisionUsers: number
+    defaultRole: number
+    allowedDomains: number
+    userAttributeMapping: number
+    signAssertions: number
+    signRequests: number
+    encryptAssertions: number
+    sessionTimeout: number
+    lastSyncAt: number
+    lastLoginAt: number
+    totalLogins: number
+    createdAt: number
+    updatedAt: number
+    createdBy: number
+    updatedBy: number
+    _all: number
+  }
+
+
+  export type TenantSsoConfigurationAvgAggregateInputType = {
+    sessionTimeout?: true
+    totalLogins?: true
+  }
+
+  export type TenantSsoConfigurationSumAggregateInputType = {
+    sessionTimeout?: true
+    totalLogins?: true
+  }
+
+  export type TenantSsoConfigurationMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    provider?: true
+    providerName?: true
+    isEnabled?: true
+    enforceSSO?: true
+    samlEntityId?: true
+    samlSsoUrl?: true
+    samlSloUrl?: true
+    samlCertificate?: true
+    samlSigningCert?: true
+    samlNameIdFormat?: true
+    oidcIssuer?: true
+    oidcClientId?: true
+    oidcClientSecret?: true
+    oidcScopes?: true
+    oidcTokenEndpoint?: true
+    oidcAuthEndpoint?: true
+    oidcUserinfoEndpoint?: true
+    oidcJwksUri?: true
+    oauth2ClientId?: true
+    oauth2ClientSecret?: true
+    oauth2AuthUrl?: true
+    oauth2TokenUrl?: true
+    oauth2UserInfoUrl?: true
+    oauth2Scopes?: true
+    autoProvisionUsers?: true
+    defaultRole?: true
+    allowedDomains?: true
+    signAssertions?: true
+    signRequests?: true
+    encryptAssertions?: true
+    sessionTimeout?: true
+    lastSyncAt?: true
+    lastLoginAt?: true
+    totalLogins?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+    updatedBy?: true
+  }
+
+  export type TenantSsoConfigurationMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    provider?: true
+    providerName?: true
+    isEnabled?: true
+    enforceSSO?: true
+    samlEntityId?: true
+    samlSsoUrl?: true
+    samlSloUrl?: true
+    samlCertificate?: true
+    samlSigningCert?: true
+    samlNameIdFormat?: true
+    oidcIssuer?: true
+    oidcClientId?: true
+    oidcClientSecret?: true
+    oidcScopes?: true
+    oidcTokenEndpoint?: true
+    oidcAuthEndpoint?: true
+    oidcUserinfoEndpoint?: true
+    oidcJwksUri?: true
+    oauth2ClientId?: true
+    oauth2ClientSecret?: true
+    oauth2AuthUrl?: true
+    oauth2TokenUrl?: true
+    oauth2UserInfoUrl?: true
+    oauth2Scopes?: true
+    autoProvisionUsers?: true
+    defaultRole?: true
+    allowedDomains?: true
+    signAssertions?: true
+    signRequests?: true
+    encryptAssertions?: true
+    sessionTimeout?: true
+    lastSyncAt?: true
+    lastLoginAt?: true
+    totalLogins?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+    updatedBy?: true
+  }
+
+  export type TenantSsoConfigurationCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    provider?: true
+    providerName?: true
+    isEnabled?: true
+    enforceSSO?: true
+    samlEntityId?: true
+    samlSsoUrl?: true
+    samlSloUrl?: true
+    samlCertificate?: true
+    samlSigningCert?: true
+    samlNameIdFormat?: true
+    samlAttributeMapping?: true
+    oidcIssuer?: true
+    oidcClientId?: true
+    oidcClientSecret?: true
+    oidcScopes?: true
+    oidcTokenEndpoint?: true
+    oidcAuthEndpoint?: true
+    oidcUserinfoEndpoint?: true
+    oidcJwksUri?: true
+    oauth2ClientId?: true
+    oauth2ClientSecret?: true
+    oauth2AuthUrl?: true
+    oauth2TokenUrl?: true
+    oauth2UserInfoUrl?: true
+    oauth2Scopes?: true
+    autoProvisionUsers?: true
+    defaultRole?: true
+    allowedDomains?: true
+    userAttributeMapping?: true
+    signAssertions?: true
+    signRequests?: true
+    encryptAssertions?: true
+    sessionTimeout?: true
+    lastSyncAt?: true
+    lastLoginAt?: true
+    totalLogins?: true
+    createdAt?: true
+    updatedAt?: true
+    createdBy?: true
+    updatedBy?: true
+    _all?: true
+  }
+
+  export type TenantSsoConfigurationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TenantSsoConfiguration to aggregate.
+     */
+    where?: TenantSsoConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSsoConfigurations to fetch.
+     */
+    orderBy?: TenantSsoConfigurationOrderByWithRelationInput | TenantSsoConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TenantSsoConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSsoConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSsoConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TenantSsoConfigurations
+    **/
+    _count?: true | TenantSsoConfigurationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TenantSsoConfigurationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TenantSsoConfigurationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TenantSsoConfigurationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TenantSsoConfigurationMaxAggregateInputType
+  }
+
+  export type GetTenantSsoConfigurationAggregateType<T extends TenantSsoConfigurationAggregateArgs> = {
+        [P in keyof T & keyof AggregateTenantSsoConfiguration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTenantSsoConfiguration[P]>
+      : GetScalarType<T[P], AggregateTenantSsoConfiguration[P]>
+  }
+
+
+
+
+  export type TenantSsoConfigurationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TenantSsoConfigurationWhereInput
+    orderBy?: TenantSsoConfigurationOrderByWithAggregationInput | TenantSsoConfigurationOrderByWithAggregationInput[]
+    by: TenantSsoConfigurationScalarFieldEnum[] | TenantSsoConfigurationScalarFieldEnum
+    having?: TenantSsoConfigurationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TenantSsoConfigurationCountAggregateInputType | true
+    _avg?: TenantSsoConfigurationAvgAggregateInputType
+    _sum?: TenantSsoConfigurationSumAggregateInputType
+    _min?: TenantSsoConfigurationMinAggregateInputType
+    _max?: TenantSsoConfigurationMaxAggregateInputType
+  }
+
+  export type TenantSsoConfigurationGroupByOutputType = {
+    id: string
+    tenantId: string
+    provider: string
+    providerName: string
+    isEnabled: boolean
+    enforceSSO: boolean
+    samlEntityId: string | null
+    samlSsoUrl: string | null
+    samlSloUrl: string | null
+    samlCertificate: string | null
+    samlSigningCert: string | null
+    samlNameIdFormat: string | null
+    samlAttributeMapping: JsonValue | null
+    oidcIssuer: string | null
+    oidcClientId: string | null
+    oidcClientSecret: string | null
+    oidcScopes: string | null
+    oidcTokenEndpoint: string | null
+    oidcAuthEndpoint: string | null
+    oidcUserinfoEndpoint: string | null
+    oidcJwksUri: string | null
+    oauth2ClientId: string | null
+    oauth2ClientSecret: string | null
+    oauth2AuthUrl: string | null
+    oauth2TokenUrl: string | null
+    oauth2UserInfoUrl: string | null
+    oauth2Scopes: string | null
+    autoProvisionUsers: boolean
+    defaultRole: string
+    allowedDomains: string | null
+    userAttributeMapping: JsonValue | null
+    signAssertions: boolean
+    signRequests: boolean
+    encryptAssertions: boolean
+    sessionTimeout: number | null
+    lastSyncAt: Date | null
+    lastLoginAt: Date | null
+    totalLogins: number
+    createdAt: Date
+    updatedAt: Date
+    createdBy: string
+    updatedBy: string
+    _count: TenantSsoConfigurationCountAggregateOutputType | null
+    _avg: TenantSsoConfigurationAvgAggregateOutputType | null
+    _sum: TenantSsoConfigurationSumAggregateOutputType | null
+    _min: TenantSsoConfigurationMinAggregateOutputType | null
+    _max: TenantSsoConfigurationMaxAggregateOutputType | null
+  }
+
+  type GetTenantSsoConfigurationGroupByPayload<T extends TenantSsoConfigurationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TenantSsoConfigurationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TenantSsoConfigurationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TenantSsoConfigurationGroupByOutputType[P]>
+            : GetScalarType<T[P], TenantSsoConfigurationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TenantSsoConfigurationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    provider?: boolean
+    providerName?: boolean
+    isEnabled?: boolean
+    enforceSSO?: boolean
+    samlEntityId?: boolean
+    samlSsoUrl?: boolean
+    samlSloUrl?: boolean
+    samlCertificate?: boolean
+    samlSigningCert?: boolean
+    samlNameIdFormat?: boolean
+    samlAttributeMapping?: boolean
+    oidcIssuer?: boolean
+    oidcClientId?: boolean
+    oidcClientSecret?: boolean
+    oidcScopes?: boolean
+    oidcTokenEndpoint?: boolean
+    oidcAuthEndpoint?: boolean
+    oidcUserinfoEndpoint?: boolean
+    oidcJwksUri?: boolean
+    oauth2ClientId?: boolean
+    oauth2ClientSecret?: boolean
+    oauth2AuthUrl?: boolean
+    oauth2TokenUrl?: boolean
+    oauth2UserInfoUrl?: boolean
+    oauth2Scopes?: boolean
+    autoProvisionUsers?: boolean
+    defaultRole?: boolean
+    allowedDomains?: boolean
+    userAttributeMapping?: boolean
+    signAssertions?: boolean
+    signRequests?: boolean
+    encryptAssertions?: boolean
+    sessionTimeout?: boolean
+    lastSyncAt?: boolean
+    lastLoginAt?: boolean
+    totalLogins?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+    updatedBy?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tenantSsoConfiguration"]>
+
+  export type TenantSsoConfigurationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    provider?: boolean
+    providerName?: boolean
+    isEnabled?: boolean
+    enforceSSO?: boolean
+    samlEntityId?: boolean
+    samlSsoUrl?: boolean
+    samlSloUrl?: boolean
+    samlCertificate?: boolean
+    samlSigningCert?: boolean
+    samlNameIdFormat?: boolean
+    samlAttributeMapping?: boolean
+    oidcIssuer?: boolean
+    oidcClientId?: boolean
+    oidcClientSecret?: boolean
+    oidcScopes?: boolean
+    oidcTokenEndpoint?: boolean
+    oidcAuthEndpoint?: boolean
+    oidcUserinfoEndpoint?: boolean
+    oidcJwksUri?: boolean
+    oauth2ClientId?: boolean
+    oauth2ClientSecret?: boolean
+    oauth2AuthUrl?: boolean
+    oauth2TokenUrl?: boolean
+    oauth2UserInfoUrl?: boolean
+    oauth2Scopes?: boolean
+    autoProvisionUsers?: boolean
+    defaultRole?: boolean
+    allowedDomains?: boolean
+    userAttributeMapping?: boolean
+    signAssertions?: boolean
+    signRequests?: boolean
+    encryptAssertions?: boolean
+    sessionTimeout?: boolean
+    lastSyncAt?: boolean
+    lastLoginAt?: boolean
+    totalLogins?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+    updatedBy?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tenantSsoConfiguration"]>
+
+  export type TenantSsoConfigurationSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    provider?: boolean
+    providerName?: boolean
+    isEnabled?: boolean
+    enforceSSO?: boolean
+    samlEntityId?: boolean
+    samlSsoUrl?: boolean
+    samlSloUrl?: boolean
+    samlCertificate?: boolean
+    samlSigningCert?: boolean
+    samlNameIdFormat?: boolean
+    samlAttributeMapping?: boolean
+    oidcIssuer?: boolean
+    oidcClientId?: boolean
+    oidcClientSecret?: boolean
+    oidcScopes?: boolean
+    oidcTokenEndpoint?: boolean
+    oidcAuthEndpoint?: boolean
+    oidcUserinfoEndpoint?: boolean
+    oidcJwksUri?: boolean
+    oauth2ClientId?: boolean
+    oauth2ClientSecret?: boolean
+    oauth2AuthUrl?: boolean
+    oauth2TokenUrl?: boolean
+    oauth2UserInfoUrl?: boolean
+    oauth2Scopes?: boolean
+    autoProvisionUsers?: boolean
+    defaultRole?: boolean
+    allowedDomains?: boolean
+    userAttributeMapping?: boolean
+    signAssertions?: boolean
+    signRequests?: boolean
+    encryptAssertions?: boolean
+    sessionTimeout?: boolean
+    lastSyncAt?: boolean
+    lastLoginAt?: boolean
+    totalLogins?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean
+    updatedBy?: boolean
+  }
+
+  export type TenantSsoConfigurationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type TenantSsoConfigurationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+
+  export type $TenantSsoConfigurationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TenantSsoConfiguration"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      provider: string
+      providerName: string
+      isEnabled: boolean
+      enforceSSO: boolean
+      samlEntityId: string | null
+      samlSsoUrl: string | null
+      samlSloUrl: string | null
+      samlCertificate: string | null
+      samlSigningCert: string | null
+      samlNameIdFormat: string | null
+      samlAttributeMapping: Prisma.JsonValue | null
+      oidcIssuer: string | null
+      oidcClientId: string | null
+      oidcClientSecret: string | null
+      oidcScopes: string | null
+      oidcTokenEndpoint: string | null
+      oidcAuthEndpoint: string | null
+      oidcUserinfoEndpoint: string | null
+      oidcJwksUri: string | null
+      oauth2ClientId: string | null
+      oauth2ClientSecret: string | null
+      oauth2AuthUrl: string | null
+      oauth2TokenUrl: string | null
+      oauth2UserInfoUrl: string | null
+      oauth2Scopes: string | null
+      autoProvisionUsers: boolean
+      defaultRole: string
+      allowedDomains: string | null
+      userAttributeMapping: Prisma.JsonValue | null
+      signAssertions: boolean
+      signRequests: boolean
+      encryptAssertions: boolean
+      sessionTimeout: number | null
+      lastSyncAt: Date | null
+      lastLoginAt: Date | null
+      totalLogins: number
+      createdAt: Date
+      updatedAt: Date
+      createdBy: string
+      updatedBy: string
+    }, ExtArgs["result"]["tenantSsoConfiguration"]>
+    composites: {}
+  }
+
+  type TenantSsoConfigurationGetPayload<S extends boolean | null | undefined | TenantSsoConfigurationDefaultArgs> = $Result.GetResult<Prisma.$TenantSsoConfigurationPayload, S>
+
+  type TenantSsoConfigurationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TenantSsoConfigurationFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TenantSsoConfigurationCountAggregateInputType | true
+    }
+
+  export interface TenantSsoConfigurationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TenantSsoConfiguration'], meta: { name: 'TenantSsoConfiguration' } }
+    /**
+     * Find zero or one TenantSsoConfiguration that matches the filter.
+     * @param {TenantSsoConfigurationFindUniqueArgs} args - Arguments to find a TenantSsoConfiguration
+     * @example
+     * // Get one TenantSsoConfiguration
+     * const tenantSsoConfiguration = await prisma.tenantSsoConfiguration.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TenantSsoConfigurationFindUniqueArgs>(args: SelectSubset<T, TenantSsoConfigurationFindUniqueArgs<ExtArgs>>): Prisma__TenantSsoConfigurationClient<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one TenantSsoConfiguration that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {TenantSsoConfigurationFindUniqueOrThrowArgs} args - Arguments to find a TenantSsoConfiguration
+     * @example
+     * // Get one TenantSsoConfiguration
+     * const tenantSsoConfiguration = await prisma.tenantSsoConfiguration.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TenantSsoConfigurationFindUniqueOrThrowArgs>(args: SelectSubset<T, TenantSsoConfigurationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TenantSsoConfigurationClient<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first TenantSsoConfiguration that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSsoConfigurationFindFirstArgs} args - Arguments to find a TenantSsoConfiguration
+     * @example
+     * // Get one TenantSsoConfiguration
+     * const tenantSsoConfiguration = await prisma.tenantSsoConfiguration.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TenantSsoConfigurationFindFirstArgs>(args?: SelectSubset<T, TenantSsoConfigurationFindFirstArgs<ExtArgs>>): Prisma__TenantSsoConfigurationClient<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first TenantSsoConfiguration that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSsoConfigurationFindFirstOrThrowArgs} args - Arguments to find a TenantSsoConfiguration
+     * @example
+     * // Get one TenantSsoConfiguration
+     * const tenantSsoConfiguration = await prisma.tenantSsoConfiguration.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TenantSsoConfigurationFindFirstOrThrowArgs>(args?: SelectSubset<T, TenantSsoConfigurationFindFirstOrThrowArgs<ExtArgs>>): Prisma__TenantSsoConfigurationClient<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more TenantSsoConfigurations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSsoConfigurationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TenantSsoConfigurations
+     * const tenantSsoConfigurations = await prisma.tenantSsoConfiguration.findMany()
+     * 
+     * // Get first 10 TenantSsoConfigurations
+     * const tenantSsoConfigurations = await prisma.tenantSsoConfiguration.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tenantSsoConfigurationWithIdOnly = await prisma.tenantSsoConfiguration.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TenantSsoConfigurationFindManyArgs>(args?: SelectSubset<T, TenantSsoConfigurationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a TenantSsoConfiguration.
+     * @param {TenantSsoConfigurationCreateArgs} args - Arguments to create a TenantSsoConfiguration.
+     * @example
+     * // Create one TenantSsoConfiguration
+     * const TenantSsoConfiguration = await prisma.tenantSsoConfiguration.create({
+     *   data: {
+     *     // ... data to create a TenantSsoConfiguration
+     *   }
+     * })
+     * 
+     */
+    create<T extends TenantSsoConfigurationCreateArgs>(args: SelectSubset<T, TenantSsoConfigurationCreateArgs<ExtArgs>>): Prisma__TenantSsoConfigurationClient<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many TenantSsoConfigurations.
+     * @param {TenantSsoConfigurationCreateManyArgs} args - Arguments to create many TenantSsoConfigurations.
+     * @example
+     * // Create many TenantSsoConfigurations
+     * const tenantSsoConfiguration = await prisma.tenantSsoConfiguration.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TenantSsoConfigurationCreateManyArgs>(args?: SelectSubset<T, TenantSsoConfigurationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TenantSsoConfigurations and returns the data saved in the database.
+     * @param {TenantSsoConfigurationCreateManyAndReturnArgs} args - Arguments to create many TenantSsoConfigurations.
+     * @example
+     * // Create many TenantSsoConfigurations
+     * const tenantSsoConfiguration = await prisma.tenantSsoConfiguration.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TenantSsoConfigurations and only return the `id`
+     * const tenantSsoConfigurationWithIdOnly = await prisma.tenantSsoConfiguration.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TenantSsoConfigurationCreateManyAndReturnArgs>(args?: SelectSubset<T, TenantSsoConfigurationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a TenantSsoConfiguration.
+     * @param {TenantSsoConfigurationDeleteArgs} args - Arguments to delete one TenantSsoConfiguration.
+     * @example
+     * // Delete one TenantSsoConfiguration
+     * const TenantSsoConfiguration = await prisma.tenantSsoConfiguration.delete({
+     *   where: {
+     *     // ... filter to delete one TenantSsoConfiguration
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TenantSsoConfigurationDeleteArgs>(args: SelectSubset<T, TenantSsoConfigurationDeleteArgs<ExtArgs>>): Prisma__TenantSsoConfigurationClient<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one TenantSsoConfiguration.
+     * @param {TenantSsoConfigurationUpdateArgs} args - Arguments to update one TenantSsoConfiguration.
+     * @example
+     * // Update one TenantSsoConfiguration
+     * const tenantSsoConfiguration = await prisma.tenantSsoConfiguration.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TenantSsoConfigurationUpdateArgs>(args: SelectSubset<T, TenantSsoConfigurationUpdateArgs<ExtArgs>>): Prisma__TenantSsoConfigurationClient<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more TenantSsoConfigurations.
+     * @param {TenantSsoConfigurationDeleteManyArgs} args - Arguments to filter TenantSsoConfigurations to delete.
+     * @example
+     * // Delete a few TenantSsoConfigurations
+     * const { count } = await prisma.tenantSsoConfiguration.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TenantSsoConfigurationDeleteManyArgs>(args?: SelectSubset<T, TenantSsoConfigurationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TenantSsoConfigurations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSsoConfigurationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TenantSsoConfigurations
+     * const tenantSsoConfiguration = await prisma.tenantSsoConfiguration.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TenantSsoConfigurationUpdateManyArgs>(args: SelectSubset<T, TenantSsoConfigurationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TenantSsoConfiguration.
+     * @param {TenantSsoConfigurationUpsertArgs} args - Arguments to update or create a TenantSsoConfiguration.
+     * @example
+     * // Update or create a TenantSsoConfiguration
+     * const tenantSsoConfiguration = await prisma.tenantSsoConfiguration.upsert({
+     *   create: {
+     *     // ... data to create a TenantSsoConfiguration
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TenantSsoConfiguration we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TenantSsoConfigurationUpsertArgs>(args: SelectSubset<T, TenantSsoConfigurationUpsertArgs<ExtArgs>>): Prisma__TenantSsoConfigurationClient<$Result.GetResult<Prisma.$TenantSsoConfigurationPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of TenantSsoConfigurations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSsoConfigurationCountArgs} args - Arguments to filter TenantSsoConfigurations to count.
+     * @example
+     * // Count the number of TenantSsoConfigurations
+     * const count = await prisma.tenantSsoConfiguration.count({
+     *   where: {
+     *     // ... the filter for the TenantSsoConfigurations we want to count
+     *   }
+     * })
+    **/
+    count<T extends TenantSsoConfigurationCountArgs>(
+      args?: Subset<T, TenantSsoConfigurationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TenantSsoConfigurationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TenantSsoConfiguration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSsoConfigurationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TenantSsoConfigurationAggregateArgs>(args: Subset<T, TenantSsoConfigurationAggregateArgs>): Prisma.PrismaPromise<GetTenantSsoConfigurationAggregateType<T>>
+
+    /**
+     * Group by TenantSsoConfiguration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSsoConfigurationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TenantSsoConfigurationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TenantSsoConfigurationGroupByArgs['orderBy'] }
+        : { orderBy?: TenantSsoConfigurationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TenantSsoConfigurationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTenantSsoConfigurationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TenantSsoConfiguration model
+   */
+  readonly fields: TenantSsoConfigurationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TenantSsoConfiguration.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TenantSsoConfigurationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TenantSsoConfiguration model
+   */ 
+  interface TenantSsoConfigurationFieldRefs {
+    readonly id: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly tenantId: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly provider: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly providerName: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly isEnabled: FieldRef<"TenantSsoConfiguration", 'Boolean'>
+    readonly enforceSSO: FieldRef<"TenantSsoConfiguration", 'Boolean'>
+    readonly samlEntityId: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly samlSsoUrl: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly samlSloUrl: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly samlCertificate: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly samlSigningCert: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly samlNameIdFormat: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly samlAttributeMapping: FieldRef<"TenantSsoConfiguration", 'Json'>
+    readonly oidcIssuer: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oidcClientId: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oidcClientSecret: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oidcScopes: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oidcTokenEndpoint: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oidcAuthEndpoint: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oidcUserinfoEndpoint: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oidcJwksUri: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oauth2ClientId: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oauth2ClientSecret: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oauth2AuthUrl: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oauth2TokenUrl: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oauth2UserInfoUrl: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly oauth2Scopes: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly autoProvisionUsers: FieldRef<"TenantSsoConfiguration", 'Boolean'>
+    readonly defaultRole: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly allowedDomains: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly userAttributeMapping: FieldRef<"TenantSsoConfiguration", 'Json'>
+    readonly signAssertions: FieldRef<"TenantSsoConfiguration", 'Boolean'>
+    readonly signRequests: FieldRef<"TenantSsoConfiguration", 'Boolean'>
+    readonly encryptAssertions: FieldRef<"TenantSsoConfiguration", 'Boolean'>
+    readonly sessionTimeout: FieldRef<"TenantSsoConfiguration", 'Int'>
+    readonly lastSyncAt: FieldRef<"TenantSsoConfiguration", 'DateTime'>
+    readonly lastLoginAt: FieldRef<"TenantSsoConfiguration", 'DateTime'>
+    readonly totalLogins: FieldRef<"TenantSsoConfiguration", 'Int'>
+    readonly createdAt: FieldRef<"TenantSsoConfiguration", 'DateTime'>
+    readonly updatedAt: FieldRef<"TenantSsoConfiguration", 'DateTime'>
+    readonly createdBy: FieldRef<"TenantSsoConfiguration", 'String'>
+    readonly updatedBy: FieldRef<"TenantSsoConfiguration", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TenantSsoConfiguration findUnique
+   */
+  export type TenantSsoConfigurationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSsoConfiguration to fetch.
+     */
+    where: TenantSsoConfigurationWhereUniqueInput
+  }
+
+  /**
+   * TenantSsoConfiguration findUniqueOrThrow
+   */
+  export type TenantSsoConfigurationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSsoConfiguration to fetch.
+     */
+    where: TenantSsoConfigurationWhereUniqueInput
+  }
+
+  /**
+   * TenantSsoConfiguration findFirst
+   */
+  export type TenantSsoConfigurationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSsoConfiguration to fetch.
+     */
+    where?: TenantSsoConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSsoConfigurations to fetch.
+     */
+    orderBy?: TenantSsoConfigurationOrderByWithRelationInput | TenantSsoConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TenantSsoConfigurations.
+     */
+    cursor?: TenantSsoConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSsoConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSsoConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TenantSsoConfigurations.
+     */
+    distinct?: TenantSsoConfigurationScalarFieldEnum | TenantSsoConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * TenantSsoConfiguration findFirstOrThrow
+   */
+  export type TenantSsoConfigurationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSsoConfiguration to fetch.
+     */
+    where?: TenantSsoConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSsoConfigurations to fetch.
+     */
+    orderBy?: TenantSsoConfigurationOrderByWithRelationInput | TenantSsoConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TenantSsoConfigurations.
+     */
+    cursor?: TenantSsoConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSsoConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSsoConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TenantSsoConfigurations.
+     */
+    distinct?: TenantSsoConfigurationScalarFieldEnum | TenantSsoConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * TenantSsoConfiguration findMany
+   */
+  export type TenantSsoConfigurationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSsoConfigurations to fetch.
+     */
+    where?: TenantSsoConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSsoConfigurations to fetch.
+     */
+    orderBy?: TenantSsoConfigurationOrderByWithRelationInput | TenantSsoConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TenantSsoConfigurations.
+     */
+    cursor?: TenantSsoConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSsoConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSsoConfigurations.
+     */
+    skip?: number
+    distinct?: TenantSsoConfigurationScalarFieldEnum | TenantSsoConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * TenantSsoConfiguration create
+   */
+  export type TenantSsoConfigurationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TenantSsoConfiguration.
+     */
+    data: XOR<TenantSsoConfigurationCreateInput, TenantSsoConfigurationUncheckedCreateInput>
+  }
+
+  /**
+   * TenantSsoConfiguration createMany
+   */
+  export type TenantSsoConfigurationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TenantSsoConfigurations.
+     */
+    data: TenantSsoConfigurationCreateManyInput | TenantSsoConfigurationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TenantSsoConfiguration createManyAndReturn
+   */
+  export type TenantSsoConfigurationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many TenantSsoConfigurations.
+     */
+    data: TenantSsoConfigurationCreateManyInput | TenantSsoConfigurationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TenantSsoConfiguration update
+   */
+  export type TenantSsoConfigurationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TenantSsoConfiguration.
+     */
+    data: XOR<TenantSsoConfigurationUpdateInput, TenantSsoConfigurationUncheckedUpdateInput>
+    /**
+     * Choose, which TenantSsoConfiguration to update.
+     */
+    where: TenantSsoConfigurationWhereUniqueInput
+  }
+
+  /**
+   * TenantSsoConfiguration updateMany
+   */
+  export type TenantSsoConfigurationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TenantSsoConfigurations.
+     */
+    data: XOR<TenantSsoConfigurationUpdateManyMutationInput, TenantSsoConfigurationUncheckedUpdateManyInput>
+    /**
+     * Filter which TenantSsoConfigurations to update
+     */
+    where?: TenantSsoConfigurationWhereInput
+  }
+
+  /**
+   * TenantSsoConfiguration upsert
+   */
+  export type TenantSsoConfigurationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TenantSsoConfiguration to update in case it exists.
+     */
+    where: TenantSsoConfigurationWhereUniqueInput
+    /**
+     * In case the TenantSsoConfiguration found by the `where` argument doesn't exist, create a new TenantSsoConfiguration with this data.
+     */
+    create: XOR<TenantSsoConfigurationCreateInput, TenantSsoConfigurationUncheckedCreateInput>
+    /**
+     * In case the TenantSsoConfiguration was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TenantSsoConfigurationUpdateInput, TenantSsoConfigurationUncheckedUpdateInput>
+  }
+
+  /**
+   * TenantSsoConfiguration delete
+   */
+  export type TenantSsoConfigurationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter which TenantSsoConfiguration to delete.
+     */
+    where: TenantSsoConfigurationWhereUniqueInput
+  }
+
+  /**
+   * TenantSsoConfiguration deleteMany
+   */
+  export type TenantSsoConfigurationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TenantSsoConfigurations to delete
+     */
+    where?: TenantSsoConfigurationWhereInput
+  }
+
+  /**
+   * TenantSsoConfiguration without action
+   */
+  export type TenantSsoConfigurationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSsoConfiguration
+     */
+    select?: TenantSsoConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSsoConfigurationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SsoAuditLog
+   */
+
+  export type AggregateSsoAuditLog = {
+    _count: SsoAuditLogCountAggregateOutputType | null
+    _min: SsoAuditLogMinAggregateOutputType | null
+    _max: SsoAuditLogMaxAggregateOutputType | null
+  }
+
+  export type SsoAuditLogMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    userId: string | null
+    event: string | null
+    provider: string | null
+    ipAddress: string | null
+    userAgent: string | null
+    samlRequestId: string | null
+    samlResponseId: string | null
+    errorMessage: string | null
+    sessionId: string | null
+    createdAt: Date | null
+  }
+
+  export type SsoAuditLogMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    userId: string | null
+    event: string | null
+    provider: string | null
+    ipAddress: string | null
+    userAgent: string | null
+    samlRequestId: string | null
+    samlResponseId: string | null
+    errorMessage: string | null
+    sessionId: string | null
+    createdAt: Date | null
+  }
+
+  export type SsoAuditLogCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    userId: number
+    event: number
+    provider: number
+    ipAddress: number
+    userAgent: number
+    samlRequestId: number
+    samlResponseId: number
+    errorMessage: number
+    attributes: number
+    sessionId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SsoAuditLogMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+    event?: true
+    provider?: true
+    ipAddress?: true
+    userAgent?: true
+    samlRequestId?: true
+    samlResponseId?: true
+    errorMessage?: true
+    sessionId?: true
+    createdAt?: true
+  }
+
+  export type SsoAuditLogMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+    event?: true
+    provider?: true
+    ipAddress?: true
+    userAgent?: true
+    samlRequestId?: true
+    samlResponseId?: true
+    errorMessage?: true
+    sessionId?: true
+    createdAt?: true
+  }
+
+  export type SsoAuditLogCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+    event?: true
+    provider?: true
+    ipAddress?: true
+    userAgent?: true
+    samlRequestId?: true
+    samlResponseId?: true
+    errorMessage?: true
+    attributes?: true
+    sessionId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SsoAuditLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SsoAuditLog to aggregate.
+     */
+    where?: SsoAuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SsoAuditLogs to fetch.
+     */
+    orderBy?: SsoAuditLogOrderByWithRelationInput | SsoAuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SsoAuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SsoAuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SsoAuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SsoAuditLogs
+    **/
+    _count?: true | SsoAuditLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SsoAuditLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SsoAuditLogMaxAggregateInputType
+  }
+
+  export type GetSsoAuditLogAggregateType<T extends SsoAuditLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateSsoAuditLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSsoAuditLog[P]>
+      : GetScalarType<T[P], AggregateSsoAuditLog[P]>
+  }
+
+
+
+
+  export type SsoAuditLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SsoAuditLogWhereInput
+    orderBy?: SsoAuditLogOrderByWithAggregationInput | SsoAuditLogOrderByWithAggregationInput[]
+    by: SsoAuditLogScalarFieldEnum[] | SsoAuditLogScalarFieldEnum
+    having?: SsoAuditLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SsoAuditLogCountAggregateInputType | true
+    _min?: SsoAuditLogMinAggregateInputType
+    _max?: SsoAuditLogMaxAggregateInputType
+  }
+
+  export type SsoAuditLogGroupByOutputType = {
+    id: string
+    tenantId: string
+    userId: string | null
+    event: string
+    provider: string
+    ipAddress: string | null
+    userAgent: string | null
+    samlRequestId: string | null
+    samlResponseId: string | null
+    errorMessage: string | null
+    attributes: JsonValue | null
+    sessionId: string | null
+    createdAt: Date
+    _count: SsoAuditLogCountAggregateOutputType | null
+    _min: SsoAuditLogMinAggregateOutputType | null
+    _max: SsoAuditLogMaxAggregateOutputType | null
+  }
+
+  type GetSsoAuditLogGroupByPayload<T extends SsoAuditLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SsoAuditLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SsoAuditLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SsoAuditLogGroupByOutputType[P]>
+            : GetScalarType<T[P], SsoAuditLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SsoAuditLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    event?: boolean
+    provider?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    samlRequestId?: boolean
+    samlResponseId?: boolean
+    errorMessage?: boolean
+    attributes?: boolean
+    sessionId?: boolean
+    createdAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | SsoAuditLog$userArgs<ExtArgs>
+  }, ExtArgs["result"]["ssoAuditLog"]>
+
+  export type SsoAuditLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    event?: boolean
+    provider?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    samlRequestId?: boolean
+    samlResponseId?: boolean
+    errorMessage?: boolean
+    attributes?: boolean
+    sessionId?: boolean
+    createdAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | SsoAuditLog$userArgs<ExtArgs>
+  }, ExtArgs["result"]["ssoAuditLog"]>
+
+  export type SsoAuditLogSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    event?: boolean
+    provider?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    samlRequestId?: boolean
+    samlResponseId?: boolean
+    errorMessage?: boolean
+    attributes?: boolean
+    sessionId?: boolean
+    createdAt?: boolean
+  }
+
+  export type SsoAuditLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | SsoAuditLog$userArgs<ExtArgs>
+  }
+  export type SsoAuditLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | SsoAuditLog$userArgs<ExtArgs>
+  }
+
+  export type $SsoAuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SsoAuditLog"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      userId: string | null
+      event: string
+      provider: string
+      ipAddress: string | null
+      userAgent: string | null
+      samlRequestId: string | null
+      samlResponseId: string | null
+      errorMessage: string | null
+      attributes: Prisma.JsonValue | null
+      sessionId: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["ssoAuditLog"]>
+    composites: {}
+  }
+
+  type SsoAuditLogGetPayload<S extends boolean | null | undefined | SsoAuditLogDefaultArgs> = $Result.GetResult<Prisma.$SsoAuditLogPayload, S>
+
+  type SsoAuditLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SsoAuditLogFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SsoAuditLogCountAggregateInputType | true
+    }
+
+  export interface SsoAuditLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SsoAuditLog'], meta: { name: 'SsoAuditLog' } }
+    /**
+     * Find zero or one SsoAuditLog that matches the filter.
+     * @param {SsoAuditLogFindUniqueArgs} args - Arguments to find a SsoAuditLog
+     * @example
+     * // Get one SsoAuditLog
+     * const ssoAuditLog = await prisma.ssoAuditLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SsoAuditLogFindUniqueArgs>(args: SelectSubset<T, SsoAuditLogFindUniqueArgs<ExtArgs>>): Prisma__SsoAuditLogClient<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SsoAuditLog that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SsoAuditLogFindUniqueOrThrowArgs} args - Arguments to find a SsoAuditLog
+     * @example
+     * // Get one SsoAuditLog
+     * const ssoAuditLog = await prisma.ssoAuditLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SsoAuditLogFindUniqueOrThrowArgs>(args: SelectSubset<T, SsoAuditLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SsoAuditLogClient<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SsoAuditLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SsoAuditLogFindFirstArgs} args - Arguments to find a SsoAuditLog
+     * @example
+     * // Get one SsoAuditLog
+     * const ssoAuditLog = await prisma.ssoAuditLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SsoAuditLogFindFirstArgs>(args?: SelectSubset<T, SsoAuditLogFindFirstArgs<ExtArgs>>): Prisma__SsoAuditLogClient<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SsoAuditLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SsoAuditLogFindFirstOrThrowArgs} args - Arguments to find a SsoAuditLog
+     * @example
+     * // Get one SsoAuditLog
+     * const ssoAuditLog = await prisma.ssoAuditLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SsoAuditLogFindFirstOrThrowArgs>(args?: SelectSubset<T, SsoAuditLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__SsoAuditLogClient<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SsoAuditLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SsoAuditLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SsoAuditLogs
+     * const ssoAuditLogs = await prisma.ssoAuditLog.findMany()
+     * 
+     * // Get first 10 SsoAuditLogs
+     * const ssoAuditLogs = await prisma.ssoAuditLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ssoAuditLogWithIdOnly = await prisma.ssoAuditLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SsoAuditLogFindManyArgs>(args?: SelectSubset<T, SsoAuditLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SsoAuditLog.
+     * @param {SsoAuditLogCreateArgs} args - Arguments to create a SsoAuditLog.
+     * @example
+     * // Create one SsoAuditLog
+     * const SsoAuditLog = await prisma.ssoAuditLog.create({
+     *   data: {
+     *     // ... data to create a SsoAuditLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends SsoAuditLogCreateArgs>(args: SelectSubset<T, SsoAuditLogCreateArgs<ExtArgs>>): Prisma__SsoAuditLogClient<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SsoAuditLogs.
+     * @param {SsoAuditLogCreateManyArgs} args - Arguments to create many SsoAuditLogs.
+     * @example
+     * // Create many SsoAuditLogs
+     * const ssoAuditLog = await prisma.ssoAuditLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SsoAuditLogCreateManyArgs>(args?: SelectSubset<T, SsoAuditLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SsoAuditLogs and returns the data saved in the database.
+     * @param {SsoAuditLogCreateManyAndReturnArgs} args - Arguments to create many SsoAuditLogs.
+     * @example
+     * // Create many SsoAuditLogs
+     * const ssoAuditLog = await prisma.ssoAuditLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SsoAuditLogs and only return the `id`
+     * const ssoAuditLogWithIdOnly = await prisma.ssoAuditLog.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SsoAuditLogCreateManyAndReturnArgs>(args?: SelectSubset<T, SsoAuditLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SsoAuditLog.
+     * @param {SsoAuditLogDeleteArgs} args - Arguments to delete one SsoAuditLog.
+     * @example
+     * // Delete one SsoAuditLog
+     * const SsoAuditLog = await prisma.ssoAuditLog.delete({
+     *   where: {
+     *     // ... filter to delete one SsoAuditLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SsoAuditLogDeleteArgs>(args: SelectSubset<T, SsoAuditLogDeleteArgs<ExtArgs>>): Prisma__SsoAuditLogClient<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SsoAuditLog.
+     * @param {SsoAuditLogUpdateArgs} args - Arguments to update one SsoAuditLog.
+     * @example
+     * // Update one SsoAuditLog
+     * const ssoAuditLog = await prisma.ssoAuditLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SsoAuditLogUpdateArgs>(args: SelectSubset<T, SsoAuditLogUpdateArgs<ExtArgs>>): Prisma__SsoAuditLogClient<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SsoAuditLogs.
+     * @param {SsoAuditLogDeleteManyArgs} args - Arguments to filter SsoAuditLogs to delete.
+     * @example
+     * // Delete a few SsoAuditLogs
+     * const { count } = await prisma.ssoAuditLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SsoAuditLogDeleteManyArgs>(args?: SelectSubset<T, SsoAuditLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SsoAuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SsoAuditLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SsoAuditLogs
+     * const ssoAuditLog = await prisma.ssoAuditLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SsoAuditLogUpdateManyArgs>(args: SelectSubset<T, SsoAuditLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SsoAuditLog.
+     * @param {SsoAuditLogUpsertArgs} args - Arguments to update or create a SsoAuditLog.
+     * @example
+     * // Update or create a SsoAuditLog
+     * const ssoAuditLog = await prisma.ssoAuditLog.upsert({
+     *   create: {
+     *     // ... data to create a SsoAuditLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SsoAuditLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SsoAuditLogUpsertArgs>(args: SelectSubset<T, SsoAuditLogUpsertArgs<ExtArgs>>): Prisma__SsoAuditLogClient<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SsoAuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SsoAuditLogCountArgs} args - Arguments to filter SsoAuditLogs to count.
+     * @example
+     * // Count the number of SsoAuditLogs
+     * const count = await prisma.ssoAuditLog.count({
+     *   where: {
+     *     // ... the filter for the SsoAuditLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends SsoAuditLogCountArgs>(
+      args?: Subset<T, SsoAuditLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SsoAuditLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SsoAuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SsoAuditLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SsoAuditLogAggregateArgs>(args: Subset<T, SsoAuditLogAggregateArgs>): Prisma.PrismaPromise<GetSsoAuditLogAggregateType<T>>
+
+    /**
+     * Group by SsoAuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SsoAuditLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SsoAuditLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SsoAuditLogGroupByArgs['orderBy'] }
+        : { orderBy?: SsoAuditLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SsoAuditLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSsoAuditLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SsoAuditLog model
+   */
+  readonly fields: SsoAuditLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SsoAuditLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SsoAuditLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    user<T extends SsoAuditLog$userArgs<ExtArgs> = {}>(args?: Subset<T, SsoAuditLog$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SsoAuditLog model
+   */ 
+  interface SsoAuditLogFieldRefs {
+    readonly id: FieldRef<"SsoAuditLog", 'String'>
+    readonly tenantId: FieldRef<"SsoAuditLog", 'String'>
+    readonly userId: FieldRef<"SsoAuditLog", 'String'>
+    readonly event: FieldRef<"SsoAuditLog", 'String'>
+    readonly provider: FieldRef<"SsoAuditLog", 'String'>
+    readonly ipAddress: FieldRef<"SsoAuditLog", 'String'>
+    readonly userAgent: FieldRef<"SsoAuditLog", 'String'>
+    readonly samlRequestId: FieldRef<"SsoAuditLog", 'String'>
+    readonly samlResponseId: FieldRef<"SsoAuditLog", 'String'>
+    readonly errorMessage: FieldRef<"SsoAuditLog", 'String'>
+    readonly attributes: FieldRef<"SsoAuditLog", 'Json'>
+    readonly sessionId: FieldRef<"SsoAuditLog", 'String'>
+    readonly createdAt: FieldRef<"SsoAuditLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SsoAuditLog findUnique
+   */
+  export type SsoAuditLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SsoAuditLog to fetch.
+     */
+    where: SsoAuditLogWhereUniqueInput
+  }
+
+  /**
+   * SsoAuditLog findUniqueOrThrow
+   */
+  export type SsoAuditLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SsoAuditLog to fetch.
+     */
+    where: SsoAuditLogWhereUniqueInput
+  }
+
+  /**
+   * SsoAuditLog findFirst
+   */
+  export type SsoAuditLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SsoAuditLog to fetch.
+     */
+    where?: SsoAuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SsoAuditLogs to fetch.
+     */
+    orderBy?: SsoAuditLogOrderByWithRelationInput | SsoAuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SsoAuditLogs.
+     */
+    cursor?: SsoAuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SsoAuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SsoAuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SsoAuditLogs.
+     */
+    distinct?: SsoAuditLogScalarFieldEnum | SsoAuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * SsoAuditLog findFirstOrThrow
+   */
+  export type SsoAuditLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SsoAuditLog to fetch.
+     */
+    where?: SsoAuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SsoAuditLogs to fetch.
+     */
+    orderBy?: SsoAuditLogOrderByWithRelationInput | SsoAuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SsoAuditLogs.
+     */
+    cursor?: SsoAuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SsoAuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SsoAuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SsoAuditLogs.
+     */
+    distinct?: SsoAuditLogScalarFieldEnum | SsoAuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * SsoAuditLog findMany
+   */
+  export type SsoAuditLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SsoAuditLogs to fetch.
+     */
+    where?: SsoAuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SsoAuditLogs to fetch.
+     */
+    orderBy?: SsoAuditLogOrderByWithRelationInput | SsoAuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SsoAuditLogs.
+     */
+    cursor?: SsoAuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SsoAuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SsoAuditLogs.
+     */
+    skip?: number
+    distinct?: SsoAuditLogScalarFieldEnum | SsoAuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * SsoAuditLog create
+   */
+  export type SsoAuditLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SsoAuditLog.
+     */
+    data: XOR<SsoAuditLogCreateInput, SsoAuditLogUncheckedCreateInput>
+  }
+
+  /**
+   * SsoAuditLog createMany
+   */
+  export type SsoAuditLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SsoAuditLogs.
+     */
+    data: SsoAuditLogCreateManyInput | SsoAuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SsoAuditLog createManyAndReturn
+   */
+  export type SsoAuditLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SsoAuditLogs.
+     */
+    data: SsoAuditLogCreateManyInput | SsoAuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SsoAuditLog update
+   */
+  export type SsoAuditLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SsoAuditLog.
+     */
+    data: XOR<SsoAuditLogUpdateInput, SsoAuditLogUncheckedUpdateInput>
+    /**
+     * Choose, which SsoAuditLog to update.
+     */
+    where: SsoAuditLogWhereUniqueInput
+  }
+
+  /**
+   * SsoAuditLog updateMany
+   */
+  export type SsoAuditLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SsoAuditLogs.
+     */
+    data: XOR<SsoAuditLogUpdateManyMutationInput, SsoAuditLogUncheckedUpdateManyInput>
+    /**
+     * Filter which SsoAuditLogs to update
+     */
+    where?: SsoAuditLogWhereInput
+  }
+
+  /**
+   * SsoAuditLog upsert
+   */
+  export type SsoAuditLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SsoAuditLog to update in case it exists.
+     */
+    where: SsoAuditLogWhereUniqueInput
+    /**
+     * In case the SsoAuditLog found by the `where` argument doesn't exist, create a new SsoAuditLog with this data.
+     */
+    create: XOR<SsoAuditLogCreateInput, SsoAuditLogUncheckedCreateInput>
+    /**
+     * In case the SsoAuditLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SsoAuditLogUpdateInput, SsoAuditLogUncheckedUpdateInput>
+  }
+
+  /**
+   * SsoAuditLog delete
+   */
+  export type SsoAuditLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
+    /**
+     * Filter which SsoAuditLog to delete.
+     */
+    where: SsoAuditLogWhereUniqueInput
+  }
+
+  /**
+   * SsoAuditLog deleteMany
+   */
+  export type SsoAuditLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SsoAuditLogs to delete
+     */
+    where?: SsoAuditLogWhereInput
+  }
+
+  /**
+   * SsoAuditLog.user
+   */
+  export type SsoAuditLog$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * SsoAuditLog without action
+   */
+  export type SsoAuditLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SsoAuditLog
+     */
+    select?: SsoAuditLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SsoAuditLogInclude<ExtArgs> | null
   }
 
 
@@ -39638,6 +42348,73 @@ export namespace Prisma {
   export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof TenantScalarFieldEnum]
 
 
+  export const TenantSsoConfigurationScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    provider: 'provider',
+    providerName: 'providerName',
+    isEnabled: 'isEnabled',
+    enforceSSO: 'enforceSSO',
+    samlEntityId: 'samlEntityId',
+    samlSsoUrl: 'samlSsoUrl',
+    samlSloUrl: 'samlSloUrl',
+    samlCertificate: 'samlCertificate',
+    samlSigningCert: 'samlSigningCert',
+    samlNameIdFormat: 'samlNameIdFormat',
+    samlAttributeMapping: 'samlAttributeMapping',
+    oidcIssuer: 'oidcIssuer',
+    oidcClientId: 'oidcClientId',
+    oidcClientSecret: 'oidcClientSecret',
+    oidcScopes: 'oidcScopes',
+    oidcTokenEndpoint: 'oidcTokenEndpoint',
+    oidcAuthEndpoint: 'oidcAuthEndpoint',
+    oidcUserinfoEndpoint: 'oidcUserinfoEndpoint',
+    oidcJwksUri: 'oidcJwksUri',
+    oauth2ClientId: 'oauth2ClientId',
+    oauth2ClientSecret: 'oauth2ClientSecret',
+    oauth2AuthUrl: 'oauth2AuthUrl',
+    oauth2TokenUrl: 'oauth2TokenUrl',
+    oauth2UserInfoUrl: 'oauth2UserInfoUrl',
+    oauth2Scopes: 'oauth2Scopes',
+    autoProvisionUsers: 'autoProvisionUsers',
+    defaultRole: 'defaultRole',
+    allowedDomains: 'allowedDomains',
+    userAttributeMapping: 'userAttributeMapping',
+    signAssertions: 'signAssertions',
+    signRequests: 'signRequests',
+    encryptAssertions: 'encryptAssertions',
+    sessionTimeout: 'sessionTimeout',
+    lastSyncAt: 'lastSyncAt',
+    lastLoginAt: 'lastLoginAt',
+    totalLogins: 'totalLogins',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    createdBy: 'createdBy',
+    updatedBy: 'updatedBy'
+  };
+
+  export type TenantSsoConfigurationScalarFieldEnum = (typeof TenantSsoConfigurationScalarFieldEnum)[keyof typeof TenantSsoConfigurationScalarFieldEnum]
+
+
+  export const SsoAuditLogScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    userId: 'userId',
+    event: 'event',
+    provider: 'provider',
+    ipAddress: 'ipAddress',
+    userAgent: 'userAgent',
+    samlRequestId: 'samlRequestId',
+    samlResponseId: 'samlResponseId',
+    errorMessage: 'errorMessage',
+    attributes: 'attributes',
+    sessionId: 'sessionId',
+    createdAt: 'createdAt'
+  };
+
+  export type SsoAuditLogScalarFieldEnum = (typeof SsoAuditLogScalarFieldEnum)[keyof typeof SsoAuditLogScalarFieldEnum]
+
+
   export const MembershipScalarFieldEnum: {
     id: 'id',
     tenantId: 'tenantId',
@@ -40432,6 +43209,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthListRelationFilter
     twoFactorCodes?: TwoFactorCodeListRelationFilter
     twoFactorAudits?: TwoFactorAuditListRelationFilter
+    ssoAuditLogs?: SsoAuditLogListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -40482,6 +43260,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthOrderByRelationAggregateInput
     twoFactorCodes?: TwoFactorCodeOrderByRelationAggregateInput
     twoFactorAudits?: TwoFactorAuditOrderByRelationAggregateInput
+    ssoAuditLogs?: SsoAuditLogOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -40535,6 +43314,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthListRelationFilter
     twoFactorCodes?: TwoFactorCodeListRelationFilter
     twoFactorAudits?: TwoFactorAuditListRelationFilter
+    ssoAuditLogs?: SsoAuditLogListRelationFilter
   }, "id" | "email" | "emailVerificationToken" | "passwordResetToken">
 
   export type UserOrderByWithAggregationInput = {
@@ -40704,6 +43484,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsListRelationFilter
     supportConfigurations?: SupportConfigurationListRelationFilter
     supportRouting?: TenantSupportRoutingListRelationFilter
+    ssoConfiguration?: XOR<TenantSsoConfigurationNullableRelationFilter, TenantSsoConfigurationWhereInput> | null
+    ssoAuditLogs?: SsoAuditLogListRelationFilter
   }
 
   export type TenantOrderByWithRelationInput = {
@@ -40759,6 +43541,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsOrderByRelationAggregateInput
     supportConfigurations?: SupportConfigurationOrderByRelationAggregateInput
     supportRouting?: TenantSupportRoutingOrderByRelationAggregateInput
+    ssoConfiguration?: TenantSsoConfigurationOrderByWithRelationInput
+    ssoAuditLogs?: SsoAuditLogOrderByRelationAggregateInput
   }
 
   export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -40817,6 +43601,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsListRelationFilter
     supportConfigurations?: SupportConfigurationListRelationFilter
     supportRouting?: TenantSupportRoutingListRelationFilter
+    ssoConfiguration?: XOR<TenantSsoConfigurationNullableRelationFilter, TenantSsoConfigurationWhereInput> | null
+    ssoAuditLogs?: SsoAuditLogListRelationFilter
   }, "id" | "slug" | "subdomain" | "customDomain">
 
   export type TenantOrderByWithAggregationInput = {
@@ -40895,6 +43681,346 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Tenant"> | Date | string
     suspendedAt?: DateTimeNullableWithAggregatesFilter<"Tenant"> | Date | string | null
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Tenant"> | Date | string | null
+  }
+
+  export type TenantSsoConfigurationWhereInput = {
+    AND?: TenantSsoConfigurationWhereInput | TenantSsoConfigurationWhereInput[]
+    OR?: TenantSsoConfigurationWhereInput[]
+    NOT?: TenantSsoConfigurationWhereInput | TenantSsoConfigurationWhereInput[]
+    id?: StringFilter<"TenantSsoConfiguration"> | string
+    tenantId?: StringFilter<"TenantSsoConfiguration"> | string
+    provider?: StringFilter<"TenantSsoConfiguration"> | string
+    providerName?: StringFilter<"TenantSsoConfiguration"> | string
+    isEnabled?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    enforceSSO?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    samlEntityId?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlSsoUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlSloUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlCertificate?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlSigningCert?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlNameIdFormat?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlAttributeMapping?: JsonNullableFilter<"TenantSsoConfiguration">
+    oidcIssuer?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcClientId?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcClientSecret?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcScopes?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcTokenEndpoint?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcAuthEndpoint?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcUserinfoEndpoint?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcJwksUri?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2ClientId?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2ClientSecret?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2AuthUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2TokenUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2UserInfoUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2Scopes?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    autoProvisionUsers?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    defaultRole?: StringFilter<"TenantSsoConfiguration"> | string
+    allowedDomains?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    userAttributeMapping?: JsonNullableFilter<"TenantSsoConfiguration">
+    signAssertions?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    signRequests?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    encryptAssertions?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    sessionTimeout?: IntNullableFilter<"TenantSsoConfiguration"> | number | null
+    lastSyncAt?: DateTimeNullableFilter<"TenantSsoConfiguration"> | Date | string | null
+    lastLoginAt?: DateTimeNullableFilter<"TenantSsoConfiguration"> | Date | string | null
+    totalLogins?: IntFilter<"TenantSsoConfiguration"> | number
+    createdAt?: DateTimeFilter<"TenantSsoConfiguration"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantSsoConfiguration"> | Date | string
+    createdBy?: StringFilter<"TenantSsoConfiguration"> | string
+    updatedBy?: StringFilter<"TenantSsoConfiguration"> | string
+    tenant?: XOR<TenantRelationFilter, TenantWhereInput>
+  }
+
+  export type TenantSsoConfigurationOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    provider?: SortOrder
+    providerName?: SortOrder
+    isEnabled?: SortOrder
+    enforceSSO?: SortOrder
+    samlEntityId?: SortOrderInput | SortOrder
+    samlSsoUrl?: SortOrderInput | SortOrder
+    samlSloUrl?: SortOrderInput | SortOrder
+    samlCertificate?: SortOrderInput | SortOrder
+    samlSigningCert?: SortOrderInput | SortOrder
+    samlNameIdFormat?: SortOrderInput | SortOrder
+    samlAttributeMapping?: SortOrderInput | SortOrder
+    oidcIssuer?: SortOrderInput | SortOrder
+    oidcClientId?: SortOrderInput | SortOrder
+    oidcClientSecret?: SortOrderInput | SortOrder
+    oidcScopes?: SortOrderInput | SortOrder
+    oidcTokenEndpoint?: SortOrderInput | SortOrder
+    oidcAuthEndpoint?: SortOrderInput | SortOrder
+    oidcUserinfoEndpoint?: SortOrderInput | SortOrder
+    oidcJwksUri?: SortOrderInput | SortOrder
+    oauth2ClientId?: SortOrderInput | SortOrder
+    oauth2ClientSecret?: SortOrderInput | SortOrder
+    oauth2AuthUrl?: SortOrderInput | SortOrder
+    oauth2TokenUrl?: SortOrderInput | SortOrder
+    oauth2UserInfoUrl?: SortOrderInput | SortOrder
+    oauth2Scopes?: SortOrderInput | SortOrder
+    autoProvisionUsers?: SortOrder
+    defaultRole?: SortOrder
+    allowedDomains?: SortOrderInput | SortOrder
+    userAttributeMapping?: SortOrderInput | SortOrder
+    signAssertions?: SortOrder
+    signRequests?: SortOrder
+    encryptAssertions?: SortOrder
+    sessionTimeout?: SortOrderInput | SortOrder
+    lastSyncAt?: SortOrderInput | SortOrder
+    lastLoginAt?: SortOrderInput | SortOrder
+    totalLogins?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    updatedBy?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type TenantSsoConfigurationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId?: string
+    AND?: TenantSsoConfigurationWhereInput | TenantSsoConfigurationWhereInput[]
+    OR?: TenantSsoConfigurationWhereInput[]
+    NOT?: TenantSsoConfigurationWhereInput | TenantSsoConfigurationWhereInput[]
+    provider?: StringFilter<"TenantSsoConfiguration"> | string
+    providerName?: StringFilter<"TenantSsoConfiguration"> | string
+    isEnabled?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    enforceSSO?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    samlEntityId?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlSsoUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlSloUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlCertificate?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlSigningCert?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlNameIdFormat?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    samlAttributeMapping?: JsonNullableFilter<"TenantSsoConfiguration">
+    oidcIssuer?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcClientId?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcClientSecret?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcScopes?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcTokenEndpoint?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcAuthEndpoint?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcUserinfoEndpoint?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oidcJwksUri?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2ClientId?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2ClientSecret?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2AuthUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2TokenUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2UserInfoUrl?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    oauth2Scopes?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    autoProvisionUsers?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    defaultRole?: StringFilter<"TenantSsoConfiguration"> | string
+    allowedDomains?: StringNullableFilter<"TenantSsoConfiguration"> | string | null
+    userAttributeMapping?: JsonNullableFilter<"TenantSsoConfiguration">
+    signAssertions?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    signRequests?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    encryptAssertions?: BoolFilter<"TenantSsoConfiguration"> | boolean
+    sessionTimeout?: IntNullableFilter<"TenantSsoConfiguration"> | number | null
+    lastSyncAt?: DateTimeNullableFilter<"TenantSsoConfiguration"> | Date | string | null
+    lastLoginAt?: DateTimeNullableFilter<"TenantSsoConfiguration"> | Date | string | null
+    totalLogins?: IntFilter<"TenantSsoConfiguration"> | number
+    createdAt?: DateTimeFilter<"TenantSsoConfiguration"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantSsoConfiguration"> | Date | string
+    createdBy?: StringFilter<"TenantSsoConfiguration"> | string
+    updatedBy?: StringFilter<"TenantSsoConfiguration"> | string
+    tenant?: XOR<TenantRelationFilter, TenantWhereInput>
+  }, "id" | "tenantId">
+
+  export type TenantSsoConfigurationOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    provider?: SortOrder
+    providerName?: SortOrder
+    isEnabled?: SortOrder
+    enforceSSO?: SortOrder
+    samlEntityId?: SortOrderInput | SortOrder
+    samlSsoUrl?: SortOrderInput | SortOrder
+    samlSloUrl?: SortOrderInput | SortOrder
+    samlCertificate?: SortOrderInput | SortOrder
+    samlSigningCert?: SortOrderInput | SortOrder
+    samlNameIdFormat?: SortOrderInput | SortOrder
+    samlAttributeMapping?: SortOrderInput | SortOrder
+    oidcIssuer?: SortOrderInput | SortOrder
+    oidcClientId?: SortOrderInput | SortOrder
+    oidcClientSecret?: SortOrderInput | SortOrder
+    oidcScopes?: SortOrderInput | SortOrder
+    oidcTokenEndpoint?: SortOrderInput | SortOrder
+    oidcAuthEndpoint?: SortOrderInput | SortOrder
+    oidcUserinfoEndpoint?: SortOrderInput | SortOrder
+    oidcJwksUri?: SortOrderInput | SortOrder
+    oauth2ClientId?: SortOrderInput | SortOrder
+    oauth2ClientSecret?: SortOrderInput | SortOrder
+    oauth2AuthUrl?: SortOrderInput | SortOrder
+    oauth2TokenUrl?: SortOrderInput | SortOrder
+    oauth2UserInfoUrl?: SortOrderInput | SortOrder
+    oauth2Scopes?: SortOrderInput | SortOrder
+    autoProvisionUsers?: SortOrder
+    defaultRole?: SortOrder
+    allowedDomains?: SortOrderInput | SortOrder
+    userAttributeMapping?: SortOrderInput | SortOrder
+    signAssertions?: SortOrder
+    signRequests?: SortOrder
+    encryptAssertions?: SortOrder
+    sessionTimeout?: SortOrderInput | SortOrder
+    lastSyncAt?: SortOrderInput | SortOrder
+    lastLoginAt?: SortOrderInput | SortOrder
+    totalLogins?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    updatedBy?: SortOrder
+    _count?: TenantSsoConfigurationCountOrderByAggregateInput
+    _avg?: TenantSsoConfigurationAvgOrderByAggregateInput
+    _max?: TenantSsoConfigurationMaxOrderByAggregateInput
+    _min?: TenantSsoConfigurationMinOrderByAggregateInput
+    _sum?: TenantSsoConfigurationSumOrderByAggregateInput
+  }
+
+  export type TenantSsoConfigurationScalarWhereWithAggregatesInput = {
+    AND?: TenantSsoConfigurationScalarWhereWithAggregatesInput | TenantSsoConfigurationScalarWhereWithAggregatesInput[]
+    OR?: TenantSsoConfigurationScalarWhereWithAggregatesInput[]
+    NOT?: TenantSsoConfigurationScalarWhereWithAggregatesInput | TenantSsoConfigurationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TenantSsoConfiguration"> | string
+    tenantId?: StringWithAggregatesFilter<"TenantSsoConfiguration"> | string
+    provider?: StringWithAggregatesFilter<"TenantSsoConfiguration"> | string
+    providerName?: StringWithAggregatesFilter<"TenantSsoConfiguration"> | string
+    isEnabled?: BoolWithAggregatesFilter<"TenantSsoConfiguration"> | boolean
+    enforceSSO?: BoolWithAggregatesFilter<"TenantSsoConfiguration"> | boolean
+    samlEntityId?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    samlSsoUrl?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    samlSloUrl?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    samlCertificate?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    samlSigningCert?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    samlNameIdFormat?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    samlAttributeMapping?: JsonNullableWithAggregatesFilter<"TenantSsoConfiguration">
+    oidcIssuer?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oidcClientId?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oidcClientSecret?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oidcScopes?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oidcTokenEndpoint?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oidcAuthEndpoint?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oidcUserinfoEndpoint?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oidcJwksUri?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oauth2ClientId?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oauth2ClientSecret?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oauth2AuthUrl?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oauth2TokenUrl?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oauth2UserInfoUrl?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    oauth2Scopes?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    autoProvisionUsers?: BoolWithAggregatesFilter<"TenantSsoConfiguration"> | boolean
+    defaultRole?: StringWithAggregatesFilter<"TenantSsoConfiguration"> | string
+    allowedDomains?: StringNullableWithAggregatesFilter<"TenantSsoConfiguration"> | string | null
+    userAttributeMapping?: JsonNullableWithAggregatesFilter<"TenantSsoConfiguration">
+    signAssertions?: BoolWithAggregatesFilter<"TenantSsoConfiguration"> | boolean
+    signRequests?: BoolWithAggregatesFilter<"TenantSsoConfiguration"> | boolean
+    encryptAssertions?: BoolWithAggregatesFilter<"TenantSsoConfiguration"> | boolean
+    sessionTimeout?: IntNullableWithAggregatesFilter<"TenantSsoConfiguration"> | number | null
+    lastSyncAt?: DateTimeNullableWithAggregatesFilter<"TenantSsoConfiguration"> | Date | string | null
+    lastLoginAt?: DateTimeNullableWithAggregatesFilter<"TenantSsoConfiguration"> | Date | string | null
+    totalLogins?: IntWithAggregatesFilter<"TenantSsoConfiguration"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"TenantSsoConfiguration"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TenantSsoConfiguration"> | Date | string
+    createdBy?: StringWithAggregatesFilter<"TenantSsoConfiguration"> | string
+    updatedBy?: StringWithAggregatesFilter<"TenantSsoConfiguration"> | string
+  }
+
+  export type SsoAuditLogWhereInput = {
+    AND?: SsoAuditLogWhereInput | SsoAuditLogWhereInput[]
+    OR?: SsoAuditLogWhereInput[]
+    NOT?: SsoAuditLogWhereInput | SsoAuditLogWhereInput[]
+    id?: StringFilter<"SsoAuditLog"> | string
+    tenantId?: StringFilter<"SsoAuditLog"> | string
+    userId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    event?: StringFilter<"SsoAuditLog"> | string
+    provider?: StringFilter<"SsoAuditLog"> | string
+    ipAddress?: StringNullableFilter<"SsoAuditLog"> | string | null
+    userAgent?: StringNullableFilter<"SsoAuditLog"> | string | null
+    samlRequestId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    samlResponseId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    errorMessage?: StringNullableFilter<"SsoAuditLog"> | string | null
+    attributes?: JsonNullableFilter<"SsoAuditLog">
+    sessionId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    createdAt?: DateTimeFilter<"SsoAuditLog"> | Date | string
+    tenant?: XOR<TenantRelationFilter, TenantWhereInput>
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }
+
+  export type SsoAuditLogOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    event?: SortOrder
+    provider?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    samlRequestId?: SortOrderInput | SortOrder
+    samlResponseId?: SortOrderInput | SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    attributes?: SortOrderInput | SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type SsoAuditLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SsoAuditLogWhereInput | SsoAuditLogWhereInput[]
+    OR?: SsoAuditLogWhereInput[]
+    NOT?: SsoAuditLogWhereInput | SsoAuditLogWhereInput[]
+    tenantId?: StringFilter<"SsoAuditLog"> | string
+    userId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    event?: StringFilter<"SsoAuditLog"> | string
+    provider?: StringFilter<"SsoAuditLog"> | string
+    ipAddress?: StringNullableFilter<"SsoAuditLog"> | string | null
+    userAgent?: StringNullableFilter<"SsoAuditLog"> | string | null
+    samlRequestId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    samlResponseId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    errorMessage?: StringNullableFilter<"SsoAuditLog"> | string | null
+    attributes?: JsonNullableFilter<"SsoAuditLog">
+    sessionId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    createdAt?: DateTimeFilter<"SsoAuditLog"> | Date | string
+    tenant?: XOR<TenantRelationFilter, TenantWhereInput>
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type SsoAuditLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    event?: SortOrder
+    provider?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    samlRequestId?: SortOrderInput | SortOrder
+    samlResponseId?: SortOrderInput | SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    attributes?: SortOrderInput | SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: SsoAuditLogCountOrderByAggregateInput
+    _max?: SsoAuditLogMaxOrderByAggregateInput
+    _min?: SsoAuditLogMinOrderByAggregateInput
+  }
+
+  export type SsoAuditLogScalarWhereWithAggregatesInput = {
+    AND?: SsoAuditLogScalarWhereWithAggregatesInput | SsoAuditLogScalarWhereWithAggregatesInput[]
+    OR?: SsoAuditLogScalarWhereWithAggregatesInput[]
+    NOT?: SsoAuditLogScalarWhereWithAggregatesInput | SsoAuditLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SsoAuditLog"> | string
+    tenantId?: StringWithAggregatesFilter<"SsoAuditLog"> | string
+    userId?: StringNullableWithAggregatesFilter<"SsoAuditLog"> | string | null
+    event?: StringWithAggregatesFilter<"SsoAuditLog"> | string
+    provider?: StringWithAggregatesFilter<"SsoAuditLog"> | string
+    ipAddress?: StringNullableWithAggregatesFilter<"SsoAuditLog"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"SsoAuditLog"> | string | null
+    samlRequestId?: StringNullableWithAggregatesFilter<"SsoAuditLog"> | string | null
+    samlResponseId?: StringNullableWithAggregatesFilter<"SsoAuditLog"> | string | null
+    errorMessage?: StringNullableWithAggregatesFilter<"SsoAuditLog"> | string | null
+    attributes?: JsonNullableWithAggregatesFilter<"SsoAuditLog">
+    sessionId?: StringNullableWithAggregatesFilter<"SsoAuditLog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SsoAuditLog"> | Date | string
   }
 
   export type MembershipWhereInput = {
@@ -43559,6 +46685,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -43609,6 +46736,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -43659,6 +46787,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -43709,6 +46838,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -43899,6 +47029,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateInput = {
@@ -43954,6 +47086,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUpdateInput = {
@@ -44009,6 +47143,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateInput = {
@@ -44064,6 +47200,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateManyInput = {
@@ -44172,6 +47310,430 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TenantSsoConfigurationCreateInput = {
+    id?: string
+    provider: string
+    providerName: string
+    isEnabled?: boolean
+    enforceSSO?: boolean
+    samlEntityId?: string | null
+    samlSsoUrl?: string | null
+    samlSloUrl?: string | null
+    samlCertificate?: string | null
+    samlSigningCert?: string | null
+    samlNameIdFormat?: string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: string | null
+    oidcClientId?: string | null
+    oidcClientSecret?: string | null
+    oidcScopes?: string | null
+    oidcTokenEndpoint?: string | null
+    oidcAuthEndpoint?: string | null
+    oidcUserinfoEndpoint?: string | null
+    oidcJwksUri?: string | null
+    oauth2ClientId?: string | null
+    oauth2ClientSecret?: string | null
+    oauth2AuthUrl?: string | null
+    oauth2TokenUrl?: string | null
+    oauth2UserInfoUrl?: string | null
+    oauth2Scopes?: string | null
+    autoProvisionUsers?: boolean
+    defaultRole?: string
+    allowedDomains?: string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: boolean
+    signRequests?: boolean
+    encryptAssertions?: boolean
+    sessionTimeout?: number | null
+    lastSyncAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    totalLogins?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    updatedBy: string
+    tenant: TenantCreateNestedOneWithoutSsoConfigurationInput
+  }
+
+  export type TenantSsoConfigurationUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    provider: string
+    providerName: string
+    isEnabled?: boolean
+    enforceSSO?: boolean
+    samlEntityId?: string | null
+    samlSsoUrl?: string | null
+    samlSloUrl?: string | null
+    samlCertificate?: string | null
+    samlSigningCert?: string | null
+    samlNameIdFormat?: string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: string | null
+    oidcClientId?: string | null
+    oidcClientSecret?: string | null
+    oidcScopes?: string | null
+    oidcTokenEndpoint?: string | null
+    oidcAuthEndpoint?: string | null
+    oidcUserinfoEndpoint?: string | null
+    oidcJwksUri?: string | null
+    oauth2ClientId?: string | null
+    oauth2ClientSecret?: string | null
+    oauth2AuthUrl?: string | null
+    oauth2TokenUrl?: string | null
+    oauth2UserInfoUrl?: string | null
+    oauth2Scopes?: string | null
+    autoProvisionUsers?: boolean
+    defaultRole?: string
+    allowedDomains?: string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: boolean
+    signRequests?: boolean
+    encryptAssertions?: boolean
+    sessionTimeout?: number | null
+    lastSyncAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    totalLogins?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    updatedBy: string
+  }
+
+  export type TenantSsoConfigurationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    enforceSSO?: BoolFieldUpdateOperationsInput | boolean
+    samlEntityId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSloUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSigningCert?: NullableStringFieldUpdateOperationsInput | string | null
+    samlNameIdFormat?: NullableStringFieldUpdateOperationsInput | string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcScopes?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcTokenEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcAuthEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcUserinfoEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcJwksUri?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2AuthUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2TokenUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2UserInfoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2Scopes?: NullableStringFieldUpdateOperationsInput | string | null
+    autoProvisionUsers?: BoolFieldUpdateOperationsInput | boolean
+    defaultRole?: StringFieldUpdateOperationsInput | string
+    allowedDomains?: NullableStringFieldUpdateOperationsInput | string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: BoolFieldUpdateOperationsInput | boolean
+    signRequests?: BoolFieldUpdateOperationsInput | boolean
+    encryptAssertions?: BoolFieldUpdateOperationsInput | boolean
+    sessionTimeout?: NullableIntFieldUpdateOperationsInput | number | null
+    lastSyncAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalLogins?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    updatedBy?: StringFieldUpdateOperationsInput | string
+    tenant?: TenantUpdateOneRequiredWithoutSsoConfigurationNestedInput
+  }
+
+  export type TenantSsoConfigurationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    enforceSSO?: BoolFieldUpdateOperationsInput | boolean
+    samlEntityId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSloUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSigningCert?: NullableStringFieldUpdateOperationsInput | string | null
+    samlNameIdFormat?: NullableStringFieldUpdateOperationsInput | string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcScopes?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcTokenEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcAuthEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcUserinfoEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcJwksUri?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2AuthUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2TokenUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2UserInfoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2Scopes?: NullableStringFieldUpdateOperationsInput | string | null
+    autoProvisionUsers?: BoolFieldUpdateOperationsInput | boolean
+    defaultRole?: StringFieldUpdateOperationsInput | string
+    allowedDomains?: NullableStringFieldUpdateOperationsInput | string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: BoolFieldUpdateOperationsInput | boolean
+    signRequests?: BoolFieldUpdateOperationsInput | boolean
+    encryptAssertions?: BoolFieldUpdateOperationsInput | boolean
+    sessionTimeout?: NullableIntFieldUpdateOperationsInput | number | null
+    lastSyncAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalLogins?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    updatedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TenantSsoConfigurationCreateManyInput = {
+    id?: string
+    tenantId: string
+    provider: string
+    providerName: string
+    isEnabled?: boolean
+    enforceSSO?: boolean
+    samlEntityId?: string | null
+    samlSsoUrl?: string | null
+    samlSloUrl?: string | null
+    samlCertificate?: string | null
+    samlSigningCert?: string | null
+    samlNameIdFormat?: string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: string | null
+    oidcClientId?: string | null
+    oidcClientSecret?: string | null
+    oidcScopes?: string | null
+    oidcTokenEndpoint?: string | null
+    oidcAuthEndpoint?: string | null
+    oidcUserinfoEndpoint?: string | null
+    oidcJwksUri?: string | null
+    oauth2ClientId?: string | null
+    oauth2ClientSecret?: string | null
+    oauth2AuthUrl?: string | null
+    oauth2TokenUrl?: string | null
+    oauth2UserInfoUrl?: string | null
+    oauth2Scopes?: string | null
+    autoProvisionUsers?: boolean
+    defaultRole?: string
+    allowedDomains?: string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: boolean
+    signRequests?: boolean
+    encryptAssertions?: boolean
+    sessionTimeout?: number | null
+    lastSyncAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    totalLogins?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    updatedBy: string
+  }
+
+  export type TenantSsoConfigurationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    enforceSSO?: BoolFieldUpdateOperationsInput | boolean
+    samlEntityId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSloUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSigningCert?: NullableStringFieldUpdateOperationsInput | string | null
+    samlNameIdFormat?: NullableStringFieldUpdateOperationsInput | string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcScopes?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcTokenEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcAuthEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcUserinfoEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcJwksUri?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2AuthUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2TokenUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2UserInfoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2Scopes?: NullableStringFieldUpdateOperationsInput | string | null
+    autoProvisionUsers?: BoolFieldUpdateOperationsInput | boolean
+    defaultRole?: StringFieldUpdateOperationsInput | string
+    allowedDomains?: NullableStringFieldUpdateOperationsInput | string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: BoolFieldUpdateOperationsInput | boolean
+    signRequests?: BoolFieldUpdateOperationsInput | boolean
+    encryptAssertions?: BoolFieldUpdateOperationsInput | boolean
+    sessionTimeout?: NullableIntFieldUpdateOperationsInput | number | null
+    lastSyncAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalLogins?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    updatedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TenantSsoConfigurationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    enforceSSO?: BoolFieldUpdateOperationsInput | boolean
+    samlEntityId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSloUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSigningCert?: NullableStringFieldUpdateOperationsInput | string | null
+    samlNameIdFormat?: NullableStringFieldUpdateOperationsInput | string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcScopes?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcTokenEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcAuthEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcUserinfoEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcJwksUri?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2AuthUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2TokenUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2UserInfoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2Scopes?: NullableStringFieldUpdateOperationsInput | string | null
+    autoProvisionUsers?: BoolFieldUpdateOperationsInput | boolean
+    defaultRole?: StringFieldUpdateOperationsInput | string
+    allowedDomains?: NullableStringFieldUpdateOperationsInput | string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: BoolFieldUpdateOperationsInput | boolean
+    signRequests?: BoolFieldUpdateOperationsInput | boolean
+    encryptAssertions?: BoolFieldUpdateOperationsInput | boolean
+    sessionTimeout?: NullableIntFieldUpdateOperationsInput | number | null
+    lastSyncAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalLogins?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    updatedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SsoAuditLogCreateInput = {
+    id?: string
+    event: string
+    provider: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    samlRequestId?: string | null
+    samlResponseId?: string | null
+    errorMessage?: string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: string | null
+    createdAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutSsoAuditLogsInput
+    user?: UserCreateNestedOneWithoutSsoAuditLogsInput
+  }
+
+  export type SsoAuditLogUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    userId?: string | null
+    event: string
+    provider: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    samlRequestId?: string | null
+    samlResponseId?: string | null
+    errorMessage?: string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SsoAuditLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutSsoAuditLogsNestedInput
+    user?: UserUpdateOneWithoutSsoAuditLogsNestedInput
+  }
+
+  export type SsoAuditLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SsoAuditLogCreateManyInput = {
+    id?: string
+    tenantId: string
+    userId?: string | null
+    event: string
+    provider: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    samlRequestId?: string | null
+    samlResponseId?: string | null
+    errorMessage?: string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SsoAuditLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SsoAuditLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MembershipCreateInput = {
@@ -47188,6 +50750,12 @@ export namespace Prisma {
     none?: TwoFactorAuditWhereInput
   }
 
+  export type SsoAuditLogListRelationFilter = {
+    every?: SsoAuditLogWhereInput
+    some?: SsoAuditLogWhereInput
+    none?: SsoAuditLogWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -47253,6 +50821,10 @@ export namespace Prisma {
   }
 
   export type TwoFactorAuditOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SsoAuditLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -47436,6 +51008,11 @@ export namespace Prisma {
     none?: TenantSupportRoutingWhereInput
   }
 
+  export type TenantSsoConfigurationNullableRelationFilter = {
+    is?: TenantSsoConfigurationWhereInput | null
+    isNot?: TenantSsoConfigurationWhereInput | null
+  }
+
   export type ContactReasonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -47571,15 +51148,276 @@ export namespace Prisma {
     suspendedAt?: SortOrder
     deletedAt?: SortOrder
   }
+  export type JsonNullableFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
 
   export type TenantRelationFilter = {
     is?: TenantWhereInput
     isNot?: TenantWhereInput
   }
 
+  export type TenantSsoConfigurationCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    provider?: SortOrder
+    providerName?: SortOrder
+    isEnabled?: SortOrder
+    enforceSSO?: SortOrder
+    samlEntityId?: SortOrder
+    samlSsoUrl?: SortOrder
+    samlSloUrl?: SortOrder
+    samlCertificate?: SortOrder
+    samlSigningCert?: SortOrder
+    samlNameIdFormat?: SortOrder
+    samlAttributeMapping?: SortOrder
+    oidcIssuer?: SortOrder
+    oidcClientId?: SortOrder
+    oidcClientSecret?: SortOrder
+    oidcScopes?: SortOrder
+    oidcTokenEndpoint?: SortOrder
+    oidcAuthEndpoint?: SortOrder
+    oidcUserinfoEndpoint?: SortOrder
+    oidcJwksUri?: SortOrder
+    oauth2ClientId?: SortOrder
+    oauth2ClientSecret?: SortOrder
+    oauth2AuthUrl?: SortOrder
+    oauth2TokenUrl?: SortOrder
+    oauth2UserInfoUrl?: SortOrder
+    oauth2Scopes?: SortOrder
+    autoProvisionUsers?: SortOrder
+    defaultRole?: SortOrder
+    allowedDomains?: SortOrder
+    userAttributeMapping?: SortOrder
+    signAssertions?: SortOrder
+    signRequests?: SortOrder
+    encryptAssertions?: SortOrder
+    sessionTimeout?: SortOrder
+    lastSyncAt?: SortOrder
+    lastLoginAt?: SortOrder
+    totalLogins?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    updatedBy?: SortOrder
+  }
+
+  export type TenantSsoConfigurationAvgOrderByAggregateInput = {
+    sessionTimeout?: SortOrder
+    totalLogins?: SortOrder
+  }
+
+  export type TenantSsoConfigurationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    provider?: SortOrder
+    providerName?: SortOrder
+    isEnabled?: SortOrder
+    enforceSSO?: SortOrder
+    samlEntityId?: SortOrder
+    samlSsoUrl?: SortOrder
+    samlSloUrl?: SortOrder
+    samlCertificate?: SortOrder
+    samlSigningCert?: SortOrder
+    samlNameIdFormat?: SortOrder
+    oidcIssuer?: SortOrder
+    oidcClientId?: SortOrder
+    oidcClientSecret?: SortOrder
+    oidcScopes?: SortOrder
+    oidcTokenEndpoint?: SortOrder
+    oidcAuthEndpoint?: SortOrder
+    oidcUserinfoEndpoint?: SortOrder
+    oidcJwksUri?: SortOrder
+    oauth2ClientId?: SortOrder
+    oauth2ClientSecret?: SortOrder
+    oauth2AuthUrl?: SortOrder
+    oauth2TokenUrl?: SortOrder
+    oauth2UserInfoUrl?: SortOrder
+    oauth2Scopes?: SortOrder
+    autoProvisionUsers?: SortOrder
+    defaultRole?: SortOrder
+    allowedDomains?: SortOrder
+    signAssertions?: SortOrder
+    signRequests?: SortOrder
+    encryptAssertions?: SortOrder
+    sessionTimeout?: SortOrder
+    lastSyncAt?: SortOrder
+    lastLoginAt?: SortOrder
+    totalLogins?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    updatedBy?: SortOrder
+  }
+
+  export type TenantSsoConfigurationMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    provider?: SortOrder
+    providerName?: SortOrder
+    isEnabled?: SortOrder
+    enforceSSO?: SortOrder
+    samlEntityId?: SortOrder
+    samlSsoUrl?: SortOrder
+    samlSloUrl?: SortOrder
+    samlCertificate?: SortOrder
+    samlSigningCert?: SortOrder
+    samlNameIdFormat?: SortOrder
+    oidcIssuer?: SortOrder
+    oidcClientId?: SortOrder
+    oidcClientSecret?: SortOrder
+    oidcScopes?: SortOrder
+    oidcTokenEndpoint?: SortOrder
+    oidcAuthEndpoint?: SortOrder
+    oidcUserinfoEndpoint?: SortOrder
+    oidcJwksUri?: SortOrder
+    oauth2ClientId?: SortOrder
+    oauth2ClientSecret?: SortOrder
+    oauth2AuthUrl?: SortOrder
+    oauth2TokenUrl?: SortOrder
+    oauth2UserInfoUrl?: SortOrder
+    oauth2Scopes?: SortOrder
+    autoProvisionUsers?: SortOrder
+    defaultRole?: SortOrder
+    allowedDomains?: SortOrder
+    signAssertions?: SortOrder
+    signRequests?: SortOrder
+    encryptAssertions?: SortOrder
+    sessionTimeout?: SortOrder
+    lastSyncAt?: SortOrder
+    lastLoginAt?: SortOrder
+    totalLogins?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: SortOrder
+    updatedBy?: SortOrder
+  }
+
+  export type TenantSsoConfigurationSumOrderByAggregateInput = {
+    sessionTimeout?: SortOrder
+    totalLogins?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type UserNullableRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
+  }
+
+  export type SsoAuditLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+    event?: SortOrder
+    provider?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    samlRequestId?: SortOrder
+    samlResponseId?: SortOrder
+    errorMessage?: SortOrder
+    attributes?: SortOrder
+    sessionId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SsoAuditLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+    event?: SortOrder
+    provider?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    samlRequestId?: SortOrder
+    samlResponseId?: SortOrder
+    errorMessage?: SortOrder
+    sessionId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SsoAuditLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+    event?: SortOrder
+    provider?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    samlRequestId?: SortOrder
+    samlResponseId?: SortOrder
+    errorMessage?: SortOrder
+    sessionId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type MembershipTenantIdUserIdCompoundUniqueInput = {
@@ -47680,17 +51518,6 @@ export namespace Prisma {
     invitedByUserId?: SortOrder
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type ContactMessageReasonListRelationFilter = {
     every?: ContactMessageReasonWhereInput
     some?: ContactMessageReasonWhereInput
@@ -47749,22 +51576,6 @@ export namespace Prisma {
 
   export type ContactReasonSumOrderByAggregateInput = {
     sortOrder?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type ContactReplyListRelationFilter = {
@@ -48561,28 +52372,6 @@ export namespace Prisma {
     metadata?: SortOrder
     createdAt?: SortOrder
   }
-  export type JsonNullableFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type ContactMessageNullableRelationFilter = {
     is?: ContactMessageWhereInput | null
@@ -48653,31 +52442,6 @@ export namespace Prisma {
     closedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedJsonNullableFilter<$PrismaModel>
-    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
   export type JsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -49227,6 +52991,13 @@ export namespace Prisma {
     connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
   }
 
+  export type SsoAuditLogCreateNestedManyWithoutUserInput = {
+    create?: XOR<SsoAuditLogCreateWithoutUserInput, SsoAuditLogUncheckedCreateWithoutUserInput> | SsoAuditLogCreateWithoutUserInput[] | SsoAuditLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SsoAuditLogCreateOrConnectWithoutUserInput | SsoAuditLogCreateOrConnectWithoutUserInput[]
+    createMany?: SsoAuditLogCreateManyUserInputEnvelope
+    connect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -49358,6 +53129,13 @@ export namespace Prisma {
     connectOrCreate?: TwoFactorAuditCreateOrConnectWithoutUserInput | TwoFactorAuditCreateOrConnectWithoutUserInput[]
     createMany?: TwoFactorAuditCreateManyUserInputEnvelope
     connect?: TwoFactorAuditWhereUniqueInput | TwoFactorAuditWhereUniqueInput[]
+  }
+
+  export type SsoAuditLogUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SsoAuditLogCreateWithoutUserInput, SsoAuditLogUncheckedCreateWithoutUserInput> | SsoAuditLogCreateWithoutUserInput[] | SsoAuditLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SsoAuditLogCreateOrConnectWithoutUserInput | SsoAuditLogCreateOrConnectWithoutUserInput[]
+    createMany?: SsoAuditLogCreateManyUserInputEnvelope
+    connect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -49634,6 +53412,20 @@ export namespace Prisma {
     deleteMany?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
   }
 
+  export type SsoAuditLogUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SsoAuditLogCreateWithoutUserInput, SsoAuditLogUncheckedCreateWithoutUserInput> | SsoAuditLogCreateWithoutUserInput[] | SsoAuditLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SsoAuditLogCreateOrConnectWithoutUserInput | SsoAuditLogCreateOrConnectWithoutUserInput[]
+    upsert?: SsoAuditLogUpsertWithWhereUniqueWithoutUserInput | SsoAuditLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SsoAuditLogCreateManyUserInputEnvelope
+    set?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    disconnect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    delete?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    connect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    update?: SsoAuditLogUpdateWithWhereUniqueWithoutUserInput | SsoAuditLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SsoAuditLogUpdateManyWithWhereWithoutUserInput | SsoAuditLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SsoAuditLogScalarWhereInput | SsoAuditLogScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -49900,6 +53692,20 @@ export namespace Prisma {
     deleteMany?: TwoFactorAuditScalarWhereInput | TwoFactorAuditScalarWhereInput[]
   }
 
+  export type SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SsoAuditLogCreateWithoutUserInput, SsoAuditLogUncheckedCreateWithoutUserInput> | SsoAuditLogCreateWithoutUserInput[] | SsoAuditLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SsoAuditLogCreateOrConnectWithoutUserInput | SsoAuditLogCreateOrConnectWithoutUserInput[]
+    upsert?: SsoAuditLogUpsertWithWhereUniqueWithoutUserInput | SsoAuditLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SsoAuditLogCreateManyUserInputEnvelope
+    set?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    disconnect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    delete?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    connect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    update?: SsoAuditLogUpdateWithWhereUniqueWithoutUserInput | SsoAuditLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SsoAuditLogUpdateManyWithWhereWithoutUserInput | SsoAuditLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SsoAuditLogScalarWhereInput | SsoAuditLogScalarWhereInput[]
+  }
+
   export type AuditLogCreateNestedManyWithoutTenantInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -50033,6 +53839,19 @@ export namespace Prisma {
     connect?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
   }
 
+  export type TenantSsoConfigurationCreateNestedOneWithoutTenantInput = {
+    create?: XOR<TenantSsoConfigurationCreateWithoutTenantInput, TenantSsoConfigurationUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: TenantSsoConfigurationCreateOrConnectWithoutTenantInput
+    connect?: TenantSsoConfigurationWhereUniqueInput
+  }
+
+  export type SsoAuditLogCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SsoAuditLogCreateWithoutTenantInput, SsoAuditLogUncheckedCreateWithoutTenantInput> | SsoAuditLogCreateWithoutTenantInput[] | SsoAuditLogUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SsoAuditLogCreateOrConnectWithoutTenantInput | SsoAuditLogCreateOrConnectWithoutTenantInput[]
+    createMany?: SsoAuditLogCreateManyTenantInputEnvelope
+    connect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+  }
+
   export type AuditLogUncheckedCreateNestedManyWithoutTenantInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -50164,6 +53983,19 @@ export namespace Prisma {
     connectOrCreate?: TenantSupportRoutingCreateOrConnectWithoutTenantInput | TenantSupportRoutingCreateOrConnectWithoutTenantInput[]
     createMany?: TenantSupportRoutingCreateManyTenantInputEnvelope
     connect?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+  }
+
+  export type TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput = {
+    create?: XOR<TenantSsoConfigurationCreateWithoutTenantInput, TenantSsoConfigurationUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: TenantSsoConfigurationCreateOrConnectWithoutTenantInput
+    connect?: TenantSsoConfigurationWhereUniqueInput
+  }
+
+  export type SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SsoAuditLogCreateWithoutTenantInput, SsoAuditLogUncheckedCreateWithoutTenantInput> | SsoAuditLogCreateWithoutTenantInput[] | SsoAuditLogUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SsoAuditLogCreateOrConnectWithoutTenantInput | SsoAuditLogCreateOrConnectWithoutTenantInput[]
+    createMany?: SsoAuditLogCreateManyTenantInputEnvelope
+    connect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
   }
 
   export type AuditLogUpdateManyWithoutTenantNestedInput = {
@@ -50432,6 +54264,30 @@ export namespace Prisma {
     deleteMany?: TenantSupportRoutingScalarWhereInput | TenantSupportRoutingScalarWhereInput[]
   }
 
+  export type TenantSsoConfigurationUpdateOneWithoutTenantNestedInput = {
+    create?: XOR<TenantSsoConfigurationCreateWithoutTenantInput, TenantSsoConfigurationUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: TenantSsoConfigurationCreateOrConnectWithoutTenantInput
+    upsert?: TenantSsoConfigurationUpsertWithoutTenantInput
+    disconnect?: TenantSsoConfigurationWhereInput | boolean
+    delete?: TenantSsoConfigurationWhereInput | boolean
+    connect?: TenantSsoConfigurationWhereUniqueInput
+    update?: XOR<XOR<TenantSsoConfigurationUpdateToOneWithWhereWithoutTenantInput, TenantSsoConfigurationUpdateWithoutTenantInput>, TenantSsoConfigurationUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type SsoAuditLogUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SsoAuditLogCreateWithoutTenantInput, SsoAuditLogUncheckedCreateWithoutTenantInput> | SsoAuditLogCreateWithoutTenantInput[] | SsoAuditLogUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SsoAuditLogCreateOrConnectWithoutTenantInput | SsoAuditLogCreateOrConnectWithoutTenantInput[]
+    upsert?: SsoAuditLogUpsertWithWhereUniqueWithoutTenantInput | SsoAuditLogUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SsoAuditLogCreateManyTenantInputEnvelope
+    set?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    disconnect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    delete?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    connect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    update?: SsoAuditLogUpdateWithWhereUniqueWithoutTenantInput | SsoAuditLogUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SsoAuditLogUpdateManyWithWhereWithoutTenantInput | SsoAuditLogUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SsoAuditLogScalarWhereInput | SsoAuditLogScalarWhereInput[]
+  }
+
   export type AuditLogUncheckedUpdateManyWithoutTenantNestedInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -50698,6 +54554,82 @@ export namespace Prisma {
     deleteMany?: TenantSupportRoutingScalarWhereInput | TenantSupportRoutingScalarWhereInput[]
   }
 
+  export type TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput = {
+    create?: XOR<TenantSsoConfigurationCreateWithoutTenantInput, TenantSsoConfigurationUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: TenantSsoConfigurationCreateOrConnectWithoutTenantInput
+    upsert?: TenantSsoConfigurationUpsertWithoutTenantInput
+    disconnect?: TenantSsoConfigurationWhereInput | boolean
+    delete?: TenantSsoConfigurationWhereInput | boolean
+    connect?: TenantSsoConfigurationWhereUniqueInput
+    update?: XOR<XOR<TenantSsoConfigurationUpdateToOneWithWhereWithoutTenantInput, TenantSsoConfigurationUpdateWithoutTenantInput>, TenantSsoConfigurationUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SsoAuditLogCreateWithoutTenantInput, SsoAuditLogUncheckedCreateWithoutTenantInput> | SsoAuditLogCreateWithoutTenantInput[] | SsoAuditLogUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SsoAuditLogCreateOrConnectWithoutTenantInput | SsoAuditLogCreateOrConnectWithoutTenantInput[]
+    upsert?: SsoAuditLogUpsertWithWhereUniqueWithoutTenantInput | SsoAuditLogUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SsoAuditLogCreateManyTenantInputEnvelope
+    set?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    disconnect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    delete?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    connect?: SsoAuditLogWhereUniqueInput | SsoAuditLogWhereUniqueInput[]
+    update?: SsoAuditLogUpdateWithWhereUniqueWithoutTenantInput | SsoAuditLogUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SsoAuditLogUpdateManyWithWhereWithoutTenantInput | SsoAuditLogUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SsoAuditLogScalarWhereInput | SsoAuditLogScalarWhereInput[]
+  }
+
+  export type TenantCreateNestedOneWithoutSsoConfigurationInput = {
+    create?: XOR<TenantCreateWithoutSsoConfigurationInput, TenantUncheckedCreateWithoutSsoConfigurationInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSsoConfigurationInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type TenantUpdateOneRequiredWithoutSsoConfigurationNestedInput = {
+    create?: XOR<TenantCreateWithoutSsoConfigurationInput, TenantUncheckedCreateWithoutSsoConfigurationInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSsoConfigurationInput
+    upsert?: TenantUpsertWithoutSsoConfigurationInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSsoConfigurationInput, TenantUpdateWithoutSsoConfigurationInput>, TenantUncheckedUpdateWithoutSsoConfigurationInput>
+  }
+
+  export type TenantCreateNestedOneWithoutSsoAuditLogsInput = {
+    create?: XOR<TenantCreateWithoutSsoAuditLogsInput, TenantUncheckedCreateWithoutSsoAuditLogsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSsoAuditLogsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutSsoAuditLogsInput = {
+    create?: XOR<UserCreateWithoutSsoAuditLogsInput, UserUncheckedCreateWithoutSsoAuditLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSsoAuditLogsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantUpdateOneRequiredWithoutSsoAuditLogsNestedInput = {
+    create?: XOR<TenantCreateWithoutSsoAuditLogsInput, TenantUncheckedCreateWithoutSsoAuditLogsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSsoAuditLogsInput
+    upsert?: TenantUpsertWithoutSsoAuditLogsInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSsoAuditLogsInput, TenantUpdateWithoutSsoAuditLogsInput>, TenantUncheckedUpdateWithoutSsoAuditLogsInput>
+  }
+
+  export type UserUpdateOneWithoutSsoAuditLogsNestedInput = {
+    create?: XOR<UserCreateWithoutSsoAuditLogsInput, UserUncheckedCreateWithoutSsoAuditLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSsoAuditLogsInput
+    upsert?: UserUpsertWithoutSsoAuditLogsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSsoAuditLogsInput, UserUpdateWithoutSsoAuditLogsInput>, UserUncheckedUpdateWithoutSsoAuditLogsInput>
+  }
+
   export type TenantCreateNestedOneWithoutMembershipsInput = {
     create?: XOR<TenantCreateWithoutMembershipsInput, TenantUncheckedCreateWithoutMembershipsInput>
     connectOrCreate?: TenantCreateOrConnectWithoutMembershipsInput
@@ -50804,14 +54736,6 @@ export namespace Prisma {
     connectOrCreate?: ContactMessageReasonCreateOrConnectWithoutContactReasonInput | ContactMessageReasonCreateOrConnectWithoutContactReasonInput[]
     createMany?: ContactMessageReasonCreateManyContactReasonInputEnvelope
     connect?: ContactMessageReasonWhereUniqueInput | ContactMessageReasonWhereUniqueInput[]
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type ContactMessageReasonUpdateManyWithoutContactReasonNestedInput = {
@@ -52195,6 +56119,28 @@ export namespace Prisma {
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
@@ -52221,28 +56167,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-  export type NestedJsonNullableFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
   export type NestedJsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -52314,6 +56238,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -52363,6 +56288,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -52428,6 +56354,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -52477,6 +56404,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -52526,6 +56454,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -52575,6 +56504,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -52634,6 +56564,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSessionsInput = {
@@ -52688,6 +56620,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSessionsInput = {
@@ -52753,6 +56687,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -52802,6 +56737,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutSessionsInput = {
@@ -52867,6 +56803,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSessionsInput = {
@@ -52921,6 +56859,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -53645,6 +57585,46 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SsoAuditLogCreateWithoutUserInput = {
+    id?: string
+    event: string
+    provider: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    samlRequestId?: string | null
+    samlResponseId?: string | null
+    errorMessage?: string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: string | null
+    createdAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutSsoAuditLogsInput
+  }
+
+  export type SsoAuditLogUncheckedCreateWithoutUserInput = {
+    id?: string
+    tenantId: string
+    event: string
+    provider: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    samlRequestId?: string | null
+    samlResponseId?: string | null
+    errorMessage?: string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SsoAuditLogCreateOrConnectWithoutUserInput = {
+    where: SsoAuditLogWhereUniqueInput
+    create: XOR<SsoAuditLogCreateWithoutUserInput, SsoAuditLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type SsoAuditLogCreateManyUserInputEnvelope = {
+    data: SsoAuditLogCreateManyUserInput | SsoAuditLogCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -54246,6 +58226,41 @@ export namespace Prisma {
     userAgent?: StringNullableFilter<"TwoFactorAudit"> | string | null
     metadata?: StringNullableFilter<"TwoFactorAudit"> | string | null
     createdAt?: DateTimeFilter<"TwoFactorAudit"> | Date | string
+  }
+
+  export type SsoAuditLogUpsertWithWhereUniqueWithoutUserInput = {
+    where: SsoAuditLogWhereUniqueInput
+    update: XOR<SsoAuditLogUpdateWithoutUserInput, SsoAuditLogUncheckedUpdateWithoutUserInput>
+    create: XOR<SsoAuditLogCreateWithoutUserInput, SsoAuditLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type SsoAuditLogUpdateWithWhereUniqueWithoutUserInput = {
+    where: SsoAuditLogWhereUniqueInput
+    data: XOR<SsoAuditLogUpdateWithoutUserInput, SsoAuditLogUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SsoAuditLogUpdateManyWithWhereWithoutUserInput = {
+    where: SsoAuditLogScalarWhereInput
+    data: XOR<SsoAuditLogUpdateManyMutationInput, SsoAuditLogUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SsoAuditLogScalarWhereInput = {
+    AND?: SsoAuditLogScalarWhereInput | SsoAuditLogScalarWhereInput[]
+    OR?: SsoAuditLogScalarWhereInput[]
+    NOT?: SsoAuditLogScalarWhereInput | SsoAuditLogScalarWhereInput[]
+    id?: StringFilter<"SsoAuditLog"> | string
+    tenantId?: StringFilter<"SsoAuditLog"> | string
+    userId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    event?: StringFilter<"SsoAuditLog"> | string
+    provider?: StringFilter<"SsoAuditLog"> | string
+    ipAddress?: StringNullableFilter<"SsoAuditLog"> | string | null
+    userAgent?: StringNullableFilter<"SsoAuditLog"> | string | null
+    samlRequestId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    samlResponseId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    errorMessage?: StringNullableFilter<"SsoAuditLog"> | string | null
+    attributes?: JsonNullableFilter<"SsoAuditLog">
+    sessionId?: StringNullableFilter<"SsoAuditLog"> | string | null
+    createdAt?: DateTimeFilter<"SsoAuditLog"> | Date | string
   }
 
   export type AuditLogCreateWithoutTenantInput = {
@@ -54962,6 +58977,139 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TenantSsoConfigurationCreateWithoutTenantInput = {
+    id?: string
+    provider: string
+    providerName: string
+    isEnabled?: boolean
+    enforceSSO?: boolean
+    samlEntityId?: string | null
+    samlSsoUrl?: string | null
+    samlSloUrl?: string | null
+    samlCertificate?: string | null
+    samlSigningCert?: string | null
+    samlNameIdFormat?: string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: string | null
+    oidcClientId?: string | null
+    oidcClientSecret?: string | null
+    oidcScopes?: string | null
+    oidcTokenEndpoint?: string | null
+    oidcAuthEndpoint?: string | null
+    oidcUserinfoEndpoint?: string | null
+    oidcJwksUri?: string | null
+    oauth2ClientId?: string | null
+    oauth2ClientSecret?: string | null
+    oauth2AuthUrl?: string | null
+    oauth2TokenUrl?: string | null
+    oauth2UserInfoUrl?: string | null
+    oauth2Scopes?: string | null
+    autoProvisionUsers?: boolean
+    defaultRole?: string
+    allowedDomains?: string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: boolean
+    signRequests?: boolean
+    encryptAssertions?: boolean
+    sessionTimeout?: number | null
+    lastSyncAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    totalLogins?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    updatedBy: string
+  }
+
+  export type TenantSsoConfigurationUncheckedCreateWithoutTenantInput = {
+    id?: string
+    provider: string
+    providerName: string
+    isEnabled?: boolean
+    enforceSSO?: boolean
+    samlEntityId?: string | null
+    samlSsoUrl?: string | null
+    samlSloUrl?: string | null
+    samlCertificate?: string | null
+    samlSigningCert?: string | null
+    samlNameIdFormat?: string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: string | null
+    oidcClientId?: string | null
+    oidcClientSecret?: string | null
+    oidcScopes?: string | null
+    oidcTokenEndpoint?: string | null
+    oidcAuthEndpoint?: string | null
+    oidcUserinfoEndpoint?: string | null
+    oidcJwksUri?: string | null
+    oauth2ClientId?: string | null
+    oauth2ClientSecret?: string | null
+    oauth2AuthUrl?: string | null
+    oauth2TokenUrl?: string | null
+    oauth2UserInfoUrl?: string | null
+    oauth2Scopes?: string | null
+    autoProvisionUsers?: boolean
+    defaultRole?: string
+    allowedDomains?: string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: boolean
+    signRequests?: boolean
+    encryptAssertions?: boolean
+    sessionTimeout?: number | null
+    lastSyncAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    totalLogins?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: string
+    updatedBy: string
+  }
+
+  export type TenantSsoConfigurationCreateOrConnectWithoutTenantInput = {
+    where: TenantSsoConfigurationWhereUniqueInput
+    create: XOR<TenantSsoConfigurationCreateWithoutTenantInput, TenantSsoConfigurationUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SsoAuditLogCreateWithoutTenantInput = {
+    id?: string
+    event: string
+    provider: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    samlRequestId?: string | null
+    samlResponseId?: string | null
+    errorMessage?: string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: string | null
+    createdAt?: Date | string
+    user?: UserCreateNestedOneWithoutSsoAuditLogsInput
+  }
+
+  export type SsoAuditLogUncheckedCreateWithoutTenantInput = {
+    id?: string
+    userId?: string | null
+    event: string
+    provider: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    samlRequestId?: string | null
+    samlResponseId?: string | null
+    errorMessage?: string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SsoAuditLogCreateOrConnectWithoutTenantInput = {
+    where: SsoAuditLogWhereUniqueInput
+    create: XOR<SsoAuditLogCreateWithoutTenantInput, SsoAuditLogUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SsoAuditLogCreateManyTenantInputEnvelope = {
+    data: SsoAuditLogCreateManyTenantInput | SsoAuditLogCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AuditLogUpsertWithWhereUniqueWithoutTenantInput = {
     where: AuditLogWhereUniqueInput
     update: XOR<AuditLogUpdateWithoutTenantInput, AuditLogUncheckedUpdateWithoutTenantInput>
@@ -55374,6 +59522,817 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TenantSupportRouting"> | Date | string
   }
 
+  export type TenantSsoConfigurationUpsertWithoutTenantInput = {
+    update: XOR<TenantSsoConfigurationUpdateWithoutTenantInput, TenantSsoConfigurationUncheckedUpdateWithoutTenantInput>
+    create: XOR<TenantSsoConfigurationCreateWithoutTenantInput, TenantSsoConfigurationUncheckedCreateWithoutTenantInput>
+    where?: TenantSsoConfigurationWhereInput
+  }
+
+  export type TenantSsoConfigurationUpdateToOneWithWhereWithoutTenantInput = {
+    where?: TenantSsoConfigurationWhereInput
+    data: XOR<TenantSsoConfigurationUpdateWithoutTenantInput, TenantSsoConfigurationUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type TenantSsoConfigurationUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    enforceSSO?: BoolFieldUpdateOperationsInput | boolean
+    samlEntityId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSloUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSigningCert?: NullableStringFieldUpdateOperationsInput | string | null
+    samlNameIdFormat?: NullableStringFieldUpdateOperationsInput | string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcScopes?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcTokenEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcAuthEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcUserinfoEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcJwksUri?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2AuthUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2TokenUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2UserInfoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2Scopes?: NullableStringFieldUpdateOperationsInput | string | null
+    autoProvisionUsers?: BoolFieldUpdateOperationsInput | boolean
+    defaultRole?: StringFieldUpdateOperationsInput | string
+    allowedDomains?: NullableStringFieldUpdateOperationsInput | string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: BoolFieldUpdateOperationsInput | boolean
+    signRequests?: BoolFieldUpdateOperationsInput | boolean
+    encryptAssertions?: BoolFieldUpdateOperationsInput | boolean
+    sessionTimeout?: NullableIntFieldUpdateOperationsInput | number | null
+    lastSyncAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalLogins?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    updatedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TenantSsoConfigurationUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    enforceSSO?: BoolFieldUpdateOperationsInput | boolean
+    samlEntityId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSloUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    samlCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    samlSigningCert?: NullableStringFieldUpdateOperationsInput | string | null
+    samlNameIdFormat?: NullableStringFieldUpdateOperationsInput | string | null
+    samlAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    oidcIssuer?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcScopes?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcTokenEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcAuthEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcUserinfoEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
+    oidcJwksUri?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientId?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2ClientSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2AuthUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2TokenUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2UserInfoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    oauth2Scopes?: NullableStringFieldUpdateOperationsInput | string | null
+    autoProvisionUsers?: BoolFieldUpdateOperationsInput | boolean
+    defaultRole?: StringFieldUpdateOperationsInput | string
+    allowedDomains?: NullableStringFieldUpdateOperationsInput | string | null
+    userAttributeMapping?: NullableJsonNullValueInput | InputJsonValue
+    signAssertions?: BoolFieldUpdateOperationsInput | boolean
+    signRequests?: BoolFieldUpdateOperationsInput | boolean
+    encryptAssertions?: BoolFieldUpdateOperationsInput | boolean
+    sessionTimeout?: NullableIntFieldUpdateOperationsInput | number | null
+    lastSyncAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalLogins?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    updatedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SsoAuditLogUpsertWithWhereUniqueWithoutTenantInput = {
+    where: SsoAuditLogWhereUniqueInput
+    update: XOR<SsoAuditLogUpdateWithoutTenantInput, SsoAuditLogUncheckedUpdateWithoutTenantInput>
+    create: XOR<SsoAuditLogCreateWithoutTenantInput, SsoAuditLogUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SsoAuditLogUpdateWithWhereUniqueWithoutTenantInput = {
+    where: SsoAuditLogWhereUniqueInput
+    data: XOR<SsoAuditLogUpdateWithoutTenantInput, SsoAuditLogUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type SsoAuditLogUpdateManyWithWhereWithoutTenantInput = {
+    where: SsoAuditLogScalarWhereInput
+    data: XOR<SsoAuditLogUpdateManyMutationInput, SsoAuditLogUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type TenantCreateWithoutSsoConfigurationInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutSsoConfigurationInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutSsoConfigurationInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutSsoConfigurationInput, TenantUncheckedCreateWithoutSsoConfigurationInput>
+  }
+
+  export type TenantUpsertWithoutSsoConfigurationInput = {
+    update: XOR<TenantUpdateWithoutSsoConfigurationInput, TenantUncheckedUpdateWithoutSsoConfigurationInput>
+    create: XOR<TenantCreateWithoutSsoConfigurationInput, TenantUncheckedCreateWithoutSsoConfigurationInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutSsoConfigurationInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutSsoConfigurationInput, TenantUncheckedUpdateWithoutSsoConfigurationInput>
+  }
+
+  export type TenantUpdateWithoutSsoConfigurationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutSsoConfigurationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantCreateWithoutSsoAuditLogsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutSsoAuditLogsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutSsoAuditLogsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutSsoAuditLogsInput, TenantUncheckedCreateWithoutSsoAuditLogsInput>
+  }
+
+  export type UserCreateWithoutSsoAuditLogsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSsoAuditLogsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSsoAuditLogsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSsoAuditLogsInput, UserUncheckedCreateWithoutSsoAuditLogsInput>
+  }
+
+  export type TenantUpsertWithoutSsoAuditLogsInput = {
+    update: XOR<TenantUpdateWithoutSsoAuditLogsInput, TenantUncheckedUpdateWithoutSsoAuditLogsInput>
+    create: XOR<TenantCreateWithoutSsoAuditLogsInput, TenantUncheckedCreateWithoutSsoAuditLogsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutSsoAuditLogsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutSsoAuditLogsInput, TenantUncheckedUpdateWithoutSsoAuditLogsInput>
+  }
+
+  export type TenantUpdateWithoutSsoAuditLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutSsoAuditLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+  }
+
+  export type UserUpsertWithoutSsoAuditLogsInput = {
+    update: XOR<UserUpdateWithoutSsoAuditLogsInput, UserUncheckedUpdateWithoutSsoAuditLogsInput>
+    create: XOR<UserCreateWithoutSsoAuditLogsInput, UserUncheckedCreateWithoutSsoAuditLogsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSsoAuditLogsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSsoAuditLogsInput, UserUncheckedUpdateWithoutSsoAuditLogsInput>
+  }
+
+  export type UserUpdateWithoutSsoAuditLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSsoAuditLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type TenantCreateWithoutMembershipsInput = {
     id?: string
     slug: string
@@ -55426,6 +60385,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutMembershipsInput = {
@@ -55480,6 +60441,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutMembershipsInput = {
@@ -55534,6 +60497,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -55583,6 +60547,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -55637,6 +60602,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInvitedMembershipsInput = {
@@ -55686,6 +60652,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutInvitedMembershipsInput = {
@@ -55756,6 +60723,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutMembershipsInput = {
@@ -55810,6 +60779,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -55870,6 +60841,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -55919,6 +60891,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutInvitedMembershipsInput = {
@@ -55979,6 +60952,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvitedMembershipsInput = {
@@ -56028,6 +61002,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantCreateWithoutInvitationsInput = {
@@ -56082,6 +61057,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutInvitationsInput = {
@@ -56136,6 +61113,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutInvitationsInput = {
@@ -56190,6 +61169,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentInvitationsInput = {
@@ -56239,6 +61219,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentInvitationsInput = {
@@ -56293,6 +61274,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAcceptedInvitationsInput = {
@@ -56342,6 +61324,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAcceptedInvitationsInput = {
@@ -56412,6 +61395,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutInvitationsInput = {
@@ -56466,6 +61451,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutSentInvitationsInput = {
@@ -56526,6 +61513,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentInvitationsInput = {
@@ -56575,6 +61563,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutAcceptedInvitationsInput = {
@@ -56635,6 +61624,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAcceptedInvitationsInput = {
@@ -56684,6 +61674,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ContactMessageReasonCreateWithoutContactReasonInput = {
@@ -56760,6 +61751,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactReasonsInput = {
@@ -56814,6 +61807,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactReasonsInput = {
@@ -56910,6 +61905,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactReasonsInput = {
@@ -56964,6 +61961,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutContactMessagesInput = {
@@ -57013,6 +62012,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutContactMessagesInput = {
@@ -57062,6 +62062,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutContactMessagesInput = {
@@ -57121,6 +62122,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactMessagesInput = {
@@ -57175,6 +62178,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactMessagesInput = {
@@ -57343,6 +62348,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutContactMessagesInput = {
@@ -57392,6 +62398,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutContactMessagesInput = {
@@ -57457,6 +62464,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactMessagesInput = {
@@ -57511,6 +62520,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type ContactMessageReasonUpsertWithWhereUniqueWithoutContactMessageInput = {
@@ -58025,6 +63036,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutAuditLogsInput = {
@@ -58079,6 +63092,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutAuditLogsInput = {
@@ -58133,6 +63148,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -58182,6 +63198,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -58252,6 +63269,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutAuditLogsInput = {
@@ -58306,6 +63325,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutAuditLogsInput = {
@@ -58366,6 +63387,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -58415,6 +63437,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPasskeysInput = {
@@ -58464,6 +63487,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPasskeysInput = {
@@ -58513,6 +63537,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPasskeysInput = {
@@ -58578,6 +63603,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPasskeysInput = {
@@ -58627,6 +63653,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAuthenticatorCodesInput = {
@@ -58676,6 +63703,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuthenticatorCodesInput = {
@@ -58725,6 +63753,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuthenticatorCodesInput = {
@@ -58790,6 +63819,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuthenticatorCodesInput = {
@@ -58839,6 +63869,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -58888,6 +63919,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -58937,6 +63969,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -58996,6 +64029,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutNotificationsInput = {
@@ -59050,6 +64085,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutNotificationsInput = {
@@ -59143,6 +64180,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -59192,6 +64230,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutNotificationsInput = {
@@ -59257,6 +64296,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutNotificationsInput = {
@@ -59311,6 +64352,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type NotificationRecipientUpsertWithWhereUniqueWithoutNotificationInput = {
@@ -59376,6 +64419,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationRecipientsInput = {
@@ -59425,6 +64469,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationRecipientsInput = {
@@ -59529,6 +64574,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationRecipientsInput = {
@@ -59578,6 +64624,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type NotificationUpsertWithoutRecipientsInput = {
@@ -59677,6 +64724,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutWebhookEndpointsInput = {
@@ -59731,6 +64780,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutWebhookEndpointsInput = {
@@ -59801,6 +64852,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutWebhookEndpointsInput = {
@@ -59855,6 +64908,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type GlobalFeatureRuleCreateWithoutFeatureInput = {
@@ -60127,6 +65182,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFeatureRulesInput = {
@@ -60181,6 +65238,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFeatureRulesInput = {
@@ -60284,6 +65343,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFeatureRulesInput = {
@@ -60338,6 +65399,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type FeatureDefinitionUpsertWithoutTenantRulesInput = {
@@ -60464,6 +65527,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFeatureAuditEntriesInput = {
@@ -60518,6 +65583,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFeatureAuditEntriesInput = {
@@ -60627,6 +65694,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFeatureAuditEntriesInput = {
@@ -60681,6 +65750,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTwoFactorMethodsInput = {
@@ -60730,6 +65801,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTwoFactorMethodsInput = {
@@ -60779,6 +65851,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTwoFactorMethodsInput = {
@@ -60838,6 +65911,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutTwoFactorMethodsInput = {
@@ -60892,6 +65967,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutTwoFactorMethodsInput = {
@@ -60957,6 +66034,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTwoFactorMethodsInput = {
@@ -61006,6 +66084,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutTwoFactorMethodsInput = {
@@ -61071,6 +66150,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutTwoFactorMethodsInput = {
@@ -61125,6 +66206,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutPendingAuthsInput = {
@@ -61174,6 +66257,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPendingAuthsInput = {
@@ -61223,6 +66307,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPendingAuthsInput = {
@@ -61282,6 +66367,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutPendingAuthsInput = {
@@ -61336,6 +66423,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutPendingAuthsInput = {
@@ -61401,6 +66490,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPendingAuthsInput = {
@@ -61450,6 +66540,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutPendingAuthsInput = {
@@ -61515,6 +66606,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutPendingAuthsInput = {
@@ -61569,6 +66662,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTwoFactorCodesInput = {
@@ -61618,6 +66713,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTwoFactorCodesInput = {
@@ -61667,6 +66763,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTwoFactorCodesInput = {
@@ -61726,6 +66823,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutTwoFactorCodesInput = {
@@ -61780,6 +66879,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutTwoFactorCodesInput = {
@@ -61845,6 +66946,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTwoFactorCodesInput = {
@@ -61894,6 +66996,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutTwoFactorCodesInput = {
@@ -61959,6 +67062,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutTwoFactorCodesInput = {
@@ -62013,6 +67118,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTwoFactorAuditsInput = {
@@ -62062,6 +67169,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTwoFactorAuditsInput = {
@@ -62111,6 +67219,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTwoFactorAuditsInput = {
@@ -62170,6 +67279,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutTwoFactorAuditsInput = {
@@ -62224,6 +67335,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutTwoFactorAuditsInput = {
@@ -62289,6 +67402,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTwoFactorAuditsInput = {
@@ -62338,6 +67452,7 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutTwoFactorAuditsInput = {
@@ -62403,6 +67518,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutTwoFactorAuditsInput = {
@@ -62457,6 +67574,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type ContactMessageCreateWithoutSupportCaseInput = {
@@ -62553,6 +67672,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssignedCasesInput = {
@@ -62602,6 +67722,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssignedCasesInput = {
@@ -62661,6 +67782,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSupportCasesInput = {
@@ -62715,6 +67838,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSupportCasesInput = {
@@ -62954,6 +68079,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedCasesInput = {
@@ -63003,6 +68129,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantUpsertWithoutSupportCasesInput = {
@@ -63068,6 +68195,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSupportCasesInput = {
@@ -63122,6 +68251,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type SupportOptionUpsertWithoutCasesInput = {
@@ -63257,6 +68388,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSupportOptionsInput = {
@@ -63311,6 +68444,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSupportOptionsInput = {
@@ -63568,6 +68703,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSupportOptionsInput = {
@@ -63622,6 +68759,8 @@ export namespace Prisma {
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type SupportOptionUpsertWithoutChildrenInput = {
@@ -63981,6 +69120,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCaseStatusChangesInput = {
@@ -64030,6 +69170,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCaseStatusChangesInput = {
@@ -64150,6 +69291,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCaseStatusChangesInput = {
@@ -64199,6 +69341,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantCreateWithoutCaseMetricsInput = {
@@ -64253,6 +69396,8 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCaseMetricsInput = {
@@ -64307,6 +69452,8 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCaseMetricsInput = {
@@ -64404,6 +69551,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCaseMetricsInput = {
@@ -64453,6 +69601,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCaseMetricsInput = {
@@ -64523,6 +69672,8 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCaseMetricsInput = {
@@ -64577,6 +69728,8 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type SupportOptionUpsertWithoutMetricsInput = {
@@ -64686,6 +69839,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCaseMetricsInput = {
@@ -64735,6 +69889,7 @@ export namespace Prisma {
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TenantCreateWithoutSupportConfigurationsInput = {
@@ -64789,6 +69944,8 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSupportConfigurationsInput = {
@@ -64843,6 +70000,8 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSupportConfigurationsInput = {
@@ -64913,6 +70072,8 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSupportConfigurationsInput = {
@@ -64967,6 +70128,8 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateWithoutSupportRoutingInput = {
@@ -65021,6 +70184,8 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSupportRoutingInput = {
@@ -65075,6 +70240,8 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSupportRoutingInput = {
@@ -65145,6 +70312,8 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSupportRoutingInput = {
@@ -65199,6 +70368,8 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -65458,6 +70629,21 @@ export namespace Prisma {
     ipAddress?: string | null
     userAgent?: string | null
     metadata?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SsoAuditLogCreateManyUserInput = {
+    id?: string
+    tenantId: string
+    event: string
+    provider: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    samlRequestId?: string | null
+    samlResponseId?: string | null
+    errorMessage?: string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: string | null
     createdAt?: Date | string
   }
 
@@ -66253,6 +71439,51 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SsoAuditLogUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutSsoAuditLogsNestedInput
+  }
+
+  export type SsoAuditLogUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SsoAuditLogUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AuditLogCreateManyTenantInput = {
     id?: string
     userId: string
@@ -66503,6 +71734,21 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type SsoAuditLogCreateManyTenantInput = {
+    id?: string
+    userId?: string | null
+    event: string
+    provider: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    samlRequestId?: string | null
+    samlResponseId?: string | null
+    errorMessage?: string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: string | null
+    createdAt?: Date | string
   }
 
   export type AuditLogUpdateWithoutTenantInput = {
@@ -67281,6 +72527,51 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SsoAuditLogUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutSsoAuditLogsNestedInput
+  }
+
+  export type SsoAuditLogUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SsoAuditLogUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    event?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    samlRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    samlResponseId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    attributes?: NullableJsonNullValueInput | InputJsonValue
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ContactMessageReasonCreateManyContactReasonInput = {
     id?: string
     contactMessageId: string
@@ -67990,6 +73281,14 @@ export namespace Prisma {
      * @deprecated Use TenantDefaultArgs instead
      */
     export type TenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TenantDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TenantSsoConfigurationDefaultArgs instead
+     */
+    export type TenantSsoConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TenantSsoConfigurationDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SsoAuditLogDefaultArgs instead
+     */
+    export type SsoAuditLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SsoAuditLogDefaultArgs<ExtArgs>
     /**
      * @deprecated Use MembershipDefaultArgs instead
      */

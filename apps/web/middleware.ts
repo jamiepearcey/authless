@@ -120,6 +120,10 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const pathParts = pathname.split("/");
 
+  // Handle SSO redirection for tenant sign-in pages
+  // Note: SSO redirection logic moved to the sign-in page component
+  // since middleware runs in Edge Runtime and can't access database
+
   // Handle /auth routing
   if (pathname === "/auth") {
     // Always route to /auth/signin/passkey by default

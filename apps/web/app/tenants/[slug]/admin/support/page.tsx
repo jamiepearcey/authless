@@ -555,7 +555,7 @@ export default function TenantSupportPage() {
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2">
-                        {(metricsData?.metrics || []).slice(0, 7).map((day: any) => (
+                        {(metricsData.daily || []).slice(0, 7).map((day: any) => (
                           <div key={day.date} className="flex items-center justify-between p-2 bg-gray-50 rounded">
                             <span className="text-sm font-medium">
                               {new Date(day.date).toLocaleDateString()}

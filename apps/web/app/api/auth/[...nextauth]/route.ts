@@ -18,6 +18,7 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET!
     }),
     CredentialsProvider({
+      id: "credentials",
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
@@ -76,6 +77,46 @@ export const authOptions = {
         if (!isValid) {
           return null;
         }
+
+        return {
+          id: user.id,
+          email: user.email!,
+          name: user.name,
+          image: user.image,
+          platformRole: user.platformRole || undefined
+        };
+      }
+    }),
+    CredentialsProvider({
+      id: "sso-credentials",
+      name: "SSO Credentials",
+      credentials: {
+        userId: { label: "User ID", type: "text" },
+        tenantSlug: { label: "Tenant Slug", type: "text" }
+      },
+      async authorize(credentials) {
+        if (!credentials?.userId || !credentials?.tenantSlug) {
+          return null;
+        }
+
+        // Get user by ID for SSO authentication
+        const user = await db.user.findUnique({
+          where: { id: credentials.userId }
+        });
+
+        if (!user) {
+          return null;
+        }
+
+        // TODO: Verify user has access to the tenant
+        // This would require a TenantUser model to be implemented
+        // const tenantUser = await db.tenantUser.findFirst({
+        //   where: { userId: user.id, tenant: { slug: credentials.tenantSlug } },
+        //   include: { tenant: true }
+        // });
+        // if (!tenantUser) {
+        //   throw new Error("User does not have access to this tenant");
+        // }
 
         return {
           id: user.id,
