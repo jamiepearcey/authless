@@ -662,7 +662,7 @@ export default function PricingPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 rounded-xl border-2 border-white text-white hover:bg-white/10">
+              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 rounded-xl border-2 border-white text-black hover:bg-white/10">
                 <Link href="/contact">
                   <Building className="mr-2 h-5 w-5" />
                   Claim Founding Discount
@@ -678,7 +678,7 @@ export default function PricingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <p>🎯 Free for revenue under £100k • 💼 £400 lifetime for larger businesses</p>
+            <p>Free for revenue under £100k • £400 lifetime for larger businesses</p>
           </motion.div>
         </div>
       </section>

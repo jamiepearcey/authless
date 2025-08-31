@@ -164,6 +164,7 @@ model Tenant {
   supportCases          SupportCase[]
   caseMetrics           CaseMetrics[]
   supportConfigurations SupportConfiguration[]
+  supportRouting        TenantSupportRouting[]
 
   @@index([slug])
   @@index([subdomain])
@@ -231,6 +232,7 @@ model ContactReason {
   label           String
   description     String
   icon            String
+  helpType        String                 @default("general") // technical, billing, account, general
   isActive        Boolean                @default(true)
   sortOrder       Int                    @default(0)
   tenantId        String?
@@ -242,6 +244,7 @@ model ContactReason {
   @@index([tenantId])
   @@index([isActive])
   @@index([sortOrder])
+  @@index([helpType])
 }
 
 model ContactMessage {
@@ -798,4 +801,23 @@ model SupportConfiguration {
   @@unique([key], name: "global_config_key")
   @@unique([tenantId, key], name: "tenant_config_key")
   @@index([tenantId])
+}
+
+// Tenant-specific email routing per help type
+model TenantSupportRouting {
+  id        String   @id @default(cuid())
+  tenantId  String
+  helpType  String // technical, billing, account, general
+  email     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, helpType])
+  @@index([tenantId])
+  @@index([helpType])
+  @@index([isActive])
 }

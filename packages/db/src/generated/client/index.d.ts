@@ -173,6 +173,11 @@ export type CaseMetrics = $Result.DefaultSelection<Prisma.$CaseMetricsPayload>
  * 
  */
 export type SupportConfiguration = $Result.DefaultSelection<Prisma.$SupportConfigurationPayload>
+/**
+ * Model TenantSupportRouting
+ * 
+ */
+export type TenantSupportRouting = $Result.DefaultSelection<Prisma.$TenantSupportRoutingPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -616,6 +621,16 @@ export class PrismaClient<
     * ```
     */
   get supportConfiguration(): Prisma.SupportConfigurationDelegate<ExtArgs>;
+
+  /**
+   * `prisma.tenantSupportRouting`: Exposes CRUD operations for the **TenantSupportRouting** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TenantSupportRoutings
+    * const tenantSupportRoutings = await prisma.tenantSupportRouting.findMany()
+    * ```
+    */
+  get tenantSupportRouting(): Prisma.TenantSupportRoutingDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1088,7 +1103,8 @@ export namespace Prisma {
     CaseMessage: 'CaseMessage',
     CaseStatusHistory: 'CaseStatusHistory',
     CaseMetrics: 'CaseMetrics',
-    SupportConfiguration: 'SupportConfiguration'
+    SupportConfiguration: 'SupportConfiguration',
+    TenantSupportRouting: 'TenantSupportRouting'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1104,7 +1120,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit" | "supportCase" | "supportOption" | "caseMessage" | "caseStatusHistory" | "caseMetrics" | "supportConfiguration"
+      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit" | "supportCase" | "supportOption" | "caseMessage" | "caseStatusHistory" | "caseMetrics" | "supportConfiguration" | "tenantSupportRouting"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3348,6 +3364,76 @@ export namespace Prisma {
           }
         }
       }
+      TenantSupportRouting: {
+        payload: Prisma.$TenantSupportRoutingPayload<ExtArgs>
+        fields: Prisma.TenantSupportRoutingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TenantSupportRoutingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TenantSupportRoutingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload>
+          }
+          findFirst: {
+            args: Prisma.TenantSupportRoutingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TenantSupportRoutingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload>
+          }
+          findMany: {
+            args: Prisma.TenantSupportRoutingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload>[]
+          }
+          create: {
+            args: Prisma.TenantSupportRoutingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload>
+          }
+          createMany: {
+            args: Prisma.TenantSupportRoutingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TenantSupportRoutingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload>[]
+          }
+          delete: {
+            args: Prisma.TenantSupportRoutingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload>
+          }
+          update: {
+            args: Prisma.TenantSupportRoutingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload>
+          }
+          deleteMany: {
+            args: Prisma.TenantSupportRoutingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TenantSupportRoutingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TenantSupportRoutingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSupportRoutingPayload>
+          }
+          aggregate: {
+            args: Prisma.TenantSupportRoutingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTenantSupportRouting>
+          }
+          groupBy: {
+            args: Prisma.TenantSupportRoutingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TenantSupportRoutingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TenantSupportRoutingCountArgs<ExtArgs>
+            result: $Utils.Optional<TenantSupportRoutingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3720,6 +3806,7 @@ export namespace Prisma {
     supportCases: number
     caseMetrics: number
     supportConfigurations: number
+    supportRouting: number
   }
 
   export type TenantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3741,6 +3828,7 @@ export namespace Prisma {
     supportCases?: boolean | TenantCountOutputTypeCountSupportCasesArgs
     caseMetrics?: boolean | TenantCountOutputTypeCountCaseMetricsArgs
     supportConfigurations?: boolean | TenantCountOutputTypeCountSupportConfigurationsArgs
+    supportRouting?: boolean | TenantCountOutputTypeCountSupportRoutingArgs
   }
 
   // Custom InputTypes
@@ -3878,6 +3966,13 @@ export namespace Prisma {
    */
   export type TenantCountOutputTypeCountSupportConfigurationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SupportConfigurationWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountSupportRoutingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TenantSupportRoutingWhereInput
   }
 
 
@@ -9077,6 +9172,7 @@ export namespace Prisma {
     supportCases?: boolean | Tenant$supportCasesArgs<ExtArgs>
     caseMetrics?: boolean | Tenant$caseMetricsArgs<ExtArgs>
     supportConfigurations?: boolean | Tenant$supportConfigurationsArgs<ExtArgs>
+    supportRouting?: boolean | Tenant$supportRoutingArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tenant"]>
 
@@ -9171,6 +9267,7 @@ export namespace Prisma {
     supportCases?: boolean | Tenant$supportCasesArgs<ExtArgs>
     caseMetrics?: boolean | Tenant$caseMetricsArgs<ExtArgs>
     supportConfigurations?: boolean | Tenant$supportConfigurationsArgs<ExtArgs>
+    supportRouting?: boolean | Tenant$supportRoutingArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TenantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -9196,6 +9293,7 @@ export namespace Prisma {
       supportCases: Prisma.$SupportCasePayload<ExtArgs>[]
       caseMetrics: Prisma.$CaseMetricsPayload<ExtArgs>[]
       supportConfigurations: Prisma.$SupportConfigurationPayload<ExtArgs>[]
+      supportRouting: Prisma.$TenantSupportRoutingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9613,6 +9711,7 @@ export namespace Prisma {
     supportCases<T extends Tenant$supportCasesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$supportCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportCasePayload<ExtArgs>, T, "findMany"> | Null>
     caseMetrics<T extends Tenant$caseMetricsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$caseMetricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseMetricsPayload<ExtArgs>, T, "findMany"> | Null>
     supportConfigurations<T extends Tenant$supportConfigurationsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$supportConfigurationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportConfigurationPayload<ExtArgs>, T, "findMany"> | Null>
+    supportRouting<T extends Tenant$supportRoutingArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$supportRoutingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10346,6 +10445,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SupportConfigurationScalarFieldEnum | SupportConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.supportRouting
+   */
+  export type Tenant$supportRoutingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    where?: TenantSupportRoutingWhereInput
+    orderBy?: TenantSupportRoutingOrderByWithRelationInput | TenantSupportRoutingOrderByWithRelationInput[]
+    cursor?: TenantSupportRoutingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TenantSupportRoutingScalarFieldEnum | TenantSupportRoutingScalarFieldEnum[]
   }
 
   /**
@@ -12489,6 +12608,7 @@ export namespace Prisma {
     label: string | null
     description: string | null
     icon: string | null
+    helpType: string | null
     isActive: boolean | null
     sortOrder: number | null
     tenantId: string | null
@@ -12502,6 +12622,7 @@ export namespace Prisma {
     label: string | null
     description: string | null
     icon: string | null
+    helpType: string | null
     isActive: boolean | null
     sortOrder: number | null
     tenantId: string | null
@@ -12515,6 +12636,7 @@ export namespace Prisma {
     label: number
     description: number
     icon: number
+    helpType: number
     isActive: number
     sortOrder: number
     tenantId: number
@@ -12538,6 +12660,7 @@ export namespace Prisma {
     label?: true
     description?: true
     icon?: true
+    helpType?: true
     isActive?: true
     sortOrder?: true
     tenantId?: true
@@ -12551,6 +12674,7 @@ export namespace Prisma {
     label?: true
     description?: true
     icon?: true
+    helpType?: true
     isActive?: true
     sortOrder?: true
     tenantId?: true
@@ -12564,6 +12688,7 @@ export namespace Prisma {
     label?: true
     description?: true
     icon?: true
+    helpType?: true
     isActive?: true
     sortOrder?: true
     tenantId?: true
@@ -12664,6 +12789,7 @@ export namespace Prisma {
     label: string
     description: string
     icon: string
+    helpType: string
     isActive: boolean
     sortOrder: number
     tenantId: string | null
@@ -12696,6 +12822,7 @@ export namespace Prisma {
     label?: boolean
     description?: boolean
     icon?: boolean
+    helpType?: boolean
     isActive?: boolean
     sortOrder?: boolean
     tenantId?: boolean
@@ -12712,6 +12839,7 @@ export namespace Prisma {
     label?: boolean
     description?: boolean
     icon?: boolean
+    helpType?: boolean
     isActive?: boolean
     sortOrder?: boolean
     tenantId?: boolean
@@ -12726,6 +12854,7 @@ export namespace Prisma {
     label?: boolean
     description?: boolean
     icon?: boolean
+    helpType?: boolean
     isActive?: boolean
     sortOrder?: boolean
     tenantId?: boolean
@@ -12754,6 +12883,7 @@ export namespace Prisma {
       label: string
       description: string
       icon: string
+      helpType: string
       isActive: boolean
       sortOrder: number
       tenantId: string | null
@@ -13159,6 +13289,7 @@ export namespace Prisma {
     readonly label: FieldRef<"ContactReason", 'String'>
     readonly description: FieldRef<"ContactReason", 'String'>
     readonly icon: FieldRef<"ContactReason", 'String'>
+    readonly helpType: FieldRef<"ContactReason", 'String'>
     readonly isActive: FieldRef<"ContactReason", 'Boolean'>
     readonly sortOrder: FieldRef<"ContactReason", 'Int'>
     readonly tenantId: FieldRef<"ContactReason", 'String'>
@@ -38426,6 +38557,963 @@ export namespace Prisma {
 
 
   /**
+   * Model TenantSupportRouting
+   */
+
+  export type AggregateTenantSupportRouting = {
+    _count: TenantSupportRoutingCountAggregateOutputType | null
+    _min: TenantSupportRoutingMinAggregateOutputType | null
+    _max: TenantSupportRoutingMaxAggregateOutputType | null
+  }
+
+  export type TenantSupportRoutingMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    helpType: string | null
+    email: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TenantSupportRoutingMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    helpType: string | null
+    email: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TenantSupportRoutingCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    helpType: number
+    email: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TenantSupportRoutingMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    helpType?: true
+    email?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TenantSupportRoutingMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    helpType?: true
+    email?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TenantSupportRoutingCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    helpType?: true
+    email?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TenantSupportRoutingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TenantSupportRouting to aggregate.
+     */
+    where?: TenantSupportRoutingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSupportRoutings to fetch.
+     */
+    orderBy?: TenantSupportRoutingOrderByWithRelationInput | TenantSupportRoutingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TenantSupportRoutingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSupportRoutings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSupportRoutings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TenantSupportRoutings
+    **/
+    _count?: true | TenantSupportRoutingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TenantSupportRoutingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TenantSupportRoutingMaxAggregateInputType
+  }
+
+  export type GetTenantSupportRoutingAggregateType<T extends TenantSupportRoutingAggregateArgs> = {
+        [P in keyof T & keyof AggregateTenantSupportRouting]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTenantSupportRouting[P]>
+      : GetScalarType<T[P], AggregateTenantSupportRouting[P]>
+  }
+
+
+
+
+  export type TenantSupportRoutingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TenantSupportRoutingWhereInput
+    orderBy?: TenantSupportRoutingOrderByWithAggregationInput | TenantSupportRoutingOrderByWithAggregationInput[]
+    by: TenantSupportRoutingScalarFieldEnum[] | TenantSupportRoutingScalarFieldEnum
+    having?: TenantSupportRoutingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TenantSupportRoutingCountAggregateInputType | true
+    _min?: TenantSupportRoutingMinAggregateInputType
+    _max?: TenantSupportRoutingMaxAggregateInputType
+  }
+
+  export type TenantSupportRoutingGroupByOutputType = {
+    id: string
+    tenantId: string
+    helpType: string
+    email: string
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: TenantSupportRoutingCountAggregateOutputType | null
+    _min: TenantSupportRoutingMinAggregateOutputType | null
+    _max: TenantSupportRoutingMaxAggregateOutputType | null
+  }
+
+  type GetTenantSupportRoutingGroupByPayload<T extends TenantSupportRoutingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TenantSupportRoutingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TenantSupportRoutingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TenantSupportRoutingGroupByOutputType[P]>
+            : GetScalarType<T[P], TenantSupportRoutingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TenantSupportRoutingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    helpType?: boolean
+    email?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tenantSupportRouting"]>
+
+  export type TenantSupportRoutingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    helpType?: boolean
+    email?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tenantSupportRouting"]>
+
+  export type TenantSupportRoutingSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    helpType?: boolean
+    email?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TenantSupportRoutingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type TenantSupportRoutingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+
+  export type $TenantSupportRoutingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TenantSupportRouting"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      helpType: string
+      email: string
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["tenantSupportRouting"]>
+    composites: {}
+  }
+
+  type TenantSupportRoutingGetPayload<S extends boolean | null | undefined | TenantSupportRoutingDefaultArgs> = $Result.GetResult<Prisma.$TenantSupportRoutingPayload, S>
+
+  type TenantSupportRoutingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TenantSupportRoutingFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TenantSupportRoutingCountAggregateInputType | true
+    }
+
+  export interface TenantSupportRoutingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TenantSupportRouting'], meta: { name: 'TenantSupportRouting' } }
+    /**
+     * Find zero or one TenantSupportRouting that matches the filter.
+     * @param {TenantSupportRoutingFindUniqueArgs} args - Arguments to find a TenantSupportRouting
+     * @example
+     * // Get one TenantSupportRouting
+     * const tenantSupportRouting = await prisma.tenantSupportRouting.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TenantSupportRoutingFindUniqueArgs>(args: SelectSubset<T, TenantSupportRoutingFindUniqueArgs<ExtArgs>>): Prisma__TenantSupportRoutingClient<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one TenantSupportRouting that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {TenantSupportRoutingFindUniqueOrThrowArgs} args - Arguments to find a TenantSupportRouting
+     * @example
+     * // Get one TenantSupportRouting
+     * const tenantSupportRouting = await prisma.tenantSupportRouting.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TenantSupportRoutingFindUniqueOrThrowArgs>(args: SelectSubset<T, TenantSupportRoutingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TenantSupportRoutingClient<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first TenantSupportRouting that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSupportRoutingFindFirstArgs} args - Arguments to find a TenantSupportRouting
+     * @example
+     * // Get one TenantSupportRouting
+     * const tenantSupportRouting = await prisma.tenantSupportRouting.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TenantSupportRoutingFindFirstArgs>(args?: SelectSubset<T, TenantSupportRoutingFindFirstArgs<ExtArgs>>): Prisma__TenantSupportRoutingClient<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first TenantSupportRouting that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSupportRoutingFindFirstOrThrowArgs} args - Arguments to find a TenantSupportRouting
+     * @example
+     * // Get one TenantSupportRouting
+     * const tenantSupportRouting = await prisma.tenantSupportRouting.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TenantSupportRoutingFindFirstOrThrowArgs>(args?: SelectSubset<T, TenantSupportRoutingFindFirstOrThrowArgs<ExtArgs>>): Prisma__TenantSupportRoutingClient<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more TenantSupportRoutings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSupportRoutingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TenantSupportRoutings
+     * const tenantSupportRoutings = await prisma.tenantSupportRouting.findMany()
+     * 
+     * // Get first 10 TenantSupportRoutings
+     * const tenantSupportRoutings = await prisma.tenantSupportRouting.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tenantSupportRoutingWithIdOnly = await prisma.tenantSupportRouting.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TenantSupportRoutingFindManyArgs>(args?: SelectSubset<T, TenantSupportRoutingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a TenantSupportRouting.
+     * @param {TenantSupportRoutingCreateArgs} args - Arguments to create a TenantSupportRouting.
+     * @example
+     * // Create one TenantSupportRouting
+     * const TenantSupportRouting = await prisma.tenantSupportRouting.create({
+     *   data: {
+     *     // ... data to create a TenantSupportRouting
+     *   }
+     * })
+     * 
+     */
+    create<T extends TenantSupportRoutingCreateArgs>(args: SelectSubset<T, TenantSupportRoutingCreateArgs<ExtArgs>>): Prisma__TenantSupportRoutingClient<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many TenantSupportRoutings.
+     * @param {TenantSupportRoutingCreateManyArgs} args - Arguments to create many TenantSupportRoutings.
+     * @example
+     * // Create many TenantSupportRoutings
+     * const tenantSupportRouting = await prisma.tenantSupportRouting.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TenantSupportRoutingCreateManyArgs>(args?: SelectSubset<T, TenantSupportRoutingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TenantSupportRoutings and returns the data saved in the database.
+     * @param {TenantSupportRoutingCreateManyAndReturnArgs} args - Arguments to create many TenantSupportRoutings.
+     * @example
+     * // Create many TenantSupportRoutings
+     * const tenantSupportRouting = await prisma.tenantSupportRouting.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TenantSupportRoutings and only return the `id`
+     * const tenantSupportRoutingWithIdOnly = await prisma.tenantSupportRouting.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TenantSupportRoutingCreateManyAndReturnArgs>(args?: SelectSubset<T, TenantSupportRoutingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a TenantSupportRouting.
+     * @param {TenantSupportRoutingDeleteArgs} args - Arguments to delete one TenantSupportRouting.
+     * @example
+     * // Delete one TenantSupportRouting
+     * const TenantSupportRouting = await prisma.tenantSupportRouting.delete({
+     *   where: {
+     *     // ... filter to delete one TenantSupportRouting
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TenantSupportRoutingDeleteArgs>(args: SelectSubset<T, TenantSupportRoutingDeleteArgs<ExtArgs>>): Prisma__TenantSupportRoutingClient<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one TenantSupportRouting.
+     * @param {TenantSupportRoutingUpdateArgs} args - Arguments to update one TenantSupportRouting.
+     * @example
+     * // Update one TenantSupportRouting
+     * const tenantSupportRouting = await prisma.tenantSupportRouting.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TenantSupportRoutingUpdateArgs>(args: SelectSubset<T, TenantSupportRoutingUpdateArgs<ExtArgs>>): Prisma__TenantSupportRoutingClient<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more TenantSupportRoutings.
+     * @param {TenantSupportRoutingDeleteManyArgs} args - Arguments to filter TenantSupportRoutings to delete.
+     * @example
+     * // Delete a few TenantSupportRoutings
+     * const { count } = await prisma.tenantSupportRouting.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TenantSupportRoutingDeleteManyArgs>(args?: SelectSubset<T, TenantSupportRoutingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TenantSupportRoutings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSupportRoutingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TenantSupportRoutings
+     * const tenantSupportRouting = await prisma.tenantSupportRouting.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TenantSupportRoutingUpdateManyArgs>(args: SelectSubset<T, TenantSupportRoutingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TenantSupportRouting.
+     * @param {TenantSupportRoutingUpsertArgs} args - Arguments to update or create a TenantSupportRouting.
+     * @example
+     * // Update or create a TenantSupportRouting
+     * const tenantSupportRouting = await prisma.tenantSupportRouting.upsert({
+     *   create: {
+     *     // ... data to create a TenantSupportRouting
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TenantSupportRouting we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TenantSupportRoutingUpsertArgs>(args: SelectSubset<T, TenantSupportRoutingUpsertArgs<ExtArgs>>): Prisma__TenantSupportRoutingClient<$Result.GetResult<Prisma.$TenantSupportRoutingPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of TenantSupportRoutings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSupportRoutingCountArgs} args - Arguments to filter TenantSupportRoutings to count.
+     * @example
+     * // Count the number of TenantSupportRoutings
+     * const count = await prisma.tenantSupportRouting.count({
+     *   where: {
+     *     // ... the filter for the TenantSupportRoutings we want to count
+     *   }
+     * })
+    **/
+    count<T extends TenantSupportRoutingCountArgs>(
+      args?: Subset<T, TenantSupportRoutingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TenantSupportRoutingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TenantSupportRouting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSupportRoutingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TenantSupportRoutingAggregateArgs>(args: Subset<T, TenantSupportRoutingAggregateArgs>): Prisma.PrismaPromise<GetTenantSupportRoutingAggregateType<T>>
+
+    /**
+     * Group by TenantSupportRouting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSupportRoutingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TenantSupportRoutingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TenantSupportRoutingGroupByArgs['orderBy'] }
+        : { orderBy?: TenantSupportRoutingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TenantSupportRoutingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTenantSupportRoutingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TenantSupportRouting model
+   */
+  readonly fields: TenantSupportRoutingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TenantSupportRouting.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TenantSupportRoutingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TenantSupportRouting model
+   */ 
+  interface TenantSupportRoutingFieldRefs {
+    readonly id: FieldRef<"TenantSupportRouting", 'String'>
+    readonly tenantId: FieldRef<"TenantSupportRouting", 'String'>
+    readonly helpType: FieldRef<"TenantSupportRouting", 'String'>
+    readonly email: FieldRef<"TenantSupportRouting", 'String'>
+    readonly isActive: FieldRef<"TenantSupportRouting", 'Boolean'>
+    readonly createdAt: FieldRef<"TenantSupportRouting", 'DateTime'>
+    readonly updatedAt: FieldRef<"TenantSupportRouting", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TenantSupportRouting findUnique
+   */
+  export type TenantSupportRoutingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSupportRouting to fetch.
+     */
+    where: TenantSupportRoutingWhereUniqueInput
+  }
+
+  /**
+   * TenantSupportRouting findUniqueOrThrow
+   */
+  export type TenantSupportRoutingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSupportRouting to fetch.
+     */
+    where: TenantSupportRoutingWhereUniqueInput
+  }
+
+  /**
+   * TenantSupportRouting findFirst
+   */
+  export type TenantSupportRoutingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSupportRouting to fetch.
+     */
+    where?: TenantSupportRoutingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSupportRoutings to fetch.
+     */
+    orderBy?: TenantSupportRoutingOrderByWithRelationInput | TenantSupportRoutingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TenantSupportRoutings.
+     */
+    cursor?: TenantSupportRoutingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSupportRoutings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSupportRoutings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TenantSupportRoutings.
+     */
+    distinct?: TenantSupportRoutingScalarFieldEnum | TenantSupportRoutingScalarFieldEnum[]
+  }
+
+  /**
+   * TenantSupportRouting findFirstOrThrow
+   */
+  export type TenantSupportRoutingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSupportRouting to fetch.
+     */
+    where?: TenantSupportRoutingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSupportRoutings to fetch.
+     */
+    orderBy?: TenantSupportRoutingOrderByWithRelationInput | TenantSupportRoutingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TenantSupportRoutings.
+     */
+    cursor?: TenantSupportRoutingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSupportRoutings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSupportRoutings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TenantSupportRoutings.
+     */
+    distinct?: TenantSupportRoutingScalarFieldEnum | TenantSupportRoutingScalarFieldEnum[]
+  }
+
+  /**
+   * TenantSupportRouting findMany
+   */
+  export type TenantSupportRoutingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    /**
+     * Filter, which TenantSupportRoutings to fetch.
+     */
+    where?: TenantSupportRoutingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSupportRoutings to fetch.
+     */
+    orderBy?: TenantSupportRoutingOrderByWithRelationInput | TenantSupportRoutingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TenantSupportRoutings.
+     */
+    cursor?: TenantSupportRoutingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSupportRoutings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSupportRoutings.
+     */
+    skip?: number
+    distinct?: TenantSupportRoutingScalarFieldEnum | TenantSupportRoutingScalarFieldEnum[]
+  }
+
+  /**
+   * TenantSupportRouting create
+   */
+  export type TenantSupportRoutingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TenantSupportRouting.
+     */
+    data: XOR<TenantSupportRoutingCreateInput, TenantSupportRoutingUncheckedCreateInput>
+  }
+
+  /**
+   * TenantSupportRouting createMany
+   */
+  export type TenantSupportRoutingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TenantSupportRoutings.
+     */
+    data: TenantSupportRoutingCreateManyInput | TenantSupportRoutingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TenantSupportRouting createManyAndReturn
+   */
+  export type TenantSupportRoutingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many TenantSupportRoutings.
+     */
+    data: TenantSupportRoutingCreateManyInput | TenantSupportRoutingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TenantSupportRouting update
+   */
+  export type TenantSupportRoutingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TenantSupportRouting.
+     */
+    data: XOR<TenantSupportRoutingUpdateInput, TenantSupportRoutingUncheckedUpdateInput>
+    /**
+     * Choose, which TenantSupportRouting to update.
+     */
+    where: TenantSupportRoutingWhereUniqueInput
+  }
+
+  /**
+   * TenantSupportRouting updateMany
+   */
+  export type TenantSupportRoutingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TenantSupportRoutings.
+     */
+    data: XOR<TenantSupportRoutingUpdateManyMutationInput, TenantSupportRoutingUncheckedUpdateManyInput>
+    /**
+     * Filter which TenantSupportRoutings to update
+     */
+    where?: TenantSupportRoutingWhereInput
+  }
+
+  /**
+   * TenantSupportRouting upsert
+   */
+  export type TenantSupportRoutingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TenantSupportRouting to update in case it exists.
+     */
+    where: TenantSupportRoutingWhereUniqueInput
+    /**
+     * In case the TenantSupportRouting found by the `where` argument doesn't exist, create a new TenantSupportRouting with this data.
+     */
+    create: XOR<TenantSupportRoutingCreateInput, TenantSupportRoutingUncheckedCreateInput>
+    /**
+     * In case the TenantSupportRouting was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TenantSupportRoutingUpdateInput, TenantSupportRoutingUncheckedUpdateInput>
+  }
+
+  /**
+   * TenantSupportRouting delete
+   */
+  export type TenantSupportRoutingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+    /**
+     * Filter which TenantSupportRouting to delete.
+     */
+    where: TenantSupportRoutingWhereUniqueInput
+  }
+
+  /**
+   * TenantSupportRouting deleteMany
+   */
+  export type TenantSupportRoutingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TenantSupportRoutings to delete
+     */
+    where?: TenantSupportRoutingWhereInput
+  }
+
+  /**
+   * TenantSupportRouting without action
+   */
+  export type TenantSupportRoutingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSupportRouting
+     */
+    select?: TenantSupportRoutingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantSupportRoutingInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -38593,6 +39681,7 @@ export namespace Prisma {
     label: 'label',
     description: 'description',
     icon: 'icon',
+    helpType: 'helpType',
     isActive: 'isActive',
     sortOrder: 'sortOrder',
     tenantId: 'tenantId',
@@ -39000,6 +40089,19 @@ export namespace Prisma {
   };
 
   export type SupportConfigurationScalarFieldEnum = (typeof SupportConfigurationScalarFieldEnum)[keyof typeof SupportConfigurationScalarFieldEnum]
+
+
+  export const TenantSupportRoutingScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    helpType: 'helpType',
+    email: 'email',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TenantSupportRoutingScalarFieldEnum = (typeof TenantSupportRoutingScalarFieldEnum)[keyof typeof TenantSupportRoutingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -39601,6 +40703,7 @@ export namespace Prisma {
     supportCases?: SupportCaseListRelationFilter
     caseMetrics?: CaseMetricsListRelationFilter
     supportConfigurations?: SupportConfigurationListRelationFilter
+    supportRouting?: TenantSupportRoutingListRelationFilter
   }
 
   export type TenantOrderByWithRelationInput = {
@@ -39655,6 +40758,7 @@ export namespace Prisma {
     supportCases?: SupportCaseOrderByRelationAggregateInput
     caseMetrics?: CaseMetricsOrderByRelationAggregateInput
     supportConfigurations?: SupportConfigurationOrderByRelationAggregateInput
+    supportRouting?: TenantSupportRoutingOrderByRelationAggregateInput
   }
 
   export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -39712,6 +40816,7 @@ export namespace Prisma {
     supportCases?: SupportCaseListRelationFilter
     caseMetrics?: CaseMetricsListRelationFilter
     supportConfigurations?: SupportConfigurationListRelationFilter
+    supportRouting?: TenantSupportRoutingListRelationFilter
   }, "id" | "slug" | "subdomain" | "customDomain">
 
   export type TenantOrderByWithAggregationInput = {
@@ -39999,6 +41104,7 @@ export namespace Prisma {
     label?: StringFilter<"ContactReason"> | string
     description?: StringFilter<"ContactReason"> | string
     icon?: StringFilter<"ContactReason"> | string
+    helpType?: StringFilter<"ContactReason"> | string
     isActive?: BoolFilter<"ContactReason"> | boolean
     sortOrder?: IntFilter<"ContactReason"> | number
     tenantId?: StringNullableFilter<"ContactReason"> | string | null
@@ -40014,6 +41120,7 @@ export namespace Prisma {
     label?: SortOrder
     description?: SortOrder
     icon?: SortOrder
+    helpType?: SortOrder
     isActive?: SortOrder
     sortOrder?: SortOrder
     tenantId?: SortOrderInput | SortOrder
@@ -40032,6 +41139,7 @@ export namespace Prisma {
     label?: StringFilter<"ContactReason"> | string
     description?: StringFilter<"ContactReason"> | string
     icon?: StringFilter<"ContactReason"> | string
+    helpType?: StringFilter<"ContactReason"> | string
     isActive?: BoolFilter<"ContactReason"> | boolean
     sortOrder?: IntFilter<"ContactReason"> | number
     tenantId?: StringNullableFilter<"ContactReason"> | string | null
@@ -40047,6 +41155,7 @@ export namespace Prisma {
     label?: SortOrder
     description?: SortOrder
     icon?: SortOrder
+    helpType?: SortOrder
     isActive?: SortOrder
     sortOrder?: SortOrder
     tenantId?: SortOrderInput | SortOrder
@@ -40068,6 +41177,7 @@ export namespace Prisma {
     label?: StringWithAggregatesFilter<"ContactReason"> | string
     description?: StringWithAggregatesFilter<"ContactReason"> | string
     icon?: StringWithAggregatesFilter<"ContactReason"> | string
+    helpType?: StringWithAggregatesFilter<"ContactReason"> | string
     isActive?: BoolWithAggregatesFilter<"ContactReason"> | boolean
     sortOrder?: IntWithAggregatesFilter<"ContactReason"> | number
     tenantId?: StringNullableWithAggregatesFilter<"ContactReason"> | string | null
@@ -42177,6 +43287,72 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"SupportConfiguration"> | Date | string
   }
 
+  export type TenantSupportRoutingWhereInput = {
+    AND?: TenantSupportRoutingWhereInput | TenantSupportRoutingWhereInput[]
+    OR?: TenantSupportRoutingWhereInput[]
+    NOT?: TenantSupportRoutingWhereInput | TenantSupportRoutingWhereInput[]
+    id?: StringFilter<"TenantSupportRouting"> | string
+    tenantId?: StringFilter<"TenantSupportRouting"> | string
+    helpType?: StringFilter<"TenantSupportRouting"> | string
+    email?: StringFilter<"TenantSupportRouting"> | string
+    isActive?: BoolFilter<"TenantSupportRouting"> | boolean
+    createdAt?: DateTimeFilter<"TenantSupportRouting"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantSupportRouting"> | Date | string
+    tenant?: XOR<TenantRelationFilter, TenantWhereInput>
+  }
+
+  export type TenantSupportRoutingOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    helpType?: SortOrder
+    email?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type TenantSupportRoutingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_helpType?: TenantSupportRoutingTenantIdHelpTypeCompoundUniqueInput
+    AND?: TenantSupportRoutingWhereInput | TenantSupportRoutingWhereInput[]
+    OR?: TenantSupportRoutingWhereInput[]
+    NOT?: TenantSupportRoutingWhereInput | TenantSupportRoutingWhereInput[]
+    tenantId?: StringFilter<"TenantSupportRouting"> | string
+    helpType?: StringFilter<"TenantSupportRouting"> | string
+    email?: StringFilter<"TenantSupportRouting"> | string
+    isActive?: BoolFilter<"TenantSupportRouting"> | boolean
+    createdAt?: DateTimeFilter<"TenantSupportRouting"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantSupportRouting"> | Date | string
+    tenant?: XOR<TenantRelationFilter, TenantWhereInput>
+  }, "id" | "tenantId_helpType">
+
+  export type TenantSupportRoutingOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    helpType?: SortOrder
+    email?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TenantSupportRoutingCountOrderByAggregateInput
+    _max?: TenantSupportRoutingMaxOrderByAggregateInput
+    _min?: TenantSupportRoutingMinOrderByAggregateInput
+  }
+
+  export type TenantSupportRoutingScalarWhereWithAggregatesInput = {
+    AND?: TenantSupportRoutingScalarWhereWithAggregatesInput | TenantSupportRoutingScalarWhereWithAggregatesInput[]
+    OR?: TenantSupportRoutingScalarWhereWithAggregatesInput[]
+    NOT?: TenantSupportRoutingScalarWhereWithAggregatesInput | TenantSupportRoutingScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TenantSupportRouting"> | string
+    tenantId?: StringWithAggregatesFilter<"TenantSupportRouting"> | string
+    helpType?: StringWithAggregatesFilter<"TenantSupportRouting"> | string
+    email?: StringWithAggregatesFilter<"TenantSupportRouting"> | string
+    isActive?: BoolWithAggregatesFilter<"TenantSupportRouting"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"TenantSupportRouting"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TenantSupportRouting"> | Date | string
+  }
+
   export type AccountCreateInput = {
     id?: string
     type: string
@@ -42722,6 +43898,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateInput = {
@@ -42776,6 +43953,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUpdateInput = {
@@ -42830,6 +44008,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateInput = {
@@ -42884,6 +44063,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateManyInput = {
@@ -43211,6 +44391,7 @@ export namespace Prisma {
     label: string
     description: string
     icon: string
+    helpType?: string
     isActive?: boolean
     sortOrder?: number
     createdAt?: Date | string
@@ -43225,6 +44406,7 @@ export namespace Prisma {
     label: string
     description: string
     icon: string
+    helpType?: string
     isActive?: boolean
     sortOrder?: number
     tenantId?: string | null
@@ -43239,6 +44421,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43253,6 +44436,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     tenantId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43267,6 +44451,7 @@ export namespace Prisma {
     label: string
     description: string
     icon: string
+    helpType?: string
     isActive?: boolean
     sortOrder?: number
     tenantId?: string | null
@@ -43280,6 +44465,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43292,6 +44478,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     tenantId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45599,6 +46786,75 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TenantSupportRoutingCreateInput = {
+    id?: string
+    helpType: string
+    email: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutSupportRoutingInput
+  }
+
+  export type TenantSupportRoutingUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    helpType: string
+    email: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TenantSupportRoutingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutSupportRoutingNestedInput
+  }
+
+  export type TenantSupportRoutingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantSupportRoutingCreateManyInput = {
+    id?: string
+    tenantId: string
+    helpType: string
+    email: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TenantSupportRoutingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantSupportRoutingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -46174,6 +47430,12 @@ export namespace Prisma {
     none?: SupportConfigurationWhereInput
   }
 
+  export type TenantSupportRoutingListRelationFilter = {
+    every?: TenantSupportRoutingWhereInput
+    some?: TenantSupportRoutingWhereInput
+    none?: TenantSupportRoutingWhereInput
+  }
+
   export type ContactReasonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -46195,6 +47457,10 @@ export namespace Prisma {
   }
 
   export type SupportConfigurationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TenantSupportRoutingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -46441,6 +47707,7 @@ export namespace Prisma {
     label?: SortOrder
     description?: SortOrder
     icon?: SortOrder
+    helpType?: SortOrder
     isActive?: SortOrder
     sortOrder?: SortOrder
     tenantId?: SortOrder
@@ -46458,6 +47725,7 @@ export namespace Prisma {
     label?: SortOrder
     description?: SortOrder
     icon?: SortOrder
+    helpType?: SortOrder
     isActive?: SortOrder
     sortOrder?: SortOrder
     tenantId?: SortOrder
@@ -46471,6 +47739,7 @@ export namespace Prisma {
     label?: SortOrder
     description?: SortOrder
     icon?: SortOrder
+    helpType?: SortOrder
     isActive?: SortOrder
     sortOrder?: SortOrder
     tenantId?: SortOrder
@@ -47726,6 +48995,41 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type TenantSupportRoutingTenantIdHelpTypeCompoundUniqueInput = {
+    tenantId: string
+    helpType: string
+  }
+
+  export type TenantSupportRoutingCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    helpType?: SortOrder
+    email?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TenantSupportRoutingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    helpType?: SortOrder
+    email?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TenantSupportRoutingMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    helpType?: SortOrder
+    email?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -48722,6 +50026,13 @@ export namespace Prisma {
     connect?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
   }
 
+  export type TenantSupportRoutingCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TenantSupportRoutingCreateWithoutTenantInput, TenantSupportRoutingUncheckedCreateWithoutTenantInput> | TenantSupportRoutingCreateWithoutTenantInput[] | TenantSupportRoutingUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TenantSupportRoutingCreateOrConnectWithoutTenantInput | TenantSupportRoutingCreateOrConnectWithoutTenantInput[]
+    createMany?: TenantSupportRoutingCreateManyTenantInputEnvelope
+    connect?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+  }
+
   export type AuditLogUncheckedCreateNestedManyWithoutTenantInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -48846,6 +50157,13 @@ export namespace Prisma {
     connectOrCreate?: SupportConfigurationCreateOrConnectWithoutTenantInput | SupportConfigurationCreateOrConnectWithoutTenantInput[]
     createMany?: SupportConfigurationCreateManyTenantInputEnvelope
     connect?: SupportConfigurationWhereUniqueInput | SupportConfigurationWhereUniqueInput[]
+  }
+
+  export type TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<TenantSupportRoutingCreateWithoutTenantInput, TenantSupportRoutingUncheckedCreateWithoutTenantInput> | TenantSupportRoutingCreateWithoutTenantInput[] | TenantSupportRoutingUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TenantSupportRoutingCreateOrConnectWithoutTenantInput | TenantSupportRoutingCreateOrConnectWithoutTenantInput[]
+    createMany?: TenantSupportRoutingCreateManyTenantInputEnvelope
+    connect?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
   }
 
   export type AuditLogUpdateManyWithoutTenantNestedInput = {
@@ -49100,6 +50418,20 @@ export namespace Prisma {
     deleteMany?: SupportConfigurationScalarWhereInput | SupportConfigurationScalarWhereInput[]
   }
 
+  export type TenantSupportRoutingUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TenantSupportRoutingCreateWithoutTenantInput, TenantSupportRoutingUncheckedCreateWithoutTenantInput> | TenantSupportRoutingCreateWithoutTenantInput[] | TenantSupportRoutingUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TenantSupportRoutingCreateOrConnectWithoutTenantInput | TenantSupportRoutingCreateOrConnectWithoutTenantInput[]
+    upsert?: TenantSupportRoutingUpsertWithWhereUniqueWithoutTenantInput | TenantSupportRoutingUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TenantSupportRoutingCreateManyTenantInputEnvelope
+    set?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+    disconnect?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+    delete?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+    connect?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+    update?: TenantSupportRoutingUpdateWithWhereUniqueWithoutTenantInput | TenantSupportRoutingUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TenantSupportRoutingUpdateManyWithWhereWithoutTenantInput | TenantSupportRoutingUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TenantSupportRoutingScalarWhereInput | TenantSupportRoutingScalarWhereInput[]
+  }
+
   export type AuditLogUncheckedUpdateManyWithoutTenantNestedInput = {
     create?: XOR<AuditLogCreateWithoutTenantInput, AuditLogUncheckedCreateWithoutTenantInput> | AuditLogCreateWithoutTenantInput[] | AuditLogUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutTenantInput | AuditLogCreateOrConnectWithoutTenantInput[]
@@ -49350,6 +50682,20 @@ export namespace Prisma {
     update?: SupportConfigurationUpdateWithWhereUniqueWithoutTenantInput | SupportConfigurationUpdateWithWhereUniqueWithoutTenantInput[]
     updateMany?: SupportConfigurationUpdateManyWithWhereWithoutTenantInput | SupportConfigurationUpdateManyWithWhereWithoutTenantInput[]
     deleteMany?: SupportConfigurationScalarWhereInput | SupportConfigurationScalarWhereInput[]
+  }
+
+  export type TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<TenantSupportRoutingCreateWithoutTenantInput, TenantSupportRoutingUncheckedCreateWithoutTenantInput> | TenantSupportRoutingCreateWithoutTenantInput[] | TenantSupportRoutingUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: TenantSupportRoutingCreateOrConnectWithoutTenantInput | TenantSupportRoutingCreateOrConnectWithoutTenantInput[]
+    upsert?: TenantSupportRoutingUpsertWithWhereUniqueWithoutTenantInput | TenantSupportRoutingUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: TenantSupportRoutingCreateManyTenantInputEnvelope
+    set?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+    disconnect?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+    delete?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+    connect?: TenantSupportRoutingWhereUniqueInput | TenantSupportRoutingWhereUniqueInput[]
+    update?: TenantSupportRoutingUpdateWithWhereUniqueWithoutTenantInput | TenantSupportRoutingUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: TenantSupportRoutingUpdateManyWithWhereWithoutTenantInput | TenantSupportRoutingUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: TenantSupportRoutingScalarWhereInput | TenantSupportRoutingScalarWhereInput[]
   }
 
   export type TenantCreateNestedOneWithoutMembershipsInput = {
@@ -50662,6 +52008,20 @@ export namespace Prisma {
     update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSupportConfigurationsInput, TenantUpdateWithoutSupportConfigurationsInput>, TenantUncheckedUpdateWithoutSupportConfigurationsInput>
   }
 
+  export type TenantCreateNestedOneWithoutSupportRoutingInput = {
+    create?: XOR<TenantCreateWithoutSupportRoutingInput, TenantUncheckedCreateWithoutSupportRoutingInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSupportRoutingInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type TenantUpdateOneRequiredWithoutSupportRoutingNestedInput = {
+    create?: XOR<TenantCreateWithoutSupportRoutingInput, TenantUncheckedCreateWithoutSupportRoutingInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSupportRoutingInput
+    upsert?: TenantUpsertWithoutSupportRoutingInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSupportRoutingInput, TenantUpdateWithoutSupportRoutingInput>, TenantUncheckedUpdateWithoutSupportRoutingInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -51273,6 +52633,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSessionsInput = {
@@ -51326,6 +52687,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSessionsInput = {
@@ -51504,6 +52866,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSessionsInput = {
@@ -51557,6 +52920,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -52980,6 +54344,7 @@ export namespace Prisma {
     label: string
     description: string
     icon: string
+    helpType?: string
     isActive?: boolean
     sortOrder?: number
     createdAt?: Date | string
@@ -52993,6 +54358,7 @@ export namespace Prisma {
     label: string
     description: string
     icon: string
+    helpType?: string
     isActive?: boolean
     sortOrder?: number
     createdAt?: Date | string
@@ -53568,6 +54934,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TenantSupportRoutingCreateWithoutTenantInput = {
+    id?: string
+    helpType: string
+    email: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TenantSupportRoutingUncheckedCreateWithoutTenantInput = {
+    id?: string
+    helpType: string
+    email: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TenantSupportRoutingCreateOrConnectWithoutTenantInput = {
+    where: TenantSupportRoutingWhereUniqueInput
+    create: XOR<TenantSupportRoutingCreateWithoutTenantInput, TenantSupportRoutingUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TenantSupportRoutingCreateManyTenantInputEnvelope = {
+    data: TenantSupportRoutingCreateManyTenantInput | TenantSupportRoutingCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AuditLogUpsertWithWhereUniqueWithoutTenantInput = {
     where: AuditLogWhereUniqueInput
     update: XOR<AuditLogUpdateWithoutTenantInput, AuditLogUncheckedUpdateWithoutTenantInput>
@@ -53625,6 +55019,7 @@ export namespace Prisma {
     label?: StringFilter<"ContactReason"> | string
     description?: StringFilter<"ContactReason"> | string
     icon?: StringFilter<"ContactReason"> | string
+    helpType?: StringFilter<"ContactReason"> | string
     isActive?: BoolFilter<"ContactReason"> | boolean
     sortOrder?: IntFilter<"ContactReason"> | number
     tenantId?: StringNullableFilter<"ContactReason"> | string | null
@@ -53950,6 +55345,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"SupportConfiguration"> | Date | string
   }
 
+  export type TenantSupportRoutingUpsertWithWhereUniqueWithoutTenantInput = {
+    where: TenantSupportRoutingWhereUniqueInput
+    update: XOR<TenantSupportRoutingUpdateWithoutTenantInput, TenantSupportRoutingUncheckedUpdateWithoutTenantInput>
+    create: XOR<TenantSupportRoutingCreateWithoutTenantInput, TenantSupportRoutingUncheckedCreateWithoutTenantInput>
+  }
+
+  export type TenantSupportRoutingUpdateWithWhereUniqueWithoutTenantInput = {
+    where: TenantSupportRoutingWhereUniqueInput
+    data: XOR<TenantSupportRoutingUpdateWithoutTenantInput, TenantSupportRoutingUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type TenantSupportRoutingUpdateManyWithWhereWithoutTenantInput = {
+    where: TenantSupportRoutingScalarWhereInput
+    data: XOR<TenantSupportRoutingUpdateManyMutationInput, TenantSupportRoutingUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type TenantSupportRoutingScalarWhereInput = {
+    AND?: TenantSupportRoutingScalarWhereInput | TenantSupportRoutingScalarWhereInput[]
+    OR?: TenantSupportRoutingScalarWhereInput[]
+    NOT?: TenantSupportRoutingScalarWhereInput | TenantSupportRoutingScalarWhereInput[]
+    id?: StringFilter<"TenantSupportRouting"> | string
+    tenantId?: StringFilter<"TenantSupportRouting"> | string
+    helpType?: StringFilter<"TenantSupportRouting"> | string
+    email?: StringFilter<"TenantSupportRouting"> | string
+    isActive?: BoolFilter<"TenantSupportRouting"> | boolean
+    createdAt?: DateTimeFilter<"TenantSupportRouting"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantSupportRouting"> | Date | string
+  }
+
   export type TenantCreateWithoutMembershipsInput = {
     id?: string
     slug: string
@@ -54001,6 +55425,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutMembershipsInput = {
@@ -54054,6 +55479,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutMembershipsInput = {
@@ -54329,6 +55755,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutMembershipsInput = {
@@ -54382,6 +55809,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -54653,6 +56081,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutInvitationsInput = {
@@ -54706,6 +56135,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutInvitationsInput = {
@@ -54981,6 +56411,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutInvitationsInput = {
@@ -55034,6 +56465,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutSentInvitationsInput = {
@@ -55327,6 +56759,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactReasonsInput = {
@@ -55380,6 +56813,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactReasonsInput = {
@@ -55475,6 +56909,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactReasonsInput = {
@@ -55528,6 +56963,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutContactMessagesInput = {
@@ -55684,6 +57120,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutContactMessagesInput = {
@@ -55737,6 +57174,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutContactMessagesInput = {
@@ -56018,6 +57456,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutContactMessagesInput = {
@@ -56071,6 +57510,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type ContactMessageReasonUpsertWithWhereUniqueWithoutContactMessageInput = {
@@ -56227,6 +57667,7 @@ export namespace Prisma {
     label: string
     description: string
     icon: string
+    helpType?: string
     isActive?: boolean
     sortOrder?: number
     createdAt?: Date | string
@@ -56240,6 +57681,7 @@ export namespace Prisma {
     label: string
     description: string
     icon: string
+    helpType?: string
     isActive?: boolean
     sortOrder?: number
     tenantId?: string | null
@@ -56322,6 +57764,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56335,6 +57778,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     tenantId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56580,6 +58024,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutAuditLogsInput = {
@@ -56633,6 +58078,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutAuditLogsInput = {
@@ -56805,6 +58251,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutAuditLogsInput = {
@@ -56858,6 +58305,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserUpsertWithoutAuditLogsInput = {
@@ -57547,6 +58995,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutNotificationsInput = {
@@ -57600,6 +59049,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutNotificationsInput = {
@@ -57806,6 +59256,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutNotificationsInput = {
@@ -57859,6 +59310,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type NotificationRecipientUpsertWithWhereUniqueWithoutNotificationInput = {
@@ -58224,6 +59676,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutWebhookEndpointsInput = {
@@ -58277,6 +59730,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutWebhookEndpointsInput = {
@@ -58346,6 +59800,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutWebhookEndpointsInput = {
@@ -58399,6 +59854,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type GlobalFeatureRuleCreateWithoutFeatureInput = {
@@ -58670,6 +60126,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFeatureRulesInput = {
@@ -58723,6 +60180,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFeatureRulesInput = {
@@ -58825,6 +60283,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFeatureRulesInput = {
@@ -58878,6 +60337,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type FeatureDefinitionUpsertWithoutTenantRulesInput = {
@@ -59003,6 +60463,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFeatureAuditEntriesInput = {
@@ -59056,6 +60517,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFeatureAuditEntriesInput = {
@@ -59164,6 +60626,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFeatureAuditEntriesInput = {
@@ -59217,6 +60680,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTwoFactorMethodsInput = {
@@ -59373,6 +60837,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutTwoFactorMethodsInput = {
@@ -59426,6 +60891,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutTwoFactorMethodsInput = {
@@ -59604,6 +61070,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutTwoFactorMethodsInput = {
@@ -59657,6 +61124,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutPendingAuthsInput = {
@@ -59813,6 +61281,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutPendingAuthsInput = {
@@ -59866,6 +61335,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutPendingAuthsInput = {
@@ -60044,6 +61514,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutPendingAuthsInput = {
@@ -60097,6 +61568,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTwoFactorCodesInput = {
@@ -60253,6 +61725,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutTwoFactorCodesInput = {
@@ -60306,6 +61779,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutTwoFactorCodesInput = {
@@ -60484,6 +61958,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutTwoFactorCodesInput = {
@@ -60537,6 +62012,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTwoFactorAuditsInput = {
@@ -60693,6 +62169,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutTwoFactorAuditsInput = {
@@ -60746,6 +62223,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutTwoFactorAuditsInput = {
@@ -60924,6 +62402,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutTwoFactorAuditsInput = {
@@ -60977,6 +62456,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type ContactMessageCreateWithoutSupportCaseInput = {
@@ -61180,6 +62660,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSupportCasesInput = {
@@ -61233,6 +62714,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSupportCasesInput = {
@@ -61585,6 +63067,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSupportCasesInput = {
@@ -61638,6 +63121,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type SupportOptionUpsertWithoutCasesInput = {
@@ -61772,6 +63256,7 @@ export namespace Prisma {
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSupportOptionsInput = {
@@ -61825,6 +63310,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSupportOptionsInput = {
@@ -62081,6 +63567,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSupportOptionsInput = {
@@ -62134,6 +63621,7 @@ export namespace Prisma {
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type SupportOptionUpsertWithoutChildrenInput = {
@@ -62764,6 +64252,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCaseMetricsInput = {
@@ -62817,6 +64306,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCaseMetricsInput = {
@@ -63032,6 +64522,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCaseMetricsInput = {
@@ -63085,6 +64576,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type SupportOptionUpsertWithoutMetricsInput = {
@@ -63296,6 +64788,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSupportConfigurationsInput = {
@@ -63349,6 +64842,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
     caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSupportConfigurationsInput = {
@@ -63418,6 +64912,7 @@ export namespace Prisma {
     supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSupportConfigurationsInput = {
@@ -63471,6 +64966,239 @@ export namespace Prisma {
     supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
     caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantCreateWithoutSupportRoutingInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutSupportRoutingInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutSupportRoutingInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutSupportRoutingInput, TenantUncheckedCreateWithoutSupportRoutingInput>
+  }
+
+  export type TenantUpsertWithoutSupportRoutingInput = {
+    update: XOR<TenantUpdateWithoutSupportRoutingInput, TenantUncheckedUpdateWithoutSupportRoutingInput>
+    create: XOR<TenantCreateWithoutSupportRoutingInput, TenantUncheckedCreateWithoutSupportRoutingInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutSupportRoutingInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutSupportRoutingInput, TenantUncheckedUpdateWithoutSupportRoutingInput>
+  }
+
+  export type TenantUpdateWithoutSupportRoutingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutSupportRoutingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -64563,6 +66291,7 @@ export namespace Prisma {
     label: string
     description: string
     icon: string
+    helpType?: string
     isActive?: boolean
     sortOrder?: number
     createdAt?: Date | string
@@ -64767,6 +66496,15 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type TenantSupportRoutingCreateManyTenantInput = {
+    id?: string
+    helpType: string
+    email: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AuditLogUpdateWithoutTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
     action?: StringFieldUpdateOperationsInput | string
@@ -64875,6 +66613,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64888,6 +66627,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64901,6 +66641,7 @@ export namespace Prisma {
     label?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65509,6 +67250,33 @@ export namespace Prisma {
     key?: StringFieldUpdateOperationsInput | string
     value?: JsonNullValueInput | InputJsonValue
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantSupportRoutingUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantSupportRoutingUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantSupportRoutingUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    helpType?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -66330,6 +68098,10 @@ export namespace Prisma {
      * @deprecated Use SupportConfigurationDefaultArgs instead
      */
     export type SupportConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SupportConfigurationDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TenantSupportRoutingDefaultArgs instead
+     */
+    export type TenantSupportRoutingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TenantSupportRoutingDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

@@ -14,6 +14,7 @@ import { supportCaseRouter } from "./routers/support-case";
 import { supportOptionRouter } from "./routers/support-option";
 import { n8nWebhookRouter } from "./routers/n8n-webhook";
 import { supportNotificationsRouter } from "./routers/support-notifications";
+import { tenantSupportRoutingRouter } from "./routers/tenant-support-routing";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -25,7 +26,7 @@ const appRouter = router({
         greeting: `Hello, ${input.name}!`,
       };
     }),
-  
+
   // Authentication
   startPasswordLogin: authRouter.startPasswordLogin,
   send2faCode: authRouter.send2faCode,
@@ -43,7 +44,7 @@ const appRouter = router({
   changePassword: userRouter.changePassword,
   deleteUser: userRouter.deleteUser,
   getAllUsers: userRouter.getAllUsers,
-  
+
   // Tenant management
   createTenant: tenantRouter.createTenant,
   getTenant: tenantRouter.getTenant,
@@ -54,7 +55,7 @@ const appRouter = router({
   getTenantMemberships: tenantRouter.getTenantMemberships,
   getUserTenants: tenantRouter.getUserTenants,
   getTenantRoles: tenantRouter.getTenantRoles,
-  
+
   // User invitations and tenant user management
   inviteUser: invitationRouter.inviteUser,
   validateInvitation: invitationRouter.validateInvitation,
@@ -62,10 +63,11 @@ const appRouter = router({
   updateTenantUser: invitationRouter.updateTenantUser,
   resendUserVerification: invitationRouter.resendUserVerification,
   deleteTenantUser: invitationRouter.deleteTenantUser,
-  
+
   // Two-factor authentication
   generateAuthenticatorCode: twoFactorRouter.generateAuthenticatorCode,
-  verifyAndCreateAuthenticatorCode: twoFactorRouter.verifyAndCreateAuthenticatorCode,
+  verifyAndCreateAuthenticatorCode:
+    twoFactorRouter.verifyAndCreateAuthenticatorCode,
   getAuthenticatorCodes: twoFactorRouter.getAuthenticatorCodes,
   deleteAuthenticatorCode: twoFactorRouter.deleteAuthenticatorCode,
   verifyAuthenticatorCode: twoFactorRouter.verifyAuthenticatorCode,
@@ -76,20 +78,19 @@ const appRouter = router({
   disableWhatsapp2fa: twoFactorRouter.disableWhatsapp2fa,
   sendTest2faCode: twoFactorRouter.sendTest2faCode,
   migrateLegacyAuthenticators: twoFactorRouter.migrateLegacyAuthenticators,
-  
+
   // Legacy compatibility methods
   setupTwoFactor: twoFactorRouter.setupTwoFactor,
   verifyTwoFactor: twoFactorRouter.verifyTwoFactor,
-  
-  // Contact system
+
+  // Contact system (now integrated with support cases)
   getContactReasons: contactRouter.getContactReasons,
   submitContactMessage: contactRouter.submitContactMessage,
-  createContactMessage: contactRouter.createContactMessage,
   getContactMessage: contactRouter.getContactMessage,
   getUserContactMessages: contactRouter.getUserContactMessages,
   addContactReply: contactRouter.addContactReply,
   updateContactMessageStatus: contactRouter.updateContactMessageStatus,
-  
+
   // Passkey system
   getRegistrationOptions: passkeyRouter.getRegistrationOptions,
   registerPasskey: passkeyRouter.registerPasskey,
@@ -99,7 +100,7 @@ const appRouter = router({
   revokePasskey: passkeyRouter.revokePasskey,
   getAccountsWithPasskeys: passkeyRouter.getAccountsWithPasskeys,
   getAvailableAccounts: passkeyRouter.getAvailableAccounts,
-  
+
   // Notification system
   createNotification: notificationRouter.createNotification,
   getUserNotifications: notificationRouter.getUserNotifications,
@@ -115,11 +116,11 @@ const appRouter = router({
   getWebhookEndpoints: notificationRouter.getWebhookEndpoints,
   updateWebhookEndpoint: notificationRouter.updateWebhookEndpoint,
   deleteWebhookEndpoint: notificationRouter.deleteWebhookEndpoint,
-  
+
   // Real-time notifications (Centrifugo)
   getCentrifugoToken: notificationRouter.getCentrifugoToken,
   subscribeToNotifications: notificationRouter.subscribeToNotifications,
-  
+
   // Feature Toggle System
   getEffectiveFeatures: featureToggleRouter.getEffectiveFeatures,
   isFeatureEnabled: featureToggleRouter.isFeatureEnabled,
@@ -134,7 +135,7 @@ const appRouter = router({
   setTenantFeatureRule: featureToggleRouter.setTenantFeatureRule,
   removeTenantFeatureRule: featureToggleRouter.removeTenantFeatureRule,
   getTenantAuditHistory: featureToggleRouter.getTenantAuditHistory,
-  
+
   // Setup Wizard
   getSetupState: setupWizardRouter.getSetupState,
   updateWizardStep: setupWizardRouter.updateWizardStep,
@@ -145,7 +146,7 @@ const appRouter = router({
   isSetupRequired: setupWizardRouter.isSetupRequired,
   getCoreFeatures: setupWizardRouter.getCoreFeatures,
   resetSetup: setupWizardRouter.resetSetup,
-  
+
   // Support Resolution Center - Cases
   getAllCases: supportCaseRouter.getAllCases,
   getCaseById: supportCaseRouter.getCaseById,
@@ -156,7 +157,8 @@ const appRouter = router({
   getCaseMessages: supportCaseRouter.getCaseMessages,
   getCaseMetrics: supportCaseRouter.getCaseMetrics,
   convertContactMessageToCase: supportCaseRouter.convertContactMessageToCase,
-  
+  processEmailReply: supportCaseRouter.processEmailReply,
+
   // Support Resolution Center - Options
   getGlobalSupportOptions: supportOptionRouter.getGlobalSupportOptions,
   createGlobalSupportOption: supportOptionRouter.createGlobalSupportOption,
@@ -168,19 +170,32 @@ const appRouter = router({
   deleteTenantSupportOption: supportOptionRouter.deleteTenantSupportOption,
   getAvailableSupportOptions: supportOptionRouter.getAvailableSupportOptions,
   testSupportOptionRouting: supportOptionRouter.testSupportOptionRouting,
-  
+
   // Support Resolution Center - n8n Integration
   receiveInboundMessage: n8nWebhookRouter.receiveInboundMessage,
   sendOutboundMessage: n8nWebhookRouter.sendOutboundMessage,
   updateDeliveryStatus: n8nWebhookRouter.updateDeliveryStatus,
   configureN8nWebhooks: n8nWebhookRouter.configureN8nWebhooks,
   getN8nConfiguration: n8nWebhookRouter.getN8nConfiguration,
-  
+
   // Support Resolution Center - Notifications
-  createSupportNotification: supportNotificationsRouter.createSupportNotification,
-  getUserSupportNotificationPreferences: supportNotificationsRouter.getUserSupportNotificationPreferences,
-  updateUserSupportNotificationPreferences: supportNotificationsRouter.updateUserSupportNotificationPreferences,
+  createSupportNotification:
+    supportNotificationsRouter.createSupportNotification,
+  getUserSupportNotificationPreferences:
+    supportNotificationsRouter.getUserSupportNotificationPreferences,
+  updateUserSupportNotificationPreferences:
+    supportNotificationsRouter.updateUserSupportNotificationPreferences,
   notifyCaseParticipants: supportNotificationsRouter.notifyCaseParticipants,
+
+  // Tenant Support Routing
+  getTenantSupportRouting: tenantSupportRoutingRouter.getTenantSupportRouting,
+  upsertTenantSupportRouting:
+    tenantSupportRoutingRouter.upsertTenantSupportRouting,
+  bulkUpdateTenantSupportRouting:
+    tenantSupportRoutingRouter.bulkUpdateTenantSupportRouting,
+  getTenantAvailableEmails: tenantSupportRoutingRouter.getTenantAvailableEmails,
+  deleteTenantSupportRouting:
+    tenantSupportRoutingRouter.deleteTenantSupportRouting,
 });
 
 // Export the router and type for client usage

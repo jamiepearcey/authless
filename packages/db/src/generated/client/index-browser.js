@@ -255,6 +255,7 @@ exports.Prisma.ContactReasonScalarFieldEnum = {
   label: 'label',
   description: 'description',
   icon: 'icon',
+  helpType: 'helpType',
   isActive: 'isActive',
   sortOrder: 'sortOrder',
   tenantId: 'tenantId',
@@ -589,6 +590,16 @@ exports.Prisma.SupportConfigurationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TenantSupportRoutingScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  helpType: 'helpType',
+  email: 'email',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -652,7 +663,8 @@ exports.Prisma.ModelName = {
   CaseMessage: 'CaseMessage',
   CaseStatusHistory: 'CaseStatusHistory',
   CaseMetrics: 'CaseMetrics',
-  SupportConfiguration: 'SupportConfiguration'
+  SupportConfiguration: 'SupportConfiguration',
+  TenantSupportRouting: 'TenantSupportRouting'
 };
 
 /**

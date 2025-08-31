@@ -36,7 +36,7 @@ interface Passkey {
 export default function PasskeySetupPage() {
   const { data: session } = useSession();
   const [step, setStep] = useState<"list" | "setup" | "verify" | "success">("list");
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [supportedMethods, setSupportedMethods] = useState<string[]>([]);
   const [newPasskeyName, setNewPasskeyName] = useState("");
   const [isAddingPasskey, setIsAddingPasskey] = useState(false);
@@ -151,8 +151,8 @@ export default function PasskeySetupPage() {
       const response = credential.response as AuthenticatorAttestationResponse;
       const credentialId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
       const publicKey = btoa(String.fromCharCode(...new Uint8Array(response.getPublicKey() || new ArrayBuffer(0))));
-      // const clientDataJSON = btoa(String.fromCharCode(...new Uint8Array(response.clientDataJSON)));
-      // const attestationObject = btoa(String.fromCharCode(...new Uint8Array(response.attestationObject)));
+      const clientDataJSON = btoa(String.fromCharCode(...new Uint8Array(response.clientDataJSON)));
+      const attestationObject = btoa(String.fromCharCode(...new Uint8Array(response.attestationObject)));
 
       // Get transports if available (this is a newer API)
       let transports: string[] | undefined;
@@ -383,9 +383,6 @@ export default function PasskeySetupPage() {
                           "2fa.passkey.page.PasskeySetupPage.revoke__1onmtc",
                         )}
                       >
-                        <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50">
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
                       </ConfirmRemoveDialog>
                     </div>
                   </div>

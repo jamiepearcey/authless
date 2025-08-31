@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@ui/base";
-import { 
-  ArrowRight, 
-  Github, 
-  Shield, 
-  Zap, 
-  Server, 
-  Globe, 
-  Check, 
+import { Button, Highlighter } from "@ui/base";
+import {
+  ArrowRight,
+  Github,
+  Shield,
+  Zap,
+  Server,
+  Globe,
+  Check,
   Star,
   Users,
   Code,
@@ -23,16 +23,25 @@ import {
 } from "lucide-react";
 import { HelloWorld } from "../components/TrpcHelloWorld";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function HomePage() {
-  console.log("HomePage where?", typeof window === "undefined" ? "server" : "browser");
+  // Highlight triggers: flip true exactly when the last animation for that area finishes
+  const [hlHeroTitle, setHlHeroTitle] = useState(false);
+  const [hlHeroParagraph, setHlHeroParagraph] = useState(false);
+  const [hlProblemSection, setHlProblemSection] = useState(false);
+  const [hlFeaturesHeading, setHlFeaturesHeading] = useState(false);
+  const [hlSetupHeading, setHlSetupHeading] = useState(false);
+
+  // If you still use this elsewhere, keep it:
+  const [relayoutKey, setRelayoutKey] = useState(0);
+
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
@@ -40,7 +49,7 @@ export default function HomePage() {
     <div className="min-h-[100dvh] flex flex-col">
       {/* Hero Section */}
       <section ref={heroRef} className="relative overflow-hidden">
-        <motion.div 
+        <motion.div
           className="absolute inset-0 -z-10"
           style={{ y, opacity }}
         >
@@ -48,9 +57,9 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(120,119,198,0.15),transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,165,0,0.1),transparent_50%)]" />
         </motion.div>
-        
+
         <div className="mx-auto max-w-7xl px-4 py-20 md:py-32 text-center">
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-100 to-cyan-100 px-4 py-2 text-sm font-medium text-indigo-700 mb-8"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -58,9 +67,9 @@ export default function HomePage() {
           >
             <motion.div
               animate={{ rotate: [0, 3, -3, 0] }}
-              transition={{ 
-                duration: 6, 
-                repeat: Infinity, 
+              transition={{
+                duration: 6,
+                repeat: Infinity,
                 ease: "easeInOut",
                 repeatDelay: 2
               }}
@@ -70,20 +79,22 @@ export default function HomePage() {
             Self-hostable • No per-user fees • Enterprise-grade
           </motion.div>
 
-          <motion.h1 
+          <motion.h1
             className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 350, damping: 30, delay: 0.1 }}
+            onAnimationComplete={() => setHlHeroTitle(true)} // 🔑 gate the "Day One" highlight
           >
             The{" "}
-            <motion.span 
+            <motion.span
               className="bg-gradient-to-r from-indigo-600 to-cyan-600 bg-clip-text text-transparent"
               initial={{ backgroundPosition: "0% 50%" }}
               animate={{ backgroundPosition: "100% 50%" }}
-              transition={{ 
-                duration: 8, 
-                repeat: Infinity, 
+              onAnimationComplete={() => setRelayoutKey(prev => prev + 1)}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
                 repeatType: "reverse",
                 ease: "easeInOut"
               }}
@@ -91,29 +102,44 @@ export default function HomePage() {
             >
               SaaS Kernel
             </motion.span>{" "}
-            That Ships Day One
+            That Ships{" "}
+            <Highlighter action="highlight" color="#fde68a" startWhen={hlHeroTitle}>
+              Day One
+            </Highlighter>
           </motion.h1>
 
-          <motion.p 
+          <motion.p
             className="mx-auto max-w-4xl text-xl md:text-2xl text-gray-600 leading-relaxed mb-12"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0.15 }}
+            onAnimationComplete={() => setHlHeroParagraph(true)} // 🔑 gate the paragraph’s highlights
           >
-            <strong>Authless</strong> is a self-hostable SaaS foundation that packages{" "}
-            <span className="font-semibold text-indigo-600">enterprise auth</span>, {" "}
-            <span className="font-semibold text-cyan-600">multi-tenancy</span>, {" "}
-            <span className="font-semibold text-purple-600">SSO</span>, {" "}
+            <strong>Authless</strong> is a{" "}
+            <Highlighter action="highlight" color="#ffd1dc" isView startWhen={hlHeroParagraph}>
+              self-hostable SaaS foundation
+            </Highlighter>{" "}
+            that packages{" "}
+            <span className="font-semibold text -indigo-600">enterprise auth</span>,{" "}
+            <span className="font-semibold text-cyan-600">multi-tenancy</span>,{" "}
+            <span className="font-semibold text-purple-600">SSO</span>,{" "}
             <span className="font-semibold text-emerald-600">i18n</span>, and{" "}
             <span className="font-semibold text-orange-600">real-time notifications</span>{" "}
-            into a single <code className="bg-gray-100 px-2 py-1 rounded text-lg">docker compose</code> command.
+            into a single{" "}
+            <Highlighter action="box" color="#a7f3d0" isView startWhen={hlHeroParagraph}>
+              <code className="bg-gray-100 px-2 py-1 rounded text-lg">docker compose</code>
+            </Highlighter>{" "}
+            command.
             <br />
             <span className="text-lg text-gray-500 mt-2 block">
-              Escape per-user pricing traps. Start building your product, not plumbing.
+              <Highlighter action="underline" color="#fbbf24" isView startWhen={hlHeroParagraph}>
+                Escape per-user pricing traps
+              </Highlighter>
+              . Start building your product, not plumbing.
             </span>
           </motion.p>
 
-          <motion.div 
+          <motion.div
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -128,10 +154,10 @@ export default function HomePage() {
                 <Link href="/setup">
                   <Rocket className="mr-2 h-5 w-5" />
                   Deploy in 2 Minutes
-              </Link>
-            </Button>
+                </Link>
+              </Button>
             </motion.div>
-                        <motion.div
+            <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 500, damping: 25 }}
@@ -163,13 +189,20 @@ export default function HomePage() {
 
           {/* tRPC demo pill */}
           <div className="mt-8 text-sm text-muted-foreground">
-           <HelloWorld />
+            <HelloWorld />
           </div>
         </div>
       </section>
 
       {/* Problem & Solution */}
-      <section className="bg-gray-50 py-20">
+      <motion.section
+        className="bg-gray-50 py-20"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+        onAnimationComplete={() => setHlProblemSection(true)} // 🔑 gate both highlights in this section
+      >
         <div className="mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -177,7 +210,7 @@ export default function HomePage() {
               <span className="text-red-600">Per-User Pricing Trap</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Stop choosing between expensive hosted auth services that charge per-user 
+              Stop choosing between expensive hosted auth services that charge per-user
               or spending months building enterprise-grade foundations from scratch.
             </p>
           </div>
@@ -208,7 +241,12 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="mt-6 p-4 bg-red-50 rounded-lg border border-red-200">
-                <p className="text-red-800 font-semibold">At 10,000 users: $500-2,500/month forever</p>
+                <p className="text-red-800 font-semibold">
+                  At 10,000 users:{" "}
+                  <Highlighter action="strike-through" color="#ef4444" startWhen={hlProblemSection}>
+                    $500-2,500/month forever
+                  </Highlighter>
+                </p>
               </div>
             </div>
 
@@ -237,46 +275,55 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
-                <p className="text-green-800 font-semibold">At 10,000 users: Still $50-200/month</p>
+                <p className="text-green-800 font-semibold">
+                  At 10,000 users:{" "}
+                  <Highlighter action="circle" color="#22c55e" startWhen={hlProblemSection}>
+                    Still $50-200/month
+                  </Highlighter>
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Core Features */}
       <section id="features" className="py-20">
         <div className="mx-auto max-w-7xl px-4">
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            onAnimationComplete={() => setHlFeaturesHeading(true)} // 🔑 gate the features heading highlight
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              The Complete SaaS Foundation
+              The{" "}
+              <Highlighter action="highlight" color="#c7d2fe" isView startWhen={hlFeaturesHeading}>
+                Complete SaaS Foundation
+              </Highlighter>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Everything you need to launch an enterprise-grade SaaS: authentication, multi-tenancy, 
+              Everything you need to launch an enterprise-grade SaaS: authentication, multi-tenancy,
               i18n, notifications, support, audit, and feature flags in one self-hostable package.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Authentication */}
-            <motion.div 
+            <motion.div
               className="group p-8 rounded-2xl border-2 border-gray-100 hover:border-indigo-200 hover:shadow-lg transition-all duration-200"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0.05 }}
-              whileHover={{ 
+              whileHover={{
                 y: -3,
                 transition: { type: "spring", stiffness: 400, damping: 25 }
               }}
             >
-              <motion.div 
+              <motion.div
                 className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mb-6"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -288,21 +335,21 @@ export default function HomePage() {
                 Passkeys, TOTP, WhatsApp OTP, Google/GitHub OAuth, tenant SSO (OpenID), and device management.
               </p>
               <div className="flex flex-wrap gap-2 text-sm">
-                <motion.span 
+                <motion.span
                   className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 >
                   Passkeys
                 </motion.span>
-                <motion.span 
+                <motion.span
                   className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 >
                   Tenant SSO
                 </motion.span>
-                <motion.span 
+                <motion.span
                   className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -398,12 +445,24 @@ export default function HomePage() {
       {/* Setup Demo */}
       <section className="bg-gradient-to-r from-indigo-600 to-cyan-600 py-20">
         <div className="mx-auto max-w-6xl px-4 text-center text-white">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            From Zero to SaaS in 2 Minutes
-          </h2>
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ type: "spring", stiffness: 320, damping: 26 }}
+            onAnimationComplete={() => setHlSetupHeading(true)} // 🔑 gate the bracket highlight
+          >
+            From Zero to SaaS in{" "}
+            <Highlighter action="bracket" color="#06b6d4" startWhen={hlSetupHeading}>
+              2 Minutes
+            </Highlighter>
+          </motion.h2>
+
           <p className="text-xl md:text-2xl mb-12 opacity-90 max-w-4xl mx-auto">
-            No complex setup, no hidden dependencies. Just <code className="bg-white/20 px-2 py-1 rounded">docker compose up</code> 
-            and a 2-minute wizard to configure your enterprise-grade SaaS foundation.
+            No complex setup, no hidden dependencies. Just{" "}
+            <code className="bg-white/20 px-2 py-1 rounded">docker compose up</code>
+            {" "}and a 2-minute wizard to configure your enterprise-grade SaaS foundation.
           </p>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -440,7 +499,7 @@ export default function HomePage() {
                 Try the Setup Wizard
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 rounded-xl border-2 border-white text-white hover:bg-white/10">
+            <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 rounded-xl border-2 border-white text-black hover:bg-white/10">
               <Link href="https://github.com/authless-org/authless" target="_blank">
                 <Github className="mr-2 h-5 w-5" />
                 View on GitHub
@@ -458,7 +517,7 @@ export default function HomePage() {
               Built By Developers, For Developers
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Every line of code is optimized for maintainability, scalability, and developer happiness. 
+              Every line of code is optimized for maintainability, scalability, and developer happiness.
               No bloat, no black boxes, just clean architecture you can understand and extend.
             </p>
           </div>
@@ -581,7 +640,7 @@ export default function HomePage() {
             Start Free. Scale Without Limits.
           </h2>
           <p className="text-xl md:text-2xl text-gray-600 mb-12">
-            Self-host Authless for free and build your SaaS without per-user pricing traps. 
+            Self-host Authless for free and build your SaaS without per-user pricing traps.
             Join the movement of developers taking back control of their infrastructure.
           </p>
 
@@ -599,7 +658,7 @@ export default function HomePage() {
                 </Link>
               </Button>
             </motion.div>
-            
+
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

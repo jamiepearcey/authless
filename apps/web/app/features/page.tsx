@@ -452,7 +452,7 @@ export default function FeaturesPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 rounded-xl border-2 border-white text-white hover:bg-white/10">
+              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 rounded-xl border-2 border-white text-black hover:bg-white/10">
                 <Link href="/pricing">
                   <Star className="mr-2 h-5 w-5" />
                   View Pricing

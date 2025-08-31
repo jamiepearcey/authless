@@ -35,7 +35,7 @@ export default function Setup2FAPage() {
 
   if (show2FASetup) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex-1 flex h-screen items-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <TwoFactorSetup
           isWizard={true}
           onComplete={() => router.push("/")}
