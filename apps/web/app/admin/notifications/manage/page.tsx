@@ -345,10 +345,10 @@ export default function NotificationManagementPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="global">🌍 Global (All Users)</SelectItem>
-                      <SelectItem value="user">👤 Specific User</SelectItem>
-                      <SelectItem value="tenant">🏢 Tenant</SelectItem>
-                      <SelectItem value="role">🎭 Role in Tenant</SelectItem>
+                      <SelectItem value="global">Global (All Users)</SelectItem>
+                      <SelectItem value="user">Specific User</SelectItem>
+                      <SelectItem value="tenant">Tenant</SelectItem>
+                      <SelectItem value="role">Role in Tenant</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

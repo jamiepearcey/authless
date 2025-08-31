@@ -66,7 +66,7 @@ export default function PasskeySelectPage() {
   // If no passkeys are available, automatically redirect to sign-in
   useEffect(() => {
     if (!isLoadingAccounts && accounts.length === 0) {
-      router.push(`/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`);
+      router.push(`/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`);
     }
   }, [accounts.length, isLoadingAccounts, router, callbackUrl]);
 

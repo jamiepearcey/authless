@@ -19,7 +19,7 @@ interface TwoFactorPromptState {
 }
 
 export function useTwoFactorPrompt(config: Partial<TwoFactorPromptConfig> = {}) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [dismissedUntil, setDismissedUntil] = useState<Date | null>(null);
   const [lastReminder, setLastReminder] = useState<Date | null>(null);
 
@@ -32,9 +32,15 @@ export function useTwoFactorPrompt(config: Partial<TwoFactorPromptConfig> = {}) 
     ...config,
   };
 
-  // Get 2FA status
-  const { data: twoFactorStatus } = trpc.getTwoFactorStatus.useQuery();
-  const { data: twoFactorMethods } = trpc.get2fa.useQuery();
+  // Get 2FA status only when logged in
+  const { data: twoFactorStatus, isLoading: isLoadingStatus } = trpc.getTwoFactorStatus.useQuery(
+    undefined,
+    { enabled: !!session?.user?.id }
+  );
+  const { data: twoFactorMethods, isLoading: isLoadingMethods } = trpc.get2fa.useQuery(
+    undefined,
+    { enabled: !!session?.user?.id }
+  );
 
   // Check if 2FA is already set up
   const has2FA = twoFactorStatus?.hasAuthenticatorCodes || 
@@ -56,7 +62,13 @@ export function useTwoFactorPrompt(config: Partial<TwoFactorPromptConfig> = {}) 
                              new Date().getTime() - lastReminder.getTime() > (defaultConfig.reminderIntervalHours * 60 * 60 * 1000));
 
   // Determine if prompt should be visible
-  const isVisible = !has2FA && (shouldEnforce || shouldShowReminder);
+  // Only show if logged in, not loading, and 2FA is needed
+  const isVisible = !!session?.user?.id && 
+                   status !== "loading" && 
+                   !isLoadingStatus && 
+                   !isLoadingMethods && 
+                   !has2FA && 
+                   (shouldEnforce || shouldShowReminder);
   const isEnforced = shouldEnforce;
 
   // Dismiss reminder until next interval

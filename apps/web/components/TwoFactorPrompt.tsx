@@ -34,16 +34,22 @@ export default function TwoFactorPrompt({
   onDismiss,
   onEnroll,
 }: TwoFactorPromptProps) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [dismissedUntil, setDismissedUntil] = useState<Date | null>(null);
   const [lastReminder, setLastReminder] = useState<Date | null>(null);
   const [isEnforced, setIsEnforced] = useState(false);
 
-  // Get 2FA status
-  const { data: twoFactorStatus } = trpc.getTwoFactorStatus.useQuery();
-  const { data: twoFactorMethods } = trpc.get2fa.useQuery();
+  // Get 2FA status only when logged in
+  const { data: twoFactorStatus, isLoading: isLoadingStatus } = trpc.getTwoFactorStatus.useQuery(
+    undefined,
+    { enabled: !!session?.user?.id }
+  );
+  const { data: twoFactorMethods, isLoading: isLoadingMethods } = trpc.get2fa.useQuery(
+    undefined,
+    { enabled: !!session?.user?.id }
+  );
 
   // Check if 2FA is already set up
   const has2FA = twoFactorStatus?.hasAuthenticatorCodes || 
@@ -66,6 +72,11 @@ export default function TwoFactorPrompt({
                              new Date().getTime() - lastReminder.getTime() > (reminderInterval * 60 * 60 * 1000));
 
   useEffect(() => {
+    // Only proceed if we have a definitive state
+    if (status === "loading" || !session?.user?.id || isLoadingStatus || isLoadingMethods) {
+      return;
+    }
+
     // Show prompt if 2FA is not set up
     if (!has2FA) {
       if (sensitiveAction) {
@@ -84,7 +95,7 @@ export default function TwoFactorPrompt({
     } else {
       setIsVisible(false);
     }
-  }, [has2FA, sensitiveAction, shouldEnforce, shouldShowReminder]);
+  }, [status, session?.user?.id, has2FA, sensitiveAction, shouldEnforce, shouldShowReminder, isLoadingStatus, isLoadingMethods]);
 
   const handleDismiss = () => {
     if (isEnforced) {
@@ -121,7 +132,28 @@ export default function TwoFactorPrompt({
     handleDismiss();
   };
 
-  if (!isVisible || has2FA) {
+  // Don't show anything until we have a definitive authentication state
+  if (status === "loading") {
+    return null;
+  }
+
+  // Don't show if not logged in
+  if (!session?.user?.id) {
+    return null;
+  }
+
+  // Don't show if we're still loading 2FA status
+  if (isLoadingStatus || isLoadingMethods) {
+    return null;
+  }
+
+  // Don't show if 2FA is already set up
+  if (has2FA) {
+    return null;
+  }
+
+  // Don't show if not visible
+  if (!isVisible) {
     return null;
   }
 

@@ -284,10 +284,10 @@ export default function AdminNotificationsPage() {
             
             <div className="flex space-x-3">
               <Button variant="outline" asChild>
-                <Link href="/admin/notifications/manage">🔧 Manage & Test</Link>
+                <Link href="/admin/notifications/manage">Manage & Test</Link>
               </Button>
               <Button variant="outline" asChild>
-                <Link href="/admin/notifications/templates">📝 Templates</Link>
+                <Link href="/admin/notifications/templates">Templates</Link>
               </Button>
             </div>
           </div>

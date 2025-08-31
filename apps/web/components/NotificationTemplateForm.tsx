@@ -161,16 +161,16 @@ export function NotificationTemplateForm({ context, tenantId, onSuccess, classNa
   const getTargetTypeOptions = () => {
     if (context === 'tenant') {
       return [
-        { value: 'tenant', label: '🏢 All Tenant Users', icon: <Settings className="h-4 w-4" /> },
-        { value: 'user', label: '👤 Specific User', icon: <Users className="h-4 w-4" /> },
-        { value: 'role', label: '🎭 Role in Tenant', icon: <Activity className="h-4 w-4" /> },
+        { value: 'tenant', label: 'All Tenant Users', icon: <Settings className="h-4 w-4" /> },
+        { value: 'user', label: 'Specific User', icon: <Users className="h-4 w-4" /> },
+        { value: 'role', label: 'Role in Tenant', icon: <Activity className="h-4 w-4" /> },
       ];
     } else {
       return [
-        { value: 'global', label: '🌍 Global (All Users)', icon: <Globe className="h-4 w-4" /> },
-        { value: 'user', label: '👤 Specific User', icon: <Users className="h-4 w-4" /> },
-        { value: 'tenant', label: '🏢 Tenant', icon: <Settings className="h-4 w-4" /> },
-        { value: 'role', label: '🎭 Role in Tenant', icon: <Activity className="h-4 w-4" /> },
+        { value: 'global', label: 'Global (All Users)', icon: <Globe className="h-4 w-4" /> },
+        { value: 'user', label: 'Specific User', icon: <Users className="h-4 w-4" /> },
+        { value: 'tenant', label: 'Tenant', icon: <Settings className="h-4 w-4" /> },
+        { value: 'role', label: 'Role in Tenant', icon: <Activity className="h-4 w-4" /> },
       ];
     }
   };
