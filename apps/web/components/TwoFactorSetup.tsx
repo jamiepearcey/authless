@@ -209,12 +209,14 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
 
   // WhatsApp handlers
   const handlePhoneNumberChange = (value: string, code: string) => {
+    console.log("Phone number changed:", value, "code:", code);
     setPhoneNumber(value);
     setCountryCode(code);
     setFullPhoneNumber(`+${code}${value}`);
   };
 
   const handlePhoneValidationChange = (isValid: boolean) => {
+    console.log("Phone validation changed:", isValid, "for phone:", phoneNumber);
     setIsPhoneValid(isValid);
   };
 
@@ -621,15 +623,25 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="space-y-3">
             <Button
               onClick={() => setStep("authenticator-verify")}
-              className="flex items-center gap-2"
+              className="w-full flex items-center justify-center gap-2"
               size="lg"
             >
               I've Added the Code
               <ArrowRight className="h-4 w-4" />
             </Button>
+            
+            <div className="text-center">
+              <Button
+                variant="outline"
+                onClick={() => setStep("method-selection")}
+                size="sm"
+              >
+                ← Back to 2FA Options
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -664,14 +676,19 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
           
           <Button
             onClick={handleWhatsAppSetup}
-            disabled={!isPhoneValid || isLoading}
-            className="w-full"
+            disabled={!isPhoneValid || !phoneNumber.trim() || isLoading}
+            className={`w-full ${(!isPhoneValid || !phoneNumber.trim()) ? 'opacity-50 cursor-not-allowed' : ''}`}
             size="lg"
           >
             {isLoading ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
                 Sending Code...
+              </>
+            ) : (!isPhoneValid || !phoneNumber.trim()) ? (
+              <>
+                <MessageCircle className="h-4 w-4 mr-2" />
+                Enter Valid Phone Number
               </>
             ) : (
               <>
@@ -687,7 +704,7 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
               onClick={() => setStep("method-selection")}
               size="sm"
             >
-              ← Back to Methods
+              ← Back to 2FA Options
             </Button>
           </div>
         </CardContent>
@@ -728,7 +745,7 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
             </p>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center space-y-3">
             <Button
               onClick={handleWhatsAppVerify}
               disabled={whatsappVerificationCode.length !== 6 || isLoading}
@@ -747,15 +764,13 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
                 </>
               )}
             </Button>
-          </div>
-
-          <div className="text-center">
+            
             <Button
               variant="outline"
               onClick={() => setStep("method-selection")}
               size="sm"
             >
-              ← Back to Setup
+              ← Back to 2FA Options
             </Button>
           </div>
         </CardContent>
@@ -823,7 +838,7 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
               onClick={() => setStep("method-selection")}
               size="sm"
             >
-              ← Back to Methods
+              ← Back to 2FA Options
             </Button>
           </div>
         </CardContent>
@@ -865,7 +880,7 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
             </p>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center space-y-3">
             <Button
               onClick={handleVerify2FA}
               disabled={verificationCode.length !== 6 || isLoading}
@@ -883,6 +898,14 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
                   Verify & Enable 2FA
                 </>
               )}
+            </Button>
+            
+            <Button
+              variant="outline"
+              onClick={() => setStep("method-selection")}
+              size="sm"
+            >
+              ← Back to 2FA Options
             </Button>
           </div>
         </CardContent>
