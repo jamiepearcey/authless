@@ -1,15 +1,70 @@
-# Authless - Turborepo Monorepo
+# Authless - The SaaS Kernel That Ships Day One
 
-A full-stack TypeScript monorepo built with Turborepo, featuring Next.js, tRPC, Prisma, and NextAuth.js.
+> **Self-hostable SaaS foundation** with enterprise authentication, multi-tenancy, SSO, i18n, real-time notifications, support system, feature flags, and audit logging. Escape per-user pricing traps and deploy in 2 minutes.
 
-## 🏗️ Architecture
+[![Next.js](https://img.shields.io/badge/Next.js-14+-black?logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?logo=typescript)](https://typescriptlang.org)
+[![tRPC](https://img.shields.io/badge/tRPC-10.0+-2596be?logo=trpc)](https://trpc.io)
+[![Prisma](https://img.shields.io/badge/Prisma-5.0+-2d3748?logo=prisma)](https://prisma.io)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ed?logo=docker)](https://docker.com)
 
-- **Frontend**: Next.js 14+ with App Router in `apps/web`
-- **API**: tRPC server hosted in Next.js API Routes in `apps/web` (port 3000)
-- **Database**: Prisma with SQLite (dev) / PostgreSQL (prod) ready
-- **Authentication**: NextAuth.js with Credentials + GitHub providers
+**Authless** packages enterprise-grade SaaS foundations into a single `docker compose` command, letting you focus on your product instead of reinventing authentication, multi-tenancy, and operational infrastructure.
+
+## ✨ Key Features
+
+### 🔐 Enterprise Authentication
+- **Passkeys/WebAuthn** with device management
+- **Multi-factor Authentication**: TOTP, WhatsApp/SMS 2FA with rate limiting  
+- **OAuth Providers**: Google, GitHub + custom provider support
+- **Tenant SSO**: OpenID Connect for enterprise customers
+- **Session Management**: Device revocation, breach checks, security monitoring
+
+### 👥 Multi-Tenancy + Domains  
+- **Domain Resolution**: Subdomain and custom domain support
+- **Tenant Admin Console** with complete user management
+- **Magic Links & Secure Invites** with role-based access control
+- **Data Isolation** and tenant-scoped operations
+- **Bulk Operations** for user management at scale
+
+### 🌐 LLM-Powered Internationalization
+- **Auto-Detection**: CLI finds English strings with confidence scoring
+- **Stable ID Generation** with intelligent heuristics
+- **LLM Translation**: GPT-powered translations with developer approval workflow
+- **One-Click Expansion** to new languages
+- **Production i18n Architecture** ready for global deployment
+
+### 🔔 Real-Time Notifications
+- **Self-Hosted Engine**: Ably alternative with no vendor fees (Centrifugo)
+- **In-App Notifications**: Tray + dedicated page with real-time updates
+- **Multi-Channel**: Email, WhatsApp via webhook workflows
+- **Smart Targeting**: Users, roles, tenants, or platform-wide
+- **User Preferences**: Granular opt-outs and digest scheduling
+
+### 💬 Support + Contact System
+- **Smart Routing**: User-facing forms with global + tenant rules
+- **Email Threading**: Mailgun integration with inbound reply handling  
+- **SLA Management**: Tracking, escalation workflows, and compliance
+- **Admin Tools**: Complete deletion, audit trails, and case management
+- **Webhook Integration**: n8n orchestration for external providers
+
+### ⚙️ Feature Flags + Audit
+- **Multi-Level Toggles**: Global platform and per-tenant overrides
+- **Tier System**: Core, Secondary, and Tenancy-only features
+- **Performance Optimized**: Cache + pub/sub invalidation
+- **Compliance Ready**: Complete audit trails for security requirements
+- **Discussion Threads**: Attachable to any resource for collaboration
+
+## 🏗️ Technical Architecture
+
+- **Frontend**: Next.js 14+ with App Router, Server Components, and Edge Runtime
+- **API**: tRPC with end-to-end type safety, hosted in Next.js API Routes
+- **Database**: Prisma ORM with SQLite (dev) / PostgreSQL (prod) support
+- **Authentication**: NextAuth.js with Passkeys, OAuth, and SSO
+- **Real-time**: Self-hosted Centrifugo WebSocket server
 - **Styling**: Tailwind CSS + shadcn/ui components
-- **Type Safety**: End-to-end types with tRPC + Zod validation
+- **Type Safety**: Full-stack TypeScript with tRPC + Zod validation
+- **Deployment**: Docker + Kubernetes ready with monitoring
+- **Integration**: Webhook-first architecture with n8n automation
 
 ## 📁 Structure
 
@@ -29,6 +84,24 @@ A full-stack TypeScript monorepo built with Turborepo, featuring Next.js, tRPC, 
 └── Dockerfile        # Application containerization
 ```
 
+## 💰 Pricing
+
+**Escape the per-user pricing trap forever.**
+
+| Tier | Price | Use Case |
+|------|-------|----------|
+| **Free (Maker)** | £0 | Full core kernel with attribution. Perfect for individuals, charities, and revenue <£100k |
+| **Commercial** | £399 one-time* | No attribution, advanced features, priority support. Perpetual license + 12mo updates |
+| **Agency/Studio** | £999/year | Unlimited client projects with transfer tools and white-glove setup |
+| **Enterprise** | Custom | SLA guarantees, security reviews, compliance documentation, dedicated support |
+
+**\*Founding Cohort Special**: First 100 buyers get Commercial for £299 (save £100)
+
+**🎯 At 10,000 users:**
+- Hosted Auth Services: **£2,000+/month forever**
+- Custom Development: **£150,000+ upfront** + maintenance
+- **Authless**: **£400 one-time** (or free if qualifying)
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -39,8 +112,10 @@ A full-stack TypeScript monorepo built with Turborepo, featuring Next.js, tRPC, 
 
 ### Option 1: Automated Setup (Recommended)
 
-1. **Run the setup script:**
+1. **Clone and setup:**
    ```bash
+   git clone https://github.com/authless-org/authless.git
+   cd authless
    pnpm run setup
    ```
    
@@ -49,8 +124,28 @@ A full-stack TypeScript monorepo built with Turborepo, featuring Next.js, tRPC, 
    - Create `.env` file from template
    - Set up database (SQLite or PostgreSQL)
    - Seed the database with test user
+   - Start the development server
 
-### Option 2: Manual Setup
+2. **Open your browser:**
+   - Frontend: http://localhost:3000
+   - Admin Console: http://localhost:3000/admin
+
+### Option 2: Docker Deployment (Production-Ready)
+
+1. **One-command deployment:**
+   ```bash
+   git clone https://github.com/authless-org/authless.git
+   cd authless
+   docker compose up -d
+   ```
+
+2. **Run setup wizard:**
+   - Visit http://localhost:3000/setup
+   - Configure database and create admin user
+   - Select features to enable
+   - Deploy in 2 minutes!
+
+### Option 3: Manual Setup
 
 1. **Install dependencies:**
    ```bash
@@ -283,25 +378,104 @@ For detailed documentation, see [packages/i18n-core/README.md](packages/i18n-cor
 - **Protected Route:** `/protected` (requires authentication)
 - **Sign In:** Click "Sign In" button in header
 
-## 🎯 Current Status
+## 🎯 Production-Ready Features
 
-✅ **Working Features:**
-- Next.js 14+ with App Router
-- tRPC API with end-to-end types
-- Prisma with SQLite database
-- NextAuth.js authentication
-- Tailwind CSS + shadcn/ui components
-- Turborepo monorepo setup
-- Database seeding
-- Protected routes
-- Build system
+### ✅ Authentication & Security
+- **Passkeys/WebAuthn**: Full device management, registration, and authentication
+- **Multi-Factor Auth**: TOTP authenticators, WhatsApp/SMS 2FA with rate limiting
+- **OAuth Integration**: Google, GitHub providers with extensible framework
+- **Tenant SSO**: Complete SAML/OIDC implementation with domain-based detection
+- **Session Management**: Device revocation, breach detection, security monitoring
+- **Password Security**: Breach checks, strength validation, secure reset flows
 
-✅ **Tested & Verified:**
-- Development server starts successfully
-- tRPC API endpoint responds correctly
-- Database migrations and seeding work
-- Application builds successfully
-- UI components render properly
+### ✅ Multi-Tenancy & Domains
+- **Domain Resolution**: Subdomain and custom domain routing with middleware
+- **Tenant Management**: Complete admin console with user management
+- **Invitation System**: Magic links, secure invites, role-based access control
+- **Data Isolation**: Tenant-scoped queries, secure data separation
+- **Bulk Operations**: User imports, exports, and management at scale
+
+### ✅ Real-Time & Notifications  
+- **Centrifugo Integration**: Self-hosted WebSocket server for real-time features
+- **Notification System**: In-app tray, dedicated page, real-time delivery
+- **Multi-Channel**: Email, WhatsApp via n8n webhook orchestration
+- **Smart Targeting**: User, role, tenant, and platform-wide notifications
+- **User Preferences**: Granular opt-outs, digest scheduling, preference management
+
+### ✅ Support & Communication
+- **Contact Forms**: User-facing support with intelligent routing
+- **Email Threading**: Mailgun integration with inbound reply processing
+- **Case Management**: SLA tracking, escalation workflows, admin tools
+- **Audit Trails**: Complete support interaction logging for compliance
+- **Webhook Integration**: External provider integration via n8n
+
+### ✅ Feature Management & Audit
+- **Feature Flags**: Global and tenant-level toggles with tier system
+- **Performance**: Redis caching, pub/sub invalidation, optimized queries
+- **Audit Logging**: Comprehensive compliance-ready audit trails
+- **Discussion System**: Attachable discussion threads for any resource
+- **Admin Interface**: Complete feature flag management console
+
+### ✅ Internationalization
+- **LLM-Powered i18n**: Auto-detection, stable ID generation, AI translations
+- **Developer Workflow**: CLI tooling, approval process, diff management  
+- **Production Ready**: 276+ translated strings, German/French support
+- **Language Detection**: Automatic locale detection and switching
+
+### ✅ Infrastructure & DevOps
+- **Docker Ready**: Complete containerization with docker-compose
+- **Database Support**: SQLite (dev), PostgreSQL (prod) with migrations
+- **Type Safety**: End-to-end TypeScript with tRPC and Zod validation
+- **Testing**: Comprehensive unit, integration, and E2E test suites
+- **Monitoring**: Built-in observability, logging, and health checks
+- **Security**: OWASP compliance, rate limiting, input validation
+
+## 🎯 Perfect For
+
+- **B2B SaaS Startups**: Launch with enterprise features from day one
+- **Enterprise Software Teams**: Skip 8-12 weeks of foundation development  
+- **Multi-Tenant Platforms**: Built-in tenant isolation and management
+- **Global Applications**: LLM-powered internationalization included
+- **Agencies & Studios**: Unlimited client projects with transfer tooling
+- **Compliance-Heavy Industries**: Audit logs, security reviews, documentation
+
+## 🚀 Deployment Options
+
+### Recommended: Coolify + Hetzner/OVH
+Perfect balance of cost, performance, and simplicity:
+
+```bash
+# 1. One-click Coolify deployment on Hetzner
+# 2. Connect GitHub repository  
+# 3. Set environment variables
+# 4. Deploy with SSL via Cloudflare
+```
+
+**Monthly cost**: ~€50-200 for unlimited users vs £2,000+ with hosted auth services
+
+### Docker + Any VPS
+Works on any Linux server:
+
+```bash
+git clone authless && cd authless
+docker compose up -d
+# Visit setup wizard at your-domain.com/setup
+```
+
+### Kubernetes
+Enterprise-grade scaling with included Helm charts:
+
+```bash
+helm install authless ./charts/authless
+kubectl apply -f k8s/
+```
+
+### Cloud Providers
+Deployment guides included for:
+- **AWS**: ECS, EKS, RDS integration
+- **Google Cloud**: Cloud Run, GKE, Cloud SQL
+- **Azure**: Container Apps, AKS, Azure SQL
+- **DigitalOcean**: App Platform, Kubernetes
 
 ## 🔧 Development
 
@@ -393,11 +567,59 @@ pnpm run docker:build
 pnpm run docker:run
 ```
 
+## 🤝 Support & Community
+
+- **Documentation**: Complete guides, API references, and deployment instructions
+- **Community**: Join our Discord for questions and discussions
+- **Priority Support**: Included with Commercial and higher tiers
+- **Custom Development**: Available for Enterprise customers
+- **Security Issues**: security@authless.dev
+
+## 🛣️ Roadmap
+
+### Coming Soon
+- **Audit Dashboard**: Visual audit log exploration and compliance reporting
+- **Advanced SSO**: SCIM provisioning, advanced SAML features
+- **Mobile SDKs**: React Native and Flutter authentication libraries  
+- **Advanced Analytics**: Usage tracking, security insights, performance metrics
+- **Third-Party Integrations**: Slack, Teams, Jira, and more via n8n
+
+### Community Requested
+- **Payment Integration**: Stripe billing, subscription management
+- **CRM Integration**: Salesforce, HubSpot, Pipedrive connectors
+- **Advanced Workflows**: Visual workflow builder for business logic
+- **White-Label Options**: Complete branding customization
+- **Multi-Region Support**: Data residency and geographic distribution
+
 ## 📚 Learn More
 
-- [Turborepo](https://turbo.build/repo)
-- [Next.js](https://nextjs.org/)
-- [tRPC](https://trpc.io/)
-- [Prisma](https://www.prisma.io/)
-- [NextAuth.js](https://next-auth.js.org/)
-- [shadcn/ui](https://ui.shadcn.com/)
+### Core Technologies
+- [Next.js](https://nextjs.org/) - React framework with App Router
+- [tRPC](https://trpc.io/) - End-to-end type safety
+- [Prisma](https://www.prisma.io/) - Database ORM and migrations
+- [NextAuth.js](https://next-auth.js.org/) - Authentication framework
+- [shadcn/ui](https://ui.shadcn.com/) - Component library
+- [Turborepo](https://turbo.build/repo) - Monorepo build system
+
+### Infrastructure & Integration
+- [Centrifugo](https://centrifugal.dev/) - Real-time messaging server
+- [n8n](https://n8n.io/) - Workflow automation
+- [Docker](https://docker.com/) - Containerization
+- [Coolify](https://coolify.io/) - Deployment platform
+- [Cloudflare](https://cloudflare.com/) - DNS, SSL, CDN
+
+---
+
+## 🚀 Ready to Build?
+
+Choose your path to SaaS freedom:
+
+1. **Start Free**: `git clone` + `pnpm setup` + `localhost:3000/setup`
+2. **Go Commercial**: [Claim founding discount](mailto:sales@authless.dev) (£299, save £100)  
+3. **Enterprise**: [Book consultation](mailto:enterprise@authless.dev) for custom requirements
+
+**🎯 Save 8-12+ weeks of development. Deploy in 2 minutes. Scale without per-user fees.**
+
+[![Deploy Now](https://img.shields.io/badge/Deploy_Now-Free-brightgreen?style=for-the-badge&logo=rocket)](mailto:start@authless.dev)
+[![Get Commercial](https://img.shields.io/badge/Get_Commercial-£299_Special-blue?style=for-the-badge&logo=crown)](mailto:sales@authless.dev)
+[![Book Demo](https://img.shields.io/badge/Book_Demo-Enterprise-purple?style=for-the-badge&logo=calendar)](mailto:demo@authless.dev)
