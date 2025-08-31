@@ -104,11 +104,11 @@ export function NotificationCard({
           <div className="flex items-center space-x-3">
             {getTypeIcon()}
             <div className="flex-1 min-w-0">
-              <h3 className="text-lg font-semibold text-gray-900 truncate">
+              <h3 className="text-lg font-semibold text-gray-900 break-words leading-tight">
                 {title}
               </h3>
               {tenant && (
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-500 mt-1 break-words">
                   From: {tenant.name}
                 </p>
               )}
@@ -128,27 +128,27 @@ export function NotificationCard({
       
       <CardContent className="pt-0">
         {description && (
-          <p className="text-gray-700 mb-4 leading-relaxed">
+          <p className="text-gray-700 mb-4 leading-relaxed break-words">
             {description}
           </p>
         )}
         
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4 text-sm text-gray-500">
-            <div className="flex items-center space-x-1">
-              <Clock className="h-4 w-4" />
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-sm text-gray-500">
+            <div className="flex items-center gap-1">
+              <Clock className="h-4 w-4 flex-shrink-0" />
               <span>Created: {formatTime(createdAt)}</span>
             </div>
             
             {readAt && (
-              <div className="flex items-center space-x-1">
-                <Check className="h-4 w-4" />
+              <div className="flex items-center gap-1">
+                <Check className="h-4 w-4 flex-shrink-0" />
                 <span>Read: {formatReadTime(readAt)}</span>
               </div>
             )}
           </div>
           
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             {status === "unread" && (
               <Button
                 variant="outline"

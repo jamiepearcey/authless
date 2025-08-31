@@ -366,8 +366,23 @@ export default function TenantUsersPage() {
           </div></div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {filteredMemberships.map((membership) => (
+          {filteredMemberships.length === 0 ? (
+            <div className="text-center py-12">
+              <Users className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No team members found</h3>
+              <p className="text-gray-500 mb-4">
+                {search ? `No team members match "${search}"` : "No team members have been added to this tenancy yet."}
+              </p>
+              {!search && (
+                <Button onClick={() => setShowInviteForm(true)} className="flex items-center gap-2">
+                  <Plus className="h-4 w-4" />
+                  Invite First Team Member
+                </Button>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {filteredMemberships.map((membership) => (
               <div key={membership.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
@@ -431,7 +446,8 @@ export default function TenantUsersPage() {
                 </div>
               </div>
             ))}
-          </div>
+            </div>
+          )}
         </CardContent>  
       </Card>
 

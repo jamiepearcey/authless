@@ -101,19 +101,18 @@ export default function AdminTenantsPage() {
   }
 
   return (
-    <main className="flex flex-1 pt-8 pb-8">
-      <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center space-x-4 mb-4">
-            <BreadcrumbNavigation
-              items={[
-                { label: "Admin", href: "/admin" },
-                { label: "Tenant Management", current: true },
-              ]}
-              showHome={false}
-            />
-          </div>
+    <div className="flex-1space-y-6 mb-8">
+      {/* Header */}
+      <div className="mb-8">
+        <div className="flex items-center space-x-4 mb-4">
+          <BreadcrumbNavigation
+            items={[
+              { label: "Platform Admin", href: "/admin" },
+              { label: "Tenant Management", current: true },
+            ]}
+            showHome={false}
+          />
+        </div>
           
           <div className="flex justify-between items-center">
             <div>
@@ -372,6 +371,5 @@ export default function AdminTenantsPage() {
         </CardContent>
       </Card>
     </div>
-    </main>
   );
 }

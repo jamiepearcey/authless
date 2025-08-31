@@ -145,8 +145,10 @@ export function NotificationBell({
       
       <DropdownMenuContent
         align="end"
-        className="w-80 max-h-96"
+        className="w-96 max-h-96"
         sideOffset={8}
+        side="bottom"
+        alignOffset={-8}
       >
         <DropdownMenuLabel className="flex items-center justify-between">
           <span>Notifications</span>
@@ -175,37 +177,37 @@ export function NotificationBell({
               <p className="text-sm">No notifications</p>
             </div>
           ) : (
-            <div className="space-y-1">
+            <div className="space-y-2">
               {notifications.map((item) => (
-                <div key={item.id} className="p-3 hover:bg-gray-50 rounded-lg">
-                  <div className="flex items-start space-x-3">
+                <div key={item.id} className="p-3 hover:bg-gray-50 rounded-lg border border-transparent hover:border-gray-200">
+                  <div className="flex items-start gap-3">
                     <span className="text-lg">
                       {getNotificationIcon(item.notification.type ?? "info")}
                     </span>
                     
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between">
-                        <p className="text-sm font-medium text-gray-900 truncate">
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="text-sm font-medium text-gray-900 break-words leading-tight">
                           {item.notification.title}
                         </p>
-                        <span className={`text-xs font-medium ${getPriorityColor(item.notification.priority)}`}>
+                        <span className={`text-xs font-medium ${getPriorityColor(item.notification.priority)} flex-shrink-0`}>
                           {item.notification.priority}
                         </span>
                       </div>
                       
                       {item.notification.description && (
-                        <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                        <p className="text-xs text-gray-600 mt-1 break-words leading-relaxed">
                           {item.notification.description}
                         </p>
                       )}
                       
                       <div className="flex items-center justify-between mt-2">
-                        <div className="flex items-center space-x-2 text-xs text-gray-500">
-                          <span>{formatTime(item.notification.createdAt)}</span>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 min-w-0">
+                          <span className="flex-shrink-0">{formatTime(item.notification.createdAt)}</span>
                           {item.notification.tenant && (
                             <>
-                              <span>•</span>
-                              <span>{item.notification.tenant.name}</span>
+                              <span className="flex-shrink-0">•</span>
+                              <span className="truncate">{item.notification.tenant.name}</span>
                             </>
                           )}
                         </div>

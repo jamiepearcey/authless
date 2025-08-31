@@ -228,60 +228,7 @@ export default function TenantDashboardPage() {
         </Card>
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              {t("User Management", "tenants.dashboard.page.TenantDashboardPage.user_management__9ckols")}
-            </CardTitle>
-            <CardDescription>
-              {t("Invite new users and manage team permissions", "tenants.dashboard.page.TenantDashboardPage.invite_new_users_and_manage_team_permissions__10ckols")}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex space-x-3">
-              <Link href={`/tenants/${tenantSlug}/admin/users`} className="flex-1">
-                <Button variant="outline" className="w-full">
-                  {t("View Users", "tenants.dashboard.page.TenantDashboardPage.view_users__11ckols")}
-                </Button>
-              </Link>
-              <Link href={`/tenants/${tenantSlug}/admin/users`} className="flex-1">
-                <Button className="w-full">
-                  {t("Invite User", "tenants.dashboard.page.TenantDashboardPage.invite_user__12ckols")}
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Settings className="h-5 w-5" />
-              {t("Workspace Settings", "tenants.dashboard.page.TenantDashboardPage.workspace_settings__13ckols")}
-            </CardTitle>
-            <CardDescription>
-              {t("Customize branding, security, and integrations", "tenants.dashboard.page.TenantDashboardPage.customize_branding_security_and_integrations__14ckols")}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex space-x-3">
-              <Link href={`/tenants/${tenantSlug}/admin/settings`} className="flex-1">
-                <Button variant="outline" className="w-full">
-                  {t("General", "tenants.dashboard.page.TenantDashboardPage.general__15ckols")}
-                </Button>
-              </Link>
-              <Link href={`/tenants/${tenantSlug}/admin/settings`} className="flex-1">
-                <Button variant="outline" className="w-full">
-                  {t("Appearance", "tenants.dashboard.page.TenantDashboardPage.appearance__16ckols")}
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* User Management Section */}
       <Card>
