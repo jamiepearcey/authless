@@ -811,8 +811,8 @@ export const contactRouter = router({
   getCaseMetrics: protectedProcedure
     .input(
       z.object({
-        dateFrom: z.string().pipe(z.coerce.date()),
-        dateTo: z.string().pipe(z.coerce.date()),
+        dateFrom: z.string().transform((str) => new Date(str)),
+        dateTo: z.string().transform((str) => new Date(str)),
         tenantId: z.string().optional(),
       })
     )
