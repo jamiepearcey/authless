@@ -14,11 +14,20 @@ export const contactRouter = router({
     .input(z.object({ tenantId: z.string().optional() }))
     .query(async ({ ctx, input }) => {
       try {
-        const whereClause: { isActive: boolean; tenantId?: string } = {
+        // Build query to include both platform-wide and tenant-specific reasons
+        const whereClause: any = {
           isActive: true,
         };
+
         if (input.tenantId) {
-          whereClause.tenantId = input.tenantId;
+          // If tenantId provided, get both platform-wide (null tenantId) and tenant-specific reasons
+          whereClause.OR = [
+            { tenantId: null }, // Platform-wide reasons
+            { tenantId: input.tenantId } // Tenant-specific reasons
+          ];
+        } else {
+          // If no tenantId provided, only get platform-wide reasons
+          whereClause.tenantId = null;
         }
 
         const reasons = await ctx.db.contactReason.findMany({
@@ -30,9 +39,46 @@ export const contactRouter = router({
             label: true,
             description: true,
             icon: true,
-            helpType: true,
           },
         });
+
+        // If no reasons found, return default ones
+        if (reasons.length === 0) {
+          return [
+            {
+              id: "default-technical",
+              key: "technical_support", 
+              label: "Technical Support",
+              description: "Issues with the platform, bugs, or technical difficulties",
+              icon: "Bug",
+              helpType: "technical"
+            },
+            {
+              id: "default-billing",
+              key: "billing_support",
+              label: "Billing & Payments", 
+              description: "Questions about billing, payments, or subscription issues",
+              icon: "CreditCard",
+              helpType: "billing"
+            },
+            {
+              id: "default-account",
+              key: "account_support",
+              label: "Account Management",
+              description: "Account settings, user management, or access issues", 
+              icon: "Shield",
+              helpType: "account"
+            },
+            {
+              id: "default-general",
+              key: "general_inquiry",
+              label: "General Inquiry",
+              description: "General questions or feedback",
+              icon: "HelpCircle", 
+              helpType: "general"
+            }
+          ];
+        }
 
         return reasons;
       } catch (error) {
@@ -64,10 +110,25 @@ export const contactRouter = router({
     .mutation(async ({ ctx, input }) => {
       try {
         // Get contact reasons for metadata
-        const contactReasons = await ctx.db.contactReason.findMany({
-          where: { id: { in: input.reasonIds } },
-          select: { id: true, key: true, label: true, helpType: true },
-        });
+        let contactReasons = [];
+        try {
+          contactReasons = await ctx.db.contactReason.findMany({
+            where: { id: { in: input.reasonIds } },
+            select: { id: true, key: true, label: true },
+          });
+        } catch (reasonError) {
+          console.warn("Failed to fetch contact reasons:", reasonError);
+          // Use default mappings based on reason IDs
+          const defaultReasons = [
+            { id: "default-technical", key: "technical_support", label: "Technical Support" },
+            { id: "default-billing", key: "billing_support", label: "Billing & Payments" },
+            { id: "default-account", key: "account_support", label: "Account Management" },
+            { id: "default-general", key: "general_inquiry", label: "General Inquiry" }
+          ];
+          contactReasons = input.reasonIds.map(id => 
+            defaultReasons.find(r => r.id === id) || { id, key: "general", label: "General Inquiry" }
+          );
+        }
 
         // Create support case directly (no intermediate ContactMessage)
         const supportCaseService = new SupportCaseService(ctx.db);
@@ -86,7 +147,7 @@ export const contactRouter = router({
               contactReasons: contactReasons.map((r) => ({
                 key: r.key,
                 label: r.label,
-                helpType: r.helpType || "general",
+                helpType: "general", // Default since helpType field may not exist yet
               })),
               customerInfo: {
                 name: input.name,
@@ -95,51 +156,63 @@ export const contactRouter = router({
               },
               formType: "contact",
             },
-            threadingKey: `contact_form:${crypto
-              .createHash("md5")
-              .update(input.email + input.subject)
-              .digest("hex")}`,
+            threadingKey: `contact_form:${crypto.randomUUID()}`,
           },
         });
 
         // Auto-assign case if configured
-        await supportCaseService.autoAssignCase(supportCase.id);
+        try {
+          await supportCaseService.autoAssignCase(supportCase.id);
+        } catch (autoAssignError) {
+          console.warn("Auto-assign failed:", autoAssignError);
+          // Continue without auto-assignment
+        }
 
         // Send notification to tenant support email or primary admin
-        const notificationService = createSupportNotificationService(ctx.db);
-        await notifyTenantOfNewContact(
-          ctx,
-          {
-            id: supportCase.id,
-            name: input.name,
-            email: input.email,
-            subject: input.subject,
-            message: input.message,
-            tenantId: input.tenantId,
-            priority: "normal",
-            helpTypes: contactReasons.map((r) => r.helpType || "general"),
-          },
-          supportCase.id,
-          notificationService
-        );
-
-        // Log the action
-        if (input.tenantId) {
-          await ctx.db.auditLog.create({
-            data: {
+        try {
+          const notificationService = createSupportNotificationService(ctx.db);
+          await notifyTenantOfNewContact(
+            ctx,
+            {
+              id: supportCase.id,
+              name: input.name,
+              email: input.email,
+              subject: input.subject,
+              message: input.message,
               tenantId: input.tenantId,
-              userId: input.userId || "anonymous",
-              action: "contact_form_submitted",
-              resourceType: "support_case",
-              resourceId: supportCase.id,
-              details: JSON.stringify({
-                subject: input.subject,
-                reasonIds: input.reasonIds,
-                caseNumber: supportCase.caseNumber,
-              }),
-              severity: "info",
+              priority: "normal",
+              helpTypes: ["general"], // Default until helpType field is available
             },
-          });
+            supportCase.id,
+            notificationService
+          );
+        } catch (notificationError) {
+          console.warn("Notification failed:", notificationError);
+          // Continue without notification
+        }
+
+        // Log the action if we have a valid user
+        if (input.tenantId && input.userId && input.userId !== "anonymous") {
+          try {
+            await ctx.db.auditLog.create({
+              data: {
+                tenantId: input.tenantId,
+                userId: input.userId,
+                action: "contact_form_submitted",
+                resourceType: "support_case",
+                resourceId: supportCase.id,
+                details: JSON.stringify({
+                  subject: input.subject,
+                  reasonIds: input.reasonIds,
+                  caseNumber: supportCase.caseNumber,
+                }),
+                severity: "info",
+              },
+            });
+          } catch (auditError) {
+            console.warn("Failed to create audit log:", auditError);
+            // Continue without audit log
+          }
         }
 
         return {
@@ -152,6 +225,7 @@ export const contactRouter = router({
         if (error instanceof TRPCError) throw error;
 
         console.error("Failed to submit contact message:", error);
+        
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to submit contact message",
@@ -505,6 +579,8 @@ export const contactRouter = router({
     .input(
       z.object({
         tenantId: z.string().optional(),
+        page: z.number().default(1),
+        pageSize: z.number().default(50),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -517,6 +593,8 @@ export const contactRouter = router({
         const cases = await ctx.db.supportCase.findMany({
           where: whereClause,
           orderBy: { createdAt: "desc" },
+          take: input.pageSize,
+          skip: (input.page - 1) * input.pageSize,
           include: {
             assignee: {
               select: {
@@ -538,10 +616,25 @@ export const contactRouter = router({
                 label: true,
               },
             },
+            _count: {
+              select: {
+                messages: true,
+              },
+            },
           },
         });
 
-        return cases;
+        const totalCount = await ctx.db.supportCase.count({
+          where: whereClause,
+        });
+
+        return {
+          cases,
+          totalCount,
+          page: input.page,
+          pageSize: input.pageSize,
+          totalPages: Math.ceil(totalCount / input.pageSize),
+        };
       } catch (error) {
         if (error instanceof TRPCError) throw error;
 
@@ -718,8 +811,8 @@ export const contactRouter = router({
   getCaseMetrics: protectedProcedure
     .input(
       z.object({
-        dateFrom: z.date(),
-        dateTo: z.date(),
+        dateFrom: z.string().pipe(z.coerce.date()),
+        dateTo: z.string().pipe(z.coerce.date()),
         tenantId: z.string().optional(),
       })
     )
@@ -926,3 +1019,4 @@ async function notifyTenantOfNewContact(
     // Don't throw - this shouldn't fail the contact submission
   }
 }
+

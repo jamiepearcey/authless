@@ -115,9 +115,18 @@ const ContactPage = () => {
   const [replyText, setReplyText] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
+  // Get user tenants to find their primary tenant
+  const { data: userTenants } = trpc.getUserTenants.useQuery(
+    undefined,
+    { enabled: !!session?.user }
+  );
+
+  // Get the first tenant (or could be made configurable)
+  const primaryTenant = userTenants?.[0]?.tenant;
+
   // tRPC queries and mutations
   const { data: contactReasons } = trpc.getContactReasons.useQuery(
-    { tenantId: undefined },
+    { tenantId: primaryTenant?.id },
     { enabled: !!session?.user }
   );
   const submitMessage = trpc.submitContactMessage.useMutation();
@@ -137,7 +146,6 @@ const ContactPage = () => {
         email: session.user?.email || "",
       }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user?.name, session?.user?.email]);
 
   const handleReasonToggle = (reasonId: string) => {
@@ -168,6 +176,7 @@ const ContactPage = () => {
         ...formData,
         reasonIds: selectedReasons,
         userId: session?.user?.email || undefined,
+        tenantId: primaryTenant?.id,
       });
 
       if (result.success) {

@@ -26,7 +26,7 @@ export const tenantSupportRoutingRouter = router({
           orderBy: { helpType: "asc" },
         });
 
-        // Ensure we have all help types represented
+// Ensure we have all help types represented
         const helpTypes = ["technical", "billing", "account", "general"];
         const routingMap = routing.reduce(
           (acc, route) => {

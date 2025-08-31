@@ -124,13 +124,8 @@ export default function TenantSupportPage() {
     { enabled: !!tenantSlug }
   );
 
-  // Debug logging
-  console.log('Tenant slug:', tenantSlug);
-  console.log('Tenant data:', tenant);
-  console.log('Tenant ID:', tenant?.id);
-
   // tRPC queries - use supportCaseRouter.getAllCases for full data
-  const { data: allCases, isLoading, error } = trpc.getAllCases.useQuery(
+  const { data: allCases, isLoading } = trpc.getAllCases.useQuery(
     { 
       // Temporarily remove tenantId filter to see if we get any cases at all
       // tenantId: tenant?.id,
@@ -141,15 +136,10 @@ export default function TenantSupportPage() {
     // { enabled: !!tenant?.id }
   );
 
-  // Debug the query result
-  console.log('getAllCases result:', allCases);
-  console.log('getAllCases error:', error);
-  console.log('Is loading:', isLoading);
-
   // Get case metrics for dashboard cards
   const { data: metricsData } = trpc.getCaseMetrics.useQuery({
-    dateFrom: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
-    dateTo: new Date(),
+    dateFrom: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // Last 30 days
+    dateTo: new Date().toISOString(),
     // Temporarily remove tenantId filter
     // tenantId: tenant?.id,
   } /* , { enabled: !!tenant?.id } */);
@@ -160,9 +150,14 @@ export default function TenantSupportPage() {
     { enabled: !!tenant?.id }
   );
 
+
   // Mutation for updating support routing
   const updateSupportRouting = trpc.upsertTenantSupportRouting.useMutation({
+    onMutate: (variables) => {
+      console.log("Updating support routing:", variables);
+    },
     onSuccess: (data, variables) => {
+      console.log("Support routing update successful:", data, variables);
       refetchRouting();
       toast.success(`${variables.helpType} support routing updated successfully`);
     },
@@ -182,11 +177,6 @@ export default function TenantSupportPage() {
     return `${Math.floor(diffInHours / 24)}d ago`;
   };
 
-  // Debug the data structure
-  console.log('allCases structure:', allCases);
-  console.log('allCases.cases:', allCases?.cases);
-  console.log('Length of cases:', allCases?.cases?.length);
-
   // Filter cases based on search and filters
   const filteredCases = allCases?.cases?.filter((supportCase: SupportCase) => {
     const matchesSearch = searchTerm === "" || 
@@ -200,10 +190,6 @@ export default function TenantSupportPage() {
 
     return matchesSearch && matchesStatus && matchesPriority;
   }) || [];
-
-  // Debug the filtered result
-  console.log('filteredCases:', filteredCases);
-  console.log('filteredCases length:', filteredCases.length);
 
   if (isLoading) {
     return (
@@ -620,10 +606,11 @@ export default function TenantSupportPage() {
                         </label>
                         <Input
                           type="email"
+                          key={route.helpType} // Force re-render when route changes
                           defaultValue={route.email}
                           onBlur={(e) => {
                             const newEmail = e.target.value.trim();
-                            if (newEmail !== route.email && newEmail) {
+                            if (newEmail !== route.email) {
                               updateSupportRouting.mutate({
                                 tenantId: tenant?.id || "",
                                 helpType: route.helpType as "technical" | "billing" | "account" | "general",
@@ -635,7 +622,7 @@ export default function TenantSupportPage() {
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                               const newEmail = (e.target as HTMLInputElement).value.trim();
-                              if (newEmail !== route.email && newEmail) {
+                              if (newEmail !== route.email) {
                                 updateSupportRouting.mutate({
                                   tenantId: tenant?.id || "",
                                   helpType: route.helpType as "technical" | "billing" | "account" | "general",
