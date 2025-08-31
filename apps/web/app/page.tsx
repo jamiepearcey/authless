@@ -19,7 +19,8 @@ import {
   Database,
   Palette,
   Timer,
-  DollarSign
+  DollarSign,
+  PoundSterling
 } from "lucide-react";
 import { HelloWorld } from "../components/TrpcHelloWorld";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -666,7 +667,7 @@ export default function HomePage() {
             >
               <Button asChild size="lg" variant="outline" className="text-xl px-12 py-8 rounded-2xl border-2 hover:bg-gray-50">
                 <Link href="/pricing">
-                  <DollarSign className="mr-3 h-6 w-6" />
+                  <PoundSterling className="mr-3 h-6 w-6" />
                   View Pricing
                 </Link>
               </Button>

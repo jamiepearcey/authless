@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 // import { t } from "@i18n-core";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, OtpInput } from "@ui/base";
 import { Button, Input, Label } from "@ui/base";
@@ -69,8 +69,8 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
       console.log("2FA setup success:", data);
       setQrCode(data.qrCodeUrl);
       setSecret(data.secret);
-      setStep("authenticator-verify");
-      console.log("State updated - qrCode:", data.qrCodeUrl, "secret:", data.secret, "step: authenticator-verify");
+      // Don't change step - stay on authenticator-setup to show QR code
+      console.log("State updated - qrCode:", data.qrCodeUrl, "secret:", data.secret, "step remains: authenticator-setup");
     },
     onError: (error) => {
       console.error("2FA setup mutation error:", error);
@@ -79,9 +79,12 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
   });
 
   const verify2FA = trpc.verifyAndCreateAuthenticatorCode.useMutation({
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       console.log("2FA verification success:", data);
       toast.success("Authenticator 2FA enabled successfully!");
+      // Refetch 2FA status to update UI
+      await refetchTwoFactorStatus();
+      await refetchTwoFactorMethods();
       setStep("method-selection");
       // Reset form
       setVerificationCode("");
@@ -106,8 +109,11 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
   });
 
   const verifyWhatsApp = trpc.verifyWhatsappActivation.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("WhatsApp 2FA enabled successfully!");
+      // Refetch 2FA status to update UI
+      await refetchTwoFactorStatus();
+      await refetchTwoFactorMethods();
       setStep("method-selection");
       // Reset form
       setWhatsappVerificationCode("");
@@ -122,8 +128,11 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
   // Passkey mutations
   const getRegistrationOptions = trpc.getRegistrationOptions.useMutation();
   const registerPasskey = trpc.registerPasskey.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Passkey added successfully!");
+      // Refetch 2FA status to update UI
+      await refetchTwoFactorStatus();
+      await refetchTwoFactorMethods();
       setStep("method-selection");
       // Reset form
       setPasskeyName("");
@@ -133,19 +142,42 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
     },
   });
 
-  const handleSetup2FA = async () => {
+  const handleSetup2FA = useCallback(async () => {
+    console.log("handleSetup2FA called, current state:", { step, qrCode, secret, isLoading });
+    
+    // Prevent multiple calls
+    if (isLoading || qrCode) {
+      console.log("Skipping setup - already loading or QR code exists");
+      return;
+    }
+    
     setIsLoading(true);
     try {
       console.log("Setting up 2FA...");
       const result = await setup2FA.mutateAsync({name: "My Authenticator"});
       console.log("2FA setup result:", result);
+      console.log("State after setup:", { qrCode, secret, step });
     } catch (error) {
       console.error("2FA setup error:", error);
       // Handled by mutation
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isLoading, qrCode, setup2FA]);
+
+  // Auto-generate QR code when entering authenticator setup
+  useEffect(() => {
+    if (step === "authenticator-setup" && !qrCode && !isLoading) {
+      console.log("Auto-generating QR code for authenticator setup");
+      // Small delay to ensure component is fully rendered
+      const timer = setTimeout(() => {
+        handleSetup2FA();
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [step, qrCode, isLoading, handleSetup2FA]);
+
+
 
   const handleVerify2FA = async () => {
     if (!verificationCode.trim()) {
@@ -360,8 +392,8 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
   };
 
   // Check current 2FA status to show progress
-  const { data: twoFactorStatus } = trpc.getTwoFactorStatus.useQuery();
-  const { data: twoFactorMethods } = trpc.get2fa.useQuery();
+  const { data: twoFactorStatus, refetch: refetchTwoFactorStatus } = trpc.getTwoFactorStatus.useQuery();
+  const { data: twoFactorMethods, refetch: refetchTwoFactorMethods } = trpc.get2fa.useQuery();
 
   const hasAuthenticator = twoFactorStatus?.hasAuthenticatorCodes || false;
   const hasWhatsApp = twoFactorMethods?.some(method => method.type === "whatsapp") || false;
@@ -381,6 +413,15 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
       setStep("complete");
     }
   }, [allMethodsSetup, step]);
+
+  // Refetch 2FA status when returning to method selection
+  useEffect(() => {
+    if (step === "method-selection") {
+      console.log("Refreshing 2FA status on method selection step");
+      refetchTwoFactorStatus();
+      refetchTwoFactorMethods();
+    }
+  }, [step, refetchTwoFactorStatus, refetchTwoFactorMethods]);
 
 
 
@@ -408,6 +449,8 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
                    if (!hasAuthenticator) {
                      setSelectedMethod("authenticator");
                      setStep("authenticator-setup");
+                     // Auto-generate QR code when entering setup
+                     setTimeout(() => handleSetup2FA(), 100);
                    }
                  }}>
               <div className="text-center">
@@ -523,7 +566,7 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
           <div className="text-center">
             {qrCode ? (
               <div className="bg-white p-4 rounded-lg border inline-block mb-4">
-                <QRCode value={qrCode} />
+                <QRCode value={qrCode} size={200} />
               </div>
             ) : (
               <div className="bg-gray-100 p-4 rounded-lg border inline-block mb-4">
