@@ -41,6 +41,7 @@ import {
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import { toast } from "@ui/base";
 
 // Status badge component
 const StatusBadge = ({ status }: { status: string }) => {
@@ -123,22 +124,35 @@ export default function TenantSupportPage() {
     { enabled: !!tenantSlug }
   );
 
+  // Debug logging
+  console.log('Tenant slug:', tenantSlug);
+  console.log('Tenant data:', tenant);
+  console.log('Tenant ID:', tenant?.id);
+
   // tRPC queries - use supportCaseRouter.getAllCases for full data
-  const { data: allCases, isLoading } = trpc.getAllCases.useQuery(
+  const { data: allCases, isLoading, error } = trpc.getAllCases.useQuery(
     { 
-      tenantId: tenant?.id,
+      // Temporarily remove tenantId filter to see if we get any cases at all
+      // tenantId: tenant?.id,
       page: 1,
       pageSize: 100 // Get all cases for now
-    },
-    { enabled: !!tenant?.id }
+    }
+    // Remove the enabled condition to allow query without tenant
+    // { enabled: !!tenant?.id }
   );
+
+  // Debug the query result
+  console.log('getAllCases result:', allCases);
+  console.log('getAllCases error:', error);
+  console.log('Is loading:', isLoading);
 
   // Get case metrics for dashboard cards
   const { data: metricsData } = trpc.getCaseMetrics.useQuery({
     dateFrom: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
     dateTo: new Date(),
-    tenantId: tenant?.id,
-  }, { enabled: !!tenant?.id });
+    // Temporarily remove tenantId filter
+    // tenantId: tenant?.id,
+  } /* , { enabled: !!tenant?.id } */);
 
   // Get tenant support routing configuration
   const { data: supportRouting, refetch: refetchRouting } = trpc.getTenantSupportRouting.useQuery(
@@ -148,11 +162,13 @@ export default function TenantSupportPage() {
 
   // Mutation for updating support routing
   const updateSupportRouting = trpc.upsertTenantSupportRouting.useMutation({
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
       refetchRouting();
+      toast.success(`${variables.helpType} support routing updated successfully`);
     },
     onError: (error) => {
       console.error("Failed to update support routing:", error);
+      toast.error("Failed to update support routing");
     },
   });
 
@@ -166,19 +182,28 @@ export default function TenantSupportPage() {
     return `${Math.floor(diffInHours / 24)}d ago`;
   };
 
+  // Debug the data structure
+  console.log('allCases structure:', allCases);
+  console.log('allCases.cases:', allCases?.cases);
+  console.log('Length of cases:', allCases?.cases?.length);
+
   // Filter cases based on search and filters
-  const filteredCases = allCases?.cases?.filter((supportCase: any) => {
+  const filteredCases = allCases?.cases?.filter((supportCase: SupportCase) => {
     const matchesSearch = searchTerm === "" || 
       supportCase.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       supportCase.caseNumber?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       supportCase.contactMessage?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       supportCase.contactMessage?.email?.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesStatus = statusFilter === "all" || supportCase.status === statusFilter;
-    const matchesPriority = priorityFilter === "all" || supportCase.priority === priorityFilter;
+    const matchesStatus = statusFilter === "all" || supportCase.status === statusFilter.toUpperCase();
+    const matchesPriority = priorityFilter === "all" || supportCase.priority === priorityFilter.toUpperCase();
 
     return matchesSearch && matchesStatus && matchesPriority;
   }) || [];
+
+  // Debug the filtered result
+  console.log('filteredCases:', filteredCases);
+  console.log('filteredCases length:', filteredCases.length);
 
   if (isLoading) {
     return (
@@ -537,7 +562,7 @@ export default function TenantSupportPage() {
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2">
-                        {metricsData.daily.slice(0, 7).map((day: any) => (
+                        {(metricsData?.metrics || []).slice(0, 7).map((day: any) => (
                           <div key={day.date} className="flex items-center justify-between p-2 bg-gray-50 rounded">
                             <span className="text-sm font-medium">
                               {new Date(day.date).toLocaleDateString()}
@@ -595,15 +620,30 @@ export default function TenantSupportPage() {
                         </label>
                         <Input
                           type="email"
-                          value={route.email}
-                          onChange={(e) => {
-                            const newEmail = e.target.value;
-                            updateSupportRouting.mutate({
-                              tenantId: tenant?.id || "",
-                              helpType: route.helpType as "technical" | "billing" | "account" | "general",
-                              email: newEmail,
-                              isActive: route.isActive,
-                            });
+                          defaultValue={route.email}
+                          onBlur={(e) => {
+                            const newEmail = e.target.value.trim();
+                            if (newEmail !== route.email && newEmail) {
+                              updateSupportRouting.mutate({
+                                tenantId: tenant?.id || "",
+                                helpType: route.helpType as "technical" | "billing" | "account" | "general",
+                                email: newEmail,
+                                isActive: route.isActive,
+                              });
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              const newEmail = (e.target as HTMLInputElement).value.trim();
+                              if (newEmail !== route.email && newEmail) {
+                                updateSupportRouting.mutate({
+                                  tenantId: tenant?.id || "",
+                                  helpType: route.helpType as "technical" | "billing" | "account" | "general",
+                                  email: newEmail,
+                                  isActive: route.isActive,
+                                });
+                              }
+                            }
                           }}
                           placeholder={`${route.helpType}@company.com`}
                           className="mt-1"

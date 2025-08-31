@@ -88,15 +88,25 @@ export default function SupportCaseDetailPage() {
     assigneeId: "",
   });
 
+  // Get tenant data first
+  const { data: tenant } = trpc.getTenant.useQuery(
+    { slug: tenantSlug },
+    { enabled: !!tenantSlug }
+  );
+
   // tRPC queries and mutations
-  const { data: supportCase, isLoading, refetch } = trpc.getSupportCase.useQuery(
+  const { data: supportCase, isLoading, refetch } = trpc.getCaseById.useQuery(
     { caseId },
     { enabled: !!caseId }
   );
 
+  // Get case messages
+  const { data: messages, refetch: refetchMessages } = trpc.getCaseMessages.useQuery(
+    { caseId, includeInternal: true },
+    { enabled: !!caseId }
+  );
 
-
-  const updateStatus = trpc.updateContactMessageStatus.useMutation({
+  const updateStatus = trpc.updateCaseStatus.useMutation({
     onSuccess: () => {
       toast.success("Case status updated successfully!");
       refetch();
@@ -106,10 +116,11 @@ export default function SupportCaseDetailPage() {
     },
   });
 
-  const addReply = trpc.addContactReply.useMutation({
+  const addMessage = trpc.addCaseMessage.useMutation({
     onSuccess: () => {
       toast.success("Reply added successfully!");
       setReplyText("");
+      refetchMessages();
       refetch();
     },
     onError: (error) => {
@@ -133,8 +144,8 @@ export default function SupportCaseDetailPage() {
     
     try {
       await updateStatus.mutateAsync({
-        contactMessageId: supportCase.contactMessageId || "",
-        status: editData.status,
+        caseId: supportCase.id,
+        status: editData.status as any,
       });
       setIsEditing(false);
     } catch (error) {
@@ -146,9 +157,13 @@ export default function SupportCaseDetailPage() {
     if (!replyText.trim() || !supportCase) return;
     
     try {
-      await addReply.mutateAsync({
-        messageId: supportCase.contactMessageId || "",
-        message: replyText,
+      await addMessage.mutateAsync({
+        caseId: supportCase.id,
+        direction: "OUTBOUND",
+        channel: "UI",
+        content: replyText.trim(),
+        fromAddress: "support",
+        toAddress: supportCase.contactMessage?.email || "customer",
       });
     } catch (error) {
       // Handled by mutation
@@ -334,8 +349,61 @@ export default function SupportCaseDetailPage() {
                       {new Date(supportCase.createdAt).toLocaleDateString()}
                     </span>
                   </div>
-                  <p className="text-gray-700">Original message content would go here</p>
+                  <p className="text-gray-700">{supportCase.description}</p>
+                  
+                  {/* Contact Reasons */}
+                  {supportCase.sourceMetadata && 
+                   typeof supportCase.sourceMetadata === 'object' && 
+                   (supportCase.sourceMetadata as any).contactReasons && (
+                    <div className="mt-3">
+                      <p className="text-sm font-medium text-gray-600 mb-2">Contact Reasons:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {(supportCase.sourceMetadata as any).contactReasons.map((reason: any, index: number) => (
+                          <Badge key={index} variant="outline" className="text-xs">
+                            {reason.label}
+                            {reason.helpType && (
+                              <span className="ml-1 text-gray-400">({reason.helpType})</span>
+                            )}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
+
+                {/* All Conversation Messages */}
+                {messages && messages.length > 0 && (
+                  <div className="space-y-3">
+                    {messages.map((message: any) => (
+                      <div
+                        key={message.id}
+                        className={`p-4 rounded-lg ${
+                          message.direction === "INBOUND"
+                            ? "bg-blue-50 border-l-4 border-blue-500"
+                            : "bg-green-50 border-l-4 border-green-500"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-medium">
+                            {message.direction === "INBOUND" ? "Customer" : "Support"}
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            {new Date(message.createdAt).toLocaleString()}
+                          </span>
+                          <Badge variant="outline" className="text-xs">
+                            {message.channel}
+                          </Badge>
+                          {message.isInternal && (
+                            <Badge variant="destructive" className="text-xs">
+                              Internal
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-gray-800 whitespace-pre-wrap">{message.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 {/* Add Reply */}
                 <Separator />
@@ -347,9 +415,9 @@ export default function SupportCaseDetailPage() {
                     placeholder="Type your reply..."
                     rows={3}
                   />
-                  <Button onClick={handleReply} disabled={!replyText.trim() || addReply.isPending}>
+                  <Button onClick={handleReply} disabled={!replyText.trim() || addMessage.isPending}>
                     <Send className="h-4 w-4 mr-2" />
-                    {addReply.isPending ? "Sending..." : "Send Reply"}
+                    {addMessage.isPending ? "Sending..." : "Send Reply"}
                   </Button>
                 </div>
               </div>
