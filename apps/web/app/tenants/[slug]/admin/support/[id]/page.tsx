@@ -34,6 +34,7 @@ import {
   HeadphonesIcon,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { toast } from "@ui/base";
 
@@ -95,8 +96,8 @@ export default function SupportCaseDetailPage() {
   );
 
   // tRPC queries and mutations
-  const { data: supportCase, isLoading, refetch } = trpc.getCaseById.useQuery(
-    { caseId },
+  const { data: supportCase, isLoading, refetch } = trpc.getCaseByCaseNumber.useQuery(
+    { caseNumber: caseId },
     { enabled: !!caseId }
   );
 
@@ -210,14 +211,14 @@ export default function SupportCaseDetailPage() {
                   { label: tenantSlug, href: `/tenants/${tenantSlug}` },
                   { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
                   { label: "Support", href: `/tenants/${tenantSlug}/admin/support` },
-                  { label: `Case ${supportCase.caseNumber}`, current: true },
+                  { label: `Case ${supportCase.caseNumber || supportCase.id.substring(0, 8)}`, current: true },
                 ]}
                 showHome={false}
               />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <HeadphonesIcon className="h-8 w-8 text-indigo-600" />
-              <span>Support Case {supportCase.caseNumber}</span>
+              <span>Support Case {supportCase.caseNumber || supportCase.id.substring(0, 8)}</span>
             </h1>
             <p className="text-gray-600 mt-2">
               {supportCase.contactMessage?.subject || "No subject"}
@@ -298,7 +299,9 @@ export default function SupportCaseDetailPage() {
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-500">Case Number</label>
-                  <p className="mt-1 text-sm text-gray-900">{supportCase.caseNumber}</p>
+                  <p className="mt-1 text-sm text-gray-900 font-mono">
+                    {supportCase.caseNumber || 'Generating...'}
+                  </p>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-500">Created</label>

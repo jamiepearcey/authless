@@ -31,6 +31,22 @@ export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isOAuthLoading, setIsOAuthLoading] = useState<string | null>(null);
   const [checkingSSO, setCheckingSSO] = useState(true);
+
+  // Helper function to map error messages to user-friendly ones
+  const getErrorMessage = (errorCode: string) => {
+    switch (errorCode) {
+      case "CredentialsSignin":
+        return "Invalid username or password. Please check your credentials and try again.";
+      case "OAuthAccountNotLinked":
+        return "This email is already associated with a different account. Please sign in with the original method.";
+      case "AccessDenied":
+        return "Access denied. Please try again.";
+      case "Verification":
+        return "Please verify your email before signing in.";
+      default:
+        return errorCode || "An error occurred during sign in. Please try again.";
+    }
+  };
   
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -78,23 +94,11 @@ export default function SignInPage() {
   }, [router, callbackUrl]);
 
   // Handle OAuth errors from URL params
-  useState(() => {
+  useEffect(() => {
     if (errorParam) {
-      switch (errorParam) {
-        case "OAuthAccountNotLinked":
-          setError("This email is already associated with a different account. Please sign in with the original method.");
-          break;
-        case "AccessDenied":
-          setError("Access denied. Please try again.");
-          break;
-        case "Verification":
-          setError("Please verify your email before signing in.");
-          break;
-        default:
-          setError("An error occurred during sign in. Please try again.");
-      }
+      setError(getErrorMessage(errorParam));
     }
-  });
+  }, [errorParam]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,7 +129,7 @@ export default function SignInPage() {
         });
 
         if (signInResult?.error) {
-          setError(signInResult.error);
+          setError(getErrorMessage(signInResult.error));
         } else if (signInResult?.ok) {
           setSuccess("Sign in successful! Redirecting...");
           setTimeout(() => {
@@ -145,7 +149,7 @@ export default function SignInPage() {
         });
 
         if (result?.error) {
-          setError(result.error);
+          setError(getErrorMessage(result.error));
         } else if (result?.ok) {
           setSuccess("Sign in successful! Redirecting...");
           setTimeout(() => {

@@ -737,7 +737,8 @@ model TwoFactorAudit {
 model SupportCase {
   id                String                 @id @default(cuid())
   contactMessageId  String?                @unique // Link to existing ContactMessage
-  caseNumber        String                 @unique // Human-readable case number
+  caseNumberSeq     BigInt                 @unique @default(autoincrement()) // Auto-incrementing sequence number (starts at 1M)
+  caseNumber        String?                @unique // Base32 encoded case number (auto-generated)
   title             String                 // Case title
   description       String?                // Extended case description
   status            String                 @default("OPEN") // OPEN, PENDING, RESOLVED, CLOSED

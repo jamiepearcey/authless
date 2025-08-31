@@ -158,7 +158,8 @@ const appRouter = router({
 
   // Support Resolution Center - Cases
   getAllCases: supportCaseRouter.getAllCases,
-  getCaseById: supportCaseRouter.getCaseById,
+  getCaseByCaseNumber: supportCaseRouter.getCaseByCaseNumber,
+
   createCase: supportCaseRouter.createCase,
   updateCaseStatus: supportCaseRouter.updateCaseStatus,
   assignCase: supportCaseRouter.assignCase,

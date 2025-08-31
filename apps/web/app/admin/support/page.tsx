@@ -27,8 +27,8 @@ export default function AdminSupportPage() {
 
   // Fetch support cases - using the same tRPC query as tenant admin
   const { data: supportCases, isLoading } = trpc.getAllCases.useQuery({
-    limit: 50,
-    offset: 0,
+    pageSize: 50,
+    page: 1,
   });
 
   // Mock support metrics - would be replaced with real queries
@@ -72,8 +72,8 @@ export default function AdminSupportPage() {
   };
 
   const filteredCases = supportCases?.cases?.filter(supportCase =>
-    supportCase.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    supportCase.description.toLowerCase().includes(searchTerm.toLowerCase())
+    supportCase.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (supportCase.description?.toLowerCase() || '').includes(searchTerm.toLowerCase())
   ) || [];
 
   if (isLoading) {
@@ -214,9 +214,14 @@ export default function AdminSupportPage() {
                           {getStatusBadge(supportCase.status)}
                           {getPriorityBadge(supportCase.priority || 'normal')}
                         </div>
-                        <p className="text-sm font-medium text-gray-900 truncate">
-                          {supportCase.subject}
-                        </p>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-mono text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                            {supportCase.caseNumber || 'Gen...'}
+                          </span>
+                          <span className="text-sm font-medium text-gray-900 truncate">
+                            {supportCase.title}
+                          </span>
+                        </div>
                         <p className="text-xs text-gray-600">
                           {supportCase.description?.substring(0, 100)}...
                         </p>
@@ -304,6 +309,7 @@ export default function AdminSupportPage() {
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-gray-200">
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Case ID</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Case</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Priority</th>
@@ -317,8 +323,13 @@ export default function AdminSupportPage() {
                       {filteredCases.map((supportCase) => (
                         <tr key={supportCase.id} className="border-b border-gray-100 hover:bg-gray-50">
                           <td className="py-4 px-4">
+                            <span className="font-mono text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                              {supportCase.caseNumber || 'Generating...'}
+                            </span>
+                          </td>
+                          <td className="py-4 px-4">
                             <div>
-                              <p className="font-medium text-gray-900">{supportCase.subject}</p>
+                              <p className="font-medium text-gray-900">{supportCase.title}</p>
                               <p className="text-sm text-gray-600 truncate max-w-xs">
                                 {supportCase.description?.substring(0, 60)}...
                               </p>
