@@ -95,8 +95,22 @@ const enforceTenantAdmin = t.middleware(async ({ ctx, next, getRawInput }) => {
   
   // Extract tenantId from input if available
   const rawInput = await getRawInput();
-  const slug = (rawInput as any)?.slug || (rawInput as any)?.tenantSlug;
+  let slug = (rawInput as any)?.slug || (rawInput as any)?.tenantSlug;
   
+  if(!slug) {
+    const tenantId = (rawInput as any)?.tenantId;
+
+    const tenant = await ctx.db.tenant.findUnique({
+      where: { id: tenantId },
+    });
+
+    if(!tenant) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: "Tenant not found" });
+    }
+
+    slug = tenant.slug;
+  }
+
   if (!slug) {
     throw new TRPCError({ code: "BAD_REQUEST", message: "Tenant ID required" });
   }

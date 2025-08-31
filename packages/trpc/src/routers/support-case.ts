@@ -629,19 +629,23 @@ export const supportCaseRouter = router({
   getCaseMetrics: protectedProcedure
     .input(
       z.object({
-        tenantId: z.string().optional(),
-        dateFrom: z.date(),
-        dateTo: z.date(),
+        tenantId: z.string(),
+        dateFrom: z.string(),
+        dateTo: z.string(),
         supportOptionId: z.string().optional(),
         assigneeId: z.string().optional(),
       })
     )
     .query(async ({ ctx, input }) => {
+
+      const dateFrom = new Date(input.dateFrom);
+      const dateTo = new Date(input.dateTo);
+
       try {
         const where: any = {
           date: {
-            gte: input.dateFrom,
-            lte: input.dateTo,
+            gte: dateFrom,
+            lte: dateTo,
           },
         };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { 
@@ -136,17 +136,24 @@ export default function TenantSupportPage() {
     // { enabled: !!tenant?.id }
   );
 
-  // Get case metrics for dashboard cards
-  const { data: metricsData } = trpc.getCaseMetrics.useQuery({
+  // Memoize date values to prevent infinite re-renders
+  const dateRange = useMemo(() => ({
     dateFrom: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // Last 30 days
     dateTo: new Date().toISOString(),
+  }), []); // Empty dependency array - dates do
+
+  // Get case metrics for dashboard cards
+  const { data: metricsData } = trpc.getCaseMetrics.useQuery({
+    dateFrom: dateRange.dateFrom, // Last 30 days
+    dateTo: dateRange.dateTo,
+    tenantId: tenant?.id!,
     // Temporarily remove tenantId filter
     // tenantId: tenant?.id,
   } /* , { enabled: !!tenant?.id } */);
 
   // Get tenant support routing configuration
   const { data: supportRouting, refetch: refetchRouting } = trpc.getTenantSupportRouting.useQuery(
-    { tenantId: tenant?.id || "" },
+    { tenantId: tenant?.id! },
     { enabled: !!tenant?.id }
   );
 
@@ -610,9 +617,9 @@ export default function TenantSupportPage() {
                           defaultValue={route.email}
                           onBlur={(e) => {
                             const newEmail = e.target.value.trim();
-                            if (newEmail !== route.email) {
+                            if (newEmail !== route.email && tenant?.id) {
                               updateSupportRouting.mutate({
-                                tenantId: tenant?.id || "",
+                                tenantId: tenant.id,
                                 helpType: route.helpType as "technical" | "billing" | "account" | "general",
                                 email: newEmail,
                                 isActive: route.isActive,
@@ -622,9 +629,9 @@ export default function TenantSupportPage() {
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                               const newEmail = (e.target as HTMLInputElement).value.trim();
-                              if (newEmail !== route.email) {
+                              if (newEmail !== route.email && tenant?.id) {
                                 updateSupportRouting.mutate({
-                                  tenantId: tenant?.id || "",
+                                  tenantId: tenant.id,
                                   helpType: route.helpType as "technical" | "billing" | "account" | "general",
                                   email: newEmail,
                                   isActive: route.isActive,
@@ -641,12 +648,14 @@ export default function TenantSupportPage() {
                           type="checkbox"
                           checked={route.isActive}
                           onChange={(e) => {
-                            updateSupportRouting.mutate({
-                              tenantId: tenant?.id || "",
-                              helpType: route.helpType as "technical" | "billing" | "account" | "general",
-                              email: route.email,
-                              isActive: e.target.checked,
-                            });
+                            if (tenant?.id) {
+                              updateSupportRouting.mutate({
+                                tenantId: tenant.id,
+                                helpType: route.helpType as "technical" | "billing" | "account" | "general",
+                                email: route.email,
+                                isActive: e.target.checked,
+                              });
+                            }
                           }}
                           className="rounded"
                         />
