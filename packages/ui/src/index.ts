@@ -36,3 +36,5 @@ export { ConfirmDeleteAccountDialog } from "./components/confirm-delete-accont";
 export { ConfirmRemoveDialog } from "./components/confirm-remove-dialog";
 export { NotificationBell } from "./components/notification-bell";
 export { NotificationCard } from "./components/notification-card";
+export { Tree } from "./components/file-tree";
+export { Highlighter } from "./components/highlighter";
