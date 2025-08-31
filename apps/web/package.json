@@ -16,6 +16,7 @@
     "@db/base": "workspace:*",
     "@i18n-core": "workspace:*",
     "@shared/base": "workspace:*",
+    "@stripe/integration": "workspace:*",
     "@tanstack/react-query": "^5.8.0",
     "@trpc/base": "workspace:*",
     "@trpc/client": "^11.0.0",

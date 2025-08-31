@@ -21,6 +21,10 @@ export const navigationLinks = [
     label: t("Admin", "components.links.navigationLinks.admin__1ckols"),
     adminOnly: true,
   },
+  {
+    href: "/payments",
+    label: t("Payments", "components.links.navigationLinks.payments__1ckols"),
+  },
 ];
 export const quickLinks = [
   ...navigationLinks
