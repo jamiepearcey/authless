@@ -2,11 +2,15 @@
 
 A standalone service for processing and storing audit events using the JetStream Service Wrapper pattern.
 
-## 🎯 **Purpose**
+## Status: Work in Progress
+
+This service is currently under active development. The API, configuration options, and implementation details are subject to change as we iterate and improve the system.
+
+## Purpose
 
 The Audit Service processes audit events from NATS streams and stores them in a PostgreSQL database for compliance, monitoring, and analysis purposes.
 
-## 🏗️ **Architecture**
+## Architecture
 
 This service follows the established pattern:
 - **Domain Logic**: Lives in the service layer
@@ -14,7 +18,7 @@ This service follows the established pattern:
 - **Event Processing**: Handles audit events from NATS streams
 - **Storage**: PostgreSQL database with structured audit schema
 
-## 📋 **Features**
+## Features
 
 - **Event Processing**: Consumes audit events from NATS streams
 - **Database Storage**: Stores events in structured PostgreSQL tables
@@ -23,7 +27,7 @@ This service follows the established pattern:
 - **Graceful Shutdown**: Proper resource cleanup and shutdown handling
 - **Retry Logic**: Configurable retry policies with DLQ support
 
-## 🚀 **Quick Start**
+## Quick Start
 
 ### **Prerequisites**
 - NATS server running
@@ -63,7 +67,7 @@ pnpm run start:dev
 pnpm run start
 ```
 
-## ⚙️ **Configuration**
+## Configuration
 
 ### **Service Configuration**
 ```typescript
@@ -97,7 +101,7 @@ const config: AuditServiceConfig = {
 };
 ```
 
-## 🗄️ **Database Schema**
+## Database Schema
 
 The service stores audit events in the `AuditEvent` table with the following structure:
 
@@ -109,7 +113,7 @@ The service stores audit events in the `AuditEvent` table with the following str
 - **Action**: `actionType`, `actionDescription`, `actionOutcome`, `actionReason`
 - **Data**: `metadata`, `originalPayload`
 
-## 📊 **Monitoring & Health**
+## Monitoring & Health
 
 ### **Health Endpoints**
 - **Health Check**: `http://localhost:8080/health`
@@ -121,7 +125,7 @@ The service stores audit events in the `AuditEvent` table with the following str
 - `audit_service_errors_total`: Error count
 - `audit_service_inflight_messages`: Current inflight count
 
-## 🔧 **Development**
+## Development
 
 ### **Building**
 ```bash
@@ -143,7 +147,7 @@ pnpm run test
 pnpm run clean && pnpm run build
 ```
 
-## 🚨 **Error Handling**
+## Error Handling
 
 The service includes comprehensive error handling:
 - **Retry Logic**: Configurable retry policies with exponential backoff
@@ -151,7 +155,7 @@ The service includes comprehensive error handling:
 - **Structured Logging**: Detailed error context and stack traces
 - **Health Checks**: Service health monitoring and degradation detection
 
-## 🔄 **Event Flow**
+## Event Flow
 
 1. **Event Source**: Application publishes audit event to NATS stream
 2. **Consumption**: Service consumes event from stream
@@ -159,7 +163,7 @@ The service includes comprehensive error handling:
 4. **Storage**: Event stored in PostgreSQL database
 5. **Metrics**: Processing metrics and health status updated
 
-## 📚 **API Reference**
+## API Reference
 
 ### **AuditService Class**
 ```typescript
@@ -178,13 +182,13 @@ class AuditServiceFactory {
 }
 ```
 
-## 🔗 **Related Packages**
+## Related Packages
 
 - **`@jetstream/service-wrapper`**: Infrastructure and service management
 - **`@jetstream/audit-consumer`**: Audit event processing logic
 - **`@db/base`**: Database schema and client
 
-## 📝 **Examples**
+## Examples
 
 See `src/example-config.ts` for complete configuration examples including:
 - Development configuration
@@ -192,7 +196,7 @@ See `src/example-config.ts` for complete configuration examples including:
 - Minimal test configuration
 - Custom event handlers
 
-## 🚀 **Deployment**
+## Deployment
 
 ### **Docker**
 ```dockerfile
@@ -207,7 +211,7 @@ CMD ["node", "dist/start.js"]
 ### **Kubernetes**
 The service includes Lightship health checks for Kubernetes readiness/liveness probes.
 
-## 🤝 **Contributing**
+## Contributing
 
 1. Follow the established service pattern
 2. Add tests for new functionality

@@ -2,6 +2,10 @@
 
 A standalone service for processing and sending templated emails using the JetStream Service Wrapper pattern.
 
+## Status: Work in Progress
+
+This service is currently under active development. The API, configuration options, and implementation details are subject to change as we iterate and improve the system.
+
 ## Purpose
 
 The Email Service processes email events from NATS streams and sends templated emails to recipients using React Email templates and various email providers (Mailgun, SendGrid, SMTP).
@@ -327,10 +331,10 @@ COPY dist ./dist
 CMD ["node", "dist/start.js"]
 ```
 
-### **Kubernetes**
+### Kubernetes
 The service includes Lightship health checks for Kubernetes readiness/liveness probes.
 
-### **Environment Variables**
+### Environment Variables
 ```bash
 # Production example
 DATABASE_URL="postgresql://user:password@db:5432/production"
@@ -341,7 +345,7 @@ SERVICE_NAME="email-service"
 APP_VERSION="1.0.0"
 ```
 
-## 🤝 **Contributing**
+## Contributing
 
 1. Follow the established service pattern
 2. Add tests for new functionality

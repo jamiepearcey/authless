@@ -2,11 +2,15 @@
 
 A standalone service for processing realtime events and notifications using the JetStream Service Wrapper pattern.
 
-## 🎯 **Purpose**
+## Status: Work in Progress
+
+This service is currently under active development. The API, configuration options, and implementation details are subject to change as we iterate and improve the system.
+
+## Purpose
 
 The Realtime Service processes realtime events from NATS streams and handles realtime messaging, channel management, and notification delivery through Centrifugo.
 
-## 🏗️ **Architecture**
+## Architecture
 
 This service follows the established pattern:
 - **Domain Logic**: Lives in the service layer
@@ -15,7 +19,7 @@ This service follows the established pattern:
 - **Realtime Communication**: Manages Centrifugo channels and notifications
 - **Database Integration**: PostgreSQL for persistence and state management
 
-## 📋 **Features**
+## Features
 
 - **Event Processing**: Consumes realtime events from NATS streams
 - **Channel Management**: Dynamic channel creation and management
@@ -25,7 +29,7 @@ This service follows the established pattern:
 - **Graceful Shutdown**: Proper resource cleanup and shutdown handling
 - **Retry Logic**: Configurable retry policies with DLQ support
 
-## 🚀 **Quick Start**
+## Quick Start
 
 ### **Prerequisites**
 - NATS server running
@@ -68,7 +72,7 @@ pnpm run start:dev
 pnpm run start
 ```
 
-## ⚙️ **Configuration**
+## Configuration
 
 ### **Service Configuration**
 ```typescript
@@ -106,7 +110,7 @@ const config: RealtimeServiceConfig = {
 };
 ```
 
-## 🗄️ **Database Integration**
+## Database Integration
 
 The service integrates with PostgreSQL for:
 - **Channel State**: Persistent channel information
@@ -114,7 +118,7 @@ The service integrates with PostgreSQL for:
 - **Event History**: Audit trail of realtime events
 - **Notification State**: Delivery status and retry logic
 
-## 📡 **Realtime Communication**
+## Realtime Communication
 
 ### **Centrifugo Integration**
 - **Channel Management**: Dynamic channel creation and subscription
@@ -128,7 +132,7 @@ The service integrates with PostgreSQL for:
 - **System Channels**: `system:*` for system-wide notifications
 - **Custom Channels**: Dynamic channels based on business logic
 
-## 📊 **Monitoring & Health**
+## Monitoring & Health
 
 ### **Health Endpoints**
 - **Health Check**: `http://localhost:8080/health`
@@ -142,7 +146,7 @@ The service integrates with PostgreSQL for:
 - `realtime_service_channels_active`: Active channel count
 - `realtime_service_users_online`: Online user count
 
-## 🔧 **Development**
+## Development
 
 ### **Building**
 ```bash
@@ -164,7 +168,7 @@ pnpm run test
 pnpm run clean && pnpm run build
 ```
 
-## 🚨 **Error Handling**
+## Error Handling
 
 The service includes comprehensive error handling:
 - **Retry Logic**: Configurable retry policies with exponential backoff
@@ -173,7 +177,7 @@ The service includes comprehensive error handling:
 - **Health Checks**: Service health monitoring and degradation detection
 - **Circuit Breakers**: Protection against downstream service failures
 
-## 🔄 **Event Flow**
+## Event Flow
 
 1. **Event Source**: Application publishes realtime event to NATS stream
 2. **Consumption**: Service consumes event from stream
@@ -182,7 +186,7 @@ The service includes comprehensive error handling:
 5. **Delivery**: Message delivered via Centrifugo WebSocket connections
 6. **Metrics**: Processing metrics and health status updated
 
-## 📚 **API Reference**
+## API Reference
 
 ### **RealtimeService Class**
 ```typescript
@@ -203,13 +207,13 @@ class RealtimeServiceFactory {
 }
 ```
 
-## 🔗 **Related Packages**
+## Related Packages
 
 - **`@jetstream/service-wrapper`**: Infrastructure and service management
 - **`@jetstream/realtime-consumer`**: Realtime event processing logic
 - **`@db/base`**: Database schema and client
 
-## 📝 **Examples**
+## Examples
 
 See `src/example-config.ts` for complete configuration examples including:
 - Development configuration
@@ -218,7 +222,7 @@ See `src/example-config.ts` for complete configuration examples including:
 - Custom event handlers
 - Centrifugo integration setup
 
-## 🚀 **Deployment**
+## Deployment
 
 ### **Docker**
 ```dockerfile
@@ -244,7 +248,7 @@ SERVICE_NAME="realtime-service"
 APP_VERSION="1.0.0"
 ```
 
-## 🤝 **Contributing**
+## Contributing
 
 1. Follow the established service pattern
 2. Add tests for new functionality

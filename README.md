@@ -2,7 +2,28 @@
 
 A comprehensive guide to the project's architecture, conventions, and development workflow.
 
-## 🏗️ **Project Architecture Overview**
+## Status: Work in Progress
+
+**This project is currently under active development.** The architecture, APIs, and implementation details are subject to change as we iterate and improve the system. Please refer to the latest documentation and consider this when making contributions or integrations.
+
+## License
+
+This project is licensed under the **Business Source License (BSL) 1.1**. 
+
+### What this means:
+
+- **Source Available**: The source code is freely available for viewing, learning, and non-commercial use
+- **Commercial Use**: Commercial use requires a separate license agreement
+- **Free for Non-Commercial**: Personal, educational, and non-commercial use is permitted
+- **Contributions**: Contributions are welcome and will be licensed under the same terms
+
+For full license terms, see [LICENSE](LICENSE) file.
+
+### Commercial Licensing
+
+If you're interested in using this software commercially, please contact us to discuss licensing options.
+
+## Project Architecture Overview
 
 This project follows a **layered architecture** with clear separation of concerns:
 
@@ -78,7 +99,7 @@ authless/
 └── pnpm-workspace.yaml          # Workspace configuration
 ```
 
-## 🎯 **Layer Responsibilities**
+## Layer Responsibilities
 
 ### **Application Layer (`/apps`)**
 - **Purpose**: User-facing web application
@@ -117,7 +138,7 @@ authless/
   - Realtime communication (Centrifugo)
   - External integrations (Stripe, etc.)
 
-## 🔄 **Data Flow Patterns**
+## Data Flow Patterns
 
 ### **Event-Driven Architecture**
 ```
@@ -142,7 +163,7 @@ authless/
 └─────────────┘    └─────────────┘    └─────────────┘
 ```
 
-## 🗄️ **Database Schema**
+## Database Schema
 
 ### **Core Tables**
 - **`User`**: User accounts and profiles
@@ -202,7 +223,7 @@ Web App Components
 - **Validation**: Zod schema validation
 - **Documentation**: OpenAPI/Swagger support
 
-## ⚙️ **Environment Configuration**
+## Environment Configuration
 
 ### **Required Variables**
 ```bash
@@ -242,7 +263,7 @@ CENTRIFUGO_API_KEY="..."
 - **MSW**: API mocking
 - **Testing Library**: React component testing
 
-## 🚀 **Development Workflow**
+## Development Workflow
 
 ### **Getting Started**
 ```bash
@@ -300,7 +321,7 @@ pnpm run dev:packages
 - **NATS**: Stream and consumer status
 - **External Services**: API availability
 
-## 🔧 **Common Patterns**
+## Common Patterns
 
 ### **Service Pattern**
 ```typescript
@@ -374,7 +395,7 @@ try {
 }
 ```
 
-## 🚨 **Troubleshooting**
+## Troubleshooting
 
 ### **Common Issues**
 
@@ -428,7 +449,7 @@ pnpm run build:packages --verbose
 tail -f logs/service.log
 ```
 
-## 📚 **Additional Resources**
+## Additional Resources
 
 ### **Documentation**
 - **Next.js**: https://nextjs.org/docs
@@ -451,7 +472,7 @@ tail -f logs/service.log
 
 ---
 
-## 🤝 **Contributing Guidelines**
+## Contributing Guidelines
 
 1. **Follow Architecture**: Respect layer boundaries and responsibilities
 2. **Type Safety**: Use TypeScript for all new code
