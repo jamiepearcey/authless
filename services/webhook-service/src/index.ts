@@ -292,18 +292,18 @@ function createDefaultConfig(): WebhookServiceConfig {
   return {
     serviceName: 'webhook-service',
     version: '1.0.0',
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4222',
+    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
     streamName: process.env.NATS_STREAM_NAME || 'EVENTS',
     consumerName: process.env.WEBHOOK_CONSUMER_NAME || 'webhook-consumer',
     filterSubjects: (process.env.WEBHOOK_FILTER_SUBJECTS || 'events.webhook.*').split(','),
-    databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/beatthefine',
+    databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/authless',
     concurrency: parseInt(process.env.WEBHOOK_CONCURRENCY || '5'),
     batchSize: parseInt(process.env.WEBHOOK_BATCH_SIZE || '1'),
     ackWaitMs: parseInt(process.env.WEBHOOK_ACK_WAIT_MS || '30000'),
     maxRetries: parseInt(process.env.WEBHOOK_MAX_RETRIES || '3'),
     retryBackoffMs: parseInt(process.env.WEBHOOK_RETRY_BACKOFF_MS || '1000'),
-    port: parseInt(process.env.PORT || '8080'),
-    metricsPort: parseInt(process.env.METRICS_PORT || '9090'),
+    port: parseInt(process.env.PORT || '8084'),
+    metricsPort: parseInt(process.env.METRICS_PORT || '9098'),
   };
 }
 

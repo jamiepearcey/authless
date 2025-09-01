@@ -4,7 +4,7 @@ A JetStream-powered webhook delivery service that consumes events and delivers t
 
 ## Architecture
 
-This service follows the Beat The Fine London architecture pattern:
+This service follows the Beat The Fine uk architecture pattern:
 
 - **Domain Logic**: Lives in `@jetstream/webhook-consumer` package
 - **Service Entry Point**: Lives in `services/webhook-service/`
@@ -30,7 +30,7 @@ WEBHOOK_CONSUMER_NAME=webhook-consumer
 WEBHOOK_FILTER_SUBJECTS=events.webhook.*
 
 # Database
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/beatthefine
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/authless
 
 # Processing Configuration
 WEBHOOK_CONCURRENCY=5

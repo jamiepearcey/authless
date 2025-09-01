@@ -7,6 +7,8 @@ import {
   type JsMsg,
   AckPolicy,
   DeliverPolicy,
+  RetentionPolicy,
+  StorageType,
 } from 'nats';
 import pino, { type Logger as PinoLogger } from 'pino';
 import {
@@ -193,9 +195,12 @@ class ServiceMetricsCollector {
   }
 
   private initialize() {
-    const prefix = this.cfg.prefix ?? 'jetstream_service_';
-    const defaultLabels = { service: this.serviceName, ...(this.cfg.defaultLabels ?? {}) };
+    const sanitizedServiceName = this.serviceName.replace(/-/g, '_');
+    const prefix = this.cfg.prefix?.replace(/-/g, '_') ?? `${sanitizedServiceName}_`;
+    const defaultLabels = { service: sanitizedServiceName, ...(this.cfg.defaultLabels ?? {}) };
     this.registry.setDefaultLabels(defaultLabels);
+
+    console.log('prefix',`${prefix}messages_total`, sanitizedServiceName)
 
     this.messagesTotal = new Counter({
       name: `${prefix}messages_total`,
@@ -357,7 +362,7 @@ export class JetStreamServiceWrapper implements ServiceRunner {
 
     this.metrics = new ServiceMetricsCollector(config.serviceName, {
       enabled: config.metrics?.enabled ?? true,
-      prefix: config.metrics?.prefix ?? 'jetstream_service_',
+      prefix: config.metrics?.prefix ?? 'jetstream_service',
       collectDefaultMetrics: config.metrics?.collectDefaultMetrics ?? true,
       defaultLabels: config.metrics?.defaultLabels,
     });
@@ -397,6 +402,9 @@ export class JetStreamServiceWrapper implements ServiceRunner {
       await this.stop().catch((err) => this.logger.error({ err }, 'Error on stop'));
     });
 
+    // 3) Signal handling for graceful shutdown
+    this.setupSignalHandlers();
+
     // 2) Optional metrics HTTP server
     const metricsPort = this.config.metrics?.metricsPort;
     if (metricsPort) {
@@ -432,22 +440,21 @@ export class JetStreamServiceWrapper implements ServiceRunner {
       });
       this.js = this.nc.jetstream();
 
-      // Ensure consumer exists (create if needed)
+      // Ensure stream exists (create if needed) - Fan-out pattern
       const jsm = await this.nc.jetstreamManager();
-      const ackWaitNs = (this.config.ackWaitMs ?? 30_000) * 1_000_000;
       try {
-        await jsm.consumers.add(this.config.streamName, {
-          name: this.config.consumerName,
-          deliver_policy: DeliverPolicy.New,
-          ack_policy: AckPolicy.Explicit,
-          max_deliver: (this.config.retryPolicy?.maxRetries ?? 10) + 1,
-          ack_wait: ackWaitNs,
-          max_ack_pending: this.config.batchSize ?? 100,
-          filter_subjects: this.config.filterSubjects,
+        await jsm.streams.add({
+          name: this.config.streamName,
+          subjects: ['events.*'], // Accept all events.* subjects
+          retention: RetentionPolicy.Limits,
+          max_age: 24 * 60 * 60 * 1000 * 1000 * 1000, // 24 hours in nanoseconds
+          max_msgs: 1000000,
+          max_bytes: 1024 * 1024 * 1024, // 1GB
+          storage: StorageType.File,
         });
         this.logger.info(
-          { stream: this.config.streamName, consumer: this.config.consumerName },
-          'JetStream consumer created'
+          { stream: this.config.streamName },
+          'JetStream stream created (fan-out pattern)'
         );
       } catch (err: any) {
         if (!String(err?.message ?? '').includes('already in use') &&
@@ -455,7 +462,35 @@ export class JetStreamServiceWrapper implements ServiceRunner {
           throw err;
         }
         this.logger.info(
-          { stream: this.config.streamName, consumer: this.config.consumerName },
+          { stream: this.config.streamName },
+          'JetStream stream already exists'
+        );
+      }
+
+      // Ensure consumer exists (create if needed) - Fan-out pattern
+      const ackWaitNs = (this.config.ackWaitMs ?? 30_000) * 1_000_000;
+      const uniqueConsumerName = `${this.config.consumerName}_${this.config.serviceName}`;
+      try {
+        await jsm.consumers.add(this.config.streamName, {
+          name: uniqueConsumerName,
+          deliver_policy: DeliverPolicy.All,
+          ack_policy: AckPolicy.Explicit,
+          max_deliver: (this.config.retryPolicy?.maxRetries ?? 10) + 1,
+          ack_wait: ackWaitNs,
+          max_ack_pending: this.config.batchSize ?? 100,
+          filter_subjects: this.config.filterSubjects,
+        });
+        this.logger.info(
+          { stream: this.config.streamName, consumer: uniqueConsumerName },
+          'JetStream consumer created (fan-out)'
+        );
+      } catch (err: any) {
+        if (!String(err?.message ?? '').includes('already in use') &&
+            !String(err?.message ?? '').includes('already exists')) {
+          throw err;
+        }
+        this.logger.info(
+          { stream: this.config.streamName, consumer: uniqueConsumerName },
           'JetStream consumer already exists'
         );
       }
@@ -467,7 +502,7 @@ export class JetStreamServiceWrapper implements ServiceRunner {
         {
           natsUrl: this.config.natsUrl,
           stream: this.config.streamName,
-          consumer: this.config.consumerName,
+          consumer: uniqueConsumerName,
           concurrency: this.config.concurrency ?? 4,
         },
         'Service ready'
@@ -549,9 +584,10 @@ export class JetStreamServiceWrapper implements ServiceRunner {
   private async consumeLoop() {
     if (!this.js) throw new Error('JetStream not initialized');
 
+    const uniqueConsumerName = `${this.config.consumerName}_${this.config.serviceName}`;
     const consumer = await this.js.consumers.get(
       this.config.streamName,
-      this.config.consumerName
+      uniqueConsumerName
     );
     const sub = await consumer.consume({
       max_messages: this.config.batchSize ?? 100,
@@ -645,6 +681,38 @@ export class JetStreamServiceWrapper implements ServiceRunner {
       this.logger.error({ err }, 'Subscription loop failed');
       this.lightship?.signalNotReady();
       this.lightship?.shutdown();
+    });
+  }
+
+  /**
+   * Setup signal handlers for graceful shutdown
+   */
+  private setupSignalHandlers(): void {
+    const shutdown = async (signal: string) => {
+      this.logger.info(`Received ${signal}, shutting down gracefully...`);
+      try {
+        await this.stop();
+        this.logger.info('Service stopped gracefully');
+        process.exit(0);
+      } catch (error) {
+        this.logger.error({ error }, 'Error during shutdown');
+        process.exit(1);
+      }
+    };
+
+    // Handle shutdown signals
+    process.on('SIGTERM', () => shutdown('SIGTERM'));
+    process.on('SIGINT', () => shutdown('SIGINT'));
+
+    // Handle uncaught exceptions
+    process.on('uncaughtException', (error) => {
+      this.logger.error({ error }, 'Uncaught Exception');
+      shutdown('uncaughtException');
+    });
+
+    process.on('unhandledRejection', (reason, promise) => {
+      this.logger.error({ reason, promise }, 'Unhandled Rejection');
+      shutdown('unhandledRejection');
     });
   }
 }

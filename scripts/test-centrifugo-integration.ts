@@ -119,7 +119,7 @@ async function testCentrifugoIntegration() {
     
     // Get admin user
     const adminUser = await db.user.findFirst({
-      where: { email: "admin@beatthefine.london" }
+      where: { email: "admin@authless.uk" }
     });
     
     if (adminUser) {

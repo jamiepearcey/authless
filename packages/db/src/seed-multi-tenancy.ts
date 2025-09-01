@@ -1,4 +1,4 @@
-import { db } from "@db/base"
+import { db } from "./client"
 import bcrypt from "bcryptjs";
 
 

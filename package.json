@@ -4,13 +4,18 @@
   "private": true,
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "services/*"
   ],
   "scripts": {
     "setup": "./scripts/setup.sh",
     "build": "turbo run build",
-    "dev": "turbo run dev",
-    "start:all": "turbo run dev --filter=@web/app --filter=email-service --filter=audit-service --filter=webhook-service --filter=realtime-service --filter=outbox-service",
+    "dev": "./dev.sh",
+    "dev:web": "./dev.sh web-only",
+    "dev:essential": "./dev.sh essential", 
+    "dev:all": "./dev.sh all",
+    "dev:stop": "./dev.sh stop",
+    "start:all": "./scripts/kill-port-conflicts.sh && turbo run dev --filter=@web/app --filter=@jetstream/email-service --filter=@jetstream/audit-service --filter=@jetstream/webhook-service --filter=@jetstream/realtime-service --filter=@jetstream/outbox-service",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "db:generate": "turbo run prisma:generate",
@@ -43,7 +48,10 @@
   "packageManager": "pnpm@8.0.0",
   "dependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/pg": "^8.15.5",
     "bcryptjs": "^2.4.3",
+    "nats": "^2.29.3",
+    "pg": "^8.11.0",
     "totp-generator": "^1.0.0"
   }
 }

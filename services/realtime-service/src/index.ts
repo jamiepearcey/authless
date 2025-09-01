@@ -113,7 +113,7 @@ export class RealtimeService {
       
       metrics: {
         enabled: true,
-        prefix: `${config.serviceName}_`,
+        prefix: `${config.serviceName.replace(/-/g, '_')}_`,
         metricsPort: config.metricsPort || 9090,
       },
       

@@ -7,7 +7,7 @@ async function testReactNotificationFlow() {
   try {
     // Step 1: Get admin user (simulating session)
     const adminUser = await db.user.findFirst({
-      where: { email: "admin@beatthefine.london" }
+      where: { email: "admin@authless.uk" }
     });
     
     if (!adminUser) {

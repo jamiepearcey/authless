@@ -3,14 +3,14 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15
-    container_name: beatthefine-postgres
+    container_name: authless-postgres
     restart: always
     environment:
-      POSTGRES_DB: beatthefine
+      POSTGRES_DB: authless
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"  # Changed to 5433 so PgBouncer can use 5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -19,9 +19,42 @@ services:
       timeout: 5s
       retries: 5
 
+  pgbouncer:
+    image: pgbouncer/pgbouncer:latest
+    container_name: authless-pgbouncer
+    restart: always
+    environment:
+      DATABASES_HOST: postgres
+      DATABASES_PORT: 5432
+      DATABASES_USER: postgres
+      DATABASES_PASSWORD: postgres
+      DATABASES_DBNAME: authless
+      POOL_MODE: transaction
+      SERVER_RESET_QUERY: DISCARD ALL
+      MAX_CLIENT_CONN: 1000
+      DEFAULT_POOL_SIZE: 25
+      RESERVE_POOL_SIZE: 5
+      SERVER_LIFETIME: 3600
+      SERVER_IDLE_TIMEOUT: 600
+      LOG_CONNECTIONS: 1
+      LOG_DISCONNECTIONS: 1
+      LOG_POOLER_ERRORS: 1
+      STATS_PERIOD: 60
+    ports:
+      - "5432:6432"  # PgBouncer internal port 6432 mapped to external 5432
+    depends_on:
+      postgres:
+        condition: service_healthy
+# Temporarily disabled health check until PgBouncer is working
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -h localhost -p 6432 -U postgres"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+
   nats:
     image: nats:2.10-alpine
-    container_name: beatthefine-nats
+    container_name: authless-nats
     restart: always
     command: ["-c", "/etc/nats-server.conf"]
     ports:
@@ -37,12 +70,11 @@ services:
       timeout: 5s
       retries: 5
     depends_on:
-      postgres:
-        condition: service_healthy
+      - pgbouncer
 
   centrifugo:
     image: centrifugo/centrifugo:v5
-    container_name: beatthefine-centrifugo
+    container_name: authless-centrifugo
     restart: always
     environment:
       CENTRIFUGO_TOKEN_HMAC_SECRET_KEY: "your-secret-key-change-in-production"
@@ -62,8 +94,7 @@ services:
       timeout: 5s
       retries: 5
     depends_on:
-      postgres:
-        condition: service_healthy
+      - pgbouncer
 
 volumes:
   postgres_data:

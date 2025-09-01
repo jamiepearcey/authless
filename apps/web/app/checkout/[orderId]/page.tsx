@@ -426,7 +426,7 @@ export default function RetryPaymentPage() {
                   📞 Call us: +44 (0) 20 1234 5678
                 </p>
                 <p className="text-sm text-blue-600">
-                  ✉️ Email: support@beatthefinelondon.com
+                  ✉️ Email: support@authlessuk.com
                 </p>
               </div>
 

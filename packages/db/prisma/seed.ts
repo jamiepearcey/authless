@@ -8,10 +8,10 @@ async function main() {
   const hashedPassword = await bcrypt.hash('admin123', 12);
   
   const adminUser = await db.user.upsert({
-    where: { email: 'admin@beatthefine.london' },
+    where: { email: 'admin@authless.uk' },
     update: {},
     create: {
-      email: 'admin@beatthefine.london',
+      email: 'admin@authless.uk',
       name: 'Admin User',
       hashedPassword,
       platformRole: 'admin',
@@ -86,7 +86,7 @@ async function main() {
   console.log('✅ Contact reasons created');
 
   console.log('🎉 Database seeding completed!');
-  console.log('📧 Admin email: admin@beatthefine.london');
+  console.log('📧 Admin email: admin@authless.uk');
   console.log('🔑 Admin password: admin123');
 }
 

@@ -41,7 +41,7 @@ export const createDevContext = async (): Promise<Context> => {
   const mockSession: Session = {
     user: {
       id: "cm5qmqzrb000008ld7k1tdl1a", // Use the seed admin user ID
-      email: "admin@beatthefine.london",
+      email: "admin@authless.uk",
       name: "Dev Admin",
       platformRole: "admin"
     }

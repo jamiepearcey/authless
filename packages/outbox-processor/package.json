@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsx --watch src/processor.ts",
+    "dev": "tsc --watch",
     "start": "tsx src/processor.ts",
     "clean": "rm -rf dist",
     "test": "vitest run",

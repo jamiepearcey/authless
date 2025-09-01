@@ -317,7 +317,7 @@ function createDefaultConfig(): OutboxServiceConfig {
   return {
     serviceName: 'outbox-service',
     version: '1.0.0',
-    databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/beatthefine',
+    databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/authless',
     natsUrl: process.env.NATS_URL || 'nats://localhost:4222',
     batchSize: parseInt(process.env.OUTBOX_BATCH_SIZE || '100'),
     maxTries: parseInt(process.env.OUTBOX_MAX_TRIES || '10'),
@@ -335,52 +335,37 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const service = OutboxServiceFactory.createService(config);
   
   // Graceful shutdown handling
-  process.on('SIGINT', async () => {
-    console.log('🔄 Received SIGINT, shutting down gracefully...');
+  const logger = service.getLogger();
+  
+  const shutdown = async (signal: string) => {
+    logger.info(`Received ${signal}, shutting down gracefully...`);
     try {
       await service.stop();
+      logger.info('Service stopped gracefully');
       process.exit(0);
     } catch (error) {
-      console.error('💥 Error during shutdown:', error);
+      logger.error({ error }, 'Error during shutdown');
       process.exit(1);
     }
-  });
-  
-  process.on('SIGTERM', async () => {
-    console.log('🔄 Received SIGTERM, shutting down gracefully...');
-    try {
-      await service.stop();
-      process.exit(0);
-    } catch (error) {
-      console.error('💥 Error during shutdown:', error);
-      process.exit(1);
-    }
-  });
-  
+  };
+
+  process.on('SIGTERM', () => shutdown('SIGTERM'));
+  process.on('SIGINT', () => shutdown('SIGINT'));
+
   // Handle uncaught exceptions
-  process.on('uncaughtException', async (error) => {
-    console.error('💥 Uncaught exception:', error);
-    try {
-      await service.stop();
-    } catch (stopError) {
-      console.error('💥 Error during emergency stop:', stopError);
-    }
-    process.exit(1);
+  process.on('uncaughtException', (error) => {
+    logger.error({ error }, 'Uncaught Exception');
+    shutdown('uncaughtException');
   });
-  
-  process.on('unhandledRejection', async (reason, promise) => {
-    console.error('💥 Unhandled rejection at:', promise, 'reason:', reason);
-    try {
-      await service.stop();
-    } catch (stopError) {
-      console.error('💥 Error during emergency stop:', stopError);
-    }
-    process.exit(1);
+
+  process.on('unhandledRejection', (reason, promise) => {
+    logger.error({ reason, promise }, 'Unhandled Rejection');
+    shutdown('unhandledRejection');
   });
   
   // Start the service
   service.start().catch((error) => {
-    console.error('💥 Failed to start outbox service:', error);
+    logger.error({ error }, 'Failed to start outbox service');
     process.exit(1);
   });
 }

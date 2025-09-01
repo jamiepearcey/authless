@@ -759,7 +759,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/jamiepearcey/repos/authless/packages/db/src/generated/client",
+      "value": "/Users/jamiepearcey/repos/beat-the-fine-london/packages/db/src/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -773,7 +773,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/jamiepearcey/repos/authless/packages/db/prisma/schema.prisma",
+    "sourceFilePath": "/Users/jamiepearcey/repos/beat-the-fine-london/packages/db/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -786,7 +786,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

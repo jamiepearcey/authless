@@ -20,7 +20,7 @@ const TEST_CONFIG: AuditConsumerConfig = {
   retryBackoffMs: 100,
   sinks: ['db'],
   database: {
-    connectionString: 'postgresql://postgres:postgres@localhost:5432/beatthefine'
+    connectionString: 'postgresql://postgres:postgres@localhost:5432/authless'
   },
   healthCheckIntervalMs: 5000,
   metricsEnabled: true,
@@ -48,7 +48,7 @@ describe('Audit Consumer Integration Tests', () => {
     prisma = new PrismaClient({
       datasources: {
         db: {
-          url: 'postgresql://postgres:postgres@localhost:5432/beatthefine'
+          url: 'postgresql://postgres:postgres@localhost:5432/authless'
         }
       }
     });

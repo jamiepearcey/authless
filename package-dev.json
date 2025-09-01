@@ -1,0 +1,11 @@
+{
+  "name": "dev-essentials",
+  "private": true,
+  "scripts": {
+    "dev:web": "turbo run dev --filter=@web/app",
+    "dev:essential": "turbo run dev --filter=@web/app --filter=outbox-service",
+    "dev:safe": "turbo run dev --filter=@web/app --filter=outbox-service --filter=@db/base --filter=@shared/base --filter=@ui/base --filter=@trpc/base",
+    "dev:all": "turbo run dev --concurrency=15",
+    "stop": "pkill -f 'turbo run dev' && pkill -f 'next dev'"
+  }
+}

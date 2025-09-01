@@ -921,7 +921,7 @@ export default function TenantSettingsPage() {
                         <SelectItem value="America/Chicago">Central Time</SelectItem>
                         <SelectItem value="America/Denver">Mountain Time</SelectItem>
                         <SelectItem value="America/Los_Angeles">Pacific Time</SelectItem>
-                        <SelectItem value="Europe/London">London</SelectItem>
+                        <SelectItem value="Europe/uk">uk</SelectItem>
                         <SelectItem value="Europe/Paris">Paris</SelectItem>
                         <SelectItem value="Asia/Tokyo">Tokyo</SelectItem>
                       </SelectContent>

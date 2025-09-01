@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🔍 Checking Authless London Status..."
+echo "🔍 Checking Authless uk Status..."
 echo ""
 
 # Check Docker/OrbStack
@@ -9,11 +9,11 @@ if docker ps > /dev/null 2>&1; then
     echo "  ✅ Docker is running"
     
     # Check PostgreSQL container
-    if docker ps | grep -q "beatthefine-postgres"; then
+    if docker ps | grep -q "authless-postgres"; then
         echo "  ✅ PostgreSQL container is running"
         
         # Test PostgreSQL connection
-        if docker exec beatthefine-postgres pg_isready -U postgres > /dev/null 2>&1; then
+        if docker exec authless-postgres pg_isready -U postgres > /dev/null 2>&1; then
             echo "  ✅ PostgreSQL is accepting connections"
         else
             echo "  ❌ PostgreSQL is not ready"
@@ -42,13 +42,13 @@ echo ""
 # Check Database Schema
 echo "🗃️  Database Schema:"
 cd packages/db
-if DATABASE_URL="postgresql://postgres:postgres@localhost:5432/beatthefine" pnpm prisma db execute --command "SELECT COUNT(*) FROM \"User\";" > /dev/null 2>&1; then
-    USER_COUNT=$(DATABASE_URL="postgresql://postgres:postgres@localhost:5432/beatthefine" pnpm prisma db execute --command "SELECT COUNT(*) FROM \"User\";" 2>/dev/null | grep -o '[0-9]\+' | head -1)
+if DATABASE_URL="postgresql://postgres:postgres@localhost:5432/authless" pnpm prisma db execute --command "SELECT COUNT(*) FROM \"User\";" > /dev/null 2>&1; then
+    USER_COUNT=$(DATABASE_URL="postgresql://postgres:postgres@localhost:5432/authless" pnpm prisma db execute --command "SELECT COUNT(*) FROM \"User\";" 2>/dev/null | grep -o '[0-9]\+' | head -1)
     echo "  ✅ Database schema is ready"
     echo "  👤 Users in database: $USER_COUNT"
 else
     echo "  ❌ Database schema is not ready"
-    echo "      Run: cd packages/db && DATABASE_URL=\"postgresql://postgres:postgres@localhost:5432/beatthefine\" pnpm prisma db push"
+    echo "      Run: cd packages/db && DATABASE_URL=\"postgresql://postgres:postgres@localhost:5432/authless\" pnpm prisma db push"
 fi
 
 cd ../..
@@ -60,5 +60,5 @@ echo "🚀 To start your development server:"
 echo "   pnpm dev"
 echo ""
 echo "🔑 Admin Credentials:"
-echo "   Email: admin@beatthefine.london"
+echo "   Email: admin@authless.uk"
 echo "   Password: admin123"

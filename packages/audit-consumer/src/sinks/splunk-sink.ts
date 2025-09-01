@@ -126,37 +126,33 @@ export class SplunkSink implements AuditSinkAdapter {
     // Splunk HEC expects newline-delimited JSON, not an array
     const payload = hecEvents.map(event => JSON.stringify(event)).join('\n');
     
-    // Use AbortController for timeout instead of the invalid timeout property
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.config.timeout || 30000);
     
-    try {
-      const response = await fetch(this.config.url, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Splunk ${this.config.token}`,
-          'Content-Type': 'application/json',
-          'X-Splunk-Request-Channel': 'audit-consumer',
-        },
-        body: payload,
-        signal: controller.signal,
-      });
+    const response = await fetch(this.config.url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Splunk ${this.config.token}`,
+        'Content-Type': 'application/json',
+        'X-Splunk-Request-Channel': 'audit-consumer',
+      },
+      body: payload,
+      signal: controller.signal,
+    });
+    
+    clearTimeout(timeoutId);
 
-      if (!response.ok) {
-        const errorText = await response.text().catch(() => 'Unknown error');
-        throw new Error(`Splunk HEC request failed: ${response.status} ${response.statusText}. Response: ${errorText}`);
-      }
-
-      const result = await response.json() as any;
-      
-      // Check for partial failures
-      if (result.code !== undefined && result.code !== 0) {
-        throw new Error(`Splunk HEC returned error code ${result.code}: ${result.text}`);
-      }
-    } finally {
-      clearTimeout(timeoutId);
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'Unknown error');
+      throw new Error(`Splunk HEC request failed: ${response.status} ${response.statusText}. Response: ${errorText}`);
     }
 
+    const result = await response.json() as { code?: number; text?: string };
+    
+    // Check for partial failures
+    if (result.code !== undefined && result.code !== 0) {
+      throw new Error(`Splunk HEC returned error code ${result.code}: ${result.text}`);
+    }
   }
 
   private convertToHECEvent(auditEvent: AuditEvent): SplunkHECEvent {
@@ -268,29 +264,26 @@ export class SplunkSink implements AuditSinkAdapter {
           }
         };
 
-        // Use AbortController for timeout instead of the invalid timeout property
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
         
-        try {
-          const response = await fetch(this.config.url, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Splunk ${this.config.token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(testEvent),
-            signal: controller.signal,
-          });
+        const response = await fetch(this.config.url, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Splunk ${this.config.token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(testEvent),
+          signal: controller.signal,
+        });
+        
+        clearTimeout(timeoutId);
 
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-
-          await response.json();
-        } finally {
-          clearTimeout(timeoutId);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
+
+        await response.json();
       }
 
       return {

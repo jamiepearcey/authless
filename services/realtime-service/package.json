@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch",
+    "dev": "tsx src/start.ts",
     "clean": "rm -rf dist",
     "start": "node dist/start.js",
     "start:dev": "tsc && node dist/start.js",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/pg": "^8.10.0",
+    "tsx": "^4.0.0",
     "typescript": "^5.0.0",
     "vitest": "^1.0.0"
   },

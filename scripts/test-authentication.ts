@@ -8,7 +8,7 @@ async function testAuthentication() {
     // Test 1: User lookup and password verification
     console.log("\n1️⃣ Testing user lookup and password verification...");
     
-    const testEmail = "admin@beatthefine.london";
+    const testEmail = "admin@authless.uk";
     const testPassword = "admin123";
     
     const user = await db.user.findUnique({

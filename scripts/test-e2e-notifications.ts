@@ -65,7 +65,7 @@ class NotificationE2ETest {
     return this.runStep("Step 1: Database Setup", async () => {
       // Get admin user
       this.adminUser = await db.user.findFirst({
-        where: { email: "admin@beatthefine.london" },
+        where: { email: "admin@authless.uk" },
         select: { id: true, email: true, name: true }
       });
 
@@ -374,7 +374,7 @@ class NotificationE2ETest {
 
   private printSummary(): void {
     console.log("📊 E2E Test Summary:");
-    console.log("=" * 50);
+    console.log("=".repeat(50));
     
     const totalSteps = this.results.length;
     const successfulSteps = this.results.filter(r => r.success).length;

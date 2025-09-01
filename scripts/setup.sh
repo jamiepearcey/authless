@@ -55,7 +55,7 @@ case $db_choice in
             sleep 10
             
             # Update .env to use PostgreSQL
-            sed -i '' 's|DATABASE_URL="file:./dev.db"|DATABASE_URL="postgresql://postgres:postgres@localhost:5432/beatthefine"|' .env
+            sed -i '' 's|DATABASE_URL="file:./dev.db"|DATABASE_URL="postgresql://postgres:postgres@localhost:5432/authless"|' .env
             
             echo "🗄️  Setting up PostgreSQL..."
             pnpm run db:switch:postgresql

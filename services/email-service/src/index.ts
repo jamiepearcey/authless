@@ -51,14 +51,6 @@ export interface EmailServiceConfig {
   metricsPort?: number;
 }
 
-/**
- * Email Service Factory
- */
-export class EmailServiceFactory {
-  static createService(config: EmailServiceConfig): EmailService {
-    return new EmailService(config);
-  }
-}
 
 /**
  * Email Service Implementation
@@ -92,6 +84,7 @@ export class EmailService {
       this.emailConsumerService,
       {
         serviceName: config.serviceName,
+        metrics: { enabled: false },
         version: config.version,
         natsUrl: config.natsUrl,
         streamName: config.streamName,
@@ -113,11 +106,6 @@ export class EmailService {
           ],
         },
         lightshipPort: config.port || 8080,
-        metrics: {
-          enabled: true,
-          prefix: `${config.serviceName}_`,
-          metricsPort: config.metricsPort || 9090,
-        },
       }
     );
 
@@ -223,5 +211,14 @@ export class EmailService {
     } catch (error) {
       this.logger.error({ error }, 'Error logging email delivery');
     }
+  }
+}
+
+/**
+ * Email Service Factory
+ */
+export class EmailServiceFactory {
+  static createService(config: EmailServiceConfig): EmailService {
+    return new EmailService(config);
   }
 }

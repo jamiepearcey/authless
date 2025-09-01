@@ -6,7 +6,7 @@ async function testPasskeyAnd2FA() {
   try {
     // Get the admin user for testing
     const user = await db.user.findUnique({
-      where: { email: "admin@beatthefine.london" }
+      where: { email: "admin@authless.uk" }
     });
     
     if (!user) {

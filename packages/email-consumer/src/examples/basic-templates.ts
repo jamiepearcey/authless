@@ -8,7 +8,7 @@ export const exampleTemplates = new Map<string, ReactEmailTemplate>([
     {
       name: 'welcome-email',
       component: (props: any) => null, // Placeholder - would be actual React component
-      subject: 'Welcome to Authless London!',
+      subject: 'Welcome to Authless uk!',
       variables: ['userName', 'userEmail', 'tenantName'],
       metadata: {
         category: 'onboarding',
@@ -121,8 +121,8 @@ export function createExampleEmailConfig() {
       },
     },
     defaultFrom: {
-      email: 'noreply@beatthefinelondon.com',
-      name: 'Authless London',
+      email: 'noreply@authlessuk.com',
+      name: 'Authless uk',
     },
     routingRules: exampleRoutingRules,
     templates: exampleTemplates,

@@ -13,12 +13,12 @@ export const exampleConfig: RealtimeServiceConfig = {
   version: '1.0.0',
   
   // NATS configuration
-  natsUrl: process.env.NATS_URL || 'nats://localhost:4222',
+  natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
   streamName: process.env.STREAM_NAME || 'EVENTS',
   consumerName: process.env.CONSUMER_NAME || 'realtime_consumer',
   
   // Database configuration
-  databaseUrl: process.env.DATABASE_URL || 'postgresql://user:pass@localhost:5432/mydb',
+  databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/authless',
   
   // Centrifugo configuration
   centrifugoUrl: process.env.CENTRIFUGO_URL || 'http://localhost:8000',
@@ -69,8 +69,8 @@ export const exampleConfig: RealtimeServiceConfig = {
   maxRetries: Number(process.env.MAX_RETRIES) || 10,
   
   // Health and metrics
-  port: Number(process.env.PORT) || 8080,
-  metricsPort: Number(process.env.METRICS_PORT) || 9090,
+  port: Number(process.env.PORT) || 8083,
+  metricsPort: Number(process.env.METRICS_PORT) || 9093,
   healthCheckIntervalMs: Number(process.env.HEALTH_CHECK_INTERVAL_MS) || 10000,
   
   // Custom event handlers for domain-specific logic

@@ -5,9 +5,9 @@ echo ""
 
 # Check PostgreSQL
 echo "1️⃣ PostgreSQL Status:"
-if docker ps | grep -q "beatthefine-postgres"; then
+if docker ps | grep -q "authless-postgres"; then
     echo "  ✅ PostgreSQL container running"
-    if docker exec beatthefine-postgres pg_isready -U postgres > /dev/null 2>&1; then
+    if docker exec authless-postgres pg_isready -U postgres > /dev/null 2>&1; then
         echo "  ✅ PostgreSQL accepting connections"
     else
         echo "  ❌ PostgreSQL not ready"
@@ -44,7 +44,7 @@ echo ""
 # Check Database Client
 echo "3️⃣ Database Client:"
 cd packages/db
-if DATABASE_URL="postgresql://postgres:postgres@localhost:5432/beatthefine" pnpm tsx -e "const {db} = require('./src/client'); db.user.count().then(c => console.log('User count:', c)).catch(e => {console.error(e); process.exit(1)}).finally(() => db.\$disconnect())" 2>/dev/null; then
+if DATABASE_URL="postgresql://postgres:postgres@localhost:5432/authless" pnpm tsx -e "const {db} = require('./src/client'); db.user.count().then(c => console.log('User count:', c)).catch(e => {console.error(e); process.exit(1)}).finally(() => db.\$disconnect())" 2>/dev/null; then
     echo "  ✅ Database client working"
 else
     echo "  ❌ Database client not working"
@@ -58,7 +58,7 @@ echo ""
 echo "📝 Next Steps:"
 echo "1. Start your development server: pnpm dev"
 echo "2. Navigate to: http://localhost:3000"
-echo "3. Try signing in with: admin@beatthefine.london / admin123"
+echo "3. Try signing in with: admin@authless.uk / admin123"
 echo ""
 echo "🔍 If you still get errors:"
 echo "- Make sure to restart your development server"

@@ -24,33 +24,7 @@ async function main() {
     console.log(`📊 Health checks available at: http://localhost:${exampleConfig.port}/health`);
     console.log(`📈 Metrics available at: http://localhost:${exampleConfig.metricsPort}/metrics`);
     
-    // Keep the process running
-    process.on('SIGTERM', async () => {
-      console.log('🔄 SIGTERM received, shutting down gracefully...');
-      await service.stop();
-      console.log('✅ Service stopped gracefully');
-      process.exit(0);
-    });
-    
-    process.on('SIGINT', async () => {
-      console.log('🔄 SIGINT received, shutting down gracefully...');
-      await service.stop();
-      console.log('✅ Service stopped gracefully');
-      process.exit(0);
-    });
-    
-    // Handle uncaught errors
-    process.on('uncaughtException', async (error) => {
-      console.error('💥 Uncaught exception:', error);
-      await service.stop();
-      process.exit(1);
-    });
-    
-    process.on('unhandledRejection', async (reason, promise) => {
-      console.error('💥 Unhandled rejection at:', promise, 'reason:', reason);
-      await service.stop();
-      process.exit(1);
-    });
+    // Keep the process running - signal handling is managed by the service wrapper
     
   } catch (error) {
     console.error('❌ Failed to start Realtime Service:', error);

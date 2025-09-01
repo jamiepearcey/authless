@@ -391,7 +391,7 @@ export default function AccountPage() {
                 className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2"
               >
                 <option value="UTC">UTC</option>
-                <option value="Europe/London">Europe/London (BST/GMT)</option>
+                <option value="Europe/uk">Europe/uk (BST/GMT)</option>
                 <option value="Europe/Berlin">Europe/Berlin (CET/CEST)</option>
                 <option value="America/New_York">America/New_York (EST/EDT)</option>
                 <option value="America/Los_Angeles">America/Los_Angeles (PST/PDT)</option>

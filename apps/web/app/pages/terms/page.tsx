@@ -244,8 +244,8 @@ const Terms = () => {
                     {t("Address:", "terms.page.Terms.address__1kv4eu")}
                   </strong>
                   {t(
-                    "123 Legal Street, London, UK",
-                    "privacy.page.Privacy.123_legal_street_london_uk__2eyw82",
+                    "123 Legal Street, uk, UK",
+                    "privacy.page.Privacy.123_legal_street_uk_uk__2eyw82",
                   )}
                   <br />
                   <strong>

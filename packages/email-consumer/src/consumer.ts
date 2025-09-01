@@ -1,8 +1,8 @@
 import { type JetStreamService, type ProcessingContext } from '@jetstream/service-wrapper';
 import { type Event, type EmailDeliveryResult } from './types.js';
-import { EmailRouter } from './email-router.js';
-import { ReactEmailRenderer } from './react-email-renderer.js';
-import { createEmailProvider, type EmailProvider } from './email-providers.js';
+import { EmailRouter } from './email-router';
+import { ReactEmailRenderer } from './react-email-renderer';
+import { createEmailProvider, type EmailProvider } from './email-providers';
 
 /**
  * Email Service Implementation
@@ -56,7 +56,7 @@ export class EmailService implements JetStreamService {
 
       // Process email for each recipient
       for (const recipient of recipients) {
-        await this.processEmailForRecipient(event, routingResult, recipient);
+        await this.processEmailForRecipient(event, routingResult, recipient, ctx);
       }
 
       console.log(`📧 Processed email event: ${event.eventName} for ${recipients.length} recipients`);
@@ -72,7 +72,8 @@ export class EmailService implements JetStreamService {
   private async processEmailForRecipient(
     event: Event,
     routingResult: any,
-    recipient: any
+    recipient: any,
+    ctx: ProcessingContext
   ): Promise<void> {
     try {
       // Extract variables for template
@@ -86,12 +87,13 @@ export class EmailService implements JetStreamService {
 
       // Send the email
       const deliveryResult = await this.emailProvider.send({
-        to: [recipient],
-        from: this.config.defaultFrom,
+        to: recipient.email,
+        from: this.config.defaultFrom.email,
         subject: this.renderSubject(routingResult.subject, variables),
         html: emailContent.html,
         text: emailContent.text,
         metadata: {
+          eventId: ctx.messageId,
           eventName: event.eventName,
           tenantId: event.tenantId,
           recipientId: recipient.userId,
@@ -102,7 +104,7 @@ export class EmailService implements JetStreamService {
       // Log the delivery result
       await this.database.logEmailDelivery({
         ...deliveryResult,
-        eventName: event.eventName,
+        eventId: ctx.messageId,
         recipientId: recipient.userId,
         templateName: routingResult.templateName,
         timestamp: new Date(),
@@ -114,9 +116,9 @@ export class EmailService implements JetStreamService {
       
       // Log the failure
       await this.database.logEmailDelivery({
-        success: false,
+        status: 'failed',
         error: error instanceof Error ? error.message : 'Unknown error',
-        eventName: event.eventName,
+        eventId: ctx.messageId,
         recipientId: recipient.userId,
         templateName: routingResult.templateName,
         timestamp: new Date(),

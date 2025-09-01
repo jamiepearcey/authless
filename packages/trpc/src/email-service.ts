@@ -43,7 +43,7 @@ export class EmailNotificationService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'User-Agent': 'BeatTheFine-NotificationSystem/1.0',
+          'User-Agent': 'authless-NotificationSystem/1.0',
         },
         body: JSON.stringify({
           event: 'notification.email',

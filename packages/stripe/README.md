@@ -1,6 +1,6 @@
 # Stripe Integration Package
 
-A comprehensive Stripe integration package for the Authless London application, providing secure payment processing, subscription management, and customer handling.
+A comprehensive Stripe integration package for the Authless uk application, providing secure payment processing, subscription management, and customer handling.
 
 ## Features
 

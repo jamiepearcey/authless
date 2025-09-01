@@ -1,4 +1,4 @@
-# Authless London - Architecture & Development Guide
+# Authless uk - Architecture & Development Guide
 
 A comprehensive guide to the project's architecture, conventions, and development workflow.
 

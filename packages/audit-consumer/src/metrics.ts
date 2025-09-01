@@ -197,11 +197,13 @@ export class HealthCheckManager {
       status: 'unhealthy',
       timestamp: new Date(),
       details: {
-        consumer: { running: false, inflightCount: 0 },
+        consumer: { running: false, inflightCount: 0, errorRate: 1 },
+        nats: { connected: false },
       },
     };
   }
 }
+
 
 // Prometheus-style metrics exporter (optional)
 export class PrometheusMetricsExporter {

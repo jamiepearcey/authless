@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { centrifugoService } from '../../../../../packages/trpc/src/centrifugo';
+import { centrifugoService } from '@trpc/base/centrifugo';
 
 export async function POST(request: NextRequest) {
   try {

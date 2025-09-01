@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Setup PostgreSQL for Authless London
-echo "🐘 Setting up PostgreSQL for Authless London..."
+# Setup PostgreSQL for Authless uk
+echo "🐘 Setting up PostgreSQL for Authless uk..."
 
 # Check if Docker is running
 if ! docker info >/dev/null 2>&1; then
@@ -24,7 +24,7 @@ docker-compose up -d
 # Wait for PostgreSQL to be ready
 echo "⏳ Waiting for PostgreSQL to be ready..."
 timeout=30
-while ! docker exec beatthefine-postgres pg_isready -U postgres >/dev/null 2>&1; do
+while ! docker exec authless-postgres pg_isready -U postgres >/dev/null 2>&1; do
     if [ $timeout -le 0 ]; then
         echo "❌ PostgreSQL failed to start within 30 seconds"
         exit 1
@@ -51,5 +51,5 @@ pnpm prisma db seed
 
 echo "🎉 Setup complete!"
 echo ""
-echo "Database connection: postgresql://postgres:postgres@localhost:5432/beatthefine"
+echo "Database connection: postgresql://postgres:postgres@localhost:5432/authless"
 echo "You can now start your development server."

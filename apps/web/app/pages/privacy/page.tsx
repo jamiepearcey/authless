@@ -520,12 +520,12 @@ const Privacy = () => {
                 </p>
                 <div className="bg-gray-100 p-4 rounded-lg">
                   <p className="text-gray-700">
-                    <strong>Email:</strong> privacy@beatthefine.com
+                    <strong>Email:</strong> privacy@authless.com
                     <br />
                     <strong>Address:</strong>
                     {t(
-                      "123 Legal Street, London, UK",
-                      "privacy.page.Privacy.123_legal_street_london_uk__2eyw82",
+                      "123 Legal Street, uk, UK",
+                      "privacy.page.Privacy.123_legal_street_uk_uk__2eyw82",
                     )}
                     <br />
                     <strong>Phone:</strong>

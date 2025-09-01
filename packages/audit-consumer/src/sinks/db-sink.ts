@@ -101,10 +101,13 @@ export class DatabaseSink implements AuditSinkAdapter {
           // Metadata and payload
           metadata: event.metadata ? JSON.stringify(event.metadata) : null,
           originalPayload: JSON.stringify(event.originalPayload),
+          
+          // Timestamps
+          createdAt: new Date(),
         },
       });
     } catch (error: any) {
-      // Check if it's a duplicate key error
+      // Handle unique constraint violation (idempotency)
       if (error.code === 'P2002' && error.meta?.target?.includes('id')) {
         console.log(`⚠️ Audit event ${event.id} already exists, skipping`);
         return;
@@ -195,11 +198,11 @@ export class DatabaseSink implements AuditSinkAdapter {
     return {
       totalEvents: total,
       eventsLast24h: last24h,
-      topEventTypes: byEventType.map((item: any) => ({
+      topEventTypes: byEventType.map(item => ({
         eventType: item.eventType,
         count: item._count.id
       })),
-      topTenants: byTenant.map((item: any) => ({
+      topTenants: byTenant.map(item => ({
         tenantId: item.tenantId,
         count: item._count.id
       })),

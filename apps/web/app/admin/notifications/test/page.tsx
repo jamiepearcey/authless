@@ -334,7 +334,7 @@ export default function TestNotificationsPage() {
               className="w-full justify-start"
               onClick={() => {
                 setForm({
-                  title: "🎉 Welcome to Authless London!",
+                  title: "🎉 Welcome to Authless uk!",
                   description: "This is a test notification to verify the system is working correctly.",
                   type: "success",
                   priority: "normal",

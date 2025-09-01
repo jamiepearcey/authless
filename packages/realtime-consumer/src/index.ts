@@ -1,9 +1,9 @@
+
 export { CentrifugoClient } from './centrifugo-client.js';
 export { ChannelRouter } from './channel-router.js';
 export { NotificationRouter } from './notification-router.js';
 
 export type {
-  IRealtimeConsumer,
   RealtimeConsumerConfig,
   Event,
   RealtimeMessage,

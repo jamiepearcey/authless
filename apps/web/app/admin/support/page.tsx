@@ -32,11 +32,17 @@ export default function AdminSupportPage() {
   });
 
   // Mock support metrics - would be replaced with real queries
+  const cases = supportCases?.cases || [];
+  const totalCases = cases.length;
+  const openCases = cases.filter((c: any) => c.status === 'open').length;
+  const pendingCases = cases.filter((c: any) => c.status === 'pending').length;
+  const resolvedCases = cases.filter((c: any) => c.status === 'resolved').length;
+  
   const supportMetrics = {
-    totalCases: supportCases?.cases?.length || 0,
-    openCases: supportCases?.cases?.filter(c => c.status === 'open').length || 0,
-    pendingCases: supportCases?.cases?.filter(c => c.status === 'pending').length || 0,
-    resolvedCases: supportCases?.cases?.filter(c => c.status === 'resolved').length || 0,
+    totalCases,
+    openCases,
+    pendingCases,
+    resolvedCases,
     averageResponseTime: "2.3 hours",
     customerSatisfaction: "4.8/5"
   };
@@ -71,10 +77,13 @@ export default function AdminSupportPage() {
     }
   };
 
-  const filteredCases = supportCases?.cases?.filter(supportCase =>
-    supportCase.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (supportCase.description?.toLowerCase() || '').includes(searchTerm.toLowerCase())
-  ) || [];
+  const allCases = supportCases?.cases || [];
+  const filteredCases = searchTerm 
+    ? allCases.filter((supportCase: any) =>
+        supportCase.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (supportCase.description?.toLowerCase() || '').includes(searchTerm.toLowerCase())
+      )
+    : allCases;
 
   if (isLoading) {
     return (
