@@ -77,7 +77,7 @@ export class WebhookService {
     // Initialize database connection
     this.db = new PG({ connectionString: config.databaseUrl });
 
-    // Create webhook consumer with database adapter
+    // Create webhook consumer with database adapter (logger will be set later)
     this.webhookConsumer = new WebhookConsumer({
       database: {
         getWebhookEndpoints: this.getWebhookEndpoints.bind(this),
@@ -131,6 +131,15 @@ export class WebhookService {
 
     // Get logger from wrapper
     this.logger = this.wrapper.getLogger();
+    
+    // Update webhook consumer with logger
+    this.webhookConsumer = new WebhookConsumer({
+      database: {
+        getWebhookEndpoints: this.getWebhookEndpoints.bind(this),
+        logDelivery: this.logDelivery.bind(this),
+      },
+      logger: this.logger
+    });
   }
 
   // ============================================================================

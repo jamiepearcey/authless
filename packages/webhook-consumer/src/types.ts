@@ -69,6 +69,11 @@ export interface WebhookConsumerConfig {
     getWebhookEndpoints: (eventName?: string, tenantId?: string) => Promise<WebhookEndpoint[]>;
     logDelivery: (result: WebhookDeliveryResult) => Promise<void>;
   };
+  logger?: {
+    info: (obj: any, msg?: string) => void;
+    error: (obj: any, msg?: string) => void;
+    warn: (obj: any, msg?: string) => void;
+  };
 }
 
 /**

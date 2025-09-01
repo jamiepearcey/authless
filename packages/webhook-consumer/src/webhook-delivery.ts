@@ -11,6 +11,19 @@ import type {
  * Webhook delivery service handles the actual HTTP delivery of webhooks
  */
 export class WebhookDeliveryService {
+  private readonly logger?: {
+    info: (obj: any, msg?: string) => void;
+    error: (obj: any, msg?: string) => void;
+    warn: (obj: any, msg?: string) => void;
+  };
+
+  constructor(logger?: {
+    info: (obj: any, msg?: string) => void;
+    error: (obj: any, msg?: string) => void;
+    warn: (obj: any, msg?: string) => void;
+  }) {
+    this.logger = logger;
+  }
   /**
    * Deliver a webhook to a specific endpoint
    */
@@ -62,7 +75,7 @@ export class WebhookDeliveryService {
         headers['X-Webhook-Signature-256'] = `sha256=${signature}`;
       }
 
-      console.log(`🎯 Delivering webhook ${webhook.id} for event ${event.eventName} to ${webhook.url}`);
+      this.logger?.info({ webhookId: webhook.id, eventName: event.eventName, url: webhook.url }, 'Delivering webhook');
 
       // Create AbortController for timeout
       const controller = new AbortController();
@@ -86,11 +99,11 @@ export class WebhookDeliveryService {
         // Consider 2xx status codes as successful
         if (response.status >= 200 && response.status < 300) {
           result.success = true;
-          console.log(`✅ Webhook ${webhook.id} delivered successfully (${response.status})`);
+          this.logger?.info({ webhookId: webhook.id, statusCode: response.status }, 'Webhook delivered successfully');
         } else {
           result.success = false;
           result.error = `HTTP ${response.status}: ${response.statusText}`;
-          console.warn(`⚠️ Webhook ${webhook.id} failed with status ${response.status}`);
+          this.logger?.warn({ webhookId: webhook.id, statusCode: response.status }, 'Webhook failed with status');
         }
 
       } catch (error: any) {
@@ -101,7 +114,7 @@ export class WebhookDeliveryService {
         result.error = error.message || 'Unknown error';
         result.success = false;
         
-        console.error(`❌ Webhook ${webhook.id} delivery failed:`, error.message);
+        this.logger?.error({ webhookId: webhook.id, error: error.message }, 'Webhook delivery failed');
       }
 
     } catch (error: any) {
@@ -110,7 +123,7 @@ export class WebhookDeliveryService {
       result.error = error.message || 'Unknown error';
       result.success = false;
       
-      console.error(`❌ Webhook ${webhook.id} preparation failed:`, error.message);
+      this.logger?.error({ webhookId: webhook.id, error: error.message }, 'Webhook preparation failed');
     }
 
     return result;
@@ -131,16 +144,16 @@ export class WebhookDeliveryService {
       results.push(lastResult);
 
       if (lastResult.success) {
-        console.log(`✅ Webhook ${webhook.id} delivered on attempt ${attempt + 1}`);
+        this.logger?.info({ webhookId: webhook.id, attempt: attempt + 1 }, 'Webhook delivered on attempt');
         break;
       }
 
       if (attempt < webhook.maxRetries) {
         const delay = this.calculateRetryDelay(attempt);
-        console.log(`🔄 Retrying webhook ${webhook.id} in ${delay}ms (attempt ${attempt + 1}/${webhook.maxRetries + 1})`);
+        this.logger?.info({ webhookId: webhook.id, delay, attempt: attempt + 1, maxRetries: webhook.maxRetries + 1 }, 'Retrying webhook');
         await this.sleep(delay);
       } else {
-        console.error(`💥 Webhook ${webhook.id} failed after ${webhook.maxRetries + 1} attempts`);
+        this.logger?.error({ webhookId: webhook.id, attempts: webhook.maxRetries + 1 }, 'Webhook failed after all attempts');
       }
     }
 

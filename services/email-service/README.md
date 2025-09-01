@@ -2,11 +2,11 @@
 
 A standalone service for processing and sending templated emails using the JetStream Service Wrapper pattern.
 
-## 🎯 **Purpose**
+## Purpose
 
 The Email Service processes email events from NATS streams and sends templated emails to recipients using React Email templates and various email providers (Mailgun, SendGrid, SMTP).
 
-## 🏗️ **Architecture**
+## Architecture
 
 This service follows the established pattern:
 - **Domain Logic**: Lives in the service layer
@@ -15,7 +15,7 @@ This service follows the established pattern:
 - **Template Rendering**: Uses React Email for beautiful, responsive email templates
 - **Provider Integration**: Supports multiple email delivery providers
 
-## 📋 **Features**
+## Features
 
 - **Event-Driven Processing**: Consumes email events from NATS streams
 - **React Email Templates**: Modern, responsive email templates using React
@@ -26,15 +26,15 @@ This service follows the established pattern:
 - **Graceful Shutdown**: Proper resource cleanup and shutdown handling
 - **Retry Logic**: Configurable retry policies with DLQ support
 
-## 🚀 **Quick Start**
+## Quick Start
 
-### **Prerequisites**
+### Prerequisites
 - NATS server running
 - PostgreSQL database
 - Email provider credentials (Mailgun, SendGrid, or SMTP)
 - Node.js 18+ and pnpm
 
-### **Installation**
+### Installation
 ```bash
 # From root directory
 pnpm install
@@ -44,7 +44,7 @@ cd services/email-service
 pnpm run build
 ```
 
-### **Configuration**
+### Configuration
 Set environment variables:
 ```bash
 # Required
@@ -73,7 +73,7 @@ FROM_EMAIL="noreply@example.com"
 FROM_NAME="Example System"
 ```
 
-### **Running**
+### Running
 ```bash
 # Development mode
 pnpm run start:dev
@@ -82,9 +82,9 @@ pnpm run start:dev
 pnpm run start
 ```
 
-## ⚙️ **Configuration**
+## Configuration
 
-### **Service Configuration**
+### Service Configuration
 ```typescript
 import { EmailServiceConfig } from '@jetstream/email-service';
 
@@ -127,7 +127,7 @@ const config: EmailServiceConfig = {
 };
 ```
 
-### **Email Templates**
+### Email Templates
 Templates are React components that render to HTML and plain text:
 
 ```tsx
@@ -148,7 +148,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({ userName, userEmail 
 };
 ```
 
-### **Routing Rules**
+### Routing Rules
 Define how events map to templates:
 
 ```typescript
@@ -167,14 +167,14 @@ Define how events map to templates:
 }
 ```
 
-## 🗄️ **Database Integration**
+## Database Integration
 
 The service integrates with PostgreSQL for:
 - **User Lookup**: Finding recipients based on event type and tenant
 - **Delivery Logging**: Tracking email delivery status and results
 - **User Preferences**: Respecting email notification preferences
 
-### **Required Tables**
+### Required Tables
 ```sql
 -- Users table (already exists in your schema)
 CREATE TABLE "User" (
@@ -192,9 +192,9 @@ CREATE TABLE "Membership" (
 );
 ```
 
-## 📡 **Email Providers**
+## Email Providers
 
-### **Mailgun**
+### Mailgun
 ```typescript
 emailProvider: {
   type: 'mailgun',
@@ -203,7 +203,7 @@ emailProvider: {
 }
 ```
 
-### **SendGrid**
+### SendGrid
 ```typescript
 emailProvider: {
   type: 'sendgrid',
@@ -211,7 +211,7 @@ emailProvider: {
 }
 ```
 
-### **SMTP**
+### SMTP
 ```typescript
 emailProvider: {
   type: 'smtp',
@@ -225,13 +225,13 @@ emailProvider: {
 }
 ```
 
-## 📊 **Monitoring & Health**
+## Monitoring & Health
 
-### **Health Endpoints**
+### Health Endpoints
 - **Health Check**: `http://localhost:8080/health`
 - **Metrics**: `http://localhost:9090/metrics`
 
-### **Key Metrics**
+### Key Metrics
 - `email_service_messages_total`: Total email events processed
 - `email_service_processing_duration_seconds`: Processing latency
 - `email_service_errors_total`: Error count
@@ -239,29 +239,29 @@ emailProvider: {
 - `email_service_emails_sent_total`: Total emails sent
 - `email_service_emails_failed_total`: Total failed emails
 
-## 🔧 **Development**
+## Development
 
-### **Building**
+### Building
 ```bash
 pnpm run build
 ```
 
-### **Development Mode**
+### Development Mode
 ```bash
 pnpm run dev
 ```
 
-### **Testing**
+### Testing
 ```bash
 pnpm run test
 ```
 
-### **Clean Build**
+### Clean Build
 ```bash
 pnpm run clean && pnpm run build
 ```
 
-## 🚨 **Error Handling**
+## Error Handling
 
 The service includes comprehensive error handling:
 - **Retry Logic**: Configurable retry policies with exponential backoff
@@ -270,7 +270,7 @@ The service includes comprehensive error handling:
 - **Health Checks**: Service health monitoring and degradation detection
 - **Provider Fallbacks**: Automatic fallback between email providers
 
-## 🔄 **Event Flow**
+## Event Flow
 
 1. **Email Event**: Application publishes email event to NATS stream
 2. **Consumption**: Service consumes event from stream
@@ -281,9 +281,9 @@ The service includes comprehensive error handling:
 7. **Logging**: Delivery result logged to database
 8. **Metrics**: Processing metrics and health status updated
 
-## 📚 **API Reference**
+## API Reference
 
-### **EmailService Class**
+### EmailService Class
 ```typescript
 class EmailService {
   async start(): Promise<void>           // Start the service
@@ -293,20 +293,20 @@ class EmailService {
 }
 ```
 
-### **EmailServiceFactory**
+### EmailServiceFactory
 ```typescript
 class EmailServiceFactory {
   static createService(config: EmailServiceConfig): EmailService
 }
 ```
 
-## 🔗 **Related Packages**
+## Related Packages
 
 - **`@jetstream/service-wrapper`**: Infrastructure and service management
 - **`@jetstream/email-consumer`**: Email event processing logic
 - **`@db/base`**: Database schema and client
 
-## 📝 **Examples**
+## Examples
 
 See `src/example-config.ts` for complete configuration examples including:
 - Development configuration
@@ -315,9 +315,9 @@ See `src/example-config.ts` for complete configuration examples including:
 - Email provider setup
 - Template configuration
 
-## 🚀 **Deployment**
+## Deployment
 
-### **Docker**
+### Docker
 ```dockerfile
 FROM node:18-alpine
 WORKDIR /app

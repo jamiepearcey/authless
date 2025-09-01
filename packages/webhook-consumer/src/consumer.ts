@@ -15,10 +15,13 @@ import { WebhookDeliveryService } from './webhook-delivery';
  * with retry logic, concurrency control, and delivery tracking.
  */
 export class WebhookConsumer implements IWebhookConsumer, JetStreamService {
-  private readonly deliveryService = new WebhookDeliveryService();
+  private readonly deliveryService: WebhookDeliveryService;
+  private readonly logger?: WebhookConsumerConfig['logger'];
 
   constructor(private readonly config: WebhookConsumerConfig) {
     this.validateConfig();
+    this.logger = config.logger;
+    this.deliveryService = new WebhookDeliveryService(config.logger);
   }
 
   /**
@@ -35,19 +38,19 @@ export class WebhookConsumer implements IWebhookConsumer, JetStreamService {
    */
   hooks = {
     beforeStart: async () => {
-      console.log('🚀 Initializing Webhook Consumer...');
+      this.logger?.info({}, 'Initializing Webhook Consumer...');
     },
 
     afterStop: async () => {
-      console.log('✅ Webhook Consumer stopped');
+      this.logger?.info({}, 'Webhook Consumer stopped');
     },
 
     onError: async (err: unknown, ctx: ProcessingContext) => {
-      console.error('❌ Webhook Consumer error:', {
+      this.logger?.error({
         error: err instanceof Error ? err.message : String(err),
         context: ctx,
         timestamp: new Date().toISOString()
-      });
+      }, 'Webhook Consumer error');
     }
   };
 
@@ -57,12 +60,12 @@ export class WebhookConsumer implements IWebhookConsumer, JetStreamService {
    */
   processMessage = async (data: unknown, ctx: ProcessingContext): Promise<void> => {
     try {
-      console.log(`📨 Processing webhook message: ${ctx.subject} (seq: ${ctx.sequence})`);
+      this.logger?.info({ subject: ctx.subject, sequence: ctx.sequence }, 'Processing webhook message');
 
       // Parse the event
       const event = EventSchema.parse(data);
 
-      console.log(`🎯 Processing event: ${event.eventName} for tenant: ${event.tenantId || 'system'}`);
+      this.logger?.info({ eventName: event.eventName, tenantId: event.tenantId || 'system' }, 'Processing event');
 
       // Get webhook endpoints that should receive this event
       const webhooks = await this.config.database.getWebhookEndpoints(
@@ -71,11 +74,11 @@ export class WebhookConsumer implements IWebhookConsumer, JetStreamService {
       );
 
       if (webhooks.length === 0) {
-        console.log(`📭 No webhooks configured for event ${event.eventName}`);
+        this.logger?.info({ eventName: event.eventName }, 'No webhooks configured for event');
         return;
       }
 
-      console.log(`🎣 Found ${webhooks.length} webhooks for event ${event.eventName}`);
+      this.logger?.info({ webhooksCount: webhooks.length, eventName: event.eventName }, 'Found webhooks for event');
 
       // Process webhooks concurrently
       const deliveryPromises = webhooks.map(webhook =>
@@ -84,10 +87,10 @@ export class WebhookConsumer implements IWebhookConsumer, JetStreamService {
 
       await Promise.allSettled(deliveryPromises);
 
-      console.log(`✅ Message processed: ${ctx.subject} (seq: ${ctx.sequence})`);
+      this.logger?.info({ subject: ctx.subject, sequence: ctx.sequence }, 'Message processed');
 
     } catch (error) {
-      console.error(`❌ Failed to process message: ${ctx.subject}`, error);
+      this.logger?.error({ subject: ctx.subject, error }, 'Failed to process message');
       throw error; // Re-throw to trigger retry logic
     }
   };
@@ -98,7 +101,7 @@ export class WebhookConsumer implements IWebhookConsumer, JetStreamService {
    */
   private async processWebhook(event: Event, webhook: WebhookEndpoint): Promise<void> {
     try {
-      console.log(`🔗 Processing webhook ${webhook.name} (${webhook.id}) for event ${event.eventName}`);
+      this.logger?.info({ webhookName: webhook.name, webhookId: webhook.id, eventName: event.eventName }, 'Processing webhook');
 
       // Deliver webhook with retries
       const results = await this.deliveryService.deliverWithRetry(event, webhook);
@@ -110,13 +113,13 @@ export class WebhookConsumer implements IWebhookConsumer, JetStreamService {
 
       const finalResult = results[results.length - 1];
       if (finalResult.success) {
-        console.log(`✅ Webhook ${webhook.name} delivered successfully`);
+        this.logger?.info({ webhookName: webhook.name }, 'Webhook delivered successfully');
       } else {
-        console.error(`💥 Webhook ${webhook.name} failed after all retries: ${finalResult.error}`);
+        this.logger?.error({ webhookName: webhook.name, error: finalResult.error }, 'Webhook failed after all retries');
       }
 
     } catch (error) {
-      console.error(`❌ Error processing webhook ${webhook.name}:`, error);
+      this.logger?.error({ webhookName: webhook.name, error }, 'Error processing webhook');
       
       // Log the failure
       await this.config.database.logDelivery({

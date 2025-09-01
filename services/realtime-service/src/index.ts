@@ -100,11 +100,11 @@ export class RealtimeService {
         baseMs: 1000,
         jitterMs: 250,
         toDlq: async (msg: any) => {
-          console.warn('Message sent to DLQ', { 
+          this.logger.warn({ 
             sequence: msg.seq,
             subject: msg.subject,
             redeliveryCount: msg.info?.redeliveryCount || 0
-          });
+          }, 'Message sent to DLQ');
           msg.term();
         },
       },
@@ -133,6 +133,9 @@ export class RealtimeService {
         ],
       },
     });
+
+    // Get logger from wrapper
+    this.logger = this.wrapper.getLogger();
   }
 
   private createJetStreamService(): JetStreamService {
@@ -142,22 +145,22 @@ export class RealtimeService {
           // Connect to database
           await this.db.connect();
           
-          console.log(`${this.config.serviceName} initialized`);
+          this.logger.info(`${this.config.serviceName} initialized`);
         },
         
         afterStop: async () => {
           // Cleanup resources
           await this.db.end();
-          console.log(`${this.config.serviceName} stopped`);
+          this.logger.info(`${this.config.serviceName} stopped`);
         },
         
         onError: async (err: unknown, ctx: ProcessingContext) => {
           // Structured logging for errors
-          console.error(`${this.config.serviceName} error`, { 
+          this.logger.error({ 
             error: err, 
             context: ctx,
             timestamp: new Date().toISOString()
-          });
+          }, `${this.config.serviceName} error`);
         },
       },
 
@@ -200,7 +203,7 @@ export class RealtimeService {
           }
 
           // Log successful processing
-          console.log('Event processed successfully', {
+          this.logger.info('Event processed successfully', {
             messageId: ctx.messageId,
             eventName: event.eventName,
             subject: ctx.subject,
@@ -208,7 +211,7 @@ export class RealtimeService {
           });
 
         } catch (error) {
-          console.error('Error processing message', {
+          this.logger.error('Error processing message', {
             messageId: ctx.messageId,
             error: error instanceof Error ? error.message : String(error),
             data: data
@@ -248,7 +251,7 @@ export class RealtimeService {
     const channels = this.channelRouter.routeEvent(event);
     
     if (channels.length === 0) {
-      console.warn('No channels found for event', { messageId: ctx.messageId, eventName: event.eventName });
+      this.logger.warn('No channels found for event', { messageId: ctx.messageId, eventName: event.eventName });
       return;
     }
 
@@ -270,20 +273,20 @@ export class RealtimeService {
         });
         
         if (result.success) {
-          console.log('Event published to channel', { 
+          this.logger.info('Event published to channel', { 
             channel, 
             messageId: ctx.messageId,
             eventName: event.eventName
           });
         } else {
-          console.error('Failed to publish to channel', { 
+          this.logger.error('Failed to publish to channel', { 
             channel, 
             messageId: ctx.messageId,
             error: result.error
           });
         }
       } catch (error) {
-        console.error('Failed to publish to channel', { 
+        this.logger.error('Failed to publish to channel', { 
           channel, 
           messageId: ctx.messageId, 
           error: error instanceof Error ? error.message : String(error)
@@ -298,19 +301,19 @@ export class RealtimeService {
       const result = await this.centrifugoClient.publish(message.channel, message);
       
       if (result.success) {
-        console.log('Realtime message published to channel', { 
+        this.logger.info('Realtime message published to channel', { 
           channel: message.channel, 
           messageId: ctx.messageId 
         });
       } else {
-        console.error('Failed to publish realtime message', { 
+        this.logger.error('Failed to publish realtime message', { 
           channel: message.channel, 
           messageId: ctx.messageId, 
           error: result.error
         });
       }
     } catch (error) {
-      console.error('Failed to publish realtime message', { 
+      this.logger.error('Failed to publish realtime message', { 
         channel: message.channel, 
         messageId: ctx.messageId, 
         error: error instanceof Error ? error.message : String(error)
@@ -364,20 +367,20 @@ export class RealtimeService {
             });
             
             if (result.success) {
-              console.log('Notification published to channel', { 
+              this.logger.info('Notification published to channel', { 
                 channel, 
                 messageId: ctx.messageId,
                 notificationId: notification.id
               });
             } else {
-              console.error('Failed to publish notification to channel', { 
+              this.logger.error('Failed to publish notification to channel', { 
                 channel, 
                 messageId: ctx.messageId,
                 error: result.error
               });
             }
           } catch (error) {
-            console.error('Failed to publish notification to channel', { 
+            this.logger.error('Failed to publish notification to channel', { 
               channel, 
               messageId: ctx.messageId, 
               error: error instanceof Error ? error.message : String(error)
@@ -385,14 +388,14 @@ export class RealtimeService {
           }
         }
       } else {
-        console.warn('No channels found for notification', { 
+        this.logger.warn('No channels found for notification', { 
           messageId: ctx.messageId,
           notificationId: notification.id
         });
       }
       
     } catch (error) {
-      console.error('Failed to route notification', { 
+      this.logger.error('Failed to route notification', { 
         messageId: ctx.messageId,
         notificationId: notification.id,
         error: error instanceof Error ? error.message : String(error)
