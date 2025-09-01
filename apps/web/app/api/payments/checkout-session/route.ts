@@ -3,14 +3,10 @@ import { getServerSession } from 'next-auth';
 import { StripeServerClient } from '@stripe/integration/server';
 import { z } from 'zod';
 
-const CreateCustomerSchema = z.object({
-  email: z.string().email(),
-  name: z.string().optional(),
-  phone: z.string().optional(),
-  metadata: z.record(z.string()).optional(),
+const CheckoutSessionQuerySchema = z.object({
+  session_id: z.string().min(1, 'Session ID is required'),
 });
 
-// Initialize Stripe client
 const getStripeClient = () => {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
@@ -27,9 +23,10 @@ const getStripeClient = () => {
   });
 };
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    // Check authentication
+    console.log('Checkout session retrieval API called');
+    
     const session = await getServerSession();
     if (!session?.user) {
       return NextResponse.json(
@@ -38,34 +35,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Parse request body
-    const body = await request.json();
-    const validatedData = CreateCustomerSchema.parse(body);
+    const url = new URL(request.url);
+    const sessionId = url.searchParams.get('session_id');
 
-    // Initialize Stripe client
+    if (!sessionId) {
+      return NextResponse.json(
+        { success: false, error: { message: 'Session ID is required' } },
+        { status: 400 }
+      );
+    }
+
+    const validatedData = CheckoutSessionQuerySchema.parse({ session_id: sessionId });
+
     const stripe = getStripeClient();
 
-    // Add user information to metadata
-    const metadata = {
-      userId: session.user.id,
-      source: 'web-app',
-      ...validatedData.metadata,
-    };
-
-    // Create customer
-    const result = await stripe.createCustomer({
-      email: validatedData.email,
-      name: validatedData.name,
-      phone: validatedData.phone,
-      metadata,
-    });
+    const result = await stripe.retrieveCheckoutSession(validatedData.session_id);
 
     if (!result.success) {
       return NextResponse.json(
         { 
           success: false, 
           error: { 
-            message: result.error?.message || 'Failed to create customer',
+            message: result.error?.message || 'Failed to retrieve checkout session',
             code: result.error?.code,
           } 
         },
@@ -73,20 +64,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log('Checkout session retrieved:', result.data?.id);
+
     return NextResponse.json({
       success: true,
-      customer: result.data,
+      session: {
+        id: result.data?.id,
+        status: result.data?.status,
+        amount_total: result.data?.amount_total,
+        currency: result.data?.currency,
+        customer_email: result.data?.customer_email,
+        payment_status: result.data?.payment_status,
+        created: result.data?.created,
+        metadata: result.data?.metadata,
+      },
     });
 
   } catch (error: any) {
-    console.error('Customer creation error:', error);
+    console.error('Checkout session retrieval error:', error);
 
     if (error.name === 'ZodError') {
       return NextResponse.json(
         { 
           success: false, 
           error: { 
-            message: 'Invalid request data',
+            message: 'Invalid request parameters',
             details: error.errors,
           } 
         },

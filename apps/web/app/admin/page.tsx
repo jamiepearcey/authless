@@ -11,7 +11,7 @@ import {
   Activity,
   AlertTriangle
 } from "lucide-react";
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+
 import { trpc } from "@/lib/trpc";
 
 interface DashboardStatProps {
@@ -73,15 +73,7 @@ export default function AdminDashboardPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center space-x-4 mb-4">
-          <BreadcrumbNavigation
-            items={[
-              { label: "Platform Admin", href: "/admin" },
-              { label: "Dashboard", current: true },
-            ]}
-            showHome={false}
-          />
-        </div>
+
         
         <div className="flex justify-between items-center">
           <div>

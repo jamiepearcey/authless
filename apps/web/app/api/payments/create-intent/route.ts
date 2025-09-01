@@ -14,11 +14,25 @@ const CreatePaymentIntentSchema = z.object({
 // Initialize Stripe client
 const getStripeClient = () => {
   const secretKey = process.env.STRIPE_SECRET_KEY;
-  const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+  const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY; // Fixed: Use correct env var
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  if (!secretKey || !publishableKey || !webhookSecret) {
-    throw new Error('Missing required Stripe environment variables');
+  console.log('Environment variables check:', {
+    hasSecretKey: !!secretKey,
+    hasPublishableKey: !!publishableKey,
+    hasWebhookSecret: !!webhookSecret,
+  });
+
+  if (!secretKey) {
+    throw new Error('STRIPE_SECRET_KEY environment variable is required');
+  }
+  
+  if (!publishableKey) {
+    throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY environment variable is required');
+  }
+  
+  if (!webhookSecret) {
+    throw new Error('STRIPE_WEBHOOK_SECRET environment variable is required');
   }
 
   return new StripeServerClient({
@@ -30,9 +44,14 @@ const getStripeClient = () => {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('Payment intent API called');
+    
     // Check authentication
     const session = await getServerSession();
+    console.log('Session check:', { hasUser: !!session?.user });
+    
     if (!session?.user) {
+      console.log('No authenticated user found');
       return NextResponse.json(
         { success: false, error: { message: 'Unauthorized' } },
         { status: 401 }
@@ -41,10 +60,14 @@ export async function POST(request: NextRequest) {
 
     // Parse request body
     const body = await request.json();
+    console.log('Request body:', { amount: body.amount, currency: body.currency });
+    
     const validatedData = CreatePaymentIntentSchema.parse(body);
+    console.log('Data validated successfully');
 
     // Initialize Stripe client
     const stripe = getStripeClient();
+    console.log('Stripe client initialized');
 
     // Add user information to metadata
     const metadata = {

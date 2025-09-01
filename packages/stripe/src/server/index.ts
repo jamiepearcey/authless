@@ -34,6 +34,45 @@ export class StripeServerClient {
     });
   }
 
+  // Checkout Sessions
+  async createCheckoutSession(params: {
+    line_items: Stripe.Checkout.SessionCreateParams.LineItem[];
+    mode: 'payment' | 'subscription' | 'setup';
+    success_url: string;
+    cancel_url: string;
+    customer_email?: string;
+    customer?: string;
+    metadata?: Record<string, string>;
+  }): Promise<StripeResponse<Stripe.Checkout.Session>> {
+    try {
+      const session = await this.stripe.checkout.sessions.create({
+        line_items: params.line_items,
+        mode: params.mode,
+        success_url: params.success_url,
+        cancel_url: params.cancel_url,
+        customer_email: params.customer_email,
+        customer: params.customer,
+        metadata: params.metadata,
+        payment_intent_data: {
+          metadata: params.metadata,
+        },
+      });
+
+      return { success: true, data: session };
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  async retrieveCheckoutSession(sessionId: string): Promise<StripeResponse<Stripe.Checkout.Session>> {
+    try {
+      const session = await this.stripe.checkout.sessions.retrieve(sessionId);
+      return { success: true, data: session };
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
   // Payment Intents
   async createPaymentIntent(input: CreatePaymentIntentInput): Promise<StripeResponse<Stripe.PaymentIntent>> {
     try {

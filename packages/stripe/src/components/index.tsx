@@ -29,10 +29,14 @@ export const StripeProvider: React.FC<StripeProviderProps> = ({
   appearance 
 }) => {
   const { stripe, client, isLoading, error } = useStripe(publishableKey);
-  const { elements } = useStripeElements(stripe, { 
+  
+  // Memoize options to prevent infinite loops
+  const elementsOptions = React.useMemo(() => ({
     appearance,
     clientSecret: undefined, // Will be set when creating payment intent
-  });
+  }), [appearance]);
+  
+  const { elements } = useStripeElements(stripe, elementsOptions);
 
   if (isLoading) {
     return <div>Loading Stripe...</div>;
@@ -437,6 +441,12 @@ export const StripeUtilities = {
   formatCurrency,
   validateAmount,
 };
+
+// Export real Stripe Elements form
+export { StripeElementsForm } from './StripeElementsForm';
+
+// Export error boundary
+export { StripeErrorBoundary } from './ErrorBoundary';
 
 // Export all hooks
 export * from '../hooks';

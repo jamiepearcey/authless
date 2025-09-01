@@ -29,7 +29,7 @@ interface HighlighterProps {
   /** === Defer options (choose any one or combine) === */
 
   /** Fixed delay before highlighting (ms) */
-  startAfterMs?: number;
+   k?: number;
 
   /**
    * External gate: highlight when this becomes true

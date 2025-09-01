@@ -17,7 +17,7 @@ import {
   Eye,
   Reply
 } from "lucide-react";
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 
@@ -88,15 +88,7 @@ export default function AdminSupportPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center space-x-4 mb-4">
-          <BreadcrumbNavigation
-            items={[
-              { label: "Platform Admin", href: "/admin" },
-              { label: "Support Management", current: true },
-            ]}
-            showHome={false}
-          />
-        </div>
+
         
         <div className="flex justify-between items-center">
           <div>

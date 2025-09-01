@@ -13,10 +13,16 @@ import {
   ArrowRight,
   DollarSign,
   TrendingUp,
-  Zap
+  Zap,
+  CreditCard,
+  Loader2
 } from "lucide-react";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useLeadTracking } from "@/hooks/useLeadTracking";
+import { StripeElementsForm } from '@stripe/integration/components';
 
 const PricingCard = ({ 
   title, 
@@ -28,7 +34,9 @@ const PricingCard = ({
   buttonText,
   buttonLink,
   delay = 0,
-  icon: Icon
+  icon: Icon,
+  priceAmount,
+  isPaymentEnabled = false
 }: {
   title: string;
   price: string;
@@ -40,9 +48,51 @@ const PricingCard = ({
   buttonLink: string;
   delay?: number;
   icon: any;
+  priceAmount?: number; // Price in pence
+  isPaymentEnabled?: boolean;
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { trackPlanSelection } = useLeadTracking();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [guestEmail, setGuestEmail] = useState('');
+  const [guestName, setGuestName] = useState('');
+  const [showGuestForm, setShowGuestForm] = useState(false);
+  const [showElementsForm, setShowElementsForm] = useState(false);
+
+  const handlePayment = async () => {
+    // Track plan selection
+    await trackPlanSelection(title, {
+      price: price,
+      amount: priceAmount?.toString() || '0'
+    });
+
+    if (!isPaymentEnabled || !priceAmount) {
+      // Fallback to link navigation
+      router.push(buttonLink);
+      return;
+    }
+
+    // Always redirect to dedicated checkout page with plan details
+    const planData = {
+      title,
+      price,
+      description,
+      priceAmount,
+      features,
+    };
+    
+    // Store plan data in sessionStorage for the checkout page
+    sessionStorage.setItem('selectedPlan', JSON.stringify(planData));
+    
+    // Redirect to checkout page
+    router.push('/checkout');
+  };
+
+
+
 
   return (
     <motion.div
@@ -147,7 +197,8 @@ const PricingCard = ({
           transition={{ type: "spring", stiffness: 500, damping: 25 }}
         >
           <Button 
-            asChild 
+            onClick={handlePayment}
+            disabled={isProcessing}
             size="lg" 
             className={`w-full text-lg py-4 rounded-xl transition-all duration-300 ${
               highlight
@@ -155,12 +206,25 @@ const PricingCard = ({
                 : "bg-gray-900 hover:bg-gray-800 text-white"
             }`}
           >
-            <Link href={buttonLink}>
-              {buttonText}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+            {isProcessing ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Processing...
+              </>
+            ) : isPaymentEnabled && priceAmount ? (
+              <>
+                <CreditCard className="mr-2 h-5 w-5" />
+                {buttonText}
+              </>
+            ) : (
+              <>
+                {buttonText}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </>
+            )}
           </Button>
         </motion.div>
+
       </motion.div>
     </motion.div>
   );
@@ -279,6 +343,12 @@ const ComparisonTable = () => {
 
 export default function PricingPage() {
   const heroRef = useRef(null);
+  const { trackPageVisit } = useLeadTracking();
+
+  useEffect(() => {
+    // Track page visit
+    trackPageVisit({ page: 'pricing' });
+  }, [trackPageVisit]);
 
   return (
     <div className="min-h-screen">
@@ -439,14 +509,12 @@ export default function PricingPage() {
             <PricingCard
               icon={Crown}
               title="Commercial"
-              price="£399"
+              price="£299"
               description="Perpetual license + 12mo updates & priority support"
               features={[
                 "Everything in Free (Maker)",
                 "No attribution required",
-                "Advanced flags (%, variants, staged)",
                 "Per-tenant SSO presets",
-                "SCIM starter + white-label packs",
                 "Observability dashboards",
                 "Backup/restore UI",
                 "Premium n8n packs (WhatsApp/SMS)",
@@ -456,8 +524,10 @@ export default function PricingPage() {
                 "Maintenance: £120/year after"
               ]}
               highlight={true}
-              buttonText="Get Commercial (£299 Special)"
+              buttonText="Get License - £299"
               buttonLink="/contact"
+              priceAmount={29900} // £299 in pence
+              isPaymentEnabled={true}
               delay={0.1}
             />
 
@@ -480,6 +550,8 @@ export default function PricingPage() {
               ]}
               buttonText="Perfect for Agencies"
               buttonLink="/contact"
+              priceAmount={99900} // £999 in pence
+              isPaymentEnabled={true}
               delay={0.15}
             />
 

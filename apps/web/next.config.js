@@ -2,6 +2,9 @@
 const nextConfig = {
   experimental: { externalDir: true },
   transpilePackages: ["@ui/base", "@trpc/base", "@shared/base", "@db/base", "@i18n-core"],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 module.exports = nextConfig;

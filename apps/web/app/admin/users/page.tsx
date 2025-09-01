@@ -21,7 +21,7 @@ import {
   MoreHorizontal
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -99,15 +99,7 @@ export default function AdminUsersPage() {
     <div className="flex-1 space-y-6 mb-8">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center space-x-4 mb-4">
-          <BreadcrumbNavigation
-            items={[
-              { label: "Platform Admin", href: "/admin" },
-              { label: "User Management", current: true },
-            ]}
-            showHome={false}
-          />
-        </div>
+
         
         <div className="flex justify-between items-center">
           <div>

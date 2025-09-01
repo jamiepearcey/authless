@@ -7,6 +7,7 @@ import { Button } from '@ui/base';
 import { Input } from '@ui/base';
 import { Label } from '@ui/base';
 import { Badge } from '@ui/base';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@ui/base';
 import { 
   CreditCard, 
   DollarSign, 
@@ -16,12 +17,16 @@ import {
   Receipt,
   User,
   Calendar,
+  ExternalLink,
+  Shield,
+  AlertCircle,
 } from 'lucide-react';
 import { 
   StripeProvider,
-  PaymentForm, 
   PaymentStatus,
   SubscriptionForm,
+  StripeElementsForm,
+  StripeErrorBoundary,
   useStripeCustomer,
   formatCurrency,
   type PaymentIntent,
@@ -32,10 +37,13 @@ const STRIPE_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ||
 export default function PaymentsPage() {
   const { data: session, status } = useSession();
   const [activeTab, setActiveTab] = useState<'payment' | 'subscription'>('payment');
+  const [paymentFlow, setPaymentFlow] = useState<'checkout' | 'elements'>('checkout');
   const [paymentAmount, setPaymentAmount] = useState(5000); // £50.00 in pence
   const [paymentDescription, setPaymentDescription] = useState('');
   const [completedPayment, setCompletedPayment] = useState<PaymentIntent | null>(null);
   const [selectedPlan, setSelectedPlan] = useState('');
+  const [isProcessingCheckout, setIsProcessingCheckout] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   // Mock plans for demonstration
   const plans = [
@@ -134,6 +142,47 @@ export default function PaymentsPage() {
     }
   };
 
+  const handleCheckoutPayment = async () => {
+    setIsProcessingCheckout(true);
+    setCheckoutError(null);
+
+    try {
+      const response = await fetch('/api/payments/create-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: paymentAmount,
+          currency: 'gbp',
+          product_name: 'Payment',
+          product_description: paymentDescription || undefined,
+          metadata: {
+            description: paymentDescription,
+            source: 'payments-page',
+            userId: session?.user?.id || '',
+          },
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        setCheckoutError(data.error?.message || 'Failed to create checkout session');
+      }
+    } catch (err: any) {
+      setCheckoutError(err.message || 'An error occurred');
+    } finally {
+      setIsProcessingCheckout(false);
+    }
+  };
+
+  const formatAmountForDisplay = (amount: number) => {
+    return formatCurrency(amount, 'gbp');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -216,21 +265,34 @@ export default function PaymentsPage() {
           </div>
         </div>
 
-        <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
+        {/* Error Messages */}
+        {checkoutError && (
+          <Card className="mb-6 border-red-200 bg-red-50">
+            <CardContent className="p-4">
+              <div className="flex items-center">
+                <AlertCircle className="h-5 w-5 text-red-600 mr-2" />
+                <span className="text-red-800">{checkoutError}</span>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        <StripeErrorBoundary>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
             {/* Payment/Subscription Form */}
             <div>
               {activeTab === 'payment' && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>One-time Payment</CardTitle>
-                    <CardDescription>
-                      Make a secure one-time payment
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4 mb-6">
+                <div className="space-y-6">
+                  {/* Payment Amount Configuration */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Payment Details</CardTitle>
+                      <CardDescription>
+                        Configure your payment amount and description
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
                       <div>
                         <Label htmlFor="amount">Amount (pence)</Label>
                         <Input
@@ -242,7 +304,7 @@ export default function PaymentsPage() {
                           max="99999999"
                         />
                         <p className="text-sm text-gray-600 mt-1">
-                          Amount: {formatCurrency(paymentAmount, 'gbp')}
+                          Amount: {formatAmountForDisplay(paymentAmount)}
                         </p>
                       </div>
                       <div>
@@ -254,29 +316,108 @@ export default function PaymentsPage() {
                           placeholder="Payment description"
                         />
                       </div>
-                    </div>
-                    
-                    <PaymentForm
-                      amount={paymentAmount}
-                      currency="gbp"
-                      customerId={customer?.id}
-                      description={paymentDescription || undefined}
-                      metadata={{
-                        source: 'payments-page',
-                        userId: session?.user?.id || '',
-                      }}
-                      onSuccess={handlePaymentSuccess}
-                      onError={handlePaymentError}
-                      submitButtonText={`Pay ${formatCurrency(paymentAmount, 'gbp')}`}
-                    />
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+
+                  {/* Payment Flow Selection */}
+                  <Tabs value={paymentFlow} onValueChange={(value) => setPaymentFlow(value as 'checkout' | 'elements')}>
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="checkout" className="flex items-center space-x-2">
+                        <ExternalLink className="h-4 w-4" />
+                        <span>Stripe Checkout</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="elements" className="flex items-center space-x-2">
+                        <CreditCard className="h-4 w-4" />
+                        <span>Payment Form</span>
+                      </TabsTrigger>
+                    </TabsList>
+
+                    {/* Stripe Checkout Flow */}
+                    <TabsContent value="checkout">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center">
+                            <ExternalLink className="h-5 w-5 mr-2" />
+                            Stripe Checkout (Redirect)
+                          </CardTitle>
+                          <CardDescription>
+                            Redirect to Stripe's secure checkout page to complete payment
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div className="flex items-start">
+                              <Shield className="h-5 w-5 text-blue-600 mt-0.5 mr-3" />
+                              <div>
+                                <h3 className="font-semibold text-blue-900 mb-1">Secure & Trusted</h3>
+                                <p className="text-blue-800 text-sm">
+                                  Your payment is handled entirely by Stripe's PCI-compliant infrastructure.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <Button 
+                            onClick={handleCheckoutPayment}
+                            disabled={isProcessingCheckout || paymentAmount < 30}
+                            className="w-full"
+                            size="lg"
+                          >
+                            {isProcessingCheckout ? (
+                              <>
+                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                Creating checkout session...
+                              </>
+                            ) : (
+                              <>
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                Pay {formatAmountForDisplay(paymentAmount)} with Stripe Checkout
+                              </>
+                            )}
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+
+                    {/* Stripe Elements Flow */}
+                    <TabsContent value="elements">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center">
+                            <CreditCard className="h-5 w-5 mr-2" />
+                            Payment Form (Elements)
+                          </CardTitle>
+                          <CardDescription>
+                            Enter payment information directly on this page
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <StripeElementsForm
+                            amount={paymentAmount}
+                            currency="gbp"
+                            description={paymentDescription || undefined}
+                            metadata={{
+                              source: 'payments-page',
+                              userId: session?.user?.id || '',
+                            }}
+                            onSuccess={handlePaymentSuccess}
+                            onError={handlePaymentError}
+                            onProcessing={() => {
+                              // Handle processing state if needed
+                            }}
+                          />
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  </Tabs>
+                </div>
               )}
 
               {activeTab === 'subscription' && (
-                <div className="space-y-6">
-                  {/* Plan Selection */}
-                  <Card>
+                <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
+                  <div className="space-y-6">
+                    {/* Plan Selection */}
+                    <Card>
                     <CardHeader>
                       <CardTitle>Choose a Plan</CardTitle>
                       <CardDescription>
@@ -367,7 +508,8 @@ export default function PaymentsPage() {
                       </CardContent>
                     </Card>
                   )}
-                </div>
+                  </div>
+                </StripeProvider>
               )}
             </div>
 
@@ -458,8 +600,8 @@ export default function PaymentsPage() {
                 </Card>
               </div>
             </div>
-          </div>
-        </StripeProvider>
+            </div>
+        </StripeErrorBoundary>
       </div>
     </div>
   );

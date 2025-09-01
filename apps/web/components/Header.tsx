@@ -4,7 +4,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useCallback } from "react";
 import Link from "next/link";
 import { Button, NotificationBell } from "@ui/base";
-import { Settings, User, LogOut, Shield, Building2 } from "lucide-react";
+import { Settings, User, LogOut, Shield, Building2, CreditCard } from "lucide-react";
 import TenantSwitcher from "./TenantSwitcher";
 import { navigationLinks } from "./links";
 import { trpc } from "@/lib/trpc";
@@ -200,10 +200,17 @@ export default function Header() {
                         <Settings className="h-4 w-4 mr-3 text-gray-400" />
                         Account Settings
                       </Link>
+                      <Link
+                        href="/payments/history"
+                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                      >
+                        <CreditCard className="h-4 w-4 mr-3 text-gray-400" />
+                        Payment History
+                      </Link>
                     </div>
                     
                     {/* Admin Functions */}
-                    {(session?.user as any)?.platformRole === 'admin' && (
+                    {false && (session?.user as any)?.platformRole === 'admin' && (
                       <>
                         <div className="border-t border-gray-100 my-1"></div>
                         <div className="px-4 py-2">

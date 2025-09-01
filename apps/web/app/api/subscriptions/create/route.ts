@@ -14,7 +14,7 @@ const CreateSubscriptionSchema = z.object({
 // Initialize Stripe client
 const getStripeClient = () => {
   const secretKey = process.env.STRIPE_SECRET_KEY;
-  const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+  const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!secretKey || !publishableKey || !webhookSecret) {
@@ -75,10 +75,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Extract client secret safely
+    let clientSecret: string | undefined;
+    if (result.data?.latest_invoice && typeof result.data.latest_invoice === 'object') {
+      const invoice = result.data.latest_invoice as any;
+      clientSecret = invoice?.payment_intent?.client_secret;
+    }
+
     return NextResponse.json({
       success: true,
       subscription: result.data,
-      clientSecret: result.data?.latest_invoice?.payment_intent?.client_secret,
+      clientSecret,
     });
 
   } catch (error: any) {

@@ -1,9 +1,8 @@
-import { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { TenantNavigation } from "@/components/TenantNavigation";
+import { TenantAdminSidebar } from "@/components/TenantAdminSidebar";
 
 interface TenantLayoutProps {
-  children: ReactNode;
+  children: React.ReactNode;
   params: {
     slug: string;
   };
@@ -20,26 +19,17 @@ export default async function TenantLayout({ children, params }: TenantLayoutPro
 
   return (
     <div className="flex-1 bg-gray-50">
-      {/* Tenant Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <h1 className="text-xl font-semibold text-gray-900">
-                {tenantSlug}
-              </h1>
-            </div>
-            
-            {/* Tenant Navigation */}
-            <TenantNavigation tenantSlug={tenantSlug} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
+          {/* Sidebar */}
+          <TenantAdminSidebar tenantSlug={tenantSlug} />
+          
+          {/* Main Content */}
+          <div className="lg:col-span-9">
+            {children}
           </div>
         </div>
       </div>
-
-      {/* Page Content */}
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        {children}
-      </main>
     </div>
   );
 }
