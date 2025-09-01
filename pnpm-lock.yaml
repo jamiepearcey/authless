@@ -899,6 +899,40 @@ importers:
         specifier: ^1.0.0
         version: 1.6.1(@types/node@20.19.11)(jsdom@26.1.0)
 
+  services/outbox-service:
+    dependencies:
+      '@outbox/processor':
+        specifier: workspace:*
+        version: link:../../packages/outbox-processor
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.6.1
+      lightship:
+        specifier: ^9.0.3
+        version: 9.0.3
+      pino:
+        specifier: ^8.17.2
+        version: 8.21.0
+      pino-pretty:
+        specifier: ^10.3.1
+        version: 10.3.1
+      prom-client:
+        specifier: ^15.1.3
+        version: 15.1.3
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.11
+      tsx:
+        specifier: ^4.0.0
+        version: 4.20.5
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.2
+      vitest:
+        specifier: ^1.0.0
+        version: 1.6.1(@types/node@20.19.11)(jsdom@26.1.0)
+
   services/realtime-service:
     dependencies:
       '@jetstream/realtime-consumer':

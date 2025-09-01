@@ -10,6 +10,7 @@
     "setup": "./scripts/setup.sh",
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "start:all": "turbo run dev --filter=@web/app --filter=email-service --filter=audit-service --filter=webhook-service --filter=realtime-service --filter=outbox-service",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "db:generate": "turbo run prisma:generate",

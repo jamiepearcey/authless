@@ -13,6 +13,12 @@ interface ProcessorConfig {
   batchSize?: number;
   maxTries?: number;
   idleSleepMs?: number;
+  logger?: {
+    info: (obj: any, msg?: string) => void;
+    error: (obj: any, msg?: string) => void;
+    warn: (obj: any, msg?: string) => void;
+    debug: (obj: any, msg?: string) => void;
+  };
 }
 
 interface OutboxEventRow {
@@ -37,9 +43,11 @@ export class OutboxProcessor {
   private isRunning = false;
   private shouldStop = false;
   private wakeupPromise: (() => void) | null = null;
+  private logger?: ProcessorConfig['logger'];
 
   constructor(private config: ProcessorConfig) {
     this.pg = new Client({ connectionString: config.databaseUrl });
+    this.logger = config.logger;
   }
 
   private backoff(tries: number): number {
@@ -63,40 +71,40 @@ export class OutboxProcessor {
   }
 
   async init(): Promise<void> {
-    console.log('🚀 Initializing Outbox Processor...');
+    this.logger?.info({}, 'Initializing Outbox Processor...');
     
     // Connect to PostgreSQL
     await this.pg.connect();
-    console.log('📊 Connected to PostgreSQL');
+    this.logger?.info({}, 'Connected to PostgreSQL');
 
     // Set up LISTEN/NOTIFY
     this.pg.on('notification', (msg: any) => {
       if (msg.channel === 'outbox_wakeup') {
-        console.log('⚡ Received outbox wakeup notification');
+        this.logger?.info({}, 'Received outbox wakeup notification');
         this.wakeup();
       }
     });
     
     await this.pg.query('LISTEN outbox_wakeup');
-    console.log('👂 Listening for outbox notifications');
+    this.logger?.info({}, 'Listening for outbox notifications');
 
     // Connect to NATS JetStream
     this.nats = await connect({ servers: this.config.natsUrl });
     this.js = this.nats.jetstream();
-    console.log('📡 Connected to NATS JetStream');
+    this.logger?.info({}, 'Connected to NATS JetStream');
 
-    console.log('✅ Outbox Processor initialized');
+    this.logger?.info({}, 'Outbox Processor initialized');
   }
 
   async start(): Promise<void> {
     if (this.isRunning) {
-      console.log('⚠️ Processor is already running');
+      this.logger?.info({}, 'Processor is already running');
       return;
     }
 
     this.isRunning = true;
     this.shouldStop = false;
-    console.log('🔄 Starting outbox processing loop...');
+    this.logger?.info({}, 'Starting outbox processing loop...');
 
     while (!this.shouldStop) {
       try {
@@ -107,18 +115,18 @@ export class OutboxProcessor {
           await this.waitForWakeup();
         }
       } catch (error) {
-        console.error('❌ Error in processing loop:', error);
+        this.logger?.error({ error }, 'Error in processing loop');
         // Short sleep to avoid tight loop on persistent errors
         await new Promise(r => setTimeout(r, 1000));
       }
     }
 
     this.isRunning = false;
-    console.log('⏹️ Outbox processor stopped');
+    this.logger?.info({}, 'Outbox processor stopped');
   }
 
   async stop(): Promise<void> {
-    console.log('🔄 Stopping outbox processor...');
+    this.logger?.info({}, 'Stopping outbox processor...');
     this.shouldStop = true;
     this.wakeup(); // Wake up if waiting
     
@@ -127,7 +135,7 @@ export class OutboxProcessor {
       await new Promise(r => setTimeout(r, 100));
     }
     
-    console.log('✅ Outbox processor stopped');
+    this.logger?.info({}, 'Outbox processor stopped');
   }
 
   private async processBatch(): Promise<number> {
@@ -157,7 +165,7 @@ export class OutboxProcessor {
       return 0;
     }
 
-    console.log(`📦 Processing batch of ${rows.length} events`);
+    this.logger?.info(`📦 Processing batch of ${rows.length} events`);
 
     let successCount = 0;
     let errorCount = 0;
@@ -171,7 +179,7 @@ export class OutboxProcessor {
       }
     }
 
-    console.log(`✅ Processed batch: ${successCount} success, ${errorCount} errors`);
+    this.logger?.info(`✅ Processed batch: ${successCount} success, ${errorCount} errors`);
     return rows.length;
   }
 
@@ -219,7 +227,7 @@ export class OutboxProcessor {
       );
 
       await this.pg.query('COMMIT');
-      console.log(`📤 Event ${event.id} (${event.eventType}) published successfully`);
+      this.logger?.info(`📤 Event ${event.id} (${event.eventType}) published successfully`);
       return true;
 
     } catch (error: any) {
@@ -240,7 +248,7 @@ export class OutboxProcessor {
       );
 
       if (newStatus === 'dead') {
-        console.error(`💀 Event ${event.id} marked as dead after ${tries} attempts: ${errorMessage}`);
+        this.logger?.error(`💀 Event ${event.id} marked as dead after ${tries} attempts: ${errorMessage}`);
       } else {
         console.warn(`⚠️ Event ${event.id} failed (attempt ${tries}/${maxTries}), will retry in ${delayMs}ms: ${errorMessage}`);
       }
@@ -254,7 +262,7 @@ export class OutboxProcessor {
   }
 
   async close(): Promise<void> {
-    console.log('🔄 Closing Outbox Processor...');
+    this.logger?.info({}, 'Closing Outbox Processor...');
     
     await this.stop();
     
@@ -266,7 +274,7 @@ export class OutboxProcessor {
       await this.pg.end();
     }
     
-    console.log('✅ Outbox Processor closed');
+    this.logger?.info({}, 'Outbox Processor closed');
   }
 
   async getStats() {
@@ -306,7 +314,7 @@ async function main() {
   };
 
   if (!config.databaseUrl) {
-    console.error('❌ DATABASE_URL environment variable is required');
+    console.error('DATABASE_URL environment variable is required');
     process.exit(1);
   }
 
@@ -326,7 +334,7 @@ async function main() {
     await processor.init();
     await processor.start();
   } catch (error) {
-    console.error('❌ Failed to start outbox processor:', error);
+    console.error('Failed to start outbox processor:', error);
     await processor.close();
     process.exit(1);
   }
