@@ -1,0 +1,425 @@
+import { JetStreamServiceWrapper, type JetStreamService, type ProcessingContext } from '@jetstream/service-wrapper';
+import { Client as PG } from 'pg';
+import type { Event, RealtimeMessage, NotificationEvent, ChannelConfig } from '@jetstream/realtime-consumer';
+import { CentrifugoClient } from '@jetstream/realtime-consumer';
+import { ChannelRouter } from '@jetstream/realtime-consumer';
+
+// ============================================================================
+// Configuration Interfaces
+// ============================================================================
+
+export interface RealtimeServiceConfig {
+  // Service identity
+  serviceName: string;
+  version: string;
+  
+  // NATS configuration
+  natsUrl: string;
+  streamName: string;
+  consumerName: string;
+  
+  // Database configuration
+  databaseUrl: string;
+  
+  // Centrifugo configuration
+  centrifugoUrl: string;
+  centrifugoApiKey: string;
+  
+  // Channel routing configuration
+  channels: ChannelConfig[];
+  
+  // Processing configuration
+  concurrency?: number;
+  batchSize?: number;
+  ackWaitMs?: number;
+  maxRetries?: number;
+  
+  // Health and metrics
+  port?: number;
+  metricsPort?: number;
+  healthCheckIntervalMs?: number;
+  
+  // Custom routing rules
+  customRoutingRules?: Array<{
+    eventPattern: string;
+    channelTemplate: string;
+    condition?: (event: Event) => boolean;
+  }>;
+  
+  // Custom event handlers
+  eventHandlers?: {
+    [eventName: string]: (event: Event, ctx: ProcessingContext) => Promise<void>;
+  };
+}
+
+export interface RealtimeServiceFactory {
+  createService(config: RealtimeServiceConfig): RealtimeService;
+}
+
+// ============================================================================
+// Main Service Implementation
+// ============================================================================
+
+export class RealtimeService {
+  private wrapper: JetStreamServiceWrapper;
+  private db: PG;
+  private centrifugoClient: CentrifugoClient;
+  private channelRouter: ChannelRouter;
+  private config: RealtimeServiceConfig;
+
+  constructor(config: RealtimeServiceConfig) {
+    this.config = config;
+    
+    // Initialize database connection
+    this.db = new PG({ connectionString: config.databaseUrl });
+    
+    // Initialize Centrifugo client
+    this.centrifugoClient = new CentrifugoClient({
+      apiUrl: config.centrifugoUrl,
+      apiKey: config.centrifugoApiKey,
+      timeout: 5000,
+    });
+    
+    // Initialize channel router with custom configuration
+    this.channelRouter = new ChannelRouter(config.channels);
+    
+    // Create the JetStream service wrapper
+    this.wrapper = new JetStreamServiceWrapper(this.createJetStreamService(), {
+      serviceName: config.serviceName,
+      version: config.version,
+      natsUrl: config.natsUrl,
+      streamName: config.streamName,
+      consumerName: config.consumerName,
+      concurrency: config.concurrency || 8,
+      ackWaitMs: config.ackWaitMs || 30000,
+      batchSize: config.batchSize || 100,
+      
+      retryPolicy: {
+        maxRetries: config.maxRetries || 10,
+        baseMs: 1000,
+        jitterMs: 250,
+        toDlq: async (msg: any) => {
+          console.warn('Message sent to DLQ', { 
+            sequence: msg.seq,
+            subject: msg.subject,
+            redeliveryCount: msg.info?.redeliveryCount || 0
+          });
+          msg.term();
+        },
+      },
+      
+      lightshipPort: config.port || 8080,
+      
+      metrics: {
+        enabled: true,
+        prefix: `${config.serviceName}_`,
+        metricsPort: config.metricsPort || 9090,
+      },
+      
+      healthChecks: {
+        intervalMs: config.healthCheckIntervalMs || 10000,
+        checks: [
+          async () => {
+            await this.db.query('SELECT 1');
+          },
+          async () => {
+            // Check Centrifugo health
+            const stats = await this.centrifugoClient.getStats();
+            if (!stats) {
+              throw new Error('Centrifugo health check failed');
+            }
+          }
+        ],
+      },
+    });
+  }
+
+  private createJetStreamService(): JetStreamService {
+    return {
+      hooks: {
+        beforeStart: async () => {
+          // Connect to database
+          await this.db.connect();
+          
+          console.log(`${this.config.serviceName} initialized`);
+        },
+        
+        afterStop: async () => {
+          // Cleanup resources
+          await this.db.end();
+          console.log(`${this.config.serviceName} stopped`);
+        },
+        
+        onError: async (err: unknown, ctx: ProcessingContext) => {
+          // Structured logging for errors
+          console.error(`${this.config.serviceName} error`, { 
+            error: err, 
+            context: ctx,
+            timestamp: new Date().toISOString()
+          });
+        },
+      },
+
+      processMessage: async (data: unknown, ctx: ProcessingContext) => {
+        try {
+          // Parse and validate the incoming message
+          const event = data as Event;
+          
+          if (!event || !event.eventName) {
+            throw new Error('Invalid event format: missing eventName');
+          }
+
+          // Check for custom event handler first
+          if (this.config.eventHandlers?.[event.eventName]) {
+            await this.config.eventHandlers[event.eventName](event, ctx);
+            return;
+          }
+
+          // Route the event based on its type
+          switch (event.eventName) {
+            case 'realtime_message':
+              if (this.isRealtimeMessage(data)) {
+                await this.handleRealtimeMessage(data as RealtimeMessage, ctx);
+              } else {
+                await this.handleGenericEvent(event, ctx);
+              }
+              break;
+              
+            case 'notification':
+              if (this.isNotificationEvent(data)) {
+                await this.handleNotificationEvent(data as NotificationEvent, ctx);
+              } else {
+                await this.handleGenericEvent(event, ctx);
+              }
+              break;
+              
+            default:
+              // Use the existing channel router for other events
+              await this.handleGenericEvent(event, ctx);
+          }
+
+          // Log successful processing
+          console.log('Event processed successfully', {
+            messageId: ctx.messageId,
+            eventName: event.eventName,
+            subject: ctx.subject,
+            duration: Date.now() - ctx.processingStartTime
+          });
+
+        } catch (error) {
+          console.error('Error processing message', {
+            messageId: ctx.messageId,
+            error: error instanceof Error ? error.message : String(error),
+            data: data
+          });
+          throw error; // Re-throw to trigger retry logic
+        }
+      },
+
+      healthCheck: async () => {
+        // Check database connection
+        await this.db.query('SELECT 1');
+        
+        // Check Centrifugo connection
+        const stats = await this.centrifugoClient.getStats();
+        
+        return {
+          database: 'connected',
+          centrifugo: stats ? 'connected' : 'disconnected',
+          timestamp: new Date().toISOString()
+        };
+      }
+    };
+  }
+
+  // Type guards
+  private isRealtimeMessage(data: unknown): data is RealtimeMessage {
+    return typeof data === 'object' && data !== null && 'channel' in data && 'type' in data;
+  }
+
+  private isNotificationEvent(data: unknown): data is NotificationEvent {
+    return typeof data === 'object' && data !== null && 'recipientId' in data && 'title' in data;
+  }
+
+  // Event handlers
+  private async handleGenericEvent(event: Event, ctx: ProcessingContext) {
+    // Use the existing channel router to determine target channels
+    const channels = this.channelRouter.routeEvent(event);
+    
+    if (channels.length === 0) {
+      console.warn('No channels found for event', { messageId: ctx.messageId, eventName: event.eventName });
+      return;
+    }
+
+    // Publish to each channel
+    for (const channel of channels) {
+      try {
+        const result = await this.centrifugoClient.publish(channel, {
+          id: ctx.messageId,
+          type: 'event',
+          timestamp: new Date().toISOString(),
+          channel,
+          event: event.eventName,
+          data: event.payload,
+          metadata: {
+            tenantId: event.tenantId,
+            userId: event.createdBy,
+            origin: 'jetstream',
+          },
+        });
+        
+        if (result.success) {
+          console.log('Event published to channel', { 
+            channel, 
+            messageId: ctx.messageId,
+            eventName: event.eventName
+          });
+        } else {
+          console.error('Failed to publish to channel', { 
+            channel, 
+            messageId: ctx.messageId,
+            error: result.error
+          });
+        }
+      } catch (error) {
+        console.error('Failed to publish to channel', { 
+          channel, 
+          messageId: ctx.messageId, 
+          error: error instanceof Error ? error.message : String(error)
+        });
+        // Continue with other channels even if one fails
+      }
+    }
+  }
+
+  private async handleRealtimeMessage(message: RealtimeMessage, ctx: ProcessingContext) {
+    try {
+      const result = await this.centrifugoClient.publish(message.channel, message);
+      
+      if (result.success) {
+        console.log('Realtime message published to channel', { 
+          channel: message.channel, 
+          messageId: ctx.messageId 
+        });
+      } else {
+        console.error('Failed to publish realtime message', { 
+          channel: message.channel, 
+          messageId: ctx.messageId, 
+          error: result.error
+        });
+      }
+    } catch (error) {
+      console.error('Failed to publish realtime message', { 
+        channel: message.channel, 
+        messageId: ctx.messageId, 
+        error: error instanceof Error ? error.message : String(error)
+      });
+      throw error;
+    }
+  }
+
+  private async handleNotificationEvent(notification: NotificationEvent, ctx: ProcessingContext) {
+    try {
+      // Convert notification to Event format for the router
+      const eventForRouter: Event = {
+        created: notification.timestamp.toISOString(),
+        eventName: 'notification',
+        payload: {
+          id: notification.id,
+          title: notification.title,
+          priority: notification.priority,
+          data: notification.data,
+          recipientId: notification.recipientId,
+          tenantId: notification.tenantId,
+        },
+        tenantId: notification.tenantId,
+        createdBy: notification.recipientId,
+      };
+      
+      // Route notification through channel router
+      const channels = this.channelRouter.routeEvent(eventForRouter);
+      
+      if (channels.length > 0) {
+        // Publish to notification channels
+        for (const channel of channels) {
+          try {
+            const result = await this.centrifugoClient.publish(channel, {
+              id: ctx.messageId,
+              type: 'notification',
+              timestamp: new Date().toISOString(),
+              channel,
+              event: 'notification',
+              data: {
+                id: notification.id,
+                title: notification.title,
+                priority: notification.priority,
+                data: notification.data,
+              },
+              metadata: {
+                tenantId: notification.tenantId,
+                userId: notification.recipientId,
+                origin: 'jetstream',
+              },
+            });
+            
+            if (result.success) {
+              console.log('Notification published to channel', { 
+                channel, 
+                messageId: ctx.messageId,
+                notificationId: notification.id
+              });
+            } else {
+              console.error('Failed to publish notification to channel', { 
+                channel, 
+                messageId: ctx.messageId,
+                error: result.error
+              });
+            }
+          } catch (error) {
+            console.error('Failed to publish notification to channel', { 
+              channel, 
+              messageId: ctx.messageId, 
+              error: error instanceof Error ? error.message : String(error)
+            });
+          }
+        }
+      } else {
+        console.warn('No channels found for notification', { 
+          messageId: ctx.messageId,
+          notificationId: notification.id
+        });
+      }
+      
+    } catch (error) {
+      console.error('Failed to route notification', { 
+        messageId: ctx.messageId,
+        notificationId: notification.id,
+        error: error instanceof Error ? error.message : String(error)
+      });
+      throw error;
+    }
+  }
+
+  // Public API
+  async start(): Promise<void> {
+    await this.wrapper.start();
+  }
+
+  async stop(): Promise<void> {
+    await this.wrapper.stop();
+  }
+
+  isRunning(): boolean {
+    return this.wrapper.isRunning();
+  }
+
+  async getMetrics(): Promise<string> {
+    return this.wrapper.getPrometheusMetrics();
+  }
+}
+
+// ============================================================================
+// Default Export
+// ============================================================================
+
+export default RealtimeService;

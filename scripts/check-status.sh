@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🔍 Checking Beat the Fine London Status..."
+echo "🔍 Checking Authless London Status..."
 echo ""
 
 # Check Docker/OrbStack

@@ -558,6 +558,7 @@ exports.Prisma.TwoFactorAuditScalarFieldEnum = {
 exports.Prisma.SupportCaseScalarFieldEnum = {
   id: 'id',
   contactMessageId: 'contactMessageId',
+  caseNumberSeq: 'caseNumberSeq',
   caseNumber: 'caseNumber',
   title: 'title',
   description: 'description',
@@ -661,6 +662,54 @@ exports.Prisma.TenantSupportRoutingScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.OutboxEventScalarFieldEnum = {
+  id: 'id',
+  eventType: 'eventType',
+  aggregateType: 'aggregateType',
+  aggregateId: 'aggregateId',
+  tenantId: 'tenantId',
+  payloadJson: 'payloadJson',
+  idempotencyKey: 'idempotencyKey',
+  status: 'status',
+  tries: 'tries',
+  nextAttemptAt: 'nextAttemptAt',
+  createdAt: 'createdAt',
+  lastError: 'lastError'
+};
+
+exports.Prisma.AuditEventScalarFieldEnum = {
+  id: 'id',
+  eventType: 'eventType',
+  eventName: 'eventName',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  aggregateType: 'aggregateType',
+  aggregateId: 'aggregateId',
+  timestamp: 'timestamp',
+  sourceService: 'sourceService',
+  sourceVersion: 'sourceVersion',
+  sourceHost: 'sourceHost',
+  requestId: 'requestId',
+  correlationId: 'correlationId',
+  actorType: 'actorType',
+  actorId: 'actorId',
+  actorName: 'actorName',
+  actorEmail: 'actorEmail',
+  actorIpAddress: 'actorIpAddress',
+  actorUserAgent: 'actorUserAgent',
+  resourceType: 'resourceType',
+  resourceId: 'resourceId',
+  resourceName: 'resourceName',
+  resourceAttributes: 'resourceAttributes',
+  actionType: 'actionType',
+  actionDescription: 'actionDescription',
+  actionOutcome: 'actionOutcome',
+  actionReason: 'actionReason',
+  metadata: 'metadata',
+  originalPayload: 'originalPayload',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -727,7 +776,9 @@ exports.Prisma.ModelName = {
   CaseStatusHistory: 'CaseStatusHistory',
   CaseMetrics: 'CaseMetrics',
   SupportConfiguration: 'SupportConfiguration',
-  TenantSupportRouting: 'TenantSupportRouting'
+  TenantSupportRouting: 'TenantSupportRouting',
+  OutboxEvent: 'OutboxEvent',
+  AuditEvent: 'AuditEvent'
 };
 
 /**

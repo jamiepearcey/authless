@@ -173,7 +173,7 @@ const Terms = () => {
             <CardContent className="space-y-4">
               <p className="text-gray-700">
                 {t(`The content, features, and functionality of our service are
-                owned by Beat The Fine and are protected by copyright,
+                owned by Authless and are protected by copyright,
                 trademark, and other intellectual property laws. You may not
                 reproduce, distribute, or create derivative works without our
                 express written consent.

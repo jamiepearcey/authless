@@ -1,0 +1,35 @@
+{
+  "name": "@outbox/processor",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx --watch src/processor.ts",
+    "start": "tsx src/processor.ts",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@db/base": "workspace:*",
+    "pg": "^8.11.0",
+    "nats": "^2.29.3"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.0",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

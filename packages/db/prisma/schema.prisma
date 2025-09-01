@@ -919,3 +919,77 @@ model TenantSupportRouting {
   @@index([helpType])
   @@index([isActive])
 }
+
+// Outbox events to be dispatched to the queue/bus
+model OutboxEvent {
+  id              BigInt    @id @default(autoincrement())
+  eventType       String    // e.g. 'support.case.created'
+  aggregateType   String    // e.g. 'support_case'
+  aggregateId     String
+  tenantId        String
+  payloadJson     Json
+  idempotencyKey  String?   @unique // hash or external id if available
+  status          String    @default("pending") // pending|processing|sent|failed|dead
+  tries           Int       @default(0)
+  nextAttemptAt   DateTime  @default(now())
+  createdAt       DateTime  @default(now())
+  lastError       String?
+
+  @@index([status, nextAttemptAt])
+  @@index([tenantId])
+  @@index([eventType])
+}
+
+// Audit events for compliance and monitoring
+model AuditEvent {
+  id              String    @id // Generated hash from original event
+  eventType       String    // Normalized audit category: auth, financial, support, etc.
+  eventName       String    // Original event type name
+  tenantId        String
+  userId          String?   // User associated with the event
+  aggregateType   String    // Original aggregate type
+  aggregateId     String    // Original aggregate ID
+  timestamp       DateTime  // When the original event occurred
+  
+  // Source information
+  sourceService   String    // Service that generated the event
+  sourceVersion   String?   // Version of the service
+  sourceHost      String?   // Host/instance identifier
+  requestId       String?   // Request correlation ID
+  correlationId   String?   // Business correlation ID
+  
+  // Actor information (who performed the action)
+  actorType       String?   // user, system, service
+  actorId         String?   // Actor identifier
+  actorName       String?   // Actor display name
+  actorEmail      String?   // Actor email (hashed for privacy)
+  actorIpAddress  String?   // Source IP address
+  actorUserAgent  String?   // User agent string
+  
+  // Resource information (what was affected)
+  resourceType    String?   // Type of resource
+  resourceId      String?   // Resource identifier
+  resourceName    String?   // Resource display name
+  resourceAttributes String? @db.Text // JSON string of resource attributes
+  
+  // Action information (what happened)
+  actionType      String    // Type of action performed
+  actionDescription String? // Human-readable description
+  actionOutcome   String    // success, failure, unknown
+  actionReason    String?   // Reason for failure or additional context
+  
+  // Metadata and payload
+  metadata        String?   @db.Text // JSON string of additional metadata
+  originalPayload String    @db.Text // JSON string of original event payload
+  
+  // Timestamps
+  createdAt       DateTime  @default(now()) // When audit record was created
+  
+  @@index([tenantId, timestamp])
+  @@index([eventType, timestamp])
+  @@index([userId, timestamp])
+  @@index([actorId, timestamp])
+  @@index([resourceType, resourceId])
+  @@index([actionOutcome, timestamp])
+  @@index([createdAt])
+}

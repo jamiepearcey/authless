@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Setup PostgreSQL for Beat the Fine London
-echo "🐘 Setting up PostgreSQL for Beat the Fine London..."
+# Setup PostgreSQL for Authless London
+echo "🐘 Setting up PostgreSQL for Authless London..."
 
 # Check if Docker is running
 if ! docker info >/dev/null 2>&1; then

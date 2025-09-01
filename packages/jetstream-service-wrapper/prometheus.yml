@@ -1,0 +1,29 @@
+# Prometheus configuration for monitoring JetStream services
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Scrape JetStream services metrics
+  - job_name: 'jetstream-services'
+    static_configs:
+      - targets: ['example-service:9000']
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+    scrape_timeout: 10s
+
+  # NATS JetStream server metrics
+  - job_name: 'nats'
+    static_configs:
+      - targets: ['nats:8222']
+    metrics_path: '/varz'
+    scrape_interval: 15s

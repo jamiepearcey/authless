@@ -1,0 +1,29 @@
+{
+  "name": "@tests/integration",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "vitest run --testTimeout=30000",
+    "setup": "tsx src/setup.ts",
+    "teardown": "tsx src/teardown.ts"
+  },
+  "dependencies": {
+    "@db/base": "workspace:*",
+    "@outbox/processor": "workspace:*",
+    "@jetstream/email-consumer": "workspace:*",
+    "@jetstream/webhook-consumer": "workspace:*",
+    "@jetstream/realtime-consumer": "workspace:*",
+    "nats": "^2.29.3",
+    "pg": "^8.11.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.0",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  }
+}

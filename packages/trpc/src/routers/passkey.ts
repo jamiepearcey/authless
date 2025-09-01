@@ -65,7 +65,7 @@ export const passkeyRouter = {
       return {
         challenge: btoa(String.fromCharCode(...challenge)), // Base64 encode
         rp: {
-          name: "Beat The Fine London",
+          name: "Authless London",
           id: rpId,
         },
         user: {

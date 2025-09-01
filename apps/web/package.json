@@ -15,6 +15,7 @@
     "@auth/prisma-adapter": "^1.0.0",
     "@db/base": "workspace:*",
     "@i18n-core": "workspace:*",
+    "@jetstream/email-consumer": "workspace:*",
     "@shared/base": "workspace:*",
     "@stripe/integration": "workspace:*",
     "@tanstack/react-query": "^5.8.0",

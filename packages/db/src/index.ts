@@ -7,3 +7,7 @@ export type { Prisma } from "./generated/client";
 
 // Export all model types from the generated client
 export * from "./generated/client";
+
+// Export outbox pattern types and repository
+export * from './outbox-types';
+export { OutboxRepository } from './outbox-repository';

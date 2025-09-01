@@ -19,6 +19,27 @@ services:
       timeout: 5s
       retries: 5
 
+  nats:
+    image: nats:2.10-alpine
+    container_name: beatthefine-nats
+    restart: always
+    command: ["-c", "/etc/nats-server.conf"]
+    ports:
+      - "4223:4222"  # Client connections
+      - "8223:8222"  # HTTP monitoring
+      - "6223:6222"  # Cluster connections
+    volumes:
+      - nats_data:/data
+      - ./nats-server.conf:/etc/nats-server.conf:ro
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8222/varz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   centrifugo:
     image: centrifugo/centrifugo:v5
     container_name: beatthefine-centrifugo
@@ -46,3 +67,4 @@ services:
 
 volumes:
   postgres_data:
+  nats_data:

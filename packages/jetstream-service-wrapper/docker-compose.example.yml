@@ -1,0 +1,98 @@
+# Example docker-compose.yml for running JetStream services
+# This demonstrates how to run services with NATS JetStream and monitoring
+
+version: '3.8'
+
+services:
+  # NATS JetStream server
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    command: |
+      --jetstream
+      --http_port 8222
+      --port 4222
+      --store_dir /data
+      --max_memory_store 1GB
+      --max_file_store 10GB
+    volumes:
+      - nats_data:/data
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8222/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # Example service using the wrapper
+  example-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.example
+    environment:
+      # Service configuration
+      - SERVICE_NAME=example-service
+      - SERVICE_VERSION=1.0.0
+      
+      # NATS configuration
+      - NATS_URL=nats://nats:4222
+      - NATS_STREAM_NAME=events
+      
+      # Processing configuration
+      - SERVICE_CONCURRENCY=10
+      - SERVICE_BATCH_SIZE=50
+      - SERVICE_RETRY_LIMIT=3
+      - SERVICE_RETRY_BACKOFF_MS=1000
+      - SERVICE_ACK_WAIT_MS=30000
+      
+      # Health and monitoring
+      - HEALTH_CHECK_INTERVAL_MS=30000
+      - METRICS_ENABLED=true
+      - LIGHTSHIP_PORT=9000
+      - GRACEFUL_SHUTDOWN_TIMEOUT=120000
+      
+      # Logging
+      - LOG_LEVEL=info
+      - STRUCTURED_LOGGING=true
+    ports:
+      - "9000:9000" # Lightship health/metrics port
+    depends_on:
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+
+  # Grafana for metrics visualization
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  nats_data:
+  grafana_data:

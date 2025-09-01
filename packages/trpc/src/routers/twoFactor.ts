@@ -22,7 +22,7 @@ export const twoFactorRouter = router({
         const secret = authenticator.generateSecret(32);
 
         // Generate QR code URL for authenticator apps
-        const qrCodeUrl = `otpauth://totp/${encodeURIComponent(ctx.session.user.email || "user")}?secret=${secret}&issuer=${encodeURIComponent("Beat The Fine London")}`;
+        const qrCodeUrl = `otpauth://totp/${encodeURIComponent(ctx.session.user.email || "user")}?secret=${secret}&issuer=${encodeURIComponent("Authless London")}`;
         
         return {
           secret: secret,
@@ -414,7 +414,7 @@ export const twoFactorRouter = router({
         const secret = authenticator.generateSecret(32);
 
         // Generate QR code URL for authenticator apps
-        const qrCodeUrl = `otpauth://totp/${encodeURIComponent(ctx.session.user.email || "user")}?secret=${secret}&issuer=${encodeURIComponent("Beat The Fine London")}`;
+        const qrCodeUrl = `otpauth://totp/${encodeURIComponent(ctx.session.user.email || "user")}?secret=${secret}&issuer=${encodeURIComponent("Authless London")}`;
         
         return {
           secret: secret,
