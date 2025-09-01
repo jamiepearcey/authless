@@ -52,7 +52,7 @@ This project follows a **layered architecture** with clear separation of concern
 ## 📁 **Directory Structure**
 
 ```
-beat-the-fine-london/
+authless/
 ├── apps/                          # Application layer
 │   └── web/                      # Next.js web application
 │       ├── app/                  # App Router pages

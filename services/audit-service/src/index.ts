@@ -1,4 +1,4 @@
-import { JetStreamServiceWrapper, type JetStreamService, type ProcessingContext } from '@jetstream/service-wrapper';
+import { JetStreamServiceWrapper, type JetStreamService, type ProcessingContext, type Logger } from '@jetstream/service-wrapper';
 import { Client as PG } from 'pg';
 import type { AuditEvent } from '@jetstream/audit-consumer';
 
@@ -54,6 +54,7 @@ export class AuditService {
   private wrapper: JetStreamServiceWrapper;
   private db: PG;
   private config: AuditServiceConfig;
+  private logger: Logger;
 
   constructor(config: AuditServiceConfig) {
     this.config = config;
@@ -77,11 +78,11 @@ export class AuditService {
         baseMs: config.retryDelayMs || 1000,
         jitterMs: 250,
         toDlq: async (msg: any) => {
-          console.warn('Message sent to DLQ', {
+          this.logger.warn({
             sequence: msg.seq,
             subject: msg.subject,
             redeliveryCount: msg.info?.redeliveryCount || 0
-          });
+          }, 'Message sent to DLQ');
           msg.term();
         },
       },
@@ -103,6 +104,9 @@ export class AuditService {
         ],
       },
     });
+
+    // Get logger from wrapper
+    this.logger = this.wrapper.getLogger();
   }
 
   private createJetStreamService(): JetStreamService {
@@ -111,22 +115,22 @@ export class AuditService {
         beforeStart: async () => {
           // Connect to database
           await this.db.connect();
-          console.log(`${this.config.serviceName} initialized`);
+          this.logger.info(`${this.config.serviceName} initialized`);
         },
 
         afterStop: async () => {
           // Cleanup resources
           await this.db.end();
-          console.log(`${this.config.serviceName} stopped`);
+          this.logger.info(`${this.config.serviceName} stopped`);
         },
 
         onError: async (err: unknown, ctx: ProcessingContext) => {
           // Structured logging for errors
-          console.error(`${this.config.serviceName} error`, {
+          this.logger.error({
             error: err,
             context: ctx,
             timestamp: new Date().toISOString()
-          });
+          }, `${this.config.serviceName} error`);
         },
       },
 
@@ -149,19 +153,19 @@ export class AuditService {
           await this.processAuditEvent(auditEvent, ctx);
 
           // Log successful processing
-          console.log('Audit event processed successfully', {
+          this.logger.info({
             messageId: ctx.messageId,
             eventName: auditEvent.eventName,
             tenantId: auditEvent.tenantId,
             duration: Date.now() - ctx.processingStartTime
-          });
+          }, 'Audit event processed successfully');
 
         } catch (error) {
-          console.error('Error processing audit message', {
+          this.logger.error({
             messageId: ctx.messageId,
             error: error instanceof Error ? error.message : String(error),
             data: data
-          });
+          }, 'Error processing audit message');
           throw error; // Re-throw to trigger retry logic
         }
       },
@@ -178,7 +182,7 @@ export class AuditService {
     };
   }
 
-  private async processAuditEvent(auditEvent: AuditEvent, ctx: ProcessingContext): Promise<void> {
+  private async processAuditEvent(auditEvent: AuditEvent, _ctx: ProcessingContext): Promise<void> {
     // Store audit event in database
     await this.storeAuditEvent(auditEvent);
 

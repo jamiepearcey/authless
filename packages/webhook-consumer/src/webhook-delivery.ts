@@ -47,7 +47,7 @@ export class WebhookDeliveryService {
       // Prepare headers
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        'User-Agent': 'Beat-The-Fine-London-Webhooks/1.0',
+        'User-Agent': 'authless-Webhooks/1.0',
         'X-Webhook-ID': webhook.id,
         'X-Event-Name': event.eventName,
         'X-Delivery-ID': eventId,

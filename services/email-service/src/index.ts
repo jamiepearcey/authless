@@ -1,4 +1,4 @@
-import { JetStreamServiceWrapper } from '@jetstream/service-wrapper';
+import { JetStreamServiceWrapper, type Logger } from '@jetstream/service-wrapper';
 import { EmailService as EmailConsumerService } from '@jetstream/email-consumer';
 import { Client as PG } from 'pg';
 
@@ -67,6 +67,7 @@ export class EmailService {
   private readonly wrapper: JetStreamServiceWrapper;
   private readonly emailConsumerService: EmailConsumerService;
   private readonly database: PG;
+  private readonly logger: Logger;
 
   constructor(private readonly config: EmailServiceConfig) {
     // Initialize database connection
@@ -119,6 +120,9 @@ export class EmailService {
         },
       }
     );
+
+    // Get logger from wrapper
+    this.logger = this.wrapper.getLogger();
   }
 
   /**
@@ -128,13 +132,13 @@ export class EmailService {
     try {
       // Connect to database
       await this.database.connect();
-      console.log('✅ Database connected');
+      this.logger.info('Database connected');
 
       // Start the wrapper
       await this.wrapper.start();
-      console.log('✅ Email service started');
+      this.logger.info('Email service started');
     } catch (error) {
-      console.error('❌ Failed to start email service:', error);
+      this.logger.error({ error }, 'Failed to start email service');
       throw error;
     }
   }
@@ -146,9 +150,9 @@ export class EmailService {
     try {
       await this.wrapper.stop();
       await this.database.end();
-      console.log('✅ Email service stopped');
+      this.logger.info('Email service stopped');
     } catch (error) {
-      console.error('❌ Error stopping email service:', error);
+      this.logger.error({ error }, 'Error stopping email service');
       throw error;
     }
   }
@@ -193,7 +197,7 @@ export class EmailService {
         userId: row.user_id,
       }));
     } catch (error) {
-      console.error('Error getting recipients:', error);
+      this.logger.error({ error }, 'Error getting recipients');
       // Return a fallback recipient for testing
       return [{
         email: 'test@example.com',
@@ -209,15 +213,15 @@ export class EmailService {
   private async logEmailDelivery(result: any): Promise<void> {
     try {
       // This is a simplified implementation - in production, you'd store this in a proper table
-      console.log('📧 Email delivery logged:', {
+      this.logger.info({
         timestamp: result.timestamp,
         templateName: result.templateName,
         recipientId: result.recipientId,
         success: result.success,
         error: result.error,
-      });
+      }, 'Email delivery logged');
     } catch (error) {
-      console.error('Error logging email delivery:', error);
+      this.logger.error({ error }, 'Error logging email delivery');
     }
   }
 }

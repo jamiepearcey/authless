@@ -1,5 +1,5 @@
 {
-  "name": "beat-the-fine-london",
+  "name": "authless",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -26,8 +26,8 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f",
-    "docker:build": "docker build -t beat-the-fine-london .",
-    "docker:run": "docker run -p 3000:3000 -p 3001:3001 --env-file .env beat-the-fine-london",
+    "docker:build": "docker build -t authless .",
+    "docker:run": "docker run -p 3000:3000 -p 3001:3001 --env-file .env authless",
     "clean": "turbo run clean && rm -rf node_modules"
   },
   "devDependencies": {

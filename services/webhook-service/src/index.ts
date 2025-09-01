@@ -1,4 +1,4 @@
-import { JetStreamServiceWrapper, type JetStreamService, type ProcessingContext } from '@jetstream/service-wrapper';
+import { JetStreamServiceWrapper, type JetStreamService, type ProcessingContext, type Logger } from '@jetstream/service-wrapper';
 import { WebhookConsumer } from '@jetstream/webhook-consumer';
 import { Client as PG } from 'pg';
 import dotenv from 'dotenv';
@@ -69,6 +69,7 @@ export class WebhookService {
   private db: PG;
   private config: WebhookServiceConfig;
   private webhookConsumer: WebhookConsumer;
+  private logger: Logger;
 
   constructor(config: WebhookServiceConfig) {
     this.config = config;
@@ -101,11 +102,11 @@ export class WebhookService {
         baseMs: config.retryBackoffMs || 1000,
         jitterMs: 250,
         toDlq: async (msg: any) => {
-          console.warn('Webhook message sent to DLQ', {
+          this.logger.warn({
             sequence: msg.seq,
             subject: msg.subject,
             redeliveryCount: msg.info?.redeliveryCount || 0
-          });
+          }, 'Webhook message sent to DLQ');
           msg.term();
         },
       },
@@ -127,6 +128,9 @@ export class WebhookService {
         ],
       },
     });
+
+    // Get logger from wrapper
+    this.logger = this.wrapper.getLogger();
   }
 
   // ============================================================================
@@ -181,7 +185,7 @@ export class WebhookService {
         headers: row.headers || {},
       }));
     } catch (error) {
-      console.error('Error getting webhook endpoints:', error);
+      this.logger.error({ error }, 'Error getting webhook endpoints');
       return [];
     }
   }
@@ -210,9 +214,15 @@ export class WebhookService {
 
       await this.db.query(query, values);
       
-      console.log(`📝 Webhook delivery logged: ${result.webhookId} - ${result.success ? 'success' : 'failed'}`);
+      this.logger.info({
+        webhookId: result.webhookId,
+        success: result.success,
+        statusCode: result.statusCode,
+        responseTime: result.responseTime,
+        retryCount: result.retryCount
+      }, 'Webhook delivery logged');
     } catch (error) {
-      console.error('Error logging webhook delivery:', error);
+      this.logger.error({ error }, 'Error logging webhook delivery');
     }
   }
 
@@ -224,13 +234,13 @@ export class WebhookService {
     try {
       // Connect to database
       await this.db.connect();
-      console.log('✅ Database connected');
+      this.logger.info('Database connected');
 
       // Start the wrapper
       await this.wrapper.start();
-      console.log('✅ Webhook service started');
+      this.logger.info('Webhook service started');
     } catch (error) {
-      console.error('❌ Failed to start webhook service:', error);
+      this.logger.error({ error }, 'Failed to start webhook service');
       throw error;
     }
   }
@@ -239,9 +249,9 @@ export class WebhookService {
     try {
       await this.wrapper.stop();
       await this.db.end();
-      console.log('✅ Webhook service stopped');
+      this.logger.info('Webhook service stopped');
     } catch (error) {
-      console.error('❌ Error stopping webhook service:', error);
+      this.logger.error({ error }, 'Error stopping webhook service');
       throw error;
     }
   }

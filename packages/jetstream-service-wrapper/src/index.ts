@@ -24,6 +24,9 @@ import http from 'http';
 
 export type HealthStatus = 'healthy' | 'unhealthy' | 'degraded';
 
+// Re-export commonly used types
+export type Logger = PinoLogger;
+
 export interface ProcessingContext {
   messageId: string;
   subject: string;
@@ -99,6 +102,7 @@ export interface ServiceRunner {
   stop(): Promise<void>;
   isRunning(): boolean;
   getPrometheusMetrics(): Promise<string>;
+  getLogger(): PinoLogger;
 }
 
 /* ===========================
@@ -370,6 +374,10 @@ export class JetStreamServiceWrapper implements ServiceRunner {
     // sync gauges with latest state
     this.metrics.updateFromState(this.state.snapshot());
     return this.registry.metrics();
+  }
+
+  getLogger(): PinoLogger {
+    return this.logger;
   }
 
   async start(): Promise<void> {

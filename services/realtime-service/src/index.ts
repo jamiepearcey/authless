@@ -1,4 +1,4 @@
-import { JetStreamServiceWrapper, type JetStreamService, type ProcessingContext } from '@jetstream/service-wrapper';
+import { JetStreamServiceWrapper, type JetStreamService, type ProcessingContext, type Logger } from '@jetstream/service-wrapper';
 import { Client as PG } from 'pg';
 import type { Event, RealtimeMessage, NotificationEvent, ChannelConfig } from '@jetstream/realtime-consumer';
 import { CentrifugoClient } from '@jetstream/realtime-consumer';
@@ -66,6 +66,7 @@ export class RealtimeService {
   private centrifugoClient: CentrifugoClient;
   private channelRouter: ChannelRouter;
   private config: RealtimeServiceConfig;
+  private logger: Logger;
 
   constructor(config: RealtimeServiceConfig) {
     this.config = config;
