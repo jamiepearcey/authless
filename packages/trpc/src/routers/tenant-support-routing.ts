@@ -137,6 +137,7 @@ export const tenantSupportRoutingRouter = router({
                   : "tenant_support_routing_created",
                 resourceType: "tenant_support_routing",
                 resourceId: result.id,
+                traceId: ctx.trace.traceId,
                 details: JSON.stringify({
                   helpType: input.helpType,
                   email: input.email,
@@ -224,6 +225,7 @@ export const tenantSupportRoutingRouter = router({
             action: "tenant_support_routing_bulk_updated",
             resourceType: "tenant_support_routing",
             resourceId: input.tenantId,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({
               updatedConfigs: input.routingConfigs.length,
               helpTypes: input.routingConfigs.map((c) => c.helpType),
@@ -345,6 +347,7 @@ export const tenantSupportRoutingRouter = router({
             userId: ctx.session.user.id || "system",
             action: "tenant_support_routing_deleted",
             resourceType: "tenant_support_routing",
+            traceId: ctx.trace.traceId,
             resourceId: deleted.id,
             details: JSON.stringify({
               helpType: input.helpType,

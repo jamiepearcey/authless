@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { defaultRateLimit, apiRateLimit, authRateLimit } from "./lib/rate-limiter";
 
 // Reserved subdomains that should not be treated as tenants
 const RESERVED_SUBDOMAINS = new Set([
@@ -109,15 +110,66 @@ function resolveTenant(request: NextRequest): {
   };
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  
+  // Apply rate limiting with error handling
+  let rateLimitResult;
+  
+  try {
+    if (pathname.startsWith('/api/')) {
+      rateLimitResult = await apiRateLimit(request);
+    } else if (pathname.startsWith('/auth/')) {
+      rateLimitResult = await authRateLimit(request);
+    } else {
+      rateLimitResult = await defaultRateLimit(request);
+    }
+    
+    // If rate limit exceeded, return error response
+    if (!rateLimitResult.success) {
+      return new Response(
+        JSON.stringify({
+          error: 'Too Many Requests',
+          message: 'Rate limit exceeded. Please try again later.',
+          retryAfter: rateLimitResult.retryAfter,
+        }),
+        {
+          status: 429,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toISOString(),
+            ...(rateLimitResult.retryAfter && {
+              'Retry-After': rateLimitResult.retryAfter.toString(),
+            }),
+          },
+        }
+      );
+    }
+  } catch (error) {
+    // If rate limiting fails, log error but continue processing request
+    console.error('Rate limiting error:', error);
+    // Set a default rate limit result to continue processing
+    rateLimitResult = {
+      success: true,
+      limit: 100,
+      remaining: 99,
+      reset: new Date(Date.now() + 60000), // 1 minute from now
+    };
+  }
+
   const { tenantSlug, isSubdomainMode, isPathMode, isUntenanted } = resolveTenant(request);
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-tenant-slug", tenantSlug || "");
   requestHeaders.set("x-tenant-mode", isSubdomainMode ? "subdomain" : isPathMode ? "path" : "untenanted");
   requestHeaders.set("x-is-untenanted", String(isUntenanted));
-
-  const pathname = request.nextUrl.pathname;
+  
+  // Add rate limit headers to all successful responses
+  requestHeaders.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+  requestHeaders.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+  requestHeaders.set('X-RateLimit-Reset', rateLimitResult.reset.toISOString());
   const pathParts = pathname.split("/");
 
   // Handle SSO redirection for tenant sign-in pages
@@ -164,36 +216,56 @@ export function middleware(request: NextRequest) {
       // - exactly /tenants/[slug] (no extra segments)
       // - or starts with /tenants/[slug]/admin
       if (!nextSegment || nextSegment === "admin") {
-        return NextResponse.next({
+        const response = NextResponse.next({
           request: { headers: requestHeaders },
         });
+        
+        // Add rate limit headers to response
+        response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+        response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+        response.headers.set('X-RateLimit-Reset', rateLimitResult.reset.toISOString());
+        
+        return response;
       }
 
       // ❗ Otherwise, strip /tenants/[slug] and rewrite
       const newUrl = request.nextUrl.clone();
       newUrl.pathname = "/" + pathParts.slice(3).join("/");
-      return NextResponse.rewrite(newUrl, {
+      const response = NextResponse.rewrite(newUrl, {
         request: { headers: requestHeaders },
       });
+      
+      // Add rate limit headers to response
+      response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+      response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+      response.headers.set('X-RateLimit-Reset', rateLimitResult.reset.toISOString());
+      
+      return response;
     }
   }
 
   // Subdomain or untenanted
-  return NextResponse.next({
+  const response = NextResponse.next({
     request: { headers: requestHeaders },
   });
+  
+  // Add rate limit headers to response
+  response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+  response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+  response.headers.set('X-RateLimit-Reset', rateLimitResult.reset.toISOString());
+  
+  return response;
 }
 
 export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public folder
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
+    "/((?!_next/static|_next/image|favicon.ico|public).*)",
   ],
 };

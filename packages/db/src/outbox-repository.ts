@@ -22,6 +22,7 @@ export class OutboxRepository {
         tenantId: input.tenantId,
         payloadJson: input.payloadJson,
         idempotencyKey: input.idempotencyKey,
+        traceId: input.traceId,
         status: OutboxEventStatus.PENDING,
         tries: 0,
       },

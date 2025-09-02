@@ -201,6 +201,7 @@ export const contactRouter = router({
                 action: "contact_form_submitted",
                 resourceType: "support_case",
                 resourceId: supportCase.id,
+                traceId: ctx.trace.traceId,
                 details: JSON.stringify({
                   subject: input.subject,
                   reasonIds: input.reasonIds,
@@ -456,6 +457,7 @@ export const contactRouter = router({
             action: "contact_reply_added_via_case",
             resourceType: "case_message",
             resourceId: caseMessage.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({
               supportCaseId: input.messageId,
               isInternal: input.isInternal,
@@ -540,6 +542,7 @@ export const contactRouter = router({
             action: "contact_case_status_updated",
             resourceType: "support_case",
             resourceId: input.contactMessageId,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({
               fromStatus: supportCase.status,
               toStatus: statusMapping[input.status],
@@ -890,6 +893,7 @@ export const contactRouter = router({
             action: "case_assigned",
             resourceType: "support_case",
             resourceId: input.caseId,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({
               assigneeId: input.assigneeId,
               previousAssigneeId: updatedCase.assigneeId,

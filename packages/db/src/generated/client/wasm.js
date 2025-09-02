@@ -373,6 +373,7 @@ exports.Prisma.AuditLogScalarFieldEnum = {
   userAgent: 'userAgent',
   metadata: 'metadata',
   severity: 'severity',
+  traceId: 'traceId',
   createdAt: 'createdAt'
 };
 
@@ -674,7 +675,8 @@ exports.Prisma.OutboxEventScalarFieldEnum = {
   tries: 'tries',
   nextAttemptAt: 'nextAttemptAt',
   createdAt: 'createdAt',
-  lastError: 'lastError'
+  lastError: 'lastError',
+  traceId: 'traceId'
 };
 
 exports.Prisma.AuditEventScalarFieldEnum = {
@@ -691,6 +693,7 @@ exports.Prisma.AuditEventScalarFieldEnum = {
   sourceHost: 'sourceHost',
   requestId: 'requestId',
   correlationId: 'correlationId',
+  traceId: 'traceId',
   actorType: 'actorType',
   actorId: 'actorId',
   actorName: 'actorName',

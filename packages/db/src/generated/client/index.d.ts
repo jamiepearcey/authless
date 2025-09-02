@@ -19658,6 +19658,7 @@ export namespace Prisma {
     userAgent: string | null
     metadata: string | null
     severity: string | null
+    traceId: string | null
     createdAt: Date | null
   }
 
@@ -19673,6 +19674,7 @@ export namespace Prisma {
     userAgent: string | null
     metadata: string | null
     severity: string | null
+    traceId: string | null
     createdAt: Date | null
   }
 
@@ -19688,6 +19690,7 @@ export namespace Prisma {
     userAgent: number
     metadata: number
     severity: number
+    traceId: number
     createdAt: number
     _all: number
   }
@@ -19705,6 +19708,7 @@ export namespace Prisma {
     userAgent?: true
     metadata?: true
     severity?: true
+    traceId?: true
     createdAt?: true
   }
 
@@ -19720,6 +19724,7 @@ export namespace Prisma {
     userAgent?: true
     metadata?: true
     severity?: true
+    traceId?: true
     createdAt?: true
   }
 
@@ -19735,6 +19740,7 @@ export namespace Prisma {
     userAgent?: true
     metadata?: true
     severity?: true
+    traceId?: true
     createdAt?: true
     _all?: true
   }
@@ -19823,6 +19829,7 @@ export namespace Prisma {
     userAgent: string | null
     metadata: string | null
     severity: string
+    traceId: string | null
     createdAt: Date
     _count: AuditLogCountAggregateOutputType | null
     _min: AuditLogMinAggregateOutputType | null
@@ -19855,6 +19862,7 @@ export namespace Prisma {
     userAgent?: boolean
     metadata?: boolean
     severity?: boolean
+    traceId?: boolean
     createdAt?: boolean
     tenant?: boolean | AuditLog$tenantArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -19872,6 +19880,7 @@ export namespace Prisma {
     userAgent?: boolean
     metadata?: boolean
     severity?: boolean
+    traceId?: boolean
     createdAt?: boolean
     tenant?: boolean | AuditLog$tenantArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -19889,6 +19898,7 @@ export namespace Prisma {
     userAgent?: boolean
     metadata?: boolean
     severity?: boolean
+    traceId?: boolean
     createdAt?: boolean
   }
 
@@ -19919,6 +19929,7 @@ export namespace Prisma {
       userAgent: string | null
       metadata: string | null
       severity: string
+      traceId: string | null
       createdAt: Date
     }, ExtArgs["result"]["auditLog"]>
     composites: {}
@@ -20326,6 +20337,7 @@ export namespace Prisma {
     readonly userAgent: FieldRef<"AuditLog", 'String'>
     readonly metadata: FieldRef<"AuditLog", 'String'>
     readonly severity: FieldRef<"AuditLog", 'String'>
+    readonly traceId: FieldRef<"AuditLog", 'String'>
     readonly createdAt: FieldRef<"AuditLog", 'DateTime'>
   }
     
@@ -42475,6 +42487,7 @@ export namespace Prisma {
     nextAttemptAt: Date | null
     createdAt: Date | null
     lastError: string | null
+    traceId: string | null
   }
 
   export type OutboxEventMaxAggregateOutputType = {
@@ -42489,6 +42502,7 @@ export namespace Prisma {
     nextAttemptAt: Date | null
     createdAt: Date | null
     lastError: string | null
+    traceId: string | null
   }
 
   export type OutboxEventCountAggregateOutputType = {
@@ -42504,6 +42518,7 @@ export namespace Prisma {
     nextAttemptAt: number
     createdAt: number
     lastError: number
+    traceId: number
     _all: number
   }
 
@@ -42530,6 +42545,7 @@ export namespace Prisma {
     nextAttemptAt?: true
     createdAt?: true
     lastError?: true
+    traceId?: true
   }
 
   export type OutboxEventMaxAggregateInputType = {
@@ -42544,6 +42560,7 @@ export namespace Prisma {
     nextAttemptAt?: true
     createdAt?: true
     lastError?: true
+    traceId?: true
   }
 
   export type OutboxEventCountAggregateInputType = {
@@ -42559,6 +42576,7 @@ export namespace Prisma {
     nextAttemptAt?: true
     createdAt?: true
     lastError?: true
+    traceId?: true
     _all?: true
   }
 
@@ -42661,6 +42679,7 @@ export namespace Prisma {
     nextAttemptAt: Date
     createdAt: Date
     lastError: string | null
+    traceId: string | null
     _count: OutboxEventCountAggregateOutputType | null
     _avg: OutboxEventAvgAggregateOutputType | null
     _sum: OutboxEventSumAggregateOutputType | null
@@ -42695,6 +42714,7 @@ export namespace Prisma {
     nextAttemptAt?: boolean
     createdAt?: boolean
     lastError?: boolean
+    traceId?: boolean
   }, ExtArgs["result"]["outboxEvent"]>
 
   export type OutboxEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -42710,6 +42730,7 @@ export namespace Prisma {
     nextAttemptAt?: boolean
     createdAt?: boolean
     lastError?: boolean
+    traceId?: boolean
   }, ExtArgs["result"]["outboxEvent"]>
 
   export type OutboxEventSelectScalar = {
@@ -42725,6 +42746,7 @@ export namespace Prisma {
     nextAttemptAt?: boolean
     createdAt?: boolean
     lastError?: boolean
+    traceId?: boolean
   }
 
 
@@ -42744,6 +42766,7 @@ export namespace Prisma {
       nextAttemptAt: Date
       createdAt: Date
       lastError: string | null
+      traceId: string | null
     }, ExtArgs["result"]["outboxEvent"]>
     composites: {}
   }
@@ -43149,6 +43172,7 @@ export namespace Prisma {
     readonly nextAttemptAt: FieldRef<"OutboxEvent", 'DateTime'>
     readonly createdAt: FieldRef<"OutboxEvent", 'DateTime'>
     readonly lastError: FieldRef<"OutboxEvent", 'String'>
+    readonly traceId: FieldRef<"OutboxEvent", 'String'>
   }
     
 
@@ -43461,6 +43485,7 @@ export namespace Prisma {
     sourceHost: string | null
     requestId: string | null
     correlationId: string | null
+    traceId: string | null
     actorType: string | null
     actorId: string | null
     actorName: string | null
@@ -43494,6 +43519,7 @@ export namespace Prisma {
     sourceHost: string | null
     requestId: string | null
     correlationId: string | null
+    traceId: string | null
     actorType: string | null
     actorId: string | null
     actorName: string | null
@@ -43527,6 +43553,7 @@ export namespace Prisma {
     sourceHost: number
     requestId: number
     correlationId: number
+    traceId: number
     actorType: number
     actorId: number
     actorName: number
@@ -43562,6 +43589,7 @@ export namespace Prisma {
     sourceHost?: true
     requestId?: true
     correlationId?: true
+    traceId?: true
     actorType?: true
     actorId?: true
     actorName?: true
@@ -43595,6 +43623,7 @@ export namespace Prisma {
     sourceHost?: true
     requestId?: true
     correlationId?: true
+    traceId?: true
     actorType?: true
     actorId?: true
     actorName?: true
@@ -43628,6 +43657,7 @@ export namespace Prisma {
     sourceHost?: true
     requestId?: true
     correlationId?: true
+    traceId?: true
     actorType?: true
     actorId?: true
     actorName?: true
@@ -43734,6 +43764,7 @@ export namespace Prisma {
     sourceHost: string | null
     requestId: string | null
     correlationId: string | null
+    traceId: string | null
     actorType: string | null
     actorId: string | null
     actorName: string | null
@@ -43784,6 +43815,7 @@ export namespace Prisma {
     sourceHost?: boolean
     requestId?: boolean
     correlationId?: boolean
+    traceId?: boolean
     actorType?: boolean
     actorId?: boolean
     actorName?: boolean
@@ -43817,6 +43849,7 @@ export namespace Prisma {
     sourceHost?: boolean
     requestId?: boolean
     correlationId?: boolean
+    traceId?: boolean
     actorType?: boolean
     actorId?: boolean
     actorName?: boolean
@@ -43850,6 +43883,7 @@ export namespace Prisma {
     sourceHost?: boolean
     requestId?: boolean
     correlationId?: boolean
+    traceId?: boolean
     actorType?: boolean
     actorId?: boolean
     actorName?: boolean
@@ -43887,6 +43921,7 @@ export namespace Prisma {
       sourceHost: string | null
       requestId: string | null
       correlationId: string | null
+      traceId: string | null
       actorType: string | null
       actorId: string | null
       actorName: string | null
@@ -44310,6 +44345,7 @@ export namespace Prisma {
     readonly sourceHost: FieldRef<"AuditEvent", 'String'>
     readonly requestId: FieldRef<"AuditEvent", 'String'>
     readonly correlationId: FieldRef<"AuditEvent", 'String'>
+    readonly traceId: FieldRef<"AuditEvent", 'String'>
     readonly actorType: FieldRef<"AuditEvent", 'String'>
     readonly actorId: FieldRef<"AuditEvent", 'String'>
     readonly actorName: FieldRef<"AuditEvent", 'String'>
@@ -44919,6 +44955,7 @@ export namespace Prisma {
     userAgent: 'userAgent',
     metadata: 'metadata',
     severity: 'severity',
+    traceId: 'traceId',
     createdAt: 'createdAt'
   };
 
@@ -45286,7 +45323,8 @@ export namespace Prisma {
     tries: 'tries',
     nextAttemptAt: 'nextAttemptAt',
     createdAt: 'createdAt',
-    lastError: 'lastError'
+    lastError: 'lastError',
+    traceId: 'traceId'
   };
 
   export type OutboxEventScalarFieldEnum = (typeof OutboxEventScalarFieldEnum)[keyof typeof OutboxEventScalarFieldEnum]
@@ -45306,6 +45344,7 @@ export namespace Prisma {
     sourceHost: 'sourceHost',
     requestId: 'requestId',
     correlationId: 'correlationId',
+    traceId: 'traceId',
     actorType: 'actorType',
     actorId: 'actorId',
     actorName: 'actorName',
@@ -47036,6 +47075,7 @@ export namespace Prisma {
     userAgent?: StringNullableFilter<"AuditLog"> | string | null
     metadata?: StringNullableFilter<"AuditLog"> | string | null
     severity?: StringFilter<"AuditLog"> | string
+    traceId?: StringNullableFilter<"AuditLog"> | string | null
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
     tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -47053,6 +47093,7 @@ export namespace Prisma {
     userAgent?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
     severity?: SortOrder
+    traceId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     tenant?: TenantOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
@@ -47073,6 +47114,7 @@ export namespace Prisma {
     userAgent?: StringNullableFilter<"AuditLog"> | string | null
     metadata?: StringNullableFilter<"AuditLog"> | string | null
     severity?: StringFilter<"AuditLog"> | string
+    traceId?: StringNullableFilter<"AuditLog"> | string | null
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
     tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -47090,6 +47132,7 @@ export namespace Prisma {
     userAgent?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
     severity?: SortOrder
+    traceId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: AuditLogCountOrderByAggregateInput
     _max?: AuditLogMaxOrderByAggregateInput
@@ -47111,6 +47154,7 @@ export namespace Prisma {
     userAgent?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
     metadata?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
     severity?: StringWithAggregatesFilter<"AuditLog"> | string
+    traceId?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
   }
 
@@ -48963,6 +49007,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFilter<"OutboxEvent"> | Date | string
     createdAt?: DateTimeFilter<"OutboxEvent"> | Date | string
     lastError?: StringNullableFilter<"OutboxEvent"> | string | null
+    traceId?: StringNullableFilter<"OutboxEvent"> | string | null
   }
 
   export type OutboxEventOrderByWithRelationInput = {
@@ -48978,6 +49023,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     lastError?: SortOrderInput | SortOrder
+    traceId?: SortOrderInput | SortOrder
   }
 
   export type OutboxEventWhereUniqueInput = Prisma.AtLeast<{
@@ -48996,6 +49042,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFilter<"OutboxEvent"> | Date | string
     createdAt?: DateTimeFilter<"OutboxEvent"> | Date | string
     lastError?: StringNullableFilter<"OutboxEvent"> | string | null
+    traceId?: StringNullableFilter<"OutboxEvent"> | string | null
   }, "id" | "idempotencyKey">
 
   export type OutboxEventOrderByWithAggregationInput = {
@@ -49011,6 +49058,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     lastError?: SortOrderInput | SortOrder
+    traceId?: SortOrderInput | SortOrder
     _count?: OutboxEventCountOrderByAggregateInput
     _avg?: OutboxEventAvgOrderByAggregateInput
     _max?: OutboxEventMaxOrderByAggregateInput
@@ -49034,6 +49082,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeWithAggregatesFilter<"OutboxEvent"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"OutboxEvent"> | Date | string
     lastError?: StringNullableWithAggregatesFilter<"OutboxEvent"> | string | null
+    traceId?: StringNullableWithAggregatesFilter<"OutboxEvent"> | string | null
   }
 
   export type AuditEventWhereInput = {
@@ -49053,6 +49102,7 @@ export namespace Prisma {
     sourceHost?: StringNullableFilter<"AuditEvent"> | string | null
     requestId?: StringNullableFilter<"AuditEvent"> | string | null
     correlationId?: StringNullableFilter<"AuditEvent"> | string | null
+    traceId?: StringNullableFilter<"AuditEvent"> | string | null
     actorType?: StringNullableFilter<"AuditEvent"> | string | null
     actorId?: StringNullableFilter<"AuditEvent"> | string | null
     actorName?: StringNullableFilter<"AuditEvent"> | string | null
@@ -49086,6 +49136,7 @@ export namespace Prisma {
     sourceHost?: SortOrderInput | SortOrder
     requestId?: SortOrderInput | SortOrder
     correlationId?: SortOrderInput | SortOrder
+    traceId?: SortOrderInput | SortOrder
     actorType?: SortOrderInput | SortOrder
     actorId?: SortOrderInput | SortOrder
     actorName?: SortOrderInput | SortOrder
@@ -49122,6 +49173,7 @@ export namespace Prisma {
     sourceHost?: StringNullableFilter<"AuditEvent"> | string | null
     requestId?: StringNullableFilter<"AuditEvent"> | string | null
     correlationId?: StringNullableFilter<"AuditEvent"> | string | null
+    traceId?: StringNullableFilter<"AuditEvent"> | string | null
     actorType?: StringNullableFilter<"AuditEvent"> | string | null
     actorId?: StringNullableFilter<"AuditEvent"> | string | null
     actorName?: StringNullableFilter<"AuditEvent"> | string | null
@@ -49155,6 +49207,7 @@ export namespace Prisma {
     sourceHost?: SortOrderInput | SortOrder
     requestId?: SortOrderInput | SortOrder
     correlationId?: SortOrderInput | SortOrder
+    traceId?: SortOrderInput | SortOrder
     actorType?: SortOrderInput | SortOrder
     actorId?: SortOrderInput | SortOrder
     actorName?: SortOrderInput | SortOrder
@@ -49194,6 +49247,7 @@ export namespace Prisma {
     sourceHost?: StringNullableWithAggregatesFilter<"AuditEvent"> | string | null
     requestId?: StringNullableWithAggregatesFilter<"AuditEvent"> | string | null
     correlationId?: StringNullableWithAggregatesFilter<"AuditEvent"> | string | null
+    traceId?: StringNullableWithAggregatesFilter<"AuditEvent"> | string | null
     actorType?: StringNullableWithAggregatesFilter<"AuditEvent"> | string | null
     actorId?: StringNullableWithAggregatesFilter<"AuditEvent"> | string | null
     actorName?: StringNullableWithAggregatesFilter<"AuditEvent"> | string | null
@@ -51062,6 +51116,7 @@ export namespace Prisma {
     userAgent?: string | null
     metadata?: string | null
     severity?: string
+    traceId?: string | null
     createdAt?: Date | string
     tenant?: TenantCreateNestedOneWithoutAuditLogsInput
     user: UserCreateNestedOneWithoutAuditLogsInput
@@ -51079,6 +51134,7 @@ export namespace Prisma {
     userAgent?: string | null
     metadata?: string | null
     severity?: string
+    traceId?: string | null
     createdAt?: Date | string
   }
 
@@ -51092,6 +51148,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenant?: TenantUpdateOneWithoutAuditLogsNestedInput
     user?: UserUpdateOneRequiredWithoutAuditLogsNestedInput
@@ -51109,6 +51166,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -51124,6 +51182,7 @@ export namespace Prisma {
     userAgent?: string | null
     metadata?: string | null
     severity?: string
+    traceId?: string | null
     createdAt?: Date | string
   }
 
@@ -51137,6 +51196,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -51152,6 +51212,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -53171,6 +53232,7 @@ export namespace Prisma {
     nextAttemptAt?: Date | string
     createdAt?: Date | string
     lastError?: string | null
+    traceId?: string | null
   }
 
   export type OutboxEventUncheckedCreateInput = {
@@ -53186,6 +53248,7 @@ export namespace Prisma {
     nextAttemptAt?: Date | string
     createdAt?: Date | string
     lastError?: string | null
+    traceId?: string | null
   }
 
   export type OutboxEventUpdateInput = {
@@ -53201,6 +53264,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OutboxEventUncheckedUpdateInput = {
@@ -53216,6 +53280,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OutboxEventCreateManyInput = {
@@ -53231,6 +53296,7 @@ export namespace Prisma {
     nextAttemptAt?: Date | string
     createdAt?: Date | string
     lastError?: string | null
+    traceId?: string | null
   }
 
   export type OutboxEventUpdateManyMutationInput = {
@@ -53246,6 +53312,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OutboxEventUncheckedUpdateManyInput = {
@@ -53261,6 +53328,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuditEventCreateInput = {
@@ -53277,6 +53345,7 @@ export namespace Prisma {
     sourceHost?: string | null
     requestId?: string | null
     correlationId?: string | null
+    traceId?: string | null
     actorType?: string | null
     actorId?: string | null
     actorName?: string | null
@@ -53310,6 +53379,7 @@ export namespace Prisma {
     sourceHost?: string | null
     requestId?: string | null
     correlationId?: string | null
+    traceId?: string | null
     actorType?: string | null
     actorId?: string | null
     actorName?: string | null
@@ -53343,6 +53413,7 @@ export namespace Prisma {
     sourceHost?: NullableStringFieldUpdateOperationsInput | string | null
     requestId?: NullableStringFieldUpdateOperationsInput | string | null
     correlationId?: NullableStringFieldUpdateOperationsInput | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     actorType?: NullableStringFieldUpdateOperationsInput | string | null
     actorId?: NullableStringFieldUpdateOperationsInput | string | null
     actorName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53376,6 +53447,7 @@ export namespace Prisma {
     sourceHost?: NullableStringFieldUpdateOperationsInput | string | null
     requestId?: NullableStringFieldUpdateOperationsInput | string | null
     correlationId?: NullableStringFieldUpdateOperationsInput | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     actorType?: NullableStringFieldUpdateOperationsInput | string | null
     actorId?: NullableStringFieldUpdateOperationsInput | string | null
     actorName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53409,6 +53481,7 @@ export namespace Prisma {
     sourceHost?: string | null
     requestId?: string | null
     correlationId?: string | null
+    traceId?: string | null
     actorType?: string | null
     actorId?: string | null
     actorName?: string | null
@@ -53442,6 +53515,7 @@ export namespace Prisma {
     sourceHost?: NullableStringFieldUpdateOperationsInput | string | null
     requestId?: NullableStringFieldUpdateOperationsInput | string | null
     correlationId?: NullableStringFieldUpdateOperationsInput | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     actorType?: NullableStringFieldUpdateOperationsInput | string | null
     actorId?: NullableStringFieldUpdateOperationsInput | string | null
     actorName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53475,6 +53549,7 @@ export namespace Prisma {
     sourceHost?: NullableStringFieldUpdateOperationsInput | string | null
     requestId?: NullableStringFieldUpdateOperationsInput | string | null
     correlationId?: NullableStringFieldUpdateOperationsInput | string | null
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     actorType?: NullableStringFieldUpdateOperationsInput | string | null
     actorId?: NullableStringFieldUpdateOperationsInput | string | null
     actorName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54818,6 +54893,7 @@ export namespace Prisma {
     userAgent?: SortOrder
     metadata?: SortOrder
     severity?: SortOrder
+    traceId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -54833,6 +54909,7 @@ export namespace Prisma {
     userAgent?: SortOrder
     metadata?: SortOrder
     severity?: SortOrder
+    traceId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -54848,6 +54925,7 @@ export namespace Prisma {
     userAgent?: SortOrder
     metadata?: SortOrder
     severity?: SortOrder
+    traceId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -55922,6 +56000,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     lastError?: SortOrder
+    traceId?: SortOrder
   }
 
   export type OutboxEventAvgOrderByAggregateInput = {
@@ -55941,6 +56020,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     lastError?: SortOrder
+    traceId?: SortOrder
   }
 
   export type OutboxEventMinOrderByAggregateInput = {
@@ -55955,6 +56035,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     lastError?: SortOrder
+    traceId?: SortOrder
   }
 
   export type OutboxEventSumOrderByAggregateInput = {
@@ -55976,6 +56057,7 @@ export namespace Prisma {
     sourceHost?: SortOrder
     requestId?: SortOrder
     correlationId?: SortOrder
+    traceId?: SortOrder
     actorType?: SortOrder
     actorId?: SortOrder
     actorName?: SortOrder
@@ -56009,6 +56091,7 @@ export namespace Prisma {
     sourceHost?: SortOrder
     requestId?: SortOrder
     correlationId?: SortOrder
+    traceId?: SortOrder
     actorType?: SortOrder
     actorId?: SortOrder
     actorName?: SortOrder
@@ -56042,6 +56125,7 @@ export namespace Prisma {
     sourceHost?: SortOrder
     requestId?: SortOrder
     correlationId?: SortOrder
+    traceId?: SortOrder
     actorType?: SortOrder
     actorId?: SortOrder
     actorName?: SortOrder
@@ -60213,6 +60297,7 @@ export namespace Prisma {
     userAgent?: string | null
     metadata?: string | null
     severity?: string
+    traceId?: string | null
     createdAt?: Date | string
     tenant?: TenantCreateNestedOneWithoutAuditLogsInput
   }
@@ -60228,6 +60313,7 @@ export namespace Prisma {
     userAgent?: string | null
     metadata?: string | null
     severity?: string
+    traceId?: string | null
     createdAt?: Date | string
   }
 
@@ -60994,6 +61080,7 @@ export namespace Prisma {
     userAgent?: StringNullableFilter<"AuditLog"> | string | null
     metadata?: StringNullableFilter<"AuditLog"> | string | null
     severity?: StringFilter<"AuditLog"> | string
+    traceId?: StringNullableFilter<"AuditLog"> | string | null
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
   }
 
@@ -61578,6 +61665,7 @@ export namespace Prisma {
     userAgent?: string | null
     metadata?: string | null
     severity?: string
+    traceId?: string | null
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutAuditLogsInput
   }
@@ -61593,6 +61681,7 @@ export namespace Prisma {
     userAgent?: string | null
     metadata?: string | null
     severity?: string
+    traceId?: string | null
     createdAt?: Date | string
   }
 
@@ -73718,6 +73807,7 @@ export namespace Prisma {
     userAgent?: string | null
     metadata?: string | null
     severity?: string
+    traceId?: string | null
     createdAt?: Date | string
   }
 
@@ -74021,6 +74111,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenant?: TenantUpdateOneWithoutAuditLogsNestedInput
   }
@@ -74036,6 +74127,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -74050,6 +74142,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -74820,6 +74913,7 @@ export namespace Prisma {
     userAgent?: string | null
     metadata?: string | null
     severity?: string
+    traceId?: string | null
     createdAt?: Date | string
   }
 
@@ -75087,6 +75181,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAuditLogsNestedInput
   }
@@ -75102,6 +75197,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -75116,6 +75212,7 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
+    traceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

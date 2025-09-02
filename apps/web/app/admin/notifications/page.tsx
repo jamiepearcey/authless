@@ -534,18 +534,51 @@ export default function AdminNotificationsPage() {
                             <h3 className="text-lg font-semibold text-gray-900 truncate">
                               {notification.title}
                             </h3>
+                          </div>
+                          
+                          {/* Priority and Status - moved above description */}
+                          <div className="flex items-center justify-between mt-2">
                             <div className="flex items-center space-x-2">
                               <Badge variant="outline" className={getPriorityColor(notification.priority)}>
                                 {notification.priority}
                               </Badge>
-                              <Badge variant="outline">
+                              <Badge variant="outline" className={notification.status === 'unread' ? 'bg-blue-100 text-blue-800 border-blue-200' : ''}>
                                 {notification.status}
                               </Badge>
+                            </div>
+                            
+                            {/* Edit/Delete buttons - moved below priority/status */}
+                            <div className="flex items-center space-x-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                              >
+                                <Edit className="h-4 w-4 mr-1" />
+                                Edit
+                              </Button>
+                              
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleDeleteNotification(notification.id)}
+                                className="text-red-600 border-red-200 hover:bg-red-50"
+                              >
+                                <Trash2 className="h-4 w-4 mr-1" />
+                                Delete
+                              </Button>
+                              
+                              <input
+                                type="checkbox"
+                                checked={selectedNotifications.has(notification.id)}
+                                onChange={(e) => handleSelectNotification(notification.id, e.target.checked)}
+                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                              />
                             </div>
                           </div>
                           
                           {notification.description && (
-                            <p className="text-sm text-gray-600 mt-1">
+                            <p className="text-sm text-gray-600 mt-2">
                               {notification.description}
                             </p>
                           )}
@@ -572,34 +605,6 @@ export default function AdminNotificationsPage() {
                             )}
                           </div>
                         </div>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="text-blue-600 border-blue-200 hover:bg-blue-50"
-                        >
-                          <Edit className="h-4 w-4 mr-1" />
-                          Edit
-                        </Button>
-                        
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleDeleteNotification(notification.id)}
-                          className="text-red-600 border-red-200 hover:bg-red-50"
-                        >
-                          <Trash2 className="h-4 w-4 mr-1" />
-                          Delete
-                        </Button>
-                        
-                        <input
-                          type="checkbox"
-                          checked={selectedNotifications.has(notification.id)}
-                          onChange={(e) => handleSelectNotification(notification.id, e.target.checked)}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                        />
                       </div>
                     </div>
                   </CardHeader>

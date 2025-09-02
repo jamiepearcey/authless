@@ -31,7 +31,7 @@ export class TrpcOutboxService {
     userId: string,
     tenantId: string | null,
     payload: UserEventPayload,
-    options?: { idempotencyKey?: string }
+    options?: { idempotencyKey?: string; traceId?: string }
   ): Promise<string> {
     const input: CreateOutboxEventInput = {
       eventType,
@@ -46,6 +46,7 @@ export class TrpcOutboxService {
         tenantId || "",
         payload.action
       ),
+      traceId: options?.traceId,
     };
 
     return await this.outboxRepository.createEvent(input);
@@ -58,7 +59,7 @@ export class TrpcOutboxService {
     eventType: EventType,
     tenantId: string,
     payload: Record<string, any>,
-    options?: { idempotencyKey?: string }
+    options?: { idempotencyKey?: string; traceId?: string }
   ): Promise<string> {
     const input: CreateOutboxEventInput = {
       eventType,
@@ -72,6 +73,7 @@ export class TrpcOutboxService {
         tenantId,
         tenantId
       ),
+      traceId: options?.traceId,
     };
 
     return await this.outboxRepository.createEvent(input);
@@ -85,7 +87,7 @@ export class TrpcOutboxService {
     supportId: string,
     tenantId: string | null,
     payload: SupportEventPayload,
-    options?: { idempotencyKey?: string }
+    options?: { idempotencyKey?: string; traceId?: string }
   ): Promise<string> {
     const input: CreateOutboxEventInput = {
       eventType,
@@ -99,6 +101,7 @@ export class TrpcOutboxService {
         supportId,
         tenantId || ""
       ),
+      traceId: options?.traceId,
     };
 
     return await this.outboxRepository.createEvent(input);
@@ -112,7 +115,7 @@ export class TrpcOutboxService {
     notificationId: string,
     tenantId: string | null,
     payload: NotificationEventPayload,
-    options?: { idempotencyKey?: string }
+    options?: { idempotencyKey?: string; traceId?: string }
   ): Promise<string> {
     const input: CreateOutboxEventInput = {
       eventType,
@@ -126,6 +129,7 @@ export class TrpcOutboxService {
         notificationId,
         tenantId || ""
       ),
+      traceId: options?.traceId,
     };
 
     return await this.outboxRepository.createEvent(input);
@@ -139,7 +143,7 @@ export class TrpcOutboxService {
     paymentId: string,
     tenantId: string | null,
     payload: PaymentEventPayload,
-    options?: { idempotencyKey?: string }
+    options?: { idempotencyKey?: string; traceId?: string }
   ): Promise<string> {
     const input: CreateOutboxEventInput = {
       eventType,
@@ -153,6 +157,7 @@ export class TrpcOutboxService {
         paymentId,
         tenantId || ""
       ),
+      traceId: options?.traceId,
     };
 
     return await this.outboxRepository.createEvent(input);
@@ -167,7 +172,7 @@ export class TrpcOutboxService {
     aggregateId: string,
     tenantId: string | null,
     payload: Record<string, any>,
-    options?: { idempotencyKey?: string }
+    options?: { idempotencyKey?: string; traceId?: string }
   ): Promise<string> {
     const input: CreateOutboxEventInput = {
       eventType,
@@ -181,6 +186,7 @@ export class TrpcOutboxService {
         aggregateId,
         tenantId || ""
       ),
+      traceId: options?.traceId,
     };
 
     return await this.outboxRepository.createEvent(input);

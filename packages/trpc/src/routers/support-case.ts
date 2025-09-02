@@ -6,7 +6,6 @@ import {
   tenantAdminProcedure,
   publicProcedure,
 } from "../middleware";
-import * as crypto from "crypto";
 import { OutboxEvents } from "../outbox-service";
 
 // Support Case Status Enum
@@ -325,6 +324,7 @@ export const supportCaseRouter = router({
             action: "support_case_created",
             resourceType: "support_case",
             resourceId: supportCase.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({
               caseNumber: supportCase.caseNumber,
               title: input.title,
@@ -345,7 +345,7 @@ export const supportCaseRouter = router({
             status: "OPEN",
             priority: input.priority,
             customerEmail: "unknown", // Could be derived from contactMessage if available
-            assignedTo: supportCase.assignee?.name,
+            assignedTo: supportCase.assignee?.name || undefined,
             category: "general",
             metadata: {
               caseNumber: supportCase.caseNumber,
@@ -353,7 +353,8 @@ export const supportCaseRouter = router({
               createdBy: ctx.session.user.id,
               timestamp: new Date().toISOString(),
             },
-          }
+          },
+          { traceId: ctx.trace.traceId }
         );
 
         return supportCase;
@@ -438,6 +439,7 @@ export const supportCaseRouter = router({
             action: "support_case_status_updated",
             resourceType: "support_case",
             resourceId: input.caseId,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({
               fromStatus: currentCase.status,
               toStatus: input.status,
@@ -473,7 +475,8 @@ export const supportCaseRouter = router({
               updatedBy: ctx.session.user.id,
               timestamp: new Date().toISOString(),
             },
-          }
+          },
+          { traceId: ctx.trace.traceId }
         );
 
         return updatedCase;
@@ -520,6 +523,7 @@ export const supportCaseRouter = router({
             userId: ctx.session.user.id || "system",
             action: "support_case_assigned",
             resourceType: "support_case",
+            traceId: ctx.trace.traceId,
             resourceId: input.caseId,
             details: JSON.stringify({
               assigneeId: input.assigneeId,
@@ -548,7 +552,8 @@ export const supportCaseRouter = router({
                 assignedBy: ctx.session.user.id,
                 timestamp: new Date().toISOString(),
               },
-            }
+            },
+            { traceId: ctx.trace.traceId }
           );
         }
 
@@ -638,6 +643,7 @@ export const supportCaseRouter = router({
             action: "case_message_added",
             resourceType: "case_message",
             resourceId: caseMessage.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({
               caseId: input.caseId,
               direction: input.direction,
@@ -898,6 +904,7 @@ export const supportCaseRouter = router({
             tenantId: contactMessage.tenantId,
             userId: ctx.session.user.id || "system",
             action: "contact_message_converted_to_case",
+            traceId: ctx.trace.traceId,
             resourceType: "support_case",
             resourceId: supportCase.id,
             details: JSON.stringify({
@@ -1077,6 +1084,7 @@ export const supportCaseRouter = router({
         await ctx.db.auditLog.create({
           data: {
             tenantId: supportCase.tenantId,
+            traceId: ctx.trace.traceId,
             userId: "email_system",
             action: "email_reply_processed",
             resourceType: "case_message",

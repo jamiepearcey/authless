@@ -141,14 +141,15 @@ export const userRouter = router({
         ctx.session.user.tenantId || null,
         {
           userId: input.id,
-          email: updatedUser.email,
+          email: updatedUser.email || "unknown",
           name: updatedUser.name || undefined,
           action: "profile_updated",
           metadata: {
             updatedFields: Object.keys(input).filter(key => key !== 'id' && input[key as keyof typeof input] !== undefined),
             timestamp: new Date().toISOString(),
           },
-        }
+        },
+        { traceId: ctx.trace.traceId }
       );
 
       return updatedUser;
@@ -217,7 +218,8 @@ export const userRouter = router({
             timestamp: new Date().toISOString(),
             ipAddress: "unknown", // Could be passed from request if needed
           },
-        }
+        },
+        { traceId: ctx.trace.traceId }
       );
 
       return { success: true, message: "Password changed successfully" };
@@ -396,7 +398,8 @@ export const userRouter = router({
             deletedByEmail: ctx.session.user.email,
             timestamp: new Date().toISOString(),
           },
-        }
+        },
+        { traceId: ctx.trace.traceId }
       );
 
       return { success: true };

@@ -1,9 +1,8 @@
-import { initTRPC, TRPCError } from "@trpc/server";
 import * as bcrypt from "bcryptjs";
-import { getServerSession } from "next-auth";
 // import { authOptions } from "../../../apps/web/app/api/auth/[...nextauth]/route";
 import { db } from "@db/base";
 import { getTrpcOutboxService, type TrpcOutboxService } from "./outbox-service";
+import { generateTraceId, extractTraceId, type TraceContext } from "@shared/base";
 
 // Define the session type inline to match NextAuth with our custom fields
 interface SessionUser {
@@ -24,9 +23,15 @@ export interface Context {
   db: typeof db;
   hashPassword: (password: string) => Promise<string>;
   outbox: TrpcOutboxService;
+  trace: TraceContext;
 }
 
-export const createContext = async (session?: Session | null): Promise<Context> => {
+export const createContext = async (
+  session?: Session | null,
+  headers?: Record<string, string | string[] | undefined>
+): Promise<Context> => {
+  const traceId = headers ? extractTraceId(headers) : undefined;
+  
   return {
     session: session || null,
     db,
@@ -35,6 +40,9 @@ export const createContext = async (session?: Session | null): Promise<Context> 
       return bcrypt.hash(password, saltRounds);
     },
     outbox: getTrpcOutboxService(db),
+    trace: {
+      traceId: traceId || generateTraceId(),
+    },
   };
 };
 
@@ -58,5 +66,8 @@ export const createDevContext = async (): Promise<Context> => {
       return bcrypt.hash(password, saltRounds);
     },
     outbox: getTrpcOutboxService(db),
+    trace: {
+      traceId: generateTraceId(),
+    },
   };
 };

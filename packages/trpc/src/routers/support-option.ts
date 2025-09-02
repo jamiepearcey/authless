@@ -125,6 +125,7 @@ export const supportOptionRouter = router({
             action: "global_support_option_created",
             resourceType: "support_option",
             resourceId: option.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({ 
               key: input.key,
               label: input.label 
@@ -176,6 +177,7 @@ export const supportOptionRouter = router({
             action: "global_support_option_updated",
             resourceType: "support_option",
             resourceId: option.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify(updateData),
             severity: "info",
           },
@@ -226,6 +228,7 @@ export const supportOptionRouter = router({
             action: "global_support_option_deleted",
             resourceType: "support_option",
             resourceId: input.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({ 
               key: option.key,
               label: option.label 
@@ -397,6 +400,7 @@ export const supportOptionRouter = router({
             action: "tenant_support_option_created",
             resourceType: "support_option",
             resourceId: option.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({ 
               key: input.key,
               label: input.label,
@@ -451,6 +455,7 @@ export const supportOptionRouter = router({
             action: "tenant_support_option_updated",
             resourceType: "support_option",
             resourceId: option.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify(updateData),
             severity: "info",
           },
@@ -503,6 +508,7 @@ export const supportOptionRouter = router({
             action: "tenant_support_option_deleted",
             resourceType: "support_option",
             resourceId: input.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({ 
               key: option.key,
               label: option.label 

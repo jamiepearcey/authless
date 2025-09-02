@@ -22,6 +22,7 @@ export const OutboxEventSchema = z.object({
   tenantId: z.string(),
   payloadJson: z.record(z.any()),
   idempotencyKey: z.string().optional(),
+  traceId: z.string().optional(),
 });
 
 export type CreateOutboxEventInput = z.infer<typeof OutboxEventSchema>;

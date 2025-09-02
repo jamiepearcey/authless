@@ -328,6 +328,7 @@ export const n8nWebhookRouter = router({
             action: isNewCase ? "support_case_created_from_inbound" : "inbound_message_received",
             resourceType: "case_message",
             resourceId: caseMessage.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({
               caseId: supportCase.id,
               channel: message.channel,
@@ -495,6 +496,7 @@ export const n8nWebhookRouter = router({
             action: "outbound_message_sent",
             resourceType: "case_message",
             resourceId: caseMessage.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({
               caseId: input.caseId,
               channel: input.channel,
@@ -593,6 +595,7 @@ export const n8nWebhookRouter = router({
             userId: "system",
             action: "message_delivery_status_updated",
             resourceType: "case_message",
+            traceId: ctx.trace.traceId,
             resourceId: input.messageId,
             details: JSON.stringify({
               deliveryId: input.deliveryId,
@@ -684,6 +687,7 @@ export const n8nWebhookRouter = router({
             tenantId: input.tenantId,
             userId: ctx.session.user.id || "system",
             action: "n8n_webhooks_configured",
+            traceId: ctx.trace.traceId,
             resourceType: "support_configuration",
             resourceId: "n8n_config",
             details: JSON.stringify({

@@ -83,7 +83,10 @@ export function AdminSidebar({ className }: AdminSidebarProps) {
     <aside className={`py-6 px-2 sm:px-6 lg:col-span-3 ${className}`}>
       <nav className="space-y-1">
         {navigationItems.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+          // Special handling for dashboard - only active if exactly /admin
+          const isActive = item.href === "/admin" 
+            ? pathname === "/admin"
+            : pathname === item.href || pathname.startsWith(item.href + "/");
           const Icon = item.icon;
           return (
             <Link

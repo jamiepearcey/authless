@@ -99,6 +99,7 @@ export const tenantRouter = router({
             action: "tenant_created",
             resourceType: "tenant",
             resourceId: newTenant.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({ slug: input.slug, name: input.name }),
             severity: "info",
           },
@@ -125,7 +126,8 @@ export const tenantRouter = router({
               size: input.size,
               contactEmail: input.contactEmail,
             },
-          }
+          },
+          { traceId: ctx.trace.traceId }
         );
         
         return newTenant;
@@ -220,6 +222,7 @@ export const tenantRouter = router({
             action: "tenant_updated",
             resourceType: "tenant",
             resourceId: updatedTenant.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify({ slug, changes: data }),
             severity: "info",
           },
@@ -239,7 +242,8 @@ export const tenantRouter = router({
             metadata: {
               previousState: existingTenant,
             },
-          }
+          },
+          { traceId: ctx.trace.traceId }
         );
         
         return updatedTenant;
@@ -285,6 +289,7 @@ export const tenantRouter = router({
             userId: ctx.session.user.id || "unknown",
             action: "tenant_deleted",
             resourceType: "tenant",
+            traceId: ctx.trace.traceId,
             resourceId: deletedTenant.id,
             details: JSON.stringify({ slug }),
             severity: "warning",
@@ -304,7 +309,8 @@ export const tenantRouter = router({
             metadata: {
               previousState: existingTenant,
             },
-          }
+          },
+          { traceId: ctx.trace.traceId }
         );
         
         return deletedTenant;

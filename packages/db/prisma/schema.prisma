@@ -420,6 +420,7 @@ model AuditLog {
   userAgent    String?
   metadata     String?
   severity     String   @default("info")
+  traceId      String?  // Distributed tracing ID
   createdAt    DateTime @default(now())
   tenant       Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -429,6 +430,7 @@ model AuditLog {
   @@index([action])
   @@index([resourceType])
   @@index([severity])
+  @@index([traceId])
   @@index([createdAt])
 }
 
@@ -934,10 +936,12 @@ model OutboxEvent {
   nextAttemptAt   DateTime  @default(now())
   createdAt       DateTime  @default(now())
   lastError       String?
+  traceId         String?   // Distributed tracing ID
 
   @@index([status, nextAttemptAt])
   @@index([tenantId])
   @@index([eventType])
+  @@index([traceId])
 }
 
 // Audit events for compliance and monitoring
@@ -957,6 +961,7 @@ model AuditEvent {
   sourceHost      String?   // Host/instance identifier
   requestId       String?   // Request correlation ID
   correlationId   String?   // Business correlation ID
+  traceId         String?   // Distributed tracing ID
   
   // Actor information (who performed the action)
   actorType       String?   // user, system, service
@@ -991,5 +996,6 @@ model AuditEvent {
   @@index([actorId, timestamp])
   @@index([resourceType, resourceId])
   @@index([actionOutcome, timestamp])
+  @@index([traceId])
   @@index([createdAt])
 }

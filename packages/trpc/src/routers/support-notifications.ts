@@ -114,6 +114,7 @@ export const supportNotificationsRouter = router({
             action: "support_notification_preferences_updated",
             resourceType: "user",
             resourceId: ctx.session.user.id,
+            traceId: ctx.trace.traceId,
             details: JSON.stringify(input),
             severity: "info",
           },
