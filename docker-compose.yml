@@ -96,6 +96,32 @@ services:
     depends_on:
       - pgbouncer
 
+  temporal:
+    image: temporalio/auto-setup:1.24
+    container_name: authless-temporal
+    restart: always
+    environment:
+      - DB=postgresql
+      - DB_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PWD=postgres
+      - POSTGRES_SEEDS=postgres
+      - DYNAMIC_CONFIG_FILE_PATH=/etc/temporal/config/dynamicconfig.yaml
+    ports:
+      - "7233:7233"  # Frontend gRPC
+      - "8233:8233"  # Web UI
+    volumes:
+      - ./temporal-dynamicconfig.yaml:/etc/temporal/config/dynamicconfig.yaml
+    healthcheck:
+      test: ["CMD", "tctl", "--address", "temporal:7233", "cluster", "health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:
   nats_data:

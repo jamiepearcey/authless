@@ -1,0 +1,22 @@
+# Temporal Dynamic Configuration
+system.forceSearchAttributesCacheRefreshOnRead:
+  - value: true
+
+# Search attributes
+system.forceSearchAttributesCacheRefreshOnRead:
+  - value: true
+
+# Frontend settings
+frontend.enableUpdateWorkflowExecution:
+  - value: true
+
+frontend.enableUpdateWorkflowExecutionAsyncAccepted:
+  - value: true
+
+# History settings  
+history.enableUpdateWorkflowExecution:
+  - value: true
+
+# Worker settings
+worker.buildIdScavengerEnabled:
+  - value: true

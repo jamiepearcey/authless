@@ -1,6 +1,6 @@
-# Beat the Fine - Services Integration Testing Suite
+# Authless - Services Integration Testing Suite
 
-This directory contains comprehensive integration tests and hardened service configurations for the Beat the Fine microservices architecture.
+This directory contains comprehensive integration tests and hardened service configurations for the Authless microservices architecture.
 
 ## 🏗️ Architecture Overview
 

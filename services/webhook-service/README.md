@@ -4,7 +4,7 @@ A JetStream-powered webhook delivery service that consumes events and delivers t
 
 ## Architecture
 
-This service follows the Beat The Fine uk architecture pattern:
+This service follows the Authless architecture pattern:
 
 - **Domain Logic**: Lives in `@jetstream/webhook-consumer` package
 - **Service Entry Point**: Lives in `services/webhook-service/`

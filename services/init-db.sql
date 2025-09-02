@@ -1,4 +1,4 @@
--- Initialize database tables for Beat the Fine services
+-- Initialize database tables for Authless services
 
 -- Enable UUID generation extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

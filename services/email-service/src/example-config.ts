@@ -1,4 +1,6 @@
 import { EmailServiceConfig } from './index.js';
+import { PaymentReceipt } from './templates/payment-receipt.js';
+import { WelcomeEmail } from './templates/welcome-email.js';
 
 /**
  * Example configuration for the Email Service
@@ -21,7 +23,6 @@ export const exampleConfig: EmailServiceConfig = {
   // Processing configuration
   concurrency: 5,
   batchSize: 1,
-  ackWaitMs: 30000,
   retryLimit: 3,
   retryBackoffMs: 1000,
   
@@ -63,14 +64,16 @@ export const exampleConfig: EmailServiceConfig = {
   ],
   
   // Email templates
-  templates: new Map([
+  templates: new Map([  
     ['welcome-email', {
       name: 'welcome-email',
+      component: WelcomeEmail,
       subject: 'Welcome {{userName}}!',
       variables: ['userName', 'userEmail'],
     }],
     ['payment-receipt', {
       name: 'payment-receipt', 
+      component: PaymentReceipt,
       subject: 'Payment Receipt - {{transactionId}}',
       variables: ['userName', 'amount', 'currency', 'transactionId'],
     }],
