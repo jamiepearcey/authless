@@ -388,6 +388,7 @@ exports.Prisma.PasskeyScalarFieldEnum = {
   backupEligible: 'backupEligible',
   backupState: 'backupState',
   userVerification: 'userVerification',
+  rpId: 'rpId',
   isActive: 'isActive',
   lastUsedAt: 'lastUsedAt',
   createdAt: 'createdAt',

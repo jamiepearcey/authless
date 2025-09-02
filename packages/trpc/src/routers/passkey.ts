@@ -15,6 +15,7 @@ const passkeyRegistrationInput = z.object({
   backupEligible: z.boolean().default(false),
   backupState: z.boolean().default(false),
   userVerification: z.enum(["required", "preferred", "discouraged"]).default("preferred"),
+  rpId: z.string().min(1, "Relying Party ID is required"),
 });
 
 // Passkey authentication input schema
@@ -118,6 +119,7 @@ export const passkeyRouter = {
           backupEligible: input.backupEligible,
           backupState: input.backupState,
           userVerification: input.userVerification,
+          rpId: input.rpId,
         },
       });
 
@@ -289,6 +291,10 @@ export const passkeyRouter = {
   // Get all available accounts with passkeys for the current domain
   getAvailableAccounts: publicProcedure
     .query(async ({ ctx }) => {
+      // Get the current domain from the request context
+      const currentDomain = process.env.NODE_ENV === "development" ? "localhost" : 
+        (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).hostname : "localhost");
+
       // Get all users who have active passkeys
       const usersWithPasskeys = await ctx.db.user.findMany({
         where: {
@@ -309,6 +315,8 @@ export const passkeyRouter = {
               name: true,
               lastUsedAt: true,
               transports: true,
+              credentialId: true,
+              rpId: true,
             },
           },
         },
@@ -317,8 +325,25 @@ export const passkeyRouter = {
         },
       });
 
+      // Filter passkeys by domain - only include passkeys that were registered for the current domain
+      const filteredAccounts = usersWithPasskeys
+        .map(user => {
+          // Filter passkeys for this user that match the current domain
+          const domainPasskeys = user.passkeys.filter(passkey => {
+            // Only include passkeys that were registered for the current domain
+            // If rpId is null (legacy passkeys), exclude them for security
+            return passkey.rpId === currentDomain;
+          });
+
+          return {
+            ...user,
+            passkeys: domainPasskeys,
+          };
+        })
+        .filter(user => user.passkeys.length > 0); // Only include users with domain-valid passkeys
+
       // Transform to match the expected interface
-      const accounts = usersWithPasskeys.map(user => ({
+      const accounts = filteredAccounts.map(user => ({
         id: user.id,
         email: user.email,
         name: user.name,

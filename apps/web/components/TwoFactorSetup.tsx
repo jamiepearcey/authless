@@ -352,6 +352,7 @@ export default function TwoFactorSetup({ isWizard = false, onComplete, onSkip }:
         backupEligible: response.attestationObject ? true : false,
         backupState: false,
         userVerification: "preferred",
+        rpId: options.rp.id, // Include the relying party ID (domain)
       });
     } catch (error) {
       console.error("Failed to add passkey:", error);

@@ -20717,6 +20717,7 @@ export namespace Prisma {
     backupEligible: boolean | null
     backupState: boolean | null
     userVerification: string | null
+    rpId: string | null
     isActive: boolean | null
     lastUsedAt: Date | null
     createdAt: Date | null
@@ -20734,6 +20735,7 @@ export namespace Prisma {
     backupEligible: boolean | null
     backupState: boolean | null
     userVerification: string | null
+    rpId: string | null
     isActive: boolean | null
     lastUsedAt: Date | null
     createdAt: Date | null
@@ -20751,6 +20753,7 @@ export namespace Prisma {
     backupEligible: number
     backupState: number
     userVerification: number
+    rpId: number
     isActive: number
     lastUsedAt: number
     createdAt: number
@@ -20778,6 +20781,7 @@ export namespace Prisma {
     backupEligible?: true
     backupState?: true
     userVerification?: true
+    rpId?: true
     isActive?: true
     lastUsedAt?: true
     createdAt?: true
@@ -20795,6 +20799,7 @@ export namespace Prisma {
     backupEligible?: true
     backupState?: true
     userVerification?: true
+    rpId?: true
     isActive?: true
     lastUsedAt?: true
     createdAt?: true
@@ -20812,6 +20817,7 @@ export namespace Prisma {
     backupEligible?: true
     backupState?: true
     userVerification?: true
+    rpId?: true
     isActive?: true
     lastUsedAt?: true
     createdAt?: true
@@ -20916,6 +20922,7 @@ export namespace Prisma {
     backupEligible: boolean
     backupState: boolean
     userVerification: string
+    rpId: string | null
     isActive: boolean
     lastUsedAt: Date | null
     createdAt: Date
@@ -20952,6 +20959,7 @@ export namespace Prisma {
     backupEligible?: boolean
     backupState?: boolean
     userVerification?: boolean
+    rpId?: boolean
     isActive?: boolean
     lastUsedAt?: boolean
     createdAt?: boolean
@@ -20970,6 +20978,7 @@ export namespace Prisma {
     backupEligible?: boolean
     backupState?: boolean
     userVerification?: boolean
+    rpId?: boolean
     isActive?: boolean
     lastUsedAt?: boolean
     createdAt?: boolean
@@ -20988,6 +20997,7 @@ export namespace Prisma {
     backupEligible?: boolean
     backupState?: boolean
     userVerification?: boolean
+    rpId?: boolean
     isActive?: boolean
     lastUsedAt?: boolean
     createdAt?: boolean
@@ -21017,6 +21027,7 @@ export namespace Prisma {
       backupEligible: boolean
       backupState: boolean
       userVerification: string
+      rpId: string | null
       isActive: boolean
       lastUsedAt: Date | null
       createdAt: Date
@@ -21425,6 +21436,7 @@ export namespace Prisma {
     readonly backupEligible: FieldRef<"Passkey", 'Boolean'>
     readonly backupState: FieldRef<"Passkey", 'Boolean'>
     readonly userVerification: FieldRef<"Passkey", 'String'>
+    readonly rpId: FieldRef<"Passkey", 'String'>
     readonly isActive: FieldRef<"Passkey", 'Boolean'>
     readonly lastUsedAt: FieldRef<"Passkey", 'DateTime'>
     readonly createdAt: FieldRef<"Passkey", 'DateTime'>
@@ -44973,6 +44985,7 @@ export namespace Prisma {
     backupEligible: 'backupEligible',
     backupState: 'backupState',
     userVerification: 'userVerification',
+    rpId: 'rpId',
     isActive: 'isActive',
     lastUsedAt: 'lastUsedAt',
     createdAt: 'createdAt',
@@ -47172,6 +47185,7 @@ export namespace Prisma {
     backupEligible?: BoolFilter<"Passkey"> | boolean
     backupState?: BoolFilter<"Passkey"> | boolean
     userVerification?: StringFilter<"Passkey"> | string
+    rpId?: StringNullableFilter<"Passkey"> | string | null
     isActive?: BoolFilter<"Passkey"> | boolean
     lastUsedAt?: DateTimeNullableFilter<"Passkey"> | Date | string | null
     createdAt?: DateTimeFilter<"Passkey"> | Date | string
@@ -47190,6 +47204,7 @@ export namespace Prisma {
     backupEligible?: SortOrder
     backupState?: SortOrder
     userVerification?: SortOrder
+    rpId?: SortOrderInput | SortOrder
     isActive?: SortOrder
     lastUsedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -47211,6 +47226,7 @@ export namespace Prisma {
     backupEligible?: BoolFilter<"Passkey"> | boolean
     backupState?: BoolFilter<"Passkey"> | boolean
     userVerification?: StringFilter<"Passkey"> | string
+    rpId?: StringNullableFilter<"Passkey"> | string | null
     isActive?: BoolFilter<"Passkey"> | boolean
     lastUsedAt?: DateTimeNullableFilter<"Passkey"> | Date | string | null
     createdAt?: DateTimeFilter<"Passkey"> | Date | string
@@ -47229,6 +47245,7 @@ export namespace Prisma {
     backupEligible?: SortOrder
     backupState?: SortOrder
     userVerification?: SortOrder
+    rpId?: SortOrderInput | SortOrder
     isActive?: SortOrder
     lastUsedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -47254,6 +47271,7 @@ export namespace Prisma {
     backupEligible?: BoolWithAggregatesFilter<"Passkey"> | boolean
     backupState?: BoolWithAggregatesFilter<"Passkey"> | boolean
     userVerification?: StringWithAggregatesFilter<"Passkey"> | string
+    rpId?: StringNullableWithAggregatesFilter<"Passkey"> | string | null
     isActive?: BoolWithAggregatesFilter<"Passkey"> | boolean
     lastUsedAt?: DateTimeNullableWithAggregatesFilter<"Passkey"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Passkey"> | Date | string
@@ -51226,6 +51244,7 @@ export namespace Prisma {
     backupEligible?: boolean
     backupState?: boolean
     userVerification?: string
+    rpId?: string | null
     isActive?: boolean
     lastUsedAt?: Date | string | null
     createdAt?: Date | string
@@ -51244,6 +51263,7 @@ export namespace Prisma {
     backupEligible?: boolean
     backupState?: boolean
     userVerification?: string
+    rpId?: string | null
     isActive?: boolean
     lastUsedAt?: Date | string | null
     createdAt?: Date | string
@@ -51260,6 +51280,7 @@ export namespace Prisma {
     backupEligible?: BoolFieldUpdateOperationsInput | boolean
     backupState?: BoolFieldUpdateOperationsInput | boolean
     userVerification?: StringFieldUpdateOperationsInput | string
+    rpId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51278,6 +51299,7 @@ export namespace Prisma {
     backupEligible?: BoolFieldUpdateOperationsInput | boolean
     backupState?: BoolFieldUpdateOperationsInput | boolean
     userVerification?: StringFieldUpdateOperationsInput | string
+    rpId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51295,6 +51317,7 @@ export namespace Prisma {
     backupEligible?: boolean
     backupState?: boolean
     userVerification?: string
+    rpId?: string | null
     isActive?: boolean
     lastUsedAt?: Date | string | null
     createdAt?: Date | string
@@ -51311,6 +51334,7 @@ export namespace Prisma {
     backupEligible?: BoolFieldUpdateOperationsInput | boolean
     backupState?: BoolFieldUpdateOperationsInput | boolean
     userVerification?: StringFieldUpdateOperationsInput | string
+    rpId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51328,6 +51352,7 @@ export namespace Prisma {
     backupEligible?: BoolFieldUpdateOperationsInput | boolean
     backupState?: BoolFieldUpdateOperationsInput | boolean
     userVerification?: StringFieldUpdateOperationsInput | string
+    rpId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54940,6 +54965,7 @@ export namespace Prisma {
     backupEligible?: SortOrder
     backupState?: SortOrder
     userVerification?: SortOrder
+    rpId?: SortOrder
     isActive?: SortOrder
     lastUsedAt?: SortOrder
     createdAt?: SortOrder
@@ -54961,6 +54987,7 @@ export namespace Prisma {
     backupEligible?: SortOrder
     backupState?: SortOrder
     userVerification?: SortOrder
+    rpId?: SortOrder
     isActive?: SortOrder
     lastUsedAt?: SortOrder
     createdAt?: SortOrder
@@ -54978,6 +55005,7 @@ export namespace Prisma {
     backupEligible?: SortOrder
     backupState?: SortOrder
     userVerification?: SortOrder
+    rpId?: SortOrder
     isActive?: SortOrder
     lastUsedAt?: SortOrder
     createdAt?: SortOrder
@@ -60647,6 +60675,7 @@ export namespace Prisma {
     backupEligible?: boolean
     backupState?: boolean
     userVerification?: string
+    rpId?: string | null
     isActive?: boolean
     lastUsedAt?: Date | string | null
     createdAt?: Date | string
@@ -60663,6 +60692,7 @@ export namespace Prisma {
     backupEligible?: boolean
     backupState?: boolean
     userVerification?: string
+    rpId?: string | null
     isActive?: boolean
     lastUsedAt?: Date | string | null
     createdAt?: Date | string
@@ -61348,6 +61378,7 @@ export namespace Prisma {
     backupEligible?: BoolFilter<"Passkey"> | boolean
     backupState?: BoolFilter<"Passkey"> | boolean
     userVerification?: StringFilter<"Passkey"> | string
+    rpId?: StringNullableFilter<"Passkey"> | string | null
     isActive?: BoolFilter<"Passkey"> | boolean
     lastUsedAt?: DateTimeNullableFilter<"Passkey"> | Date | string | null
     createdAt?: DateTimeFilter<"Passkey"> | Date | string
@@ -73932,6 +73963,7 @@ export namespace Prisma {
     backupEligible?: boolean
     backupState?: boolean
     userVerification?: string
+    rpId?: string | null
     isActive?: boolean
     lastUsedAt?: Date | string | null
     createdAt?: Date | string
@@ -74497,6 +74529,7 @@ export namespace Prisma {
     backupEligible?: BoolFieldUpdateOperationsInput | boolean
     backupState?: BoolFieldUpdateOperationsInput | boolean
     userVerification?: StringFieldUpdateOperationsInput | string
+    rpId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -74513,6 +74546,7 @@ export namespace Prisma {
     backupEligible?: BoolFieldUpdateOperationsInput | boolean
     backupState?: BoolFieldUpdateOperationsInput | boolean
     userVerification?: StringFieldUpdateOperationsInput | string
+    rpId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -74529,6 +74563,7 @@ export namespace Prisma {
     backupEligible?: BoolFieldUpdateOperationsInput | boolean
     backupState?: BoolFieldUpdateOperationsInput | boolean
     userVerification?: StringFieldUpdateOperationsInput | string
+    rpId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

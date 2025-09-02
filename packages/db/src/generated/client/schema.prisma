@@ -445,6 +445,7 @@ model Passkey {
   backupEligible   Boolean   @default(false)
   backupState      Boolean   @default(false)
   userVerification String    @default("preferred")
+  rpId             String? // Relying Party ID (domain) this passkey was registered for
   isActive         Boolean   @default(true)
   lastUsedAt       DateTime?
   createdAt        DateTime  @default(now())
@@ -456,6 +457,7 @@ model Passkey {
   @@index([isActive])
   @@index([lastUsedAt])
   @@index([createdAt])
+  @@index([rpId])
 }
 
 model AuthenticatorCode {

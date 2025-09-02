@@ -171,6 +171,7 @@ export default function PasskeySetupPage() {
         backupEligible: response.attestationObject ? true : false,
         backupState: false,
         userVerification: "preferred",
+        rpId: options.rp.id, // Include the relying party ID (domain)
       });
 
       toast.success("Passkey added successfully!");
