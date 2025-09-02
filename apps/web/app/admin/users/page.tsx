@@ -18,9 +18,12 @@ import {
   UserCheck,
   Mail,
   Shield,
-  MoreHorizontal
+  MoreHorizontal,
+  ArrowLeft
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import Link from "next/link";
 
 import {
   DropdownMenu,
@@ -96,22 +99,50 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <div className="flex-1 space-y-6 mb-8">
+    <div className="flex-1 space-y-6">
       {/* Header */}
       <div className="mb-8">
-
+        {/* Breadcrumb Navigation */}
+        <div className="flex items-center space-x-4 mb-4">
+          <Link 
+            href="/admin"
+            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Admin
+          </Link>
+          <div className="h-6 w-px bg-gray-300" />
+          <BreadcrumbNavigation
+            items={[
+              { label: "Admin", href: "/admin" },
+              { label: "User Management", current: true },
+            ]}
+            showHome={false}
+          />
+        </div>
         
+        {/* Page Header */}
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <Users className="h-8 w-8 text-indigo-600" />
-              <span>User Management (In Progress)</span>
+              <span>User Management</span>
             </h1>
             <p className="text-gray-600 mt-2">
               Manage platform users across all tenants
             </p>
           </div>
           
+          <Button onClick={handleCreateUser} className="flex items-center space-x-2">
+            <Plus className="h-4 w-4" />
+            <span>Add User</span>
+          </Button>
+        </div>
+      </div>
+
+      {/* Toolbar */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             {/* Quick Search */}
             <div className="relative">
@@ -147,11 +178,6 @@ export default function AdminUsersPage() {
                 <option value="user">User</option>
               </select>
             </div>
-            
-            <Button onClick={handleCreateUser} className="flex items-center space-x-2">
-              <Plus className="h-4 w-4" />
-              <span>Add User</span>
-            </Button>
           </div>
         </div>
       </div>

@@ -15,10 +15,12 @@ import {
   Lock,
   Globe,
   Database,
-  Server
+  Server,
+  ArrowLeft
 } from "lucide-react";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
+import Link from "next/link";
 
 export default function AdminSecurityPage() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -95,21 +97,31 @@ export default function AdminSecurityPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="mb-8">
+        {/* Breadcrumb Navigation */}
         <div className="flex items-center space-x-4 mb-4">
+          <Link 
+            href="/admin"
+            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Admin
+          </Link>
+          <div className="h-6 w-px bg-gray-300" />
           <BreadcrumbNavigation
             items={[
-              { label: "Platform Admin", href: "/admin" },
+              { label: "Admin", href: "/admin" },
               { label: "Security Management", current: true },
             ]}
             showHome={false}
           />
         </div>
         
+        {/* Page Header */}
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <Shield className="h-8 w-8 text-indigo-600" />
-              <span>Security Management (Sample Page)</span>
+              <span>Security Management</span>
             </h1>
             <p className="text-gray-600 mt-2">
               Monitor platform security, manage threats, and configure security settings

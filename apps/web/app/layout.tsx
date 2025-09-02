@@ -9,6 +9,8 @@ import { I18nMount } from "@i18n-core/src/server";
 
 import { ReactNode } from "react";
 import { Toaster } from "@ui/base";
+import { MicrosoftClarity } from "../components/MicrosoftClarity";
+import { ClarityCssConfig } from "../components/ClarityCssConfig";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,6 +30,8 @@ export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <MicrosoftClarity />
+        <ClarityCssConfig />
         <I18nMount>
           <ClientProviders>
             <div className="min-h-screen bg-background flex flex-col">

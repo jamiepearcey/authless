@@ -10,6 +10,7 @@ import { Badge } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import Link from "next/link";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 
 export default function AdminNotificationsPage() {
@@ -250,16 +251,28 @@ export default function AdminNotificationsPage() {
       <div className="max-w-8xl mx-auto">
         {/* Header */}
         <div className="mb-8">
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center space-x-4 mb-4">
+            <Link 
+              href="/admin"
+              className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Admin
+            </Link>
+            <div className="h-6 w-px bg-gray-300" />
+            <BreadcrumbNavigation
+              items={[
+                { label: "Admin", href: "/admin" },
+                { label: "Notifications", current: true },
+              ]}
+              showHome={false}
+            />
+          </div>
+          
+          {/* Page Header */}
           <div className="flex items-center justify-between">
-            <div>                 <div className="mb-4">
-                <Link 
-                  href="/admin"
-                  className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-                >
-                  <ArrowLeft className="h-5 w-5 mr-2" />
-                  Back to Admin
-                </Link>
-              </div>
+            <div>
               <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
                 <Bell className="h-8 w-8 text-indigo-600" />
                 <span>Admin Notifications</span>

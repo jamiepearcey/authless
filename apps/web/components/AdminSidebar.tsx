@@ -80,8 +80,8 @@ export function AdminSidebar({ className }: AdminSidebarProps) {
   ];
 
   return (
-    <aside className={`py-6 px-2 sm:px-6 lg:col-span-3 ${className}`}>
-      <nav className="space-y-1">
+    <aside className={`lg:col-span-3 ${className}`}>
+      <nav className="">
         {navigationItems.map((item) => {
           // Special handling for dashboard - only active if exactly /admin
           const isActive = item.href === "/admin" 

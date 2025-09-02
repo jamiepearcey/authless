@@ -14,6 +14,7 @@
     "dev": "./dev.sh",
     "dev:web": "./dev.sh web-only",
     "dev:essential": "./dev.sh essential", 
+    "dev:tunnel": "cloudflared tunnel run my-tunnel",
     "dev:all": "./dev.sh all",
     "dev:stop": "./dev.sh stop",
     "temporal:worker": "pnpm -C workflows run worker:dev",

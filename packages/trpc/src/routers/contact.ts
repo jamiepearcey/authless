@@ -632,7 +632,22 @@ export const contactRouter = router({
         });
 
         return {
-          cases,
+          cases: cases.map(case_ => ({
+            ...case_,
+            id: case_.id.toString(), // Convert BigInt to string
+            assignee: case_.assignee ? {
+              ...case_.assignee,
+              id: case_.assignee.id.toString(), // Convert BigInt to string
+            } : null,
+            contactMessage: case_.contactMessage ? {
+              ...case_.contactMessage,
+              id: case_.contactMessage.id.toString(), // Convert BigInt to string
+            } : null,
+            supportOption: case_.supportOption ? {
+              ...case_.supportOption,
+              id: case_.supportOption.id.toString(), // Convert BigInt to string
+            } : null,
+          })),
           totalCount,
           page: input.page,
           pageSize: input.pageSize,

@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { useCallback } from 'react';
+import { useMicrosoftClarity } from '@/components/MicrosoftClarity';
 
 type LeadEvent = 'page_visit' | 'plan_selection' | 'checkout_started' | 'payment_attempted' | 'payment_completed' | 'payment_failed';
 
@@ -12,9 +13,20 @@ interface TrackLeadParams {
 
 export function useLeadTracking() {
   const { data: session } = useSession();
+  const { trackEvent: trackClarityEvent, identifyUser } = useMicrosoftClarity();
 
   const trackLead = useCallback(async ({ event, email, name, metadata }: TrackLeadParams) => {
     try {
+      // Track event in Microsoft Clarity first
+      trackClarityEvent(event);
+      
+      // If we have user info, identify them in Clarity
+      if (email || name || session?.user) {
+        const userId = session?.user?.email || email || 'unknown';
+        const displayName = session?.user?.name || name;
+        identifyUser(userId, displayName);
+      }
+
       const response = await fetch('/api/leads/track', {
         method: 'POST',
         headers: {
@@ -39,7 +51,7 @@ export function useLeadTracking() {
       console.error('Lead tracking error:', error);
       return { success: false, error: { message: 'Network error' } };
     }
-  }, []);
+  }, [trackClarityEvent, identifyUser, session?.user]);
 
   // Convenience methods for common events
   const trackPageVisit = useCallback((metadata?: Record<string, string>) => {

@@ -10,13 +10,16 @@ import {
   Clock,
   XCircle,
   Filter,
-  Database
+  Database,
+  ArrowLeft
 } from "lucide-react";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
 import { trpc } from "@/lib/trpc";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import Link from "next/link";
 
 interface OutboxEventFilters {
   status?: 'pending' | 'processing' | 'sent' | 'failed' | 'dead';
@@ -116,25 +119,47 @@ export default function OutboxMonitoringPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-            <Send className="h-8 w-8 text-indigo-600" />
-            <span>Outbox Monitoring</span>
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Monitor event publishing and delivery across the system
-          </p>
-        </div>
-        <div className="flex space-x-2">
-          <Button
-            onClick={() => { refetchStats(); refetchEvents(); }}
-            variant="outline"
-            size="sm"
+      <div className="mb-8">
+        {/* Breadcrumb Navigation */}
+        <div className="flex items-center space-x-4 mb-4">
+          <Link 
+            href="/admin"
+            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
           >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh
-          </Button>
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Admin
+          </Link>
+          <div className="h-6 w-px bg-gray-300" />
+          <BreadcrumbNavigation
+            items={[
+              { label: "Admin", href: "/admin" },
+              { label: "Outbox Monitoring", current: true },
+            ]}
+            showHome={false}
+          />
+        </div>
+        
+        {/* Page Header */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+              <Send className="h-8 w-8 text-indigo-600" />
+              <span>Outbox Monitoring</span>
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Monitor event publishing and delivery across the system
+            </p>
+          </div>
+          <div className="flex space-x-2">
+            <Button
+              onClick={() => { refetchStats(); refetchEvents(); }}
+              variant="outline"
+              size="sm"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -201,49 +226,6 @@ export default function OutboxMonitoringPage() {
         </Card>
       </div>
 
-      {/* Management Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Management Actions</CardTitle>
-          <CardDescription>
-            Perform bulk operations on outbox events
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex space-x-4">
-            <Button
-              onClick={handleRetryFailed}
-              disabled={retryFailedMutation.isPending}
-              variant="outline"
-            >
-              {retryFailedMutation.isPending ? (
-                <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <RefreshCw className="h-4 w-4 mr-2" />
-              )}
-              Retry Failed Events
-            </Button>
-            
-            <Button
-              onClick={handleResetStuck}
-              disabled={resetStuckMutation.isPending}
-              variant="outline"
-            >
-              <Clock className="h-4 w-4 mr-2" />
-              Reset Stuck Events
-            </Button>
-            
-            <Button
-              onClick={handleCleanup}
-              disabled={cleanupMutation.isPending}
-              variant="outline"
-            >
-              <Database className="h-4 w-4 mr-2" />
-              Cleanup Old Events
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Filters */}
       <Card>
@@ -320,10 +302,73 @@ export default function OutboxMonitoringPage() {
       {/* Events Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Events</CardTitle>
-          <CardDescription>
-            {events?.totalCount || 0} total events
-          </CardDescription>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+            <div>
+              <CardTitle>Recent Events</CardTitle>
+              <CardDescription>
+                {events?.totalCount || 0} total events
+              </CardDescription>
+            </div>
+            
+            {/* Management Actions Toolbar */}
+            <div className="flex items-center space-x-3">
+              <span className="text-xs text-gray-500 font-medium hidden sm:inline">Actions</span>
+              <div className={`flex items-center space-x-1 rounded-lg p-1 transition-colors ${
+                (retryFailedMutation.isPending || resetStuckMutation.isPending || cleanupMutation.isPending) 
+                  ? 'bg-blue-50 ring-1 ring-blue-200' 
+                  : 'bg-gray-50'
+              }`}>
+                <Button
+                  onClick={handleRetryFailed}
+                  disabled={retryFailedMutation.isPending || (stats?.failed || 0) === 0}
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 px-2"
+                  title={`Retry Failed Events (${stats?.failed || 0})`}
+                >
+                  {retryFailedMutation.isPending ? (
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <RefreshCw className="h-4 w-4" />
+                  )}
+                  {(stats?.failed || 0) > 0 && (
+                    <span className="ml-1 text-xs text-orange-600 font-medium">
+                      {stats?.failed}
+                    </span>
+                  )}
+                </Button>
+                
+                <div className="w-px h-4 bg-gray-300" />
+                
+                <Button
+                  onClick={handleResetStuck}
+                  disabled={resetStuckMutation.isPending}
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 px-2"
+                  title="Reset Stuck Events (30min+)"
+                >
+                  <Clock className="h-4 w-4" />
+                </Button>
+                
+                <Button
+                  onClick={handleCleanup}
+                  disabled={cleanupMutation.isPending}
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 px-2"
+                  title={`Cleanup Old Events (24h+)${(stats?.dead || 0) > 0 ? ` - ${stats?.dead} dead` : ''}`}
+                >
+                  <Database className="h-4 w-4" />
+                  {(stats?.dead || 0) > 0 && (
+                    <span className="ml-1 text-xs text-red-600 font-medium">
+                      {stats?.dead}
+                    </span>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">

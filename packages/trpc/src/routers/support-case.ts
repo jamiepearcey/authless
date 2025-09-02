@@ -173,7 +173,23 @@ export const supportCaseRouter = router({
         ]);
 
         return {
-          cases,
+          cases: cases.map(case_ => ({
+            ...case_,
+            id: case_.id.toString(), // Convert BigInt to string
+            contactMessage: case_.contactMessage ? {
+              ...case_.contactMessage,
+            } : null,
+            assignee: case_.assignee ? {
+              ...case_.assignee,
+              id: case_.assignee.id.toString(), // Convert BigInt to string
+            } : null,
+            supportOption: case_.supportOption ? {
+              ...case_.supportOption,
+            } : null,
+            tenant: case_.tenant ? {
+              ...case_.tenant,
+            } : null,
+          })),
           pagination: {
             page: input.page,
             pageSize: input.pageSize,
@@ -254,7 +270,49 @@ export const supportCaseRouter = router({
           });
         }
 
-        return supportCase;
+        return {
+          ...supportCase,
+          id: supportCase.id.toString(), // Convert BigInt to string
+          contactMessage: supportCase.contactMessage ? {
+            ...supportCase.contactMessage,
+            id: supportCase.contactMessage.id.toString(), // Convert BigInt to string
+            reasons: supportCase.contactMessage.reasons.map(reason => ({
+              ...reason,
+              id: reason.id.toString(), // Convert BigInt to string
+              contactReason: reason.contactReason ? {
+                ...reason.contactReason,
+                id: reason.contactReason.id.toString(), // Convert BigInt to string
+              } : null,
+            })),
+          } : null,
+          assignee: supportCase.assignee ? {
+            ...supportCase.assignee,
+            id: supportCase.assignee.id.toString(), // Convert BigInt to string
+          } : null,
+          supportOption: supportCase.supportOption ? {
+            ...supportCase.supportOption,
+            id: supportCase.supportOption.id.toString(), // Convert BigInt to string
+          } : null,
+          tenant: supportCase.tenant ? {
+            ...supportCase.tenant,
+            id: supportCase.tenant.id.toString(), // Convert BigInt to string
+          } : null,
+          messages: supportCase.messages.map(message => ({
+            ...message,
+            id: message.id.toString(), // Convert BigInt to string
+            contactReply: message.contactReply ? {
+              ...message.contactReply,
+              id: message.contactReply.id.toString(), // Convert BigInt to string
+            } : null,
+          })),
+          statusHistory: supportCase.statusHistory.map(status => ({
+            ...status,
+            id: status.id.toString(), // Convert BigInt to string
+            user: status.user ? {
+              ...status.user,
+            } : null,
+          })),
+        };
       } catch (error) {
         if (error instanceof TRPCError) throw error;
 
