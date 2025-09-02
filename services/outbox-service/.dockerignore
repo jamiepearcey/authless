@@ -1,0 +1,75 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage and testing
+coverage/
+.nyc_output/
+.coverage/
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+docs/
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+
+# Development files
+.prettierrc
+.eslintrc*
+tsconfig.json
+vitest.config.ts
+
+# Test files
+tests/
+__tests__/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Temporary files
+tmp/
+temp/

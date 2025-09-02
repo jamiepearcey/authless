@@ -88,10 +88,23 @@ export class OutboxProcessor {
     await this.pg.query('LISTEN outbox_wakeup');
     this.logger?.info({}, 'Listening for outbox notifications');
 
-    // Connect to NATS JetStream
-    this.nats = await connect({ servers: this.config.natsUrl });
-    this.js = this.nats.jetstream();
-    this.logger?.info({}, 'Connected to NATS JetStream');
+    // Connect to NATS JetStream with proper timeouts
+    this.nats = await connect({ 
+      servers: this.config.natsUrl,
+      timeout: 30000, // 30 second connection timeout
+      pingInterval: 20000, // 20 second ping interval
+      maxPingOut: 5,
+      reconnect: true,
+      maxReconnectAttempts: -1,
+      reconnectTimeWait: 1000
+    });
+    
+    // Create JetStream client with extended timeout
+    this.js = this.nats.jetstream({
+      timeout: 30000 // 30 second JetStream operation timeout
+    });
+    
+    this.logger?.info({}, 'Connected to NATS JetStream with extended timeouts');
 
     this.logger?.info({}, 'Outbox Processor initialized');
   }
@@ -192,15 +205,14 @@ export class OutboxProcessor {
       }
 
       // Prepare the event payload for JetStream
+      // Send the payloadJson directly (flattened) rather than nested in a payload field
       const jetStreamEvent = {
-        id: event.id,
-        eventType: event.eventType,
-        aggregateType: event.aggregateType,
-        aggregateId: event.aggregateId,
-        tenantId: event.tenantId,
-        payload: event.payloadJson,
-        created: event.createdAt.toISOString(),
-        idempotencyKey: event.idempotencyKey || event.id,
+        ...event.payloadJson, // Spread the actual audit event fields
+        // Override with outbox metadata
+        outboxId: event.id,
+        outboxEventType: event.eventType,
+        outboxCreated: event.createdAt.toISOString(),
+        outboxIdempotencyKey: event.idempotencyKey || event.id,
       };
 
       // Derive subject from event type and tenant
@@ -214,10 +226,11 @@ export class OutboxProcessor {
       msgHeaders.set('Tenant-Id', event.tenantId);
       msgHeaders.set('Outbox-Event-Id', event.id);
 
-      // Publish to JetStream with broker deduplication
+      // Publish to JetStream with broker deduplication and timeout
       await this.js.publish(subject, sc.encode(JSON.stringify(jetStreamEvent)), {
         msgID: event.idempotencyKey || event.id,
-        headers: msgHeaders
+        headers: msgHeaders,
+        timeout: 20000 // 20 second timeout for individual publish operations
       });
 
       // Mark as sent
