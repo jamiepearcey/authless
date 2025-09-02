@@ -111,12 +111,12 @@ await startHelloWorkflow({
 - **Duration**: ~3 seconds
 - **Use Cases**: Testing, learning, proof of concept
 
-### **🚧 Planned Workflows for Traffic Fine Management**
-Based on the domain, these workflows are planned but not yet implemented:
+### **🚧 Planned Workflows for SaaS Business Processes**
+Based on common SaaS patterns, these workflows are planned but not yet implemented:
 
-- **Fine Processing**: Multi-step fine validation and processing 🚧
-- **Payment Processing**: Handle payment flows with retries and rollbacks 🚧
-- **Appeal Workflows**: Appeal submission, review, and resolution tracking 🚧
+- **User Processing**: Multi-step user validation and onboarding processes 🚧
+- **Payment Processing**: Handle subscription flows with retries and rollbacks 🚧
+- **Support Workflows**: Ticket submission, review, and resolution tracking 🚧
 - **Notification Sequences**: Multi-stage reminder and escalation notifications 🚧
 - **Compliance Reporting**: Long-running compliance and audit workflows 🚧
 - **Tenant Onboarding**: Complete local authority setup workflows 🚧
@@ -135,7 +135,7 @@ Based on the domain, these workflows are planned but not yet implemented:
 }
 
 // Note: Only the hello world workflow is currently implemented
-// Domain-specific fine management workflows are not yet available
+// Domain-specific SaaS business workflows are not yet available
 ```
 
 ### **Checking Status**
@@ -204,7 +204,7 @@ Workflows integrate with your existing test infrastructure:
 
 **Current Limitations:**
 - Only basic hello world workflow implemented
-- No domain-specific workflows for traffic fine management
+- No domain-specific workflows for SaaS business processes
 - Limited error handling and monitoring
 - No production deployment configuration
 

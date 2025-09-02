@@ -105,7 +105,7 @@ export abstract class BaseEventNormalizer implements EventNormalizer {
 
   protected createSource(eventType: string, payload: any) {
     return {
-      service: payload.source?.service || 'beat-the-fine',
+      service: payload.source?.service || 'authless',
       version: payload.source?.version || process.env.APP_VERSION || '1.0.0',
       host: payload.source?.host || process.env.HOSTNAME || 'unknown',
       requestId: payload.requestId || payload.source?.requestId,

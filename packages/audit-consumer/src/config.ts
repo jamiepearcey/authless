@@ -25,7 +25,7 @@ const EnvConfigSchema = z.object({
   // Splunk HEC Configuration
   SPLUNK_HEC_URL: z.string().optional(),
   SPLUNK_HEC_TOKEN: z.string().optional(),
-  SPLUNK_SOURCE: z.string().default('beat-the-fine'),
+  SPLUNK_SOURCE: z.string().default('authless'),
   SPLUNK_SOURCETYPE: z.string().default('audit_event'),
   SPLUNK_INDEX: z.string().default('main'),
   SPLUNK_BATCH_SIZE: z.string().transform(Number).default('10'),

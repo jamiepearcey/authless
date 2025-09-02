@@ -566,7 +566,7 @@ export default function HomePage() {
                 <span className="ml-2 text-gray-400">~/your-saas</span>
               </div>
               <div className="space-y-2">
-                <div><span className="text-green-400">$</span> git clone beat-the-fine</div>
+                <div><span className="text-green-400">$</span> git clone authless</div>
                 <div><span className="text-green-400">$</span> pnpm install</div>
                 <div><span className="text-green-400">$</span> pnpm dev</div>
                 <div className="text-gray-400"># Your SaaS is now running!</div>

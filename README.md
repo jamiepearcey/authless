@@ -2,7 +2,7 @@
 
 **⚠️ WORK IN PROGRESS**: This is an advanced SaaS architecture foundation under active development. While the core architecture is production-ready, many features are in various stages of completion - see status indicators throughout this documentation.
 
-**Authless** (formerly Beat the Fine - London) is a comprehensive, self-hosted SaaS foundation demonstrating enterprise-grade architecture patterns. It showcases event-driven microservices, multi-tenancy, real-time capabilities, and advanced authentication systems - providing a sophisticated foundation for building modern B2B applications.
+**Authless** is a comprehensive, self-hosted SaaS foundation demonstrating enterprise-grade architecture patterns. It showcases event-driven microservices, multi-tenancy, real-time capabilities, and advanced authentication systems - providing a sophisticated foundation for building modern B2B applications.
 
 ## 🚀 What Is This?
 
@@ -104,7 +104,7 @@
 │  • Multi-tenant routing (subdomain + path-based)         │
 │  • tRPC API layer with end-to-end type safety            │
 │  • WebSocket connections to Centrifugo                   │
-│  • Admin panels for traffic fine management              │
+│  • Admin panels for SaaS application management        │
 └─────────────────────────────────────────────────────────────┘
                         │ (Outbox Pattern)
                         ▼
@@ -142,7 +142,7 @@
 ## 📁 **Project Structure**
 
 ```
-beat-the-fine-london/
+authless/
 ├── apps/web/                          # Next.js application (Port 3000)
 │   ├── app/                           # App Router (pages & API routes)
 │   ├── components/                    # React components  
@@ -178,8 +178,8 @@ beat-the-fine-london/
 ### **Development Setup**
 ```bash
 # Clone and install dependencies
-git clone https://github.com/your-org/beat-the-fine-london
-cd beat-the-fine-london
+git clone https://github.com/authless-org/authless
+cd authless
 pnpm install
 
 # Set up environment variables

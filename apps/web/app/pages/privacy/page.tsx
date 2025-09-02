@@ -28,7 +28,7 @@ const Privacy = () => {
                 <p className="text-gray-700">
                   {t(
                     'Authless ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our service.',
-                    "privacy.page.Privacy.beat_the_fine_we_our_or_us_is_committed_to_protecting_your_privacy_this_privacy_policy_explains_how_we_collect_use_disclose_and_safeguard_your_information_when_you_use_our_service__wzezak",
+                    "privacy.page.Privacy.authless_we_our_or_us_is_committed_to_protecting_your_privacy_this_privacy_policy_explains_how_we_collect_use_disclose_and_safeguard_your_information_when_you_use_our_service__wzezak",
                   )}
                 </p>
                 <p className="text-gray-700">

@@ -27,7 +27,7 @@ export const AuditConsumerConfigSchema = z.object({
   splunk: z.object({
     url: z.string(),
     token: z.string(),
-    source: z.string().default('beat-the-fine'),
+    source: z.string().default('authless'),
     sourcetype: z.string().default('audit_event'),
     index: z.string().default('main'),
     batchSize: z.number().default(10),

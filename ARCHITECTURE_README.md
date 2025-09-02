@@ -1,11 +1,11 @@
-# Beat the Fine - Architecture & Implementation Guide
+# Authless - Advanced SaaS Architecture Foundation & Implementation Guide
 
 **⚠️ WORK IN PROGRESS**: This architecture documentation reflects the current implementation state. Many services are in various stages of completion.
 
 ## 🏗️ **Project Structure Overview**
 
 ```
-beat-the-fine-london/
+authless/
 ├── apps/                          # Next.js web applications
 │   └── web/                     # Main web application ✅
 ├── packages/                     # Shared packages and libraries

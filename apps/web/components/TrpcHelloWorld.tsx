@@ -1,13 +1,19 @@
 "use client";
 
 import { trpc } from "@/lib/trpc";
+import { useEffect, useState } from "react";
 
 export function HelloWorld() {
-    console.log("HelloWorld where?", typeof window === "undefined" ? "server" : "browser");
+    const [isClient, setIsClient] = useState(false);
+    
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
-    const hello = trpc.hello.useQuery({
-      name: "Authless",
-    });
+    const hello = trpc.hello.useQuery(
+        { name: "Authless" },
+        { enabled: isClient }
+    );
   
     
     return hello.isLoading ? (

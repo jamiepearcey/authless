@@ -1,4 +1,4 @@
-# Beat the Fine - Services Integration Testing Suite
+# Authless - Services Integration Testing Suite
 
 **⚠️ STATUS: Services 75% Complete, Testing Suite 95% Complete**
 
@@ -156,11 +156,11 @@ npx vitest run tests/integration/audit-behavioral.test.ts
 ```bash
 # Build audit service
 cd audit-service
-docker build -t beatthefine/audit-service:latest .
+docker build -t authless/audit-service:latest .
 
 # Build outbox service
 cd outbox-service
-docker build -t beatthefine/outbox-service:latest .
+docker build -t authless/outbox-service:latest .
 ```
 
 ## 🔧 Configuration
@@ -173,7 +173,7 @@ Each service supports comprehensive environment configuration:
 ```env
 SERVICE_NAME=audit-service
 SERVICE_VERSION=1.0.0
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/beatthefine
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/authless
 NATS_URL=nats://localhost:4222
 NATS_STREAM_NAME=EVENTS
 AUDIT_CONSUMER_NAME=audit-consumer
@@ -189,7 +189,7 @@ LOG_LEVEL=info
 ```env
 SERVICE_NAME=outbox-service
 SERVICE_VERSION=1.0.0
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/beatthefine
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/authless
 NATS_URL=nats://localhost:4222
 OUTBOX_BATCH_SIZE=100
 OUTBOX_MAX_TRIES=10
