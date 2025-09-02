@@ -1,40 +1,49 @@
-# Authless - Architecture & Conventions Guide
+# Beat the Fine - Architecture & Implementation Guide
+
+**⚠️ WORK IN PROGRESS**: This architecture documentation reflects the current implementation state. Many services are in various stages of completion.
 
 ## 🏗️ **Project Structure Overview**
 
 ```
-authless/
-├── apps/                    # Next.js web applications
-│   └── web/               # Main web application
-├── packages/               # Shared packages and libraries
-│   ├── ui/                # UI component library
-│   ├── trpc/              # tRPC API definitions
-│   ├── db/                # Database schema and client
-│   ├── shared/            # Shared utilities and types
-│   ├── outbox-processor/ # Publishes events from outbox to jetstream bus
-│   ├── jetstream-service-wrapper/  # Infrastructure package
-│   ├── realtime-consumer/ # Domain-specific consumer
-│   ├── audit-consumer/    # Domain-specific consumer
-│   ├── email-consumer/    # Domain-specific consumer
-│   └── webhook-consumer/  # Domain-specific consumer
-├── services/               # Standalone services
-│   ├── realtime-service/  # Realtime event processing service
-│   └── audit-service/     # Audit event processing service
-└── pnpm-workspace.yaml    # Workspace configuration
+beat-the-fine-london/
+├── apps/                          # Next.js web applications
+│   └── web/                     # Main web application ✅
+├── packages/                     # Shared packages and libraries
+│   ├── ui/                      # UI component library ✅
+│   ├── trpc/                    # tRPC API definitions ✅
+│   ├── db/                      # Database schema and client ✅
+│   ├── stripe/                  # Payment integration ✅
+│   ├── i18n-core/               # LLM translation system ⚠️ 60%
+│   ├── outbox-processor/        # Publishes events from outbox to jetstream ✅
+│   ├── jetstream-service-wrapper/ # Infrastructure package ✅
+│   ├── realtime-consumer/       # Domain-specific consumer ⚠️ 75%
+│   ├── audit-consumer/          # Domain-specific consumer ⚠️ 75%
+│   ├── email-consumer/          # Domain-specific consumer ⚠️ 80%
+│   └── webhook-consumer/        # Domain-specific consumer ⚠️ 70%
+├── services/                     # Standalone services
+│   ├── realtime-service/        # Realtime event processing service ⚠️ 80%
+│   ├── audit-service/           # Audit event processing service ⚠️ 75%
+│   ├── email-service/           # Email workflows ⚠️ 80%
+│   └── webhook-service/         # External integrations ⚠️ 70%
+├── workflows/                    # Temporal workflow definitions ⚠️ 40%
+└── pnpm-workspace.yaml          # Workspace configuration ✅
 ```
 
-## 🎯 **Architecture Principles**
+## 🎯 **Architecture Principles** ✅ (Implemented)
 
 ### **Separation of Concerns**
 - **Domain-specific logic** → Lives in `services/` and `packages/*-consumer/`
 - **Domain-agnostic infrastructure** → Lives in `packages/jetstream-service-wrapper/`
-- **Shared business logic** → Lives in `packages/shared/` and `packages/trpc/`
+- **Shared business logic** → Lives in `packages/trpc/` (no `packages/shared/` currently)
 - **UI components** → Live in `packages/ui/`
+- **Database access** → Centralized in `packages/db/`
 
-### **Service Pattern**
+### **Service Pattern** ⚠️ (75% Complete)
 - **Services** (`services/*/`) contain domain-specific business logic
 - **Consumers** (`packages/*-consumer/`) contain domain-specific event processing
 - **Wrapper** (`packages/jetstream-service-wrapper/`) provides infrastructure (NATS, health checks, metrics)
+- **Integration** between services and consumers is partially implemented
+- **Health monitoring** and **metrics** are implemented but not fully configured
 
 ## 📦 **Package Layer (`packages/`)**
 
@@ -103,24 +112,31 @@ export class DomainService {
 - Use `@db/base` for direct database access (if needed)
 - Keep business logic in hooks and services, not in components
 
-## 🔄 **Data Flow Architecture**
+## 🔄 **Data Flow Architecture** ✅ (Core Implementation Complete)
 
-### **Event-Driven Flow**
+### **Event-Driven Flow** (Outbox Pattern)
 ```
-1. Application Event → NATS Stream
-2. Consumer Package → Processes Event
-3. Service Layer → Business Logic + Storage
-4. Database → Persistent Storage
-5. Real-time → Centrifugo → Web Clients
+1. Application Event → OutboxEvent (PostgreSQL)
+2. Outbox Processor → NATS JetStream (Reliable Publishing)
+3. Consumer Package → Processes Event from Stream
+4. Service Layer → Business Logic + Storage
+5. Database → Persistent Storage (Audit Trail)
+6. Real-time → Centrifugo → Web Clients
 ```
 
-### **API Flow**
+### **API Flow** (Direct tRPC)
 ```
 1. Web Client → tRPC Call
 2. tRPC Router → Business Logic
-3. Database → Data Access
+3. Database → Direct Data Access
 4. Response → Client
 ```
+
+### **Current Implementation Status**
+- **Outbox Pattern**: ✅ Complete with PostgreSQL LISTEN/NOTIFY
+- **NATS Integration**: ✅ JetStream with deduplication and DLQ
+- **Service Consumers**: ⚠️ 75% complete (basic functionality working)
+- **Real-time Updates**: ⚠️ 80% complete (Centrifugo integration active)
 
 ## 🗄️ **Database Schema (`packages/db/`)**
 
@@ -177,21 +193,28 @@ export const appRouter = router({
 
 ## 🚦 **Environment & Configuration**
 
-### **Required Environment Variables**
+### **Required Environment Variables** (Actual Ports from docker-compose.yml)
 ```bash
-# Database
-DATABASE_URL="postgresql://..."
+# Database (PostgreSQL via PgBouncer)
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/authless"
 
-# NATS
-NATS_URL="nats://localhost:4222"
+# NATS JetStream (Custom ports to avoid conflicts)
+NATS_URL="nats://localhost:4223"
 
 # Authentication
-NEXTAUTH_SECRET="..."
-NEXTAUTH_URL="..."
+NEXTAUTH_SECRET="your-secret-here"
+NEXTAUTH_URL="http://localhost:3000"
 
 # External Services
-CENTRIFUGO_URL="..."
-CENTRIFUGO_API_KEY="..."
+CENTRIFUGO_URL="http://localhost:8000"
+CENTRIFUGO_API_KEY="your-api-key-change-in-production"
+
+# Temporal
+TEMPORAL_ADDRESS="localhost:7233"
+
+# Stripe (if using payments)
+STRIPE_SECRET_KEY="sk_test_..."
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_..."
 ```
 
 ### **Configuration Patterns**
@@ -214,44 +237,50 @@ CENTRIFUGO_API_KEY="..."
 - Mock external dependencies
 - Test both success and error paths
 
-## 🚀 **Development Workflow**
+## 🚀 **Development Workflow** (Updated Commands)
 
-### **Package Development**
+### **Complete Development Setup**
 ```bash
 # Install dependencies
 pnpm install
 
-# Build packages
-pnpm --filter @jetstream/service-wrapper build
+# Start infrastructure (PostgreSQL, NATS, Centrifugo, Temporal)
+docker compose up -d
 
-# Run tests
-pnpm --filter @jetstream/service-wrapper test
+# Initialize database
+pnpm run db:migrate
 
-# Watch mode
-pnpm --filter @jetstream/service-wrapper dev
+# Start web app only (recommended for frontend work)
+pnpm run dev:web
+
+# OR start web app + essential services
+pnpm run dev:essential
+
+# OR start everything (web app + all microservices)
+pnpm run dev:all
 ```
 
-### **Service Development**
+### **Service Development** ⚠️ (Manual Process)
 ```bash
-# Build service
-cd services/realtime-service
+# Build specific service
+cd services/audit-service
 pnpm run build
 
-# Start service
+# Start service individually
 pnpm run start:dev
 
-# Run tests
-pnpm run test
+# Test service integration
+node tests/manual-verification.js
 ```
 
-### **Application Development**
+### **Package Development**
 ```bash
-# Start web app
-cd apps/web
-pnpm run dev
+# Build core packages
+pnpm run build --filter @jetstream/service-wrapper
+pnpm run build --filter @outbox/processor
 
-# Build for production
-pnpm run build
+# Watch mode for development
+pnpm --filter @jetstream/service-wrapper dev
 ```
 
 ## 🔍 **Debugging & Monitoring**

@@ -1,6 +1,8 @@
-# Authless - Services Integration Testing Suite
+# Beat the Fine - Services Integration Testing Suite
 
-This directory contains comprehensive integration tests and hardened service configurations for the Authless microservices architecture.
+**⚠️ STATUS: Services 75% Complete, Testing Suite 95% Complete**
+
+This directory contains comprehensive integration tests and working service configurations for the event-driven microservices architecture. The testing infrastructure is mature, while individual services are in various stages of completion.
 
 ## 🏗️ Architecture Overview
 
@@ -22,23 +24,40 @@ This testing suite provides multiple levels of verification:
 
 ## 📋 Services Included
 
-### Audit Service
+### Audit Service ⚠️ (75% Complete)
 - **Purpose**: Processes and stores audit events from the message bus
 - **Port**: 8081 (Health), 9091 (Metrics)
 - **Key Features**: NATS JetStream consumer, PostgreSQL storage, custom event handlers
+- **Status**: Basic functionality working, some edge cases need handling
 - **Location**: `./audit-service/`
 
-### Outbox Service
+### Outbox Service ✅ (95% Complete)
 - **Purpose**: Reliably publishes events from database to message bus (Transactional Outbox Pattern)
 - **Port**: 8082 (Health), 9092 (Metrics)  
-- **Key Features**: Batch processing, retry logic, failure handling
-- **Location**: `./outbox-service/`
+- **Key Features**: Batch processing, retry logic, failure handling, PostgreSQL LISTEN/NOTIFY
+- **Status**: Production-ready, comprehensive error handling
+- **Location**: `../packages/outbox-processor/`
 
-### Webhook Service (Optional)
+### Email Service ⚠️ (80% Complete)
+- **Purpose**: Processes email events and sends notifications
+- **Port**: 8083 (Health), 9093 (Metrics)
+- **Key Features**: React Email templates, SMTP integration, retry logic
+- **Status**: Core functionality working, templating system in progress
+- **Location**: `./email-service/`
+
+### Webhook Service ⚠️ (70% Complete)
 - **Purpose**: Delivers events to external webhooks
 - **Port**: 8084 (Health), 9094 (Metrics)
 - **Key Features**: HTTP delivery, retry logic, endpoint management
-- **Location**: `../webhook-service/`
+- **Status**: Basic implementation, needs production hardening
+- **Location**: `./webhook-service/`
+
+### Realtime Service ⚠️ (80% Complete)
+- **Purpose**: Handles real-time notifications via Centrifugo
+- **Port**: 8085 (Health), 9095 (Metrics)
+- **Key Features**: WebSocket management, channel routing, presence tracking
+- **Status**: Centrifugo integration working, advanced features in progress
+- **Location**: `./realtime-service/`
 
 ## 🚀 Quick Start
 

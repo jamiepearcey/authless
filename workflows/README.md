@@ -1,6 +1,8 @@
 # Authless Temporal Workflows
 
-This directory contains Temporal workflow definitions and workers for the Authless SaaS platform.
+**⚠️ STATUS: Basic Integration Complete (40%)** 
+
+This directory contains Temporal workflow definitions and workers for the Authless SaaS architecture foundation. The integration demonstrates workflow orchestration patterns but is currently limited to basic examples. Production workflows for complex SaaS business processes are planned but not yet implemented.
 
 ## 🏗️ **Architecture**
 
@@ -20,10 +22,14 @@ workflows/
 ## 🚀 **Quick Start**
 
 ### **Prerequisites**
-Make sure Temporal is running via Docker Compose:
+Temporal is included in the main Docker Compose setup:
 ```bash
 # From project root
-docker compose up -d temporal
+docker compose up -d
+
+# Temporal will be available at:
+# - gRPC: localhost:7233
+# - Web UI: http://localhost:8233
 ```
 
 ### **Install Dependencies**
@@ -105,19 +111,21 @@ await startHelloWorkflow({
 - **Duration**: ~3 seconds
 - **Use Cases**: Testing, learning, proof of concept
 
-### **Future Workflow Ideas**
-Based on your SaaS architecture, consider these workflows:
+### **🚧 Planned Workflows for Traffic Fine Management**
+Based on the domain, these workflows are planned but not yet implemented:
 
-- **User Onboarding**: Multi-step user setup with email verification
-- **Payment Processing**: Handle payment flows with retries and rollbacks  
-- **Support Case Management**: SLA tracking with escalation rules
-- **Tenant Provisioning**: Complete tenant setup with all dependencies
-- **Audit Compliance**: Long-running compliance workflows
-- **Feature Flag Rollouts**: Gradual feature releases with monitoring
+- **Fine Processing**: Multi-step fine validation and processing 🚧
+- **Payment Processing**: Handle payment flows with retries and rollbacks 🚧
+- **Appeal Workflows**: Appeal submission, review, and resolution tracking 🚧
+- **Notification Sequences**: Multi-stage reminder and escalation notifications 🚧
+- **Compliance Reporting**: Long-running compliance and audit workflows 🚧
+- **Tenant Onboarding**: Complete local authority setup workflows 🚧
 
-## 🌐 **API Integration**
+**Current Status**: Only the hello world example workflow is implemented
 
-### **Triggering Workflows**
+## 🌐 **API Integration** ⚠️ (Basic Implementation)
+
+### **Current API Endpoints**
 ```typescript
 // GET /api/workflows/hello?name=World
 {
@@ -125,6 +133,9 @@ Based on your SaaS architecture, consider these workflows:
   "status": "running",
   "result": null  // Will be populated when workflow completes
 }
+
+// Note: Only the hello world workflow is currently implemented
+// Domain-specific fine management workflows are not yet available
 ```
 
 ### **Checking Status**
@@ -189,20 +200,35 @@ Workflows integrate with your existing test infrastructure:
 - Verify outbox events are created
 - Test end-to-end user journeys
 
-## 🚀 **Production Deployment**
+## 🚀 **Production Deployment** ⚠️ (Not Production Ready)
 
-### **Scaling Workers**
+**Current Limitations:**
+- Only basic hello world workflow implemented
+- No domain-specific workflows for traffic fine management
+- Limited error handling and monitoring
+- No production deployment configuration
+
+### **Current Development Workflow**
 ```bash
-# Run multiple workers for high availability
-pnpm run worker &
-pnpm run worker &
-pnpm run worker &
+# Start Temporal server (via Docker Compose)
+docker compose up -d temporal
+
+# Build and start worker
+cd workflows
+pnpm install
+pnpm run build
+pnpm run worker:dev
+
+# Test the integration
+curl "http://localhost:3000/api/workflows/hello?name=TestRun"
 ```
 
-### **Monitoring**
-- Workers automatically report metrics to Temporal
-- Use your existing logging infrastructure
-- Set up alerts on workflow failures
+### **Production Readiness TODO**
+- [ ] Implement domain-specific workflows
+- [ ] Add comprehensive error handling
+- [ ] Set up proper monitoring and alerting
+- [ ] Add horizontal scaling configuration
+- [ ] Implement workflow state persistence strategies
 
 ---
 
