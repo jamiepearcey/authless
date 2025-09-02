@@ -5,6 +5,7 @@ import { TRPCError } from "@trpc/server";
 import { twoFactorService } from "../two-factor-service";
 import { verifyPassword } from "@shared/base";
 import { randomBytes } from "crypto";
+import { getTrpcOutboxService, OutboxEvents } from "../outbox-service";
 
 export const authRouter = router({
   /**
@@ -81,6 +82,25 @@ export const authRouter = router({
 
       // Log the auth attempt
       await twoFactorService["auditLog"](user.id, tenantId, "login_initiated", "password", true, `requires2fa: true`);
+
+      // Publish login initiated event
+      const outboxService = getTrpcOutboxService(db);
+      await outboxService.publishUserEvent(
+        OutboxEvents.AUTH_LOGIN_INITIATED,
+        user.id,
+        tenantId || null,
+        {
+          userId: user.id,
+          email: user.email!,
+          name: user.name || "",
+          action: "login_initiated",
+          metadata: {
+            requires2fa: true,
+            availableFactors: enabledFactors,
+            timestamp: new Date().toISOString(),
+          },
+        }
+      );
 
       return {
         next: "2fa",
@@ -285,6 +305,24 @@ export const authRouter = router({
           expires: expiresAt,
         },
       });
+
+      // Publish login completed event
+      const outboxService = getTrpcOutboxService(db);
+      await outboxService.publishUserEvent(
+        OutboxEvents.AUTH_LOGIN_COMPLETED,
+        user.id,
+        pendingAuth.tenantId,
+        {
+          userId: user.id,
+          email: user.email!,
+          name: user.name || "",
+          action: "login_completed",
+          metadata: {
+            method: method,
+            timestamp: new Date().toISOString(),
+          },
+        }
+      );
 
       // Return session token for secure authentication completion
       return { 

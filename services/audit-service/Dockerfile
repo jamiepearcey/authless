@@ -30,7 +30,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Expose ports
-EXPOSE 8080 9090
+EXPOSE 8081 9091
 
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
@@ -83,11 +83,11 @@ RUN mkdir -p logs && chown -R audit-service:nodejs logs
 USER audit-service
 
 # Expose ports
-EXPOSE 8080 9090
+EXPOSE 8081 9091
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8080/health || exit 1
+    CMD curl -f http://localhost:8081/health || exit 1
 
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]

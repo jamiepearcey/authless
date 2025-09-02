@@ -393,7 +393,7 @@ export class JetStreamServiceWrapper implements ServiceRunner {
 
     // 1) Lightship
     this.lightship = await createLightship({
-      port: this.config.lightshipPort ?? 8080,
+      port: this.config.lightshipPort ?? 8081,
       detectKubernetes: false,
       gracefulShutdownTimeout: 25_000,
     });

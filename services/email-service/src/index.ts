@@ -84,7 +84,10 @@ export class EmailService {
       this.emailConsumerService,
       {
         serviceName: config.serviceName,
-        metrics: { enabled: false },
+        metrics: { 
+          enabled: true,
+          metricsPort: config.metricsPort || 9093,
+        },
         version: config.version,
         natsUrl: config.natsUrl,
         streamName: config.streamName,
@@ -105,7 +108,7 @@ export class EmailService {
             },
           ],
         },
-        lightshipPort: config.port || 8080,
+        lightshipPort: config.port || 8083,
       }
     );
 

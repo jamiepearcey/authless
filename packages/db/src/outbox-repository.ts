@@ -185,15 +185,26 @@ export class OutboxRepository {
 
   private async getAverageProcessingTime(whereClause: Prisma.OutboxEventWhereInput): Promise<number | undefined> {
     try {
-      const result = await this.db.$queryRaw<[{ avg: number | null }]>`
+      let query = Prisma.sql`
         SELECT AVG(EXTRACT(EPOCH FROM (updated_at - created_at)) * 1000)::float as avg
         FROM outbox_events
         WHERE status = 'sent'
-          ${whereClause.tenantId ? Prisma.sql`AND tenant_id = ${whereClause.tenantId}` : Prisma.empty}
           AND updated_at IS NOT NULL
           AND created_at < NOW() - INTERVAL '1 minute'
       `;
 
+      if (whereClause.tenantId) {
+        query = Prisma.sql`
+          SELECT AVG(EXTRACT(EPOCH FROM (updated_at - created_at)) * 1000)::float as avg
+          FROM outbox_events
+          WHERE status = 'sent'
+            AND tenant_id = ${whereClause.tenantId}
+            AND updated_at IS NOT NULL
+            AND created_at < NOW() - INTERVAL '1 minute'
+        `;
+      }
+
+      const result = await this.db.$queryRaw<[{ avg: number | null }]>(query);
       return result[0]?.avg || undefined;
     } catch (error) {
       console.warn('Failed to calculate average processing time:', error);

@@ -16,6 +16,8 @@ import { n8nWebhookRouter } from "./routers/n8n-webhook";
 import { supportNotificationsRouter } from "./routers/support-notifications";
 import { tenantSupportRoutingRouter } from "./routers/tenant-support-routing";
 import { tenantSsoRouter } from "./routers/tenant-sso";
+import { outboxRouter } from "./routers/outbox";
+import { auditRouter } from "./routers/audit";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -206,6 +208,25 @@ const appRouter = router({
   getTenantAvailableEmails: tenantSupportRoutingRouter.getTenantAvailableEmails,
   deleteTenantSupportRouting:
     tenantSupportRoutingRouter.deleteTenantSupportRouting,
+
+  // Outbox Event Management (Platform Admin)
+  getOutboxStats: outboxRouter.getStats,
+  getOutboxEvents: outboxRouter.getEvents,
+  getOutboxEventById: outboxRouter.getEventById,
+  retryFailedEvents: outboxRouter.retryFailedEvents,
+  resetStuckEvents: outboxRouter.resetStuckEvents,
+  cleanupProcessedEvents: outboxRouter.cleanupProcessedEvents,
+  getEventsByTenant: outboxRouter.getEventsByTenant,
+  getEventsByType: outboxRouter.getEventsByType,
+  getOutboxEventTypes: outboxRouter.getEventTypes,
+  getOutboxTenantIds: outboxRouter.getTenantIds,
+
+  // Audit Event Management (Platform Admin & Tenant Admin)
+  getAuditEvents: auditRouter.getAuditEvents,
+  getTenantAuditEvents: auditRouter.getTenantAuditEvents,
+  getAuditStats: auditRouter.getAuditStats,
+  getAuditFilterOptions: auditRouter.getFilterOptions,
+  getAuditEventById: auditRouter.getAuditEventById,
 });
 
 // Export the router and type for client usage

@@ -190,7 +190,7 @@ This is a learning project. Contributions are welcome, but please understand:
 
 ## License
 
-nThis project is licensed under a custom license that reserves commercial rights. See [LICENSE](LICENSE) for details.
+This project is licensed under a custom license that reserves commercial rights. See [LICENSE](LICENSE) for details.
 
 **For commercial use, please contact the author for licensing terms.**
 

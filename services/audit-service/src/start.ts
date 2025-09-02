@@ -14,7 +14,7 @@ function createDefaultConfig(): AuditServiceConfig {
   return {
     serviceName: process.env.SERVICE_NAME || 'audit-service',
     version: process.env.SERVICE_VERSION || '1.0.0',
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4222',
+    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
     streamName: process.env.NATS_STREAM_NAME || 'EVENTS',
     consumerName: process.env.AUDIT_CONSUMER_NAME || 'audit-consumer',
     databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/authless',
@@ -25,8 +25,8 @@ function createDefaultConfig(): AuditServiceConfig {
     concurrency: parseInt(process.env.AUDIT_CONCURRENCY || '8'),
     batchSize: parseInt(process.env.AUDIT_BATCH_SIZE || '100'),
     ackWaitMs: parseInt(process.env.AUDIT_ACK_WAIT_MS || '30000'),
-    port: parseInt(process.env.PORT || '8080'),
-    metricsPort: parseInt(process.env.METRICS_PORT || '9090'),
+    port: parseInt(process.env.PORT || '8081'),
+    metricsPort: parseInt(process.env.METRICS_PORT || '9091'),
     healthCheckIntervalMs: parseInt(process.env.HEALTH_CHECK_INTERVAL_MS || '10000'),
   };
 }

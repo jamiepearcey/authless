@@ -87,12 +87,12 @@ export class AuditService {
         },
       },
 
-      lightshipPort: config.port || 8080,
+      lightshipPort: config.port || 8081,
 
       metrics: {
         enabled: true,
         prefix: `${config.serviceName}_`,
-        metricsPort: config.metricsPort || 9090,
+        metricsPort: config.metricsPort || 9091,
       },
 
       healthChecks: {

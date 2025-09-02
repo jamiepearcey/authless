@@ -10,7 +10,9 @@ import {
   BarChart3,
   Shield,
   HelpCircle,
-  Home
+  Home,
+  Database,
+  Activity
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -56,6 +58,18 @@ export function AdminSidebar({ className }: AdminSidebarProps) {
       href: "/admin/security",
       icon: Shield,
       description: "Security settings"
+    },
+    {
+      name: "Outbox",
+      href: "/admin/outbox",
+      icon: Database,
+      description: "Event processing monitoring"
+    },
+    {
+      name: "Audit",
+      href: "/admin/audit",
+      icon: Activity,
+      description: "System audit logs"
     },
     {
       name: "Settings",

@@ -2,6 +2,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { router, platformAdminProcedure, tenantMemberProcedure, protectedProcedure } from "../middleware";
 import { PrismaClient } from "@db/base";
+import { OutboxEvents } from "../outbox-service";
 
 const tenantSelect = {
   id: true,
@@ -102,6 +103,30 @@ export const tenantRouter = router({
             severity: "info",
           },
         });
+
+        // Publish tenant created event
+        await ctx.outbox.publishTenantEvent(
+          OutboxEvents.TENANT_CREATED,
+          newTenant.id,
+          {
+            tenantId: newTenant.id,
+            slug: input.slug,
+            name: input.name,
+            plan: input.plan,
+            createdBy: ctx.session.user.id,
+            createdByEmail: ctx.session.user.email,
+            timestamp: new Date().toISOString(),
+            metadata: {
+              subdomain: input.subdomain,
+              invitePolicy: input.invitePolicy,
+              description: input.description,
+              website: input.website,
+              industry: input.industry,
+              size: input.size,
+              contactEmail: input.contactEmail,
+            },
+          }
+        );
         
         return newTenant;
       } catch (error) {
@@ -199,6 +224,23 @@ export const tenantRouter = router({
             severity: "info",
           },
         });
+
+        // Publish tenant updated event
+        await ctx.outbox.publishTenantEvent(
+          OutboxEvents.TENANT_UPDATED,
+          updatedTenant.id,
+          {
+            tenantId: updatedTenant.id,
+            slug: slug,
+            updatedBy: ctx.session.user.id,
+            updatedByEmail: ctx.session.user.email,
+            timestamp: new Date().toISOString(),
+            changes: data,
+            metadata: {
+              previousState: existingTenant,
+            },
+          }
+        );
         
         return updatedTenant;
       } catch (error) {
@@ -248,6 +290,22 @@ export const tenantRouter = router({
             severity: "warning",
           },
         });
+
+        // Publish tenant deleted event
+        await ctx.outbox.publishTenantEvent(
+          OutboxEvents.TENANT_DELETED,
+          deletedTenant.id,
+          {
+            tenantId: deletedTenant.id,
+            slug: slug,
+            deletedBy: ctx.session.user.id,
+            deletedByEmail: ctx.session.user.email,
+            timestamp: new Date().toISOString(),
+            metadata: {
+              previousState: existingTenant,
+            },
+          }
+        );
         
         return deletedTenant;
       } catch (error) {

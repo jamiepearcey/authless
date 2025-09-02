@@ -15,13 +15,13 @@ function createDefaultConfig(): OutboxServiceConfig {
     serviceName: process.env.SERVICE_NAME || 'outbox-service',
     version: process.env.SERVICE_VERSION || '1.0.0',
     databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/authless',
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4222',
+    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
     batchSize: parseInt(process.env.OUTBOX_BATCH_SIZE || '100'),
     maxTries: parseInt(process.env.OUTBOX_MAX_TRIES || '10'),
     idleSleepMs: parseInt(process.env.OUTBOX_IDLE_SLEEP_MS || '500'),
     logLevel: (process.env.LOG_LEVEL as any) || 'info',
-    port: parseInt(process.env.PORT || '8080'),
-    metricsPort: parseInt(process.env.METRICS_PORT || '9090'),
+    port: parseInt(process.env.PORT || '8082'),
+    metricsPort: parseInt(process.env.METRICS_PORT || '9092'),
     metricsEnabled: process.env.METRICS_ENABLED !== 'false',
   };
 }

@@ -6,7 +6,7 @@
 echo "🔍 Checking for port conflicts..."
 
 # Define the ports used by services
-PORTS=(8080 8081 8082 8085 9092 9093 9094 9095)
+PORTS=(8081 8082 8083 8084 8085 9091 9092 9093 9094 9095)
 
 # Function to kill process on a specific port
 kill_port() {
@@ -39,8 +39,8 @@ done
 echo "🎯 Port conflict resolution complete!"
 echo ""
 echo "📋 Service ports:"
-echo "   Email Service: 8080"
-echo "   Audit Service: 8081" 
-echo "   Outbox Service: 8082"
-echo "   Webhook Service: 8085"
-echo "   Metrics: 9092, 9093, 9094, 9095"
+echo "   Audit Service: 8081 (health) / 9091 (metrics)"
+echo "   Outbox Service: 8082 (health) / 9092 (metrics)" 
+echo "   Email Service: 8083 (health) / 9093 (metrics)"
+echo "   Realtime Service: 8084 (health) / 9094 (metrics)"
+echo "   Webhook Service: 8085 (health) / 9095 (metrics)"

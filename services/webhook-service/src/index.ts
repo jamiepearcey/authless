@@ -111,12 +111,12 @@ export class WebhookService {
         },
       },
 
-      lightshipPort: config.port || 8080,
+      lightshipPort: config.port || 8085,
 
       metrics: {
         enabled: true,
         prefix: `${config.serviceName}_`,
-        metricsPort: config.metricsPort || 9090,
+        metricsPort: config.metricsPort || 9095,
       },
 
       healthChecks: {
@@ -302,8 +302,8 @@ function createDefaultConfig(): WebhookServiceConfig {
     ackWaitMs: parseInt(process.env.WEBHOOK_ACK_WAIT_MS || '30000'),
     maxRetries: parseInt(process.env.WEBHOOK_MAX_RETRIES || '3'),
     retryBackoffMs: parseInt(process.env.WEBHOOK_RETRY_BACKOFF_MS || '1000'),
-    port: parseInt(process.env.PORT || '8084'),
-    metricsPort: parseInt(process.env.METRICS_PORT || '9098'),
+    port: parseInt(process.env.PORT || '8085'),
+    metricsPort: parseInt(process.env.METRICS_PORT || '9095'),
   };
 }
 

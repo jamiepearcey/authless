@@ -109,12 +109,12 @@ export class RealtimeService {
         },
       },
       
-      lightshipPort: config.port || 8080,
+      lightshipPort: config.port || 8084,
       
       metrics: {
         enabled: true,
         prefix: `${config.serviceName.replace(/-/g, '_')}_`,
-        metricsPort: config.metricsPort || 9090,
+        metricsPort: config.metricsPort || 9094,
       },
       
       healthChecks: {

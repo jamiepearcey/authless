@@ -9,7 +9,10 @@ import {
   BarChart3,
   TrendingUp,
   Activity,
-  AlertTriangle
+  AlertTriangle,
+  Send,
+  Database,
+  FileText
 } from "lucide-react";
 
 import { trpc } from "@/lib/trpc";
@@ -50,6 +53,8 @@ function DashboardStat({ title, value, description, icon: Icon, trend }: Dashboa
 
 export default function AdminDashboardPage() {
   const { data: dashboardStats, isLoading } = trpc.getAllTenants.useQuery();
+  const { data: outboxStats, isLoading: outboxLoading } = trpc.getOutboxStats.useQuery({});
+  const { data: auditStats, isLoading: auditLoading } = trpc.getAuditStats.useQuery({});
   
   // Mock data for now - replace with real queries
   const stats = {
@@ -61,7 +66,7 @@ export default function AdminDashboardPage() {
     systemHealth: "99.9%"
   };
 
-  if (isLoading) {
+  if (isLoading || outboxLoading || auditLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
@@ -194,22 +199,119 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Recent Notifications */}
-        <Card className="col-span-3">
+        {/* Outbox Monitoring */}
+        <Card className="col-span-2">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Send className="h-5 w-5" />
+              <span>Outbox Events</span>
+            </CardTitle>
+            <CardDescription>Event publishing and delivery status</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-green-600">{outboxStats?.sent || 0}</div>
+                  <div className="text-sm text-gray-600">Sent</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600">{outboxStats?.pending || 0}</div>
+                  <div className="text-sm text-gray-600">Pending</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-yellow-600">{outboxStats?.processing || 0}</div>
+                  <div className="text-sm text-gray-600">Processing</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-red-600">{(outboxStats?.failed || 0) + (outboxStats?.dead || 0)}</div>
+                  <div className="text-sm text-gray-600">Failed</div>
+                </div>
+              </div>
+              
+              {outboxStats?.oldestPending && (
+                <div className="mt-4 p-3 bg-yellow-50 rounded-lg">
+                  <div className="flex items-center space-x-2">
+                    <AlertTriangle className="h-4 w-4 text-yellow-600" />
+                    <span className="text-sm font-medium text-yellow-800">
+                      Oldest pending: {new Date(outboxStats.oldestPending).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              )}
+              
+              <div className="mt-4">
+                <a 
+                  href="/admin/outbox" 
+                  className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+                >
+                  View detailed outbox monitoring →
+                </a>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Audit Monitoring */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <FileText className="h-5 w-5" />
+              <span>Audit Events</span>
+            </CardTitle>
+            <CardDescription>System audit trail and activity</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-indigo-600">{auditStats?.recentEvents || 0}</div>
+                <div className="text-sm text-gray-600">Events (24h)</div>
+              </div>
+              
+              <div className="space-y-2">
+                {auditStats?.topActions?.slice(0, 3).map((action) => (
+                  <div key={action.action} className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">{action.action.replace(/_/g, ' ')}</span>
+                    <span className="font-medium">{action.count}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-4">
+                <a 
+                  href="/admin/audit" 
+                  className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+                >
+                  View audit events →
+                </a>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* System Alerts Section */}
+      <div className="grid gap-6">
+        <Card>
           <CardHeader>
             <CardTitle>System Alerts</CardTitle>
             <CardDescription>Recent system events and notifications</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5" />
-                <div>
-                  <p className="font-medium">Email service degradation</p>
-                  <p className="text-sm text-gray-600">Email delivery experiencing delays. Investigating...</p>
-                  <p className="text-xs text-gray-500 mt-1">2 minutes ago</p>
+              {outboxStats && (outboxStats.failed > 0 || outboxStats.dead > 0) && (
+                <div className="flex items-start space-x-3">
+                  <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Outbox events failing</p>
+                    <p className="text-sm text-gray-600">
+                      {outboxStats.failed + outboxStats.dead} events need attention
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">Check outbox monitoring</p>
+                  </div>
                 </div>
-              </div>
+              )}
+              
               <div className="flex items-start space-x-3">
                 <Shield className="h-5 w-5 text-green-500 mt-0.5" />
                 <div>
@@ -218,6 +320,7 @@ export default function AdminDashboardPage() {
                   <p className="text-xs text-gray-500 mt-1">1 hour ago</p>
                 </div>
               </div>
+              
               <div className="flex items-start space-x-3">
                 <Building2 className="h-5 w-5 text-blue-500 mt-0.5" />
                 <div>

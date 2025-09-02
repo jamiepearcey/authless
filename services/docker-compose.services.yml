@@ -56,21 +56,21 @@ services:
       - OUTBOX_BATCH_SIZE=100
       - OUTBOX_MAX_TRIES=10
       - OUTBOX_IDLE_SLEEP_MS=500
-      - PORT=8080
-      - METRICS_PORT=9090
+      - PORT=8082
+      - METRICS_PORT=9092
       - LOG_LEVEL=info
       - METRICS_ENABLED=true
       - NODE_ENV=production
     ports:
-      - "8082:8080"  # Health/API port
-      - "9092:9090"  # Metrics port
+      - "8082:8082"  # Health/API port
+      - "9092:9092"  # Metrics port
     depends_on:
       postgres:
         condition: service_healthy
       nats:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -99,22 +99,22 @@ services:
       - AUDIT_MAX_RETRIES=10
       - AUDIT_RETRY_DELAY_MS=1000
       - HEALTH_CHECK_INTERVAL_MS=10000
-      - PORT=8080
-      - METRICS_PORT=9090
+      - PORT=8081
+      - METRICS_PORT=9091
       - LOG_LEVEL=info
       - DEFAULT_SERVICE=audit-service
       - DEFAULT_VERSION=1.0.0
       - NODE_ENV=production
     ports:
-      - "8081:8080"  # Health/API port
-      - "9091:9090"  # Metrics port
+      - "8081:8081"  # Health/API port
+      - "9091:9091"  # Metrics port
     depends_on:
       postgres:
         condition: service_healthy
       nats:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -122,6 +122,90 @@ services:
     restart: unless-stopped
     networks:
       - authless-network
+
+  # Email Service
+  email-service:
+    build:
+      context: ./email-service
+      dockerfile: Dockerfile
+      target: production
+    container_name: authless-email-service
+    environment:
+      - SERVICE_NAME=email-service
+      - SERVICE_VERSION=1.0.0
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/authless
+      - NATS_URL=nats://nats:4222
+      - NATS_STREAM_NAME=EVENTS
+      - EMAIL_CONSUMER_NAME=email-consumer
+      - EMAIL_CONCURRENCY=5
+      - EMAIL_BATCH_SIZE=1
+      - EMAIL_RETRY_LIMIT=3
+      - EMAIL_RETRY_BACKOFF_MS=1000
+      - PORT=8083
+      - METRICS_PORT=9093
+      - NODE_ENV=production
+    ports:
+      - "8083:8083"  # Health/API port
+      - "9093:9093"  # Metrics port
+    depends_on:
+      postgres:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - authless-network
+    profiles:
+      - extended  # Only start with --profile extended
+
+  # Realtime Service
+  realtime-service:
+    build:
+      context: ./realtime-service
+      dockerfile: Dockerfile
+      target: production
+    container_name: authless-realtime-service
+    environment:
+      - SERVICE_NAME=realtime-service
+      - SERVICE_VERSION=1.0.0
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/authless
+      - NATS_URL=nats://nats:4222
+      - NATS_STREAM_NAME=EVENTS
+      - REALTIME_CONSUMER_NAME=realtime-consumer
+      - REALTIME_CONCURRENCY=8
+      - REALTIME_BATCH_SIZE=100
+      - REALTIME_ACK_WAIT_MS=30000
+      - REALTIME_MAX_RETRIES=10
+      - CENTRIFUGO_URL=http://centrifugo:8000
+      - CENTRIFUGO_API_KEY=your-centrifugo-api-key
+      - PORT=8084
+      - METRICS_PORT=9094
+      - NODE_ENV=production
+    ports:
+      - "8084:8084"  # Health/API port
+      - "9094:9094"  # Metrics port
+    depends_on:
+      postgres:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - authless-network
+    profiles:
+      - extended  # Only start with --profile extended
 
   # Webhook Service (if needed)
   webhook-service:
@@ -143,19 +227,19 @@ services:
       - WEBHOOK_ACK_WAIT_MS=30000
       - WEBHOOK_MAX_RETRIES=3
       - WEBHOOK_RETRY_BACKOFF_MS=1000
-      - PORT=8080
-      - METRICS_PORT=9090
+      - PORT=8085
+      - METRICS_PORT=9095
       - NODE_ENV=production
     ports:
-      - "8084:8080"  # Health/API port
-      - "9094:9090"  # Metrics port
+      - "8085:8085"  # Health/API port
+      - "9095:9095"  # Metrics port
     depends_on:
       postgres:
         condition: service_healthy
       nats:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8085/health"]
       interval: 30s
       timeout: 10s
       retries: 3

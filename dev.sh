@@ -33,6 +33,10 @@ cleanup() {
     pkill -f "next dev" 2>/dev/null || true
     pkill -f "tsx src" 2>/dev/null || true
     
+    # Kill any processes on service ports
+    echo -e "${YELLOW}🔍 Resolving port conflicts...${NC}"
+    ./scripts/kill-port-conflicts.sh
+    
     echo -e "${GREEN}✅ Cleanup completed${NC}"
 }
 
@@ -51,6 +55,11 @@ case "${1:-start}" in
         cleanup
         exit 0
         ;;
+    "kill-ports")
+        echo -e "${YELLOW}🔍 Killing all processes on service ports...${NC}"
+        ./scripts/kill-port-conflicts.sh
+        exit 0
+        ;;
     "web-only")
         echo -e "${BLUE}🌐 Starting web application only...${NC}"
         cd apps/web
@@ -59,6 +68,10 @@ case "${1:-start}" in
         ;;
     "essential")
         echo -e "${BLUE}🚀 Starting essential services...${NC}"
+        
+        # Kill any processes on service ports first
+        echo -e "${YELLOW}🔍 Resolving port conflicts...${NC}"
+        ./scripts/kill-port-conflicts.sh
         
         # Start web app
         echo -e "${GREEN}📱 Starting web application...${NC}"
@@ -90,8 +103,12 @@ case "${1:-start}" in
         ;;
     "start"|*)
         echo -e "${BLUE}🚀 Starting development environment...${NC}"
-        echo -e "${GREEN}📱 Web application starting...${NC}"
         
+        # Kill any processes on service ports first
+        echo -e "${YELLOW}🔍 Resolving port conflicts...${NC}"
+        ./scripts/kill-port-conflicts.sh
+        
+        echo -e "${GREEN}📱 Web application starting...${NC}"
         cd apps/web
         pnpm dev &
         echo $! >> "../../$PID_FILE"
@@ -108,6 +125,7 @@ echo "   Startup tenant: http://startup.test:3000"
 echo "   Enterprise tenant: http://enterprise.test:3000"
 echo ""
 echo -e "${YELLOW}🛑 To stop: ./dev.sh stop${NC}"
+echo -e "${YELLOW}🔍 To kill ports only: ./dev.sh kill-ports${NC}"
 
 # Wait for processes
 wait

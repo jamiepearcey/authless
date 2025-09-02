@@ -30,7 +30,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Expose ports
-EXPOSE 8080 9090
+EXPOSE 8082 9092
 
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
@@ -83,11 +83,11 @@ RUN mkdir -p logs && chown -R outbox-service:nodejs logs
 USER outbox-service
 
 # Expose ports
-EXPOSE 8080 9090
+EXPOSE 8082 9092
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8080/health || exit 1
+    CMD curl -f http://localhost:8082/health || exit 1
 
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]

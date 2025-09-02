@@ -7,6 +7,7 @@ import {
   publicProcedure,
 } from "../middleware";
 import * as crypto from "crypto";
+import { OutboxEvents } from "../outbox-service";
 
 // Support Case Status Enum
 const CaseStatusEnum = z.enum(["OPEN", "PENDING", "RESOLVED", "CLOSED"]);
@@ -333,6 +334,28 @@ export const supportCaseRouter = router({
           },
         });
 
+        // Publish support ticket created event
+        await ctx.outbox.publishSupportEvent(
+          OutboxEvents.SUPPORT_TICKET_CREATED,
+          supportCase.id,
+          input.tenantId || null,
+          {
+            ticketId: supportCase.id,
+            subject: input.title,
+            status: "OPEN",
+            priority: input.priority,
+            customerEmail: "unknown", // Could be derived from contactMessage if available
+            assignedTo: supportCase.assignee?.name,
+            category: "general",
+            metadata: {
+              caseNumber: supportCase.caseNumber,
+              source: input.source,
+              createdBy: ctx.session.user.id,
+              timestamp: new Date().toISOString(),
+            },
+          }
+        );
+
         return supportCase;
       } catch (error) {
         console.error("Failed to create support case:", error);
@@ -424,6 +447,35 @@ export const supportCaseRouter = router({
           },
         });
 
+        // Publish appropriate support event based on status change
+        let eventType = OutboxEvents.SUPPORT_TICKET_UPDATED;
+        if (input.status === "CLOSED") {
+          eventType = OutboxEvents.SUPPORT_TICKET_CLOSED as any;
+        }
+
+        await ctx.outbox.publishSupportEvent(
+          eventType,
+          currentCase.id,
+          currentCase.tenantId,
+          {
+            ticketId: currentCase.id,
+            subject: currentCase.title!,
+            status: input.status,
+            priority: currentCase.priority!,
+            customerEmail: currentCase.contactMessage?.email || "unknown",
+            assignedTo: currentCase.assignee?.name || undefined,
+            category: "general",
+            metadata: {
+              caseNumber: currentCase.caseNumber!,
+              fromStatus: currentCase.status,
+              toStatus: input.status,
+              reason: input.reason,
+              updatedBy: ctx.session.user.id,
+              timestamp: new Date().toISOString(),
+            },
+          }
+        );
+
         return updatedCase;
       } catch (error) {
         if (error instanceof TRPCError) throw error;
@@ -476,6 +528,29 @@ export const supportCaseRouter = router({
             severity: "info",
           },
         });
+
+        // Publish support ticket assigned event
+        if (input.assigneeId) {
+          await ctx.outbox.publishSupportEvent(
+            OutboxEvents.SUPPORT_TICKET_ASSIGNED,
+            input.caseId,
+            updatedCase.tenantId,
+            {
+              ticketId: input.caseId,
+              subject: updatedCase.title!,
+              status: updatedCase.status!,
+              priority: updatedCase.priority!,
+              customerEmail: "unknown", // Could be derived from case data
+              assignedTo: updatedCase.assignee?.name || undefined,
+              category: "general",
+              metadata: {
+                caseNumber: updatedCase.caseNumber!,
+                assignedBy: ctx.session.user.id,
+                timestamp: new Date().toISOString(),
+              },
+            }
+          );
+        }
 
         return updatedCase;
       } catch (error) {

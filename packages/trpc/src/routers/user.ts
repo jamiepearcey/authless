@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { router, protectedProcedure, platformAdminProcedure, tenantAdminProcedure } from "../middleware";
 import bcrypt from "bcryptjs";
 import { imageUploadService } from "../image-upload-service";
+import { OutboxEvents } from "../outbox-service";
 
 export const userRouter = router({
   // Get user by ID (protected - users can only get their own info or if they're admin)
@@ -133,6 +134,23 @@ export const userRouter = router({
         },
       });
 
+      // Publish user updated event
+      await ctx.outbox.publishUserEvent(
+        OutboxEvents.USER_UPDATED,
+        input.id,
+        ctx.session.user.tenantId || null,
+        {
+          userId: input.id,
+          email: updatedUser.email,
+          name: updatedUser.name || undefined,
+          action: "profile_updated",
+          metadata: {
+            updatedFields: Object.keys(input).filter(key => key !== 'id' && input[key as keyof typeof input] !== undefined),
+            timestamp: new Date().toISOString(),
+          },
+        }
+      );
+
       return updatedUser;
     }),
 
@@ -184,6 +202,23 @@ export const userRouter = router({
           hashedPassword: hashedNewPassword,
         },
       });
+
+      // Publish password changed event
+      await ctx.outbox.publishUserEvent(
+        OutboxEvents.AUTH_PASSWORD_CHANGED,
+        input.id,
+        ctx.session.user.tenantId || null,
+        {
+          userId: input.id,
+          email: ctx.session.user.email,
+          name: ctx.session.user.name || "",
+          action: "password_changed",
+          metadata: {
+            timestamp: new Date().toISOString(),
+            ipAddress: "unknown", // Could be passed from request if needed
+          },
+        }
+      );
 
       return { success: true, message: "Password changed successfully" };
     }),
@@ -345,6 +380,24 @@ export const userRouter = router({
       await ctx.db.user.delete({
         where: { id: input.id },
       });
+
+      // Publish user deleted event
+      await ctx.outbox.publishUserEvent(
+        OutboxEvents.USER_DELETED,
+        input.id,
+        null, // No tenant context for platform admin actions
+        {
+          userId: input.id,
+          email: user.email!,
+          name: user.name || "",
+          action: "user_deleted",
+          metadata: {
+            deletedBy: ctx.session.user.id,
+            deletedByEmail: ctx.session.user.email,
+            timestamp: new Date().toISOString(),
+          },
+        }
+      );
 
       return { success: true };
     }),

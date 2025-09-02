@@ -128,7 +128,7 @@ export const exampleConfig: RealtimeServiceConfig = {
 export const minimalConfig: RealtimeServiceConfig = {
   serviceName: 'realtime-service-dev',
   version: '0.1.0',
-  natsUrl: 'nats://localhost:4222',
+  natsUrl: 'nats://localhost:4223',
   streamName: 'EVENTS',
   consumerName: 'realtime_consumer_dev',
   databaseUrl: 'postgresql://postgres:postgres@localhost:5432/realtime_dev',

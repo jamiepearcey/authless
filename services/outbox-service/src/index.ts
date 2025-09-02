@@ -186,7 +186,7 @@ export class OutboxService {
 
       // Start Lightship for health checks
       this.lightship = await createLightship({
-        port: this.config.port || 8080,
+        port: this.config.port || 8082,
         detectKubernetes: false,
         gracefulShutdownTimeout: 25_000,
       });
@@ -211,7 +211,7 @@ export class OutboxService {
       this.lightship.signalReady();
       
       this.logger.info({
-        port: this.config.port || 8080,
+        port: this.config.port || 8082,
         metricsPort: this.config.metricsPort || 9090,
         batchSize: this.config.batchSize,
         maxTries: this.config.maxTries,
@@ -318,13 +318,13 @@ function createDefaultConfig(): OutboxServiceConfig {
     serviceName: 'outbox-service',
     version: '1.0.0',
     databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/authless',
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4222',
+    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
     batchSize: parseInt(process.env.OUTBOX_BATCH_SIZE || '100'),
     maxTries: parseInt(process.env.OUTBOX_MAX_TRIES || '10'),
     idleSleepMs: parseInt(process.env.OUTBOX_IDLE_SLEEP_MS || '500'),
     logLevel: (process.env.LOG_LEVEL as pino.LevelWithSilent) || 'info',
-    port: parseInt(process.env.PORT || '8080'),
-    metricsPort: parseInt(process.env.METRICS_PORT || '9090'),
+            port: parseInt(process.env.PORT || '8082'),
+    metricsPort: parseInt(process.env.METRICS_PORT || '9092'),
     metricsEnabled: process.env.METRICS_ENABLED !== 'false',
   };
 }
