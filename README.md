@@ -1,493 +1,293 @@
-# Authless uk - Architecture & Development Guide
+# Authless - Self-Hosted SaaS Foundation
 
-A comprehensive guide to the project's architecture, conventions, and development workflow.
+**Escape the per-user pricing trap. Build enterprise-grade SaaS without the £2,500/month bills.**
 
-## Status: Work in Progress
+Authless is a comprehensive, self-hosted SaaS foundation that provides everything you need to build modern B2B applications. No vendor lock-in, no per-user fees, no compromise on enterprise features.
 
-**This project is currently under active development.** The architecture, APIs, and implementation details are subject to change as we iterate and improve the system. Please refer to the latest documentation and consider this when making contributions or integrations.
+## 🚀 What Is This?
 
-## License
+**Authless is the SaaS starter you wish existed** - a complete, production-ready foundation that typically takes 8-12+ weeks of senior engineering work. Instead of paying £500-2,500/month for 10K users to hosted auth services, pay once and own your infrastructure.
 
-This project is licensed under the **Business Source License (BSL) 1.1**. 
+### **Core Value Proposition**
+- ✅ **Self-hosted** - Complete control over your infrastructure  
+- ✅ **No per-user fees** - Escape the pricing trap that kills profitability
+- ✅ **Enterprise-ready** - Multi-tenancy, SSO, compliance, audit trails
+- ✅ **Production-proven** - Battle-tested patterns and architecture
+- ✅ **Developer-friendly** - Full TypeScript, comprehensive tooling
 
-### What this means:
+### **Target Market**
+- 🎯 B2B SaaS startups avoiding per-user pricing traps
+- 🎯 Enterprise software teams building multi-tenant platforms  
+- 🎯 Agencies/studios building multiple client projects
+- 🎯 Companies with revenue >£100K needing commercial features
 
-- **Source Available**: The source code is freely available for viewing, learning, and non-commercial use
-- **Commercial Use**: Commercial use requires a separate license agreement
-- **Free for Non-Commercial**: Personal, educational, and non-commercial use is permitted
-- **Contributions**: Contributions are welcome and will be licensed under the same terms
+## 🏗️ **Product Architecture**
 
-For full license terms, see [LICENSE](LICENSE) file.
+### **Frontend Stack**
+- **Next.js 14** - App Router, SSR, TypeScript, TailwindCSS
+- **Multi-tenant routing** - Subdomains, custom domains, tenant isolation
+- **Real-time UI** - Live notifications, WebSocket connections
+- **Internationalization** - LLM-powered translation workflows
+- **Admin panels** - Tenant management, user management, support
 
-### Commercial Licensing
+### **Backend Stack** 
+- **tRPC API** - End-to-end type safety with Zod validation
+- **PostgreSQL + Prisma** - Relational database with type-safe ORM
+- **Event-driven architecture** - NATS JetStream for reliable messaging
+- **Microservices** - Domain-specific services with clear boundaries
 
-If you're interested in using this software commercially, please contact us to discuss licensing options.
+### **Infrastructure**
+- **NATS JetStream** - Self-hosted message streaming (Kafka alternative)
+- **Centrifugo** - Self-hosted real-time server (Pusher/Ably alternative)
+- **PostgreSQL + PgBouncer** - Database with connection pooling
+- **Docker Compose** - Complete local development environment
 
-## Project Architecture Overview
+## 🔥 **Key Features**
 
-This project follows a **layered architecture** with clear separation of concerns:
+### **1. Enterprise Authentication**
+- **Passkeys/WebAuthn** with device management
+- **Multi-factor auth** - TOTP, WhatsApp/SMS with rate limiting  
+- **OAuth providers** - Google, GitHub + custom integrations
+- **Enterprise SSO** - OpenID Connect for enterprise customers
+- **Session management** - Device tracking, bulk revocation
+- **Security monitoring** - Breach alerts, suspicious activity
+
+### **2. Multi-Tenancy + Domain Management**  
+- **Domain resolution** - Subdomains & custom domains
+- **Tenant admin console** - Complete self-service management
+- **Magic link invitations** - Secure user onboarding
+- **Role-based access** - Granular permissions system
+- **Data isolation** - Complete tenant separation
+- **Bulk operations** - User management at scale
+
+### **3. LLM-Powered Internationalization**
+- **Automatic detection** - CLI finds English strings in codebase
+- **Stable translation IDs** - Content-aware ID generation
+- **LLM translations** - GPT fills missing translations with context
+- **Developer workflow** - Approval system for translations
+- **One-click expansion** - Add new languages instantly
+- **Production-ready** - Complete i18n architecture
+
+### **4. Real-Time Notifications**
+- **Self-hosted alternative** to Ably/Pusher (no vendor fees)
+- **In-app notification tray** + management interface
+- **Multi-channel delivery** - Email, WhatsApp via webhooks
+- **Smart targeting** - Users, roles, tenants, global broadcast
+- **User preferences** - Opt-out management, digest scheduling
+- **Webhook workflows** - Extensible notification pipeline
+
+### **5. Support + Contact System**
+- **Customer support forms** - Intelligent routing & categorization
+- **Email threading** - Inbound replies via webhook integration
+- **SLA tracking** - Escalation workflows and metrics
+- **Admin interface** - Complete case management
+- **Multi-level routing** - Global + tenant-specific configuration
+- **Integration-ready** - Webhook-based extensibility
+
+### **6. Feature Flags + Compliance**
+- **Multi-level flags** - Global, tenant, and user-specific
+- **Precedence system** - Configurable override hierarchy  
+- **Cache optimization** - Pub/sub invalidation for performance
+- **Audit compliance** - Complete event trail for regulations
+- **Discussion system** - Collaborative features on any resource
+- **Admin controls** - Platform-wide feature management
+
+## 🏛️ **Technical Architecture**
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Application Layer                        │
-│  • Next.js Web App (/apps/web)                            │
-│  • API Routes (/apps/web/app/api)                         │
-│  • UI Components (/packages/ui)                           │
-│  • Authentication (NextAuth.js)                           │
-│  • Database Client (Prisma)                               │
+│                    Next.js Web Application                  │  
+│  • Multi-tenant routing (subdomains/custom domains)       │
+│  • tRPC API layer with end-to-end type safety            │
+│  • Real-time UI with WebSocket connections               │
+│  • Admin panels for tenant/user management               │
 └─────────────────────────────────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                    Service Layer                           │
-│  • Realtime Service (/services/realtime-service)           │
-│  • Audit Service (/services/audit-service)                 │
-│  • Email Service (future)                                  │
-│  • Webhook Service (future)                                │
-└─────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Package Layer                            │
-│  • @jetstream/service-wrapper                              │
-│  • @jetstream/realtime-consumer                           │
-│  • @jetstream/audit-consumer                              │
-│  • @jetstream/email-consumer                              │
-│  • @jetstream/webhook-consumer                            │
-│  • @db/base                                                │
-│  • @ui                                                     │
-│  • @trpc                                                   │
+│                    Event-Driven Services                   │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐       │
+│  │    Audit    │  │   Email     │  │  Webhook    │       │
+│  │   Service   │  │  Service    │  │  Service    │       │
+│  └─────────────┘  └─────────────┘  └─────────────┘       │
+│  ┌─────────────┐  ┌─────────────────────────────────┐     │
+│  │  Realtime   │  │      Outbox Processor           │     │
+│  │   Service   │  │   (Reliable Event Publishing)   │     │
+│  └─────────────┘  └─────────────────────────────────┘     │
 └─────────────────────────────────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    Infrastructure Layer                     │
-│  • NATS JetStream (Event Streaming)                       │
-│  • PostgreSQL (Database)                                   │
-│  • Centrifugo (Realtime Communication)                     │
-│  • Redis (Caching)                                         │
-│  • Stripe (Payments)                                       │
+│  • NATS JetStream (Event Streaming & Message Queues)      │
+│  • PostgreSQL + PgBouncer (Database + Connection Pool)    │  
+│  • Centrifugo (Real-time WebSocket Server)                │
+│  • Stripe (Payment Processing)                            │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 📁 **Directory Structure**
+### **Event-Driven Flow**
+1. **Web App** generates events (user actions, system events)
+2. **Outbox Processor** publishes events to NATS JetStream reliably
+3. **Microservices** consume and process domain-specific events
+4. **Real-time clients** receive updates via Centrifugo WebSocket
+5. **Database** maintains consistent state with audit trails
+
+## 📁 **Project Structure**
 
 ```
 authless/
-├── apps/                          # Application layer
-│   └── web/                      # Next.js web application
-│       ├── app/                  # App Router pages
-│       ├── components/           # React components
-│       ├── hooks/                # Custom React hooks
-│       └── lib/                  # Utility libraries
-├── packages/                      # Package layer (domain-agnostic)
+├── apps/web/                     # Next.js application
+│   ├── app/                      # App Router (pages & API)
+│   ├── components/               # React components  
+│   └── lib/                      # Utilities & configurations
+├── packages/                     # Shared packages
+│   ├── db/                       # Prisma schema & migrations
+│   ├── trpc/                     # API layer & routers
 │   ├── ui/                       # Shared UI components
-│   ├── db/                       # Database schema & client
-│   ├── trpc/                     # tRPC API layer
-│   ├── jetstream-service-wrapper/ # Service infrastructure
-│   ├── realtime-consumer/        # Realtime event processing
-│   ├── audit-consumer/           # Audit event processing
-│   ├── email-consumer/           # Email processing
-│   ├── webhook-consumer/         # Webhook processing
-│   └── integration-tests/        # End-to-end testing
-├── services/                      # Service layer (domain-specific)
-│   ├── realtime-service/         # Realtime service
-│   ├── audit-service/            # Audit service
-│   └── [future-services]/        # Additional services
-├── docs/                         # Documentation
-├── scripts/                      # Build & deployment scripts
-└── pnpm-workspace.yaml          # Workspace configuration
+│   ├── outbox-processor/         # Reliable event publishing
+│   └── [domain]-consumer/        # Event processing packages
+├── services/                     # Microservices
+│   ├── audit-service/            # Compliance & audit trails
+│   ├── email-service/            # Email workflows
+│   ├── webhook-service/          # External integrations  
+│   └── realtime-service/         # Real-time notifications
+└── scripts/                      # Development & deployment
 ```
 
-## Layer Responsibilities
+## 🚀 **Quick Start**
 
-### **Application Layer (`/apps`)**
-- **Purpose**: User-facing web application
-- **Responsibilities**:
-  - User interface and experience
-  - API route handlers
-  - Authentication and authorization
-  - Business logic orchestration
-  - State management
-- **Technologies**: Next.js, React, TypeScript, tRPC
+### **Prerequisites**
+- Node.js 18+ and pnpm
+- PostgreSQL 14+
+- Docker & Docker Compose (for local development)
 
-### **Service Layer (`/services`)**
-- **Purpose**: Domain-specific business services
-- **Responsibilities**:
-  - Domain logic implementation
-  - Service configuration
-  - Custom event handlers
-  - Business rules and workflows
-  - Service-specific routing
-- **Pattern**: Factory pattern with `JetStreamServiceWrapper`
-
-### **Package Layer (`/packages`)**
-- **Purpose**: Reusable, domain-agnostic packages
-- **Responsibilities**:
-  - Infrastructure implementation
-  - Common utilities and helpers
-  - Shared types and interfaces
-  - Cross-cutting concerns
-- **Convention**: `@jetstream/*` namespace
-
-### **Infrastructure Layer**
-- **Purpose**: External services and data stores
-- **Responsibilities**:
-  - Event streaming (NATS)
-  - Data persistence (PostgreSQL)
-  - Realtime communication (Centrifugo)
-  - External integrations (Stripe, etc.)
-
-## Data Flow Patterns
-
-### **Event-Driven Architecture**
-```
-1. Application Event → NATS Stream
-2. Consumer Package → Event Processing
-3. Service Layer → Domain Logic
-4. Infrastructure → External Systems
-5. Response → Back to Application
-```
-
-### **Service Communication**
-```
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│   Web App   │───▶│   Service   │───▶│  Consumer  │
-│             │    │             │    │             │
-└─────────────┘    └─────────────┘    └─────────────┘
-       │                   │                   │
-       ▼                   ▼                   ▼
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│   tRPC      │    │   NATS      │    │ PostgreSQL  │
-│   API       │    │ JetStream   │    │   Database  │
-└─────────────┘    └─────────────┘    └─────────────┘
-```
-
-## Database Schema
-
-### **Core Tables**
-- **`User`**: User accounts and profiles
-- **`Tenant`**: Multi-tenancy support
-- **`SupportCase`**: Support ticket management
-- **`AuditEvent`**: Audit trail and compliance
-- **`ContactMessage`**: Contact form submissions
-
-### **Key Relationships**
-- **User** ↔ **Tenant** (Many-to-Many)
-- **SupportCase** → **Tenant** (Belongs to)
-- **SupportCase** → **User** (Created by)
-- **AuditEvent** → **User** (Actor)
-- **AuditEvent** → **Tenant** (Context)
-
-### **Schema Conventions**
-- **Naming**: PascalCase for models, camelCase for fields
-- **Timestamps**: `createdAt`, `updatedAt` on all models
-- **IDs**: UUID primary keys with optional `caseNumber` (base32)
-- **Relations**: Explicit foreign key relationships
-- **Indexes**: Strategic indexing for performance
-
-## 🎨 **UI Component System**
-
-### **Component Hierarchy**
-```
-@ui (Base Components)
-├── Button, Input, Card, etc.
-├── Layout components
-└── Utility components
-
-Web App Components
-├── Page-specific components
-├── Feature components
-└── Layout components
-```
-
-### **Design System**
-- **Colors**: Consistent color palette
-- **Typography**: Unified font hierarchy
-- **Spacing**: 4px grid system
-- **Components**: Reusable, composable patterns
-- **Responsive**: Mobile-first design approach
-
-## 🔌 **API Design**
-
-### **tRPC Architecture**
-- **Routers**: Organized by domain
-- **Procedures**: Type-safe API endpoints
-- **Middleware**: Authentication, validation, rate limiting
-- **Error Handling**: Structured error responses
-
-### **API Conventions**
-- **Naming**: RESTful endpoint naming
-- **Response Format**: Consistent JSON structure
-- **Error Codes**: Standardized error codes
-- **Validation**: Zod schema validation
-- **Documentation**: OpenAPI/Swagger support
-
-## Environment Configuration
-
-### **Required Variables**
+### **Development Setup**
 ```bash
-# Database
-DATABASE_URL="postgresql://..."
-
-# NATS
-NATS_URL="nats://localhost:4222"
-
-# Authentication
-NEXTAUTH_SECRET="..."
-NEXTAUTH_URL="http://localhost:3000"
-
-# External Services
-STRIPE_SECRET_KEY="..."
-CENTRIFUGO_API_KEY="..."
-```
-
-### **Configuration Files**
-- **`.env.local`**: Local development
-- **`.env.example`**: Template for team members
-- **`.env.production`**: Production deployment
-- **`next.config.js`**: Next.js configuration
-- **`tsconfig.json`**: TypeScript configuration
-
-## 🧪 **Testing Strategy**
-
-### **Test Types**
-- **Unit Tests**: Individual component/function testing
-- **Integration Tests**: API endpoint testing
-- **E2E Tests**: Full user journey testing
-- **Contract Tests**: Service interface testing
-
-### **Testing Tools**
-- **Vitest**: Unit and integration testing
-- **Playwright**: End-to-end testing
-- **MSW**: API mocking
-- **Testing Library**: React component testing
-
-## Development Workflow
-
-### **Getting Started**
-```bash
-# Clone and install
+# Clone and install dependencies
 git clone <repository>
+cd authless
 pnpm install
 
 # Set up environment
 cp .env.example .env.local
-# Edit .env.local with your values
+# Edit .env.local with your configuration
 
-# Start development
+# Start infrastructure (PostgreSQL, NATS, Centrifugo)
+docker compose up -d
+
+# Initialize database
+pnpm run db:migrate
+pnpm run db:seed
+
+# Start development server
 pnpm run dev
 ```
 
-### **Development Commands**
+### **Core Commands**
 ```bash
-pnpm run dev          # Start development server
-pnpm run build        # Build for production
-pnpm run test         # Run tests
-pnpm run lint         # Lint code
-pnpm run type-check   # TypeScript check
+pnpm run dev              # Start all services in development
+pnpm run build            # Build for production  
+pnpm run test             # Run comprehensive test suite
+pnpm run db:migrate       # Run database migrations
+pnpm run db:studio        # Open Prisma Studio
+pnpm run services:start   # Start microservices only
 ```
 
-### **Package Development**
-```bash
-# Build specific package
-cd packages/ui
-pnpm run build
+## 🧪 **Testing Strategy**
 
-# Build all packages
-pnpm run build:packages
+### **Test Coverage**
+- **Unit tests** - Individual functions and components
+- **Integration tests** - API endpoints and database operations
+- **End-to-end tests** - Complete user workflows
+- **Service tests** - Event-driven architecture validation
 
-# Watch mode for packages
-pnpm run dev:packages
-```
+### **Behavioral Testing**
+Our test suite emphasizes real-world scenarios:
+- **Outbox pattern reliability** - Message delivery guarantees
+- **Multi-tenant isolation** - Data security between tenants
+- **Authentication flows** - Complete auth workflows
+- **Real-time functionality** - WebSocket connection handling
 
-## 🐛 **Debugging & Monitoring**
+## 💰 **Pricing & Licensing**
 
-### **Development Tools**
-- **Next.js DevTools**: Built-in debugging
-- **React DevTools**: Component inspection
-- **Prisma Studio**: Database visualization
-- **NATS CLI**: Stream monitoring
+### **Free (Maker) Tier**
+- Complete foundation with attribution requirement
+- Perfect for side projects and learning
+- All core features included
 
-### **Logging Strategy**
-- **Development**: Console logging with levels
-- **Production**: Structured logging (Pino)
-- **Error Tracking**: Sentry integration
-- **Performance**: Web Vitals monitoring
+### **Commercial Licenses**
+- **Individual**: £299 (founding cohort) / £399 (regular)
+- **Agency/Studio**: £999/year (unlimited client projects)  
+- **Enterprise**: Custom pricing (SLA + security reviews + setup)
 
-### **Health Checks**
-- **Service Health**: `/health` endpoints
-- **Database**: Connection pool status
-- **NATS**: Stream and consumer status
-- **External Services**: API availability
+### **ROI Comparison**
+**Hosted Auth Services at 10K users:**
+- Auth0: £1,600/month = £19,200/year
+- Supabase: £500/month = £6,000/year  
+- **Authless: £399 one-time** ✅
 
-## Common Patterns
+## 🏢 **Enterprise Features**
 
-### **Service Pattern**
-```typescript
-// 1. Define service interface
-interface MyService {
-  start(): Promise<void>;
-  stop(): Promise<void>;
-  processEvent(event: Event): Promise<void>;
-}
+### **Security & Compliance**
+- **SOC 2 ready** - Comprehensive audit trails
+- **GDPR compliant** - Data protection by design
+- **Enterprise SSO** - OpenID Connect, SAML support
+- **Security monitoring** - Breach detection, alerting
+- **Role-based access** - Granular permissions system
 
-// 2. Implement with wrapper
-class MyServiceImpl implements MyService {
-  constructor(private wrapper: JetStreamServiceWrapper) {}
-  
-  async start() {
-    await this.wrapper.start();
-  }
-  
-  // ... implementation
-}
+### **Multi-Tenancy**  
+- **Complete isolation** - Data, UI, and configuration
+- **Custom domains** - White-label customer portals
+- **Tenant admin** - Self-service management interfaces
+- **Bulk operations** - Enterprise-scale user management
 
-// 3. Factory for creation
-class MyServiceFactory {
-  static createService(config: Config): MyService {
-    const wrapper = new JetStreamServiceWrapper(config);
-    return new MyServiceImpl(wrapper);
-  }
-}
-```
+### **Observability**
+- **Structured logging** - Production-ready log aggregation
+- **Health checks** - Service monitoring and alerting  
+- **Performance metrics** - Application performance monitoring
+- **Error tracking** - Comprehensive error reporting
 
-### **Event Processing Pattern**
-```typescript
-// 1. Define event types
-interface Event {
-  type: string;
-  payload: any;
-  metadata: EventMetadata;
-}
+## 🤝 **Contributing**
 
-// 2. Route events
-const router = new EventRouter();
-router.addRoute('user.created', handleUserCreated);
-router.addRoute('payment.completed', handlePaymentCompleted);
+We welcome contributions! Please:
+1. **Follow architecture** - Respect service boundaries
+2. **Maintain type safety** - Use TypeScript throughout
+3. **Add tests** - Cover new functionality comprehensively
+4. **Update docs** - Keep documentation current
+5. **Submit PRs** - Use our review process
 
-// 3. Process in consumer
-async function processMessage(msg: JsMsg) {
-  const event = JSON.parse(msg.data.toString());
-  await router.routeEvent(event);
-  msg.ack();
-}
-```
+## 📞 **Support & Community**
 
-### **Database Pattern**
-```typescript
-// 1. Use Prisma client
-const prisma = new PrismaClient();
+- **Documentation**: Comprehensive guides and API references
+- **GitHub Issues**: Bug reports and feature requests  
+- **Community**: Discord server for discussions
+- **Enterprise Support**: SLA-backed support for commercial licenses
 
-// 2. Transactional operations
-await prisma.$transaction(async (tx) => {
-  const user = await tx.user.create({ data: userData });
-  await tx.auditEvent.create({ data: auditData });
-});
+## 🎯 **Why Choose Authless?**
 
-// 3. Error handling
-try {
-  const result = await prisma.user.findUnique({ where: { id } });
-  return result;
-} catch (error) {
-  logger.error('Database query failed', { error, userId: id });
-  throw new DatabaseError('Failed to fetch user');
-}
-```
+### **vs. Hosted Auth Services**
+- **Cost**: One-time £399 vs £500-2,500/month forever
+- **Control**: Own your infrastructure vs vendor dependency
+- **Customization**: Full source access vs limited configuration
+- **Data**: Your database vs their servers
 
-## Troubleshooting
+### **vs. Building from Scratch**
+- **Time**: Ready in days vs 8-12+ weeks of development
+- **Quality**: Production-tested vs experimental implementation  
+- **Features**: Complete feature set vs basic MVP
+- **Maintenance**: Ongoing updates vs technical debt
 
-### **Common Issues**
-
-#### **Build Errors**
-```bash
-# Clear all builds
-pnpm run clean:all
-
-# Reinstall dependencies
-rm -rf node_modules pnpm-lock.yaml
-pnpm install
-
-# Check TypeScript config
-pnpm run type-check
-```
-
-#### **Service Connection Issues**
-```bash
-# Check NATS
-nats sub EVENTS
-
-# Check database
-pnpm run db:studio
-
-# Check environment variables
-echo $DATABASE_URL
-echo $NATS_URL
-```
-
-#### **Package Resolution Issues**
-```bash
-# Check workspace config
-cat pnpm-workspace.yaml
-
-# Rebuild packages
-pnpm run build:packages
-
-# Check package.json dependencies
-cat packages/*/package.json | grep "@jetstream"
-```
-
-### **Debug Mode**
-```bash
-# Enable debug logging
-DEBUG=* pnpm run dev
-
-# Verbose package builds
-pnpm run build:packages --verbose
-
-# Check service logs
-tail -f logs/service.log
-```
-
-## Additional Resources
-
-### **Documentation**
-- **Next.js**: https://nextjs.org/docs
-- **Prisma**: https://www.prisma.io/docs
-- **tRPC**: https://trpc.io/docs
-- **NATS**: https://docs.nats.io
-- **Centrifugo**: https://centrifugal.dev/docs
-
-### **Architecture Decisions**
-- **Service Wrapper Pattern**: Centralized infrastructure
-- **Event-Driven Design**: Loose coupling, scalability
-- **Type Safety**: Full-stack TypeScript
-- **Monorepo Structure**: Shared packages, isolated apps
-
-### **Performance Considerations**
-- **Database**: Connection pooling, query optimization
-- **Caching**: Redis for frequently accessed data
-- **Event Processing**: Batch processing, concurrency control
-- **Frontend**: Code splitting, lazy loading
+### **vs. Other Starters**  
+- **Completeness**: Full SaaS foundation vs basic auth only
+- **Architecture**: Event-driven microservices vs monolithic structure
+- **Enterprise**: Multi-tenancy, SSO, compliance vs missing features
+- **Real-time**: Built-in WebSocket infrastructure vs afterthought
 
 ---
 
-## Contributing Guidelines
+**Ready to escape the per-user pricing trap?**
 
-1. **Follow Architecture**: Respect layer boundaries and responsibilities
-2. **Type Safety**: Use TypeScript for all new code
-3. **Testing**: Add tests for new functionality
-4. **Documentation**: Update docs for API changes
-5. **Code Style**: Follow established patterns and conventions
-6. **Review Process**: Submit PRs for all changes
+Authless gives you everything you need to build enterprise-grade SaaS applications without the recurring costs that kill profitability. Own your infrastructure, control your costs, and scale without limits.
 
-## 📞 **Support & Questions**
-
-- **Architecture Questions**: Check this README first
-- **Technical Issues**: Review troubleshooting section
-- **Feature Requests**: Create detailed issue descriptions
-- **Contributions**: Follow contributing guidelines
-
----
-
-*This architecture guide is a living document. Update it as the system evolves.*
+*Start building your SaaS today. Your future self (and bank account) will thank you.*
