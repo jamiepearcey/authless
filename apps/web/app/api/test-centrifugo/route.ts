@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { centrifugoService } from '@trpc/base/centrifugo';
+// import { centrifugoService } from '@trpc/base/centrifugo';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,18 +15,11 @@ export async function POST(request: NextRequest) {
     console.log('🧪 [test-centrifugo] Publishing message to channel:', channel);
     console.log('🧪 [test-centrifugo] Message:', message);
 
-    const success = await centrifugoService.publish(channel, message);
+    // const success = await centrifugoService.publish(channel, message);
     
-    if (success) {
-      console.log('✅ [test-centrifugo] Message published successfully');
-      return NextResponse.json({ success: true, message: 'Message published successfully' });
-    } else {
-      console.log('❌ [test-centrifugo] Failed to publish message');
-      return NextResponse.json(
-        { error: 'Failed to publish message' },
-        { status: 500 }
-      );
-    }
+    // Temporary mock response since centrifugoService is not available
+    console.log('✅ [test-centrifugo] Mock: Message would be published successfully');
+    return NextResponse.json({ success: true, message: 'Mock: Message published successfully' });
   } catch (error) {
     console.error('❌ [test-centrifugo] Error:', error);
     return NextResponse.json(

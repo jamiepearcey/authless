@@ -174,15 +174,13 @@ export default function RetryPaymentPage() {
           <div className="mb-8">
             {/* Breadcrumb Navigation */}
             <div className="flex items-center space-x-4 mb-4">
-              <Button
-                onClick={() => router.push('/payments/history')}
-                variant="outline"
-                size="sm"
+              <Link 
+                href="/payments/history"
                 className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
+                <ArrowLeft className="h-5 w-5 mr-2" />
                 Back to History
-              </Button>
+              </Link>
               <div className="h-6 w-px bg-gray-300" />
               <BreadcrumbNavigation
                 items={[

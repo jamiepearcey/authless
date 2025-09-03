@@ -272,7 +272,7 @@ export default function TenantUsersPage() {
                 <div className="h-6 w-px bg-gray-300" />
                 <BreadcrumbNavigation
                   items={[
-                    { label: "Tenants", href: "/tenants" },
+                    { label: "Tenants", href: "/tenants/dashboard" },
                     { label: tenantSlug, href: `/tenants/${tenantSlug}` },
                     { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
                     { label: "Users", current: true },

@@ -21,6 +21,8 @@ import {
   Clock,
   XCircle
 } from 'lucide-react';
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import Link from "next/link";
 
 interface PaymentItem {
   id: string;
@@ -173,25 +175,17 @@ export default function PaymentHistoryPage() {
         
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <Button
-              onClick={() => router.back()}
-              variant="outline"
-              size="sm"
-              className="mr-4"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Button>
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+                <CreditCard className="h-8 w-8 text-indigo-600" />
+                <span>Payment History</span>
+              </h1>
+              <p className="text-gray-600 mt-2">
+                View and manage your payment transactions
+              </p>
+            </div>
           </div>
-          
-          <div className="flex items-center mb-2">
-            <CreditCard className="h-8 w-8 text-blue-600 mr-3" />
-            <h1 className="text-3xl font-bold text-gray-900">Payment History</h1>
-          </div>
-          <p className="text-gray-600">
-            View and manage your payment transactions
-          </p>
         </div>
 
         {isLoading ? (

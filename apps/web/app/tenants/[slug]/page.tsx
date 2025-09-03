@@ -140,7 +140,7 @@ export default function TenantDashboardPage() {
         <div className="flex items-center space-x-4 mb-4">
           <BreadcrumbNavigation
             items={[
-              { label: "Tenants", href: "/tenants" },
+              { label: "Tenants", href: "/tenants/dashboard" },
               { label: tenant.name || tenantSlug, current: true },
             ]}
             showHome={false}

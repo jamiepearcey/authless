@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
@@ -103,7 +103,7 @@ function  SsoConfiguration({ tenantId, tenantSlug }: { tenantId: string; tenantS
   });
 
   // Initialize form data when SSO config loads
-  useState(() => {
+  useEffect(() => {
     if (ssoConfig && !isEditing) {
       setSsoFormData({
         provider: ssoConfig.provider as any || "none",
@@ -133,7 +133,7 @@ function  SsoConfiguration({ tenantId, tenantSlug }: { tenantId: string; tenantS
         })()
       });
     }
-  });
+  }, [ssoConfig, isEditing]);
 
   const handleSsoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -577,7 +577,7 @@ export default function TenantSettingsPage() {
   });
 
   // Initialize form data when tenant loads
-  useState(() => {
+  useEffect(() => {
     if (tenant && !isEditing) {
       setFormData({
         name: tenant.name || "",
@@ -598,7 +598,7 @@ export default function TenantSettingsPage() {
         billingEnabled: tenant.billingEnabled || false,
       });
     }
-  });
+  }, [tenant, isEditing]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -664,7 +664,7 @@ export default function TenantSettingsPage() {
                 <div className="h-6 w-px bg-gray-300" />
                 <BreadcrumbNavigation
                   items={[
-                    { label: "Tenants", href: "/tenants" },
+                    { label: "Tenants", href: "/tenants/dashboard" },
                     { label: tenantSlug, href: `/tenants/${tenantSlug}` },
                     { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
                     { label: "Tenant Settings", current: true },
@@ -710,10 +710,7 @@ export default function TenantSettingsPage() {
             <Palette className="h-4 w-4" />
             Appearance
           </TabsTrigger>
-          <TabsTrigger value="security" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            Security
-          </TabsTrigger>
+    
           <TabsTrigger value="integrations" className="flex items-center gap-2">
             <Zap className="h-4 w-4" />
             Integrations

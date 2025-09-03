@@ -9,16 +9,13 @@
 @layer components {
   .grid-stack {
     background: #f9fafb;
-    min-height: 800px;
-    padding: 1rem;
     border-radius: 0.5rem;
     width: 100%;
   }
   
   .grid-stack-item {
-    border-radius: 0.5rem;
     overflow: visible;
-    min-height: 120px !important;
+    border-radius: 0.5rem;
   }
   
   .grid-stack-item-content {
@@ -27,23 +24,23 @@
     border-radius: 0.5rem;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     cursor: move;
-    overflow: auto;
-    height: calc(100% - 4px) !important;
-    width: calc(100% - 4px) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    box-sizing: border-box !important;
-    margin: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
     padding: 0;
   }
 
-  .grid-stack-item-content .card {
-    height: 100% !important;
+  .grid-stack-item-content .card{
     width: 100% !important;
     margin: 0 !important;
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
+  }
+
+  .grid-stack-item-content .shadow-sm, .grid-stack-item-content .border {
+    box-shadow: none !important;
+    border: none !important;
   }
   
   .grid-stack-item:hover .grid-stack-item-content {
@@ -96,9 +93,7 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: 80px;
-    gap: 10px;
     background: #f9fafb;
-    padding: 1rem;
     border-radius: 0.5rem;
     min-height: 60vh;
   }
@@ -112,32 +107,31 @@
     transition: all 0.2s ease;
     position: relative;
   }
-  
+  :root { --gs-gap: 5px; } /* match GridStack margin */
+
+.grid-edge-flush {
+  /* visually pull the grid outward so outer padding disappears */
+  margin: calc(-1 * var(--gs-gap));
+  /* keep page scroll working */
+  overflow: visible;
+}
+
+/* Move your “frame” styling to the wrapper so the rounded bg goes edge-to-edge */
+.grid-edge-flush {
+  background: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+/* Let GridStack keep its internal padding (equals margin) so spacing between items stays correct */
+.grid-edge-flush > .grid-stack {
+  /* DO NOT zero out padding here, that breaks GridStack spacing */
+  border-radius: inherit; /* optional */
+}
   .dashboard-widget-grid-item:hover {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     border-color: #6366f1;
   }
   
-  .dashboard-widget-grid-item::after {
-    content: '⋮⋮';
-    position: absolute;
-    bottom: 4px;
-    right: 4px;
-    background: #6366f1;
-    color: white;
-    width: 16px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.25rem;
-    font-size: 10px;
-    line-height: 8px;
-    letter-spacing: -2px;
-    opacity: 0;
-    transition: opacity 0.2s;
-    pointer-events: none;
-  }
   
   .dashboard-widget-grid-item:hover::after {
     opacity: 0.8;

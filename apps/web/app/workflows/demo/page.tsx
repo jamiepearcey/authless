@@ -7,10 +7,7 @@
  */
 
 import { useState } from 'react';
-import { Button } from '@ui/base/button';
-import { Input } from '@ui/base/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui/base/card';
-import { Badge } from '@ui/base/badge';
+import { Button, Input, Card, CardContent, CardDescription, CardHeader, CardTitle, Badge } from '@ui/base';
 import { Loader2, Play, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 interface WorkflowResult {

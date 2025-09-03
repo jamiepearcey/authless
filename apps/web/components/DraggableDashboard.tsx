@@ -16,19 +16,19 @@ interface DashboardStatProps {
   trend?: { value: string; isPositive: boolean };
 }
 
-function DashboardStat({ title, value, description, icon: Icon, trend }: DashboardStatProps) {
+function DashboardStat({ title, value, description, icon: Icon, trend, isGridMode }: DashboardStatProps & { isGridMode?: boolean }) {
   return (
-    <Card className="h-full min-h-[240px]">
+    <Card data-variant={isGridMode ? "gridstack" : "default"} className="overflow-hidden">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         <Icon className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
-        <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-          <span>{description}</span>
+      <CardContent className="overflow-hidden">
+        <div className="text-2xl font-bold overflow-hidden">{value}</div>
+        <div className="flex items-center space-x-2 text-xs text-muted-foreground overflow-hidden">
+          <span className="truncate">{description}</span>
           {trend && (
-            <span className={`flex items-center ${trend.isPositive ? "text-green-600" : "text-red-600"}`}>
+            <span className={`flex items-center ${trend.isPositive ? "text-green-600" : "text-red-600"} flex-shrink-0`}>
               <TrendingUp className={`h-3 w-3 mr-1 ${trend.isPositive ? "" : "rotate-180"}`} />
               {trend.value}
             </span>
@@ -61,21 +61,21 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
     lastUpdate, refreshHealth, isAllHealthy, healthyCount, totalCount, avgResponseTime, isGridMode
   } = props;
 
-  // 12-col grid; cellHeight=120 → h=2=240px; h=5=600px, etc.
-  const widgets = [
-    { id: "stats-1", x: 0,  y: 0,  w: 3, h: 2, minW: 2, minH: 2 },
-    { id: "stats-2", x: 3,  y: 0,  w: 3, h: 2, minW: 2, minH: 2 },
-    { id: "stats-3", x: 6,  y: 0,  w: 3, h: 2, minW: 2, minH: 2 },
-    { id: "stats-4", x: 9,  y: 0,  w: 3, h: 2, minW: 2, minH: 2 },
+           // 12-col grid with proper heights for content
+     const widgets = [
+      { id: "stats-1", x: 0,  y: 0,  w: 3, h: 3, minW: 2, minH: 3  },
+      { id: "stats-2", x: 3,  y: 0,  w: 3, h: 3, minW: 2, minH: 3},
+      { id: "stats-3", x: 6,  y: 0,  w: 3, h: 3, minW: 2, minH: 3 },
+      { id: "stats-4", x: 9,  y: 0,  w: 3, h: 3, minW: 2, minH: 3 },
 
-    { id: "tenants",       x: 0,  y: 2,  w: 8, h: 5, minW: 4, minH: 4 },
-    { id: "system-status", x: 8,  y: 2,  w: 4, h: 5, minW: 3, minH: 4 },
+     { id: "tenants",       x: 0,  y: 4,  w: 8, h: 10, minW: 4, minH: 6 },
+     { id: "system-status", x: 8,  y: 4,  w: 4, h: 8, minW: 3, minH: 6 },
 
-    { id: "outbox", x: 0,  y: 7,  w: 8, h: 4, minW: 4, minH: 3 },
-    { id: "audit",  x: 8,  y: 7,  w: 4, h: 4, minW: 3, minH: 3 },
+     { id: "outbox", x: 0,  y: 12, w: 8, h: 4, minW: 4, minH: 4 },
+     { id: "audit",  x: 8,  y: 12, w: 4, h: 6, minW: 3, minH: 4 },
 
-    { id: "alerts", x: 0,  y: 11, w: 12, h: 3, minW: 6, minH: 3 }
-  ];
+     { id: "alerts", x: 0,  y: 18, w: 12, h: 6, minW: 6, minH: 4 }
+   ];
 
   const [isMounted, setIsMounted] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -84,7 +84,7 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
   useEffect(() => setIsMounted(true), []);
 
   useEffect(() => {
-    if (!isMounted || !isGridMode || !gridRef.current) return;
+    if (!isMounted || !gridRef.current) return;
 
     // destroy any stale instance
     if (gridInstanceRef.current) {
@@ -92,16 +92,17 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
       gridInstanceRef.current = null;
     }
 
-         const grid = GridStack.init(
+    const grid = GridStack.init(
        {
          column: 12,
-         cellHeight: 120,
-         margin: 12,
+         cellHeight: 50,
+         margin: 5,
          animate: true,
          float: false,
-         resizable: { handles: "se" },
-         draggable: { handle: ".card-header, .grid-stack-item-content" },
-         staticGrid: false
+         resizable: isGridMode ? { handles: "se" } : false,
+         draggable: isGridMode ? { handle: ".card-header, .grid-stack-item-content" } : false,
+         staticGrid: !isGridMode,
+         minRow: 1
        },
        gridRef.current
      );
@@ -163,6 +164,7 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
             description="All registered workspaces"
             icon={Building2}
             trend={{ value: "+12%", isPositive: true }}
+            isGridMode={isGridMode}
           />
         );
       case "stats-2":
@@ -173,6 +175,7 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
             description="Currently active workspaces"
             icon={Activity}
             trend={{ value: "+8%", isPositive: true }}
+            isGridMode={isGridMode}
           />
         );
       case "stats-3":
@@ -183,6 +186,7 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
             description="Across all tenants"
             icon={Users}
             trend={{ value: "+15%", isPositive: true }}
+            isGridMode={isGridMode}
           />
         );
       case "stats-4":
@@ -193,18 +197,19 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
             description={healthData ? `${healthyCount}/${totalCount} services healthy` : "Checking services..."}
             icon={Shield}
             trend={healthData ? { value: `${avgResponseTime}ms avg`, isPositive: avgResponseTime < 200 } : undefined}
+            isGridMode={isGridMode}
           />
         );
       case "tenants":
         return (
-          <Card className="h-full">
+          <Card>
             <CardHeader>
               <CardTitle>Recent Tenant Activity</CardTitle>
               <CardDescription>Latest tenant registrations and status changes</CardDescription>
             </CardHeader>
-            <CardContent className="h-full overflow-auto">
-              <div className="space-y-4">
-                {dashboardStats?.slice(0, 10).map((tenant) => (
+            <CardContent>
+              <div className="space-y-3">
+                {dashboardStats?.slice(0, 6).map((tenant) => (
                   <div key={tenant.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div className="flex items-center space-x-3">
                       <Building2 className="h-5 w-5 text-indigo-600" />
@@ -228,7 +233,7 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
         );
       case "system-status":
         return (
-          <Card className="h-full">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <div>
                 <CardTitle>System Status</CardTitle>
@@ -243,7 +248,7 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
                 <Activity className={`h-4 w-4 ${healthLoading ? "animate-spin" : ""}`} />
               </button>
             </CardHeader>
-            <CardContent className="h-full overflow-auto">
+            <CardContent>
               {healthLoading && !healthData ? (
                 <div className="flex items-center justify-center py-8">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600" />
@@ -300,7 +305,7 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
         );
       case "outbox":
         return (
-          <Card className="h-full">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Send className="h-5 w-5" />
@@ -308,31 +313,31 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
               </CardTitle>
               <CardDescription>Event publishing and delivery status</CardDescription>
             </CardHeader>
-            <CardContent className="h-full">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 h-full">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">{outboxStats?.sent || 0}</div>
-                  <div className="text-sm text-gray-600">Sent</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">{outboxStats?.pending || 0}</div>
-                  <div className="text-sm text-gray-600">Pending</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-yellow-600">{outboxStats?.processing || 0}</div>
-                  <div className="text-sm text-gray-600">Processing</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-red-600">{(outboxStats?.failed || 0) + (outboxStats?.dead || 0)}</div>
-                  <div className="text-sm text-gray-600">Failed</div>
-                </div>
-              </div>
-            </CardContent>
+                         <CardContent>
+               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                 <div className="text-center">
+                   <div className="text-2xl font-bold text-green-600">{outboxStats?.sent || 0}</div>
+                   <div className="text-sm text-gray-600">Sent</div>
+                 </div>
+                 <div className="text-center">
+                   <div className="text-2xl font-bold text-blue-600">{outboxStats?.pending || 0}</div>
+                   <div className="text-sm text-gray-600">Pending</div>
+                 </div>
+                 <div className="text-center">
+                   <div className="text-2xl font-bold text-yellow-600">{outboxStats?.processing || 0}</div>
+                   <div className="text-sm text-gray-600">Processing</div>
+                 </div>
+                 <div className="text-center">
+                   <div className="text-2xl font-bold text-red-600">{(outboxStats?.failed || 0) + (outboxStats?.dead || 0)}</div>
+                   <div className="text-sm text-gray-600">Failed</div>
+                 </div>
+               </div>
+             </CardContent>
           </Card>
         );
       case "audit":
         return (
-          <Card className="h-full">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <FileText className="h-5 w-5" />
@@ -340,7 +345,7 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
               </CardTitle>
               <CardDescription>System audit trail and activity</CardDescription>
             </CardHeader>
-            <CardContent className="h-full overflow-auto">
+            <CardContent>
               <div className="space-y-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-indigo-600">{auditStats?.recentEvents || 0}</div>
@@ -360,12 +365,12 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
         );
       case "alerts":
         return (
-          <Card className="h-full">
+          <Card>
             <CardHeader>
               <CardTitle>System Alerts</CardTitle>
               <CardDescription>Recent system events and notifications</CardDescription>
             </CardHeader>
-            <CardContent className="h-full overflow-auto">
+            <CardContent>
               <div className="space-y-4">
                 {healthData && isAllHealthy && (
                   <div className="flex items-start space-x-3">
@@ -404,77 +409,46 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
 
   return (
     <div className="space-y-6">
-      {isGridMode ? (
-        <div>
-          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-            <p className="text-sm text-blue-800">
-              <strong>Grid Layout Mode Active:</strong> Drag widgets to rearrange and resize by dragging the bottom-right corner.
-            </p>
-          </div>
-
-          <div ref={gridRef} className="grid-stack">
-            {widgets.map((w) => (
-              <div
-                key={w.id}
-                className="grid-stack-item"
-                gs-x={w.x} gs-y={w.y} gs-w={w.w} gs-h={w.h}
-                gs-min-w={w.minW} gs-min-h={w.minH} gs-id={w.id}
-              >
-                <div className="grid-stack-item-content h-full">
-                  {renderWidgetContent(w.id)}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        // Fixed fallback layout
-        <div className="space-y-6">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <DashboardStat title="Total Tenants" value={String(stats.totalTenants)} description="All registered workspaces" icon={Building2} trend={{ value: "+12%", isPositive: true }} />
-            <DashboardStat title="Active Tenants" value={String(stats.activeTenants)} description="Currently active workspaces" icon={Activity} trend={{ value: "+8%", isPositive: true }} />
-            <DashboardStat title="Total Users" value="1,247" description="Across all tenants" icon={Users} trend={{ value: "+15%", isPositive: true }} />
-            <DashboardStat title="System Health" value={getHealthPercentage()} description={healthData ? `${healthyCount}/${totalCount} services healthy` : "Checking services..."} icon={Shield} trend={healthData ? { value: `${avgResponseTime}ms avg`, isPositive: avgResponseTime < 200 } : undefined} />
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="col-span-2 h-[600px]">
-              <CardHeader>
-                <CardTitle>Recent Tenant Activity</CardTitle>
-                <CardDescription>Latest tenant registrations and status changes</CardDescription>
-              </CardHeader>
-              <CardContent className="h-full overflow-auto">
-                <div className="space-y-4">
-                  {dashboardStats?.slice(0, 10).map((tenant) => (
-                    <div key={tenant.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <div className="flex items-center space-x-3">
-                        <Building2 className="h-5 w-5 text-indigo-600" />
-                        <div>
-                          <p className="font-medium">{tenant.name}</p>
-                          <p className="text-sm text-gray-600">@{tenant.slug}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          tenant.status === "active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
-                        }`}>
-                          {tenant.status}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {renderWidgetContent("system-status")}
-
-            <div className="col-span-2 h-[480px]">{renderWidgetContent("outbox")}</div>
-            <div className="h-[480px]">{renderWidgetContent("audit")}</div>
-            <div className="col-span-3 h-[360px]">{renderWidgetContent("alerts")}</div>
-          </div>
+      {isGridMode && (
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+          <p className="text-sm text-blue-800">
+            <strong>Grid Layout Mode Active:</strong> Drag widgets to rearrange and resize by dragging the bottom-right corner.
+          </p>
         </div>
       )}
+
+      <style jsx>{`
+        .grid-stack-static .grid-stack-item {
+          cursor: default !important;
+        }
+        .grid-stack-static .grid-stack-item:hover {
+          border: none !important;
+          box-shadow: none !important;
+        }
+        .grid-stack-static .grid-stack-item .ui-resizable-handle {
+          display: none !important;
+        }
+        .grid-stack-static .grid-stack-item .ui-draggable-handle {
+          cursor: default !important;
+        }
+      `}</style>
+
+      <div className="grid-edge-flush"> 
+        <div ref={gridRef} className={`grid-stack ${!isGridMode ? 'grid-stack-static' : ''}`}>
+          {widgets.map((w) => (
+            <div
+               key={w.id}
+               className="grid-stack-item"
+               gs-x={w.x} gs-y={w.y} gs-w={w.w} gs-h={w.h}
+               gs-min-w={w.minW} gs-min-h={w.minH} gs-id={w.id}
+             >
+              <div className="grid-stack-item-content overflow-hidden">
+                {renderWidgetContent(w.id)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -198,7 +198,7 @@ export const apiRateLimit = createRateLimit({
 });
 
 export const authRateLimit = createRateLimit({
-  points: 10,
+  points: 20,
   duration: 300, // 5 minutes
   blockDuration: 900, // Block for 15 minutes
   keyPrefix: 'auth',
