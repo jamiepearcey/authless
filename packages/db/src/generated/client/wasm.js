@@ -189,6 +189,8 @@ exports.Prisma.TenantScalarFieldEnum = {
   status: 'status',
   subdomain: 'subdomain',
   customDomain: 'customDomain',
+  domainAlias: 'domainAlias',
+  registrationClosed: 'registrationClosed',
   logoUrl: 'logoUrl',
   theme: 'theme',
   primaryColor: 'primaryColor',

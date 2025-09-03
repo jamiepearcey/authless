@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { 
   Building2, 
@@ -18,6 +19,10 @@ interface TenantAdminSidebarProps {
 
 export function TenantAdminSidebar({ tenantSlug, className }: TenantAdminSidebarProps) {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  
+  // Check if user is a platform administrator
+  const isPlatformAdmin = session?.user?.platformRole === "admin";
   
   const navigationItems = [
     {
@@ -54,20 +59,25 @@ export function TenantAdminSidebar({ tenantSlug, className }: TenantAdminSidebar
 
   return (
     <aside className={`py-6 px-2 sm:px-6 lg:col-span-3 ${className}`}>
-      {/* Back to Platform */}
-      <div className="mb-6">
-        <Link
-          href="/admin/tenants"
-          className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Platform
-        </Link>
-      </div>
+      {/* Back to Platform - Only visible for platform administrators */}
+      {isPlatformAdmin && (
+        <div className="mb-6">
+          <Link
+            href="/admin/tenants"
+            className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Platform
+          </Link>
+        </div>
+      )}
 
       <nav className="space-y-1">
         {navigationItems.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+          // Special handling for Dashboard - only active on exact match
+          const isActive = item.name === "Dashboard" 
+            ? pathname === item.href
+            : pathname === item.href || pathname.startsWith(item.href + "/");
           const Icon = item.icon;
           return (
             <Link

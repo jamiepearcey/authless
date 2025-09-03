@@ -35,8 +35,45 @@ export default function TenantSwitcher() {
   const [userTenants, setUserTenants] = useState<UserTenant[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-
   const isPlatformAdmin = (session?.user as any)?.platformRole === 'admin';
+
+  // Check if we're on a tenant-specific domain
+  const isOnTenantDomain = () => {
+    if (typeof window === 'undefined') return false;
+    
+    const hostname = window.location.hostname;
+    
+    // Check for subdomain mode (e.g., tenant.example.com)
+    if (hostname.includes('localhost')) {
+      const parts = hostname.split('.');
+      const subdomain = parts[0];
+      // If subdomain is not 'localhost' and looks like a tenant slug
+      if (subdomain !== 'localhost' && /^[a-z0-9-]+$/.test(subdomain)) {
+        return true;
+      }
+    } else {
+      // Production domain with subdomain
+      const parts = hostname.split('.');
+      if (parts.length >= 3) {
+        const subdomain = parts[0];
+        if (/^[a-z0-9-]+$/.test(subdomain)) {
+          return true;
+        }
+      }
+    }
+    
+    // Check for custom domain mode (would need to check against known custom domains)
+    // For now, we'll assume any non-localhost domain that doesn't match the main domain is a custom domain
+    const mainDomain = process.env.NEXT_PUBLIC_MAIN_DOMAIN || 'authless.com';
+    if (!hostname.includes('localhost') && !hostname.includes(mainDomain)) {
+      return true;
+    }
+    
+    return false;
+  };
+
+  // Hide the tenant switcher if on tenant domain and not platform admin
+  const shouldHideTenantSwitcher = isOnTenantDomain() && !isPlatformAdmin;
 
   const { data: tenantsData } = trpc.getUserTenants.useQuery(
     undefined, 
@@ -141,6 +178,11 @@ export default function TenantSwitcher() {
         Loading...
       </div>
     );
+  }
+
+  // Hide the tenant switcher if on tenant domain and not platform admin
+  if (shouldHideTenantSwitcher) {
+    return null;
   }
 
   // For platform admins, use all tenants; for regular users, use their memberships

@@ -14,9 +14,18 @@ import {
   Shield,
   Phone,
   Lock,
-  ExternalLink
+  ExternalLink,
+  Receipt,
+  Calendar,
+  User,
+  Mail,
+  CheckCircle,
+  XCircle,
+  Clock
 } from 'lucide-react';
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { StripeElementsForm } from '@stripe/integration/components';
+import Link from "next/link";
 
 interface OrderData {
   id: string;
@@ -25,10 +34,18 @@ interface OrderData {
   status: string;
   paymentStatus: string;
   description: string;
+  created: number;
+  customerEmail?: string;
+  customerName?: string;
+  paymentMethod?: string;
+  paymentIntentId?: string;
+  receiptUrl?: string;
   metadata: {
     plan?: string;
     guestEmail?: string;
     guestName?: string;
+    tenantId?: string;
+    billingPeriod?: string;
   };
   canRetry: boolean;
 }
@@ -153,30 +170,47 @@ export default function RetryPaymentPage() {
   if (viewMode === 'details') {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
-            <div className="flex items-center mb-4">
+            {/* Breadcrumb Navigation */}
+            <div className="flex items-center space-x-4 mb-4">
               <Button
                 onClick={() => router.push('/payments/history')}
                 variant="outline"
                 size="sm"
-                className="mr-4"
+                className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to History
               </Button>
+              <div className="h-6 w-px bg-gray-300" />
+              <BreadcrumbNavigation
+                items={[
+                  { label: "Payment History", href: "/payments/history" },
+                  { label: "Order Details", current: true },
+                ]}
+                showHome={false}
+              />
             </div>
             
-            <div className="flex items-center mb-2">
-              <ExternalLink className="h-8 w-8 text-blue-600 mr-3" />
-              <h1 className="text-3xl font-bold text-gray-900">Order Details</h1>
+            {/* Page Header */}
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+                  <Receipt className="h-8 w-8 text-indigo-600" />
+                  <span>Order Details</span>
+                </h1>
+                <p className="text-gray-600 mt-2 break-words">
+                  Order ID: <span className="font-mono break-all">{orderId}</span>
+                </p>
+              </div>
             </div>
           </div>
 
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
-                <span>Order {orderId}</span>
+                <span className="break-words">Order <span className="break-all font-mono">{orderId}</span></span>
                 <Badge 
                   className={
                     orderData.paymentStatus === 'paid' 
@@ -195,7 +229,7 @@ export default function RetryPaymentPage() {
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Order ID:</span>
-                      <span className="font-mono">{orderData.id}</span>
+                      <span className="font-mono break-all">{orderData.id}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Plan:</span>
@@ -255,28 +289,40 @@ export default function RetryPaymentPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <Button
-              onClick={() => router.push('/payments/history')}
-              variant="outline"
-              size="sm"
-              className="mr-4"
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center space-x-4 mb-4">
+            <Link 
+              href="/pricing"
+              className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to History
-            </Button>
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Pricing
+            </Link>
+            <div className="h-6 w-px bg-gray-300" />
+            <BreadcrumbNavigation
+              items={[
+                { label: "Pricing", href: "/pricing" },
+                { label: "Retry Payment", current: true },
+              ]}
+              showHome={false}
+            />
           </div>
           
-          <div className="flex items-center mb-2">
-            <CreditCard className="h-8 w-8 text-orange-600 mr-3" />
-            <h1 className="text-3xl font-bold text-gray-900">Retry Payment</h1>
+          {/* Page Header */}
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+                <CreditCard className="h-8 w-8 text-indigo-600" />
+                <span>Retry Payment</span>
+              </h1>
+              <p className="text-gray-600 mt-2">
+                Complete your payment for order {orderId}
+              </p>
+            </div>
           </div>
-          <p className="text-gray-600">
-            Complete your payment for order {orderId}
-          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

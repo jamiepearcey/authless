@@ -24,6 +24,7 @@ export interface Context {
   hashPassword: (password: string) => Promise<string>;
   outbox: TrpcOutboxService;
   trace: TraceContext;
+  hostname?: string;
 }
 
 export const createContext = async (
@@ -31,6 +32,7 @@ export const createContext = async (
   headers?: Record<string, string | string[] | undefined>
 ): Promise<Context> => {
   const traceId = headers ? extractTraceId(headers) : undefined;
+  const hostname = headers?.host as string;
   
   return {
     session: session || null,
@@ -43,6 +45,7 @@ export const createContext = async (
     trace: {
       traceId: traceId || generateTraceId(),
     },
+    hostname: hostname || undefined,
   };
 };
 
@@ -69,5 +72,6 @@ export const createDevContext = async (): Promise<Context> => {
     trace: {
       traceId: generateTraceId(),
     },
+    hostname: 'localhost',
   };
 };

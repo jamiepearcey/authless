@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
-import { Button, Input, Label, toast, Badge, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@ui/base";
-import { Mail, Bell, Trash2, Globe, Lock, Save } from "lucide-react";
+import { Button, Input, Label, toast, Badge, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
+import { Mail, Bell, Trash2, Globe, Lock, Save, MapPin, Clock, Eye, EyeOff, User, Shield, CheckCircle, Edit3, Camera, Upload, Key } from "lucide-react";
 import { useLocale } from "@i18n-core";
 import { trpc } from "@/lib/trpc";
+import { ProfilePhotoUploadDialog } from "@/components/ProfilePhotoUploadDialog";
 
 export default function AccountPage() {
   const { data: session } = useSession();
@@ -43,6 +44,9 @@ export default function AccountPage() {
     enabled: !!session?.user?.id,
   });
 
+  // Get 2FA status
+  const { data: twoFactorStatus } = trpc.getTwoFactorStatus.useQuery();
+
   // Update user mutation
   const updateUser = trpc.updateUser.useMutation({
     onSuccess: () => {
@@ -51,6 +55,25 @@ export default function AccountPage() {
     },
     onError: (error) => {
       toast.error(`Failed to update settings: ${error.message}`);
+    },
+  });
+
+  // Update profile photo mutation
+  const updateProfilePhoto = trpc.updateProfilePhoto.useMutation({
+    onSuccess: (updatedUser) => {
+      // Update session with new image
+      update({
+        ...session,
+        user: {
+          ...session?.user,
+          email: updatedUser.email,
+          image: updatedUser.image,
+        },
+      });
+      toast.success("Profile photo updated successfully!");
+    },
+    onError: (error) => {
+      toast.error(`Failed to update profile photo: ${error.message}`);
     },
   });
 
@@ -103,22 +126,7 @@ export default function AccountPage() {
     }
   };
 
-  const handleSavePreferences = async () => {
-    if (!session?.user?.id) return;
 
-    try {
-      await updateUser.mutateAsync({
-        id: session.user.id,
-        timezone,
-        emailNotifications,
-        marketingEmails: marketingCommunications,
-        securityAlerts,
-        activityUpdates,
-      });
-    } catch (error) {
-      // Error is handled by the mutation
-    }
-  };
 
   const handleDeleteAccount = async () => {
     if (!session?.user?.id) return;
@@ -135,6 +143,15 @@ export default function AccountPage() {
       setIsDeletingAccount(false);
       setShowDeleteDialog(false);
     }
+  };
+
+  const handleProfilePhotoUpload = async (imageFile: File) => {
+    if (!session?.user?.id) return;
+    
+    await updateProfilePhoto.mutateAsync({
+      userId: session.user.id,
+      imageFile,
+    });
   };
 
   // Compact toggle matching your form styling
@@ -169,23 +186,134 @@ export default function AccountPage() {
 
   return (
     <div className="space-y-6">
-      {/* Email Settings */}
-      <div className="bg-white shadow rounded-lg">
-        <div className="px-4 py-5 sm:p-6">
-          <div className="flex items-center space-x-3 mb-6">
-            <Mail className="h-6 w-6 text-indigo-600" />
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Email Settings
-            </h3>
+      {/* Profile Overview */}
+      <div className="bg-white shadow-lg rounded-xl border border-gray-200">
+        <div className="px-6 py-8 sm:p-8">
+          <div className="flex items-start space-x-6">
+            {/* Avatar Section with Upload */}
+            <div className="flex-shrink-0">
+              <div className="relative">
+                <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-100 border-4 border-white shadow-lg">
+                  {session?.user?.image ? (
+                    <img 
+                      src={session.user.image} 
+                      alt="Profile" 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-indigo-500 flex items-center justify-center">
+                      <User className="h-10 w-10 text-white" />
+                    </div>
+                  )}
+                </div>
+                
+                <ProfilePhotoUploadDialog
+                  currentImageUrl={session?.user?.image}
+                  onImageUpload={handleProfilePhotoUpload}
+                  trigger={
+                    <button
+                      type="button"
+                      className="absolute -bottom-1 -right-1 bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition-colors shadow-lg"
+                    >
+                      <Camera className="h-4 w-4" />
+                    </button>
+                  }
+                />
+              </div>
+            </div>
+            
+            {/* Profile Info */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center space-x-3 mb-2">
+                <h2 className="text-2xl font-bold text-gray-900 truncate">
+                  {session.user.name || 'User Account'}
+                </h2>
+                <Badge className="bg-green-100 text-green-800 border-green-200">
+                  <Shield className="h-3 w-3 mr-1" />
+                  Verified
+                </Badge>
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <Mail className="h-5 w-5 text-gray-400" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">{session.user.email}</p>
+                    <p className="text-xs text-gray-500">Primary email address</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <Shield className="h-5 w-5 text-gray-400" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Account Security</p>
+                    <p className="text-xs text-gray-500">Password protected • 2FA available</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <Globe className="h-5 w-5 text-gray-400" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Member since</p>
+                    <p className="text-xs text-gray-500">January 2024</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-900">Email Address</p>
-                <p className="text-sm text-gray-500">{session.user.email}</p>
+          {/* Account Info */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Mail className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Email Address</p>
+                  <p className="text-xs text-gray-500">{session.user.email}</p>
+                </div>
               </div>
-              <Badge variant="outline">Verified</Badge>
+            </div>
+            
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+              <div className="flex items-center space-x-3">
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                  twoFactorStatus?.hasPasskeys || twoFactorStatus?.hasAuthenticatorCodes 
+                    ? 'bg-green-100' 
+                    : 'bg-red-100'
+                }`}>
+                  <Key className={`h-5 w-5 ${
+                    twoFactorStatus?.hasPasskeys || twoFactorStatus?.hasAuthenticatorCodes 
+                      ? 'text-green-600' 
+                      : 'text-red-600'
+                  }`} />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Two-Factor Auth</p>
+                  <p className={`text-xs ${
+                    twoFactorStatus?.hasPasskeys || twoFactorStatus?.hasAuthenticatorCodes 
+                      ? 'text-green-600' 
+                      : 'text-red-600'
+                  }`}>
+                    {twoFactorStatus?.hasPasskeys || twoFactorStatus?.hasAuthenticatorCodes 
+                      ? 'Enabled' 
+                      : 'Not enabled'}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <Globe className="h-5 w-5 text-purple-600" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Account Type</p>
+                  <p className="text-xs text-gray-500">Standard User</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -201,81 +329,104 @@ export default function AccountPage() {
             </h3>
           </div>
           
-          {!showPasswordForm ? (
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-900">Password</p>
-                <p className="text-sm text-gray-500">Last changed: Never</p>
+          {/* Fixed height container to prevent layout shift */}
+          <div className="min-h-[120px] transition-all duration-300 ease-in-out">
+            {!showPasswordForm ? (
+              <div className="h-full flex items-center justify-between p-6 bg-gradient-to-r from-slate-50 to-slate-100 border-2 border-slate-200 rounded-xl hover:border-indigo-300 hover:shadow-md transition-all duration-200 cursor-pointer group"
+                   onClick={() => setShowPasswordForm(true)}>
+                <div className="flex items-center space-x-6">
+                  {/* Stylized asterisk display */}
+                  <div className="flex items-center justify-center w-16 h-16 bg-white rounded-full border-2 border-slate-200 group-hover:border-indigo-300 transition-all duration-200">
+                    <div className="flex items-center space-x-1">
+                      <span className="text-indigo-600 text-lg font-bold tracking-wider">••••••</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-base font-semibold text-gray-900 group-hover:text-indigo-900 transition-colors">Password Protected</p>
+                    <p className="text-sm text-gray-500 flex items-center space-x-1">
+                      <Shield className="h-3 w-3" />
+                      <span>Click to change your password</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2 text-indigo-600 group-hover:text-indigo-700 transition-colors">
+                  <Edit3 className="h-5 w-5" />
+                  <span className="text-sm font-medium">Change</span>
+                </div>
               </div>
-              <Button onClick={() => setShowPasswordForm(true)} variant="outline">
-                Change Password
-              </Button>
-            </div>
-          ) : (
-            <form onSubmit={handlePasswordChange} className="space-y-4">
-              <div>
-                <Label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">
-                  New Password
-                </Label>
-                <Input
-                  id="newPassword"
-                  type="password"
-                  value={passwordData.newPassword}
-                  onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
-                  className="mt-1"
-                  required
-                  minLength={8}
-                  placeholder="Enter your new password"
-                />
-                <p className="text-xs text-gray-500 mt-1">Must be at least 8 characters</p>
+            ) : (
+              <div className="h-full">
+                <form onSubmit={handlePasswordChange} className="space-y-4 p-6 bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-200 rounded-xl">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="newPassword" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                        <Key className="h-4 w-4 text-indigo-600" />
+                        New Password
+                      </Label>
+                      <Input
+                        id="newPassword"
+                        type="password"
+                        value={passwordData.newPassword}
+                        onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                        className="h-11 border-indigo-200 focus:border-indigo-400 focus:ring-indigo-400"
+                        required
+                        minLength={8}
+                        placeholder="Enter your new password"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Must be at least 8 characters</p>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="confirmPassword" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                        <CheckCircle className="h-4 w-4 text-indigo-600" />
+                        Confirm Password
+                      </Label>
+                      <Input
+                        id="confirmPassword"
+                        type="password"
+                        value={passwordData.confirmPassword}
+                        onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                        className="h-11 border-indigo-200 focus:border-indigo-400 focus:ring-indigo-400"
+                        required
+                        placeholder="Confirm your new password"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-end space-x-3 pt-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setShowPasswordForm(false);
+                        setPasswordData({ newPassword: "", confirmPassword: "" });
+                      }}
+                      className="border-slate-300 text-slate-600 hover:bg-slate-50"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={isChangingPassword}
+                      className="bg-indigo-600 hover:bg-indigo-700 flex items-center space-x-2"
+                    >
+                      {isChangingPassword ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                          <span>Saving...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Save className="h-4 w-4" />
+                          <span>Save Password</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </form>
               </div>
-              
-              <div>
-                <Label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                  Confirm New Password
-                </Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  value={passwordData.confirmPassword}
-                  onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                  className="mt-1"
-                  required
-                  placeholder="Confirm your new password"
-                />
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <Button
-                  type="submit"
-                  disabled={isChangingPassword}
-                  className="flex items-center space-x-2"
-                >
-                  {isChangingPassword ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                      <span>Changing...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Save className="h-4 w-4" />
-                      <span>Change Password</span>
-                    </>
-                  )}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => {
-                    setShowPasswordForm(false);
-                    setPasswordData({ newPassword: "", confirmPassword: "" });
-                  }}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
@@ -297,7 +448,20 @@ export default function AccountPage() {
               </div>
               <Toggle
                 checked={emailNotifications}
-                onChange={setEmailNotifications}
+                onChange={(checked) => {
+                  setEmailNotifications(checked);
+                  // Auto-save notification preferences
+                  if (session?.user?.id) {
+                    updateUser.mutateAsync({
+                      id: session.user.id,
+                      timezone,
+                      emailNotifications: checked,
+                      marketingEmails: marketingCommunications,
+                      securityAlerts,
+                      activityUpdates,
+                    });
+                  }
+                }}
                 label="Email Notifications"
               />
             </div>
@@ -309,7 +473,20 @@ export default function AccountPage() {
               </div>
               <Toggle
                 checked={securityAlerts}
-                onChange={setSecurityAlerts}
+                onChange={(checked) => {
+                  setSecurityAlerts(checked);
+                  // Auto-save notification preferences
+                  if (session?.user?.id) {
+                    updateUser.mutateAsync({
+                      id: session.user.id,
+                      timezone,
+                      emailNotifications,
+                      marketingEmails: marketingCommunications,
+                      securityAlerts: checked,
+                      activityUpdates,
+                    });
+                  }
+                }}
                 label="Security Alerts"
               />
             </div>
@@ -321,7 +498,20 @@ export default function AccountPage() {
               </div>
               <Toggle
                 checked={activityUpdates}
-                onChange={setActivityUpdates}
+                onChange={(checked) => {
+                  setActivityUpdates(checked);
+                  // Auto-save notification preferences
+                  if (session?.user?.id) {
+                    updateUser.mutateAsync({
+                      id: session.user.id,
+                      timezone,
+                      emailNotifications,
+                      marketingEmails: marketingCommunications,
+                      securityAlerts,
+                      activityUpdates: checked,
+                    });
+                  }
+                }}
                 label="Activity Updates"
               />
             </div>
@@ -333,16 +523,23 @@ export default function AccountPage() {
               </div>
               <Toggle
                 checked={marketingCommunications}
-                onChange={setMarketingCommunications}
+                onChange={(checked) => {
+                  setMarketingCommunications(checked);
+                  // Auto-save notification preferences
+                  if (session?.user?.id) {
+                    updateUser.mutateAsync({
+                      id: session.user.id,
+                      timezone,
+                      emailNotifications,
+                      marketingEmails: checked,
+                      securityAlerts,
+                      activityUpdates,
+                    });
+                  }
+                }}
                 label="Marketing Communications"
               />
             </div>
-          </div>
-          
-          <div className="mt-6 flex justify-end">
-            <Button onClick={handleSavePreferences} disabled={updateUser.isPending}>
-              {updateUser.isPending ? "Saving..." : "Save Preferences"}
-            </Button>
           </div>
         </div>
       </div>
@@ -358,56 +555,171 @@ export default function AccountPage() {
           </div>
           
           <div className="grid gap-6 sm:grid-cols-2">
-            <div>
-              <Label htmlFor="language" className="block text-sm font-medium text-gray-700">
+            <div className="space-y-3">
+              <Label htmlFor="language" className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                <Globe className="h-4 w-4 text-indigo-600" />
                 Language
               </Label>
-              <select
-                id="language"
-                value={locale ?? "en"}
-                onChange={(e) => switchLocale(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2"
-              >
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
-                <option value="fr">Français</option>
-                <option value="es">Español</option>
-                <option value="ja">日本語</option>
-                <option value="zh">中文</option>
-              </select>
-              <p className="mt-1 text-xs text-gray-500">
-                Choose your interface language.
-              </p>
+              <Select value={locale ?? "en"} onValueChange={(value) => switchLocale(value)}>
+                <SelectTrigger className="w-full h-12 border-2 border-slate-200 focus:border-indigo-400 focus:ring-indigo-400 hover:border-slate-300 transition-all duration-200 bg-gradient-to-r from-slate-50 to-white">
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent className="max-h-60 overflow-y-auto">
+                  <SelectItem value="en" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇺🇸</span>
+                      <div>
+                        <span className="font-medium">English</span>
+                        <span className="text-xs text-gray-500 block">United States</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="de" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇩🇪</span>
+                      <div>
+                        <span className="font-medium">Deutsch</span>
+                        <span className="text-xs text-gray-500 block">Germany</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="fr" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇫🇷</span>
+                      <div>
+                        <span className="font-medium">Français</span>
+                        <span className="text-xs text-gray-500 block">France</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="es" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇪🇸</span>
+                      <div>
+                        <span className="font-medium">Español</span>
+                        <span className="text-xs text-gray-500 block">Spain</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="ja" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇯🇵</span>
+                      <div>
+                        <span className="font-medium">日本語</span>
+                        <span className="text-xs text-gray-500 block">Japan</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="zh" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇨🇳</span>
+                      <div>
+                        <span className="font-medium">中文</span>
+                        <span className="text-xs text-gray-500 block">China</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <div className="flex items-center space-x-2 text-xs">
+                <CheckCircle className="h-3 w-3 text-green-600" />
+                <span className="text-green-600 font-medium">Changes apply immediately</span>
+              </div>
             </div>
 
-            <div>
-              <Label htmlFor="timezone" className="block text-sm font-medium text-gray-700">
+            <div className="space-y-3">
+              <Label htmlFor="timezone" className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                <Clock className="h-4 w-4 text-indigo-600" />
                 Timezone
               </Label>
-              <select
-                id="timezone"
-                value={timezone}
-                onChange={(e) => setTimezone(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2"
-              >
-                <option value="UTC">UTC</option>
-                <option value="Europe/uk">Europe/uk (BST/GMT)</option>
-                <option value="Europe/Berlin">Europe/Berlin (CET/CEST)</option>
-                <option value="America/New_York">America/New_York (EST/EDT)</option>
-                <option value="America/Los_Angeles">America/Los_Angeles (PST/PDT)</option>
-                <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
-                <option value="Australia/Sydney">Australia/Sydney (AEST/AEDT)</option>
-              </select>
-              <p className="mt-1 text-xs text-gray-500">
-                Used for dates and times across the app.
-              </p>
+              <Select value={timezone} onValueChange={(value) => {
+                setTimezone(value);
+                // Auto-save timezone preference
+                if (session?.user?.id) {
+                  updateUser.mutateAsync({
+                    id: session.user.id,
+                    timezone: value,
+                    emailNotifications,
+                    marketingEmails: marketingCommunications,
+                    securityAlerts,
+                    activityUpdates,
+                  });
+                }
+              }}>
+                <SelectTrigger className="w-full h-12 border-2 border-slate-200 focus:border-indigo-400 focus:ring-indigo-400 hover:border-slate-300 transition-all duration-200 bg-gradient-to-r from-slate-50 to-white">
+                  <SelectValue placeholder="Select timezone" />
+                </SelectTrigger>
+                <SelectContent className="max-h-60 overflow-y-auto">
+                  <SelectItem value="UTC" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <MapPin className="h-4 w-4 text-gray-400" />
+                      <div>
+                        <span className="font-medium">UTC</span>
+                        <span className="text-xs text-gray-500 block">Coordinated Universal Time</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="Europe/London" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇬🇧</span>
+                      <div>
+                        <span className="font-medium">London</span>
+                        <span className="text-xs text-gray-500 block">GMT/BST</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="Europe/Berlin" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇩🇪</span>
+                      <div>
+                        <span className="font-medium">Berlin</span>
+                        <span className="text-xs text-gray-500 block">CET/CEST</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="America/New_York" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇺🇸</span>
+                      <div>
+                        <span className="font-medium">New York</span>
+                        <span className="text-xs text-gray-500 block">EST/EDT</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="America/Los_Angeles" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇺🇸</span>
+                      <div>
+                        <span className="font-medium">Los Angeles</span>
+                        <span className="text-xs text-gray-500 block">PST/PDT</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="Asia/Tokyo" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇯🇵</span>
+                      <div>
+                        <span className="font-medium">Tokyo</span>
+                        <span className="text-xs text-gray-500 block">JST</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="Australia/Sydney" className="hover:bg-indigo-50 cursor-pointer">
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="text-xl">🇦🇺</span>
+                      <div>
+                        <span className="font-medium">Sydney</span>
+                        <span className="text-xs text-gray-500 block">AEST/AEDT</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <div className="flex items-center space-x-2 text-xs">
+                <CheckCircle className="h-3 w-3 text-green-600" />
+                <span className="text-green-600 font-medium">Saves automatically</span>
+              </div>
             </div>
-          </div>
-          
-          <div className="mt-6 flex justify-end">
-            <Button onClick={handleSavePreferences} disabled={updateUser.isPending}>
-              {updateUser.isPending ? "Saving..." : "Save Preferences"}
-            </Button>
           </div>
         </div>
       </div>

@@ -15,6 +15,7 @@
     "@auth/prisma-adapter": "^1.0.0",
     "@authless/workflows": "workspace:*",
     "@db/base": "workspace:*",
+    "@declarative-gridstack/react": "^0.1.5",
     "@i18n-core": "workspace:*",
     "@shared/base": "workspace:*",
     "@stripe/integration": "workspace:*",

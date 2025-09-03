@@ -17,7 +17,10 @@ import {
   Edit,
   Trash2,
   AlertTriangle,
-  ArrowLeft
+  ArrowLeft,
+  Filter,
+  X,
+  ChevronDown
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
@@ -145,61 +148,137 @@ export default function AdminTenantsPage() {
         </div>
       </div>
 
-      {/* Toolbar */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            {/* Quick Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search tenants..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-64"
-              />
+      {/* Enhanced Toolbar */}
+      <Card className="mb-6">
+        <CardContent className="p-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            {/* Search Section */}
+            <div className="flex-1 max-w-md">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Search tenants by name or slug..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 h-10 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             </div>
-            
-            {/* Quick Filters */}
-            <div className="flex items-center space-x-2">
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              >
-                <option value="all">All Statuses</option>
-                <option value="active">Active</option>
-                <option value="suspended">Suspended</option>
-                <option value="deleted">Deleted</option>
-              </select>
+
+            {/* Filters Section */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-medium text-gray-700">Filters:</span>
+              </div>
               
-              <select
-                value={selectedPlan}
-                onChange={(e) => setSelectedPlan(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              >
-                <option value="all">All Plans</option>
-                <option value="free">Free</option>
-                <option value="pro">Pro</option>
-                <option value="enterprise">Enterprise</option>
-              </select>
-              
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedStatus("all");
-                  setSelectedPlan("all");
-                  setCurrentPage(1);
-                }}
-                size="sm"
-              >
-                Clear
-              </Button>
+              <div className="flex flex-wrap items-center gap-2">
+                {/* Status Filter */}
+                <div className="relative">
+                  <select
+                    value={selectedStatus}
+                    onChange={(e) => setSelectedStatus(e.target.value)}
+                    className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 transition-colors min-w-[120px]"
+                  >
+                    <option value="all">All Statuses</option>
+                    <option value="active">Active</option>
+                    <option value="suspended">Suspended</option>
+                    <option value="deleted">Deleted</option>
+                  </select>
+                  <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                </div>
+
+                {/* Plan Filter */}
+                <div className="relative">
+                  <select
+                    value={selectedPlan}
+                    onChange={(e) => setSelectedPlan(e.target.value)}
+                    className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 transition-colors min-w-[120px]"
+                  >
+                    <option value="all">All Plans</option>
+                    <option value="free">Free</option>
+                    <option value="pro">Pro</option>
+                    <option value="enterprise">Enterprise</option>
+                  </select>
+                  <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                </div>
+
+                {/* Clear Filters Button */}
+                {(searchTerm || selectedStatus !== "all" || selectedPlan !== "all") && (
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      setSearchTerm("");
+                      setSelectedStatus("all");
+                      setSelectedPlan("all");
+                      setCurrentPage(1);
+                    }}
+                    size="sm"
+                    className="h-8 px-3 text-xs border-gray-300 hover:border-gray-400 hover:bg-gray-50"
+                  >
+                    <X className="h-3 w-3 mr-1" />
+                    Clear All
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+
+          {/* Active Filters Display */}
+          {(searchTerm || selectedStatus !== "all" || selectedPlan !== "all") && (
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm text-gray-500">Active filters:</span>
+                
+                {searchTerm && (
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200">
+                    <Search className="h-3 w-3 mr-1" />
+                    "{searchTerm}"
+                    <button
+                      onClick={() => setSearchTerm("")}
+                      className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+                
+                {selectedStatus !== "all" && (
+                  <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
+                    Status: {selectedStatus}
+                    <button
+                      onClick={() => setSelectedStatus("all")}
+                      className="ml-1 hover:bg-green-200 rounded-full p-0.5"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+                
+                {selectedPlan !== "all" && (
+                  <Badge variant="secondary" className="bg-purple-100 text-purple-800 border-purple-200">
+                    Plan: {selectedPlan}
+                    <button
+                      onClick={() => setSelectedPlan("all")}
+                      className="ml-1 hover:bg-purple-200 rounded-full p-0.5"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">

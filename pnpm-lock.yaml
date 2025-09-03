@@ -60,6 +60,9 @@ importers:
       '@db/base':
         specifier: workspace:*
         version: link:../../packages/db
+      '@declarative-gridstack/react':
+        specifier: ^0.1.5
+        version: 0.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@i18n-core':
         specifier: workspace:*
         version: link:../../packages/i18n-core
@@ -1272,6 +1275,12 @@ packages:
 
   '@date-fns/tz@1.4.1':
     resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
+
+  '@declarative-gridstack/react@0.1.5':
+    resolution: {integrity: sha512-TTkxpbJUref1UZcKXumHw+9Ix93xPyVKmUb50zl9FyvHlKEPcT3q401rc8wBNIxBejfiOhcpt3XvWw7Gpb5DPg==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -6777,6 +6786,11 @@ snapshots:
   '@csstools/css-tokenizer@3.0.4': {}
 
   '@date-fns/tz@1.4.1': {}
+
+  '@declarative-gridstack/react@0.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true

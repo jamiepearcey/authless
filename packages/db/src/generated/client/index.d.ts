@@ -9169,6 +9169,8 @@ export namespace Prisma {
     status: string | null
     subdomain: string | null
     customDomain: string | null
+    domainAlias: string | null
+    registrationClosed: boolean | null
     logoUrl: string | null
     theme: string | null
     primaryColor: string | null
@@ -9205,6 +9207,8 @@ export namespace Prisma {
     status: string | null
     subdomain: string | null
     customDomain: string | null
+    domainAlias: string | null
+    registrationClosed: boolean | null
     logoUrl: string | null
     theme: string | null
     primaryColor: string | null
@@ -9241,6 +9245,8 @@ export namespace Prisma {
     status: number
     subdomain: number
     customDomain: number
+    domainAlias: number
+    registrationClosed: number
     logoUrl: number
     theme: number
     primaryColor: number
@@ -9279,6 +9285,8 @@ export namespace Prisma {
     status?: true
     subdomain?: true
     customDomain?: true
+    domainAlias?: true
+    registrationClosed?: true
     logoUrl?: true
     theme?: true
     primaryColor?: true
@@ -9315,6 +9323,8 @@ export namespace Prisma {
     status?: true
     subdomain?: true
     customDomain?: true
+    domainAlias?: true
+    registrationClosed?: true
     logoUrl?: true
     theme?: true
     primaryColor?: true
@@ -9351,6 +9361,8 @@ export namespace Prisma {
     status?: true
     subdomain?: true
     customDomain?: true
+    domainAlias?: true
+    registrationClosed?: true
     logoUrl?: true
     theme?: true
     primaryColor?: true
@@ -9460,6 +9472,8 @@ export namespace Prisma {
     status: string
     subdomain: string | null
     customDomain: string | null
+    domainAlias: string | null
+    registrationClosed: boolean
     logoUrl: string | null
     theme: string | null
     primaryColor: string | null
@@ -9513,6 +9527,8 @@ export namespace Prisma {
     status?: boolean
     subdomain?: boolean
     customDomain?: boolean
+    domainAlias?: boolean
+    registrationClosed?: boolean
     logoUrl?: boolean
     theme?: boolean
     primaryColor?: boolean
@@ -9571,6 +9587,8 @@ export namespace Prisma {
     status?: boolean
     subdomain?: boolean
     customDomain?: boolean
+    domainAlias?: boolean
+    registrationClosed?: boolean
     logoUrl?: boolean
     theme?: boolean
     primaryColor?: boolean
@@ -9607,6 +9625,8 @@ export namespace Prisma {
     status?: boolean
     subdomain?: boolean
     customDomain?: boolean
+    domainAlias?: boolean
+    registrationClosed?: boolean
     logoUrl?: boolean
     theme?: boolean
     primaryColor?: boolean
@@ -9694,6 +9714,8 @@ export namespace Prisma {
       status: string
       subdomain: string | null
       customDomain: string | null
+      domainAlias: string | null
+      registrationClosed: boolean
       logoUrl: string | null
       theme: string | null
       primaryColor: string | null
@@ -10141,6 +10163,8 @@ export namespace Prisma {
     readonly status: FieldRef<"Tenant", 'String'>
     readonly subdomain: FieldRef<"Tenant", 'String'>
     readonly customDomain: FieldRef<"Tenant", 'String'>
+    readonly domainAlias: FieldRef<"Tenant", 'String'>
+    readonly registrationClosed: FieldRef<"Tenant", 'Boolean'>
     readonly logoUrl: FieldRef<"Tenant", 'String'>
     readonly theme: FieldRef<"Tenant", 'String'>
     readonly primaryColor: FieldRef<"Tenant", 'String'>
@@ -44756,6 +44780,8 @@ export namespace Prisma {
     status: 'status',
     subdomain: 'subdomain',
     customDomain: 'customDomain',
+    domainAlias: 'domainAlias',
+    registrationClosed: 'registrationClosed',
     logoUrl: 'logoUrl',
     theme: 'theme',
     primaryColor: 'primaryColor',
@@ -45951,6 +45977,8 @@ export namespace Prisma {
     status?: StringFilter<"Tenant"> | string
     subdomain?: StringNullableFilter<"Tenant"> | string | null
     customDomain?: StringNullableFilter<"Tenant"> | string | null
+    domainAlias?: StringNullableFilter<"Tenant"> | string | null
+    registrationClosed?: BoolFilter<"Tenant"> | boolean
     logoUrl?: StringNullableFilter<"Tenant"> | string | null
     theme?: StringNullableFilter<"Tenant"> | string | null
     primaryColor?: StringNullableFilter<"Tenant"> | string | null
@@ -46008,6 +46036,8 @@ export namespace Prisma {
     status?: SortOrder
     subdomain?: SortOrderInput | SortOrder
     customDomain?: SortOrderInput | SortOrder
+    domainAlias?: SortOrderInput | SortOrder
+    registrationClosed?: SortOrder
     logoUrl?: SortOrderInput | SortOrder
     theme?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
@@ -46063,11 +46093,13 @@ export namespace Prisma {
     slug?: string
     subdomain?: string
     customDomain?: string
+    domainAlias?: string
     AND?: TenantWhereInput | TenantWhereInput[]
     OR?: TenantWhereInput[]
     NOT?: TenantWhereInput | TenantWhereInput[]
     name?: StringFilter<"Tenant"> | string
     status?: StringFilter<"Tenant"> | string
+    registrationClosed?: BoolFilter<"Tenant"> | boolean
     logoUrl?: StringNullableFilter<"Tenant"> | string | null
     theme?: StringNullableFilter<"Tenant"> | string | null
     primaryColor?: StringNullableFilter<"Tenant"> | string | null
@@ -46116,7 +46148,7 @@ export namespace Prisma {
     supportRouting?: TenantSupportRoutingListRelationFilter
     ssoConfiguration?: XOR<TenantSsoConfigurationNullableRelationFilter, TenantSsoConfigurationWhereInput> | null
     ssoAuditLogs?: SsoAuditLogListRelationFilter
-  }, "id" | "slug" | "subdomain" | "customDomain">
+  }, "id" | "slug" | "subdomain" | "customDomain" | "domainAlias">
 
   export type TenantOrderByWithAggregationInput = {
     id?: SortOrder
@@ -46125,6 +46157,8 @@ export namespace Prisma {
     status?: SortOrder
     subdomain?: SortOrderInput | SortOrder
     customDomain?: SortOrderInput | SortOrder
+    domainAlias?: SortOrderInput | SortOrder
+    registrationClosed?: SortOrder
     logoUrl?: SortOrderInput | SortOrder
     theme?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
@@ -46167,6 +46201,8 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"Tenant"> | string
     subdomain?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
     customDomain?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
+    domainAlias?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
+    registrationClosed?: BoolWithAggregatesFilter<"Tenant"> | boolean
     logoUrl?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
     theme?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
     primaryColor?: StringNullableWithAggregatesFilter<"Tenant"> | string | null
@@ -49789,6 +49825,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -49846,6 +49884,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -49903,6 +49943,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49960,6 +50002,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50017,6 +50061,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -50053,6 +50099,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50089,6 +50137,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54225,6 +54275,8 @@ export namespace Prisma {
     status?: SortOrder
     subdomain?: SortOrder
     customDomain?: SortOrder
+    domainAlias?: SortOrder
+    registrationClosed?: SortOrder
     logoUrl?: SortOrder
     theme?: SortOrder
     primaryColor?: SortOrder
@@ -54261,6 +54313,8 @@ export namespace Prisma {
     status?: SortOrder
     subdomain?: SortOrder
     customDomain?: SortOrder
+    domainAlias?: SortOrder
+    registrationClosed?: SortOrder
     logoUrl?: SortOrder
     theme?: SortOrder
     primaryColor?: SortOrder
@@ -54297,6 +54351,8 @@ export namespace Prisma {
     status?: SortOrder
     subdomain?: SortOrder
     customDomain?: SortOrder
+    domainAlias?: SortOrder
+    registrationClosed?: SortOrder
     logoUrl?: SortOrder
     theme?: SortOrder
     primaryColor?: SortOrder
@@ -59933,6 +59989,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -59989,6 +60047,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -60172,6 +60232,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60228,6 +60290,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63071,6 +63135,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -63127,6 +63193,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -63199,6 +63267,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63255,6 +63325,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63311,6 +63383,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -63367,6 +63441,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -63544,6 +63620,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63600,6 +63678,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63767,6 +63847,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -63823,6 +63905,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -64105,6 +64189,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64161,6 +64247,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64439,6 +64527,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -64495,6 +64585,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -64777,6 +64869,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64833,6 +64927,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65133,6 +65229,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -65189,6 +65287,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -65287,6 +65387,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65343,6 +65445,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65504,6 +65608,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -65560,6 +65666,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -65848,6 +65956,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65904,6 +66014,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66422,6 +66534,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -66478,6 +66592,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -66655,6 +66771,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66711,6 +66829,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -67415,6 +67535,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -67471,6 +67593,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -67682,6 +67806,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -67738,6 +67864,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -68110,6 +68238,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -68166,6 +68296,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -68238,6 +68370,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -68294,6 +68428,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -68568,6 +68704,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -68624,6 +68762,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -68729,6 +68869,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -68785,6 +68927,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -68913,6 +69057,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -68969,6 +69115,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -69080,6 +69228,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69136,6 +69286,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69297,6 +69449,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -69353,6 +69507,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -69536,6 +69692,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69592,6 +69750,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69753,6 +69913,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -69809,6 +69971,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -69992,6 +70156,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70048,6 +70214,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70209,6 +70377,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -70265,6 +70435,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -70448,6 +70620,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70504,6 +70678,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70665,6 +70841,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -70721,6 +70899,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -70904,6 +71084,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70960,6 +71142,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -71168,6 +71352,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -71224,6 +71410,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -71581,6 +71769,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -71637,6 +71827,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -71774,6 +71966,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -71830,6 +72024,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -72091,6 +72287,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -72147,6 +72345,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -72792,6 +72992,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -72848,6 +73050,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -73068,6 +73272,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -73124,6 +73330,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -73340,6 +73548,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -73396,6 +73606,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -73468,6 +73680,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -73524,6 +73738,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -73580,6 +73796,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -73636,6 +73854,8 @@ export namespace Prisma {
     status?: string
     subdomain?: string | null
     customDomain?: string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
     logoUrl?: string | null
     theme?: string | null
     primaryColor?: string | null
@@ -73708,6 +73928,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -73764,6 +73986,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     subdomain?: NullableStringFieldUpdateOperationsInput | string | null
     customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null

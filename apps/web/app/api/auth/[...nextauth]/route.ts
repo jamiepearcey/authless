@@ -24,31 +24,86 @@ export const authOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         if (!credentials?.email) {
           return null;
         }
 
         const user = await db.user.findUnique({
-          where: { email: credentials.email }
+          where: { email: credentials.email },
+          include: {
+            memberships: {
+              where: { status: 'active' },
+              include: {
+                tenant: {
+                  select: { id: true, slug: true, domainAlias: true, customDomain: true }
+                }
+              }
+            }
+          }
         });
 
         if (!user) {
           return null;
         }
 
+        // Check domain-based restrictions
+        const hostname = req?.headers?.['host'] || '';
+        if (hostname && !hostname.includes('localhost')) {
+          // Check if this is a custom domain that maps to a specific tenant
+          const tenant = await db.tenant.findFirst({
+            where: {
+              OR: [
+                { domainAlias: hostname },
+                { customDomain: hostname }
+              ],
+              status: 'active'
+            }
+          });
+
+          if (tenant) {
+            // This is a custom domain - check if user is authorized
+            const hasPlatformRole = user.platformRole === 'admin';
+            const isTenantMember = user.memberships.some(m => 
+              m.tenant.id === tenant.id && (m.role === 'admin' || m.role === 'member')
+            );
+
+            if (!hasPlatformRole && !isTenantMember) {
+              throw new Error("You are not authorized to access this domain");
+            }
+          }
+        }
+
         // Handle passkey authentication (when password is empty)
         if (!credentials.password) {
           // Check if user has active passkeys
-          const passkeys = await db.passkey.findMany({
+          let passkeys = await db.passkey.findMany({
             where: { 
               userId: user.id,
               isActive: true 
             },
           });
 
+          // Filter passkeys by domain if on a custom domain
+          if (hostname && !hostname.includes('localhost')) {
+            const tenant = await db.tenant.findFirst({
+              where: {
+                OR: [
+                  { domainAlias: hostname },
+                  { customDomain: hostname }
+                ],
+                status: 'active'
+              }
+            });
+
+            if (tenant) {
+              // For custom domains, only allow passkeys registered for this domain
+              passkeys = passkeys.filter(p => p.rpId === hostname || !p.rpId);
+            }
+          }
+
           if (passkeys.length === 0) {
-            throw new Error("No passkeys found for this user");
+            throw new Error("No passkeys found for this user on this domain");
           }
 
           // For passkey auth, we'll trust that the WebAuthn verification already happened

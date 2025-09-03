@@ -67,45 +67,92 @@ function getTenantFromPath(pathname: string): string | null {
   return null;
 }
 
+// Load custom domains from environment variables or use static config
+// Environment variable format: CUSTOM_DOMAINS="domain1.com:tenant1,domain2.com:tenant2"
+const loadCustomDomains = (): Record<string, string> => {
+  const staticDomains = {
+    'demoday.deepintrospect.com': 'demoday',
+    // Add other known custom domains here
+  };
+
+  const envDomains = process.env.CUSTOM_DOMAINS;
+  if (envDomains) {
+    const envMappings: Record<string, string> = {};
+    envDomains.split(',').forEach(mapping => {
+      const [domain, tenant] = mapping.split(':');
+      if (domain && tenant) {
+        envMappings[domain.trim()] = tenant.trim();
+      }
+    });
+    return { ...staticDomains, ...envMappings };
+  }
+
+  return staticDomains;
+};
+
+const KNOWN_CUSTOM_DOMAINS = loadCustomDomains();
+
+// Get tenant from domain alias (simple lookup without database)
+function getTenantFromDomainAlias(hostname: string): string | null {
+  // Check if this is a known custom domain
+  return KNOWN_CUSTOM_DOMAINS[hostname] || null;
+}
+
 // Resolve tenant using the specified resolution order
 function resolveTenant(request: NextRequest): {
   tenantSlug: string | null;
   isSubdomainMode: boolean;
   isPathMode: boolean;
+  isDomainMode: boolean;
   isUntenanted: boolean;
 } {
   const hostname = request.headers.get("host") || "";
   const pathname = request.nextUrl.pathname;
   
-  // Resolution order: 1. Subdomain, 2. Path, 3. Untenanted
+  // Resolution order: 1. Custom Domain, 2. Subdomain, 3. Path, 4. Untenanted
   
-  // 1. Try subdomain mode first
+  // 1. Try custom domain mode first (highest priority)
+  const domainTenant = getTenantFromDomainAlias(hostname);
+  if (domainTenant) {
+    return {
+      tenantSlug: domainTenant,
+      isSubdomainMode: false,
+      isPathMode: false,
+      isDomainMode: true,
+      isUntenanted: false,
+    };
+  }
+  
+  // 2. Try subdomain mode
   const subdomainTenant = getTenantFromSubdomain(hostname);
   if (subdomainTenant) {
     return {
       tenantSlug: subdomainTenant,
       isSubdomainMode: true,
       isPathMode: false,
+      isDomainMode: false,
       isUntenanted: false,
     };
   }
   
-  // 2. Try path mode as fallback
+  // 3. Try path mode as fallback
   const pathTenant = getTenantFromPath(pathname);
   if (pathTenant) {
     return {
       tenantSlug: pathTenant,
       isSubdomainMode: false,
       isPathMode: true,
+      isDomainMode: false,
       isUntenanted: false,
     };
   }
   
-  // 3. No tenant resolved (untenanted/platform mode)
+  // 4. No tenant resolved (untenanted/platform mode)
   return {
     tenantSlug: null,
     isSubdomainMode: false,
     isPathMode: false,
+    isDomainMode: false,
     isUntenanted: true,
   };
 }
@@ -159,11 +206,16 @@ export async function middleware(request: NextRequest) {
     };
   }
 
-  const { tenantSlug, isSubdomainMode, isPathMode, isUntenanted } = resolveTenant(request);
+  const { tenantSlug, isSubdomainMode, isPathMode, isDomainMode, isUntenanted } = resolveTenant(request);
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-tenant-slug", tenantSlug || "");
-  requestHeaders.set("x-tenant-mode", isSubdomainMode ? "subdomain" : isPathMode ? "path" : "untenanted");
+  requestHeaders.set("x-tenant-mode", 
+    isDomainMode ? "domain" : 
+    isSubdomainMode ? "subdomain" : 
+    isPathMode ? "path" : 
+    "untenanted"
+  );
   requestHeaders.set("x-is-untenanted", String(isUntenanted));
   
   // Add rate limit headers to all successful responses
@@ -207,8 +259,9 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (isPathMode && tenantSlug) {
-    // We’re in /tenants/[slug] mode
+  // TODO: Look into this
+  if (!isUntenanted || tenantSlug) {
+    // We're in /tenants/[slug] mode
     if (pathParts[1] === "tenants" && pathParts[2]) {
       const nextSegment = pathParts[3]; // after the slug
 
@@ -244,7 +297,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Subdomain or untenanted
+  // Subdomain, Domain mode, or untenanted
   const response = NextResponse.next({
     request: { headers: requestHeaders },
   });

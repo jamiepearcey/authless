@@ -19,7 +19,10 @@ import {
   Mail,
   Shield,
   MoreHorizontal,
-  ArrowLeft
+  ArrowLeft,
+  Filter,
+  X,
+  ChevronDown
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
@@ -140,47 +143,136 @@ export default function AdminUsersPage() {
         </div>
       </div>
 
-      {/* Toolbar */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            {/* Quick Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search users..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-64"
-              />
+      {/* Enhanced Toolbar */}
+      <Card className="mb-6">
+        <CardContent className="p-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            {/* Search Section */}
+            <div className="flex-1 max-w-md">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Search users by name or email..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 h-10 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             </div>
-            
-            {/* Quick Filters */}
-            <div className="flex items-center space-x-2">
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              >
-                <option value="all">All Statuses</option>
-                <option value="active">Active</option>
-                <option value="pending">Pending</option>
-                <option value="suspended">Suspended</option>
-              </select>
+
+            {/* Filters Section */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-medium text-gray-700">Filters:</span>
+              </div>
               
-              <select
-                value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              >
-                <option value="all">All Roles</option>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-              </select>
+              <div className="flex flex-wrap items-center gap-2">
+                {/* Status Filter */}
+                <div className="relative">
+                  <select
+                    value={selectedStatus}
+                    onChange={(e) => setSelectedStatus(e.target.value)}
+                    className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 transition-colors min-w-[120px]"
+                  >
+                    <option value="all">All Statuses</option>
+                    <option value="active">Active</option>
+                    <option value="pending">Pending</option>
+                    <option value="suspended">Suspended</option>
+                  </select>
+                  <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                </div>
+
+                {/* Role Filter */}
+                <div className="relative">
+                  <select
+                    value={selectedRole}
+                    onChange={(e) => setSelectedRole(e.target.value)}
+                    className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 transition-colors min-w-[120px]"
+                  >
+                    <option value="all">All Roles</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                  </select>
+                  <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                </div>
+
+                {/* Clear Filters Button */}
+                {(searchTerm || selectedStatus !== "all" || selectedRole !== "all") && (
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      setSearchTerm("");
+                      setSelectedStatus("all");
+                      setSelectedRole("all");
+                      setCurrentPage(1);
+                    }}
+                    size="sm"
+                    className="h-8 px-3 text-xs border-gray-300 hover:border-gray-400 hover:bg-gray-50"
+                  >
+                    <X className="h-3 w-3 mr-1" />
+                    Clear All
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+
+          {/* Active Filters Display */}
+          {(searchTerm || selectedStatus !== "all" || selectedRole !== "all") && (
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm text-gray-500">Active filters:</span>
+                
+                {searchTerm && (
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200">
+                    <Search className="h-3 w-3 mr-1" />
+                    "{searchTerm}"
+                    <button
+                      onClick={() => setSearchTerm("")}
+                      className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+                
+                {selectedStatus !== "all" && (
+                  <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
+                    Status: {selectedStatus}
+                    <button
+                      onClick={() => setSelectedStatus("all")}
+                      className="ml-1 hover:bg-green-200 rounded-full p-0.5"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+                
+                {selectedRole !== "all" && (
+                  <Badge variant="secondary" className="bg-purple-100 text-purple-800 border-purple-200">
+                    Role: {selectedRole}
+                    <button
+                      onClick={() => setSelectedRole("all")}
+                      className="ml-1 hover:bg-purple-200 rounded-full p-0.5"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -249,7 +341,7 @@ export default function AdminUsersPage() {
             Manage all platform users and their permissions
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           {filteredUsers.length === 0 ? (
             <div className="text-center py-12">
               <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -265,102 +357,117 @@ export default function AdminUsersPage() {
               )}
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">User</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Email</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Role</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Created</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Last Login</th>
-                    <th className="text-right py-3 px-4 font-semibold text-gray-700">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredUsers.map((user) => (
-                    <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-4 px-4">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-                            <span className="text-sm font-medium text-indigo-600">
-                              {user.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
-                            </span>
+            <div className="overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[250px]">
+                        User
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">
+                        Status
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">
+                        Role
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[120px]">
+                        Created
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[120px]">
+                        Last Login
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {filteredUsers.map((user) => (
+                      <tr key={user.id} className="hover:bg-gray-50">
+                        <td className="px-4 py-4">
+                          <div className="flex items-center min-w-0">
+                            <div className="h-10 w-10 flex-shrink-0">
+                              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                                <span className="text-sm font-medium text-white">
+                                  {user.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="ml-4 min-w-0 flex-1">
+                              <div className="text-sm font-medium text-gray-900 truncate">
+                                {user.name || "Unnamed User"}
+                              </div>
+                              <div className="text-sm text-gray-500 truncate" title={user.email}>
+                                {user.email}
+                              </div>
+                            </div>
                           </div>
-                          <div>
-                            <p className="font-medium text-gray-900">
-                              {user.name || "Unnamed User"}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className="text-gray-900">{user.email}</span>
-                      </td>
-                      <td className="py-4 px-4">
-                        {getStatusBadge("active", user.isEmailVerified)}
-                      </td>
-                      <td className="py-4 px-4">
-                        {getRoleBadge(user.platformRole || "user")}
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className="text-gray-600">
+                        </td>
+                        <td className="px-4 py-4">
+                          {getStatusBadge("active", user.isEmailVerified)}
+                        </td>
+                        <td className="px-4 py-4">
+                          {getRoleBadge(user.platformRole || "user")}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500">
                           {new Date(user.createdAt).toLocaleDateString()}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className="text-gray-600">
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500">
                           {user.lastLoginAt 
                             ? new Date(user.lastLoginAt).toLocaleDateString()
                             : "Never"
                           }
-                        </span>
-                      </td>
-                      <td className="py-4 px-4">
-                        <div className="flex items-center justify-end space-x-2">
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                <MoreHorizontal className="h-4 w-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem onClick={() => handleViewUser(user.id)}>
-                                <Eye className="h-4 w-4 mr-2" />
-                                View Details
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleEditUser(user.id)}>
-                                <Edit className="h-4 w-4 mr-2" />
-                                Edit User
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem className="text-red-600">
-                                <Trash2 className="h-4 w-4 mr-2" />
-                                Delete User
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                        </td>
+                        <td className="px-4 py-4">
+                          <div className="flex items-center space-x-1">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleViewUser(user.id)}
+                              className="h-8 w-8 p-0"
+                              title="View User"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEditUser(user.id)}
+                              className="h-8 w-8 p-0"
+                              title="Edit User"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
+                              title="Delete User"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
 
           {/* Pagination */}
-          {filteredUsers.length > 0 && (
-            <div className="flex items-center justify-between mt-6 pt-6 border-t border-gray-200">
-              <div className="text-sm text-gray-600">
-                Showing {offset + 1} to {Math.min(offset + limit, usersData?.length || 0)} of {usersData?.length || 0} users
+          {usersData && usersData.length > limit && (
+            <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
+              <div className="text-sm text-gray-700">
+                Showing {offset + 1} to {Math.min(offset + limit, usersData.length)} of {usersData.length} results
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex space-x-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setCurrentPage(currentPage - 1)}
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
                 >
                   Previous
@@ -369,7 +476,7 @@ export default function AdminUsersPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={offset + limit >= (usersData?.length || 0)}
+                  disabled={offset + limit >= usersData.length}
                 >
                   Next
                 </Button>

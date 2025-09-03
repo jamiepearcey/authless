@@ -59,9 +59,14 @@ export const passkeyRouter = {
       // Generate challenge using crypto.randomBytes for proper WebAuthn compatibility
       const challenge = crypto.randomBytes(32);
       
-      // For development, use localhost, for production use the actual domain
-      const rpId = process.env.NODE_ENV === "development" ? "localhost" : 
-        (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).hostname : "localhost");
+      // Use the current request's hostname for the rpId to support custom domains
+      // Remove port from hostname if present (e.g., localhost:3000 -> localhost)
+      const hostname = ctx.hostname?.split(':')[0];
+      const rpId = hostname || 
+        (process.env.NODE_ENV === "development" ? "localhost" : 
+        (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).hostname : "localhost"));
+      
+      console.log(`[Passkey Registration] Original hostname: ${ctx.hostname}, Parsed hostname: ${hostname}, Using rpId: ${rpId}`);
       
       return {
         challenge: btoa(String.fromCharCode(...challenge)), // Base64 encode
@@ -165,9 +170,12 @@ export const passkeyRouter = {
       // Generate challenge using crypto.randomBytes for proper WebAuthn compatibility
       const challenge = crypto.randomBytes(32);
       
-      // For development, use localhost, for production use the actual domain
-      const rpId = process.env.NODE_ENV === "development" ? "localhost" : 
-        (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).hostname : "localhost");
+      // Use the current request's hostname for the rpId to support custom domains
+      // Remove port from hostname if present (e.g., localhost:3000 -> localhost)
+      const hostname = ctx.hostname?.split(':')[0];
+      const rpId = hostname || 
+        (process.env.NODE_ENV === "development" ? "localhost" : 
+        (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).hostname : "localhost"));
       
       return {
         challenge: btoa(String.fromCharCode(...challenge)),
@@ -292,8 +300,11 @@ export const passkeyRouter = {
   getAvailableAccounts: publicProcedure
     .query(async ({ ctx }) => {
       // Get the current domain from the request context
-      const currentDomain = process.env.NODE_ENV === "development" ? "localhost" : 
-        (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).hostname : "localhost");
+      // Remove port from hostname if present (e.g., localhost:3000 -> localhost)
+      const hostname = ctx.hostname?.split(':')[0];
+      const currentDomain = hostname || 
+        (process.env.NODE_ENV === "development" ? "localhost" : 
+        (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).hostname : "localhost"));
 
       // Get all users who have active passkeys
       const usersWithPasskeys = await ctx.db.user.findMany({

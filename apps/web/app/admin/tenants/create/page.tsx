@@ -9,6 +9,7 @@ import { Label } from "@ui/base";
 import { Textarea } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
+import { Checkbox } from "@ui/base";
 import { ArrowLeft, Building2, Save, AlertCircle } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
@@ -21,6 +22,8 @@ export default function CreateTenantPage() {
     slug: "",
     name: "",
     subdomain: "",
+    domainAlias: "",
+    registrationClosed: false,
     plan: "free",
     invitePolicy: "admin_only",
     description: "",
@@ -55,6 +58,8 @@ export default function CreateTenantPage() {
         slug: formData.slug.trim(),
         name: formData.name.trim(),
         subdomain: formData.subdomain.trim() || undefined,
+        domainAlias: formData.domainAlias.trim() || undefined,
+        registrationClosed: formData.registrationClosed,
         plan: formData.plan as any,
         invitePolicy: formData.invitePolicy as any,
         description: formData.description.trim() || undefined,
@@ -201,6 +206,23 @@ export default function CreateTenantPage() {
                 </p>
               </div>
 
+              {/* Domain Alias */}
+              <div>
+                <Label htmlFor="domainAlias" className="text-sm font-medium text-gray-700">
+                  Custom Domain Alias (Optional)
+                </Label>
+                <Input
+                  id="domainAlias"
+                  value={formData.domainAlias}
+                  onChange={(e) => setFormData(prev => ({ ...prev, domainAlias: e.target.value }))}
+                  placeholder="example.com"
+                  className="mt-1"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Custom domain where this tenant will be accessible (e.g., your-domain.com)
+                </p>
+              </div>
+
               {/* Plan and Settings */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -233,6 +255,21 @@ export default function CreateTenantPage() {
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
+
+              {/* Registration Settings */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="registrationClosed"
+                  checked={formData.registrationClosed}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, registrationClosed: !!checked }))}
+                />
+                <Label htmlFor="registrationClosed" className="text-sm font-medium text-gray-700">
+                  Close Registration
+                </Label>
+                <p className="text-xs text-gray-500 ml-2">
+                  Prevent new users from signing up to this tenant
+                </p>
               </div>
 
               {/* Additional Information */}

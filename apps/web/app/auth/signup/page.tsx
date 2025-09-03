@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@ui/base";
 import Link from "next/link";
 import { t } from "@i18n-core";
+
 export default function SignUpPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,7 +13,29 @@ export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [registrationClosed, setRegistrationClosed] = useState(false);
+  const [checkingRegistration, setCheckingRegistration] = useState(true);
   const router = useRouter();
+
+  // Check if registration is closed for this domain
+  useEffect(() => {
+    const checkRegistrationStatus = async () => {
+      try {
+        const response = await fetch('/api/check-registration-status');
+        if (response.ok) {
+          const { registrationClosed } = await response.json();
+          setRegistrationClosed(registrationClosed);
+        }
+      } catch (error) {
+        console.error('Failed to check registration status:', error);
+        // Allow registration if check fails
+      } finally {
+        setCheckingRegistration(false);
+      }
+    };
+
+    checkRegistrationStatus();
+  }, []);
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -45,6 +68,51 @@ export default function SignUpPage() {
       setIsLoading(false);
     }
   };
+  // Show loading while checking registration status
+  if (checkingRegistration) {
+    return (
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Checking registration status...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show message when registration is closed
+  if (registrationClosed) {
+    return (
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div className="text-center">
+            <div className="mx-auto h-12 w-12 text-red-600">
+              <svg className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              Registration Closed
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              New user registration has been disabled for this domain.
+            </p>
+            <div className="mt-6">
+              <Link
+                href="/auth/signin"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Sign In Instead
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">

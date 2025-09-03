@@ -118,6 +118,8 @@ model Tenant {
   status                         String            @default("active")
   subdomain                      String?           @unique
   customDomain                   String?           @unique
+  domainAlias                    String?           @unique // Custom domain alias for tenancy access
+  registrationClosed             Boolean           @default(false) // Whether registration is closed for this tenancy
   logoUrl                        String?
   theme                          String?
   primaryColor                   String?
@@ -173,6 +175,7 @@ model Tenant {
 
   @@index([slug])
   @@index([subdomain])
+  @@index([domainAlias])
   @@index([status])
   @@index([plan])
   @@index([createdAt])

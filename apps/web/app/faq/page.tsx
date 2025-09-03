@@ -430,10 +430,12 @@ export default function FAQPage() {
                           setSelectedCategory(category);
                           setShowSuggestions(false);
                         }}
-                        className="text-left p-2 text-sm hover:bg-gray-50 rounded transition-colors"
+                        className="flex items-center text-left p-2 text-sm hover:bg-gray-50 rounded transition-colors"
                       >
-                        {getCategoryIcon(category)}
-                        <span className="ml-2">{category}</span>
+                        <div className="flex-shrink-0 mr-2">
+                          {getCategoryIcon(category)}
+                        </div>
+                        <span className="flex-1">{category}</span>
                       </button>
                     ))}
                   </div>

@@ -9,6 +9,7 @@ import { Label } from "@ui/base";
 import { Textarea } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
+import { Checkbox } from "@ui/base";
 import { ArrowLeft, Building2, Save } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
@@ -34,6 +35,8 @@ export default function EditTenantPage() {
     primaryColor: "",
     secondaryColor: "",
     contactEmail: "",
+    domainAlias: "",
+    registrationClosed: false,
   });
 
   const { data: tenant, isLoading } = trpc.getTenant.useQuery(
@@ -57,6 +60,8 @@ export default function EditTenantPage() {
         primaryColor: tenant.primaryColor || "",
         secondaryColor: tenant.secondaryColor || "",
         contactEmail: tenant.contactEmail || "",
+        domainAlias: tenant.domainAlias || "",
+        registrationClosed: tenant.registrationClosed || false,
       });
     }
   }, [tenant]);
@@ -102,6 +107,8 @@ export default function EditTenantPage() {
           industry: formData.industry.trim() || undefined,
           size: formData.size.trim() || undefined,
           contactEmail: formData.contactEmail.trim() || undefined,
+          domainAlias: formData.domainAlias.trim() || undefined,
+          registrationClosed: formData.registrationClosed,
           plan: formData.plan as any,
           status: formData.status as any,
           invitePolicy: formData.invitePolicy as any,
@@ -240,6 +247,22 @@ export default function EditTenantPage() {
                     {t("Email for support and business inquiries", "admin.tenants.edit.page.EditTenantPage.email_for_support_and_business_inquiries__11ckols")}
                   </p>
                 </div>
+
+                <div>
+                  <Label htmlFor="domainAlias" className="text-sm font-medium text-gray-700">
+                    Custom Domain Alias
+                  </Label>
+                  <Input
+                    id="domainAlias"
+                    value={formData.domainAlias}
+                    onChange={(e) => setFormData(prev => ({ ...prev, domainAlias: e.target.value }))}
+                    placeholder="example.com"
+                    className="mt-1"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Custom domain for this tenant (e.g., your-domain.com)
+                  </p>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -345,6 +368,20 @@ export default function EditTenantPage() {
                       <SelectItem value="open">{t("Open", "admin.tenants.edit.page.EditTenantPage.open__37ckols")}</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="registrationClosed"
+                    checked={formData.registrationClosed}
+                    onCheckedChange={(checked) => setFormData(prev => ({ ...prev, registrationClosed: !!checked }))}
+                  />
+                  <Label htmlFor="registrationClosed" className="text-sm font-medium text-gray-700">
+                    Close Registration
+                  </Label>
+                  <p className="text-xs text-gray-500">
+                    Prevent new users from signing up to this tenant
+                  </p>
                 </div>
 
                 <div>

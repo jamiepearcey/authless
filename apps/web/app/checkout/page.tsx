@@ -16,6 +16,8 @@ import {
   Lock,
   Check
 } from 'lucide-react';
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import Link from "next/link";
 import { StripeElementsForm } from '@stripe/integration/components';
 import { useLeadTracking } from '@/hooks/useLeadTracking';
 
@@ -219,30 +221,40 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <Button
-              onClick={() => router.back()}
-              variant="outline"
-              size="sm"
-              className="mr-4"
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center space-x-4 mb-4">
+            <Link 
+              href="/pricing"
+              className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Button>
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Pricing
+            </Link>
+            <div className="h-6 w-px bg-gray-300" />
+            <BreadcrumbNavigation
+              items={[
+                { label: "Pricing", href: "/pricing" },
+                { label: orderId ? 'Retry Payment' : 'Checkout', current: true },
+              ]}
+              showHome={false}
+            />
           </div>
           
-          <div className="flex items-center mb-2">
-            <CreditCard className="h-8 w-8 text-blue-600 mr-3" />
-            <h1 className="text-3xl font-bold text-gray-900">
-              {orderId ? 'Retry Payment' : 'Checkout'}
-            </h1>
+          {/* Page Header */}
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+                <CreditCard className="h-8 w-8 text-indigo-600" />
+                <span>{orderId ? 'Retry Payment' : 'Checkout'}</span>
+              </h1>
+              <p className="text-gray-600 mt-2">
+                Complete your purchase securely
+              </p>
+            </div>
           </div>
-          <p className="text-gray-600">
-            Complete your purchase securely
-          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

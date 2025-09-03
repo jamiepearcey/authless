@@ -333,9 +333,9 @@ const ContactPage = () => {
                           <User className="h-6 w-6" />
                         </AvatarFallback>
                       </Avatar>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">{session.user.name}</h3>
-                        <p className="text-sm text-gray-600">{session.user.email}</p>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-gray-900 truncate">{session.user.name}</h3>
+                        <p className="text-sm text-gray-600 break-words">{session.user.email}</p>
                       </div>
                     </div>
                   </CardContent>

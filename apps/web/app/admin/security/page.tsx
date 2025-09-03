@@ -2,95 +2,52 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
-import { Button, Input, Label } from "@ui/base";
+import { Button, Input, Label, Switch } from "@ui/base";
 import { Badge } from "@ui/base";
 import { 
   Shield, 
   Key, 
   AlertTriangle, 
-  CheckCircle, 
   Eye, 
   Users,
   Activity,
-  Lock,
-  Globe,
-  Database,
-  Server,
-  ArrowLeft
+  ArrowLeft,
+  ExternalLink,
+  Settings,
+  Clock
 } from "lucide-react";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
+import { trpc } from "@/lib/trpc";
+import { toast } from "@ui/base";
 import Link from "next/link";
 
 export default function AdminSecurityPage() {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [rateLimit, setRateLimit] = useState(1000);
+  const [sessionTimeout, setSessionTimeout] = useState(24);
+  const [maxFailedLogins, setMaxFailedLogins] = useState(5);
+  const [require2FA, setRequire2FA] = useState(false);
 
-  // Mock security data - would be replaced with real queries
-  const securityMetrics = {
-    activeThreats: 0,
-    blockedAttempts: 247,
-    activeSessions: 1834,
-    failedLogins: 23,
-    sslStatus: "valid",
-    lastSecurityScan: "2024-08-31T10:00:00Z",
-    vulnerabilities: {
-      critical: 0,
-      high: 1,
-      medium: 3,
-      low: 7
-    }
-  };
+  // Real data queries
+  const { data: failedLogins } = trpc.getFailedLogins.useQuery({ hours: 24 });
+  const { data: activeSessions } = trpc.getActiveSessions.useQuery();
+  const { data: auditEvents } = trpc.getRecentAuditEvents.useQuery({ limit: 10 });
 
-  const recentSecurityEvents = [
-    {
-      id: 1,
-      type: "failed_login",
-      severity: "low",
-      description: "Multiple failed login attempts from IP 192.168.1.100",
-      timestamp: "2024-08-31T09:45:00Z",
-      resolved: true
+  const updateSettings = trpc.updateSecuritySettings.useMutation({
+    onSuccess: () => {
+      toast.success("Security settings updated");
     },
-    {
-      id: 2,
-      type: "suspicious_activity",
-      severity: "medium", 
-      description: "Unusual API request pattern detected from tenant 'acme-corp'",
-      timestamp: "2024-08-31T08:30:00Z",
-      resolved: false
+    onError: (error) => {
+      toast.error(error.message);
     },
-    {
-      id: 3,
-      type: "security_update",
-      severity: "info",
-      description: "Security patch applied successfully to database server",
-      timestamp: "2024-08-31T07:00:00Z",
-      resolved: true
-    }
-  ];
+  });
 
-  const getSeverityBadge = (severity: string) => {
-    switch (severity) {
-      case "critical":
-        return <Badge variant="destructive" className="bg-red-100 text-red-800">Critical</Badge>;
-      case "high":
-        return <Badge variant="destructive" className="bg-orange-100 text-orange-800">High</Badge>;
-      case "medium":
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Medium</Badge>;
-      case "low":
-        return <Badge variant="outline" className="text-gray-600">Low</Badge>;
-      case "info":
-        return <Badge variant="outline" className="text-blue-600">Info</Badge>;
-      default:
-        return <Badge variant="outline">{severity}</Badge>;
-    }
-  };
-
-  const getStatusIcon = (resolved: boolean) => {
-    return resolved ? (
-      <CheckCircle className="h-4 w-4 text-green-600" />
-    ) : (
-      <AlertTriangle className="h-4 w-4 text-yellow-600" />
-    );
+  const handleSaveSettings = () => {
+    updateSettings.mutate({
+      rateLimit,
+      sessionTimeout,
+      maxFailedLogins,
+      require2FA,
+    });
   };
 
   return (
@@ -110,7 +67,7 @@ export default function AdminSecurityPage() {
           <BreadcrumbNavigation
             items={[
               { label: "Admin", href: "/admin" },
-              { label: "Security Management", current: true },
+              { label: "Security", current: true },
             ]}
             showHome={false}
           />
@@ -121,36 +78,24 @@ export default function AdminSecurityPage() {
           <div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <Shield className="h-8 w-8 text-indigo-600" />
-              <span>Security Management</span>
+              <span>Security Controls</span>
             </h1>
             <p className="text-gray-600 mt-2">
-              Monitor platform security, manage threats, and configure security settings
+              Configure platform security settings and monitor real security events
             </p>
           </div>
         </div>
       </div>
 
-      {/* Security Overview Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {/* Real Security Metrics */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center">
-              <AlertTriangle className="h-8 w-8 text-red-600" />
+              <Key className="h-8 w-8 text-red-600" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Active Threats</p>
-                <p className="text-2xl font-bold text-gray-900">{securityMetrics.activeThreats}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <Shield className="h-8 w-8 text-green-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Blocked Attempts</p>
-                <p className="text-2xl font-bold text-gray-900">{securityMetrics.blockedAttempts}</p>
+                <p className="text-sm font-medium text-gray-600">Failed Logins (24h)</p>
+                <p className="text-2xl font-bold text-gray-900">{failedLogins?.count || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -162,7 +107,7 @@ export default function AdminSecurityPage() {
               <Activity className="h-8 w-8 text-blue-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Active Sessions</p>
-                <p className="text-2xl font-bold text-gray-900">{securityMetrics.activeSessions}</p>
+                <p className="text-2xl font-bold text-gray-900">{activeSessions?.count || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -171,342 +116,189 @@ export default function AdminSecurityPage() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center">
-              <Key className="h-8 w-8 text-purple-600" />
+              <Users className="h-8 w-8 text-green-600" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Failed Logins</p>
-                <p className="text-2xl font-bold text-gray-900">{securityMetrics.failedLogins}</p>
+                <p className="text-sm font-medium text-gray-600">2FA Enabled Users</p>
+                <p className="text-2xl font-bold text-gray-900">{activeSessions?.twoFactorEnabled || 0}</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Security Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="threats" className="flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4" />
-            Threats
-          </TabsTrigger>
-          <TabsTrigger value="access" className="flex items-center gap-2">
-            <Key className="h-4 w-4" />
-            Access Control
-          </TabsTrigger>
-          <TabsTrigger value="monitoring" className="flex items-center gap-2">
-            <Eye className="h-4 w-4" />
-            Monitoring
-          </TabsTrigger>
-          <TabsTrigger value="settings" className="flex items-center gap-2">
-            <Lock className="h-4 w-4" />
-            Settings
-          </TabsTrigger>
-        </TabsList>
+      {/* Actionable Security Controls */}
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Rate Limiting */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield className="h-5 w-5" />
+              Rate Limiting
+            </CardTitle>
+            <CardDescription>Control API request limits per user</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <Label htmlFor="rate-limit">Requests per minute</Label>
+              <Input
+                id="rate-limit"
+                type="number"
+                value={rateLimit}
+                onChange={(e) => setRateLimit(Number(e.target.value))}
+                className="mt-1"
+              />
+            </div>
+            <p className="text-sm text-gray-600">
+              Current setting will block users exceeding {rateLimit} requests/min
+            </p>
+          </CardContent>
+        </Card>
 
-        {/* Security Overview */}
-        <TabsContent value="overview" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* Security Status */}
-            <Card>
-              <CardHeader>
-                <CardTitle>System Security Status</CardTitle>
-                <CardDescription>Current security posture and health checks</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Globe className="h-4 w-4 text-green-600" />
-                      <span className="text-sm">SSL Certificate</span>
-                    </div>
-                    <Badge variant="default" className="bg-green-100 text-green-800">Valid</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Database className="h-4 w-4 text-green-600" />
-                      <span className="text-sm">Database Security</span>
-                    </div>
-                    <Badge variant="default" className="bg-green-100 text-green-800">Secure</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Server className="h-4 w-4 text-green-600" />
-                      <span className="text-sm">Server Hardening</span>
-                    </div>
-                    <Badge variant="default" className="bg-green-100 text-green-800">Applied</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Shield className="h-4 w-4 text-yellow-600" />
-                      <span className="text-sm">Firewall Rules</span>
-                    </div>
-                    <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Needs Review</Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+        {/* Session Management */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="h-5 w-5" />
+              Session Security
+            </CardTitle>
+            <CardDescription>Control user session behavior</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <Label htmlFor="session-timeout">Session timeout (hours)</Label>
+              <Input
+                id="session-timeout"
+                type="number"
+                value={sessionTimeout}
+                onChange={(e) => setSessionTimeout(Number(e.target.value))}
+                className="mt-1"
+              />
+            </div>
+            <div>
+              <Label htmlFor="failed-logins">Max failed login attempts</Label>
+              <Input
+                id="failed-logins"
+                type="number"
+                value={maxFailedLogins}
+                onChange={(e) => setMaxFailedLogins(Number(e.target.value))}
+                className="mt-1"
+              />
+            </div>
+          </CardContent>
+        </Card>
 
-            {/* Vulnerability Overview */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Vulnerability Report</CardTitle>
-                <CardDescription>
-                  Last scan: {new Date(securityMetrics.lastSecurityScan).toLocaleDateString()}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Critical</span>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm font-bold text-red-600">{securityMetrics.vulnerabilities.critical}</span>
-                      <div className="w-16 h-2 bg-gray-200 rounded-full">
-                        <div className="h-2 bg-red-600 rounded-full" style={{width: '0%'}}></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">High</span>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm font-bold text-orange-600">{securityMetrics.vulnerabilities.high}</span>
-                      <div className="w-16 h-2 bg-gray-200 rounded-full">
-                        <div className="h-2 bg-orange-600 rounded-full" style={{width: '10%'}}></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Medium</span>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm font-bold text-yellow-600">{securityMetrics.vulnerabilities.medium}</span>
-                      <div className="w-16 h-2 bg-gray-200 rounded-full">
-                        <div className="h-2 bg-yellow-600 rounded-full" style={{width: '30%'}}></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Low</span>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm font-bold text-blue-600">{securityMetrics.vulnerabilities.low}</span>
-                      <div className="w-16 h-2 bg-gray-200 rounded-full">
-                        <div className="h-2 bg-blue-600 rounded-full" style={{width: '70%'}}></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Recent Security Events */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Security Events</CardTitle>
-              <CardDescription>Latest security incidents and system events</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {recentSecurityEvents.map((event) => (
-                  <div key={event.id} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="flex-shrink-0 mt-1">
-                      {getStatusIcon(event.resolved)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center space-x-2 mb-1">
-                        {getSeverityBadge(event.severity)}
-                        <span className="text-xs text-gray-500">
-                          {new Date(event.timestamp).toLocaleString()}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-900 mb-1">{event.description}</p>
-                      <p className="text-xs text-gray-600 capitalize">Type: {event.type.replace('_', ' ')}</p>
-                    </div>
-                    <Button variant="outline" size="sm">
-                      View Details
-                    </Button>
-                  </div>
-                ))}
+        {/* Authentication Requirements */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Key className="h-5 w-5" />
+              Authentication Policy
+            </CardTitle>
+            <CardDescription>Platform-wide auth requirements</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <Label>Require 2FA for Admin Users</Label>
+                <p className="text-sm text-gray-600">Force all platform admins to use 2FA</p>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+              <Switch
+                checked={require2FA}
+                onCheckedChange={setRequire2FA}
+              />
+            </div>
+            <Button 
+              onClick={handleSaveSettings} 
+              disabled={updateSettings.isPending}
+              className="w-full"
+            >
+              {updateSettings.isPending ? "Saving..." : "Save Security Settings"}
+            </Button>
+          </CardContent>
+        </Card>
 
-        {/* Threat Management */}
-        <TabsContent value="threats" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Active Threat Detection</CardTitle>
-              <CardDescription>Configure and monitor threat detection systems</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div className="flex items-center justify-center py-12">
-                  <div className="text-center">
-                    <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No Active Threats Detected</h3>
-                    <p className="text-gray-600">All systems are secure and operating normally</p>
+        {/* Security Resources */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <ExternalLink className="h-5 w-5" />
+              Security Resources
+            </CardTitle>
+            <CardDescription>Industry standards and compliance</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <a 
+              href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-sm font-medium">OWASP Authentication Guide</span>
+              <ExternalLink className="h-4 w-4 text-gray-400" />
+            </a>
+            <a 
+              href="https://www.nist.gov/itl/applied-cybersecurity/sce/more-secure-authentication" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-sm font-medium">NIST Authentication Guidelines</span>
+              <ExternalLink className="h-4 w-4 text-gray-400" />
+            </a>
+            <a 
+              href="https://datatracker.ietf.org/doc/html/rfc6819" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-sm font-medium">OAuth 2.0 Security Best Practices</span>
+              <ExternalLink className="h-4 w-4 text-gray-400" />
+            </a>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recent Audit Events */}
+      {auditEvents && auditEvents.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Eye className="h-5 w-5" />
+              Recent Audit Events
+            </CardTitle>
+            <CardDescription>Real security events from your audit log</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {auditEvents.slice(0, 10).map((event: any) => (
+                <div key={event.id} className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <div className="flex-shrink-0 mt-1">
+                    {event.eventType.includes('failed') ? (
+                      <AlertTriangle className="h-4 w-4 text-red-600" />
+                    ) : (
+                      <Activity className="h-4 w-4 text-blue-600" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900">{event.eventType}</p>
+                    <p className="text-xs text-gray-600 mt-1">
+                      {event.userEmail || event.ipAddress} • {new Date(event.timestamp).toLocaleString()}
+                    </p>
+                    {event.details && (
+                      <p className="text-xs text-gray-500 mt-1">{JSON.stringify(event.details)}</p>
+                    )}
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Access Control */}
-        <TabsContent value="access" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Authentication Settings</CardTitle>
-                <CardDescription>Configure platform-wide authentication policies</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label className="text-sm font-medium">Require 2FA for Admins</Label>
-                      <p className="text-xs text-gray-600">Force two-factor authentication for platform administrators</p>
-                    </div>
-                    <Button variant="outline" size="sm">Enable</Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label className="text-sm font-medium">Password Complexity</Label>
-                      <p className="text-xs text-gray-600">Enforce strong password requirements</p>
-                    </div>
-                    <Button variant="outline" size="sm">Configure</Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label className="text-sm font-medium">Session Timeout</Label>
-                      <p className="text-xs text-gray-600">Automatic session expiration</p>
-                    </div>
-                    <Button variant="outline" size="sm">24 hours</Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Access Permissions</CardTitle>
-                <CardDescription>Manage platform-level access controls</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label className="text-sm font-medium">API Rate Limiting</Label>
-                      <p className="text-xs text-gray-600">Requests per minute per user</p>
-                    </div>
-                    <Button variant="outline" size="sm">1000/min</Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label className="text-sm font-medium">IP Whitelisting</Label>
-                      <p className="text-xs text-gray-600">Restrict admin access to specific IPs</p>
-                    </div>
-                    <Button variant="outline" size="sm">Configure</Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label className="text-sm font-medium">Failed Login Lockout</Label>
-                      <p className="text-xs text-gray-600">Lock accounts after failed attempts</p>
-                    </div>
-                    <Button variant="outline" size="sm">5 attempts</Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        {/* Monitoring */}
-        <TabsContent value="monitoring" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Security Monitoring</CardTitle>
-              <CardDescription>Real-time security monitoring and alerting</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-6 md:grid-cols-3">
-                <div className="text-center p-6 bg-green-50 rounded-lg">
-                  <Activity className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                  <p className="text-sm font-medium text-gray-900">Intrusion Detection</p>
-                  <p className="text-xs text-gray-600 mt-1">Active</p>
-                </div>
-                <div className="text-center p-6 bg-blue-50 rounded-lg">
-                  <Eye className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                  <p className="text-sm font-medium text-gray-900">Activity Logging</p>
-                  <p className="text-xs text-gray-600 mt-1">Enabled</p>
-                </div>
-                <div className="text-center p-6 bg-purple-50 rounded-lg">
-                  <Shield className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                  <p className="text-sm font-medium text-gray-900">Anomaly Detection</p>
-                  <p className="text-xs text-gray-600 mt-1">Learning</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Security Settings */}
-        <TabsContent value="settings" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Platform Security Configuration</CardTitle>
-              <CardDescription>Configure global security settings and policies</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div>
-                  <Label htmlFor="security-level">Security Level</Label>
-                  <select
-                    id="security-level"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  >
-                    <option value="standard">Standard</option>
-                    <option value="high" selected>High</option>
-                    <option value="maximum">Maximum</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <Label htmlFor="encryption-key">Data Encryption</Label>
-                  <div className="mt-1 flex rounded-md shadow-sm">
-                    <Input
-                      type="password"
-                      id="encryption-key"
-                      placeholder="Current encryption key"
-                      className="flex-1"
-                      readOnly
-                    />
-                    <Button variant="outline" className="ml-2">
-                      Rotate Key
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <input type="checkbox" id="audit-logging" checked readOnly />
-                  <Label htmlFor="audit-logging">Enable comprehensive audit logging</Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <input type="checkbox" id="breach-detection" checked readOnly />
-                  <Label htmlFor="breach-detection">Enable breach detection alerts</Label>
-                </div>
-
-                <div className="pt-4">
-                  <Button>Save Security Settings</Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              ))}
+            </div>
+            <div className="mt-4">
+              <Link href="/admin/audit" className="text-sm text-indigo-600 hover:text-indigo-800">
+                View full audit log →
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

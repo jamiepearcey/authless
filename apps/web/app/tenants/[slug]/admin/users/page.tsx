@@ -11,6 +11,7 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Copy } from "lucide-react";
 import { copyToClipboard, User } from "@shared/base";
+import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 import {
   DropdownMenu,
