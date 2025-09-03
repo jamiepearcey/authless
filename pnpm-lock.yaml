@@ -60,9 +60,6 @@ importers:
       '@db/base':
         specifier: workspace:*
         version: link:../../packages/db
-      '@declarative-gridstack/react':
-        specifier: ^0.1.5
-        version: 0.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@i18n-core':
         specifier: workspace:*
         version: link:../../packages/i18n-core
@@ -114,6 +111,9 @@ importers:
       framer-motion:
         specifier: ^12.23.12
         version: 12.23.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      gridstack:
+        specifier: ^12.3.3
+        version: 12.3.3
       ioredis:
         specifier: ^5.7.0
         version: 5.7.0
@@ -141,6 +141,9 @@ importers:
       react-dom:
         specifier: ^18.0.0
         version: 18.3.1(react@18.3.1)
+      react-gridstack:
+        specifier: ^0.1.4
+        version: 0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-qr-code:
         specifier: ^2.0.18
         version: 2.0.18(react@18.3.1)
@@ -1275,12 +1278,6 @@ packages:
 
   '@date-fns/tz@1.4.1':
     resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
-
-  '@declarative-gridstack/react@0.1.5':
-    resolution: {integrity: sha512-TTkxpbJUref1UZcKXumHw+9Ix93xPyVKmUb50zl9FyvHlKEPcT3q401rc8wBNIxBejfiOhcpt3XvWw7Gpb5DPg==}
-    peerDependencies:
-      react: ^18.2.0
-      react-dom: ^18.2.0
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -4312,6 +4309,12 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
+  gridstack@0.2.6:
+    resolution: {integrity: sha512-9Bu+2HmAM1gCagJrYqFXwhcoJFAk7sTOD3wXhKDBh71R9uh4L2GyCAyWTw/AMD16AeFoYnmixghuUURNgX6SBA==}
+
+  gridstack@12.3.3:
+    resolution: {integrity: sha512-Bboi4gj7HXGnx1VFXQNde4Nwi5srdUSuCCnOSszKhFjBs8EtMEWhsKX02BjIKkErq/FjQUkNUbXUYeQaVMQ0jQ==}
+
   hachure-fill@0.5.2:
     resolution: {integrity: sha512-3GKBOn+m2LX9iq+JC1064cSFprJY4jL1jCXTcpnfER5HYE2l/4EfWSGzkPa/ZDBmYI0ZOEj5VHV/eKnPGkHuOg==}
 
@@ -4504,6 +4507,16 @@ packages:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
     engines: {node: '>=10'}
 
+  jquery-ui@1.14.1:
+    resolution: {integrity: sha512-DhzsYH8VeIvOaxwi+B/2BCsFFT5EGjShdzOcm5DssWjtcpGWIMsn66rJciDA6jBruzNiLf1q0KvwMoX1uGNvnQ==}
+
+  jquery@2.2.4:
+    resolution: {integrity: sha512-lBHj60ezci2u1v2FqnZIraShGgEXq35qCzMv4lITyHGppTnA13rwR0MgwyNJh9TnDs3aXUvd1xjAotfraMHX/Q==}
+    deprecated: This version is deprecated. Please upgrade to the latest version or find support at https://www.herodevs.com/support/jquery-nes.
+
+  jquery@3.7.1:
+    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
+
   js-beautify@1.15.4:
     resolution: {integrity: sha512-9/KXeZUKKJwqCXUdBxFJ3vPh467OCckSBmYDwSK/EtV090K+iMJ7zx2S3HLVDIWFQdqMIsZWbnaGiba18aWhaA==}
     engines: {node: '>=14'}
@@ -4645,6 +4658,9 @@ packages:
 
   lodash.once@4.1.1:
     resolution: {integrity: sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==}
+
+  lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
   log-symbols@6.0.0:
     resolution: {integrity: sha512-i24m8rpwhmPIS4zscNzK6MSEhk0DUWa/8iYQWxhffV8jkI4Phvs3F+quL5xvS0gdQR0FyTCMMH33Y78dDTzzIw==}
@@ -5309,6 +5325,12 @@ packages:
     resolution: {integrity: sha512-Eqzs/xZnS881oghPO/4CQ1cULyESuUhEjfYboXmYNOokXnJ6QP5GKKJZ6zjkg9SnKXxSrIxSo5PxzCI5jReJMA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
+
+  react-gridstack@0.1.4:
+    resolution: {integrity: sha512-0K+Vxw6AhtsD2je3Fl15lE13yXT9v5JzOgz33oGLLD0hq9btZjIMDEah5o3fdkrprUm7LPT1jiWcIjrDn4mN2w==}
+    peerDependencies:
+      react: '>= 0.14.7'
+      react-dom: '>= 0.14.5'
 
   react-hook-form@7.62.0:
     resolution: {integrity: sha512-7KWFejc98xqG/F4bAxpL41NB3o1nnvQO1RWZT3TqRZYL8RryQETGfEdVnJN2fy1crCiBLLjkRBVK05j24FxJGA==}
@@ -6786,11 +6808,6 @@ snapshots:
   '@csstools/css-tokenizer@3.0.4': {}
 
   '@date-fns/tz@1.4.1': {}
-
-  '@declarative-gridstack/react@0.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
@@ -9900,6 +9917,14 @@ snapshots:
 
   graphemer@1.4.0: {}
 
+  gridstack@0.2.6:
+    dependencies:
+      jquery: 3.7.1
+      jquery-ui: 1.14.1
+      lodash: 4.17.21
+
+  gridstack@12.3.3: {}
+
   hachure-fill@0.5.2: {}
 
   has-flag@4.0.0: {}
@@ -10065,6 +10090,14 @@ snapshots:
 
   joycon@3.1.1: {}
 
+  jquery-ui@1.14.1:
+    dependencies:
+      jquery: 3.7.1
+
+  jquery@2.2.4: {}
+
+  jquery@3.7.1: {}
+
   js-beautify@1.15.4:
     dependencies:
       config-chain: 1.1.13
@@ -10216,6 +10249,8 @@ snapshots:
   lodash.merge@4.6.2: {}
 
   lodash.once@4.1.1: {}
+
+  lodash@4.17.21: {}
 
   log-symbols@6.0.0:
     dependencies:
@@ -10907,6 +10942,14 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
+
+  react-gridstack@0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      gridstack: 0.2.6
+      jquery: 2.2.4
+      lodash: 4.17.21
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-hook-form@7.62.0(react@18.3.1):
     dependencies:

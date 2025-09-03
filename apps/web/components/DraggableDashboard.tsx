@@ -1,0 +1,480 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
+import {
+  Building2, Users, Shield, TrendingUp, Activity, AlertTriangle, Send, FileText
+} from "lucide-react";
+import { GridStack } from "gridstack";
+import "gridstack/dist/gridstack.min.css";
+
+interface DashboardStatProps {
+  title: string;
+  value: string;
+  description: string;
+  icon: React.ElementType;
+  trend?: { value: string; isPositive: boolean };
+}
+
+function DashboardStat({ title, value, description, icon: Icon, trend }: DashboardStatProps) {
+  return (
+    <Card className="h-full min-h-[240px]">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <Icon className="h-4 w-4 text-muted-foreground" />
+      </CardHeader>
+      <CardContent>
+        <div className="text-2xl font-bold">{value}</div>
+        <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+          <span>{description}</span>
+          {trend && (
+            <span className={`flex items-center ${trend.isPositive ? "text-green-600" : "text-red-600"}`}>
+              <TrendingUp className={`h-3 w-3 mr-1 ${trend.isPositive ? "" : "rotate-180"}`} />
+              {trend.value}
+            </span>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+interface DraggableDashboardProps {
+  dashboardStats: any[];
+  outboxStats: any;
+  auditStats: any;
+  healthData: any;
+  healthLoading: boolean;
+  healthError: string | null;
+  lastUpdate: Date | null;
+  refreshHealth: () => void;
+  isAllHealthy: boolean;
+  healthyCount: number;
+  totalCount: number;
+  avgResponseTime: number;
+  isGridMode: boolean;
+}
+
+export default function DraggableDashboard(props: DraggableDashboardProps) {
+  const {
+    dashboardStats, outboxStats, auditStats, healthData, healthLoading, healthError,
+    lastUpdate, refreshHealth, isAllHealthy, healthyCount, totalCount, avgResponseTime, isGridMode
+  } = props;
+
+  // 12-col grid; cellHeight=120 → h=2=240px; h=5=600px, etc.
+  const widgets = [
+    { id: "stats-1", x: 0,  y: 0,  w: 3, h: 2, minW: 2, minH: 2 },
+    { id: "stats-2", x: 3,  y: 0,  w: 3, h: 2, minW: 2, minH: 2 },
+    { id: "stats-3", x: 6,  y: 0,  w: 3, h: 2, minW: 2, minH: 2 },
+    { id: "stats-4", x: 9,  y: 0,  w: 3, h: 2, minW: 2, minH: 2 },
+
+    { id: "tenants",       x: 0,  y: 2,  w: 8, h: 5, minW: 4, minH: 4 },
+    { id: "system-status", x: 8,  y: 2,  w: 4, h: 5, minW: 3, minH: 4 },
+
+    { id: "outbox", x: 0,  y: 7,  w: 8, h: 4, minW: 4, minH: 3 },
+    { id: "audit",  x: 8,  y: 7,  w: 4, h: 4, minW: 3, minH: 3 },
+
+    { id: "alerts", x: 0,  y: 11, w: 12, h: 3, minW: 6, minH: 3 }
+  ];
+
+  const [isMounted, setIsMounted] = useState(false);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const gridInstanceRef = useRef<GridStack | null>(null);
+
+  useEffect(() => setIsMounted(true), []);
+
+  useEffect(() => {
+    if (!isMounted || !isGridMode || !gridRef.current) return;
+
+    // destroy any stale instance
+    if (gridInstanceRef.current) {
+      gridInstanceRef.current.destroy(false);
+      gridInstanceRef.current = null;
+    }
+
+         const grid = GridStack.init(
+       {
+         column: 12,
+         cellHeight: 120,
+         margin: 12,
+         animate: true,
+         float: false,
+         resizable: { handles: "se" },
+         draggable: { handle: ".card-header, .grid-stack-item-content" },
+         staticGrid: false
+       },
+       gridRef.current
+     );
+
+    gridInstanceRef.current = grid;
+
+    return () => {
+      if (gridInstanceRef.current) {
+        gridInstanceRef.current.destroy(false);
+        gridInstanceRef.current = null;
+      }
+    };
+  }, [isMounted, isGridMode]);
+
+  if (!isMounted) {
+    return (
+      <div className="space-y-6">
+        <div className="flex justify-end">
+          <div className="h-9 w-48 bg-gray-200 animate-pulse rounded" />
+        </div>
+        <div className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-24 bg-gray-200 animate-pulse rounded" />
+            ))}
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-64 bg-gray-200 animate-pulse rounded" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const stats = {
+    totalTenants: dashboardStats?.length || 0,
+    activeTenants: dashboardStats?.filter((t) => t.status === "active").length || 0,
+    totalUsers: 1247
+  };
+
+  const getHealthPercentage = () => {
+    if (!healthData) return "Unknown";
+    if (isAllHealthy) return "100%";
+    if (totalCount === 0) return "Unknown";
+    return `${Math.round((healthyCount / totalCount) * 100)}%`;
+  };
+
+
+
+  const renderWidgetContent = (widgetId: string) => {
+    switch (widgetId) {
+      case "stats-1":
+        return (
+          <DashboardStat
+            title="Total Tenants"
+            value={stats.totalTenants.toString()}
+            description="All registered workspaces"
+            icon={Building2}
+            trend={{ value: "+12%", isPositive: true }}
+          />
+        );
+      case "stats-2":
+        return (
+          <DashboardStat
+            title="Active Tenants"
+            value={stats.activeTenants.toString()}
+            description="Currently active workspaces"
+            icon={Activity}
+            trend={{ value: "+8%", isPositive: true }}
+          />
+        );
+      case "stats-3":
+        return (
+          <DashboardStat
+            title="Total Users"
+            value="1,247"
+            description="Across all tenants"
+            icon={Users}
+            trend={{ value: "+15%", isPositive: true }}
+          />
+        );
+      case "stats-4":
+        return (
+          <DashboardStat
+            title="System Health"
+            value={getHealthPercentage()}
+            description={healthData ? `${healthyCount}/${totalCount} services healthy` : "Checking services..."}
+            icon={Shield}
+            trend={healthData ? { value: `${avgResponseTime}ms avg`, isPositive: avgResponseTime < 200 } : undefined}
+          />
+        );
+      case "tenants":
+        return (
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle>Recent Tenant Activity</CardTitle>
+              <CardDescription>Latest tenant registrations and status changes</CardDescription>
+            </CardHeader>
+            <CardContent className="h-full overflow-auto">
+              <div className="space-y-4">
+                {dashboardStats?.slice(0, 10).map((tenant) => (
+                  <div key={tenant.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <Building2 className="h-5 w-5 text-indigo-600" />
+                      <div>
+                        <p className="font-medium">{tenant.name}</p>
+                        <p className="text-sm text-gray-600">@{tenant.slug}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                        tenant.status === "active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                      }`}>
+                        {tenant.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        );
+      case "system-status":
+        return (
+          <Card className="h-full">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <div>
+                <CardTitle>System Status</CardTitle>
+                <CardDescription>Current system health indicators</CardDescription>
+              </div>
+              <button
+                onClick={refreshHealth}
+                disabled={healthLoading}
+                className="p-2 hover:bg-gray-100 rounded-md disabled:opacity-50"
+                title="Refresh health status"
+              >
+                <Activity className={`h-4 w-4 ${healthLoading ? "animate-spin" : ""}`} />
+              </button>
+            </CardHeader>
+            <CardContent className="h-full overflow-auto">
+              {healthLoading && !healthData ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600" />
+                </div>
+              ) : healthError ? (
+                <div className="text-center py-4">
+                  <div className="flex items-center justify-center text-red-600 mb-2">
+                    <AlertTriangle className="h-5 w-5 mr-2" />
+                    <span className="text-sm">Health check failed</span>
+                  </div>
+                  <p className="text-xs text-gray-500">{healthError}</p>
+                  <button onClick={refreshHealth} className="text-xs text-indigo-600 hover:text-indigo-800 mt-2">
+                    Retry
+                  </button>
+                </div>
+              ) : healthData ? (
+                <div className="space-y-3">
+                  {healthData.services.map((service: any) => {
+                    const statusColor =
+                      service.status === "healthy" ? "text-green-600" :
+                      service.status === "unhealthy" ? "text-red-600" : "text-gray-600";
+                    const dotColor =
+                      service.status === "healthy" ? "bg-green-500" :
+                      service.status === "unhealthy" ? "bg-red-500" : "bg-gray-500";
+                    return (
+                      <div key={service.name} className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-sm capitalize">{service.name.replace(/-/g, " ")}</span>
+                          {service.responseTime && (
+                            <span className="text-xs text-gray-400">({service.responseTime}ms)</span>
+                          )}
+                        </div>
+                        <div className={`flex items-center ${statusColor}`}>
+                          <div className={`w-2 h-2 ${dotColor} rounded-full mr-2`} />
+                          <span className="text-sm capitalize">{service.status}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {lastUpdate && (
+                    <div className="pt-2 border-t">
+                      <div className="flex items-center justify-between text-xs text-gray-500">
+                        <span>Last updated: {lastUpdate.toLocaleTimeString()}</span>
+                        <span>Avg: {avgResponseTime}ms</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-center py-4 text-gray-500 text-sm">No health data available</div>
+              )}
+            </CardContent>
+          </Card>
+        );
+      case "outbox":
+        return (
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Send className="h-5 w-5" />
+                <span>Outbox Events</span>
+              </CardTitle>
+              <CardDescription>Event publishing and delivery status</CardDescription>
+            </CardHeader>
+            <CardContent className="h-full">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 h-full">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-green-600">{outboxStats?.sent || 0}</div>
+                  <div className="text-sm text-gray-600">Sent</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600">{outboxStats?.pending || 0}</div>
+                  <div className="text-sm text-gray-600">Pending</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-yellow-600">{outboxStats?.processing || 0}</div>
+                  <div className="text-sm text-gray-600">Processing</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-red-600">{(outboxStats?.failed || 0) + (outboxStats?.dead || 0)}</div>
+                  <div className="text-sm text-gray-600">Failed</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      case "audit":
+        return (
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <FileText className="h-5 w-5" />
+                <span>Audit Events</span>
+              </CardTitle>
+              <CardDescription>System audit trail and activity</CardDescription>
+            </CardHeader>
+            <CardContent className="h-full overflow-auto">
+              <div className="space-y-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-indigo-600">{auditStats?.recentEvents || 0}</div>
+                  <div className="text-sm text-gray-600">Events (24h)</div>
+                </div>
+                <div className="space-y-2">
+                  {auditStats?.topActions?.slice(0, 6).map((action: any) => (
+                    <div key={action.action} className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600">{action.action.replace(/_/g, " ")}</span>
+                      <span className="font-medium">{action.count}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      case "alerts":
+        return (
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle>System Alerts</CardTitle>
+              <CardDescription>Recent system events and notifications</CardDescription>
+            </CardHeader>
+            <CardContent className="h-full overflow-auto">
+              <div className="space-y-4">
+                {healthData && isAllHealthy && (
+                  <div className="flex items-start space-x-3">
+                    <Shield className="h-5 w-5 text-green-500 mt-0.5" />
+                    <div>
+                      <p className="font-medium">All services healthy</p>
+                      <p className="text-sm text-gray-600">All {totalCount} services are responding normally</p>
+                      <p className="text-xs text-gray-500 mt-1">Last checked: {lastUpdate?.toLocaleTimeString()}</p>
+                    </div>
+                  </div>
+                )}
+                <div className="flex items-start space-x-3">
+                  <Shield className="h-5 w-5 text-green-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Security scan completed</p>
+                    <p className="text-sm text-gray-600">Weekly security audit passed with no issues found</p>
+                    <p className="text-xs text-gray-500 mt-1">1 hour ago</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <Building2 className="h-5 w-5 text-blue-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">New tenant registered</p>
+                    <p className="text-sm text-gray-600">AcmeCorp has successfully completed onboarding</p>
+                    <p className="text-xs text-gray-500 mt-1">3 hours ago</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      default:
+        return <div className="p-4">Unknown widget: {widgetId}</div>;
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {isGridMode ? (
+        <div>
+          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+            <p className="text-sm text-blue-800">
+              <strong>Grid Layout Mode Active:</strong> Drag widgets to rearrange and resize by dragging the bottom-right corner.
+            </p>
+          </div>
+
+          <div ref={gridRef} className="grid-stack">
+            {widgets.map((w) => (
+              <div
+                key={w.id}
+                className="grid-stack-item"
+                gs-x={w.x} gs-y={w.y} gs-w={w.w} gs-h={w.h}
+                gs-min-w={w.minW} gs-min-h={w.minH} gs-id={w.id}
+              >
+                <div className="grid-stack-item-content h-full">
+                  {renderWidgetContent(w.id)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        // Fixed fallback layout
+        <div className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <DashboardStat title="Total Tenants" value={String(stats.totalTenants)} description="All registered workspaces" icon={Building2} trend={{ value: "+12%", isPositive: true }} />
+            <DashboardStat title="Active Tenants" value={String(stats.activeTenants)} description="Currently active workspaces" icon={Activity} trend={{ value: "+8%", isPositive: true }} />
+            <DashboardStat title="Total Users" value="1,247" description="Across all tenants" icon={Users} trend={{ value: "+15%", isPositive: true }} />
+            <DashboardStat title="System Health" value={getHealthPercentage()} description={healthData ? `${healthyCount}/${totalCount} services healthy` : "Checking services..."} icon={Shield} trend={healthData ? { value: `${avgResponseTime}ms avg`, isPositive: avgResponseTime < 200 } : undefined} />
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <Card className="col-span-2 h-[600px]">
+              <CardHeader>
+                <CardTitle>Recent Tenant Activity</CardTitle>
+                <CardDescription>Latest tenant registrations and status changes</CardDescription>
+              </CardHeader>
+              <CardContent className="h-full overflow-auto">
+                <div className="space-y-4">
+                  {dashboardStats?.slice(0, 10).map((tenant) => (
+                    <div key={tenant.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <Building2 className="h-5 w-5 text-indigo-600" />
+                        <div>
+                          <p className="font-medium">{tenant.name}</p>
+                          <p className="text-sm text-gray-600">@{tenant.slug}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                          tenant.status === "active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                        }`}>
+                          {tenant.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {renderWidgetContent("system-status")}
+
+            <div className="col-span-2 h-[480px]">{renderWidgetContent("outbox")}</div>
+            <div className="h-[480px]">{renderWidgetContent("audit")}</div>
+            <div className="col-span-3 h-[360px]">{renderWidgetContent("alerts")}</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
