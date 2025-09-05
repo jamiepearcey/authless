@@ -120,7 +120,7 @@ export default function DataGridDemoPage() {
     
     if (!dataProviderRef.current?.isReady()) {
       console.log('❌ DuckDB provider not ready');
-      return { num_rows: 0, num_columns: 0, column_headers: [], data: [] };
+      return { num_rows: 0, num_columns: 0, data: [] };
     }
 
     try {
@@ -141,8 +141,12 @@ export default function DataGridDemoPage() {
         orderBy = `${sort.id} ${sort.desc ? 'DESC' : 'ASC'}`;
       }
       
-      // Request more rows to ensure good performance
-      const rowCount = Math.max(y1 - y0, 20); // At least 20 rows
+      // Calculate adequate chunk size for smooth scrolling
+      const requestedRows = y1 - y0;
+      const minChunkSize = 50; // Minimum chunk for good performance
+      const rowCount = Math.max(requestedRows, minChunkSize);
+      
+      console.log(`🔄 Regular-table requested ${requestedRows} rows [${y0}-${y1}], fetching ${rowCount} rows for smooth scrolling`);
       console.log(`🔄 Querying DuckDB: all columns (${allColumnKeys.length}), rows=[${y0}-${y0 + rowCount}], orderBy=${orderBy}`);
 
       const result = await dataProviderRef.current.queryData(
@@ -160,9 +164,11 @@ export default function DataGridDemoPage() {
         allHeaders: result.columnHeaders
       });
 
-      // Extract only the requested column data for the viewport
+      // Extract viewport data - return exactly what regular-table requested
       const viewportData: any[][] = [];
-      for (let rowIdx = 0; rowIdx < result.data.length; rowIdx++) {
+      const rowsToReturn = Math.min(requestedRows, result.data.length);
+      
+      for (let rowIdx = 0; rowIdx < rowsToReturn; rowIdx++) {
         const rowData = result.data[rowIdx];
         const viewportRow: any[] = [];
         
@@ -173,19 +179,41 @@ export default function DataGridDemoPage() {
         viewportData.push(viewportRow);
       }
 
-      console.log(`🎯 Viewport data: ${viewportData.length} rows x ${requestedColumnHeaders.length} columns`);
+      console.log(`🎯 Viewport data: ${viewportData.length} rows x ${requestedColumnHeaders.length} columns (requested: ${requestedRows} rows)`);
       console.log(`📋 Sample viewport row:`, viewportData[0]);
+      console.log(`📋 All viewport rows:`, viewportData.slice(0, 5)); // Show first 5 rows
+      console.log(`📋 Headers array type:`, typeof requestedColumnHeaders, Array.isArray(requestedColumnHeaders));
+      console.log(`📋 Headers:`, requestedColumnHeaders);
+      console.log(`📋 First header:`, requestedColumnHeaders[0], typeof requestedColumnHeaders[0]);
+
+      // Convert row-major data to column-major format (official regular-table format)
+      const columnMajorData = [];
+      for (let colIdx = 0; colIdx < requestedColumnHeaders.length; colIdx++) {
+        const columnData = [];
+        for (let rowIdx = 0; rowIdx < viewportData.length; rowIdx++) {
+          columnData.push(viewportData[rowIdx][colIdx] || '');
+        }
+        columnMajorData.push(columnData);
+      }
+      
+      // Generate hierarchical headers (2D arrays)
+      const columnHeaders = requestedColumnHeaders.map(header => [header]);
+      const rowHeaders = [];
+      for (let y = y0; y < y0 + viewportData.length; y++) {
+        rowHeaders.push([`Row ${y + 1}`]);
+      }
 
       return {
         num_rows: result.totalRows,
         num_columns: FINANCIAL_COLUMNS.length,
-        column_headers: requestedColumnHeaders,
-        data: viewportData,
+        row_headers: rowHeaders,
+        column_headers: columnHeaders,
+        data: columnMajorData,
       };
     } catch (error) {
       console.error('❌ DuckDB data request failed:', error);
       console.error('Error details:', error);
-      return { num_rows: 0, num_columns: 0, column_headers: [], data: [] };
+      return { num_rows: 0, num_columns: 0, data: [] };
     }
   };
 

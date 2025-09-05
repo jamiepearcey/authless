@@ -27,7 +27,8 @@ interface DataGridProps<T = any> {
   onDataRequest?: (x0: number, y0: number, x1: number, y1: number) => Promise<{
     num_rows: number;
     num_columns: number;
-    column_headers: string[];
+    row_headers?: string[][];
+    column_headers?: string[][];
     data: any[][];
   }>;
 }
@@ -71,8 +72,24 @@ export function DataGrid<T = any>({
   const initializeTable = useCallback(async () => {
     try {
       console.log("Initializing regular-table...");
-      await import("regular-table");
-      await customElements.whenDefined("regular-table");
+      
+      // Import regular-table with error handling
+      try {
+        await import("regular-table");
+        console.log("✅ Regular-table module imported successfully");
+      } catch (importError) {
+        console.error("❌ Failed to import regular-table:", importError);
+        throw importError;
+      }
+      
+      // Wait for custom element definition
+      try {
+        await customElements.whenDefined("regular-table");
+        console.log("✅ Regular-table custom element defined");
+      } catch (defineError) {
+        console.error("❌ Failed to define regular-table custom element:", defineError);
+        throw defineError;
+      }
       
       // Wait a bit more to ensure the element is fully ready
       await new Promise(resolve => setTimeout(resolve, 200));
@@ -83,15 +100,25 @@ export function DataGrid<T = any>({
       
       const rt = tableRef.current;
       if (!rt) {
-        console.error("No table ref found");
-        return;
+        console.error("❌ No table ref found");
+        throw new Error("Table ref is null");
       }
       
-      console.log("Regular table element found:", rt);
-      console.log("Element connected:", rt.isConnected);
-      console.log("Element ready state:", rt.readyState);
-      console.log("Available methods:", Object.getOwnPropertyNames(rt));
-      console.log("setDataModel method:", typeof rt.setDataModel);
+      console.log("✅ Regular table element found:", rt);
+      console.log("📊 Element type:", rt.constructor.name);
+      console.log("🔌 Element connected:", rt.isConnected);
+      console.log("⚡ Element ready state:", rt.readyState);
+      
+      // Check properties safely
+      try {
+        const methods = Object.getOwnPropertyNames(rt);
+        console.log("📋 Available methods:", methods.filter(name => typeof (rt as any)[name] === 'function'));
+        console.log("🎯 setDataListener method:", typeof rt.setDataListener);
+        console.log("🎯 setScrollDimensions method:", typeof rt.setScrollDimensions);
+        console.log("🎯 draw method:", typeof rt.draw);
+      } catch (propsError) {
+        console.error("❌ Error checking element properties:", propsError);
+      }
       
       // Wait for element to be fully connected and ready
       if (!rt.isConnected) {
@@ -108,129 +135,90 @@ export function DataGrid<T = any>({
         });
       }
 
-      // Set up data listener using regular-table's API
+      // Set up data listener using regular-table's API - simplified to avoid readonly issues
       const dataListener = async (x0: number, y0: number, x1: number, y1: number) => {
-        console.log(`Data request: x0=${x0}, y0=${y0}, x1=${x1}, y1=${y1}`);
+        console.log(`📥 Data request: x0=${x0}, y0=${y0}, x1=${x1}, y1=${y1}`);
         
         // Handle dimension queries and invalid ranges
         if (x1 <= x0 || y1 <= y0) {
-          let numRows = 0;
+          let numRows = onDataRequest ? 10000 : tanstackTable.getRowModel().rows.length;
           let numColumns = columns.length;
           
-          if (onDataRequest) {
-            // For DuckDB mode, use a large default for virtual scrolling
-            numRows = 10000;
-            numColumns = columns.length;
-          } else {
-            numRows = tanstackTable.getRowModel().rows.length;
-          }
-          
-          const logMessage = x1 <= x0 && y1 <= y0 ? 'Dimension query' : 'Invalid coordinates';
-          console.log(`${logMessage} [${x0},${y0}] to [${x1},${y1}] - returning ${numRows} rows, ${numColumns} columns`);
+          console.log(`Dimension/invalid query - returning ${numRows} rows, ${numColumns} columns`);
           
           return {
             num_rows: numRows,
             num_columns: numColumns,
-            column_headers: [], // Empty headers for dimension/invalid query
             data: []
           };
         }
         
         if (onDataRequest) {
-          // Clamp coordinates to valid bounds
-          const clampedX0 = Math.max(0, x0);
-          const clampedY0 = Math.max(0, y0);
-          const clampedX1 = Math.min(x1, columns.length);
-          const clampedY1 = Math.max(y1, y0 + 1); // Ensure y1 > y0
-          
-          console.log(`DuckDB mode: calling onDataRequest for range [${clampedX0},${clampedY0}] to [${clampedX1},${clampedY1}] (original: [${x0},${y0}] to [${x1},${y1}])`);
-          
           try {
-            const result = await onDataRequest(clampedX0, clampedY0, clampedX1, clampedY1);
+            const result = await onDataRequest(x0, y0, x1, y1);
             console.log(`DuckDB response:`, result);
             setTotalRows(result.num_rows);
             return result;
           } catch (error) {
             console.error("DuckDB data request failed:", error);
-            console.error("Error details:", error);
-            const fallbackHeaders = [];
-            for (let x = clampedX0; x < clampedX1; x++) {
-              const column = columns[x];
-              if (column) {
-                fallbackHeaders.push(typeof column.header === 'string' ? column.header : 'Column');
-              }
-            }
             return {
               num_rows: 0,
               num_columns: columns.length,
-              column_headers: fallbackHeaders,
               data: []
             };
           }
         } else {
-          // Use local data
+          // Use local data - following official regular-table format
           const rows = tanstackTable.getRowModel().rows;
           const numRows = rows.length;
           const numColumns = columns.length;
-
-          // Clamp coordinates to valid bounds
-          const clampedX0 = Math.max(0, x0);
-          const clampedY0 = Math.max(0, y0);
-          const clampedX1 = Math.min(x1, numColumns);
-          const clampedY1 = Math.min(y1, numRows);
-
+          
           console.log(`Local data: ${numRows} rows, ${numColumns} columns`);
-          console.log(`Requested range: [${x0},${y0}] to [${x1},${y1}], clamped to: [${clampedX0},${clampedY0}] to [${clampedX1},${clampedY1}]`);
-          console.log(`Sample row data:`, rows[0]?.original);
-          console.log(`Columns:`, columns.map(col => ({ header: col.header, accessorKey: (col as any).accessorKey })));
-
-          // Get column headers for the requested range
-          const columnHeaders: string[] = [];
-          for (let x = clampedX0; x < clampedX1; x++) {
+          
+          // Official format: column_headers is 2D array, one array per column
+          const columnHeaders = [];
+          for (let x = x0; x < Math.min(x1, numColumns); x++) {
             const column = columns[x];
-            if (column) {
-              columnHeaders.push(typeof column.header === 'string' ? column.header : 'Column');
+            if (column && typeof column.header === 'string') {
+              columnHeaders.push([column.header]); // Wrap in array for hierarchy
+            } else {
+              columnHeaders.push(['Column']);
             }
           }
           
-          const data: any[][] = [];
-          for (let y = clampedY0; y < clampedY1; y++) {
-            const row = rows[y];
-            if (!row) continue;
+          // Official format: row_headers is 2D array, one array per row
+          const rowHeaders = [];
+          for (let y = y0; y < Math.min(y1, numRows); y++) {
+            rowHeaders.push([`Row ${y + 1}`]); // Wrap in array for hierarchy
+          }
+          
+          // Official format: data is 2D array where each sub-array is a COLUMN
+          const data = [];
+          for (let x = x0; x < Math.min(x1, numColumns); x++) {
+            const column = columns[x];
+            const columnData = [];
             
-            const rowData: any[] = [];
-            for (let x = clampedX0; x < clampedX1; x++) {
-              const column = columns[x];
-              if (!column) continue;
-              
-              const accessorKey = (column as any).accessorKey;
-              if (accessorKey) {
-                const value = (row.original as any)[accessorKey];
-                if (typeof value === 'number') {
-                  rowData.push(value.toFixed(2));
+            for (let y = y0; y < Math.min(y1, numRows); y++) {
+              const row = rows[y];
+              if (row && column) {
+                const accessorKey = (column as any).accessorKey;
+                if (accessorKey && row.original) {
+                  const value = (row.original as any)[accessorKey];
+                  columnData.push(String(value || ''));
                 } else {
-                  rowData.push(String(value || ''));
+                  columnData.push('');
                 }
               } else {
-                rowData.push('');
+                columnData.push('');
               }
             }
-            data.push(rowData);
+            data.push(columnData);
           }
-          
-          console.log(`Returning ${data.length} rows of data, ${columnHeaders.length} columns`);
-          console.log(`Column headers for range [${x0}-${x1}]:`, columnHeaders);
-          console.log(`Sample data:`, data[0]);
-          console.log(`Full response:`, {
-            num_rows: numRows,
-            num_columns: numColumns,
-            column_headers: columnHeaders,
-            data: data
-          });
           
           return {
             num_rows: numRows,
             num_columns: numColumns,
+            row_headers: rowHeaders,
             column_headers: columnHeaders,
             data: data
           };
@@ -239,12 +227,19 @@ export function DataGrid<T = any>({
 
       console.log("Setting data listener...");
       
-      // Use the correct regular-table API
-      if (typeof rt.setDataListener === 'function') {
-        rt.setDataListener(dataListener);
-        console.log("Data listener set successfully");
-      } else {
-        throw new Error("setDataListener method not available on regular-table element");
+      // Use the correct setDataListener API as per official documentation
+      try {
+        if (typeof rt.setDataListener === 'function') {
+          console.log("Using setDataListener API");
+          rt.setDataListener(dataListener);
+          console.log("Data listener set successfully");
+        } else {
+          throw new Error("setDataListener method not available on regular-table element");
+        }
+      } catch (error) {
+        console.error("Error setting data listener:", error);
+        console.error("Error details:", error instanceof Error ? error.message : String(error));
+        throw error;
       }
       
       // Set scroll dimensions for virtual scrolling
@@ -260,6 +255,16 @@ export function DataGrid<T = any>({
       if (typeof rt.draw === 'function') {
         console.log("Drawing table...");
         rt.draw();
+        
+        // Add event listeners to see what's happening
+        rt.addEventListener('regular-table-draw', () => {
+          console.log('🎨 regular-table draw event fired');
+        });
+        
+        rt.addEventListener('scroll', () => {
+          console.log('📜 regular-table scroll event');
+        });
+        
       } else {
         console.log("draw method not available, trying alternative...");
         // Try to trigger a redraw
@@ -323,13 +328,35 @@ export function DataGrid<T = any>({
           const actualWidth = rt.offsetWidth || rt.clientWidth || 800;
           const actualHeight = rt.offsetHeight || rt.clientHeight || height;
           
-          console.log(`Setting scroll dimensions: ${actualWidth} x ${actualHeight}`);
-          rt.setScrollDimensions({
-            width: actualWidth,
-            height: actualHeight
-          });
+          console.log(`📐 Element dimensions: ${actualWidth} x ${actualHeight}, container: ${rt.parentElement?.offsetWidth} x ${rt.parentElement?.offsetHeight}`);
+          console.log(`📐 Setting scroll dimensions: ${actualWidth} x ${actualHeight}`);
           
-          console.log("Redrawing after setting dimensions...");
+          // Set explicit dimensions for virtual scrolling
+          try {
+            rt.setScrollDimensions({
+              width: actualWidth,
+              height: actualHeight
+            });
+            console.log(`✅ Scroll dimensions set successfully`);
+          } catch (scrollError) {
+            console.warn("Could not set scroll dimensions:", scrollError);
+          }
+          
+          // Set explicit table size to ensure proper viewport calculation
+          if (onDataRequest) {
+            console.log(`📐 Setting virtual table size for 10,000 rows`);
+            // Tell regular-table we have a large virtual dataset
+            try {
+              if (rt.style) {
+                rt.style.width = `${actualWidth}px`;
+                rt.style.height = `${actualHeight}px`;
+              }
+            } catch (styleError) {
+              console.warn("Could not set style properties:", styleError);
+            }
+          }
+          
+          console.log("🎨 Redrawing after setting dimensions...");
           rt.draw(); // Redraw after setting dimensions
         }
       }, 100);
@@ -391,12 +418,23 @@ export function DataGrid<T = any>({
   }, [data, sorting, columnFilters, isTableReady]);
 
   return (
-    <div className="w-full border rounded-lg bg-white overflow-hidden relative">
+    <div 
+      className="w-full border rounded-lg bg-white overflow-hidden relative"
+      style={{ height: `${height}px` }}
+    >
       <regular-table
-        ref={tableRef}
+        ref={(el) => {
+          try {
+            console.log("🔗 Setting table ref:", el);
+            tableRef.current = el;
+          } catch (refError) {
+            console.error("❌ Error setting table ref:", refError);
+          }
+        }}
         style={{
           width: "100%",
-          height: `${height}px`,
+          height: "100%",
+          display: "block",
         } as React.CSSProperties}
       />
       
