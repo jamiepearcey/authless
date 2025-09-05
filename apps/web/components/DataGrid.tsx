@@ -65,7 +65,11 @@ export function DataGrid<T = any>({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    enableColumnResizing: false,
+    enableColumnResizing: true,
+    enableSorting: true,
+    enableColumnFilters: true,
+    enableGrouping: true,
+    columnResizeMode: 'onChange',
   });
 
   // Initialize regular-table
@@ -175,36 +179,136 @@ export function DataGrid<T = any>({
           
           console.log(`Local data: ${numRows} rows, ${numColumns} columns`);
           
-          // Official format: column_headers is 2D array, one array per column
+          // Use TanStack Table's header features - support hierarchical headers
+          const headerGroups = tanstackTable.getHeaderGroups();
+          const currentLeafHeaders = headerGroups[headerGroups.length - 1]?.headers || [];
+          
           const columnHeaders = [];
           for (let x = x0; x < Math.min(x1, numColumns); x++) {
-            const column = columns[x];
-            if (column && typeof column.header === 'string') {
-              columnHeaders.push([column.header]); // Wrap in array for hierarchy
+            const leafHeader = currentLeafHeaders[x];
+            if (leafHeader) {
+              // Build hierarchical header array from all header groups
+              const headerHierarchy = [];
+              
+              // Go through each header group to build hierarchy
+              for (const headerGroup of headerGroups) {
+                const headerInGroup = headerGroup.headers.find(h => 
+                  h.column.id === leafHeader.column.id || 
+                  h.column.columnDef === leafHeader.column.columnDef
+                );
+                
+                if (headerInGroup) {
+                  const headerText = typeof headerInGroup.column.columnDef.header === 'string' 
+                    ? headerInGroup.column.columnDef.header 
+                    : headerInGroup.id;
+                  
+                  // Add indicators only to leaf headers
+                  if (headerInGroup === leafHeader) {
+                    const sortDirection = headerInGroup.column.getIsSorted();
+                    const isGrouped = headerInGroup.column.getIsGrouped();
+                    const isFiltered = headerInGroup.column.getIsFiltered();
+                    const canResize = headerInGroup.column.getCanResize();
+                    
+                    // Build HTML header with proper elements and layout
+                    let headerHTML = `<div class="header-content">`;
+                    headerHTML += `<span class="header-text">${headerText}</span>`;
+                    
+                    // Add status icons in a group
+                    headerHTML += `<div class="header-icons">`;
+                    
+                    if (sortDirection) {
+                      const sortIcon = sortDirection === 'asc' 
+                        ? '<svg class="sort-icon sort-asc" width="12" height="12" viewBox="0 0 12 12"><path d="M6 2L10 8H2L6 2Z" fill="currentColor"/></svg>'
+                        : '<svg class="sort-icon sort-desc" width="12" height="12" viewBox="0 0 12 12"><path d="M6 10L2 4H10L6 10Z" fill="currentColor"/></svg>';
+                      headerHTML += sortIcon;
+                    }
+                    
+                    if (isGrouped) {
+                      headerHTML += '<svg class="group-icon" width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="2" width="10" height="2" fill="currentColor"/><rect x="1" y="5" width="7" height="2" fill="currentColor"/><rect x="1" y="8" width="10" height="2" fill="currentColor"/></svg>';
+                    }
+                    
+                    if (isFiltered) {
+                      headerHTML += '<svg class="filter-icon" width="12" height="12" viewBox="0 0 12 12"><path d="M1 2H11L7 6V10L5 8V6L1 2Z" fill="currentColor"/></svg>';
+                    }
+                    
+                    headerHTML += `</div>`; // close header-icons
+                    headerHTML += `</div>`; // close header-content
+                    
+                    if (canResize) {
+                      headerHTML += '<div class="resize-handle"><svg class="resize-icon" width="8" height="16" viewBox="0 0 8 16"><path d="M2 2V14M6 2V14" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>';
+                    }
+                    
+                    headerHierarchy.push(headerHTML);
+                  } else {
+                    headerHierarchy.push(headerText);
+                  }
+                }
+              }
+              
+              // If no hierarchy, use just the leaf header
+              if (headerHierarchy.length === 0) {
+                const headerText = typeof leafHeader.column.columnDef.header === 'string' 
+                  ? leafHeader.column.columnDef.header 
+                  : leafHeader.id;
+                headerHierarchy.push(headerText);
+              }
+              
+              columnHeaders.push(headerHierarchy);
             } else {
               columnHeaders.push(['Column']);
             }
           }
           
           // Official format: row_headers is 2D array, one array per row
+          // Enhanced with TanStack Table row information
           const rowHeaders = [];
           for (let y = y0; y < Math.min(y1, numRows); y++) {
-            rowHeaders.push([`Row ${y + 1}`]); // Wrap in array for hierarchy
+            const row = rows[y];
+            if (row) {
+              let rowLabel = `Row ${y + 1}`;
+              
+              // Add grouping information
+              if (row.getIsGrouped()) {
+                rowLabel = `📁 ${rowLabel} (Group)`;
+              } else if (row.depth > 0) {
+                const indent = '  '.repeat(row.depth);
+                rowLabel = `${indent}↳ ${rowLabel}`;
+              }
+              
+              // Add selection indicator if row is selected
+              if (row.getIsSelected()) {
+                rowLabel = `✓ ${rowLabel}`;
+              } else if (row.getIsSomeSelected()) {
+                rowLabel = `◐ ${rowLabel}`;
+              }
+              
+              rowHeaders.push([rowLabel]);
+            } else {
+              rowHeaders.push([`Row ${y + 1}`]);
+            }
           }
           
           // Official format: data is 2D array where each sub-array is a COLUMN
+          // Use TanStack Table's processed data (sorted, filtered, grouped)
           const data = [];
+          
           for (let x = x0; x < Math.min(x1, numColumns); x++) {
-            const column = columns[x];
+            const leafHeader = currentLeafHeaders[x];
             const columnData = [];
             
             for (let y = y0; y < Math.min(y1, numRows); y++) {
               const row = rows[y];
-              if (row && column) {
-                const accessorKey = (column as any).accessorKey;
-                if (accessorKey && row.original) {
-                  const value = (row.original as any)[accessorKey];
-                  columnData.push(String(value || ''));
+              if (row && leafHeader) {
+                // Use TanStack Table's cell value which respects sorting/filtering/grouping
+                const cell = row.getVisibleCells().find(cell => cell.column.id === leafHeader.column.id);
+                if (cell) {
+                  const value = cell.getValue();
+                  // Handle grouped cells differently
+                  if (leafHeader.column.getIsGrouped() && row.getIsGrouped()) {
+                    columnData.push(`${value} (${row.subRows?.length || 0} items)`);
+                  } else {
+                    columnData.push(String(value || ''));
+                  }
                 } else {
                   columnData.push('');
                 }
@@ -259,10 +363,121 @@ export function DataGrid<T = any>({
         // Add event listeners to see what's happening
         rt.addEventListener('regular-table-draw', () => {
           console.log('🎨 regular-table draw event fired');
+          
+          // Post-process headers to inject HTML content
+          const headerCells = rt.querySelectorAll('th');
+          headerCells.forEach((th: Element, index: number) => {
+            const textContent = th.textContent || '';
+            if (textContent.includes('<span') || textContent.includes('<svg')) {
+              // This header contains HTML - render it properly
+              th.innerHTML = textContent;
+            }
+          });
         });
         
         rt.addEventListener('scroll', () => {
           console.log('📜 regular-table scroll event');
+        });
+        
+        // Add header click handlers for TanStack Table features
+        rt.addEventListener('click', (event: any) => {
+          const target = event.target as HTMLElement;
+          
+          // Don't handle clicks on resize handles
+          if (target.closest('.resize-handle')) {
+            event.stopPropagation();
+            return;
+          }
+          
+          // Handle clicks on headers or their child elements (SVG icons, spans)
+          let headerCell: HTMLElement | null = target;
+          if (target.tagName !== 'TH') {
+            // If clicked on a child element, find the parent TH
+            headerCell = target.closest('th') as HTMLElement | null;
+          }
+          
+          if (headerCell && headerCell.tagName === 'TH') {
+            const meta = rt.getMeta ? rt.getMeta(headerCell) : null;
+            if (meta && meta.x !== undefined && meta.y === undefined) {
+              // Header click - determine which column was clicked
+              const clickHeaderGroups = tanstackTable.getHeaderGroups();
+              const clickLeafHeaders = clickHeaderGroups[clickHeaderGroups.length - 1]?.headers || [];
+              const clickedHeader = clickLeafHeaders[meta.x];
+              
+              if (clickedHeader) {
+                // Handle sorting
+                if (clickedHeader.column.getCanSort()) {
+                  clickedHeader.column.toggleSorting();
+                  console.log(`🔄 Toggled sorting for column: ${clickedHeader.column.id}`);
+                  
+                  // Redraw table to show updated sorting indicators
+                  rt.draw();
+                }
+              }
+            }
+          }
+        });
+        
+        // Add resize functionality
+        let isResizing = false;
+        let resizeColumn: any = null;
+        let startX = 0;
+        let startWidth = 0;
+        
+        rt.addEventListener('mousedown', (event: any) => {
+          const target = event.target as HTMLElement;
+          const resizeHandle = target.closest('.resize-handle');
+          
+          if (resizeHandle) {
+            event.preventDefault();
+            isResizing = true;
+            startX = event.clientX;
+            
+            const headerCell = resizeHandle.closest('th');
+            if (headerCell) {
+              const meta = rt.getMeta ? rt.getMeta(headerCell) : null;
+              if (meta && meta.x !== undefined) {
+                const clickHeaderGroups = tanstackTable.getHeaderGroups();
+                const clickLeafHeaders = clickHeaderGroups[clickHeaderGroups.length - 1]?.headers || [];
+                resizeColumn = clickLeafHeaders[meta.x];
+                startWidth = headerCell.offsetWidth;
+                
+                // Add visual feedback
+                document.body.style.cursor = 'col-resize';
+                headerCell.classList.add('resizing');
+              }
+            }
+          }
+        });
+        
+        document.addEventListener('mousemove', (event: MouseEvent) => {
+          if (!isResizing || !resizeColumn) return;
+          
+          event.preventDefault();
+          const deltaX = event.clientX - startX;
+          const newWidth = Math.max(50, startWidth + deltaX); // Minimum width of 50px
+          
+          // Update column size in TanStack Table
+          resizeColumn.column.setSize(newWidth);
+          
+          console.log(`Resizing column ${resizeColumn.column.id} to ${newWidth}px`);
+        });
+        
+        document.addEventListener('mouseup', () => {
+          if (isResizing) {
+            isResizing = false;
+            resizeColumn = null;
+            document.body.style.cursor = '';
+            
+            // Remove visual feedback
+            const headers = rt.querySelectorAll('th.resizing');
+            headers.forEach((th: Element) => {
+              th.classList.remove('resizing');
+            });
+            
+            // Redraw table with new sizes
+            rt.draw();
+          }
         });
         
       } else {
@@ -277,10 +492,10 @@ export function DataGrid<T = any>({
         style.id = "datagrid-styles";
         style.textContent = `
           regular-table {
-            font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-            font-size: 12px;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 14px;
             background-color: white;
-            color: #1f2937;
+            color: #374151;
             border: 1px solid #e5e7eb;
             border-radius: 6px;
             overflow: auto;
@@ -290,29 +505,125 @@ export function DataGrid<T = any>({
             height: 100%;
           }
           regular-table::-webkit-scrollbar { width: 12px; height: 12px; }
-          regular-table::-webkit-scrollbar-track { background: #334155; border-radius: 6px; }
-          regular-table::-webkit-scrollbar-thumb { background: #64748b; border-radius: 6px; border: 2px solid #334155; }
+          regular-table::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 6px; }
+          regular-table::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; border: 2px solid #f1f5f9; }
           regular-table::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-          regular-table::-webkit-scrollbar-corner { background: #334155; }
+          regular-table::-webkit-scrollbar-corner { background: #f1f5f9; }
           regular-table th {
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             min-width: 80px;
             max-width: 300px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
             background-color: #f9fafb;
             color: #374151;
+            border-right: 1px solid #e5e7eb;
             border-bottom: 1px solid #e5e7eb;
             font-weight: 600;
             padding: 8px 12px;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+          }
+          regular-table th:hover {
+            background-color: #f3f4f6;
+          }
+          regular-table th:hover .resize-handle {
+            opacity: 1;
+          }
+          regular-table th .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            min-height: 20px;
+            padding-right: 12px;
+          }
+          regular-table th .header-text {
+            font-weight: 600;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          regular-table th .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+            margin-left: 8px;
+          }
+          regular-table th .sort-icon {
+            display: block;
+            color: #6b7280;
+            transition: color 0.2s;
+          }
+          regular-table th .sort-icon.sort-asc {
+            color: #3b82f6;
+          }
+          regular-table th .sort-icon.sort-desc {
+            color: #3b82f6;
+          }
+          regular-table th .group-icon {
+            display: block;
+            color: #10b981;
+          }
+          regular-table th .filter-icon {
+            display: block;
+            color: #f59e0b;
+          }
+          regular-table th .resize-handle {
+            position: absolute;
+            top: 0;
+            right: -4px;
+            bottom: 0;
+            width: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.2s ease;
+            cursor: col-resize;
+            z-index: 10;
+            background: transparent;
+            border-radius: 3px;
+          }
+          regular-table th .resize-handle:hover {
+            background: rgba(59, 130, 246, 0.15);
+            opacity: 1;
+          }
+          regular-table th .resize-handle:active {
+            background: rgba(59, 130, 246, 0.25);
+          }
+          regular-table th .resize-handle .resize-icon {
+            color: #3b82f6;
+            pointer-events: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+          }
+          regular-table th .resize-handle:hover .resize-icon {
+            opacity: 1;
+          }
+          regular-table th.resizing {
+            border-right: 2px solid #3b82f6 !important;
+          }
+          regular-table th.resizing .resize-handle {
+            opacity: 1;
+            background: rgba(59, 130, 246, 0.25);
           }
           regular-table td {
             border-right: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
             padding: 8px 12px;
             background-color: white;
           }
           regular-table tbody tr:hover {
+            background-color: #f9fafb;
+          }
+          regular-table tbody tr:nth-child(even) {
+            background-color: #fafafa;
+          }
+          regular-table tbody tr:nth-child(even):hover {
             background-color: #f3f4f6;
           }
         `;

@@ -43,30 +43,160 @@ const DEMO_DATA = [
   { id: 8, name: "Netflix Inc.", symbol: "NFLX", price: 445.05, change: -8.15, sector: "Communication Services" },
 ];
 
-// Simple columns for demo data
+// Simple columns for demo data with enhanced TanStack features
 const DEMO_COLUMNS: ColumnDef<typeof DEMO_DATA[0]>[] = [
-  { accessorKey: "symbol", header: "Symbol", size: 80 },
-  { accessorKey: "name", header: "Company", size: 200 },
-  { accessorKey: "price", header: "Price", size: 100, cell: ({ getValue }) => `$${(getValue() as number).toFixed(2)}` },
-  { accessorKey: "change", header: "Change", size: 100, cell: ({ getValue }) => {
-    const value = getValue() as number;
-    return <span style={{ color: value >= 0 ? '#10b981' : '#ef4444' }}>{value >= 0 ? '+' : ''}{value.toFixed(2)}</span>;
-  }},
-  { accessorKey: "sector", header: "Sector", size: 180 },
+  { 
+    accessorKey: "symbol", 
+    header: "Symbol", 
+    size: 80,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    meta: { category: "Identifier" }
+  },
+  { 
+    accessorKey: "name", 
+    header: "Company", 
+    size: 200,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: true,
+    meta: { category: "Identifier" }
+  },
+  { 
+    accessorKey: "price", 
+    header: "Price", 
+    size: 100, 
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    cell: ({ getValue }) => `$${(getValue() as number).toFixed(2)}`,
+    sortingFn: 'basic',
+    meta: { category: "Financial" }
+  },
+  { 
+    accessorKey: "change", 
+    header: "Change", 
+    size: 100, 
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    cell: ({ getValue }) => {
+      const value = getValue() as number;
+      return <span style={{ color: value >= 0 ? '#10b981' : '#ef4444' }}>{value >= 0 ? '+' : ''}{value.toFixed(2)}</span>;
+    },
+    sortingFn: 'basic',
+    meta: { category: "Financial" }
+  },
+  { 
+    accessorKey: "sector", 
+    header: "Sector", 
+    size: 180,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: true,
+    meta: { category: "Classification" }
+  },
 ];
 
-// Financial data columns for DuckDB demo
+// Financial data columns for DuckDB demo with enhanced TanStack features
 const FINANCIAL_COLUMNS: ColumnDef<FinancialRecord>[] = [
-  { accessorKey: "symbol", header: "Symbol", size: 80 },
-  { accessorKey: "company", header: "Company", size: 200 },
-  { accessorKey: "current_price", header: "Price", size: 90 },
-  { accessorKey: "price_change", header: "Change", size: 90 },
-  { accessorKey: "price_change_percent", header: "Change %", size: 100 },
-  { accessorKey: "volume", header: "Volume", size: 100 },
-  { accessorKey: "market_cap", header: "Market Cap", size: 120 },
-  { accessorKey: "pe_ratio", header: "P/E Ratio", size: 90 },
-  { accessorKey: "sector", header: "Sector", size: 150 },
-  { accessorKey: "analyst_rating", header: "Rating", size: 100 },
+  { 
+    accessorKey: "symbol", 
+    header: "Symbol", 
+    size: 80,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    meta: { category: "Stock Info" }
+  },
+  { 
+    accessorKey: "company", 
+    header: "Company", 
+    size: 200,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: true,
+    meta: { category: "Stock Info" }
+  },
+  { 
+    accessorKey: "current_price", 
+    header: "Price", 
+    size: 90,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    sortingFn: 'basic',
+    meta: { category: "Pricing" }
+  },
+  { 
+    accessorKey: "price_change", 
+    header: "Change", 
+    size: 90,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    sortingFn: 'basic',
+    meta: { category: "Pricing" }
+  },
+  { 
+    accessorKey: "price_change_percent", 
+    header: "Change %", 
+    size: 100,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    sortingFn: 'basic',
+    meta: { category: "Pricing" }
+  },
+  { 
+    accessorKey: "volume", 
+    header: "Volume", 
+    size: 100,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    sortingFn: 'basic',
+    meta: { category: "Trading" }
+  },
+  { 
+    accessorKey: "market_cap", 
+    header: "Market Cap", 
+    size: 120,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    sortingFn: 'basic',
+    meta: { category: "Valuation" }
+  },
+  { 
+    accessorKey: "pe_ratio", 
+    header: "P/E Ratio", 
+    size: 90,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: false,
+    sortingFn: 'basic',
+    meta: { category: "Valuation" }
+  },
+  { 
+    accessorKey: "sector", 
+    header: "Sector", 
+    size: 150,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: true,
+    meta: { category: "Classification" }
+  },
+  { 
+    accessorKey: "analyst_rating", 
+    header: "Rating", 
+    size: 100,
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGrouping: true,
+    meta: { category: "Analysis" }
+  },
 ];
 
 export default function DataGridDemoPage() {
