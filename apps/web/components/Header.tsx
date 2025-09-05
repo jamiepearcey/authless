@@ -4,9 +4,9 @@ import { useSession, signOut } from "next-auth/react";
 import { useCallback } from "react";
 import Link from "next/link";
 import { Button, NotificationBell } from "@ui/base";
-import { Settings, User, LogOut, Shield, Building2, CreditCard } from "lucide-react";
+import { Settings, User, LogOut, Shield, Building2, CreditCard, Bell } from "lucide-react";
 import TenantSwitcher from "./TenantSwitcher";
-import { navigationLinks } from "./links";
+import EnterpriseNavigation from "./EnterpriseNavigation";
 import { trpc } from "@/lib/trpc";
 import { useBasicNotificationSubscription, useCentrifugo, NotificationMessage } from "@/hooks/useNotificationSubscription";
 import { useRouter } from "next/navigation";
@@ -87,29 +87,10 @@ export default function Header() {
               Authless
             </Link>
 
-            {/* Navigation - Always left-aligned, fixed positioning */}
-            <nav className="hidden md:flex items-center space-x-1">
-              {navigationLinks.map((link: any) => {
-                // Skip admin-only links for non-admin users
-                if (link.adminOnly && (session?.user as any)?.platformRole !== 'admin') {
-                  return null;
-                }
-                
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="relative px-4 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600 transition-all duration-200 rounded-lg hover:bg-indigo-50 flex items-center gap-2 group"
-                  >
-                    {link.adminOnly && (
-                      <Shield className="h-3.5 w-3.5 text-indigo-500 group-hover:text-indigo-600" />
-                    )}
-                    <span>{link.label}</span>
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 w-0 bg-indigo-600 transition-all duration-200 group-hover:w-6"></div>
-                  </Link>
-                );
-              })}
-            </nav>
+            {/* Enterprise Navigation */}
+            <div className="hidden md:block">
+              <EnterpriseNavigation />
+            </div>
           </div>
 
           {/* Right Section: Auth/User Menu */}
@@ -172,10 +153,6 @@ export default function Header() {
                   {/* Dropdown Menu */}
                   <div className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
                     {/* User Info Header */}
-                    <div className="px-4 py-3 border-b border-gray-100">
-                      <p className="text-sm font-medium text-gray-900">{session.user?.name || 'User'}</p>
-                      <p className="text-xs text-gray-500">{session.user?.email}</p>
-                    </div>
 
                     {/* User Actions */}
                     <div className="py-1">
@@ -183,7 +160,7 @@ export default function Header() {
                         href="/notifications"
                         className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
                       >
-                        <User className="h-4 w-4 mr-3 text-gray-400" />
+                        <Bell className="h-4 w-4 mr-3 text-gray-400" />
                         Notifications
                       </Link>
                       <Link
@@ -192,6 +169,13 @@ export default function Header() {
                       >
                         <User className="h-4 w-4 mr-3 text-gray-400" />
                         Profile
+                      </Link>
+                      <Link
+                        href="/settings/2fa"
+                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                      >
+                        <Shield className="h-4 w-4 mr-3 text-gray-400" />
+                        Two-Factor Authentication
                       </Link>
                       <Link
                         href="/settings/account"

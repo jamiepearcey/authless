@@ -1,0 +1,41 @@
+# Cursor Rules for Authless Project
+
+## Component Requirements
+
+### Data Grid Implementation
+- **MUST use regular-table custom element** - No fallbacks to HTML tables or other components
+- **MUST use setDataListener API** - This is the correct method for regular-table, not setDataModel
+- **MUST use DuckDB WASM** - For high-performance data processing
+- **NO fallback mechanisms** - If regular-table fails, throw errors, don't create alternatives
+
+### Regular Table API
+- Use `setDataListener(dataListener)` to provide data
+- Use `draw()` to render the table
+- Data listener signature: `(x0: number, y0: number, x1: number, y1: number) => Promise<DataResponse>`
+- DataResponse format: `{ num_rows: number, num_columns: number, column_headers: string[], data: any[][] }`
+
+### DuckDB Integration
+- Use `@duckdb/duckdb-wasm` for data processing
+- Use `read_parquet()` and `read_csv_auto()` for file loading
+- Use SQL queries for filtering and sorting
+- Enable HTTPFS extension for remote file access
+
+### Error Handling
+- Throw errors when components fail to initialize
+- Don't create fallback UI components
+- Use proper error messages that indicate the specific component failure
+
+### TypeScript
+- Use proper type definitions for all components
+- No `any` types unless absolutely necessary
+- Follow the existing codebase patterns
+
+## File Structure
+- Keep data grid logic in `components/DataGrid.tsx`
+- Keep DuckDB logic in `lib/DuckDBDataProvider.ts`
+- Keep page components in `app/components/grid/page.tsx`
+
+## Dependencies
+- `regular-table` - For virtual scrolling data grid
+- `@duckdb/duckdb-wasm` - For data processing
+- `@tanstack/react-table` - For column definitions and state management

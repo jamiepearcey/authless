@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
@@ -22,7 +22,9 @@ import {
   ArrowLeft,
   Filter,
   X,
-  ChevronDown
+  ChevronDown,
+  ArrowUpDown,
+  GripVertical
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
@@ -36,20 +38,44 @@ import {
   DropdownMenuTrigger,
 } from "@ui/base";
 
+// Removed TanStack Table for now - using simple table implementation
+
+type User = {
+  id: string;
+  name: string | null;
+  email: string | null;
+  status: string;
+  platformRole: string | null;
+  createdAt: string;
+};
+
 export default function AdminUsersPage() {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [selectedRole, setSelectedRole] = useState<string>("all");
+  const [globalFilter, setGlobalFilter] = useState("");
   
   const limit = 20;
   const offset = (currentPage - 1) * limit;
 
-  const { data: usersData, isLoading } = trpc.getAllUsers.useQuery({
-    limit,
-    offset,
-  });
+  const { data: usersData, isLoading } = trpc.getAllUsers.useQuery();
+
+  // Filter users based on search and filters
+  const filteredUsers = usersData?.filter(user => {
+    const matchesSearch = !globalFilter || 
+      user.name?.toLowerCase().includes(globalFilter.toLowerCase()) ||
+      user.email?.toLowerCase().includes(globalFilter.toLowerCase());
+    
+    const matchesStatus = selectedStatus === "all" || 
+      (selectedStatus === "active" && user.status === "active") ||
+      (selectedStatus === "pending" && user.status === "pending");
+    
+    const matchesRole = selectedRole === "all" || user.platformRole === selectedRole;
+    
+    return matchesSearch && matchesStatus && matchesRole;
+  }) || [];
 
   const handleCreateUser = () => {
     router.push("/admin/users/create");
@@ -63,35 +89,6 @@ export default function AdminUsersPage() {
     router.push(`/admin/users/${userId}`);
   };
 
-  const getStatusBadge = (status: string, isEmailVerified: boolean) => {
-    if (!isEmailVerified) {
-      return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Pending</Badge>;
-    }
-    switch (status) {
-      case "active":
-        return <Badge variant="default" className="bg-green-100 text-green-800">Active</Badge>;
-      case "suspended":
-        return <Badge variant="secondary" className="bg-red-100 text-red-800">Suspended</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
-  };
-
-  const getRoleBadge = (role: string) => {
-    switch (role) {
-      case "admin":
-        return <Badge variant="default" className="bg-purple-100 text-purple-800">Admin</Badge>;
-      case "user":
-        return <Badge variant="outline" className="text-gray-600">User</Badge>;
-      default:
-        return <Badge variant="outline">{role}</Badge>;
-    }
-  };
-
-  const filteredUsers = usersData?.filter(user =>
-    user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
 
   if (isLoading) {
     return (
@@ -153,13 +150,13 @@ export default function AdminUsersPage() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
                   placeholder="Search users by name or email..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  value={globalFilter}
+                  onChange={(e) => setGlobalFilter(e.target.value)}
                   className="pl-10 pr-4 h-10 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                 />
-                {searchTerm && (
+                {globalFilter && (
                   <button
-                    onClick={() => setSearchTerm("")}
+                    onClick={() => setGlobalFilter("")}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 hover:text-gray-600"
                   >
                     <X className="h-4 w-4" />
@@ -227,17 +224,17 @@ export default function AdminUsersPage() {
           </div>
 
           {/* Active Filters Display */}
-          {(searchTerm || selectedStatus !== "all" || selectedRole !== "all") && (
+          {(globalFilter || selectedStatus !== "all" || selectedRole !== "all") && (
             <div className="mt-4 pt-4 border-t border-gray-200">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-sm text-gray-500">Active filters:</span>
                 
-                {searchTerm && (
+                {globalFilter && (
                   <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200">
                     <Search className="h-3 w-3 mr-1" />
-                    "{searchTerm}"
+                    "{globalFilter}"
                     <button
-                      onClick={() => setSearchTerm("")}
+                      onClick={() => setGlobalFilter("")}
                       className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
                     >
                       <X className="h-3 w-3" />
@@ -297,7 +294,7 @@ export default function AdminUsersPage() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Active Users</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {usersData?.filter(u => u.isEmailVerified).length || 0}
+                  {usersData?.filter(u => u.status === "active").length || 0}
                 </p>
               </div>
             </div>
@@ -311,7 +308,7 @@ export default function AdminUsersPage() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Pending</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {usersData?.filter(u => !u.isEmailVerified).length || 0}
+                  {usersData?.filter(u => u.status === "pending").length || 0}
                 </p>
               </div>
             </div>
@@ -336,10 +333,28 @@ export default function AdminUsersPage() {
       {/* Users Table */}
       <Card>
         <CardHeader>
-          <CardTitle>All Users</CardTitle>
-          <CardDescription>
-            Manage all platform users and their permissions
-          </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>All Users</CardTitle>
+              <CardDescription>
+                Manage all platform users and their permissions
+              </CardDescription>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setGlobalFilter("");
+                  setSelectedStatus("all");
+                  setSelectedRole("all");
+                }}
+                className="h-8 px-3 text-xs"
+              >
+                Reset Filters
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           {filteredUsers.length === 0 ? (
@@ -347,9 +362,9 @@ export default function AdminUsersPage() {
               <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">No users found</h3>
               <p className="text-gray-600 mb-6">
-                {searchTerm ? "Try adjusting your search criteria" : "Get started by creating your first user"}
+                {globalFilter ? "Try adjusting your search criteria" : "Get started by creating your first user"}
               </p>
-              {!searchTerm && (
+              {!globalFilter && (
                 <Button onClick={handleCreateUser}>
                   <Plus className="h-4 w-4 mr-2" />
                   Create User
@@ -362,35 +377,23 @@ export default function AdminUsersPage() {
                 <table className="w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[250px]">
-                        User
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">
-                        Status
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">
-                        Role
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[120px]">
-                        Created
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[120px]">
-                        Last Login
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">
-                        Actions
-                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Login</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {filteredUsers.map((user) => (
                       <tr key={user.id} className="hover:bg-gray-50">
-                        <td className="px-4 py-4">
+                        <td className="px-6 py-4">
                           <div className="flex items-center min-w-0">
                             <div className="h-10 w-10 flex-shrink-0">
                               <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
                                 <span className="text-sm font-medium text-white">
-                                  {user.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
+                                  {user.name?.charAt(0) || user.email?.charAt(0).toUpperCase()}
                                 </span>
                               </div>
                             </div>
@@ -398,28 +401,37 @@ export default function AdminUsersPage() {
                               <div className="text-sm font-medium text-gray-900 truncate">
                                 {user.name || "Unnamed User"}
                               </div>
-                              <div className="text-sm text-gray-500 truncate" title={user.email}>
-                                {user.email}
+                              <div className="text-sm text-gray-500 truncate" title={user.email || ""}>
+                                {user.email || ""}
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-4">
-                          {getStatusBadge("active", user.isEmailVerified)}
+                        <td className="px-6 py-4">
+                          {user.status === "active" ? (
+                            <Badge className="bg-green-100 text-green-800">Active</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Pending</Badge>
+                          )}
                         </td>
-                        <td className="px-4 py-4">
-                          {getRoleBadge(user.platformRole || "user")}
+                        <td className="px-6 py-4">
+                          {user.platformRole === "admin" ? (
+                            <Badge className="bg-purple-100 text-purple-800">Admin</Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-gray-600">User</Badge>
+                          )}
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500">
-                          {new Date(user.createdAt).toLocaleDateString()}
+                        <td className="px-6 py-4">
+                          <span className="text-sm text-gray-500">
+                            {new Date(user.createdAt).toLocaleDateString()}
+                          </span>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500">
-                          {user.lastLoginAt 
-                            ? new Date(user.lastLoginAt).toLocaleDateString()
-                            : "Never"
-                          }
+                        <td className="px-6 py-4">
+                          <span className="text-sm text-gray-500">
+                            {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "Never"}
+                          </span>
                         </td>
-                        <td className="px-4 py-4">
+                        <td className="px-6 py-4">
                           <div className="flex items-center space-x-1">
                             <Button
                               variant="ghost"
@@ -458,28 +470,13 @@ export default function AdminUsersPage() {
           )}
 
           {/* Pagination */}
-          {usersData && usersData.length > limit && (
+          {filteredUsers && filteredUsers.length > limit && (
             <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
               <div className="text-sm text-gray-700">
-                Showing {offset + 1} to {Math.min(offset + limit, usersData.length)} of {usersData.length} results
+                Showing {Math.min(filteredUsers.length, limit)} of {filteredUsers.length} results
               </div>
               <div className="flex space-x-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                  disabled={currentPage === 1}
-                >
-                  Previous
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={offset + limit >= usersData.length}
-                >
-                  Next
-                </Button>
+                <span className="text-sm text-gray-500">Simple pagination - full pagination removed with TanStack Table</span>
               </div>
             </div>
           )}

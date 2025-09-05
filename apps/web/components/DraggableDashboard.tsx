@@ -99,8 +99,8 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
          margin: 5,
          animate: true,
          float: false,
-         resizable: isGridMode ? { handles: "se" } : false,
-         draggable: isGridMode ? { handle: ".card-header, .grid-stack-item-content" } : false,
+         resizable: isGridMode ? { handles: "se" } : undefined,
+         draggable: isGridMode ? { handle: ".card-header, .grid-stack-item-content" } : undefined,
          staticGrid: !isGridMode,
          minRow: 1
        },

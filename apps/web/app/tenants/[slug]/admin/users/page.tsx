@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
-import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, ArrowLeft } from "lucide-react";
+import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, ArrowLeft, ArrowUpDown, GripVertical, Search, X, Filter, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 import { trpc } from "@/lib/trpc";
@@ -39,17 +39,38 @@ import {
   AlertDialogTitle,
 } from "@ui/base";
 
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  useReactTable,
+  ColumnResizeMode,
+  SortingState,
+  ColumnOrderState,
+  VisibilityState,
+} from "@tanstack/react-table";
+
 interface UserData {
   id: string;
   name: string | null;
-  email: string;
+  email: string | null;
   image: string | null;
   createdAt: string;
   lastLoginAt: string | null;
   status: string;
-  role: string;
   isEmailVerified: boolean;
 }
+
+interface MembershipData {
+  id: string;
+  role: string;
+  createdAt: string;
+  user: UserData;
+}
+
+const columnHelper = createColumnHelper<MembershipData>();
 
 type Predicate<T> = (value: T) => boolean;
 
@@ -81,6 +102,12 @@ export default function TenantUsersPage() {
     status: "active" as "active" | "suspended" | "removed",
   });
   const [search, setSearch] = useState("");
+  
+  // TanStack Table state
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [globalFilter, setGlobalFilter] = useState("");
   const { data: memberships, refetch: refetchMemberships } = trpc.getTenantMemberships.useQuery(
     { slug: tenantSlug  },
     { enabled: !!tenantSlug }
@@ -134,6 +161,160 @@ export default function TenantUsersPage() {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+
+  // Column definitions
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor("user.name", {
+        id: "user",
+        header: () => "User",
+        cell: ({ row }) => (
+          <div className="flex items-center min-w-0">
+            <div className="h-10 w-10 flex-shrink-0">
+              <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                {row.original.user.image ? (
+                  <img src={row.original.user.image} alt={row.original.user.name || ""} className="h-10 w-10 rounded-full" />
+                ) : (
+                  <span className="text-gray-600 font-medium">
+                    {row.original.user.name?.charAt(0) || row.original.user.email?.charAt(0).toUpperCase()}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="ml-4 min-w-0 flex-1">
+              <div className="text-sm font-medium text-gray-900 truncate">
+                {row.original.user.name || "No Name"}
+              </div>
+                                            <div className="text-sm text-gray-500 truncate" title={row.original.user.email || ""}>
+                                {row.original.user.email || ""}
+                              </div>
+            </div>
+          </div>
+        ),
+        size: 350,
+        minSize: 250,
+        maxSize: 500,
+        enableSorting: true,
+        enableResizing: true,
+      }),
+      columnHelper.accessor("role", {
+        id: "role",
+        header: () => "Role",
+        cell: ({ row }) => {
+          const role = row.original.role;
+          switch (role) {
+            case "admin":
+              return <Badge variant="default" className="bg-red-100 text-red-700 border-red-200">Admin</Badge>;
+            case "member":
+              return <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">Member</Badge>;
+            default:
+              return <Badge variant="outline">{role}</Badge>;
+          }
+        },
+        size: 100,
+        minSize: 80,
+        maxSize: 120,
+        enableSorting: true,
+        enableResizing: true,
+      }),
+      columnHelper.accessor("user.isEmailVerified", {
+        id: "status",
+        header: () => "Status",
+        cell: ({ row }) => {
+          const isVerified = row.original.user.isEmailVerified;
+          if (isVerified) {
+            return <Badge variant="default" className="bg-green-100 text-green-700 border-green-200">Active</Badge>;
+          } else {
+            return (
+              <div className="flex items-center gap-1">
+                <Badge variant="outline" className="text-orange-600 border-orange-200">Unverified</Badge>
+              </div>
+            );
+          }
+        },
+        size: 120,
+        minSize: 100,
+        maxSize: 150,
+        enableSorting: true,
+        enableResizing: true,
+      }),
+      columnHelper.accessor("createdAt", {
+        id: "joined",
+        header: () => "Joined",
+        cell: ({ row }) => (
+          <span className="text-sm text-gray-500">
+            {new Date(row.original.createdAt).toLocaleDateString()}
+          </span>
+        ),
+        size: 120,
+        minSize: 100,
+        maxSize: 150,
+        enableSorting: true,
+        enableResizing: true,
+      }),
+      columnHelper.display({
+        id: "actions",
+        header: () => "Actions",
+        cell: ({ row }) => (
+          <div className="flex items-center space-x-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => openUserDetails(row.original.user as UserData)}
+              className="h-8 w-8 p-0"
+              title="View Details"
+            >
+              <Eye className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => openEditForm(row.original.user as UserData)}
+              className="h-8 w-8 p-0"
+              title="Edit User"
+            >
+              <Edit className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => openDeleteConfirm(row.original.user as UserData)}
+              className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
+              title="Remove User"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
+        ),
+        size: 120,
+        minSize: 100,
+        maxSize: 150,
+        enableSorting: false,
+        enableResizing: true,
+      }),
+    ],
+    []
+  );
+
+  // Table instance
+  const table = useReactTable({
+    data: memberships || [],
+    columns,
+    state: {
+      sorting,
+      columnOrder,
+      columnVisibility,
+      globalFilter,
+    },
+    onSortingChange: setSorting,
+    onColumnOrderChange: setColumnOrder,
+    onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    columnResizeMode: "onChange" as ColumnResizeMode,
   });
 
   const handleInviteUser = async (e: React.FormEvent) => {
@@ -221,11 +402,12 @@ export default function TenantUsersPage() {
     }
   };
 
+
   const openEditForm = (user: UserData) => {
     setSelectedUser(user);
     setEditData({
       name: user.name || "",
-      role: user.role as "member" | "admin",
+      role: "member" as "member" | "admin", // Default to member since role comes from membership
       status: user.status as "active" | "suspended" | "removed",
     });
     setShowEditForm(true);
@@ -249,12 +431,6 @@ export default function TenantUsersPage() {
     );
   }
 
-  const nameEqual : Predicate<typeof memberships[0]> =  (membership) => membership.user.name?.toLowerCase().includes(search.toLowerCase()) || false;    
-  const emailEqual : Predicate<typeof memberships[0]> =  (membership) => membership.user.email?.toLowerCase().includes(search.toLowerCase()) || false;
-  const roleEqual : Predicate<typeof memberships[0]> =  (membership) => membership.role === search.toLowerCase() || false;
-
-  const filteredMemberships = memberships.filter(or(nameEqual, emailEqual, roleEqual
-  ));
 
   return (
     <div className="space-y-6">
@@ -350,103 +526,179 @@ export default function TenantUsersPage() {
         </Card>
       </div>
 
+      {/* Enhanced Toolbar */}
+      <Card className="mb-6">
+        <CardContent className="p-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            {/* Search Section */}
+            <div className="flex-1 max-w-md">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Search team members by name or email..."
+                  value={globalFilter}
+                  onChange={(e) => setGlobalFilter(e.target.value)}
+                  className="pl-10 pr-4 h-10 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                />
+                {globalFilter && (
+                  <button
+                    onClick={() => setGlobalFilter("")}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Clear Filters Button */}
+            {globalFilter && (
+              <Button 
+                variant="outline" 
+                onClick={() => setGlobalFilter("")}
+                size="sm"
+                className="h-8 px-3 text-xs border-gray-300 hover:border-gray-400 hover:bg-gray-50"
+              >
+                <X className="h-3 w-3 mr-1" />
+                Clear Search
+              </Button>
+            )}
+          </div>
+
+          {/* Active Filters Display */}
+          {globalFilter && (
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm text-gray-500">Active filters:</span>
+                
+                {globalFilter && (
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200">
+                    <Search className="h-3 w-3 mr-1" />
+                    "{globalFilter}"
+                    <button
+                      onClick={() => setGlobalFilter("")}
+                      className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* User List */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between"> 
-          <div className="inline-flex flex-col">
-            <CardTitle>Team Members</CardTitle>
-            <CardDescription>Manage user roles, permissions, and status   
-            </CardDescription>
-          </div>
-          {/* filter controls for memberships using input filter and button to apply filter right aligned */}
-          <div className="inline-flex gap-2 justify-end mt-2">
-            <div className="flex items-center gap-2 w-96">
-              <Input type="text" onChange={(e) => setSearch(e.target.value)} placeholder="Search" />
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Team Members</CardTitle>
+              <CardDescription>Manage user roles, permissions, and status</CardDescription>
             </div>
-          </div></div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSorting([]);
+                  setColumnOrder([]);
+                  setColumnVisibility({});
+                  setGlobalFilter("");
+                }}
+                className="h-8 px-3 text-xs"
+              >
+                Reset Columns
+              </Button>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent>
-          {filteredMemberships.length === 0 ? (
+        <CardContent className="p-0">
+          {table.getRowModel().rows.length === 0 ? (
             <div className="text-center py-12">
-              <Users className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No team members found</h3>
-              <p className="text-gray-500 mb-4">
-                {search ? `No team members match "${search}"` : "No team members have been added to this tenancy yet."}
+              <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No team members found</h3>
+              <p className="text-gray-600 mb-6">
+                {globalFilter ? "Try adjusting your search criteria" : "No team members have been added to this tenancy yet."}
               </p>
-              {!search && (
-                <Button onClick={() => setShowInviteForm(true)} className="flex items-center gap-2">
-                  <Plus className="h-4 w-4" />
+              {!globalFilter && (
+                <Button onClick={() => setShowInviteForm(true)}>
+                  <Plus className="h-4 w-4 mr-2" />
                   Invite First Team Member
                 </Button>
               )}
             </div>
           ) : (
-            <div className="space-y-3">
-              {filteredMemberships.map((membership) => (
-              <div key={membership.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                    {membership.user.image ? (
-                      <img src={membership.user.image} alt={membership.user.name || ""} className="h-10 w-10 rounded-full" />
-                    ) : (
-                      <span className="text-gray-600 font-medium">
-                        {membership.user.name?.charAt(0) || membership.user.email?.charAt(0).toUpperCase()}
-                      </span>
-                    )}
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">{membership.user.name || "No Name"}</p>
-                    <p className="text-sm text-gray-500">{membership.user.email}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      {getRoleBadge(membership.role)}
-                      {getStatusBadge(membership.user.isEmailVerified ? "active" : "removed")}
-                      {!membership.user.isEmailVerified && (
-                        <Badge variant="outline" className="text-orange-600 border-orange-200">
-                          Unverified
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-500">
-                    Joined {new Date(membership.createdAt).toLocaleDateString()}
-                  </span>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="sm">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => openUserDetails(membership.user as UserData)}>
-                        <Eye className="h-4 w-4 mr-2" />
-                        View Details
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => openEditForm(membership.user as UserData)}>
-                        <Edit className="h-4 w-4 mr-2" />
-                        Edit User
-                      </DropdownMenuItem>
-                      {!membership.user.isEmailVerified && (
-                        <DropdownMenuItem onClick={() => handleResendVerification(membership.user.id)}>
-                          <Mail className="h-4 w-4 mr-2" />
-                          Resend Verification
-                        </DropdownMenuItem>
-                      )}
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem 
-                        className="text-red-600"
-                        onClick={() => openDeleteConfirm(membership.user as UserData)}
-                      >
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        Remove User
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
+            <div className="overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    {table.getHeaderGroups().map(headerGroup => (
+                      <tr key={headerGroup.id}>
+                        {headerGroup.headers.map(header => (
+                          <th
+                            key={header.id}
+                            className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider relative group"
+                            style={{ width: header.getSize() }}
+                          >
+                            <div className="flex items-center space-x-1 min-h-[20px]">
+                              {header.isPlaceholder ? null : (
+                                <div
+                                  className={`flex items-center space-x-1 min-h-[20px] ${
+                                    header.column.getCanSort() ? 'cursor-pointer select-none' : ''
+                                  }`}
+                                  onClick={header.column.getToggleSortingHandler()}
+                                >
+                                  <span className="flex-1">
+                                    {flexRender(header.column.columnDef.header, header.getContext())}
+                                  </span>
+                                  <div className="flex items-center space-x-1 w-6 justify-center">
+                                    {header.column.getCanSort() && (
+                                      <ArrowUpDown className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                                    )}
+                                    {header.column.getIsSorted() === 'asc' && (
+                                      <span className="text-indigo-600 text-xs flex-shrink-0">↑</span>
+                                    )}
+                                    {header.column.getIsSorted() === 'desc' && (
+                                      <span className="text-indigo-600 text-xs flex-shrink-0">↓</span>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                            {/* Column Resize Handle */}
+                            {header.column.getCanResize() && (
+                              <div
+                                className={`absolute right-0 top-0 h-full w-1 bg-gray-300 cursor-col-resize select-none touch-none ${
+                                  header.column.getIsResizing() ? 'bg-indigo-500' : 'hover:bg-gray-400'
+                                }`}
+                                onMouseDown={header.getResizeHandler()}
+                                onTouchStart={header.getResizeHandler()}
+                              />
+                            )}
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {table.getRowModel().rows.map(row => (
+                      <tr key={row.id} className="hover:bg-gray-50">
+                        {row.getVisibleCells().map(cell => (
+                          <td
+                            key={cell.id}
+                            className="px-6 py-4"
+                            style={{ width: cell.column.getSize() }}
+                          >
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            ))}
             </div>
           )}
         </CardContent>  
@@ -594,20 +846,20 @@ export default function TenantUsersPage() {
                     <img src={selectedUser.image} alt={selectedUser.name || ""} className="h-16 w-16 rounded-full" />
                   ) : (
                     <span className="text-gray-600 font-medium text-xl">
-                      {selectedUser.name?.charAt(0) || selectedUser.email.charAt(0).toUpperCase()}
+                      {selectedUser.name?.charAt(0) || selectedUser.email?.charAt(0).toUpperCase()}
                     </span>
                   )}
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">{selectedUser.name || "No Name"}</h3>
-                  <p className="text-gray-600">{selectedUser.email}</p>
+                  <p className="text-gray-600">{selectedUser.email || ""}</p>
                 </div>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm font-medium text-gray-500">Role</Label>
-                  <p className="text-sm">{getRoleBadge(selectedUser.role)}</p>
+                  <p className="text-sm">{getRoleBadge("member")}</p>
                 </div>
                 <div>
                   <Label className="text-sm font-medium text-gray-500">Status</Label>

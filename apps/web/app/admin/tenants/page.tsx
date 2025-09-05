@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { t } from "@i18n-core";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Badge } from "@ui/base";
+import { ColumnOrderState, ColumnResizeMode, createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table";
 import { 
   Plus, 
   Search, 
@@ -20,12 +21,31 @@ import {
   ArrowLeft,
   Filter,
   X,
-  ChevronDown
+  ChevronDown,
+  ArrowUpDown,
+  GripVertical
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import Link from "next/link";
 
+
+// Define the tenant type
+type Tenant = {
+  id: string;
+  name: string;
+  slug: string;
+  status: string;
+  plan: string;
+  logoUrl?: string | null;
+  createdAt: string;
+  _count?: {
+    memberships: number;
+  };
+};
+
+// Create column helper
+const columnHelper = createColumnHelper<Tenant>();
 
 export default function AdminTenantsPage() {
   const router = useRouter();
@@ -33,6 +53,12 @@ export default function AdminTenantsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [selectedPlan, setSelectedPlan] = useState<string>("all");
+  
+  // TanStack Table state
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [globalFilter, setGlobalFilter] = useState("");
   
   const limit = 20;
   const offset = (currentPage - 1) * limit;
@@ -42,6 +68,159 @@ export default function AdminTenantsPage() {
     offset,
     status: selectedStatus === "all" ? undefined : selectedStatus,
     plan: selectedPlan === "all" ? undefined : selectedPlan,
+  });
+
+  // Define columns
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor("name", {
+        id: "tenant",
+        header: () => t("Tenant", "admin.tenants.page.AdminTenantsPage.tenant__23ckols"),
+        cell: ({ row }) => (
+          <div className="flex items-center min-w-0">
+            <div className="h-10 w-10 flex-shrink-0">
+              {row.original.logoUrl ? (
+                <img className="h-10 w-10 rounded-full" src={row.original.logoUrl} alt={row.original.name} />
+              ) : (
+                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                  <Building2 className="h-5 w-5 text-white" />
+                </div>
+              )}
+            </div>
+            <div className="ml-4 min-w-0 flex-1">
+              <div className="text-sm font-medium text-gray-900 truncate">{row.original.name}</div>
+              <div className="text-sm text-gray-500 truncate">{row.original.slug}</div>
+            </div>
+          </div>
+        ),
+        size: 350,
+        minSize: 250,
+        maxSize: 500,
+      }),
+      columnHelper.accessor("status", {
+        id: "status",
+        header: () => t("Status", "admin.tenants.page.AdminTenantsPage.status__24ckols"),
+        cell: ({ getValue }) => {
+          const status = getValue();
+          switch (status) {
+            case "active":
+              return <Badge variant="default" className="bg-green-100 text-green-800">Active</Badge>;
+            case "suspended":
+              return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Suspended</Badge>;
+            case "deleted":
+              return <Badge variant="destructive" className="bg-red-100 text-red-800">Deleted</Badge>;
+            default:
+              return <Badge variant="outline">{status}</Badge>;
+          }
+        },
+        size: 100,
+        minSize: 80,
+        maxSize: 150,
+      }),
+      columnHelper.accessor("plan", {
+        id: "plan",
+        header: () => t("Plan", "admin.tenants.page.AdminTenantsPage.plan__25ckols"),
+        cell: ({ getValue }) => {
+          const plan = getValue();
+          switch (plan) {
+            case "free":
+              return <Badge variant="outline" className="text-gray-600">Free</Badge>;
+            case "pro":
+              return <Badge variant="secondary" className="bg-blue-100 text-blue-800">Pro</Badge>;
+            case "enterprise":
+              return <Badge variant="default" className="bg-purple-100 text-purple-800">Enterprise</Badge>;
+            default:
+              return <Badge variant="outline">{plan}</Badge>;
+          }
+        },
+        size: 100,
+        minSize: 80,
+        maxSize: 150,
+      }),
+      columnHelper.accessor("_count.memberships", {
+        id: "members",
+        header: () => t("Members", "admin.tenants.page.AdminTenantsPage.members__26ckols"),
+        cell: ({ getValue }) => (
+          <span className="text-sm text-gray-900">{getValue() || 0}</span>
+        ),
+        size: 80,
+        minSize: 60,
+        maxSize: 120,
+      }),
+      columnHelper.accessor("createdAt", {
+        id: "created",
+        header: () => t("Created", "admin.tenants.page.AdminTenantsPage.created__27ckols"),
+        cell: ({ getValue }) => (
+          <span className="text-sm text-gray-500">
+            {new Date(getValue()).toLocaleDateString()}
+          </span>
+        ),
+        size: 120,
+        minSize: 100,
+        maxSize: 150,
+      }),
+      columnHelper.display({
+        id: "actions",
+        header: () => t("Actions", "admin.tenants.page.AdminTenantsPage.actions__28ckols"),
+        cell: ({ row }) => (
+          <div className="flex items-center space-x-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleViewTenant(row.original.slug)}
+              className="h-8 w-8 p-0"
+              title="View Tenant"
+            >
+              <Eye className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleEditTenant(row.original.slug)}
+              className="h-8 w-8 p-0"
+              title="Edit Tenant"
+            >
+              <Edit className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
+              title="Delete Tenant"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
+        ),
+        size: 120,
+        minSize: 100,
+        maxSize: 150,
+        enableSorting: false,
+      }),
+    ],
+    [t]
+  );
+
+  // Create table instance
+  const table = useReactTable({
+    data: tenantsData?.tenants || [],
+    columns,
+    state: {
+      sorting,
+      columnOrder,
+      columnVisibility,
+      globalFilter: globalFilter || searchTerm,
+    },
+    onSortingChange: setSorting,
+    onColumnOrderChange: setColumnOrder,
+    onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    columnResizeMode: "onChange" as ColumnResizeMode,
+    enableColumnResizing: true,
+    enableSorting: true,
   });
 
   // TODO: Implement inline tenant creation if needed in the future
@@ -67,36 +246,10 @@ export default function AdminTenantsPage() {
     router.push(`/tenants/${tenantSlug}`);
   };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "active":
-        return <Badge variant="default" className="bg-green-100 text-green-800">Active</Badge>;
-      case "suspended":
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Suspended</Badge>;
-      case "deleted":
-        return <Badge variant="destructive" className="bg-red-100 text-red-800">Deleted</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
-  };
-
-  const getPlanBadge = (plan: string) => {
-    switch (plan) {
-      case "free":
-        return <Badge variant="outline" className="text-gray-600">Free</Badge>;
-      case "pro":
-        return <Badge variant="secondary" className="bg-blue-100 text-blue-800">Pro</Badge>;
-      case "enterprise":
-        return <Badge variant="default" className="bg-purple-100 text-purple-800">Enterprise</Badge>;
-      default:
-        return <Badge variant="outline">{plan}</Badge>;
-    }
-  };
-
-  const filteredTenants = tenantsData?.tenants.filter(tenant =>
-    tenant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    tenant.slug.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
+  // Update global filter when search term changes
+  useMemo(() => {
+    setGlobalFilter(searchTerm);
+  }, [searchTerm]);
 
   if (isLoading) {
     return (
@@ -341,102 +494,94 @@ export default function AdminTenantsPage() {
         </Card>
       </div>
 
-      {/* Tenants Table */}
+      {/* TanStack Table */}
       <Card>
         <CardHeader>
-          <CardTitle>{t("All Tenants", "admin.tenants.page.AdminTenantsPage.all_tenants__21ckols")}</CardTitle>
-          <CardDescription>
-            {t("Manage and monitor all workspaces in the system", "admin.tenants.page.AdminTenantsPage.manage_and_monitor_all_workspaces__22ckols")}
-          </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>{t("All Tenants", "admin.tenants.page.AdminTenantsPage.all_tenants__21ckols")}</CardTitle>
+              <CardDescription>
+                {t("Manage and monitor all workspaces in the system", "admin.tenants.page.AdminTenantsPage.manage_and_monitor_all_workspaces__22ckols")}
+              </CardDescription>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.resetColumnOrder()}
+                className="text-xs"
+              >
+                <GripVertical className="h-4 w-4 mr-1" />
+                Reset Columns
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full divide-y divide-gray-200">
+              <table className="w-full divide-y divide-gray-200" style={{ width: table.getCenterTotalSize() }}>
                 <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">
-                      {t("Tenant", "admin.tenants.page.AdminTenantsPage.tenant__23ckols")}
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">
-                      {t("Status", "admin.tenants.page.AdminTenantsPage.status__24ckols")}
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">
-                      {t("Plan", "admin.tenants.page.AdminTenantsPage.plan__25ckols")}
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[80px]">
-                      {t("Members", "admin.tenants.page.AdminTenantsPage.members__26ckols")}
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[120px]">
-                      {t("Created", "admin.tenants.page.AdminTenantsPage.created__27ckols")}
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[120px]">
-                      {t("Actions", "admin.tenants.page.AdminTenantsPage.actions__28ckols")}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredTenants.map((tenant) => (
-                    <tr key={tenant.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-4">
-                        <div className="flex items-center min-w-0">
-                          <div className="h-10 w-10 flex-shrink-0">
-                            {tenant.logoUrl ? (
-                              <img className="h-10 w-10 rounded-full" src={tenant.logoUrl} alt={tenant.name} />
-                            ) : (
-                              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-                                <Building2 className="h-5 w-5 text-white" />
+                  {table.getHeaderGroups().map(headerGroup => (
+                    <tr key={headerGroup.id}>
+                      {headerGroup.headers.map(header => (
+                        <th
+                          key={header.id}
+                          className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider relative group"
+                          style={{ width: header.getSize() }}
+                        >
+                          <div className="flex items-center space-x-1 min-h-[20px]">
+                            {header.isPlaceholder ? null : (
+                              <div
+                                className={`flex items-center space-x-1 min-h-[20px] ${
+                                  header.column.getCanSort() ? 'cursor-pointer select-none' : ''
+                                }`}
+                                onClick={header.column.getToggleSortingHandler()}
+                              >
+                                <span className="flex-1">
+                                  {flexRender(header.column.columnDef.header, header.getContext())}
+                                </span>
+                                <div className="flex items-center space-x-1 w-6 justify-center">
+                                  {header.column.getCanSort() && (
+                                    <ArrowUpDown className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                                  )}
+                                  {header.column.getIsSorted() === 'asc' && (
+                                    <span className="text-indigo-600 text-xs flex-shrink-0">↑</span>
+                                  )}
+                                  {header.column.getIsSorted() === 'desc' && (
+                                    <span className="text-indigo-600 text-xs flex-shrink-0">↓</span>
+                                  )}
+                                </div>
                               </div>
                             )}
                           </div>
-                          <div className="ml-4 min-w-0 flex-1">
-                            <div className="text-sm font-medium text-gray-900 truncate">{tenant.name}</div>
-                            <div className="text-sm text-gray-500 truncate">{tenant.slug}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4">
-                        {getStatusBadge(tenant.status)}
-                      </td>
-                      <td className="px-4 py-4">
-                        {getPlanBadge(tenant.plan)}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-900">
-                        {tenant._count?.memberships || 0}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500">
-                        {new Date(tenant.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-4 py-4">
-                        <div className="flex items-center space-x-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleViewTenant(tenant.slug)}
-                            className="h-8 w-8 p-0"
-                            title="View Tenant"
-                          >
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleEditTenant(tenant.slug)}
-                            className="h-8 w-8 p-0"
-                            title="Edit Tenant"
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
-                            title="Delete Tenant"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </td>
+                          {/* Column Resize Handle */}
+                          {header.column.getCanResize() && (
+                            <div
+                              className={`absolute right-0 top-0 h-full w-1 bg-gray-300 cursor-col-resize select-none touch-none ${
+                                header.column.getIsResizing() ? 'bg-indigo-500' : 'hover:bg-gray-400'
+                              }`}
+                              onMouseDown={header.getResizeHandler()}
+                              onTouchStart={header.getResizeHandler()}
+                            />
+                          )}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {table.getRowModel().rows.map(row => (
+                    <tr key={row.id} className="hover:bg-gray-50">
+                      {row.getVisibleCells().map(cell => (
+                        <td
+                          key={cell.id}
+                          className="px-6 py-4"
+                          style={{ width: cell.column.getSize() }}
+                        >
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      ))}
                     </tr>
                   ))}
                 </tbody>

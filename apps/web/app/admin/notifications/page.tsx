@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Bell, Filter, Search, Loader2, Inbox, Trash2, Edit, ArrowLeft } from "lucide-react";
+import { 
+  Bell, Search, Loader2, Inbox, Trash2, ArrowLeft, 
+  Archive, Flag, Clock, CheckCircle, 
+  AlertCircle, Info, AlertTriangle, 
+  RefreshCw, Download, Building,
+  FileText
+} from "lucide-react";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
@@ -19,6 +25,10 @@ export default function AdminNotificationsPage() {
   const [typeFilter, setTypeFilter] = useState<"all" | "info" | "success" | "warning" | "error">("all");
   const [priorityFilter, setPriorityFilter] = useState<"all" | "low" | "normal" | "high" | "urgent">("all");
   const [tenantFilter, setTenantFilter] = useState<string>("all");
+  
+  // Inbox interface state
+  const [selectedNotification, setSelectedNotification] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "priority" | "type">("newest");
   
   // Batch selection state
   const [selectedNotifications, setSelectedNotifications] = useState<Set<string>>(new Set());
@@ -73,19 +83,41 @@ export default function AdminNotificationsPage() {
   // Flatten notifications from all pages
   const notifications = notificationsData?.pages.flatMap(page => page.items) || [];
 
-  // Filter notifications by search term
-  const filteredNotifications = notifications.filter(notification => {
-    if (!searchTerm) return true;
-    
-    const searchLower = searchTerm.toLowerCase();
-    const title = notification.title.toLowerCase();
-    const description = notification.description?.toLowerCase() || "";
-    const tenantName = notification.tenant?.name.toLowerCase() || "";
-    
-    return title.includes(searchLower) || 
-           description.includes(searchLower) || 
-           tenantName.includes(searchLower);
-  });
+  // Filter and sort notifications
+  const filteredNotifications = notifications
+    .filter(notification => {
+      if (!searchTerm) return true;
+      
+      const searchLower = searchTerm.toLowerCase();
+      const title = notification.title.toLowerCase();
+      const description = notification.description?.toLowerCase() || "";
+      const tenantName = notification.tenant?.name.toLowerCase() || "";
+      
+      return title.includes(searchLower) || 
+             description.includes(searchLower) || 
+             tenantName.includes(searchLower);
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "newest":
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        case "oldest":
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        case "priority":
+          const priorityOrder = { urgent: 4, high: 3, normal: 2, low: 1 };
+          return (priorityOrder[b.priority as keyof typeof priorityOrder] || 0) - 
+                 (priorityOrder[a.priority as keyof typeof priorityOrder] || 0);
+        case "type":
+          return a.type.localeCompare(b.type);
+        default:
+          return 0;
+      }
+    });
+
+  // Get selected notification details
+  const selectedNotificationData = selectedNotification 
+    ? filteredNotifications.find(n => n.id === selectedNotification)
+    : null;
 
   // Handle delete notification
   const handleDeleteNotification = async (id: string) => {
@@ -246,13 +278,45 @@ export default function AdminNotificationsPage() {
     return date.toLocaleDateString();
   };
 
+  // Inbox helper functions
+  const handleNotificationSelect = (notificationId: string) => {
+    setSelectedNotification(notificationId);
+  };
+
+  const getNotificationIcon = (type: string, status: string) => {
+    if (status === "unread") {
+      switch (type) {
+        case "success": return <CheckCircle className="h-5 w-5 text-green-600" />;
+        case "warning": return <AlertTriangle className="h-5 w-5 text-yellow-600" />;
+        case "error": return <AlertCircle className="h-5 w-5 text-red-600" />;
+        default: return <Info className="h-5 w-5 text-blue-600" />;
+      }
+    } else {
+      switch (type) {
+        case "success": return <CheckCircle className="h-5 w-5 text-green-400" />;
+        case "warning": return <AlertTriangle className="h-5 w-5 text-yellow-400" />;
+        case "error": return <AlertCircle className="h-5 w-5 text-red-400" />;
+        default: return <Info className="h-5 w-5 text-gray-400" />;
+      }
+    }
+  };
+
+  const getPriorityIcon = (priority: string) => {
+    switch (priority) {
+      case "urgent": return <Flag className="h-4 w-4 text-red-600" />;
+      case "high": return <Flag className="h-4 w-4 text-orange-600" />;
+      case "normal": return <Flag className="h-4 w-4 text-blue-600" />;
+      case "low": return <Flag className="h-4 w-4 text-gray-400" />;
+      default: return <Flag className="h-4 w-4 text-gray-400" />;
+    }
+  };
+
   return (
-    <div className="flex-1">
-      <div className="max-w-8xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          {/* Breadcrumb Navigation */}
-          <div className="flex items-center space-x-4 mb-4">
+    <div className="flex-1 h-screen flex flex-col">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
             <Link 
               href="/admin"
               className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
@@ -270,408 +334,421 @@ export default function AdminNotificationsPage() {
             />
           </div>
           
-          {/* Page Header */}
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-                <Bell className="h-8 w-8 text-indigo-600" />
-                <span>Admin Notifications</span>
+          <div className="flex items-center space-x-3">
+            <Button variant="outline" asChild>
+              <Link href="/admin/notifications/manage">Manage & Test</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/admin/notifications/templates">Templates</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Inbox Layout */}
+      <div className="flex-1 flex overflow-hidden">
+
+        {/* Main Content Area - SharePoint Style */}
+        <div className="flex-1 flex">
+          {/* Left Panel - Notification Titles */}
+          <div className="w-2/5 bg-white border-r border-gray-200 flex flex-col">
+            {/* Left Panel Header */}
+            <div className="p-4 border-b border-gray-200">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-gray-900">
+                  {statusFilter === "all" ? "All Notifications" : 
+                   statusFilter === "unread" ? "Unread Notifications" :
+                   statusFilter === "read" ? "Read Notifications" :
+                   statusFilter === "archived" ? "Archived Notifications" : "Notifications"}
+                </h2>
+                <div className="flex items-center space-x-2">
+                  <Button variant="outline" size="sm" onClick={() => window.location.reload()}>
+                    <RefreshCw className="h-4 w-4" />
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <Download className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              
+              {/* Search and Filters */}
+              <div className="space-y-3">
+                {/* Search */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Input
+                    placeholder="Search notifications..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+                
+                {/* Quick Filters Toolbar */}
+                <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+                  <Button
+                    variant={statusFilter === "all" ? "default" : "ghost"}
+                    size="sm"
+                    className="h-7 px-3 text-[10px] font-medium"
+                    onClick={() => setStatusFilter("all")}
+                  >
+                    All
+                    <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
+                      {notifications.length}
+                    </Badge>
+                  </Button>
+                  <Button
+                    variant={statusFilter === "unread" ? "default" : "ghost"}
+                    size="sm"
+                    className="h-7 px-3 text-[10px] font-medium"
+                    onClick={() => setStatusFilter("unread")}
+                  >
+                    Unread
+                    <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
+                      {notifications.filter(n => n.status === "unread").length}
+                    </Badge>
+                  </Button>
+                  <Button
+                    variant={statusFilter === "read" ? "default" : "ghost"}
+                    size="sm"
+                    className="h-7 px-3 text-[10px] font-medium"
+                    onClick={() => setStatusFilter("read")}
+                  >
+                    Read
+                    <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
+                      {notifications.filter(n => n.status === "read").length}
+                    </Badge>
+                  </Button>
+                  <Button
+                    variant={statusFilter === "archived" ? "default" : "ghost"}
+                    size="sm"
+                    className="h-7 px-3 text-[10px] font-medium"
+                    onClick={() => setStatusFilter("archived")}
+                  >
+                    Archived
+                    <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
+                      {notifications.filter(n => n.status === "archived").length}
+                    </Badge>
+                  </Button>
+                </div>
+                
+                {/* Additional Filters Toolbar */}
+                <div className="flex items-center space-x-2">
+                  <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                    <SelectTrigger className="h-7 w-32 text-[10px]">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="newest">Newest first</SelectItem>
+                      <SelectItem value="oldest">Oldest first</SelectItem>
+                      <SelectItem value="priority">Priority</SelectItem>
+                      <SelectItem value="type">Type</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  <Select value={typeFilter} onValueChange={(value: any) => setTypeFilter(value)}>
+                    <SelectTrigger className="h-7 w-28 text-[10px]">
+                      <SelectValue placeholder="Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Types</SelectItem>
+                      <SelectItem value="info">Info</SelectItem>
+                      <SelectItem value="success">Success</SelectItem>
+                      <SelectItem value="warning">Warning</SelectItem>
+                      <SelectItem value="error">Error</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  <Select value={priorityFilter} onValueChange={(value: any) => setPriorityFilter(value)}>
+                    <SelectTrigger className="h-7 w-28 text-[10px]">
+                      <SelectValue placeholder="Priority" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Priorities</SelectItem>
+                      <SelectItem value="low">Low</SelectItem>
+                      <SelectItem value="normal">Normal</SelectItem>
+                      <SelectItem value="high">High</SelectItem>
+                      <SelectItem value="urgent">Urgent</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              
+              <div className="mt-3 flex items-center space-x-2">
+                <Badge variant="outline" className="bg-indigo-100 text-indigo-800">
+                  {filteredNotifications.length} total
+                </Badge>
                 {selectedNotifications.size > 0 && (
-                  <Badge variant="secondary" className="ml-3 bg-indigo-100 text-indigo-800">
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-800">
                     {selectedNotifications.size} selected
                   </Badge>
                 )}
-              </h1>
-              <p className="mt-2 text-gray-600">
-                Manage all notifications across the system
-              </p>
-            </div>
-            
-            <div className="flex space-x-3">
-              <Button variant="outline" asChild>
-                <Link href="/admin/notifications/manage">Manage & Test</Link>
-              </Button>
-              <Button variant="outline" asChild>
-                <Link href="/admin/notifications/templates">Templates</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Notifications</CardTitle>
-              <Bell className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{notifications.length}</div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Unread</CardTitle>
-              <Badge variant="outline" className="bg-blue-100 text-blue-800">
-                {notifications.filter(n => n.status === "unread").length}
-              </Badge>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-blue-600">
-                {notifications.filter(n => n.status === "unread").length}
               </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Webhooks</CardTitle>
-              <Badge variant="outline">
-                {webhooks?.length || 0}
-              </Badge>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-green-600">
-                {webhooks?.length || 0}
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Tenants</CardTitle>
-              <Badge variant="outline">
-                {new Set(notifications.map(n => n.tenant?.name).filter(Boolean)).size}
-              </Badge>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-purple-600">
-                {new Set(notifications.map(n => n.tenant?.name).filter(Boolean)).size}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Filters */}
-        <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-medium text-gray-900 flex items-center space-x-2">
-              <Filter className="h-5 w-5" />
-              <span>Filters</span>
-            </h2>
-            
-            {hasActiveFilters && (
-              <Button variant="ghost" size="sm" onClick={resetFilters}>
-                Reset filters
-              </Button>
-            )}
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            {/* Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search notifications..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
             </div>
             
-            {/* Status Filter */}
-            <Select value={statusFilter} onValueChange={(value: any) => setStatusFilter(value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="unread">Unread</SelectItem>
-                <SelectItem value="read">Read</SelectItem>
-                <SelectItem value="archived">Archived</SelectItem>
-              </SelectContent>
-            </Select>
-            
-            {/* Type Filter */}
-            <Select value={typeFilter} onValueChange={(value: any) => setTypeFilter(value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="info">Info</SelectItem>
-                <SelectItem value="success">Success</SelectItem>
-                <SelectItem value="warning">Warning</SelectItem>
-                <SelectItem value="error">Error</SelectItem>
-              </SelectContent>
-            </Select>
-            
-            {/* Priority Filter */}
-            <Select value={priorityFilter} onValueChange={(value: any) => setPriorityFilter(value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Priority" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Priorities</SelectItem>
-                <SelectItem value="low">Low</SelectItem>
-                <SelectItem value="normal">Normal</SelectItem>
-                <SelectItem value="high">High</SelectItem>
-                <SelectItem value="urgent">Urgent</SelectItem>
-              </SelectContent>
-            </Select>
-            
-            {/* Tenant Filter */}
-            <Select value={tenantFilter} onValueChange={(value: any) => setTenantFilter(value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Tenant" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Tenants</SelectItem>
-                {Array.from(new Set(notifications.map(n => n.tenant?.name).filter(Boolean))).map(tenantName => {
-                  const tenant = notifications.find(n => n.tenant?.name === tenantName)?.tenant;
-                  return (
-                    <SelectItem key={tenantName} value={tenantName || ""}>
-                      {tenant?.name || tenantName}
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* Notifications List */}
-        <div className="space-y-4">
-          {isLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
-            </div>
-          ) : filteredNotifications.length === 0 ? (
-            <div className="text-center py-12">
-              <Inbox className="h-16 w-16 mx-auto text-gray-300 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                {hasActiveFilters ? "No notifications match your filters" : "No notifications yet"}
-              </h3>
-              <p className="text-gray-500">
-                {hasActiveFilters 
-                  ? "Try adjusting your filters or search terms"
-                  : "You'll see notifications here when they arrive"
-                }
-              </p>
-              {hasActiveFilters && (
-                <Button onClick={resetFilters} className="mt-4">
-                  Reset filters
-                </Button>
-              )}
-            </div>
-          ) : (
-            <>
-              {/* Batch Selection Toolbar */}
-              {filteredNotifications.length > 0 && (
-                <div className="flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 p-4 rounded-lg mb-4 shadow-sm">
-                  <div className="flex items-center space-x-3">
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={isSelectAll}
-                        onChange={handleSelectAll}
-                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                      />
-                      <span className="text-sm font-medium text-gray-700">
-                        {isSelectAll ? "Deselect All" : "Select All"}
-                      </span>
-                    </div>
-                    {selectedNotifications.size > 0 && (
-                      <span className="text-sm text-gray-600">
-                        • {selectedNotifications.size} of {filteredNotifications.length} selected
-                      </span>
-                    )}
-                    <span className="text-xs text-gray-500">
-                      💡 Use Ctrl+A to select all, Escape to clear
-                    </span>
-                  </div>
-                  
-                  {selectedNotifications.size > 0 && (
-                    <div className="flex items-center space-x-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setSelectedNotifications(new Set())}
-                        className="text-gray-600 border-gray-300 hover:bg-gray-50"
-                      >
-                        Clear Selection
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={handleBatchDelete}
-                        disabled={batchDeleteMutation.isPending}
-                        className="text-white bg-red-600 hover:bg-red-700 border-red-600"
-                      >
-                        {batchDeleteMutation.isPending ? (
-                          <>
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                            Deleting...
-                          </>
-                        ) : (
-                          <>
-                            <Trash2 className="h-4 w-4 mr-2" />
-                            Delete Selected ({selectedNotifications.size})
-                          </>
-                        )}
-                      </Button>
-                    </div>
+            {/* Notification List */}
+            <div className="flex-1 overflow-y-auto">
+              {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+                </div>
+              ) : filteredNotifications.length === 0 ? (
+                <div className="text-center py-12 px-4">
+                  <Inbox className="h-16 w-16 mx-auto text-gray-300 mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    {hasActiveFilters ? "No notifications match your filters" : "No notifications yet"}
+                  </h3>
+                  <p className="text-gray-500 text-sm">
+                    {hasActiveFilters 
+                      ? "Try adjusting your filters or search terms"
+                      : "You'll see notifications here when they arrive"
+                    }
+                  </p>
+                  {hasActiveFilters && (
+                    <Button onClick={resetFilters} className="mt-4" size="sm">
+                      Reset filters
+                    </Button>
                   )}
                 </div>
-              )}
-
-              {filteredNotifications.map((notification) => (
-                <Card 
-                  key={notification.id} 
-                  className={`hover:shadow-md transition-all duration-200 ${
-                    selectedNotifications.has(notification.id) 
-                      ? 'ring-2 ring-indigo-500 bg-indigo-50/50' 
-                      : ''
-                  }`}
-                >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center space-x-3">
-                        <span className="text-2xl">
-                          {getTypeIcon(notification.type)}
-                        </span>
+              ) : (
+                <div className="divide-y divide-gray-200">
+                  {filteredNotifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors border-l-4 ${
+                        selectedNotification === notification.id 
+                          ? 'bg-indigo-50 border-l-indigo-500' 
+                          : 'border-l-transparent'
+                      } ${notification.status === 'unread' ? 'bg-blue-50/30' : ''}`}
+                      onClick={() => handleNotificationSelect(notification.id)}
+                    >
+                      <div className="flex items-start space-x-3">
+                        {/* Notification Icon */}
+                        <div className="flex-shrink-0 mt-1">
+                          {getNotificationIcon(notification.type, notification.status)}
+                        </div>
                         
+                        {/* Content */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between">
-                            <h3 className="text-lg font-semibold text-gray-900 truncate">
+                            <h3 className={`text-sm font-medium line-clamp-2 ${
+                              notification.status === 'unread' ? 'text-gray-900 font-semibold' : 'text-gray-700'
+                            }`}>
                               {notification.title}
                             </h3>
+                            
+                            {/* Time and Priority */}
+                            <div className="flex items-center space-x-1 ml-2 flex-shrink-0">
+                              {getPriorityIcon(notification.priority)}
+                              <span className="text-xs text-gray-400">
+                                {formatTime(notification.createdAt)}
+                              </span>
+                            </div>
                           </div>
                           
-                          {/* Priority and Status - moved above description */}
+                          {/* Meta Information */}
                           <div className="flex items-center justify-between mt-2">
-                            <div className="flex items-center space-x-2">
-                              <Badge variant="outline" className={getPriorityColor(notification.priority)}>
-                                {notification.priority}
-                              </Badge>
-                              <Badge variant="outline" className={notification.status === 'unread' ? 'bg-blue-100 text-blue-800 border-blue-200' : ''}>
+                            <div className="flex items-center space-x-2 text-xs text-gray-500">
+                              <Badge 
+                                variant="outline" 
+                                className={`text-xs ${notification.status === 'unread' ? 'bg-blue-100 text-blue-800 border-blue-200' : ''}`}
+                              >
                                 {notification.status}
+                              </Badge>
+                              <Badge variant="outline" className={`text-xs ${getPriorityColor(notification.priority)}`}>
+                                {notification.type}
                               </Badge>
                             </div>
                             
-                            {/* Edit/Delete buttons - moved below priority/status */}
-                            <div className="flex items-center space-x-2">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="text-blue-600 border-blue-200 hover:bg-blue-50"
-                              >
-                                <Edit className="h-4 w-4 mr-1" />
-                                Edit
-                              </Button>
-                              
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleDeleteNotification(notification.id)}
-                                className="text-red-600 border-red-200 hover:bg-red-50"
-                              >
-                                <Trash2 className="h-4 w-4 mr-1" />
-                                Delete
-                              </Button>
-                              
+                            {/* Actions */}
+                            <div className="flex items-center space-x-1">
                               <input
                                 type="checkbox"
                                 checked={selectedNotifications.has(notification.id)}
-                                onChange={(e) => handleSelectNotification(notification.id, e.target.checked)}
+                                onChange={(e) => {
+                                  e.stopPropagation();
+                                  handleSelectNotification(notification.id, e.target.checked);
+                                }}
                                 className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                               />
                             </div>
                           </div>
-                          
-                          {notification.description && (
-                            <p className="text-sm text-gray-600 mt-2">
-                              {notification.description}
-                            </p>
-                          )}
-                          
-                          <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
-                            <span>Created: {formatTime(notification.createdAt)}</span>
-                            {notification.tenant && (
-                              <>
-                                <span>•</span>
-                                <span>Tenant: {notification.tenant.name}</span>
-                              </>
-                            )}
-                            {notification.role && (
-                              <>
-                                <span>•</span>
-                                <span>Role: {notification.role}</span>
-                              </>
-                            )}
-                            {notification.userId && (
-                              <>
-                                <span>•</span>
-                                <span>User: {notification.userId}</span>
-                              </>
-                            )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* Right Panel - Full Notification Content */}
+          <div className="flex-1 bg-gray-50 flex flex-col">
+            {selectedNotificationData ? (
+              <>
+                {/* Content Header */}
+                <div className="bg-white border-b border-gray-200 px-6 py-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-3">
+                        {getNotificationIcon(selectedNotificationData.type, selectedNotificationData.status)}
+                        <div>
+                          <h1 className="text-xl font-semibold text-gray-900">
+                            {selectedNotificationData.title}
+                          </h1>
+                          <div className="flex items-center space-x-4 mt-1">
+                            <Badge variant="outline" className={getPriorityColor(selectedNotificationData.priority)}>
+                              {selectedNotificationData.priority}
+                            </Badge>
+                            <Badge variant="outline" className={selectedNotificationData.status === 'unread' ? 'bg-blue-100 text-blue-800 border-blue-200' : ''}>
+                              {selectedNotificationData.status}
+                            </Badge>
+                            <span className="text-sm text-gray-500">
+                              {formatTime(selectedNotificationData.createdAt)}
+                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </CardHeader>
-                  
-                  {notification.recipients && notification.recipients.length > 0 && (
-                    <CardContent className="pt-0">
-                      <div className="border-t pt-3">
-                        <h4 className="text-sm font-medium text-gray-900 mb-2">
-                          Recipients ({notification.recipients.length})
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {notification.recipients.map((recipient) => (
-                            <Badge key={recipient.id} variant="outline" className="text-xs">
-                              {recipient.user.email} ({recipient.status})
-                            </Badge>
-                          ))}
+                    
+                    <div className="flex items-center space-x-2">
+                      <Button variant="outline" size="sm">
+                        <Archive className="h-4 w-4 mr-2" />
+                        Archive
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => handleDeleteNotification(selectedNotificationData.id)}>
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Content Body */}
+                <div className="flex-1 overflow-y-auto p-6">
+                  <div className="max-w-4xl">
+                    {/* Main Content */}
+                    <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+                      <div className="prose max-w-none">
+                        <h2 className="text-lg font-medium text-gray-900 mb-4">Notification Details</h2>
+                        {selectedNotificationData.description ? (
+                          <div className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                            {selectedNotificationData.description}
+                          </div>
+                        ) : (
+                          <p className="text-gray-500 italic">No additional details provided.</p>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Simple Metadata */}
+                    <div className="bg-white rounded-lg border border-gray-200 p-4">
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center space-x-4">
+                          <Badge variant="outline" className={selectedNotificationData.status === 'unread' ? 'bg-blue-100 text-blue-800 border-blue-200' : ''}>
+                            {selectedNotificationData.status}
+                          </Badge>
+                          <Badge variant="outline" className={getPriorityColor(selectedNotificationData.priority)}>
+                            {selectedNotificationData.type}
+                          </Badge>
+                          <Badge variant="outline" className={getPriorityColor(selectedNotificationData.priority)}>
+                            {selectedNotificationData.priority}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center space-x-4 text-gray-500">
+                          {selectedNotificationData.tenant && (
+                            <div className="flex items-center space-x-1">
+                              <Building className="h-3 w-3" />
+                              <span>{selectedNotificationData.tenant.name}</span>
+                            </div>
+                          )}
+                          <div className="flex items-center space-x-1">
+                            <Clock className="h-3 w-3" />
+                            <span>{formatTime(selectedNotificationData.createdAt)}</span>
+                          </div>
                         </div>
                       </div>
-                    </CardContent>
-                  )}
-                </Card>
-              ))}
-              
-              {/* Load More */}
-              {hasNextPage && (
-                <div className="flex justify-center py-6">
-                  <Button
-                    onClick={loadMore}
-                    disabled={isFetchingNextPage}
-                    variant="outline"
-                    className="w-48"
-                  >
-                    {isFetchingNextPage ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Loading...
-                      </>
-                    ) : (
-                      "Load more notifications"
-                    )}
-                  </Button>
+                    </div>
+                  </div>
                 </div>
-              )}
-              
-              {/* End of notifications */}
-              {!hasNextPage && filteredNotifications.length > 0 && (
-                <div className="text-center py-6 text-gray-500">
-                  <p>You've reached the end of all notifications</p>
+              </>
+            ) : (
+              /* Empty State */
+              <div className="flex-1 flex items-center justify-center">
+                <div className="text-center">
+                  <FileText className="h-16 w-16 mx-auto text-gray-300 mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    Select a notification
+                  </h3>
+                  <p className="text-gray-500">
+                    Choose a notification from the list to view its details
+                  </p>
                 </div>
-              )}
-            </>
-          )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Batch Actions Toolbar - Only show when notifications are selected */}
+      {selectedNotifications.size > 0 && (
+        <div className="bg-indigo-50 border-t border-indigo-200 px-6 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <span className="text-sm font-medium text-indigo-900">
+                {selectedNotifications.size} notification{selectedNotifications.size > 1 ? 's' : ''} selected
+              </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSelectedNotifications(new Set())}
+                className="text-indigo-600 hover:text-indigo-800"
+              >
+                Clear Selection
+              </Button>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {/* TODO: Mark as read */}}
+                className="text-indigo-600 border-indigo-300 hover:bg-indigo-100"
+              >
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Mark as Read
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {/* TODO: Archive */}}
+                className="text-indigo-600 border-indigo-300 hover:bg-indigo-100"
+              >
+                <Archive className="h-4 w-4 mr-2" />
+                Archive
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleBatchDelete}
+                disabled={batchDeleteMutation.isPending}
+              >
+                {batchDeleteMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Deleting...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Delete Selected
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Batch Delete Confirmation Dialog */}
       {showBatchDeleteConfirm && (

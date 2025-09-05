@@ -1,13 +1,17 @@
+const PerspectivePlugin = require("@finos/perspective-webpack-plugin");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: { externalDir: true },
+  experimental: { 
+    externalDir: true,
+    esmExternals: 'loose'
+  },
   transpilePackages: ["@ui/base", "@trpc/base", "@shared/base", "@db/base", "@i18n-core"],
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,
-  },
+  }, 
   // Improve CSS accessibility for Microsoft Clarity
   assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX || '',
   // Ensure CSS files are accessible with proper headers
