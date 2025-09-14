@@ -384,7 +384,7 @@ export default function EditTenantPage() {
                   </p>
                 </div>
 
-                <div>
+                <div className="hidden">
                   <Label htmlFor="primaryColor" className="text-sm font-medium text-gray-700">
                     {t("Primary Color", "admin.tenants.edit.page.EditTenantPage.primary_color__38ckols")}
                   </Label>
@@ -406,7 +406,7 @@ export default function EditTenantPage() {
                 </div>
               </div>
 
-              <div>
+              <div className="hidden">
                 <Label htmlFor="secondaryColor" className="text-sm font-medium text-gray-700">
                   {t("Secondary Color", "admin.tenants.edit.page.EditTenantPage.secondary_color__39ckols")}
                 </Label>

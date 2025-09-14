@@ -1,6 +1,7 @@
 'use client';
 
 import Script from 'next/script';
+import { useCallback } from 'react';
 
 interface MicrosoftClarityProps {
   projectId?: string;
@@ -144,61 +145,61 @@ export const clarity = {
 
 // Hook for easy Clarity integration
 export function useMicrosoftClarity() {
-  const trackEvent = (eventName: string) => {
+  const trackEvent = useCallback((eventName: string) => {
     if (!eventName || typeof eventName !== 'string') {
       console.warn('Microsoft Clarity: Invalid event name provided');
       return;
     }
     clarity.event(eventName);
-  };
+  }, []);
 
-  const identifyUser = (userId: string, friendlyName?: string) => {
+  const identifyUser = useCallback((userId: string, friendlyName?: string) => {
     if (!userId || typeof userId !== 'string') {
       console.warn('Microsoft Clarity: Invalid user ID provided');
       return;
     }
     clarity.identify(userId, undefined, undefined, friendlyName);
-  };
+  }, []);
 
-  const setCustomData = (key: string, value: string) => {
+  const setCustomData = useCallback((key: string, value: string) => {
     if (!key || !value || typeof key !== 'string' || typeof value !== 'string') {
       console.warn('Microsoft Clarity: Invalid custom data provided');
       return;
     }
     clarity.set(key, value);
-  };
+  }, []);
 
-  const setConsent = (hasConsent: boolean) => {
+  const setConsent = useCallback((hasConsent: boolean) => {
     if (typeof hasConsent !== 'boolean') {
       console.warn('Microsoft Clarity: Invalid consent value provided');
       return;
     }
     clarity.consent(hasConsent);
-  };
+  }, []);
 
-  const maskElement = (selector: string) => {
+  const maskElement = useCallback((selector: string) => {
     if (!selector || typeof selector !== 'string') {
       console.warn('Microsoft Clarity: Invalid selector provided for masking');
       return;
     }
     clarity.maskElement(selector);
-  };
+  }, []);
 
-  const unmaskElement = (selector: string) => {
+  const unmaskElement = useCallback((selector: string) => {
     if (!selector || typeof selector !== 'string') {
       console.warn('Microsoft Clarity: Invalid selector provided for unmasking');
       return;
     }
     clarity.unmaskElement(selector);
-  };
+  }, []);
 
-  const maskRegion = (selector: string) => {
+  const maskRegion = useCallback((selector: string) => {
     if (!selector || typeof selector !== 'string') {
       console.warn('Microsoft Clarity: Invalid selector provided for region masking');
       return;
     }
     clarity.maskRegion(selector);
-  };
+  }, []);
 
   return {
     trackEvent,

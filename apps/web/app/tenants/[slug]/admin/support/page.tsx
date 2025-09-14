@@ -395,7 +395,7 @@ export default function TenantSupportPage() {
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
                           <Link 
-                            href={`/tenants/${tenantSlug}/admin/support/${supportCase.id}`}
+                            href={`/tenants/${tenantSlug}/admin/support/${supportCase.caseNumber}`}
                             className="font-medium text-blue-600 hover:text-blue-800 hover:underline"
                           >
                             {supportCase.caseNumber || `Case ${supportCase.id.substring(0, 8)}...`}

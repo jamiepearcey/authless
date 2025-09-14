@@ -175,13 +175,11 @@ export const supportCaseRouter = router({
         return {
           cases: cases.map(case_ => ({
             ...case_,
-            id: case_.id.toString(), // Convert BigInt to string
             contactMessage: case_.contactMessage ? {
               ...case_.contactMessage,
             } : null,
             assignee: case_.assignee ? {
               ...case_.assignee,
-              id: case_.assignee.id.toString(), // Convert BigInt to string
             } : null,
             supportOption: case_.supportOption ? {
               ...case_.supportOption,
@@ -271,45 +269,79 @@ export const supportCaseRouter = router({
         }
 
         return {
-          ...supportCase,
-          id: supportCase.id.toString(), // Convert BigInt to string
+          id: supportCase.id,
+          caseNumber: supportCase.caseNumber,
+          title: supportCase.title,
+          description: supportCase.description,
+          status: supportCase.status,
+          priority: supportCase.priority,
+          assigneeId: supportCase.assigneeId,
+          tenantId: supportCase.tenantId,
+          supportOptionId: supportCase.supportOptionId,
+          threadingKey: supportCase.threadingKey,
+          source: supportCase.source,
+          sourceMetadata: supportCase.sourceMetadata,
+          firstResponseAt: supportCase.firstResponseAt,
+          resolvedAt: supportCase.resolvedAt,
+          closedAt: supportCase.closedAt,
+          createdAt: supportCase.createdAt,
+          updatedAt: supportCase.updatedAt,
           contactMessage: supportCase.contactMessage ? {
-            ...supportCase.contactMessage,
-            id: supportCase.contactMessage.id.toString(), // Convert BigInt to string
+            id: supportCase.contactMessage.id,
+            name: supportCase.contactMessage.name,
+            email: supportCase.contactMessage.email,
+            subject: supportCase.contactMessage.subject,
+            message: supportCase.contactMessage.message,
+            createdAt: supportCase.contactMessage.createdAt,
             reasons: supportCase.contactMessage.reasons.map(reason => ({
-              ...reason,
-              id: reason.id.toString(), // Convert BigInt to string
+              id: reason.id,
               contactReason: reason.contactReason ? {
-                ...reason.contactReason,
-                id: reason.contactReason.id.toString(), // Convert BigInt to string
+                id: reason.contactReason.id,
+                key: reason.contactReason.key,
+                label: reason.contactReason.label,
+                description: reason.contactReason.description,
               } : null,
             })),
           } : null,
           assignee: supportCase.assignee ? {
-            ...supportCase.assignee,
-            id: supportCase.assignee.id.toString(), // Convert BigInt to string
+            id: supportCase.assignee.id,
+            name: supportCase.assignee.name,
+            email: supportCase.assignee.email,
+            image: supportCase.assignee.image,
           } : null,
           supportOption: supportCase.supportOption ? {
-            ...supportCase.supportOption,
-            id: supportCase.supportOption.id.toString(), // Convert BigInt to string
+            id: supportCase.supportOption.id,
+            key: supportCase.supportOption.key,
+            label: supportCase.supportOption.label,
+            description: supportCase.supportOption.description,
+            icon: supportCase.supportOption.icon,
+            isActive: supportCase.supportOption.isActive,
           } : null,
           tenant: supportCase.tenant ? {
-            ...supportCase.tenant,
-            id: supportCase.tenant.id.toString(), // Convert BigInt to string
+            id: supportCase.tenant.id,
+            name: supportCase.tenant.name,
+            slug: supportCase.tenant.slug,
           } : null,
           messages: supportCase.messages.map(message => ({
-            ...message,
-            id: message.id.toString(), // Convert BigInt to string
+            id: message.id,
+            content: message.content,
+            isInternal: message.isInternal,
+            createdAt: message.createdAt,
             contactReply: message.contactReply ? {
-              ...message.contactReply,
-              id: message.contactReply.id.toString(), // Convert BigInt to string
+              id: message.contactReply.id,
+              message: message.contactReply.message,
+              createdAt: message.contactReply.createdAt,
             } : null,
           })),
           statusHistory: supportCase.statusHistory.map(status => ({
-            ...status,
-            id: status.id.toString(), // Convert BigInt to string
+            id: status.id,
+            fromStatus: status.fromStatus,
+            toStatus: status.toStatus,
+            reason: status.reason,
+            createdAt: status.createdAt,
             user: status.user ? {
-              ...status.user,
+              name: status.user.name,
+              email: status.user.email,
             } : null,
           })),
         };
@@ -875,7 +907,26 @@ export const supportCaseRouter = router({
                   )
                 : null,
           },
-          daily: metrics,
+          daily: metrics.map(metric => ({
+            id: metric.id,
+            date: metric.date,
+            totalCases: metric.totalCases,
+            openCases: metric.openCases,
+            pendingCases: metric.pendingCases,
+            resolvedCases: metric.resolvedCases,
+            closedCases: metric.closedCases,
+            avgFirstResponseTime: metric.avgFirstResponseTime,
+            avgResolutionTime: metric.avgResolutionTime,
+            tenantId: metric.tenantId,
+            supportOptionId: metric.supportOptionId,
+            assigneeId: metric.assigneeId,
+            supportOption: metric.supportOption ? {
+              label: metric.supportOption.label,
+            } : null,
+            assignee: metric.assignee ? {
+              name: metric.assignee.name,
+            } : null,
+          })),
         };
       } catch (error) {
         console.error("Failed to fetch case metrics:", error);

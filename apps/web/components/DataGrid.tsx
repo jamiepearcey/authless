@@ -47,7 +47,7 @@ export function DataGrid<T = any>({
 }: DataGridProps<T>) {
   const tableRef = useRef<any>(null);
   const [isTableReady, setIsTableReady] = useState(false);
-  const [cachedData, setCachedData] = useState<{ [key: string]: string }>({});
+  const [cachedData, setCachedData] = useState<{ [key: string]: any }>({});
   const [totalRows, setTotalRows] = useState(0);
 
   const tanstackTable = useReactTable({
@@ -71,6 +71,42 @@ export function DataGrid<T = any>({
     enableGrouping: true,
     columnResizeMode: 'onChange',
   });
+
+  // Effect to handle sorting changes for external data sources
+  const prevSortingRef = useRef<SortingState>([]);
+  const sortingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  useEffect(() => {
+    if (onDataRequest && isTableReady && tableRef.current) {
+      // Only redraw if sorting actually changed
+      const sortingChanged = JSON.stringify(sorting) !== JSON.stringify(prevSortingRef.current);
+      
+      if (sortingChanged) {
+        console.log(`🔄 Sorting changed, debouncing update:`, sorting);
+        prevSortingRef.current = [...sorting];
+        
+        // Clear any existing timeout
+        if (sortingTimeoutRef.current) {
+          clearTimeout(sortingTimeoutRef.current);
+        }
+        
+        // Debounce the redraw to prevent rapid refreshes
+        sortingTimeoutRef.current = setTimeout(() => {
+          if (tableRef.current && typeof tableRef.current.draw === 'function') {
+            console.log(`🎨 Debounced redraw for sorting change`);
+            tableRef.current.draw();
+          }
+        }, 150); // 150ms debounce
+      }
+    }
+    
+    // Cleanup timeout on unmount
+    return () => {
+      if (sortingTimeoutRef.current) {
+        clearTimeout(sortingTimeoutRef.current);
+      }
+    };
+  }, [sorting, onDataRequest, isTableReady]);
 
   // Initialize regular-table
   const initializeTable = useCallback(async () => {
@@ -159,9 +195,26 @@ export function DataGrid<T = any>({
         
         if (onDataRequest) {
           try {
+            // Create a cache key based on coordinates and sorting state
+            const cacheKey = `${x0}-${y0}-${x1}-${y1}-${JSON.stringify(sorting)}`;
+            
+            // Check if we have cached data for this exact request
+            if (cachedData[cacheKey]) {
+              console.log(`📦 Using cached data for key: ${cacheKey}`);
+              return cachedData[cacheKey];
+            }
+            
+            console.log(`🔄 Fetching fresh data for key: ${cacheKey}`);
             const result = await onDataRequest(x0, y0, x1, y1);
             console.log(`DuckDB response:`, result);
             setTotalRows(result.num_rows);
+            
+            // Cache the result
+            setCachedData(prev => ({
+              ...prev,
+              [cacheKey]: result
+            }));
+            
             return result;
           } catch (error) {
             console.error("DuckDB data request failed:", error);
@@ -365,18 +418,26 @@ export function DataGrid<T = any>({
           console.log('🎨 regular-table draw event fired');
           
           // Post-process headers to inject HTML content
-          const headerCells = rt.querySelectorAll('th');
-          headerCells.forEach((th: Element, index: number) => {
-            const textContent = th.textContent || '';
-            if (textContent.includes('<span') || textContent.includes('<svg')) {
-              // This header contains HTML - render it properly
-              th.innerHTML = textContent;
-            }
-          });
+          setTimeout(() => {
+            const headerCells = rt.querySelectorAll('th');
+            headerCells.forEach((th: Element, index: number) => {
+              const textContent = th.textContent || '';
+              if (textContent.includes('<div') || textContent.includes('<svg') || textContent.includes('<span')) {
+                // This header contains HTML - render it properly
+                th.innerHTML = textContent;
+                console.log(`🎨 Injected HTML for header ${index}:`, textContent.substring(0, 100));
+              }
+            });
+          }, 10);
         });
         
+        // Throttle scroll events for better performance
+        let scrollTimeout: NodeJS.Timeout | null = null;
         rt.addEventListener('scroll', () => {
-          console.log('📜 regular-table scroll event');
+          if (scrollTimeout) clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            console.log('📜 regular-table scroll event (throttled)');
+          }, 100);
         });
         
         // Add header click handlers for TanStack Table features
@@ -407,11 +468,20 @@ export function DataGrid<T = any>({
               if (clickedHeader) {
                 // Handle sorting
                 if (clickedHeader.column.getCanSort()) {
-                  clickedHeader.column.toggleSorting();
-                  console.log(`🔄 Toggled sorting for column: ${clickedHeader.column.id}`);
+                  console.log(`🔄 Toggling sorting for column: ${clickedHeader.column.id}`);
                   
-                  // Redraw table to show updated sorting indicators
-                  rt.draw();
+                  // Toggle sorting through TanStack Table
+                  clickedHeader.column.toggleSorting();
+                  console.log(`📊 Toggled sorting for column: ${clickedHeader.column.id}`);
+                  
+                  // For DuckDB mode, the sorting state change will trigger a data refresh
+                  // For local mode, the data is already sorted by TanStack Table
+                  // Just update the visual indicators
+                  setTimeout(() => {
+                    if (tableRef.current && typeof tableRef.current.draw === 'function') {
+                      tableRef.current.draw();
+                    }
+                  }, 10);
                 }
               }
             }
@@ -638,16 +708,27 @@ export function DataGrid<T = any>({
         if (typeof rt.setScrollDimensions === 'function') {
           const actualWidth = rt.offsetWidth || rt.clientWidth || 800;
           const actualHeight = rt.offsetHeight || rt.clientHeight || height;
+          const numRows = totalRows || (onDataRequest ? 10000 : data.length);
+          const numCols = columns.length;
           
           console.log(`📐 Element dimensions: ${actualWidth} x ${actualHeight}, container: ${rt.parentElement?.offsetWidth} x ${rt.parentElement?.offsetHeight}`);
-          console.log(`📐 Setting scroll dimensions: ${actualWidth} x ${actualHeight}`);
+          console.log(`📐 Setting scroll dimensions: ${actualWidth} x ${actualHeight} for ${numRows} rows x ${numCols} cols`);
           
           // Set explicit dimensions for virtual scrolling
           try {
+            // Set both viewport dimensions and data dimensions
             rt.setScrollDimensions({
               width: actualWidth,
-              height: actualHeight
+              height: actualHeight,
+              columns: numCols,
+              rows: numRows
             });
+            
+            // Add scroll optimization
+            if (rt.style) {
+              rt.style.scrollBehavior = 'auto'; // Disable smooth scrolling for performance
+            }
+            
             console.log(`✅ Scroll dimensions set successfully`);
           } catch (scrollError) {
             console.warn("Could not set scroll dimensions:", scrollError);

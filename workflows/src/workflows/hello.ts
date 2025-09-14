@@ -65,7 +65,7 @@ export async function helloWorkflow(params: HelloWorkflowParams): Promise<HelloW
       aggregateId: `hello-${params.name.toLowerCase().replace(/\s+/g, '-')}`,
       tenantId: 'temporal-integration',
       payloadJson: {
-        id: crypto.randomUUID(),
+        id: `hello-${params.name}-${Date.now()}`,
         eventType: 'WorkflowEvent',
         eventName: 'hello.workflow.completed',
         tenantId: 'temporal-integration',

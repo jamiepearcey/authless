@@ -98,12 +98,12 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   ];
   return (
     <AuthGuard>
-      <div className="flex flex-grow flex-1 bg-gray-50">
+      <div className="flex-1 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
             {/* Sidebar */}
-            <aside className="py-6 px-2 sm:px-6 lg:col-span-3">
-              <nav className="space-y-1">
+            <aside className="lg:col-span-3">
+              <nav className="">
                 {navigationItems.map((item) => {
                   const isActive = pathname === item.href;
                   const Icon = item.icon;
@@ -158,7 +158,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
             </aside>
 
             {/* Main content */}
-            <div className="space-y-6 sm:px-6 lg:col-span-9">{children}</div>
+            <div className="lg:col-span-9">{children}</div>
           </div>
         </div>
       </div>

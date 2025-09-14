@@ -79,7 +79,7 @@ export default function CheckoutPage() {
     if (!storedPlan && !orderId) {
       router.push('/pricing');
     }
-  }, [orderId, router, trackPageVisit, trackCheckoutStarted, session]);
+  }, [orderId, router, session?.user?.email, session?.user?.name]); // Removed tracking functions from deps
 
   const isGuest = status !== 'loading' && !session?.user;
   

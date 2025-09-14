@@ -352,9 +352,23 @@ export const userRouter = router({
         id: true,
         name: true,
         email: true,
+        image: true,
         platformRole: true,
         status: true,
         createdAt: true,
+        memberships: {
+          where: { status: "active" },
+          select: {
+            role: true,
+            tenant: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+              },
+            },
+          },
+        },
       },
       orderBy: { createdAt: "desc" },
     });

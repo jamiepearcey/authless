@@ -457,25 +457,76 @@ export default function SupportCaseDetailPage() {
               <CardTitle>Case Timeline</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
+              <div className="space-y-4">
+                {/* Case Created - Always first */}
                 <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                  <div className="flex-1">
                     <p className="text-sm font-medium">Case Created</p>
                     <p className="text-xs text-gray-500">
-                      {new Date(supportCase.createdAt).toLocaleDateString()}
+                      {new Date(supportCase.createdAt).toLocaleString()}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      via {supportCase.source?.toLowerCase().replace('_', ' ')}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-gray-300 rounded-full mt-2"></div>
-                  <div>
-                    <p className="text-sm font-medium">Status Updated</p>
-                    <p className="text-xs text-gray-500">
-                      {new Date(supportCase.updatedAt).toLocaleDateString()}
-                    </p>
+
+                {/* Status History - Dynamic from database */}
+                {supportCase.statusHistory && supportCase.statusHistory.length > 0 && (
+                  <>
+                    {supportCase.statusHistory.map((historyItem: any) => {
+                      const getStatusColor = (status: string) => {
+                        switch (status) {
+                          case 'OPEN': return 'bg-blue-500';
+                          case 'PENDING': return 'bg-yellow-500';
+                          case 'RESOLVED': return 'bg-green-500';
+                          case 'CLOSED': return 'bg-gray-500';
+                          default: return 'bg-gray-400';
+                        }
+                      };
+
+                      const getStatusAction = (fromStatus: string | null, toStatus: string) => {
+                        if (!fromStatus) return `Set to ${toStatus}`;
+                        return `Changed from ${fromStatus} to ${toStatus}`;
+                      };
+
+                      return (
+                        <div key={historyItem.id} className="flex items-start space-x-3">
+                          <div className={`w-2 h-2 rounded-full mt-2 ${getStatusColor(historyItem.toStatus)}`}></div>
+                          <div className="flex-1">
+                            <p className="text-sm font-medium">
+                              Status {getStatusAction(historyItem.fromStatus, historyItem.toStatus)}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              {new Date(historyItem.createdAt).toLocaleString()}
+                            </p>
+                            {historyItem.user && (
+                              <p className="text-xs text-gray-400">
+                                by {historyItem.user.name || historyItem.user.email}
+                              </p>
+                            )}
+                            {historyItem.reason && (
+                              <p className="text-xs text-gray-400 italic">
+                                "{historyItem.reason}"
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
+                )}
+
+                {/* No status changes yet */}
+                {(!supportCase.statusHistory || supportCase.statusHistory.length === 0) && (
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-gray-300 rounded-full mt-2"></div>
+                    <div>
+                      <p className="text-sm text-gray-500 italic">No status changes yet</p>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </CardContent>
           </Card>

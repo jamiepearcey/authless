@@ -608,6 +608,7 @@ export const contactRouter = router({
             },
             contactMessage: {
               select: {
+                id: true,
                 name: true,
                 email: true,
                 subject: true,
@@ -615,6 +616,7 @@ export const contactRouter = router({
             },
             supportOption: {
               select: {
+                id: true,
                 key: true,
                 label: true,
               },
@@ -633,20 +635,40 @@ export const contactRouter = router({
 
         return {
           cases: cases.map(case_ => ({
-            ...case_,
-            id: case_.id.toString(), // Convert BigInt to string
+            id: case_.id,
+            caseNumber: case_.caseNumber,
+            title: case_.title,
+            description: case_.description,
+            status: case_.status,
+            priority: case_.priority,
+            assigneeId: case_.assigneeId,
+            tenantId: case_.tenantId,
+            supportOptionId: case_.supportOptionId,
+            threadingKey: case_.threadingKey,
+            source: case_.source,
+            sourceMetadata: case_.sourceMetadata,
+            firstResponseAt: case_.firstResponseAt,
+            resolvedAt: case_.resolvedAt,
+            closedAt: case_.closedAt,
+            createdAt: case_.createdAt,
+            updatedAt: case_.updatedAt,
             assignee: case_.assignee ? {
-              ...case_.assignee,
-              id: case_.assignee.id.toString(), // Convert BigInt to string
+              id: case_.assignee.id,
+              name: case_.assignee.name,
+              email: case_.assignee.email,
             } : null,
             contactMessage: case_.contactMessage ? {
-              ...case_.contactMessage,
-              id: case_.contactMessage.id.toString(), // Convert BigInt to string
+              id: case_.contactMessage.id,
+              name: case_.contactMessage.name,
+              email: case_.contactMessage.email,
+              subject: case_.contactMessage.subject,
             } : null,
             supportOption: case_.supportOption ? {
-              ...case_.supportOption,
-              id: case_.supportOption.id.toString(), // Convert BigInt to string
+              id: case_.supportOption.id,
+              key: case_.supportOption.key,
+              label: case_.supportOption.label,
             } : null,
+            _count: case_._count,
           })),
           totalCount,
           page: input.page,

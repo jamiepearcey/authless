@@ -18,7 +18,7 @@ export const tenantSupportRoutingRouter = router({
     )
     .query(async ({ ctx, input }) => {
       try {
-        let routing = [];
+        let routing: any[] = [];
         try {
           routing = await ctx.db.tenantSupportRouting.findMany({
             where: {

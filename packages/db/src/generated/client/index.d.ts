@@ -34913,13 +34913,13 @@ export namespace Prisma {
   }
 
   export type SupportCaseSumAggregateOutputType = {
-    caseNumberSeq: bigint | null
+    caseNumberSeq: number | null
   }
 
   export type SupportCaseMinAggregateOutputType = {
     id: string | null
     contactMessageId: string | null
-    caseNumberSeq: bigint | null
+    caseNumberSeq: number | null
     caseNumber: string | null
     title: string | null
     description: string | null
@@ -34940,7 +34940,7 @@ export namespace Prisma {
   export type SupportCaseMaxAggregateOutputType = {
     id: string | null
     contactMessageId: string | null
-    caseNumberSeq: bigint | null
+    caseNumberSeq: number | null
     caseNumber: string | null
     title: string | null
     description: string | null
@@ -35144,7 +35144,7 @@ export namespace Prisma {
   export type SupportCaseGroupByOutputType = {
     id: string
     contactMessageId: string | null
-    caseNumberSeq: bigint
+    caseNumberSeq: number
     caseNumber: string | null
     title: string
     description: string | null
@@ -35288,7 +35288,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       contactMessageId: string | null
-      caseNumberSeq: bigint
+      caseNumberSeq: number
       caseNumber: string | null
       title: string
       description: string | null
@@ -35706,7 +35706,7 @@ export namespace Prisma {
   interface SupportCaseFieldRefs {
     readonly id: FieldRef<"SupportCase", 'String'>
     readonly contactMessageId: FieldRef<"SupportCase", 'String'>
-    readonly caseNumberSeq: FieldRef<"SupportCase", 'BigInt'>
+    readonly caseNumberSeq: FieldRef<"SupportCase", 'Int'>
     readonly caseNumber: FieldRef<"SupportCase", 'String'>
     readonly title: FieldRef<"SupportCase", 'String'>
     readonly description: FieldRef<"SupportCase", 'String'>
@@ -42507,12 +42507,12 @@ export namespace Prisma {
   }
 
   export type OutboxEventSumAggregateOutputType = {
-    id: bigint | null
+    id: number | null
     tries: number | null
   }
 
   export type OutboxEventMinAggregateOutputType = {
-    id: bigint | null
+    id: number | null
     eventType: string | null
     aggregateType: string | null
     aggregateId: string | null
@@ -42527,7 +42527,7 @@ export namespace Prisma {
   }
 
   export type OutboxEventMaxAggregateOutputType = {
-    id: bigint | null
+    id: number | null
     eventType: string | null
     aggregateType: string | null
     aggregateId: string | null
@@ -42703,7 +42703,7 @@ export namespace Prisma {
   }
 
   export type OutboxEventGroupByOutputType = {
-    id: bigint
+    id: number
     eventType: string
     aggregateType: string
     aggregateId: string
@@ -42790,7 +42790,7 @@ export namespace Prisma {
     name: "OutboxEvent"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      id: bigint
+      id: number
       eventType: string
       aggregateType: string
       aggregateId: string
@@ -43196,7 +43196,7 @@ export namespace Prisma {
    * Fields of the OutboxEvent model
    */ 
   interface OutboxEventFieldRefs {
-    readonly id: FieldRef<"OutboxEvent", 'BigInt'>
+    readonly id: FieldRef<"OutboxEvent", 'Int'>
     readonly eventType: FieldRef<"OutboxEvent", 'String'>
     readonly aggregateType: FieldRef<"OutboxEvent", 'String'>
     readonly aggregateId: FieldRef<"OutboxEvent", 'String'>
@@ -45512,20 +45512,6 @@ export namespace Prisma {
    * Reference to a field of type 'Json'
    */
   export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'BigInt'
-   */
-  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
-    
-
-
-  /**
-   * Reference to a field of type 'BigInt[]'
-   */
-  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
 
 
@@ -48362,7 +48348,7 @@ export namespace Prisma {
     NOT?: SupportCaseWhereInput | SupportCaseWhereInput[]
     id?: StringFilter<"SupportCase"> | string
     contactMessageId?: StringNullableFilter<"SupportCase"> | string | null
-    caseNumberSeq?: BigIntFilter<"SupportCase"> | bigint | number
+    caseNumberSeq?: IntFilter<"SupportCase"> | number
     caseNumber?: StringNullableFilter<"SupportCase"> | string | null
     title?: StringFilter<"SupportCase"> | string
     description?: StringNullableFilter<"SupportCase"> | string | null
@@ -48418,7 +48404,7 @@ export namespace Prisma {
   export type SupportCaseWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     contactMessageId?: string
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string
     threadingKey?: string
     AND?: SupportCaseWhereInput | SupportCaseWhereInput[]
@@ -48479,7 +48465,7 @@ export namespace Prisma {
     NOT?: SupportCaseScalarWhereWithAggregatesInput | SupportCaseScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"SupportCase"> | string
     contactMessageId?: StringNullableWithAggregatesFilter<"SupportCase"> | string | null
-    caseNumberSeq?: BigIntWithAggregatesFilter<"SupportCase"> | bigint | number
+    caseNumberSeq?: IntWithAggregatesFilter<"SupportCase"> | number
     caseNumber?: StringNullableWithAggregatesFilter<"SupportCase"> | string | null
     title?: StringWithAggregatesFilter<"SupportCase"> | string
     description?: StringNullableWithAggregatesFilter<"SupportCase"> | string | null
@@ -49049,7 +49035,7 @@ export namespace Prisma {
     AND?: OutboxEventWhereInput | OutboxEventWhereInput[]
     OR?: OutboxEventWhereInput[]
     NOT?: OutboxEventWhereInput | OutboxEventWhereInput[]
-    id?: BigIntFilter<"OutboxEvent"> | bigint | number
+    id?: IntFilter<"OutboxEvent"> | number
     eventType?: StringFilter<"OutboxEvent"> | string
     aggregateType?: StringFilter<"OutboxEvent"> | string
     aggregateId?: StringFilter<"OutboxEvent"> | string
@@ -49081,7 +49067,7 @@ export namespace Prisma {
   }
 
   export type OutboxEventWhereUniqueInput = Prisma.AtLeast<{
-    id?: bigint | number
+    id?: number
     idempotencyKey?: string
     AND?: OutboxEventWhereInput | OutboxEventWhereInput[]
     OR?: OutboxEventWhereInput[]
@@ -49124,7 +49110,7 @@ export namespace Prisma {
     AND?: OutboxEventScalarWhereWithAggregatesInput | OutboxEventScalarWhereWithAggregatesInput[]
     OR?: OutboxEventScalarWhereWithAggregatesInput[]
     NOT?: OutboxEventScalarWhereWithAggregatesInput | OutboxEventScalarWhereWithAggregatesInput[]
-    id?: BigIntWithAggregatesFilter<"OutboxEvent"> | bigint | number
+    id?: IntWithAggregatesFilter<"OutboxEvent"> | number
     eventType?: StringWithAggregatesFilter<"OutboxEvent"> | string
     aggregateType?: StringWithAggregatesFilter<"OutboxEvent"> | string
     aggregateId?: StringWithAggregatesFilter<"OutboxEvent"> | string
@@ -52542,7 +52528,7 @@ export namespace Prisma {
 
   export type SupportCaseCreateInput = {
     id?: string
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -52567,7 +52553,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedCreateInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -52590,7 +52576,6 @@ export namespace Prisma {
 
   export type SupportCaseUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52615,7 +52600,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52639,7 +52624,7 @@ export namespace Prisma {
   export type SupportCaseCreateManyInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -52660,7 +52645,6 @@ export namespace Prisma {
 
   export type SupportCaseUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52679,7 +52663,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53295,7 +53279,6 @@ export namespace Prisma {
   }
 
   export type OutboxEventCreateInput = {
-    id?: bigint | number
     eventType: string
     aggregateType: string
     aggregateId: string
@@ -53311,7 +53294,7 @@ export namespace Prisma {
   }
 
   export type OutboxEventUncheckedCreateInput = {
-    id?: bigint | number
+    id?: number
     eventType: string
     aggregateType: string
     aggregateId: string
@@ -53327,7 +53310,6 @@ export namespace Prisma {
   }
 
   export type OutboxEventUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
     eventType?: StringFieldUpdateOperationsInput | string
     aggregateType?: StringFieldUpdateOperationsInput | string
     aggregateId?: StringFieldUpdateOperationsInput | string
@@ -53343,7 +53325,7 @@ export namespace Prisma {
   }
 
   export type OutboxEventUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: IntFieldUpdateOperationsInput | number
     eventType?: StringFieldUpdateOperationsInput | string
     aggregateType?: StringFieldUpdateOperationsInput | string
     aggregateId?: StringFieldUpdateOperationsInput | string
@@ -53359,7 +53341,7 @@ export namespace Prisma {
   }
 
   export type OutboxEventCreateManyInput = {
-    id?: bigint | number
+    id?: number
     eventType: string
     aggregateType: string
     aggregateId: string
@@ -53375,7 +53357,6 @@ export namespace Prisma {
   }
 
   export type OutboxEventUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
     eventType?: StringFieldUpdateOperationsInput | string
     aggregateType?: StringFieldUpdateOperationsInput | string
     aggregateId?: StringFieldUpdateOperationsInput | string
@@ -53391,7 +53372,7 @@ export namespace Prisma {
   }
 
   export type OutboxEventUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: IntFieldUpdateOperationsInput | number
     eventType?: StringFieldUpdateOperationsInput | string
     aggregateType?: StringFieldUpdateOperationsInput | string
     aggregateId?: StringFieldUpdateOperationsInput | string
@@ -55612,17 +55593,6 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type BigIntFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
-  }
-
   export type ContactMessageNullableRelationFilter = {
     is?: ContactMessageWhereInput | null
     isNot?: ContactMessageWhereInput | null
@@ -55703,22 +55673,6 @@ export namespace Prisma {
 
   export type SupportCaseSumOrderByAggregateInput = {
     caseNumberSeq?: SortOrder
-  }
-
-  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedBigIntFilter<$PrismaModel>
-    _min?: NestedBigIntFilter<$PrismaModel>
-    _max?: NestedBigIntFilter<$PrismaModel>
   }
   export type JsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -58989,14 +58943,6 @@ export namespace Prisma {
     connect?: CaseStatusHistoryWhereUniqueInput | CaseStatusHistoryWhereUniqueInput[]
   }
 
-  export type BigIntFieldUpdateOperationsInput = {
-    set?: bigint | number
-    increment?: bigint | number
-    decrement?: bigint | number
-    multiply?: bigint | number
-    divide?: bigint | number
-  }
-
   export type ContactMessageUpdateOneWithoutSupportCaseNestedInput = {
     create?: XOR<ContactMessageCreateWithoutSupportCaseInput, ContactMessageUncheckedCreateWithoutSupportCaseInput>
     connectOrCreate?: ContactMessageCreateOrConnectWithoutSupportCaseInput
@@ -59610,33 +59556,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedBigIntFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
-  }
-
-  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedBigIntFilter<$PrismaModel>
-    _min?: NestedBigIntFilter<$PrismaModel>
-    _max?: NestedBigIntFilter<$PrismaModel>
   }
   export type NestedJsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -60837,7 +60756,7 @@ export namespace Prisma {
 
   export type SupportCaseCreateWithoutAssigneeInput = {
     id?: string
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -60861,7 +60780,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedCreateWithoutAssigneeInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -61532,7 +61451,7 @@ export namespace Prisma {
     NOT?: SupportCaseScalarWhereInput | SupportCaseScalarWhereInput[]
     id?: StringFilter<"SupportCase"> | string
     contactMessageId?: StringNullableFilter<"SupportCase"> | string | null
-    caseNumberSeq?: BigIntFilter<"SupportCase"> | bigint | number
+    caseNumberSeq?: IntFilter<"SupportCase"> | number
     caseNumber?: StringNullableFilter<"SupportCase"> | string | null
     title?: StringFilter<"SupportCase"> | string
     description?: StringNullableFilter<"SupportCase"> | string | null
@@ -62316,7 +62235,7 @@ export namespace Prisma {
 
   export type SupportCaseCreateWithoutTenantInput = {
     id?: string
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -62340,7 +62259,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedCreateWithoutTenantInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -65778,7 +65697,7 @@ export namespace Prisma {
 
   export type SupportCaseCreateWithoutContactMessageInput = {
     id?: string
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -65801,7 +65720,7 @@ export namespace Prisma {
 
   export type SupportCaseUncheckedCreateWithoutContactMessageInput = {
     id?: string
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -66124,7 +66043,6 @@ export namespace Prisma {
 
   export type SupportCaseUpdateWithoutContactMessageInput = {
     id?: StringFieldUpdateOperationsInput | string
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66147,7 +66065,7 @@ export namespace Prisma {
 
   export type SupportCaseUncheckedUpdateWithoutContactMessageInput = {
     id?: StringFieldUpdateOperationsInput | string
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -72173,7 +72091,7 @@ export namespace Prisma {
 
   export type SupportCaseCreateWithoutSupportOptionInput = {
     id?: string
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -72197,7 +72115,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedCreateWithoutSupportOptionInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -72495,7 +72413,7 @@ export namespace Prisma {
 
   export type SupportCaseCreateWithoutMessagesInput = {
     id?: string
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -72519,7 +72437,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedCreateWithoutMessagesInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -72584,7 +72502,6 @@ export namespace Prisma {
 
   export type SupportCaseUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -72608,7 +72525,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -72663,7 +72580,7 @@ export namespace Prisma {
 
   export type SupportCaseCreateWithoutStatusHistoryInput = {
     id?: string
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -72687,7 +72604,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedCreateWithoutStatusHistoryInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -72830,7 +72747,6 @@ export namespace Prisma {
 
   export type SupportCaseUpdateWithoutStatusHistoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -72854,7 +72770,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateWithoutStatusHistoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -74218,7 +74134,7 @@ export namespace Prisma {
   export type SupportCaseCreateManyAssigneeInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -74859,7 +74775,6 @@ export namespace Prisma {
 
   export type SupportCaseUpdateWithoutAssigneeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -74883,7 +74798,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateWithoutAssigneeInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -74906,7 +74821,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateManyWithoutAssigneeInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -75363,7 +75278,7 @@ export namespace Prisma {
   export type SupportCaseCreateManyTenantInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -76045,7 +75960,6 @@ export namespace Prisma {
 
   export type SupportCaseUpdateWithoutTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76069,7 +75983,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateWithoutTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76092,7 +76006,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateManyWithoutTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76706,7 +76620,7 @@ export namespace Prisma {
   export type SupportCaseCreateManySupportOptionInput = {
     id?: string
     contactMessageId?: string | null
-    caseNumberSeq?: bigint | number
+    caseNumberSeq?: number
     caseNumber?: string | null
     title: string
     description?: string | null
@@ -76796,7 +76710,6 @@ export namespace Prisma {
 
   export type SupportCaseUpdateWithoutSupportOptionInput = {
     id?: StringFieldUpdateOperationsInput | string
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76820,7 +76733,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateWithoutSupportOptionInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76843,7 +76756,7 @@ export namespace Prisma {
   export type SupportCaseUncheckedUpdateManyWithoutSupportOptionInput = {
     id?: StringFieldUpdateOperationsInput | string
     contactMessageId?: NullableStringFieldUpdateOperationsInput | string | null
-    caseNumberSeq?: BigIntFieldUpdateOperationsInput | bigint | number
+    caseNumberSeq?: IntFieldUpdateOperationsInput | number
     caseNumber?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null

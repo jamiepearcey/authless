@@ -73,7 +73,7 @@ export class OutboxRepository {
       if (events.length > 0) {
         const eventIds = events.map(e => e.id);
         await tx.outboxEvent.updateMany({
-          where: { id: { in: eventIds.map(id => BigInt(id)) } },
+          where: { id: { in: eventIds } },
           data: { status: OutboxEventStatus.PROCESSING },
         });
       }
@@ -106,7 +106,7 @@ export class OutboxRepository {
     }
 
     await this.db.outboxEvent.update({
-      where: { id: BigInt(eventId) },
+      where: { id: parseInt(eventId) },
       data: updateData,
     });
   }
@@ -123,7 +123,7 @@ export class OutboxRepository {
     retryConfig: RetryConfig = DEFAULT_RETRY_CONFIG
   ): Promise<void> {
     const event = await this.db.outboxEvent.findUnique({
-      where: { id: BigInt(eventId) },
+      where: { id: parseInt(eventId) },
       select: { tries: true },
     });
 
@@ -272,7 +272,7 @@ export class OutboxRepository {
 
   async getEventById(eventId: string) {
     return this.db.outboxEvent.findUnique({
-      where: { id: BigInt(eventId) },
+      where: { id: parseInt(eventId) },
     });
   }
 

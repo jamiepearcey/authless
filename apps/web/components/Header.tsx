@@ -63,6 +63,9 @@ export default function Header() {
   const handleArchive = async (notificationId: string) => {
     try {
       await archiveMutation.mutateAsync({ notificationId });
+      // Refetch notifications and unread count after archiving
+      refetchNotifications();
+      refetchUnreadCount();
     } catch (error) {
       console.error("Failed to archive notification:", error);
     }

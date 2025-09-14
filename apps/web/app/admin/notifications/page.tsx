@@ -312,26 +312,38 @@ export default function AdminNotificationsPage() {
   };
 
   return (
-    <div className="flex-1 h-screen flex flex-col">
+    <div className="flex-1 space-y-6">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link 
-              href="/admin"
-              className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Admin
-            </Link>
-            <div className="h-6 w-px bg-gray-300" />
-            <BreadcrumbNavigation
-              items={[
-                { label: "Admin", href: "/admin" },
-                { label: "Notifications", current: true },
-              ]}
-              showHome={false}
-            />
+      <div className="mb-8">
+        {/* Breadcrumb Navigation */}
+        <div className="flex items-center space-x-4 mb-4">
+          <Link 
+            href="/admin"
+            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Admin
+          </Link>
+          <div className="h-6 w-px bg-gray-300" />
+          <BreadcrumbNavigation
+            items={[
+              { label: "Admin", href: "/admin" },
+              { label: "Notifications", current: true },
+            ]}
+            showHome={false}
+          />
+        </div>
+        
+        {/* Page Header */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+              <Bell className="h-8 w-8 text-indigo-600" />
+              <span>Notifications</span>
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Manage system notifications and alerts
+            </p>
           </div>
           
           <div className="flex items-center space-x-3">
@@ -346,12 +358,12 @@ export default function AdminNotificationsPage() {
       </div>
 
       {/* Main Inbox Layout */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex h-[calc(100vh-12rem)] overflow-hidden bg-white rounded-lg border border-gray-200">
 
         {/* Main Content Area - SharePoint Style */}
         <div className="flex-1 flex">
           {/* Left Panel - Notification Titles */}
-          <div className="w-2/5 bg-white border-r border-gray-200 flex flex-col">
+          <div className="w-2/5 min-w-[376px] bg-white border-r border-gray-200 flex flex-col">
             {/* Left Panel Header */}
             <div className="p-4 border-b border-gray-200">
               <div className="flex items-center justify-between mb-4">

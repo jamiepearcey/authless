@@ -21,7 +21,8 @@ import {
   Plus,
   Star,
   Target,
-  BarChart3
+  BarChart3,
+  TrendingUp
 } from "lucide-react";
 
 interface NavigationItem {
@@ -101,64 +102,90 @@ const navigationStructure: NavigationItem[] = [
     adminOnly: true,
     items: [
       {
-        label: "Dashboard",
-        href: "/admin",
-        icon: BarChart3,
-        description: "Platform overview and key metrics"
+        label: "Overview",
+        items: [
+          {
+            label: "Dashboard",
+            href: "/admin",
+            icon: BarChart3,
+            description: "Platform overview and key metrics"
+          },
+          {
+            label: "Analytics",
+            href: "/admin/analytics",
+            icon: TrendingUp,
+            description: "Detailed analytics and reporting"
+          }
+        ]
       },
       {
-        label: "User Management", 
-        href: "/admin/users",
-        icon: Users,
-        description: "Manage platform users and permissions"
+        label: "Management",
+        items: [
+          {
+            label: "User Management", 
+            href: "/admin/users",
+            icon: Users,
+            description: "Manage platform users and permissions"
+          },
+          {
+            label: "Tenant Management",
+            href: "/admin/tenants",
+            icon: Building2,
+            description: "View and manage all platform tenants"
+          },
+          {
+            label: "Create Tenant",
+            href: "/admin/tenants/create",
+            icon: Plus,
+            description: "Add a new tenant to the platform"
+          }
+        ]
       },
       {
-        label: "Tenant Management",
-        href: "/admin/tenants",
-        icon: Building2,
-        description: "View and manage all platform tenants"
+        label: "System",
+        items: [
+          {
+            label: "Settings",
+            href: "/admin/settings",
+            icon: Settings,
+            description: "Platform configuration and feature toggles"
+          },
+          {
+            label: "Security",
+            href: "/admin/security",
+            icon: Shield,
+            description: "Security policies and access controls"
+          },
+          {
+            label: "Audit Log",
+            href: "/admin/audit",
+            icon: History,
+            description: "System activity and audit trails"
+          }
+        ]
       },
       {
-        label: "Create Tenant",
-        href: "/admin/tenants/create",
-        icon: Plus,
-        description: "Add a new tenant to the platform"
-      },
-      {
-        label: "Settings",
-        href: "/admin/settings",
-        icon: Settings,
-        description: "Platform configuration and feature toggles"
-      },
-      {
-        label: "Security",
-        href: "/admin/security",
-        icon: Shield,
-        description: "Security policies and access controls"
-      },
-      {
-        label: "Audit Log",
-        href: "/admin/audit",
-        icon: History,
-        description: "System activity and audit trails"
-      },
-      {
-        label: "Support",
-        href: "/admin/support",
-        icon: MessageSquare,
-        description: "Customer support and ticket management"
-      },
-      {
-        label: "Notifications",
-        href: "/admin/notifications",
-        icon: Bell,
-        description: "System notifications and alerts"
-      },
-      {
-        label: "Email Templates",
-        href: "/admin/notifications/templates",
-        icon: Mail,
-        description: "Manage email templates and campaigns"
+        label: "Communication",
+        items: [
+          {
+            label: "Support",
+            href: "/admin/support",
+            icon: MessageSquare,
+            description: "Customer support and ticket management"
+          },
+          {
+            label: "Notifications",
+            href: "/admin/notifications",
+            icon: Bell,
+            description: "System notifications and alerts"
+          },
+          {
+            label: "Email Templates",
+            href: "/admin/notifications/templates",
+            icon: Mail,
+            description: "Manage email templates and campaigns"
+          }
+        ]
       }
     ]
   }
@@ -249,14 +276,18 @@ const NavigationItem = ({ item, level = 0 }: { item: NavigationItem; level?: num
 };
 
 const NavigationPanel = ({ items, isAdmin }: { items: NavigationItem[]; isAdmin?: boolean }) => {
-  // Determine panel width based on content
+  // Determine panel width and layout based on content
   const isLargeSection = items.some(item => item.items && item.items.length > 4);
   const panelWidth = isLargeSection ? "w-[640px]" : "w-[480px]";
   
+  // For admin section with many items, use multi-column layout
+  const useMultiColumn = isAdmin && items.length > 6;
+  const gridCols = useMultiColumn ? "grid-cols-2" : "grid-cols-1";
+  
   return (
-    <NavigationMenu.Content className="absolute top-0 left-0 w-auto">
-      <div className={`bg-white text-gray-900 rounded-lg border border-gray-200 shadow-xl p-6 ${panelWidth} max-h-[80vh] overflow-y-auto navigation-panel-enter`}>
-        <div className="space-y-6">
+    <NavigationMenu.Content className="absolute top-0 left-0 w-auto data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90">
+      <div className={`bg-white text-gray-900 rounded-lg border border-gray-200 shadow-xl p-6 ${panelWidth} max-h-[80vh] overflow-y-auto navigation-panel-enter z-50`}>
+        <div className={`grid ${gridCols} gap-6`}>
           {items.map((item, index) => (
             <div key={index} className="last:pb-0">
               <NavigationItem item={item} />

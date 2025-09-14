@@ -744,7 +744,7 @@ model TwoFactorAudit {
 model SupportCase {
   id                String                 @id @default(cuid())
   contactMessageId  String?                @unique // Link to existing ContactMessage
-  caseNumberSeq     BigInt                 @unique @default(autoincrement()) // Auto-incrementing sequence number (starts at 1M)
+  caseNumberSeq     Int                    @unique @default(autoincrement()) // Auto-incrementing sequence number (starts at 1M)
   caseNumber        String?                @unique // Base32 encoded case number (auto-generated)
   title             String                 // Case title
   description       String?                // Extended case description
@@ -929,7 +929,7 @@ model TenantSupportRouting {
 
 // Outbox events to be dispatched to the queue/bus
 model OutboxEvent {
-  id              BigInt    @id @default(autoincrement())
+  id              Int       @id @default(autoincrement())
   eventType       String    // e.g. 'support.case.created'
   aggregateType   String    // e.g. 'support_case'
   aggregateId     String

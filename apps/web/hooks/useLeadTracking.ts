@@ -51,7 +51,7 @@ export function useLeadTracking() {
       console.error('Lead tracking error:', error);
       return { success: false, error: { message: 'Network error' } };
     }
-  }, [trackClarityEvent, identifyUser, session?.user]);
+  }, [trackClarityEvent, identifyUser, session?.user?.email, session?.user?.name]);
 
   // Convenience methods for common events
   const trackPageVisit = useCallback((metadata?: Record<string, string>) => {

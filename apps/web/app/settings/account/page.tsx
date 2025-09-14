@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Button, Input, Label, toast, Badge, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Mail, Bell, Trash2, Globe, Lock, Save, MapPin, Clock, Eye, EyeOff, User, Shield, CheckCircle, Edit3, Camera, Upload, Key } from "lucide-react";
-import { useLocale } from "@i18n-core";
+import { useLocale, t } from "@i18n-core";
 import { trpc } from "@/lib/trpc";
 import { ProfilePhotoUploadDialog } from "@/components/ProfilePhotoUploadDialog";
 
@@ -550,7 +550,7 @@ export default function AccountPage() {
           <div className="flex items-center space-x-3 mb-6">
             <Globe className="h-6 w-6 text-indigo-600" />
             <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Language & Region
+              {t("Language & Region", "settings.account.page.AccountPage.language_region__1abcde")}
             </h3>
           </div>
           
@@ -558,19 +558,45 @@ export default function AccountPage() {
             <div className="space-y-3">
               <Label htmlFor="language" className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <Globe className="h-4 w-4 text-indigo-600" />
-                Language
+                {t("Language", "settings.account.page.AccountPage.language__2abcde")}
               </Label>
               <Select value={locale ?? "en"} onValueChange={(value) => switchLocale(value)}>
                 <SelectTrigger className="w-full h-12 border-2 border-slate-200 focus:border-indigo-400 focus:ring-indigo-400 hover:border-slate-300 transition-all duration-200 bg-gradient-to-r from-slate-50 to-white">
-                  <SelectValue placeholder="Select language" />
+                  <div className="flex items-center gap-3 py-1">
+                    <span className="text-xl">
+                      {locale === "en" ? "🇺🇸" : 
+                       locale === "de" ? "🇩🇪" : 
+                       locale === "fr" ? "🇫🇷" : 
+                       locale === "es" ? "🇪🇸" : 
+                       locale === "ja" ? "🇯🇵" : "🇺🇸"}
+                    </span>
+                    <div className="text-left">
+                      <span className="font-medium">
+                        {locale === "en" ? t("English", "settings.account.page.AccountPage.english__4abcde") :
+                         locale === "de" ? t("Deutsch", "settings.account.page.AccountPage.deutsch__5abcde") :
+                         locale === "fr" ? t("Français", "settings.account.page.AccountPage.francais__6abcde") :
+                         locale === "es" ? t("Español", "settings.account.page.AccountPage.espanol__7abcde") :
+                         locale === "ja" ? t("日本語", "settings.account.page.AccountPage.japanese__12abcde") :
+                         t("English", "settings.account.page.AccountPage.english__4abcde")}
+                      </span>
+                      <span className="text-xs text-gray-500 block">
+                        {locale === "en" ? t("United States", "settings.account.page.AccountPage.united_states__8abcde") :
+                         locale === "de" ? t("Germany", "settings.account.page.AccountPage.germany__9abcde") :
+                         locale === "fr" ? t("France", "settings.account.page.AccountPage.france__10abcde") :
+                         locale === "es" ? t("Spain", "settings.account.page.AccountPage.spain__11abcde") :
+                         locale === "ja" ? t("Japan", "settings.account.page.AccountPage.japan__13abcde") :
+                         t("United States", "settings.account.page.AccountPage.united_states__8abcde")}
+                      </span>
+                    </div>
+                  </div>
                 </SelectTrigger>
                 <SelectContent className="max-h-60 overflow-y-auto">
                   <SelectItem value="en" className="hover:bg-indigo-50 cursor-pointer">
                     <div className="flex items-center gap-3 py-1">
                       <span className="text-xl">🇺🇸</span>
                       <div>
-                        <span className="font-medium">English</span>
-                        <span className="text-xs text-gray-500 block">United States</span>
+                        <span className="font-medium">{t("English", "settings.account.page.AccountPage.english__4abcde")}</span>
+                        <span className="text-xs text-gray-500 block">{t("United States", "settings.account.page.AccountPage.united_states__8abcde")}</span>
                       </div>
                     </div>
                   </SelectItem>
@@ -578,8 +604,8 @@ export default function AccountPage() {
                     <div className="flex items-center gap-3 py-1">
                       <span className="text-xl">🇩🇪</span>
                       <div>
-                        <span className="font-medium">Deutsch</span>
-                        <span className="text-xs text-gray-500 block">Germany</span>
+                        <span className="font-medium">{t("Deutsch", "settings.account.page.AccountPage.deutsch__5abcde")}</span>
+                        <span className="text-xs text-gray-500 block">{t("Germany", "settings.account.page.AccountPage.germany__9abcde")}</span>
                       </div>
                     </div>
                   </SelectItem>
@@ -587,8 +613,8 @@ export default function AccountPage() {
                     <div className="flex items-center gap-3 py-1">
                       <span className="text-xl">🇫🇷</span>
                       <div>
-                        <span className="font-medium">Français</span>
-                        <span className="text-xs text-gray-500 block">France</span>
+                        <span className="font-medium">{t("Français", "settings.account.page.AccountPage.francais__6abcde")}</span>
+                        <span className="text-xs text-gray-500 block">{t("France", "settings.account.page.AccountPage.france__10abcde")}</span>
                       </div>
                     </div>
                   </SelectItem>
@@ -596,8 +622,8 @@ export default function AccountPage() {
                     <div className="flex items-center gap-3 py-1">
                       <span className="text-xl">🇪🇸</span>
                       <div>
-                        <span className="font-medium">Español</span>
-                        <span className="text-xs text-gray-500 block">Spain</span>
+                        <span className="font-medium">{t("Español", "settings.account.page.AccountPage.espanol__7abcde")}</span>
+                        <span className="text-xs text-gray-500 block">{t("Spain", "settings.account.page.AccountPage.spain__11abcde")}</span>
                       </div>
                     </div>
                   </SelectItem>
@@ -605,8 +631,8 @@ export default function AccountPage() {
                     <div className="flex items-center gap-3 py-1">
                       <span className="text-xl">🇯🇵</span>
                       <div>
-                        <span className="font-medium">日本語</span>
-                        <span className="text-xs text-gray-500 block">Japan</span>
+                        <span className="font-medium">{t("日本語", "settings.account.page.AccountPage.japanese__12abcde")}</span>
+                        <span className="text-xs text-gray-500 block">{t("Japan", "settings.account.page.AccountPage.japan__13abcde")}</span>
                       </div>
                     </div>
                   </SelectItem>
@@ -614,8 +640,8 @@ export default function AccountPage() {
                     <div className="flex items-center gap-3 py-1">
                       <span className="text-xl">🇨🇳</span>
                       <div>
-                        <span className="font-medium">中文</span>
-                        <span className="text-xs text-gray-500 block">China</span>
+                        <span className="font-medium">{t("中文", "settings.account.page.AccountPage.chinese__14abcde")}</span>
+                        <span className="text-xs text-gray-500 block">{t("China", "settings.account.page.AccountPage.china__15abcde")}</span>
                       </div>
                     </div>
                   </SelectItem>
@@ -623,14 +649,14 @@ export default function AccountPage() {
               </Select>
               <div className="flex items-center space-x-2 text-xs">
                 <CheckCircle className="h-3 w-3 text-green-600" />
-                <span className="text-green-600 font-medium">Changes apply immediately</span>
+                <span className="text-green-600 font-medium">{t("Changes apply immediately", "settings.account.page.AccountPage.changes_apply_immediately__16abcde")}</span>
               </div>
             </div>
 
             <div className="space-y-3">
               <Label htmlFor="timezone" className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <Clock className="h-4 w-4 text-indigo-600" />
-                Timezone
+                {t("Timezone", "settings.account.page.AccountPage.timezone__18abcde")}
               </Label>
               <Select value={timezone} onValueChange={(value) => {
                 setTimezone(value);
@@ -647,7 +673,7 @@ export default function AccountPage() {
                 }
               }}>
                 <SelectTrigger className="w-full h-12 border-2 border-slate-200 focus:border-indigo-400 focus:ring-indigo-400 hover:border-slate-300 transition-all duration-200 bg-gradient-to-r from-slate-50 to-white">
-                  <SelectValue placeholder="Select timezone" />
+                  <SelectValue placeholder={t("Select timezone", "settings.account.page.AccountPage.select_timezone__17abcde")} />
                 </SelectTrigger>
                 <SelectContent className="max-h-60 overflow-y-auto">
                   <SelectItem value="UTC" className="hover:bg-indigo-50 cursor-pointer">

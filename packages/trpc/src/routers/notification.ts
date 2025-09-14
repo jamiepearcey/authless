@@ -281,6 +281,8 @@ export const notificationRouter = router({
         where: {
           userId: userId,
           ...(status && { status: status }),
+          // Exclude archived notifications unless specifically requested
+          ...(status !== "archived" && { status: { not: "archived" } }),
           notification: {
             ...(type && { type: type }),
             ...(priority && { priority: priority }),

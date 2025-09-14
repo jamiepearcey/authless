@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
-import { Settings, Server, Mail, Bell, Globe, Zap } from "lucide-react";
+import { Settings, Server, Mail, Bell, Globe, Zap, ArrowLeft } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
@@ -161,17 +161,28 @@ export default function AdminSettingsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="mb-8">
+        {/* Breadcrumb Navigation */}
+        <div className="flex items-center space-x-4 mb-4">
+          <Link 
+            href="/admin"
+            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Admin
+          </Link>
+          <div className="h-6 w-px bg-gray-300" />
+          <BreadcrumbNavigation
+            items={[
+              { label: "Admin", href: "/admin" },
+              { label: "Platform Settings", current: true },
+            ]}
+            showHome={false}
+          />
+        </div>
+        
+        {/* Page Header */}
         <div className="flex justify-between items-center">
           <div>
-            <div className="flex items-center space-x-4 mb-4">
-              <BreadcrumbNavigation
-                items={[
-                  { label: "Admin", href: "/admin" },
-                  { label: "Platform Settings", current: true },
-                ]}
-                showHome={false}
-              />
-            </div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <Settings className="h-8 w-8 text-indigo-600" />
               <span>Platform Settings</span>

@@ -13,6 +13,7 @@ import { Separator } from "@ui/base";
 import { Checkbox } from "@ui/base";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@ui/base";
 import { motion, AnimatePresence, type Transition, Variants } from "framer-motion";
 
 import {
@@ -24,7 +25,17 @@ import {
   CreditCard,
   Shield,
   HelpCircle,
-  ChevronRight
+  ChevronRight,
+  RefreshCw,
+  Plus,
+  Flag,
+  Clock,
+  CheckCircle,
+  AlertCircle,
+  Info,
+  AlertTriangle,
+  FileText,
+  Building
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
@@ -111,9 +122,11 @@ const ContactPage = () => {
   });
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showCloseDialog, setShowCloseDialog] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [showNewMessage, setShowNewMessage] = useState<boolean>(false);
 
   // Get user tenants to find their primary tenant
   const { data: userTenants } = trpc.getUserTenants.useQuery(
@@ -183,6 +196,7 @@ const ContactPage = () => {
         toast.success(result.message);
         setFormData({ name: "", email: "", subject: "", message: "" });
         setSelectedReasons([]);
+        setShowNewMessage(false);
         refetchMessages();
       }
     } catch (error: unknown) {
@@ -220,6 +234,7 @@ const ContactPage = () => {
         toast.success("Ticket closed successfully");
         refetchSelectedMessage();
         refetchMessages();
+        setShowCloseDialog(false);
       }
     } catch (error: unknown) {
       toast.error(getErrorMessage(error));
@@ -285,6 +300,59 @@ const ContactPage = () => {
     });
   };
 
+  // Helper functions for inbox-style layout
+  const formatTimeAgo = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffMinutes < 1) return "Just now";
+    if (diffMinutes < 60) return `${diffMinutes}m ago`;
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays < 7) return `${diffDays}d ago`;
+    return date.toLocaleDateString();
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "open":
+        return <Info className="h-5 w-5 text-blue-600" />;
+      case "pending":
+        return <Clock className="h-5 w-5 text-yellow-600" />;
+      case "in_progress":
+        return <RefreshCw className="h-5 w-5 text-purple-600" />;
+      case "resolved":
+        return <CheckCircle className="h-5 w-5 text-green-600" />;
+      case "closed":
+        return <CheckCircle className="h-5 w-5 text-gray-400" />;
+      default:
+        return <Info className="h-5 w-5 text-blue-600" />;
+    }
+  };
+
+  const getPriorityIcon = (priority: string) => {
+    switch (priority) {
+      case "urgent": return <Flag className="h-4 w-4 text-red-600" />;
+      case "high": return <Flag className="h-4 w-4 text-orange-600" />;
+      case "normal": return <Flag className="h-4 w-4 text-blue-600" />;
+      case "low": return <Flag className="h-4 w-4 text-gray-400" />;
+      default: return <Flag className="h-4 w-4 text-gray-400" />;
+    }
+  };
+
+  const handleNewMessage = () => {
+    setShowNewMessage(true);
+    setSelectedMessage(null);
+  };
+
+  const handleMessageSelect = (messageId: string) => {
+    setSelectedMessage(messageId);
+    setShowNewMessage(false);
+  };
+
   // Filter messages based on status
   const filteredMessages =
     userMessages?.filter((msg: ContactMessage) => {
@@ -306,192 +374,301 @@ const ContactPage = () => {
   }
 
   return (
-    <main className="flex flex-1 pt-8 pb-8">
-      <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex-1 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            {t("Contact Us", "contact.page.ContactPage.contact_us__1itlrq")}
-          </h1>
-          <p className="text-gray-600">
-            {t("Get in touch with our support team. We're here to help!", "contact.page.ContactPage.get_in_touch_with_our_support_team__2bkoks")}
-          </p>
+        <div className="mb-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
+                <MessageSquare className="h-8 w-8 text-indigo-600" />
+                <span>{t("Contact Support", "contact.page.ContactPage.contact_support__1itlrq")}</span>
+              </h1>
+              <p className="mt-2 text-gray-600">
+                {t("Get in touch with our support team. We're here to help!", "contact.page.ContactPage.get_in_touch_with_our_support_team__2bkoks")}
+              </p>
+            </div>
+            
+            {session?.user && (
+              <Button onClick={handleNewMessage} className="bg-indigo-600 hover:bg-indigo-700">
+                <Plus className="h-4 w-4 mr-2" />
+                New Message
+              </Button>
+            )}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Left Sidebar - User Profile & Conversation History */}
-          {session?.user && (
-            <div className="lg:col-span-1">
-              <div className="space-y-6">
-                {/* User Profile Card */}
-                <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
-                  <CardContent className="p-6">
-                    <div className="flex items-center space-x-3">
-                      <Avatar className="h-12 w-12 border-2 border-blue-200">
-                        <AvatarImage src={session.user.image || ""} alt={session.user.name || ""} />
-                        <AvatarFallback className="bg-blue-100 text-blue-600 font-semibold">
-                          <User className="h-6 w-6" />
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-semibold text-gray-900 truncate">{session.user.name}</h3>
-                        <p className="text-sm text-gray-600 break-words">{session.user.email}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Conversation History */}
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      <MessageSquare className="h-5 w-5" />
-                      {t("Conversation History", "contact.page.ContactPage.conversation_history__11ckols")}
-                    </CardTitle>
-
-                    {/* Status Filter */}
-                    <div className="flex items-center gap-2 mt-3">
-                      <Label htmlFor="status-filter" className="text-xs font-medium text-gray-600">
-                        Filter by status:
-                      </Label>
-                      <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v)}>
-                        <SelectTrigger id="status-filter" className="h-8 w-32 text-xs">
-                          <SelectValue placeholder="All" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Statuses</SelectItem>
-                          <SelectItem value="open">Open</SelectItem>
-                          <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="in_progress">In Progress</SelectItem>
-                          <SelectItem value="resolved">Resolved</SelectItem>
-                          <SelectItem value="closed">Closed</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="p-0">
-                    <div className="h-96 overflow-y-auto overflow-x-hidden scroll-smooth">
-                      {filteredMessages.length > 0 ? (
-                        <motion.ul
-                          className="space-y-1 p-3"
-                          variants={listVariants}
-                          initial="hidden"
-                          animate="show"
-                        >
-                          <AnimatePresence mode="wait">
-                            {filteredMessages.map((msg: ContactMessage) => (
-                              <motion.li
-                                key={msg.id}
-                                variants={itemVariants as Variants}
-                                initial="hidden"
-                                animate="show"
-                                exit="exit"
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                className={`p-3 rounded-lg cursor-pointer transition-colors duration-150
-                                  border border-transparent hover:bg-gray-50 hover:shadow-sm
-                                  ${selectedMessage === msg.id ? "bg-blue-50 border-blue-200 ring-1 ring-blue-200 shadow-md" : ""}`}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  setSelectedMessage(msg.id);
-                                }}
-                              >
-                                <div className="flex items-start justify-between mb-2">
-                                  <h4 className="font-medium text-sm text-gray-900 line-clamp-2">
-                                    {msg.subject}
-                                  </h4>
-                                  <motion.div
-                                    initial={{ rotate: 0 }}
-                                    animate={{ rotate: selectedMessage === msg.id ? 90 : 0 }}
-                                    transition={{ ...spring }}
-                                  >
-                                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                                  </motion.div>
-                                </div>
-                                <div className="flex items-center gap-2 mb-2">
-                                  {getStatusBadge(msg.status)}
-                                  {getPriorityBadge(msg.priority)}
-                                </div>
-                                <p className="text-xs text-gray-600 line-clamp-2 mb-2">
-                                  {msg.lastMessage?.content || msg.message || "No message content"}
-                                </p>
-                                <div className="flex items-center gap-2 text-xs text-gray-500">
-                                  <Calendar className="h-3 w-3" />
-                                  {formatDate(msg.createdAt)}
-                                </div>
-                              </motion.li>
-                            ))}
-                          </AnimatePresence>
-                        </motion.ul>
-                      ) : (
-                        <div className="text-center py-8 text-gray-500">
-                          <MessageSquare className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                          <p className="text-sm">
-                            {statusFilter === "all"
-                              ? t("No conversations yet", "contact.page.ContactPage.no_conversations_yet__19ckols")
-                              : `No ${statusFilter.replace("_", " ")} conversations`}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+        {session?.user ? (
+          /* Main Inbox Layout */
+          <div className="flex h-[calc(100vh-12rem)] overflow-hidden bg-white rounded-lg border border-gray-200">
+            {/* Left Panel - Support Tickets List */}
+            <div className="w-2/5 bg-white border-r border-gray-200 flex flex-col">
+              {/* Left Panel Header */}
+              <div className="p-4 border-b border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold text-gray-900">
+                    {statusFilter === "all" ? "All Support Tickets" : 
+                     statusFilter === "open" ? "Open Tickets" :
+                     statusFilter === "pending" ? "Pending Tickets" :
+                     statusFilter === "in_progress" ? "In Progress Tickets" :
+                     statusFilter === "resolved" ? "Resolved Tickets" :
+                     statusFilter === "closed" ? "Closed Tickets" : "Support Tickets"}
+                  </h2>
+                  <div className="flex items-center space-x-2">
+                    <Button variant="outline" size="sm" onClick={() => refetchMessages()}>
+                      <RefreshCw className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* Quick Filters Toolbar */}
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+                    <Button
+                      variant={statusFilter === "all" ? "default" : "ghost"}
+                      size="sm"
+                      className="h-7 px-3 text-[10px] font-medium"
+                      onClick={() => setStatusFilter("all")}
+                    >
+                      All
+                      <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
+                        {filteredMessages.length}
+                      </Badge>
+                    </Button>
+                    <Button
+                      variant={statusFilter === "open" ? "default" : "ghost"}
+                      size="sm"
+                      className="h-7 px-3 text-[10px] font-medium"
+                      onClick={() => setStatusFilter("open")}
+                    >
+                      Open
+                      <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
+                        {filteredMessages.filter((m: ContactMessage) => m.status === "open").length}
+                      </Badge>
+                    </Button>
+                    <Button
+                      variant={statusFilter === "pending" ? "default" : "ghost"}
+                      size="sm"
+                      className="h-7 px-3 text-[10px] font-medium"
+                      onClick={() => setStatusFilter("pending")}
+                    >
+                      Pending
+                      <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
+                        {filteredMessages.filter((m: ContactMessage) => m.status === "pending").length}
+                      </Badge>
+                    </Button>
+                    <Button
+                      variant={statusFilter === "resolved" ? "default" : "ghost"}
+                      size="sm"
+                      className="h-7 px-3 text-[10px] font-medium"
+                      onClick={() => setStatusFilter("resolved")}
+                    >
+                      Resolved
+                      <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
+                        {filteredMessages.filter((m: ContactMessage) => m.status === "resolved").length}
+                      </Badge>
+                    </Button>
+                  </div>
+                </div>
+                
+                <div className="mt-3 flex items-center space-x-2">
+                  <Badge variant="outline" className="bg-indigo-100 text-indigo-800">
+                    {filteredMessages.length} tickets
+                  </Badge>
+                </div>
               </div>
-            </div>
-          )}
-
-          {/* Main Content - Contact Form or Message Detail */}
-          <div className="lg:col-span-3 min-h-[600px]">
-            <AnimatePresence mode="wait">
-              {selectedMessage && selectedMessageData ? (
-                /* Message Detail View */
-                <motion.div
-                  key="message-detail"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  <Card className="h-full">
-                    <CardHeader className="border-b">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <CardTitle className="text-xl">{selectedMessageData.subject}</CardTitle>
-                          <div className="flex items-center gap-2 mt-2">
-                            {getStatusBadge(selectedMessageData.status)}
-                            {getPriorityBadge(selectedMessageData.priority)}
+              
+              {/* Support Tickets List */}
+              <div className="flex-1 overflow-y-auto">
+                {filteredMessages.length > 0 ? (
+                  <div className="divide-y divide-gray-200">
+                    {filteredMessages.map((msg: ContactMessage) => (
+                      <div
+                        key={msg.id}
+                        className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors border-l-4 ${
+                          selectedMessage === msg.id 
+                            ? 'bg-indigo-50 border-l-indigo-500' 
+                            : 'border-l-transparent'
+                        } ${msg.status === 'open' ? 'bg-blue-50/30' : ''}`}
+                        onClick={() => handleMessageSelect(msg.id)}
+                      >
+                        <div className="flex items-start space-x-3">
+                          {/* Status Icon */}
+                          <div className="flex-shrink-0 mt-1">
+                            {getStatusIcon(msg.status)}
+                          </div>
+                          
+                          {/* Content */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between">
+                              <h3 className={`text-sm font-medium line-clamp-2 ${
+                                msg.status === 'open' ? 'text-gray-900 font-semibold' : 'text-gray-700'
+                              }`}>
+                                {msg.subject}
+                              </h3>
+                              
+                              {/* Time and Priority */}
+                              <div className="flex items-center space-x-1 ml-2 flex-shrink-0">
+                                {getPriorityIcon(msg.priority)}
+                                <span className="text-xs text-gray-400">
+                                  {formatTimeAgo(msg.createdAt)}
+                                </span>
+                              </div>
+                            </div>
+                            
+                            {/* Meta Information */}
+                            <div className="flex items-center justify-between mt-2">
+                              <div className="flex items-center space-x-2 text-xs text-gray-500">
+                                <Badge 
+                                  variant="outline" 
+                                  className={`text-xs ${msg.status === 'open' ? 'bg-blue-100 text-blue-800 border-blue-200' : ''}`}
+                                >
+                                  {msg.status.replace('_', ' ')}
+                                </Badge>
+                                <Badge variant="outline" className="text-xs">
+                                  #{msg.caseNumber}
+                                </Badge>
+                              </div>
+                            </div>
+                            
+                            {/* Last message preview */}
+                            <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                              {msg.lastMessage?.content || msg.message || "No message content"}
+                            </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12 px-4">
+                    <MessageSquare className="h-16 w-16 mx-auto text-gray-300 mb-4" />
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      {statusFilter === "all" ? "No support tickets yet" : `No ${statusFilter.replace('_', ' ')} tickets`}
+                    </h3>
+                    <p className="text-gray-500 text-sm">
+                      {statusFilter === "all" 
+                        ? "Create your first support ticket to get started"
+                        : `You don't have any ${statusFilter.replace('_', ' ')} tickets`
+                      }
+                    </p>
+                    <Button onClick={handleNewMessage} className="mt-4" size="sm">
+                      <Plus className="h-4 w-4 mr-2" />
+                      New Message
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Right Panel - Message Details or New Message Form */}
+            <div className="flex-1 bg-gray-50 flex flex-col">
+              <AnimatePresence mode="wait">
+                {selectedMessage && selectedMessageData ? (
+                  /* Message Detail View */
+                  <motion.div
+                    key="message-detail"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="flex flex-col h-full"
+                  >
+                    {/* Content Header */}
+                    <div className="bg-white border-b border-gray-200 px-6 py-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <div className="flex items-center space-x-3">
+                            {getStatusIcon(selectedMessageData.status)}
+                            <div>
+                              <h1 className="text-xl font-semibold text-gray-900">
+                                {selectedMessageData.subject}
+                              </h1>
+                              <div className="flex items-center space-x-4 mt-1">
+                                {getStatusBadge(selectedMessageData.status)}
+                                {getPriorityBadge(selectedMessageData.priority)}
+                                <span className="text-sm text-gray-500">
+                                  #{selectedMessageData.caseNumber}
+                                </span>
+                                <span className="text-sm text-gray-500">
+                                  {formatDate(selectedMessageData.createdAt)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
                           {selectedMessageData.status === "resolved" && (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={handleCloseTicket}
-                              className="text-green-600 border-green-200 hover:bg-green-50"
-                            >
-                              Close Ticket
-                            </Button>
+                            <AlertDialog open={showCloseDialog} onOpenChange={setShowCloseDialog}>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="text-green-600 border-green-200 hover:bg-green-50"
+                                >
+                                  Close Ticket
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Close this ticket?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    This will mark the ticket as closed. You can still view the conversation history, but no further replies will be expected.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={handleCloseTicket}
+                                    className="bg-green-600 hover:bg-green-700 focus:ring-green-500"
+                                  >
+                                    Yes, close ticket
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
                           )}
                           {selectedMessageData.status !== "closed" && selectedMessageData.status !== "resolved" && (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={handleCloseTicket}
-                              className="text-orange-600 border-orange-200 hover:bg-orange-50"
-                            >
-                              Close Ticket
-                            </Button>
+                            <AlertDialog open={showCloseDialog} onOpenChange={setShowCloseDialog}>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="text-orange-600 border-orange-200 hover:bg-orange-50"
+                                >
+                                  Close Ticket
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Close this ticket?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    This will mark the ticket as closed. You can still view the conversation history, but no further replies will be expected.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={handleCloseTicket}
+                                    className="bg-orange-600 hover:bg-orange-700 focus:ring-orange-500"
+                                  >
+                                    Yes, close ticket
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
                           )}
                           <Button variant="outline" size="sm" onClick={() => setSelectedMessage(null)}>
                             ✕
                           </Button>
                         </div>
                       </div>
-                    </CardHeader>
-                    <CardContent className="p-6">
-                      <div className="space-y-4">
+                    </div>
+                    
+                    {/* Content Body */}
+                    <div className="flex-1 overflow-y-auto p-6">
+                      <div className="max-w-4xl space-y-6">
                         {/* Help Reasons Display */}
                         {selectedMessageData.reasons && selectedMessageData.reasons.length > 0 && (
                           <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
@@ -658,29 +835,42 @@ const ContactPage = () => {
                           </div>
                         )}
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="contact-form"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  <Card className="h-full bg-gradient-to-br from-white to-blue-50 border-blue-200 shadow-lg">
-                    <CardHeader className="space-y-1">
-                      <CardTitle className="text-2xl font-semibold text-gray-900 flex items-center gap-2">
-                        <MessageSquare className="h-6 w-6 text-blue-600" />
-                        {t("Get Help", "contact.page.ContactPage.get_help__20ckols")}
-                      </CardTitle>
-                      <p className="text-gray-600">
-                        {t("Select the reason(s) for contacting support and describe your issue", "contact.page.ContactPage.select_reasons_for_contacting_support__21ckols")}
-                      </p>
-                    </CardHeader>
+                    </div>
+                  </motion.div>
+                ) : showNewMessage || (!selectedMessage && !filteredMessages.length) ? (
+                  /* New Message Form */
+                  <motion.div
+                    key="contact-form"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="flex flex-col h-full"
+                  >
+                    {/* Form Header */}
+                    <div className="bg-white border-b border-gray-200 px-6 py-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                          <MessageSquare className="h-6 w-6 text-indigo-600" />
+                          <div>
+                            <h1 className="text-xl font-semibold text-gray-900">
+                              {t("New Support Ticket", "contact.page.ContactPage.new_support_ticket__20ckols")}
+                            </h1>
+                            <p className="text-sm text-gray-600">
+                              {t("Select the reason(s) for contacting support and describe your issue", "contact.page.ContactPage.select_reasons_for_contacting_support__21ckols")}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <Button variant="outline" size="sm" onClick={() => setShowNewMessage(false)}>
+                          ✕
+                        </Button>
+                      </div>
+                    </div>
 
-                    <CardContent className="space-y-6">
+                    {/* Form Content */}
+                    <div className="flex-1 overflow-y-auto p-6">
+                      <div className="max-w-4xl space-y-6">
                       <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Contact Reasons */}
                         <div className="space-y-4">
@@ -776,15 +966,47 @@ const ContactPage = () => {
                           )}
                         </Button>
                       </form>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : (
+                  /* Empty State */
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="text-center">
+                      <FileText className="h-16 w-16 mx-auto text-gray-300 mb-4" />
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        Select a support ticket
+                      </h3>
+                      <p className="text-gray-500 mb-4">
+                        Choose a ticket from the list to view its details and conversation history
+                      </p>
+                      <Button onClick={handleNewMessage} variant="outline">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create New Ticket
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
+        ) : (
+          /* Not logged in - Show login prompt */
+          <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+            <MessageSquare className="h-16 w-16 mx-auto text-gray-300 mb-4" />
+            <h3 className="text-xl font-medium text-gray-900 mb-2">
+              Sign in to contact support
+            </h3>
+            <p className="text-gray-500 mb-6">
+              You need to be signed in to create support tickets and view your conversation history.
+            </p>
+            <Button className="bg-indigo-600 hover:bg-indigo-700">
+              Sign In
+            </Button>
+          </div>
+        )}
       </div>
-    </main>
+    </div>
   );
 };
 

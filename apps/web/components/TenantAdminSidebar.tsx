@@ -61,7 +61,7 @@ export function TenantAdminSidebar({ tenantSlug, className }: TenantAdminSidebar
     <aside className={`:px-6 lg:col-span-3 ${className}`}>
       {/* Back to Platform - Only visible for platform administrators */}
       {isPlatformAdmin && (
-        <div className="">
+        <div className="space-y-6">
           <Link
             href="/admin/tenants"
             className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 transition-colors p-3"
