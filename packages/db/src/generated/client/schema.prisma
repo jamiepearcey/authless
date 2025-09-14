@@ -87,6 +87,7 @@ model User {
   twoFactorAudits           TwoFactorAudit[]
   twoFactorCodes            TwoFactorCode[]
   twoFactorMethods          TwoFactorMethod[]
+  createdEmailProviders     EmailProvider[]
 
   @@index([email])
   @@index([platformRole])
@@ -868,6 +869,39 @@ model OutboxEvent {
   @@index([tenantId])
   @@index([eventType])
   @@index([traceId])
+}
+
+model EmailProvider {
+  id        String  @id @default(cuid())
+  type      String // 'mailgun', 'sendgrid', 'smtp', 'jetstream'
+  enabled   Boolean @default(false)
+  isDefault Boolean @default(false)
+
+  // Common fields
+  fromName     String?
+  fromEmail    String?
+  replyToEmail String?
+
+  // Provider specific configuration (JSON)
+  config Json // Encrypted sensitive data
+
+  // Connection status
+  isConnected    Boolean   @default(false)
+  lastTested     DateTime?
+  lastTestResult String?
+
+  // Metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+
+  // Relations
+  createdBy User? @relation(fields: [createdById], references: [id])
+
+  @@unique([type])
+  @@index([type])
+  @@index([enabled])
+  @@index([isDefault])
 }
 
 model AuditEvent {

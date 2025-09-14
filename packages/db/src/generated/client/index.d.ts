@@ -194,6 +194,11 @@ export type TenantSupportRouting = $Result.DefaultSelection<Prisma.$TenantSuppor
  */
 export type OutboxEvent = $Result.DefaultSelection<Prisma.$OutboxEventPayload>
 /**
+ * Model EmailProvider
+ * 
+ */
+export type EmailProvider = $Result.DefaultSelection<Prisma.$EmailProviderPayload>
+/**
  * Model AuditEvent
  * 
  */
@@ -686,6 +691,16 @@ export class PrismaClient<
     * ```
     */
   get outboxEvent(): Prisma.OutboxEventDelegate<ExtArgs>;
+
+  /**
+   * `prisma.emailProvider`: Exposes CRUD operations for the **EmailProvider** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EmailProviders
+    * const emailProviders = await prisma.emailProvider.findMany()
+    * ```
+    */
+  get emailProvider(): Prisma.EmailProviderDelegate<ExtArgs>;
 
   /**
    * `prisma.auditEvent`: Exposes CRUD operations for the **AuditEvent** model.
@@ -1183,6 +1198,7 @@ export namespace Prisma {
     SupportConfiguration: 'SupportConfiguration',
     TenantSupportRouting: 'TenantSupportRouting',
     OutboxEvent: 'OutboxEvent',
+    EmailProvider: 'EmailProvider',
     AuditEvent: 'AuditEvent',
     InboxEvent: 'InboxEvent'
   };
@@ -1200,7 +1216,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "tenantSsoConfiguration" | "ssoAuditLog" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit" | "supportCase" | "supportOption" | "caseMessage" | "caseStatusHistory" | "caseMetrics" | "supportConfiguration" | "tenantSupportRouting" | "outboxEvent" | "auditEvent" | "inboxEvent"
+      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "tenantSsoConfiguration" | "ssoAuditLog" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit" | "supportCase" | "supportOption" | "caseMessage" | "caseStatusHistory" | "caseMetrics" | "supportConfiguration" | "tenantSupportRouting" | "outboxEvent" | "emailProvider" | "auditEvent" | "inboxEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3724,6 +3740,76 @@ export namespace Prisma {
           }
         }
       }
+      EmailProvider: {
+        payload: Prisma.$EmailProviderPayload<ExtArgs>
+        fields: Prisma.EmailProviderFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EmailProviderFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EmailProviderFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload>
+          }
+          findFirst: {
+            args: Prisma.EmailProviderFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EmailProviderFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload>
+          }
+          findMany: {
+            args: Prisma.EmailProviderFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload>[]
+          }
+          create: {
+            args: Prisma.EmailProviderCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload>
+          }
+          createMany: {
+            args: Prisma.EmailProviderCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EmailProviderCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload>[]
+          }
+          delete: {
+            args: Prisma.EmailProviderDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload>
+          }
+          update: {
+            args: Prisma.EmailProviderUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload>
+          }
+          deleteMany: {
+            args: Prisma.EmailProviderDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EmailProviderUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.EmailProviderUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailProviderPayload>
+          }
+          aggregate: {
+            args: Prisma.EmailProviderAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEmailProvider>
+          }
+          groupBy: {
+            args: Prisma.EmailProviderGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EmailProviderGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EmailProviderCountArgs<ExtArgs>
+            result: $Utils.Optional<EmailProviderCountAggregateOutputType> | number
+          }
+        }
+      }
       AuditEvent: {
         payload: Prisma.$AuditEventPayload<ExtArgs>
         fields: Prisma.AuditEventFieldRefs
@@ -4045,6 +4131,7 @@ export namespace Prisma {
     twoFactorAudits: number
     twoFactorCodes: number
     twoFactorMethods: number
+    createdEmailProviders: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4068,6 +4155,7 @@ export namespace Prisma {
     twoFactorAudits?: boolean | UserCountOutputTypeCountTwoFactorAuditsArgs
     twoFactorCodes?: boolean | UserCountOutputTypeCountTwoFactorCodesArgs
     twoFactorMethods?: boolean | UserCountOutputTypeCountTwoFactorMethodsArgs
+    createdEmailProviders?: boolean | UserCountOutputTypeCountCreatedEmailProvidersArgs
   }
 
   // Custom InputTypes
@@ -4219,6 +4307,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountTwoFactorMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TwoFactorMethodWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreatedEmailProvidersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmailProviderWhereInput
   }
 
 
@@ -7063,6 +7158,7 @@ export namespace Prisma {
     twoFactorAudits?: boolean | User$twoFactorAuditsArgs<ExtArgs>
     twoFactorCodes?: boolean | User$twoFactorCodesArgs<ExtArgs>
     twoFactorMethods?: boolean | User$twoFactorMethodsArgs<ExtArgs>
+    createdEmailProviders?: boolean | User$createdEmailProvidersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -7149,6 +7245,7 @@ export namespace Prisma {
     twoFactorAudits?: boolean | User$twoFactorAuditsArgs<ExtArgs>
     twoFactorCodes?: boolean | User$twoFactorCodesArgs<ExtArgs>
     twoFactorMethods?: boolean | User$twoFactorMethodsArgs<ExtArgs>
+    createdEmailProviders?: boolean | User$createdEmailProvidersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -7176,6 +7273,7 @@ export namespace Prisma {
       twoFactorAudits: Prisma.$TwoFactorAuditPayload<ExtArgs>[]
       twoFactorCodes: Prisma.$TwoFactorCodePayload<ExtArgs>[]
       twoFactorMethods: Prisma.$TwoFactorMethodPayload<ExtArgs>[]
+      createdEmailProviders: Prisma.$EmailProviderPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7590,6 +7688,7 @@ export namespace Prisma {
     twoFactorAudits<T extends User$twoFactorAuditsArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorAuditsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorAuditPayload<ExtArgs>, T, "findMany"> | Null>
     twoFactorCodes<T extends User$twoFactorCodesArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorCodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findMany"> | Null>
     twoFactorMethods<T extends User$twoFactorMethodsArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorMethodsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorMethodPayload<ExtArgs>, T, "findMany"> | Null>
+    createdEmailProviders<T extends User$createdEmailProvidersArgs<ExtArgs> = {}>(args?: Subset<T, User$createdEmailProvidersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8358,6 +8457,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TwoFactorMethodScalarFieldEnum | TwoFactorMethodScalarFieldEnum[]
+  }
+
+  /**
+   * User.createdEmailProviders
+   */
+  export type User$createdEmailProvidersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    where?: EmailProviderWhereInput
+    orderBy?: EmailProviderOrderByWithRelationInput | EmailProviderOrderByWithRelationInput[]
+    cursor?: EmailProviderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EmailProviderScalarFieldEnum | EmailProviderScalarFieldEnum[]
   }
 
   /**
@@ -43582,6 +43701,1058 @@ export namespace Prisma {
 
 
   /**
+   * Model EmailProvider
+   */
+
+  export type AggregateEmailProvider = {
+    _count: EmailProviderCountAggregateOutputType | null
+    _min: EmailProviderMinAggregateOutputType | null
+    _max: EmailProviderMaxAggregateOutputType | null
+  }
+
+  export type EmailProviderMinAggregateOutputType = {
+    id: string | null
+    type: string | null
+    enabled: boolean | null
+    isDefault: boolean | null
+    fromName: string | null
+    fromEmail: string | null
+    replyToEmail: string | null
+    isConnected: boolean | null
+    lastTested: Date | null
+    lastTestResult: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdById: string | null
+  }
+
+  export type EmailProviderMaxAggregateOutputType = {
+    id: string | null
+    type: string | null
+    enabled: boolean | null
+    isDefault: boolean | null
+    fromName: string | null
+    fromEmail: string | null
+    replyToEmail: string | null
+    isConnected: boolean | null
+    lastTested: Date | null
+    lastTestResult: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    createdById: string | null
+  }
+
+  export type EmailProviderCountAggregateOutputType = {
+    id: number
+    type: number
+    enabled: number
+    isDefault: number
+    fromName: number
+    fromEmail: number
+    replyToEmail: number
+    config: number
+    isConnected: number
+    lastTested: number
+    lastTestResult: number
+    createdAt: number
+    updatedAt: number
+    createdById: number
+    _all: number
+  }
+
+
+  export type EmailProviderMinAggregateInputType = {
+    id?: true
+    type?: true
+    enabled?: true
+    isDefault?: true
+    fromName?: true
+    fromEmail?: true
+    replyToEmail?: true
+    isConnected?: true
+    lastTested?: true
+    lastTestResult?: true
+    createdAt?: true
+    updatedAt?: true
+    createdById?: true
+  }
+
+  export type EmailProviderMaxAggregateInputType = {
+    id?: true
+    type?: true
+    enabled?: true
+    isDefault?: true
+    fromName?: true
+    fromEmail?: true
+    replyToEmail?: true
+    isConnected?: true
+    lastTested?: true
+    lastTestResult?: true
+    createdAt?: true
+    updatedAt?: true
+    createdById?: true
+  }
+
+  export type EmailProviderCountAggregateInputType = {
+    id?: true
+    type?: true
+    enabled?: true
+    isDefault?: true
+    fromName?: true
+    fromEmail?: true
+    replyToEmail?: true
+    config?: true
+    isConnected?: true
+    lastTested?: true
+    lastTestResult?: true
+    createdAt?: true
+    updatedAt?: true
+    createdById?: true
+    _all?: true
+  }
+
+  export type EmailProviderAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EmailProvider to aggregate.
+     */
+    where?: EmailProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailProviders to fetch.
+     */
+    orderBy?: EmailProviderOrderByWithRelationInput | EmailProviderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EmailProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailProviders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailProviders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EmailProviders
+    **/
+    _count?: true | EmailProviderCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EmailProviderMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EmailProviderMaxAggregateInputType
+  }
+
+  export type GetEmailProviderAggregateType<T extends EmailProviderAggregateArgs> = {
+        [P in keyof T & keyof AggregateEmailProvider]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEmailProvider[P]>
+      : GetScalarType<T[P], AggregateEmailProvider[P]>
+  }
+
+
+
+
+  export type EmailProviderGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmailProviderWhereInput
+    orderBy?: EmailProviderOrderByWithAggregationInput | EmailProviderOrderByWithAggregationInput[]
+    by: EmailProviderScalarFieldEnum[] | EmailProviderScalarFieldEnum
+    having?: EmailProviderScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EmailProviderCountAggregateInputType | true
+    _min?: EmailProviderMinAggregateInputType
+    _max?: EmailProviderMaxAggregateInputType
+  }
+
+  export type EmailProviderGroupByOutputType = {
+    id: string
+    type: string
+    enabled: boolean
+    isDefault: boolean
+    fromName: string | null
+    fromEmail: string | null
+    replyToEmail: string | null
+    config: JsonValue
+    isConnected: boolean
+    lastTested: Date | null
+    lastTestResult: string | null
+    createdAt: Date
+    updatedAt: Date
+    createdById: string | null
+    _count: EmailProviderCountAggregateOutputType | null
+    _min: EmailProviderMinAggregateOutputType | null
+    _max: EmailProviderMaxAggregateOutputType | null
+  }
+
+  type GetEmailProviderGroupByPayload<T extends EmailProviderGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EmailProviderGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EmailProviderGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EmailProviderGroupByOutputType[P]>
+            : GetScalarType<T[P], EmailProviderGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EmailProviderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    enabled?: boolean
+    isDefault?: boolean
+    fromName?: boolean
+    fromEmail?: boolean
+    replyToEmail?: boolean
+    config?: boolean
+    isConnected?: boolean
+    lastTested?: boolean
+    lastTestResult?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdById?: boolean
+    createdBy?: boolean | EmailProvider$createdByArgs<ExtArgs>
+  }, ExtArgs["result"]["emailProvider"]>
+
+  export type EmailProviderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    enabled?: boolean
+    isDefault?: boolean
+    fromName?: boolean
+    fromEmail?: boolean
+    replyToEmail?: boolean
+    config?: boolean
+    isConnected?: boolean
+    lastTested?: boolean
+    lastTestResult?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdById?: boolean
+    createdBy?: boolean | EmailProvider$createdByArgs<ExtArgs>
+  }, ExtArgs["result"]["emailProvider"]>
+
+  export type EmailProviderSelectScalar = {
+    id?: boolean
+    type?: boolean
+    enabled?: boolean
+    isDefault?: boolean
+    fromName?: boolean
+    fromEmail?: boolean
+    replyToEmail?: boolean
+    config?: boolean
+    isConnected?: boolean
+    lastTested?: boolean
+    lastTestResult?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdById?: boolean
+  }
+
+  export type EmailProviderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | EmailProvider$createdByArgs<ExtArgs>
+  }
+  export type EmailProviderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | EmailProvider$createdByArgs<ExtArgs>
+  }
+
+  export type $EmailProviderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EmailProvider"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      type: string
+      enabled: boolean
+      isDefault: boolean
+      fromName: string | null
+      fromEmail: string | null
+      replyToEmail: string | null
+      config: Prisma.JsonValue
+      isConnected: boolean
+      lastTested: Date | null
+      lastTestResult: string | null
+      createdAt: Date
+      updatedAt: Date
+      createdById: string | null
+    }, ExtArgs["result"]["emailProvider"]>
+    composites: {}
+  }
+
+  type EmailProviderGetPayload<S extends boolean | null | undefined | EmailProviderDefaultArgs> = $Result.GetResult<Prisma.$EmailProviderPayload, S>
+
+  type EmailProviderCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<EmailProviderFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: EmailProviderCountAggregateInputType | true
+    }
+
+  export interface EmailProviderDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EmailProvider'], meta: { name: 'EmailProvider' } }
+    /**
+     * Find zero or one EmailProvider that matches the filter.
+     * @param {EmailProviderFindUniqueArgs} args - Arguments to find a EmailProvider
+     * @example
+     * // Get one EmailProvider
+     * const emailProvider = await prisma.emailProvider.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EmailProviderFindUniqueArgs>(args: SelectSubset<T, EmailProviderFindUniqueArgs<ExtArgs>>): Prisma__EmailProviderClient<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one EmailProvider that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {EmailProviderFindUniqueOrThrowArgs} args - Arguments to find a EmailProvider
+     * @example
+     * // Get one EmailProvider
+     * const emailProvider = await prisma.emailProvider.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EmailProviderFindUniqueOrThrowArgs>(args: SelectSubset<T, EmailProviderFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EmailProviderClient<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first EmailProvider that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailProviderFindFirstArgs} args - Arguments to find a EmailProvider
+     * @example
+     * // Get one EmailProvider
+     * const emailProvider = await prisma.emailProvider.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EmailProviderFindFirstArgs>(args?: SelectSubset<T, EmailProviderFindFirstArgs<ExtArgs>>): Prisma__EmailProviderClient<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first EmailProvider that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailProviderFindFirstOrThrowArgs} args - Arguments to find a EmailProvider
+     * @example
+     * // Get one EmailProvider
+     * const emailProvider = await prisma.emailProvider.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EmailProviderFindFirstOrThrowArgs>(args?: SelectSubset<T, EmailProviderFindFirstOrThrowArgs<ExtArgs>>): Prisma__EmailProviderClient<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more EmailProviders that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailProviderFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EmailProviders
+     * const emailProviders = await prisma.emailProvider.findMany()
+     * 
+     * // Get first 10 EmailProviders
+     * const emailProviders = await prisma.emailProvider.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const emailProviderWithIdOnly = await prisma.emailProvider.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EmailProviderFindManyArgs>(args?: SelectSubset<T, EmailProviderFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a EmailProvider.
+     * @param {EmailProviderCreateArgs} args - Arguments to create a EmailProvider.
+     * @example
+     * // Create one EmailProvider
+     * const EmailProvider = await prisma.emailProvider.create({
+     *   data: {
+     *     // ... data to create a EmailProvider
+     *   }
+     * })
+     * 
+     */
+    create<T extends EmailProviderCreateArgs>(args: SelectSubset<T, EmailProviderCreateArgs<ExtArgs>>): Prisma__EmailProviderClient<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many EmailProviders.
+     * @param {EmailProviderCreateManyArgs} args - Arguments to create many EmailProviders.
+     * @example
+     * // Create many EmailProviders
+     * const emailProvider = await prisma.emailProvider.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EmailProviderCreateManyArgs>(args?: SelectSubset<T, EmailProviderCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many EmailProviders and returns the data saved in the database.
+     * @param {EmailProviderCreateManyAndReturnArgs} args - Arguments to create many EmailProviders.
+     * @example
+     * // Create many EmailProviders
+     * const emailProvider = await prisma.emailProvider.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many EmailProviders and only return the `id`
+     * const emailProviderWithIdOnly = await prisma.emailProvider.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EmailProviderCreateManyAndReturnArgs>(args?: SelectSubset<T, EmailProviderCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a EmailProvider.
+     * @param {EmailProviderDeleteArgs} args - Arguments to delete one EmailProvider.
+     * @example
+     * // Delete one EmailProvider
+     * const EmailProvider = await prisma.emailProvider.delete({
+     *   where: {
+     *     // ... filter to delete one EmailProvider
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EmailProviderDeleteArgs>(args: SelectSubset<T, EmailProviderDeleteArgs<ExtArgs>>): Prisma__EmailProviderClient<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one EmailProvider.
+     * @param {EmailProviderUpdateArgs} args - Arguments to update one EmailProvider.
+     * @example
+     * // Update one EmailProvider
+     * const emailProvider = await prisma.emailProvider.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EmailProviderUpdateArgs>(args: SelectSubset<T, EmailProviderUpdateArgs<ExtArgs>>): Prisma__EmailProviderClient<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more EmailProviders.
+     * @param {EmailProviderDeleteManyArgs} args - Arguments to filter EmailProviders to delete.
+     * @example
+     * // Delete a few EmailProviders
+     * const { count } = await prisma.emailProvider.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EmailProviderDeleteManyArgs>(args?: SelectSubset<T, EmailProviderDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EmailProviders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailProviderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EmailProviders
+     * const emailProvider = await prisma.emailProvider.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EmailProviderUpdateManyArgs>(args: SelectSubset<T, EmailProviderUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one EmailProvider.
+     * @param {EmailProviderUpsertArgs} args - Arguments to update or create a EmailProvider.
+     * @example
+     * // Update or create a EmailProvider
+     * const emailProvider = await prisma.emailProvider.upsert({
+     *   create: {
+     *     // ... data to create a EmailProvider
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EmailProvider we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EmailProviderUpsertArgs>(args: SelectSubset<T, EmailProviderUpsertArgs<ExtArgs>>): Prisma__EmailProviderClient<$Result.GetResult<Prisma.$EmailProviderPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of EmailProviders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailProviderCountArgs} args - Arguments to filter EmailProviders to count.
+     * @example
+     * // Count the number of EmailProviders
+     * const count = await prisma.emailProvider.count({
+     *   where: {
+     *     // ... the filter for the EmailProviders we want to count
+     *   }
+     * })
+    **/
+    count<T extends EmailProviderCountArgs>(
+      args?: Subset<T, EmailProviderCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EmailProviderCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EmailProvider.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailProviderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EmailProviderAggregateArgs>(args: Subset<T, EmailProviderAggregateArgs>): Prisma.PrismaPromise<GetEmailProviderAggregateType<T>>
+
+    /**
+     * Group by EmailProvider.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailProviderGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EmailProviderGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EmailProviderGroupByArgs['orderBy'] }
+        : { orderBy?: EmailProviderGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EmailProviderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEmailProviderGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EmailProvider model
+   */
+  readonly fields: EmailProviderFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EmailProvider.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EmailProviderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends EmailProvider$createdByArgs<ExtArgs> = {}>(args?: Subset<T, EmailProvider$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the EmailProvider model
+   */ 
+  interface EmailProviderFieldRefs {
+    readonly id: FieldRef<"EmailProvider", 'String'>
+    readonly type: FieldRef<"EmailProvider", 'String'>
+    readonly enabled: FieldRef<"EmailProvider", 'Boolean'>
+    readonly isDefault: FieldRef<"EmailProvider", 'Boolean'>
+    readonly fromName: FieldRef<"EmailProvider", 'String'>
+    readonly fromEmail: FieldRef<"EmailProvider", 'String'>
+    readonly replyToEmail: FieldRef<"EmailProvider", 'String'>
+    readonly config: FieldRef<"EmailProvider", 'Json'>
+    readonly isConnected: FieldRef<"EmailProvider", 'Boolean'>
+    readonly lastTested: FieldRef<"EmailProvider", 'DateTime'>
+    readonly lastTestResult: FieldRef<"EmailProvider", 'String'>
+    readonly createdAt: FieldRef<"EmailProvider", 'DateTime'>
+    readonly updatedAt: FieldRef<"EmailProvider", 'DateTime'>
+    readonly createdById: FieldRef<"EmailProvider", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * EmailProvider findUnique
+   */
+  export type EmailProviderFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which EmailProvider to fetch.
+     */
+    where: EmailProviderWhereUniqueInput
+  }
+
+  /**
+   * EmailProvider findUniqueOrThrow
+   */
+  export type EmailProviderFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which EmailProvider to fetch.
+     */
+    where: EmailProviderWhereUniqueInput
+  }
+
+  /**
+   * EmailProvider findFirst
+   */
+  export type EmailProviderFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which EmailProvider to fetch.
+     */
+    where?: EmailProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailProviders to fetch.
+     */
+    orderBy?: EmailProviderOrderByWithRelationInput | EmailProviderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EmailProviders.
+     */
+    cursor?: EmailProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailProviders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailProviders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EmailProviders.
+     */
+    distinct?: EmailProviderScalarFieldEnum | EmailProviderScalarFieldEnum[]
+  }
+
+  /**
+   * EmailProvider findFirstOrThrow
+   */
+  export type EmailProviderFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which EmailProvider to fetch.
+     */
+    where?: EmailProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailProviders to fetch.
+     */
+    orderBy?: EmailProviderOrderByWithRelationInput | EmailProviderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EmailProviders.
+     */
+    cursor?: EmailProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailProviders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailProviders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EmailProviders.
+     */
+    distinct?: EmailProviderScalarFieldEnum | EmailProviderScalarFieldEnum[]
+  }
+
+  /**
+   * EmailProvider findMany
+   */
+  export type EmailProviderFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which EmailProviders to fetch.
+     */
+    where?: EmailProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailProviders to fetch.
+     */
+    orderBy?: EmailProviderOrderByWithRelationInput | EmailProviderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EmailProviders.
+     */
+    cursor?: EmailProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailProviders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailProviders.
+     */
+    skip?: number
+    distinct?: EmailProviderScalarFieldEnum | EmailProviderScalarFieldEnum[]
+  }
+
+  /**
+   * EmailProvider create
+   */
+  export type EmailProviderCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    /**
+     * The data needed to create a EmailProvider.
+     */
+    data: XOR<EmailProviderCreateInput, EmailProviderUncheckedCreateInput>
+  }
+
+  /**
+   * EmailProvider createMany
+   */
+  export type EmailProviderCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EmailProviders.
+     */
+    data: EmailProviderCreateManyInput | EmailProviderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EmailProvider createManyAndReturn
+   */
+  export type EmailProviderCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many EmailProviders.
+     */
+    data: EmailProviderCreateManyInput | EmailProviderCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EmailProvider update
+   */
+  export type EmailProviderUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    /**
+     * The data needed to update a EmailProvider.
+     */
+    data: XOR<EmailProviderUpdateInput, EmailProviderUncheckedUpdateInput>
+    /**
+     * Choose, which EmailProvider to update.
+     */
+    where: EmailProviderWhereUniqueInput
+  }
+
+  /**
+   * EmailProvider updateMany
+   */
+  export type EmailProviderUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EmailProviders.
+     */
+    data: XOR<EmailProviderUpdateManyMutationInput, EmailProviderUncheckedUpdateManyInput>
+    /**
+     * Filter which EmailProviders to update
+     */
+    where?: EmailProviderWhereInput
+  }
+
+  /**
+   * EmailProvider upsert
+   */
+  export type EmailProviderUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    /**
+     * The filter to search for the EmailProvider to update in case it exists.
+     */
+    where: EmailProviderWhereUniqueInput
+    /**
+     * In case the EmailProvider found by the `where` argument doesn't exist, create a new EmailProvider with this data.
+     */
+    create: XOR<EmailProviderCreateInput, EmailProviderUncheckedCreateInput>
+    /**
+     * In case the EmailProvider was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EmailProviderUpdateInput, EmailProviderUncheckedUpdateInput>
+  }
+
+  /**
+   * EmailProvider delete
+   */
+  export type EmailProviderDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+    /**
+     * Filter which EmailProvider to delete.
+     */
+    where: EmailProviderWhereUniqueInput
+  }
+
+  /**
+   * EmailProvider deleteMany
+   */
+  export type EmailProviderDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EmailProviders to delete
+     */
+    where?: EmailProviderWhereInput
+  }
+
+  /**
+   * EmailProvider.createdBy
+   */
+  export type EmailProvider$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * EmailProvider without action
+   */
+  export type EmailProviderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailProvider
+     */
+    select?: EmailProviderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailProviderInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model AuditEvent
    */
 
@@ -46486,6 +47657,26 @@ export namespace Prisma {
   export type OutboxEventScalarFieldEnum = (typeof OutboxEventScalarFieldEnum)[keyof typeof OutboxEventScalarFieldEnum]
 
 
+  export const EmailProviderScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    enabled: 'enabled',
+    isDefault: 'isDefault',
+    fromName: 'fromName',
+    fromEmail: 'fromEmail',
+    replyToEmail: 'replyToEmail',
+    config: 'config',
+    isConnected: 'isConnected',
+    lastTested: 'lastTested',
+    lastTestResult: 'lastTestResult',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    createdById: 'createdById'
+  };
+
+  export type EmailProviderScalarFieldEnum = (typeof EmailProviderScalarFieldEnum)[keyof typeof EmailProviderScalarFieldEnum]
+
+
   export const AuditEventScalarFieldEnum: {
     id: 'id',
     eventType: 'eventType',
@@ -46873,6 +48064,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditListRelationFilter
     twoFactorCodes?: TwoFactorCodeListRelationFilter
     twoFactorMethods?: TwoFactorMethodListRelationFilter
+    createdEmailProviders?: EmailProviderListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -46924,6 +48116,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditOrderByRelationAggregateInput
     twoFactorCodes?: TwoFactorCodeOrderByRelationAggregateInput
     twoFactorMethods?: TwoFactorMethodOrderByRelationAggregateInput
+    createdEmailProviders?: EmailProviderOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -46978,6 +48171,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditListRelationFilter
     twoFactorCodes?: TwoFactorCodeListRelationFilter
     twoFactorMethods?: TwoFactorMethodListRelationFilter
+    createdEmailProviders?: EmailProviderListRelationFilter
   }, "id" | "email" | "emailVerificationToken" | "passwordResetToken">
 
   export type UserOrderByWithAggregationInput = {
@@ -50268,6 +51462,106 @@ export namespace Prisma {
     traceId?: StringNullableWithAggregatesFilter<"OutboxEvent"> | string | null
   }
 
+  export type EmailProviderWhereInput = {
+    AND?: EmailProviderWhereInput | EmailProviderWhereInput[]
+    OR?: EmailProviderWhereInput[]
+    NOT?: EmailProviderWhereInput | EmailProviderWhereInput[]
+    id?: StringFilter<"EmailProvider"> | string
+    type?: StringFilter<"EmailProvider"> | string
+    enabled?: BoolFilter<"EmailProvider"> | boolean
+    isDefault?: BoolFilter<"EmailProvider"> | boolean
+    fromName?: StringNullableFilter<"EmailProvider"> | string | null
+    fromEmail?: StringNullableFilter<"EmailProvider"> | string | null
+    replyToEmail?: StringNullableFilter<"EmailProvider"> | string | null
+    config?: JsonFilter<"EmailProvider">
+    isConnected?: BoolFilter<"EmailProvider"> | boolean
+    lastTested?: DateTimeNullableFilter<"EmailProvider"> | Date | string | null
+    lastTestResult?: StringNullableFilter<"EmailProvider"> | string | null
+    createdAt?: DateTimeFilter<"EmailProvider"> | Date | string
+    updatedAt?: DateTimeFilter<"EmailProvider"> | Date | string
+    createdById?: StringNullableFilter<"EmailProvider"> | string | null
+    createdBy?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }
+
+  export type EmailProviderOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    isDefault?: SortOrder
+    fromName?: SortOrderInput | SortOrder
+    fromEmail?: SortOrderInput | SortOrder
+    replyToEmail?: SortOrderInput | SortOrder
+    config?: SortOrder
+    isConnected?: SortOrder
+    lastTested?: SortOrderInput | SortOrder
+    lastTestResult?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdBy?: UserOrderByWithRelationInput
+  }
+
+  export type EmailProviderWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    type?: string
+    AND?: EmailProviderWhereInput | EmailProviderWhereInput[]
+    OR?: EmailProviderWhereInput[]
+    NOT?: EmailProviderWhereInput | EmailProviderWhereInput[]
+    enabled?: BoolFilter<"EmailProvider"> | boolean
+    isDefault?: BoolFilter<"EmailProvider"> | boolean
+    fromName?: StringNullableFilter<"EmailProvider"> | string | null
+    fromEmail?: StringNullableFilter<"EmailProvider"> | string | null
+    replyToEmail?: StringNullableFilter<"EmailProvider"> | string | null
+    config?: JsonFilter<"EmailProvider">
+    isConnected?: BoolFilter<"EmailProvider"> | boolean
+    lastTested?: DateTimeNullableFilter<"EmailProvider"> | Date | string | null
+    lastTestResult?: StringNullableFilter<"EmailProvider"> | string | null
+    createdAt?: DateTimeFilter<"EmailProvider"> | Date | string
+    updatedAt?: DateTimeFilter<"EmailProvider"> | Date | string
+    createdById?: StringNullableFilter<"EmailProvider"> | string | null
+    createdBy?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }, "id" | "type">
+
+  export type EmailProviderOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    isDefault?: SortOrder
+    fromName?: SortOrderInput | SortOrder
+    fromEmail?: SortOrderInput | SortOrder
+    replyToEmail?: SortOrderInput | SortOrder
+    config?: SortOrder
+    isConnected?: SortOrder
+    lastTested?: SortOrderInput | SortOrder
+    lastTestResult?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    _count?: EmailProviderCountOrderByAggregateInput
+    _max?: EmailProviderMaxOrderByAggregateInput
+    _min?: EmailProviderMinOrderByAggregateInput
+  }
+
+  export type EmailProviderScalarWhereWithAggregatesInput = {
+    AND?: EmailProviderScalarWhereWithAggregatesInput | EmailProviderScalarWhereWithAggregatesInput[]
+    OR?: EmailProviderScalarWhereWithAggregatesInput[]
+    NOT?: EmailProviderScalarWhereWithAggregatesInput | EmailProviderScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"EmailProvider"> | string
+    type?: StringWithAggregatesFilter<"EmailProvider"> | string
+    enabled?: BoolWithAggregatesFilter<"EmailProvider"> | boolean
+    isDefault?: BoolWithAggregatesFilter<"EmailProvider"> | boolean
+    fromName?: StringNullableWithAggregatesFilter<"EmailProvider"> | string | null
+    fromEmail?: StringNullableWithAggregatesFilter<"EmailProvider"> | string | null
+    replyToEmail?: StringNullableWithAggregatesFilter<"EmailProvider"> | string | null
+    config?: JsonWithAggregatesFilter<"EmailProvider">
+    isConnected?: BoolWithAggregatesFilter<"EmailProvider"> | boolean
+    lastTested?: DateTimeNullableWithAggregatesFilter<"EmailProvider"> | Date | string | null
+    lastTestResult?: StringNullableWithAggregatesFilter<"EmailProvider"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"EmailProvider"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"EmailProvider"> | Date | string
+    createdById?: StringNullableWithAggregatesFilter<"EmailProvider"> | string | null
+  }
+
   export type AuditEventWhereInput = {
     AND?: AuditEventWhereInput | AuditEventWhereInput[]
     OR?: AuditEventWhereInput[]
@@ -50761,6 +52055,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -50812,6 +52107,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -50863,6 +52159,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -50914,6 +52211,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -54641,6 +55939,124 @@ export namespace Prisma {
     traceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type EmailProviderCreateInput = {
+    id?: string
+    type: string
+    enabled?: boolean
+    isDefault?: boolean
+    fromName?: string | null
+    fromEmail?: string | null
+    replyToEmail?: string | null
+    config: JsonNullValueInput | InputJsonValue
+    isConnected?: boolean
+    lastTested?: Date | string | null
+    lastTestResult?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutCreatedEmailProvidersInput
+  }
+
+  export type EmailProviderUncheckedCreateInput = {
+    id?: string
+    type: string
+    enabled?: boolean
+    isDefault?: boolean
+    fromName?: string | null
+    fromEmail?: string | null
+    replyToEmail?: string | null
+    config: JsonNullValueInput | InputJsonValue
+    isConnected?: boolean
+    lastTested?: Date | string | null
+    lastTestResult?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdById?: string | null
+  }
+
+  export type EmailProviderUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    fromName?: NullableStringFieldUpdateOperationsInput | string | null
+    fromEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    replyToEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: JsonNullValueInput | InputJsonValue
+    isConnected?: BoolFieldUpdateOperationsInput | boolean
+    lastTested?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastTestResult?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutCreatedEmailProvidersNestedInput
+  }
+
+  export type EmailProviderUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    fromName?: NullableStringFieldUpdateOperationsInput | string | null
+    fromEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    replyToEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: JsonNullValueInput | InputJsonValue
+    isConnected?: BoolFieldUpdateOperationsInput | boolean
+    lastTested?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastTestResult?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type EmailProviderCreateManyInput = {
+    id?: string
+    type: string
+    enabled?: boolean
+    isDefault?: boolean
+    fromName?: string | null
+    fromEmail?: string | null
+    replyToEmail?: string | null
+    config: JsonNullValueInput | InputJsonValue
+    isConnected?: boolean
+    lastTested?: Date | string | null
+    lastTestResult?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdById?: string | null
+  }
+
+  export type EmailProviderUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    fromName?: NullableStringFieldUpdateOperationsInput | string | null
+    fromEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    replyToEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: JsonNullValueInput | InputJsonValue
+    isConnected?: BoolFieldUpdateOperationsInput | boolean
+    lastTested?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastTestResult?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailProviderUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    fromName?: NullableStringFieldUpdateOperationsInput | string | null
+    fromEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    replyToEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: JsonNullValueInput | InputJsonValue
+    isConnected?: BoolFieldUpdateOperationsInput | boolean
+    lastTested?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastTestResult?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type AuditEventCreateInput = {
     id: string
     eventType: string
@@ -55341,6 +56757,12 @@ export namespace Prisma {
     none?: TwoFactorMethodWhereInput
   }
 
+  export type EmailProviderListRelationFilter = {
+    every?: EmailProviderWhereInput
+    some?: EmailProviderWhereInput
+    none?: EmailProviderWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -55410,6 +56832,10 @@ export namespace Prisma {
   }
 
   export type TwoFactorMethodOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EmailProviderOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -57456,6 +58882,55 @@ export namespace Prisma {
     tries?: SortOrder
   }
 
+  export type EmailProviderCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    isDefault?: SortOrder
+    fromName?: SortOrder
+    fromEmail?: SortOrder
+    replyToEmail?: SortOrder
+    config?: SortOrder
+    isConnected?: SortOrder
+    lastTested?: SortOrder
+    lastTestResult?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type EmailProviderMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    isDefault?: SortOrder
+    fromName?: SortOrder
+    fromEmail?: SortOrder
+    replyToEmail?: SortOrder
+    isConnected?: SortOrder
+    lastTested?: SortOrder
+    lastTestResult?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type EmailProviderMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    isDefault?: SortOrder
+    fromName?: SortOrder
+    fromEmail?: SortOrder
+    replyToEmail?: SortOrder
+    isConnected?: SortOrder
+    lastTested?: SortOrder
+    lastTestResult?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdById?: SortOrder
+  }
+
   export type AuditEventCountOrderByAggregateInput = {
     id?: SortOrder
     eventType?: SortOrder
@@ -57824,6 +59299,13 @@ export namespace Prisma {
     connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
   }
 
+  export type EmailProviderCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<EmailProviderCreateWithoutCreatedByInput, EmailProviderUncheckedCreateWithoutCreatedByInput> | EmailProviderCreateWithoutCreatedByInput[] | EmailProviderUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EmailProviderCreateOrConnectWithoutCreatedByInput | EmailProviderCreateOrConnectWithoutCreatedByInput[]
+    createMany?: EmailProviderCreateManyCreatedByInputEnvelope
+    connect?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -57962,6 +59444,13 @@ export namespace Prisma {
     connectOrCreate?: TwoFactorMethodCreateOrConnectWithoutUserInput | TwoFactorMethodCreateOrConnectWithoutUserInput[]
     createMany?: TwoFactorMethodCreateManyUserInputEnvelope
     connect?: TwoFactorMethodWhereUniqueInput | TwoFactorMethodWhereUniqueInput[]
+  }
+
+  export type EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<EmailProviderCreateWithoutCreatedByInput, EmailProviderUncheckedCreateWithoutCreatedByInput> | EmailProviderCreateWithoutCreatedByInput[] | EmailProviderUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EmailProviderCreateOrConnectWithoutCreatedByInput | EmailProviderCreateOrConnectWithoutCreatedByInput[]
+    createMany?: EmailProviderCreateManyCreatedByInputEnvelope
+    connect?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -58252,6 +59741,20 @@ export namespace Prisma {
     deleteMany?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
   }
 
+  export type EmailProviderUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<EmailProviderCreateWithoutCreatedByInput, EmailProviderUncheckedCreateWithoutCreatedByInput> | EmailProviderCreateWithoutCreatedByInput[] | EmailProviderUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EmailProviderCreateOrConnectWithoutCreatedByInput | EmailProviderCreateOrConnectWithoutCreatedByInput[]
+    upsert?: EmailProviderUpsertWithWhereUniqueWithoutCreatedByInput | EmailProviderUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: EmailProviderCreateManyCreatedByInputEnvelope
+    set?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
+    disconnect?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
+    delete?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
+    connect?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
+    update?: EmailProviderUpdateWithWhereUniqueWithoutCreatedByInput | EmailProviderUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: EmailProviderUpdateManyWithWhereWithoutCreatedByInput | EmailProviderUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: EmailProviderScalarWhereInput | EmailProviderScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -58530,6 +60033,20 @@ export namespace Prisma {
     update?: TwoFactorMethodUpdateWithWhereUniqueWithoutUserInput | TwoFactorMethodUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TwoFactorMethodUpdateManyWithWhereWithoutUserInput | TwoFactorMethodUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TwoFactorMethodScalarWhereInput | TwoFactorMethodScalarWhereInput[]
+  }
+
+  export type EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<EmailProviderCreateWithoutCreatedByInput, EmailProviderUncheckedCreateWithoutCreatedByInput> | EmailProviderCreateWithoutCreatedByInput[] | EmailProviderUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EmailProviderCreateOrConnectWithoutCreatedByInput | EmailProviderCreateOrConnectWithoutCreatedByInput[]
+    upsert?: EmailProviderUpsertWithWhereUniqueWithoutCreatedByInput | EmailProviderUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: EmailProviderCreateManyCreatedByInputEnvelope
+    set?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
+    disconnect?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
+    delete?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
+    connect?: EmailProviderWhereUniqueInput | EmailProviderWhereUniqueInput[]
+    update?: EmailProviderUpdateWithWhereUniqueWithoutCreatedByInput | EmailProviderUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: EmailProviderUpdateManyWithWhereWithoutCreatedByInput | EmailProviderUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: EmailProviderScalarWhereInput | EmailProviderScalarWhereInput[]
   }
 
   export type AuditLogCreateNestedManyWithoutTenantInput = {
@@ -60762,6 +62279,22 @@ export namespace Prisma {
     update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSupportRoutingInput, TenantUpdateWithoutSupportRoutingInput>, TenantUncheckedUpdateWithoutSupportRoutingInput>
   }
 
+  export type UserCreateNestedOneWithoutCreatedEmailProvidersInput = {
+    create?: XOR<UserCreateWithoutCreatedEmailProvidersInput, UserUncheckedCreateWithoutCreatedEmailProvidersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedEmailProvidersInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutCreatedEmailProvidersNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedEmailProvidersInput, UserUncheckedCreateWithoutCreatedEmailProvidersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedEmailProvidersInput
+    upsert?: UserUpsertWithoutCreatedEmailProvidersInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedEmailProvidersInput, UserUpdateWithoutCreatedEmailProvidersInput>, UserUncheckedUpdateWithoutCreatedEmailProvidersInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -61055,6 +62588,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -61105,6 +62639,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -61171,6 +62706,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -61221,6 +62757,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TenantCreateWithoutSessionsInput = {
@@ -61392,6 +62929,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -61442,6 +62980,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -61635,6 +63174,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -61685,6 +63225,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -62455,6 +63996,48 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type EmailProviderCreateWithoutCreatedByInput = {
+    id?: string
+    type: string
+    enabled?: boolean
+    isDefault?: boolean
+    fromName?: string | null
+    fromEmail?: string | null
+    replyToEmail?: string | null
+    config: JsonNullValueInput | InputJsonValue
+    isConnected?: boolean
+    lastTested?: Date | string | null
+    lastTestResult?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailProviderUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    type: string
+    enabled?: boolean
+    isDefault?: boolean
+    fromName?: string | null
+    fromEmail?: string | null
+    replyToEmail?: string | null
+    config: JsonNullValueInput | InputJsonValue
+    isConnected?: boolean
+    lastTested?: Date | string | null
+    lastTestResult?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailProviderCreateOrConnectWithoutCreatedByInput = {
+    where: EmailProviderWhereUniqueInput
+    create: XOR<EmailProviderCreateWithoutCreatedByInput, EmailProviderUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type EmailProviderCreateManyCreatedByInputEnvelope = {
+    data: EmailProviderCreateManyCreatedByInput | EmailProviderCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -63094,6 +64677,42 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"TwoFactorMethod"> | Date | string
     updatedAt?: DateTimeFilter<"TwoFactorMethod"> | Date | string
     lastUsedAt?: DateTimeNullableFilter<"TwoFactorMethod"> | Date | string | null
+  }
+
+  export type EmailProviderUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: EmailProviderWhereUniqueInput
+    update: XOR<EmailProviderUpdateWithoutCreatedByInput, EmailProviderUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<EmailProviderCreateWithoutCreatedByInput, EmailProviderUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type EmailProviderUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: EmailProviderWhereUniqueInput
+    data: XOR<EmailProviderUpdateWithoutCreatedByInput, EmailProviderUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type EmailProviderUpdateManyWithWhereWithoutCreatedByInput = {
+    where: EmailProviderScalarWhereInput
+    data: XOR<EmailProviderUpdateManyMutationInput, EmailProviderUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type EmailProviderScalarWhereInput = {
+    AND?: EmailProviderScalarWhereInput | EmailProviderScalarWhereInput[]
+    OR?: EmailProviderScalarWhereInput[]
+    NOT?: EmailProviderScalarWhereInput | EmailProviderScalarWhereInput[]
+    id?: StringFilter<"EmailProvider"> | string
+    type?: StringFilter<"EmailProvider"> | string
+    enabled?: BoolFilter<"EmailProvider"> | boolean
+    isDefault?: BoolFilter<"EmailProvider"> | boolean
+    fromName?: StringNullableFilter<"EmailProvider"> | string | null
+    fromEmail?: StringNullableFilter<"EmailProvider"> | string | null
+    replyToEmail?: StringNullableFilter<"EmailProvider"> | string | null
+    config?: JsonFilter<"EmailProvider">
+    isConnected?: BoolFilter<"EmailProvider"> | boolean
+    lastTested?: DateTimeNullableFilter<"EmailProvider"> | Date | string | null
+    lastTestResult?: StringNullableFilter<"EmailProvider"> | string | null
+    createdAt?: DateTimeFilter<"EmailProvider"> | Date | string
+    updatedAt?: DateTimeFilter<"EmailProvider"> | Date | string
+    createdById?: StringNullableFilter<"EmailProvider"> | string | null
   }
 
   export type AuditLogCreateWithoutTenantInput = {
@@ -64891,6 +66510,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSsoAuditLogsInput = {
@@ -64941,6 +66561,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSsoAuditLogsInput = {
@@ -65134,6 +66755,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSsoAuditLogsInput = {
@@ -65184,6 +66806,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutInvitedMembershipsInput = {
@@ -65234,6 +66857,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutInvitedMembershipsInput = {
@@ -65284,6 +66908,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutInvitedMembershipsInput = {
@@ -65460,6 +67085,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -65510,6 +67136,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -65576,6 +67203,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvitedMembershipsInput = {
@@ -65626,6 +67254,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TenantUpsertWithoutMembershipsInput = {
@@ -65814,6 +67443,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -65864,6 +67494,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutAcceptedInvitationsInput = {
@@ -65914,6 +67545,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAcceptedInvitationsInput = {
@@ -65964,6 +67596,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAcceptedInvitationsInput = {
@@ -66019,6 +67652,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSentInvitationsInput = {
@@ -66069,6 +67703,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSentInvitationsInput = {
@@ -66256,6 +67891,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAcceptedInvitationsInput = {
@@ -66306,6 +67942,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutSentInvitationsInput = {
@@ -66367,6 +68004,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentInvitationsInput = {
@@ -66417,6 +68055,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TenantUpsertWithoutInvitationsInput = {
@@ -67011,6 +68650,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutContactMessagesInput = {
@@ -67061,6 +68701,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutContactMessagesInput = {
@@ -67359,6 +69000,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutContactMessagesInput = {
@@ -67409,6 +69051,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ContactMessageReasonUpsertWithWhereUniqueWithoutContactMessageInput = {
@@ -68041,6 +69684,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -68091,6 +69735,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -68284,6 +69929,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -68334,6 +69980,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutPasskeysInput = {
@@ -68384,6 +70031,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutPasskeysInput = {
@@ -68434,6 +70082,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutPasskeysInput = {
@@ -68500,6 +70149,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPasskeysInput = {
@@ -68550,6 +70200,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutAuthenticatorCodesInput = {
@@ -68600,6 +70251,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAuthenticatorCodesInput = {
@@ -68650,6 +70302,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAuthenticatorCodesInput = {
@@ -68716,6 +70369,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuthenticatorCodesInput = {
@@ -68766,6 +70420,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TenantCreateWithoutNotificationsInput = {
@@ -68937,6 +70592,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -68987,6 +70643,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -69208,6 +70865,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -69258,6 +70916,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type NotificationRecipientUpsertWithWhereUniqueWithoutNotificationInput = {
@@ -69363,6 +71022,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutNotificationRecipientsInput = {
@@ -69413,6 +71073,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutNotificationRecipientsInput = {
@@ -69524,6 +71185,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationRecipientsInput = {
@@ -69574,6 +71236,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TenantCreateWithoutWebhookEndpointsInput = {
@@ -70845,6 +72508,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutTwoFactorMethodsInput = {
@@ -70895,6 +72559,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutTwoFactorMethodsInput = {
@@ -71088,6 +72753,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTwoFactorMethodsInput = {
@@ -71138,6 +72804,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TenantCreateWithoutPendingAuthsInput = {
@@ -71309,6 +72976,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutPendingAuthsInput = {
@@ -71359,6 +73027,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutPendingAuthsInput = {
@@ -71552,6 +73221,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPendingAuthsInput = {
@@ -71602,6 +73272,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TenantCreateWithoutTwoFactorCodesInput = {
@@ -71773,6 +73444,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutTwoFactorCodesInput = {
@@ -71823,6 +73495,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutTwoFactorCodesInput = {
@@ -72016,6 +73689,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTwoFactorCodesInput = {
@@ -72066,6 +73740,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TenantCreateWithoutTwoFactorAuditsInput = {
@@ -72237,6 +73912,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutTwoFactorAuditsInput = {
@@ -72287,6 +73963,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutTwoFactorAuditsInput = {
@@ -72480,6 +74157,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTwoFactorAuditsInput = {
@@ -72530,6 +74208,7 @@ export namespace Prisma {
     assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type CaseMessageCreateWithoutCaseInput = {
@@ -72658,6 +74337,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAssignedCasesInput = {
@@ -72708,6 +74388,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAssignedCasesInput = {
@@ -73017,6 +74698,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedCasesInput = {
@@ -73067,6 +74749,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ContactMessageUpsertWithoutSupportCaseInput = {
@@ -74098,6 +75781,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCaseStatusChangesInput = {
@@ -74148,6 +75832,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCaseStatusChangesInput = {
@@ -74270,6 +75955,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCaseStatusChangesInput = {
@@ -74320,6 +76006,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutCaseMetricsInput = {
@@ -74370,6 +76057,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCaseMetricsInput = {
@@ -74420,6 +76108,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
     twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
     twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCaseMetricsInput = {
@@ -74650,6 +76339,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCaseMetricsInput = {
@@ -74700,6 +76390,7 @@ export namespace Prisma {
     twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
     twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
     twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type SupportOptionUpsertWithoutMetricsInput = {
@@ -75374,6 +77065,226 @@ export namespace Prisma {
     webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
   }
 
+  export type UserCreateWithoutCreatedEmailProvidersInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCreatedEmailProvidersInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCreatedEmailProvidersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreatedEmailProvidersInput, UserUncheckedCreateWithoutCreatedEmailProvidersInput>
+  }
+
+  export type UserUpsertWithoutCreatedEmailProvidersInput = {
+    update: XOR<UserUpdateWithoutCreatedEmailProvidersInput, UserUncheckedUpdateWithoutCreatedEmailProvidersInput>
+    create: XOR<UserCreateWithoutCreatedEmailProvidersInput, UserUncheckedCreateWithoutCreatedEmailProvidersInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreatedEmailProvidersInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreatedEmailProvidersInput, UserUncheckedUpdateWithoutCreatedEmailProvidersInput>
+  }
+
+  export type UserUpdateWithoutCreatedEmailProvidersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreatedEmailProvidersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     type: string
@@ -75650,6 +77561,22 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     lastUsedAt?: Date | string | null
+  }
+
+  export type EmailProviderCreateManyCreatedByInput = {
+    id?: string
+    type: string
+    enabled?: boolean
+    isDefault?: boolean
+    fromName?: string | null
+    fromEmail?: string | null
+    replyToEmail?: string | null
+    config: JsonNullValueInput | InputJsonValue
+    isConnected?: boolean
+    lastTested?: Date | string | null
+    lastTestResult?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -76495,6 +78422,54 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type EmailProviderUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    fromName?: NullableStringFieldUpdateOperationsInput | string | null
+    fromEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    replyToEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: JsonNullValueInput | InputJsonValue
+    isConnected?: BoolFieldUpdateOperationsInput | boolean
+    lastTested?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastTestResult?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailProviderUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    fromName?: NullableStringFieldUpdateOperationsInput | string | null
+    fromEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    replyToEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: JsonNullValueInput | InputJsonValue
+    isConnected?: BoolFieldUpdateOperationsInput | boolean
+    lastTested?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastTestResult?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailProviderUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    fromName?: NullableStringFieldUpdateOperationsInput | string | null
+    fromEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    replyToEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: JsonNullValueInput | InputJsonValue
+    isConnected?: BoolFieldUpdateOperationsInput | boolean
+    lastTested?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastTestResult?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AuditLogCreateManyTenantInput = {
@@ -78396,6 +80371,10 @@ export namespace Prisma {
      * @deprecated Use OutboxEventDefaultArgs instead
      */
     export type OutboxEventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OutboxEventDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use EmailProviderDefaultArgs instead
+     */
+    export type EmailProviderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = EmailProviderDefaultArgs<ExtArgs>
     /**
      * @deprecated Use AuditEventDefaultArgs instead
      */

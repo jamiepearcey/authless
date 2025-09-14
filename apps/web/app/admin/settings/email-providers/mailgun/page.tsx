@@ -63,11 +63,13 @@ export default function MailgunProviderPage() {
     },
   });
 
-  // Mock query for Mailgun settings - replace with actual tRPC query
-  const { data: mailgunSettings, refetch } = trpc.getMailgunSettings?.useQuery() || { data: null, refetch: () => {} };
+  // Get Mailgun provider settings
+  const { data: mailgunSettings, refetch } = trpc.getEmailProvider.useQuery({ 
+    type: 'mailgun' 
+  });
 
-  // Mock mutation for updating Mailgun settings
-  const updateSettings = trpc.updateMailgunSettings?.useMutation({
+  // Update Mailgun provider settings
+  const updateSettings = trpc.updateEmailProvider.useMutation({
     onSuccess: () => {
       toast.success("Mailgun settings updated successfully!");
       setIsEditing(false);
@@ -76,10 +78,10 @@ export default function MailgunProviderPage() {
     onError: (error) => {
       toast.error(`Failed to update Mailgun settings: ${error.message}`);
     },
-  }) || { mutateAsync: async () => {}, isPending: false };
+  });
 
-  // Mock mutation for testing Mailgun connection
-  const testConnection = trpc.testMailgunConnection?.useMutation({
+  // Test Mailgun connection
+  const testConnection = trpc.testEmailProvider.useMutation({
     onSuccess: (result) => {
       if (result.success) {
         toast.success("Mailgun connection test successful!");
@@ -94,32 +96,33 @@ export default function MailgunProviderPage() {
       toast.error(`Connection test failed: ${error.message}`);
       setIsConnected(false);
     },
-  }) || { mutateAsync: async () => {}, isPending: false };
+  });
 
   // Initialize form data when settings load
   useEffect(() => {
     if (mailgunSettings && !isEditing) {
+      const config = mailgunSettings.config || {};
       setFormData({
         enabled: mailgunSettings.enabled || false,
-        apiKey: mailgunSettings.apiKey || "",
-        domain: mailgunSettings.domain || "",
+        apiKey: config.apiKey || "",
+        domain: config.domain || "",
         fromName: mailgunSettings.fromName || "",
         fromEmail: mailgunSettings.fromEmail || "",
         replyToEmail: mailgunSettings.replyToEmail || "",
-        region: mailgunSettings.region || "us",
-        trackClicks: mailgunSettings.trackClicks || "yes",
-        trackOpens: mailgunSettings.trackOpens || "yes",
-        requireTLS: mailgunSettings.requireTLS ?? true,
-        skipVerification: mailgunSettings.skipVerification || false,
-        rateLimitPerSecond: mailgunSettings.rateLimitPerSecond || 10,
-        batchSize: mailgunSettings.batchSize || 1000,
-        template: mailgunSettings.template || "",
-        templateVariables: mailgunSettings.templateVariables || {},
-        tags: mailgunSettings.tags || [],
-        deliveryTime: mailgunSettings.deliveryTime || "",
-        timeZone: mailgunSettings.timeZone || "",
-        testMode: mailgunSettings.testMode || false,
-        webhookUrls: mailgunSettings.webhookUrls || {
+        region: config.region || "us",
+        trackClicks: config.trackClicks || "yes",
+        trackOpens: config.trackOpens || "yes",
+        requireTLS: config.requireTLS ?? true,
+        skipVerification: config.skipVerification || false,
+        rateLimitPerSecond: config.rateLimitPerSecond || 10,
+        batchSize: config.batchSize || 1000,
+        template: config.template || "",
+        templateVariables: config.templateVariables || {},
+        tags: config.tags || [],
+        deliveryTime: config.deliveryTime || "",
+        timeZone: config.timeZone || "",
+        testMode: config.testMode || false,
+        webhookUrls: config.webhookUrls || {
           clicked: "",
           opened: "",
           delivered: "",
@@ -128,11 +131,11 @@ export default function MailgunProviderPage() {
           complained: "",
           unsubscribed: "",
         },
-        customHeaders: mailgunSettings.customHeaders || {},
-        recipientVariables: mailgunSettings.recipientVariables || {},
-        dkimSignature: mailgunSettings.dkimSignature ?? true,
-        campaignId: mailgunSettings.campaignId || "",
-        suppressionList: mailgunSettings.suppressionList || {
+        customHeaders: config.customHeaders || {},
+        recipientVariables: config.recipientVariables || {},
+        dkimSignature: config.dkimSignature ?? true,
+        campaignId: config.campaignId || "",
+        suppressionList: config.suppressionList || {
           bounces: true,
           unsubscribes: true,
           complaints: true,
@@ -146,7 +149,64 @@ export default function MailgunProviderPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await updateSettings.mutateAsync(formData);
+      const { 
+        enabled, 
+        fromName, 
+        fromEmail, 
+        replyToEmail,
+        apiKey,
+        domain,
+        region,
+        trackClicks,
+        trackOpens,
+        requireTLS,
+        skipVerification,
+        rateLimitPerSecond,
+        batchSize,
+        template,
+        templateVariables,
+        tags,
+        deliveryTime,
+        timeZone,
+        testMode,
+        webhookUrls,
+        customHeaders,
+        recipientVariables,
+        dkimSignature,
+        campaignId,
+        suppressionList
+      } = formData;
+
+      await updateSettings.mutateAsync({
+        type: 'mailgun',
+        enabled,
+        fromName,
+        fromEmail,
+        replyToEmail,
+        config: {
+          apiKey,
+          domain,
+          region,
+          trackClicks,
+          trackOpens,
+          requireTLS,
+          skipVerification,
+          rateLimitPerSecond,
+          batchSize,
+          template,
+          templateVariables,
+          tags,
+          deliveryTime,
+          timeZone,
+          testMode,
+          webhookUrls,
+          customHeaders,
+          recipientVariables,
+          dkimSignature,
+          campaignId,
+          suppressionList
+        }
+      });
     } catch (error) {
       // Handled by mutation
     }
@@ -154,7 +214,19 @@ export default function MailgunProviderPage() {
 
   const handleTestConnection = async () => {
     try {
-      await testConnection.mutateAsync(formData);
+      const { apiKey, domain, region, trackClicks, trackOpens, requireTLS, testMode } = formData;
+      await testConnection.mutateAsync({
+        type: 'mailgun',
+        config: {
+          apiKey,
+          domain,
+          region,
+          trackClicks,
+          trackOpens,
+          requireTLS,
+          testMode
+        }
+      });
     } catch (error) {
       // Handled by mutation
     }

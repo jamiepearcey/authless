@@ -21,6 +21,7 @@ import { inboxRouter } from "./routers/inbox";
 import { securityRouter } from "./routers/security";
 import { auditRouter } from "./routers/audit";
 import { platformSettingsRouter } from "./routers/platform-settings";
+import { emailProviderRouter } from "./routers/email-provider";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -256,6 +257,13 @@ const appRouter = router({
   // Platform Settings (Platform Admin)
   getPlatformSettings: platformSettingsRouter.getPlatformSettings,
   updatePlatformSettings: platformSettingsRouter.updatePlatformSettings,
+
+  // Email Provider Management (Platform Admin)
+  getEmailProviders: emailProviderRouter.getProviders,
+  getEmailProvider: emailProviderRouter.getProvider,
+  updateEmailProvider: emailProviderRouter.updateProvider,
+  testEmailProvider: emailProviderRouter.testProvider,
+  deleteEmailProvider: emailProviderRouter.deleteProvider,
 });
 
 // Export the router and type for client usage

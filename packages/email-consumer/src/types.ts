@@ -4,14 +4,57 @@ import { z } from 'zod';
 type ReactComponentType<P = any> = (props: P) => any;
 
 /**
- * Base event structure that comes from JetStream
+ * Base event structure that comes from JetStream (updated to match new contract)
  */
 export const EventSchema = z.object({
-  tenantId: z.string().optional(),
-  created: z.string(), // ISO date string from JetStream
-  createdBy: z.string().optional(),
+  // Core AuditEvent fields
+  id: z.string(),
+  eventType: z.string(),
   eventName: z.string(),
-  payload: z.record(z.any()),
+  tenantId: z.string(),
+  userId: z.string().optional(),
+  aggregateType: z.string(),
+  aggregateId: z.string(),
+  timestamp: z.union([z.string(), z.date()]),
+  
+  // Source information
+  source: z.object({
+    service: z.string(),
+    version: z.string().optional(),
+    host: z.string().optional(),
+    requestId: z.string().optional(),
+    correlationId: z.string().optional(),
+  }),
+  
+  // Actor information
+  actor: z.object({
+    type: z.enum(['user', 'system', 'service']),
+    id: z.string(),
+    name: z.string().optional(),
+    email: z.string().optional(),
+    ipAddress: z.string().optional(),
+    userAgent: z.string().optional(),
+  }).optional(),
+  
+  // Resource information
+  resource: z.object({
+    type: z.string(),
+    id: z.string(),
+    name: z.string().optional(),
+    attributes: z.record(z.any()).optional(),
+  }).optional(),
+  
+  // Action information
+  action: z.object({
+    type: z.string(),
+    description: z.string().optional(),
+    outcome: z.enum(['success', 'failure', 'unknown']),
+    reason: z.string().optional(),
+  }),
+  
+  // Metadata and original payload
+  metadata: z.record(z.any()).optional(),
+  originalPayload: z.record(z.any()),
 });
 
 export type Event = z.infer<typeof EventSchema>;
@@ -182,6 +225,7 @@ export interface EmailConsumerConfig {
   database: {
     getRecipients: (eventName: string, tenantId?: string, event?: Event) => Promise<EmailRecipient[]>;
     logEmailDelivery: (result: EmailDeliveryResult) => Promise<void>;
+    getEmailProviderConfig?: () => Promise<EmailProviderConfig>;
   };
   rateLimiting?: {
     maxEmailsPerSecond?: number;

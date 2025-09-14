@@ -13,7 +13,7 @@ import { createEmailProvider, type EmailProvider } from './email-providers';
 export class EmailService implements JetStreamService {
   private readonly emailRouter: EmailRouter;
   private readonly templateRenderer: ReactEmailRenderer;
-  private readonly emailProvider: EmailProvider;
+  private emailProvider: EmailProvider;
   private readonly database: any;
 
   constructor(
@@ -32,10 +32,51 @@ export class EmailService implements JetStreamService {
   }
 
   /**
-   * Process incoming email events
+   * Initialize or refresh email provider configuration from database
    */
-  async processMessage(event: Event, ctx: ProcessingContext): Promise<void> {
+  private async initializeEmailProvider(): Promise<void> {
     try {
+      if (this.database.getEmailProviderConfig) {
+        const providerConfig = await this.database.getEmailProviderConfig();
+        if (providerConfig) {
+          console.log(`📧 Initializing email provider: ${providerConfig.type}`);
+          this.emailProvider = createEmailProvider(providerConfig);
+        }
+      }
+    } catch (error) {
+      console.warn(`📧 Failed to load email provider config from database, using default:`, error);
+    }
+  }
+
+  /**
+   * Process incoming email events (updated to handle new jetStreamEvent contract)
+   */
+  async processMessage(eventData: unknown, ctx: ProcessingContext): Promise<void> {
+    try {
+      // Initialize/refresh email provider configuration
+      await this.initializeEmailProvider();
+      
+      // Parse and validate the incoming message using the new schema
+      const event = EventSchema.parse(eventData);
+      
+      // Normalize timestamp if it's a string (handle malformed timestamps like audit-service)
+      if (typeof event.timestamp === 'string') {
+        let timestampStr = event.timestamp;
+        
+        // Fix common malformed timestamp patterns (same as audit-service)
+        if (timestampStr.includes('NZ') && !timestampStr.endsWith('Z')) {
+          timestampStr = timestampStr.replace(/(\d)NZ$/, '$1000Z');
+        }
+        
+        const normalized = new Date(timestampStr);
+        if (isNaN(normalized.getTime())) {
+          console.warn(`📧 Invalid timestamp format: ${event.timestamp}, using current time`);
+          event.timestamp = new Date();
+        } else {
+          event.timestamp = normalized;
+        }
+      }
+
       // Route the event to determine which template to use
       const routingResult = this.emailRouter.routeEvent(event);
       if (!routingResult) {
@@ -61,7 +102,7 @@ export class EmailService implements JetStreamService {
 
       console.log(`📧 Processed email event: ${event.eventName} for ${recipients.length} recipients`);
     } catch (error) {
-      console.error(`❌ Error processing email event: ${event.eventName}`, error);
+      console.error(`❌ Error processing email event:`, error);
       throw error;
     }
   }

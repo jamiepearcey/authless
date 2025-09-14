@@ -70,10 +70,10 @@ const enforcePlatformAdmin = t.middleware(async ({ ctx, next }) => {
   
   const user = await ctx.db.user.findUnique({
     where: { email: ctx.session.user.email },
-    select: { platformRole: true },
+    select: { id: true, platformRole: true, email: true, name: true },
   });
   
-  if (user?.platformRole !== "admin") {
+  if (!user || user.platformRole !== "admin") {
     throw new TRPCError({ code: "FORBIDDEN", message: "Platform admin access required" });
   }
   
@@ -81,6 +81,7 @@ const enforcePlatformAdmin = t.middleware(async ({ ctx, next }) => {
     ctx: {
       ...ctx,
       session: { ...ctx.session, user: ctx.session.user },
+      user, // Add the full user object to context
     },
   });
 });

@@ -683,6 +683,23 @@ exports.Prisma.OutboxEventScalarFieldEnum = {
   traceId: 'traceId'
 };
 
+exports.Prisma.EmailProviderScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  enabled: 'enabled',
+  isDefault: 'isDefault',
+  fromName: 'fromName',
+  fromEmail: 'fromEmail',
+  replyToEmail: 'replyToEmail',
+  config: 'config',
+  isConnected: 'isConnected',
+  lastTested: 'lastTested',
+  lastTestResult: 'lastTestResult',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById'
+};
+
 exports.Prisma.AuditEventScalarFieldEnum = {
   id: 'id',
   eventType: 'eventType',
@@ -803,6 +820,7 @@ exports.Prisma.ModelName = {
   SupportConfiguration: 'SupportConfiguration',
   TenantSupportRouting: 'TenantSupportRouting',
   OutboxEvent: 'OutboxEvent',
+  EmailProvider: 'EmailProvider',
   AuditEvent: 'AuditEvent',
   InboxEvent: 'InboxEvent'
 };

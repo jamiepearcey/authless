@@ -71,10 +71,11 @@ export class EmailService {
     this.emailConsumerService = new EmailConsumerService({
       routingRules: config.routingRules,
       templates: config.templates,
-      provider: config.provider,
+      provider: config.provider, // This will be overridden by getEmailProviderConfig()
       database: {
         getRecipients: this.getRecipients.bind(this),
         logEmailDelivery: this.logEmailDelivery.bind(this),
+        getEmailProviderConfig: this.getEmailProviderConfig.bind(this),
       },
       defaultFrom: config.defaultFrom,
     });
@@ -163,12 +164,12 @@ export class EmailService {
   }
 
   /**
-   * Get recipients for an event
+   * Get recipients for an event (updated to use email provider configuration)
    */
   private async getRecipients(_eventName: string, tenantId?: string): Promise<any[]> {
     try {
-      // This is a simplified implementation - in production, you'd query your user database
-      // based on event type, tenant, user preferences, etc.
+      // Query users who have email notifications enabled
+      // In a tenant-specific context, filter by tenant membership
       const query = `
         SELECT 
           u.email,
@@ -177,6 +178,8 @@ export class EmailService {
         FROM "User" u
         WHERE u."emailNotifications" = true
         ${tenantId ? 'AND EXISTS (SELECT 1 FROM "Membership" m WHERE m."userId" = u.id AND m."tenantId" = $1)' : ''}
+        ORDER BY u."createdAt" DESC
+        LIMIT 100
       `;
       
       const params = tenantId ? [tenantId] : [];
@@ -195,6 +198,41 @@ export class EmailService {
         name: 'Test User',
         userId: 'test-user',
       }];
+    }
+  }
+
+  /**
+   * Get active email provider configuration from database
+   */
+  private async getEmailProviderConfig(): Promise<any> {
+    try {
+      const result = await this.database.query(`
+        SELECT type, config, "fromName", "fromEmail", "replyToEmail"
+        FROM "EmailProvider"
+        WHERE enabled = true AND "isConnected" = true
+        ORDER BY "isDefault" DESC, "updatedAt" DESC
+        LIMIT 1
+      `);
+
+      if (result.rows.length === 0) {
+        this.logger.warn('No active email provider found, using default configuration');
+        return this.config.provider;
+      }
+
+      const provider = result.rows[0];
+      this.logger.info({ providerType: provider.type }, 'Using email provider from database');
+
+      // Merge database config with defaults
+      return {
+        type: provider.type,
+        ...provider.config,
+        fromName: provider.fromName || this.config.defaultFrom.name,
+        fromEmail: provider.fromEmail || this.config.defaultFrom.email,
+        replyToEmail: provider.replyToEmail,
+      };
+    } catch (error) {
+      this.logger.error({ error }, 'Error getting email provider config, using default');
+      return this.config.provider;
     }
   }
 
