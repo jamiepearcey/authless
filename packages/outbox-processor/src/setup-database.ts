@@ -40,7 +40,7 @@ export async function setupOutboxDatabase(databaseUrl: string): Promise<void> {
     const triggerCheck = await client.query(`
       SELECT trigger_name 
       FROM information_schema.triggers 
-      WHERE event_object_table = 'outbox_events'
+      WHERE event_object_table = 'OutboxEvent'
         AND trigger_name IN ('trg_outbox_notify', 'trg_outbox_retry_notify')
     `);
     

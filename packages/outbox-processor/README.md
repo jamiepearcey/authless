@@ -68,7 +68,7 @@ Environment variables:
 
 ### Processing Flow
 
-1. **Event Creation**: When events are inserted into `outbox_events`, a trigger sends a notification
+1. **Event Creation**: When events are inserted into `OutboxEvent`, a trigger sends a notification
 2. **Instant Wake-up**: The processor receives the notification and immediately starts processing
 3. **Batch Claiming**: Uses `FOR UPDATE SKIP LOCKED` to claim a batch of pending events
 4. **JetStream Publishing**: Publishes each event to NATS JetStream with deduplication
@@ -76,10 +76,10 @@ Environment variables:
 
 ### Database Schema
 
-The processor expects an `outbox_events` table with the following structure:
+The processor expects an `OutboxEvent` table with the following structure:
 
 ```sql
-CREATE TABLE outbox_events (
+CREATE TABLE "OutboxEvent" (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   event_type VARCHAR NOT NULL,
   aggregate_type VARCHAR NOT NULL,
@@ -195,7 +195,7 @@ spec:
 
 ```bash
 # Check outbox event status
-psql $DATABASE_URL -c "SELECT status, COUNT(*) FROM outbox_events GROUP BY status;"
+psql $DATABASE_URL -c "SELECT status, COUNT(*) FROM \"OutboxEvent\" GROUP BY status;"
 
 # Check NATS stream info
 curl http://localhost:8223/jsz

@@ -145,7 +145,7 @@ export class DomainService {
 - **`tenants`**: Multi-tenant organization data
 - **`support_cases`**: Support ticket management
 - **`audit_events`**: Audit trail and compliance
-- **`outbox_events`**: Event sourcing and reliability
+- **`OutboxEvent`**: Event sourcing and reliability
 
 ### **Key Conventions**
 - Use Prisma for all database access

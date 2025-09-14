@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
-import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
+import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Switch } from "@ui/base";
 import { Settings, Server, Mail, Bell, Globe, Zap, ArrowLeft } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
@@ -72,11 +72,11 @@ export default function AdminSettingsPage() {
     retentionDays: 90,
   });
 
-  // Mock query for platform settings - replace with actual tRPC query
-  const { data: platformSettings, refetch } = trpc.getPlatformSettings?.useQuery() || { data: null, refetch: () => {} };
+  // Platform settings query
+  const { data: platformSettings, refetch } = trpc.getPlatformSettings.useQuery();
   
-  // Mock mutation for updating platform settings - replace with actual tRPC mutation
-  const updateSettings = trpc.updatePlatformSettings?.useMutation({
+  // Platform settings mutation
+  const updateSettings = trpc.updatePlatformSettings.useMutation({
     onSuccess: () => {
       toast.success("Platform settings updated successfully!");
       setIsEditing(false);
@@ -85,7 +85,7 @@ export default function AdminSettingsPage() {
     onError: (error) => {
       toast.error(`Failed to update settings: ${error.message}`);
     },
-  }) || { mutateAsync: async () => {}, isPending: false };
+  });
 
   // Initialize form data when settings load
   useEffect(() => {
@@ -241,41 +241,35 @@ export default function AdminSettingsPage() {
                 <div className="space-y-4">
                   <h4 className="text-sm font-medium text-gray-900 border-b pb-2">Authentication & Security</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
+                    <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex-1 min-w-0 mr-4">
                         <Label className="text-sm font-medium">Multi-Factor Authentication</Label>
-                        <p className="text-xs text-gray-500">Enable MFA for all users</p>
+                        <p className="text-xs text-gray-500 mt-1">Enable MFA for all users</p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          id="enableMFA"
+                      <div className="flex items-center space-x-3 flex-shrink-0">
+                        <Switch
                           checked={formData.enableMFA || false}
-                          onChange={(e) => setFormData(prev => ({ ...prev, enableMFA: e.target.checked }))}
+                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, enableMFA: checked }))}
                           disabled={!isEditing}
-                          className="rounded border-gray-300"
                         />
-                        <span className={`text-xs px-2 py-1 rounded-full ${formData.enableMFA ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+                        <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${formData.enableMFA ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
                           {formData.enableMFA ? 'Enabled' : 'Disabled'}
                         </span>
                       </div>
                     </div>
                     
-                    <div className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
+                    <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex-1 min-w-0 mr-4">
                         <Label className="text-sm font-medium">Passkey Authentication</Label>
-                        <p className="text-xs text-gray-500">WebAuthn/FIDO2 support</p>
+                        <p className="text-xs text-gray-500 mt-1">WebAuthn/FIDO2 support</p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          id="enablePasskeys"
+                      <div className="flex items-center space-x-3 flex-shrink-0">
+                        <Switch
                           checked={formData.enablePasskeys || false}
-                          onChange={(e) => setFormData(prev => ({ ...prev, enablePasskeys: e.target.checked }))}
+                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, enablePasskeys: checked }))}
                           disabled={!isEditing}
-                          className="rounded border-gray-300"
                         />
-                        <span className={`text-xs px-2 py-1 rounded-full ${formData.enablePasskeys ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+                        <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${formData.enablePasskeys ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
                           {formData.enablePasskeys ? 'Enabled' : 'Disabled'}
                         </span>
                       </div>
@@ -327,41 +321,35 @@ export default function AdminSettingsPage() {
                 <div className="space-y-4">
                   <h4 className="text-sm font-medium text-gray-900 border-b pb-2">Tenant Management</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
+                    <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex-1 min-w-0 mr-4">
                         <Label className="text-sm font-medium">Multi-Tenant Support</Label>
-                        <p className="text-xs text-gray-500">Allow multiple tenants per user</p>
+                        <p className="text-xs text-gray-500 mt-1">Allow multiple tenants per user</p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          id="enableMultiTenant"
+                      <div className="flex items-center space-x-3 flex-shrink-0">
+                        <Switch
                           checked={formData.enableMultiTenant || false}
-                          onChange={(e) => setFormData(prev => ({ ...prev, enableMultiTenant: e.target.checked }))}
+                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, enableMultiTenant: checked }))}
                           disabled={!isEditing}
-                          className="rounded border-gray-300"
                         />
-                        <span className={`text-xs px-2 py-1 rounded-full ${formData.enableMultiTenant ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+                        <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${formData.enableMultiTenant ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
                           {formData.enableMultiTenant ? 'Enabled' : 'Disabled'}
                         </span>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
+                    <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex-1 min-w-0 mr-4">
                         <Label className="text-sm font-medium">Tenant Registration</Label>
-                        <p className="text-xs text-gray-500">Allow new tenant creation</p>
+                        <p className="text-xs text-gray-500 mt-1">Allow new tenant creation</p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          id="allowNewTenantRegistration"
+                      <div className="flex items-center space-x-3 flex-shrink-0">
+                        <Switch
                           checked={formData.allowNewTenantRegistration}
-                          onChange={(e) => setFormData(prev => ({ ...prev, allowNewTenantRegistration: e.target.checked }))}
+                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, allowNewTenantRegistration: checked }))}
                           disabled={!isEditing}
-                          className="rounded border-gray-300"
                         />
-                        <span className={`text-xs px-2 py-1 rounded-full ${formData.allowNewTenantRegistration ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+                        <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${formData.allowNewTenantRegistration ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
                           {formData.allowNewTenantRegistration ? 'Enabled' : 'Disabled'}
                         </span>
                       </div>
@@ -433,21 +421,18 @@ export default function AdminSettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
+                    <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex-1 min-w-0 mr-4">
                         <Label className="text-sm font-medium">Webhooks</Label>
-                        <p className="text-xs text-gray-500">Event-driven webhook notifications</p>
+                        <p className="text-xs text-gray-500 mt-1">Event-driven webhook notifications</p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          id="enableWebhooks"
+                      <div className="flex items-center space-x-3 flex-shrink-0">
+                        <Switch
                           checked={formData.enableWebhooks || false}
-                          onChange={(e) => setFormData(prev => ({ ...prev, enableWebhooks: e.target.checked }))}
+                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, enableWebhooks: checked }))}
                           disabled={!isEditing}
-                          className="rounded border-gray-300"
                         />
-                        <span className={`text-xs px-2 py-1 rounded-full ${formData.enableWebhooks ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+                        <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${formData.enableWebhooks ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
                           {formData.enableWebhooks ? 'Enabled' : 'Disabled'}
                         </span>
                       </div>
@@ -499,21 +484,18 @@ export default function AdminSettingsPage() {
                 <div className="space-y-4">
                   <h4 className="text-sm font-medium text-gray-900 border-b pb-2">Monitoring & Analytics</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
+                    <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex-1 min-w-0 mr-4">
                         <Label className="text-sm font-medium">Audit Logging</Label>
-                        <p className="text-xs text-gray-500">Comprehensive audit trails</p>
+                        <p className="text-xs text-gray-500 mt-1">Comprehensive audit trails</p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          id="enableAuditLogging"
+                      <div className="flex items-center space-x-3 flex-shrink-0">
+                        <Switch
                           checked={formData.enableAuditLogging}
-                          onChange={(e) => setFormData(prev => ({ ...prev, enableAuditLogging: e.target.checked }))}
+                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, enableAuditLogging: checked }))}
                           disabled={!isEditing}
-                          className="rounded border-gray-300"
                         />
-                        <span className={`text-xs px-2 py-1 rounded-full ${formData.enableAuditLogging ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+                        <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${formData.enableAuditLogging ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
                           {formData.enableAuditLogging ? 'Enabled' : 'Disabled'}
                         </span>
                       </div>

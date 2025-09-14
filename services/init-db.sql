@@ -92,11 +92,11 @@ CREATE INDEX IF NOT EXISTS idx_audit_events_event_name
 CREATE INDEX IF NOT EXISTS idx_audit_events_aggregate 
     ON "AuditEvent" ("aggregateType", "aggregateId");
 
-CREATE INDEX IF NOT EXISTS idx_outbox_events_status_created 
+CREATE INDEX IF NOT EXISTS idx_OutboxEvent_status_created 
     ON "OutboxEvent" (status, "createdAt") 
     WHERE status = 'pending';
 
-CREATE INDEX IF NOT EXISTS idx_outbox_events_tenant 
+CREATE INDEX IF NOT EXISTS idx_OutboxEvent_tenant 
     ON "OutboxEvent" ("tenantId");
 
 CREATE INDEX IF NOT EXISTS idx_webhook_endpoints_active 

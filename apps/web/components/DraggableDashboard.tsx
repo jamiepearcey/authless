@@ -99,10 +99,12 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
          margin: 5,
          animate: true,
          float: false,
-         resizable: isGridMode ? { handles: "se" } : undefined,
-         draggable: isGridMode ? { handle: ".card-header, .grid-stack-item-content" } : undefined,
+         resizable: isGridMode ? { handles: "se" } : false,
+         draggable: isGridMode ? { handle: ".card-header, .grid-stack-item-content" } : false,
          staticGrid: !isGridMode,
-         minRow: 1
+         minRow: 1,
+         disableOneColumnMode: true,
+         acceptWidgets: isGridMode
        },
        gridRef.current
      );
@@ -337,27 +339,82 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
         );
       case "audit":
         return (
-          <Card>
+          <Card className="bg-gradient-to-r from-slate-50 to-indigo-50 border-indigo-200">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <FileText className="h-5 w-5" />
-                <span>Audit Events</span>
+                <div className="p-1 bg-indigo-100 rounded-md">
+                  <FileText className="h-4 w-4 text-indigo-600" />
+                </div>
+                <span className="text-indigo-900">Audit Monitor</span>
               </CardTitle>
-              <CardDescription>System audit trail and activity</CardDescription>
+              <CardDescription className="text-indigo-700">Security & compliance trail</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-indigo-600">{auditStats?.recentEvents || 0}</div>
-                  <div className="text-sm text-gray-600">Events (24h)</div>
-                </div>
-                <div className="space-y-2">
-                  {auditStats?.topActions?.slice(0, 6).map((action: any) => (
-                    <div key={action.action} className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">{action.action.replace(/_/g, " ")}</span>
-                      <span className="font-medium">{action.count}</span>
+                {/* Enhanced Metrics Grid */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-white/60 rounded-lg p-3 border border-blue-100">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs font-medium text-blue-800">Recent (24h)</p>
+                        <p className="text-xl font-bold text-blue-700">{auditStats?.recentEvents || 0}</p>
+                      </div>
+                      <Activity className="h-5 w-5 text-blue-600" />
                     </div>
-                  ))}
+                  </div>
+                  
+                  <div className="bg-white/60 rounded-lg p-3 border border-indigo-100">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs font-medium text-indigo-800">Total Events</p>
+                        <p className="text-xl font-bold text-indigo-700">{auditStats?.totalEvents || 0}</p>
+                      </div>
+                      <FileText className="h-5 w-5 text-indigo-600" />
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white/60 rounded-lg p-3 border border-yellow-100">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs font-medium text-yellow-800">Warnings</p>
+                        <p className="text-xl font-bold text-yellow-700">
+                          {auditStats?.severityBreakdown?.warning || 0}
+                        </p>
+                      </div>
+                      <AlertTriangle className="h-5 w-5 text-yellow-600" />
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white/60 rounded-lg p-3 border border-red-100">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs font-medium text-red-800">Critical</p>
+                        <p className="text-xl font-bold text-red-700">
+                          {(auditStats?.severityBreakdown?.error || 0) + (auditStats?.severityBreakdown?.critical || 0)}
+                        </p>
+                      </div>
+                      <Shield className="h-5 w-5 text-red-600" />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Top Actions with enhanced styling */}
+                <div className="bg-white/40 rounded-lg p-3">
+                  <h4 className="text-xs font-semibold text-indigo-900 mb-2 uppercase tracking-wide">Active Patterns</h4>
+                  <div className="space-y-1.5">
+                    {auditStats?.topActions?.slice(0, 3).map((action: any, index: number) => (
+                      <div key={action.action} className="flex items-center justify-between text-sm">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full"></div>
+                          <span className="text-gray-700 text-xs capitalize">{action.action.replace(/_/g, " ")}</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <span className="text-xs font-bold text-indigo-600">{action.count}</span>
+                          <TrendingUp className="h-3 w-3 text-green-500" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -430,6 +487,34 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
         }
         .grid-stack-static .grid-stack-item .ui-draggable-handle {
           cursor: default !important;
+        }
+        .grid-stack-static .grid-stack-item .card-header {
+          cursor: default !important;
+        }
+        .grid-stack-static .grid-stack-item .grid-stack-item-content {
+          cursor: default !important;
+        }
+        .grid-stack-static .grid-stack-item .grid-stack-item-content:hover {
+          border: none !important;
+          box-shadow: none !important;
+        }
+        /* Ensure no hover effects on cards when not in grid mode */
+        .grid-stack-static .grid-stack-item .grid-stack-item-content .card:hover {
+          border: none !important;
+          box-shadow: none !important;
+        }
+        .grid-stack-static .grid-stack-item .grid-stack-item-content .card {
+          cursor: default !important;
+        }
+        .grid-stack-static .grid-stack-item .grid-stack-item-content .card * {
+          cursor: default !important;
+        }
+        /* Override any potential hover states from the Card component */
+        .grid-stack-static .grid-stack-item .grid-stack-item-content .card[data-variant="default"]:hover,
+        .grid-stack-static .grid-stack-item .grid-stack-item-content .card[data-variant="gridstack"]:hover {
+          border: none !important;
+          box-shadow: none !important;
+          transform: none !important;
         }
       `}</style>
 

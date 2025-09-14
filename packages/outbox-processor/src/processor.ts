@@ -1,5 +1,5 @@
 import { Client } from "pg";
-import { connect, NatsConnection, JetStreamClient, StringCodec, headers } from "nats";
+import { connect, NatsConnection, JetStreamClient, StringCodec, headers, DiscardPolicy, StorageType, RetentionPolicy } from "nats";
 import type { OutboxEvent } from "@db/base";
 
 const sc = StringCodec();
@@ -104,6 +104,12 @@ export class OutboxProcessor {
       timeout: 30000 // 30 second JetStream operation timeout
     });
     
+    // Create the EVENTS stream if it doesn't exist
+    // Don't fail initialization if stream creation fails - we'll retry during processing
+    this.ensureStreamExists().catch(error => {
+      this.logger?.warn({ error }, 'Failed to ensure JetStream stream exists during init, will retry during processing');
+    });
+    
     this.logger?.info({}, 'Connected to NATS JetStream with extended timeouts');
 
     this.logger?.info({}, 'Outbox Processor initialized');
@@ -197,6 +203,17 @@ export class OutboxProcessor {
   }
 
   private async processEvent(event: OutboxEventRow): Promise<boolean> {
+    this.logger?.info({
+      eventId: event.id,
+      eventType: event.eventType,
+      aggregateType: event.aggregateType,
+      aggregateId: event.aggregateId,
+      tenantId: event.tenantId,
+      tries: event.tries,
+      status: event.status,
+      createdAt: event.createdAt.toISOString()
+    }, `🔄 Processing event ${event.id} (${event.eventType})`);
+
     const tx = await this.pg.query('BEGIN');
     
     try {
@@ -204,15 +221,59 @@ export class OutboxProcessor {
         throw new Error('JetStream client not initialized');
       }
 
+      // Ensure the stream exists before publishing
+      try {
+        await this.ensureStreamExists();
+      } catch (error) {
+        this.logger?.warn({ error }, 'Failed to ensure stream exists, continuing with publish attempt');
+      }
+
       // Prepare the event payload for JetStream
-      // Send the payloadJson directly (flattened) rather than nested in a payload field
+      // Create a normalized AuditEvent format for the audit service
       const jetStreamEvent = {
-        ...event.payloadJson, // Spread the actual audit event fields
-        // Override with outbox metadata
-        outboxId: event.id,
-        outboxEventType: event.eventType,
-        outboxCreated: event.createdAt.toISOString(),
-        outboxIdempotencyKey: event.idempotencyKey || event.id,
+        // Required AuditEvent fields
+        id: event.id,
+        eventType: event.eventType,
+        eventName: event.eventType,
+        tenantId: event.tenantId,
+        userId: event.payloadJson?.createdBy || event.payloadJson?.userId,
+        aggregateType: event.aggregateType,
+        aggregateId: event.aggregateId,
+        timestamp: event.createdAt.toISOString(),
+        source: {
+          service: 'outbox-service',
+          version: '1.0.0',
+          host: process.env.HOSTNAME || 'localhost',
+          requestId: event.idempotencyKey || event.id,
+          correlationId: (event as any).traceId,
+        },
+        actor: {
+          type: 'user' as const,
+          id: event.payloadJson?.createdBy || event.payloadJson?.userId || 'system',
+          name: event.payloadJson?.createdByName || event.payloadJson?.userName,
+          email: event.payloadJson?.createdByEmail || event.payloadJson?.userEmail,
+          ipAddress: event.payloadJson?.ipAddress,
+          userAgent: event.payloadJson?.userAgent,
+        },
+        resource: {
+          type: event.aggregateType,
+          id: event.aggregateId,
+          name: event.payloadJson?.name || event.payloadJson?.title,
+          attributes: event.payloadJson,
+        },
+        action: {
+          type: event.eventType,
+          description: `Created ${event.aggregateType}`,
+          outcome: 'success' as const,
+          reason: 'Event processed successfully',
+        },
+        metadata: {
+          outboxId: event.id,
+          outboxEventType: event.eventType,
+          outboxCreated: event.createdAt.toISOString(),
+          outboxIdempotencyKey: event.idempotencyKey || event.id,
+        },
+        originalPayload: event.payloadJson,
       };
 
       // Derive subject from event type and tenant
@@ -227,13 +288,35 @@ export class OutboxProcessor {
       msgHeaders.set('Outbox-Event-Id', event.id);
 
       // Publish to JetStream with broker deduplication and timeout
-      await this.js.publish(subject, sc.encode(JSON.stringify(jetStreamEvent)), {
+      this.logger?.info({
+        eventId: event.id,
+        eventType: event.eventType,
+        subject,
+        tenantId: event.tenantId,
+        jetStreamEvent: jetStreamEvent,
+        headers: msgHeaders.toString()
+      }, `🚀 Publishing event ${event.id} to subject: ${subject}`);
+
+      const publishResult = await this.js.publish(
+        subject, 
+        sc.encode(JSON.stringify(jetStreamEvent)), {
         msgID: event.idempotencyKey || event.id,
         headers: msgHeaders,
         timeout: 20000 // 20 second timeout for individual publish operations
       });
 
+      this.logger?.info({
+        eventId: event.id,
+        subject,
+        publishResult: {
+          seq: publishResult.seq,
+          duplicate: publishResult.duplicate,
+          stream: publishResult.stream
+        }
+      }, `✅ JetStream publish successful for event ${event.id}`);
+
       // Mark as sent
+      this.logger?.info(`💾 Updating event ${event.id} status to 'sent'`);
       await this.pg.query(
         'UPDATE "OutboxEvent" SET status = $2, "lastError" = NULL WHERE id = $1',
         [event.id, 'sent']
@@ -252,6 +335,38 @@ export class OutboxProcessor {
       const newStatus = tries >= maxTries ? 'dead' : 'pending';
       const errorMessage = error?.message || String(error);
 
+      // Enhanced error logging with detailed context
+      const errorDetails = {
+        eventId: event.id,
+        eventType: event.eventType,
+        aggregateType: event.aggregateType,
+        aggregateId: event.aggregateId,
+        tenantId: event.tenantId,
+        subject: this.deriveSubject(event.eventType, event.tenantId),
+        attempt: tries,
+        maxTries,
+        error: errorMessage,
+        errorCode: error?.code,
+        errorStatus: error?.status,
+        errorResponse: error?.response?.data,
+        errorHeaders: error?.response?.headers,
+        stack: error?.stack,
+        jetStreamEvent: {
+          outboxId: event.id,
+          outboxEventType: event.eventType,
+          outboxCreated: event.createdAt.toISOString(),
+          outboxIdempotencyKey: event.idempotencyKey || event.id,
+        }
+      };
+
+      this.logger?.info({
+        eventId: event.id,
+        newStatus,
+        tries,
+        errorMessage,
+        delayMs
+      }, `💾 Updating event ${event.id} status to '${newStatus}' after error`);
+
       await this.pg.query(
         `UPDATE "OutboxEvent"
          SET status = $2, tries = $3, "lastError" = $4,
@@ -261,12 +376,53 @@ export class OutboxProcessor {
       );
 
       if (newStatus === 'dead') {
-        this.logger?.error(`💀 Event ${event.id} marked as dead after ${tries} attempts: ${errorMessage}`);
+        this.logger?.error(errorDetails, `💀 Event ${event.id} marked as dead after ${tries} attempts`);
       } else {
         console.warn(`⚠️ Event ${event.id} failed (attempt ${tries}/${maxTries}), will retry in ${delayMs}ms: ${errorMessage}`);
+        console.warn(`🔍 Error details:`, JSON.stringify(errorDetails, null, 2));
       }
 
       return false;
+    }
+  }
+
+  private async ensureStreamExists(): Promise<void> {
+    try {
+      const streamName = 'EVENTS';
+      
+      // Get JetStream manager for stream operations
+      const jsm = await this.js!.jetstreamManager();
+      
+      // Try to get the stream info to see if it exists
+      try {
+        await jsm.streams.info(streamName);
+        this.logger?.info({ streamName }, 'JetStream stream already exists');
+        return;
+      } catch (error: any) {
+        // Stream doesn't exist, create it
+        if (error.code === '404' || error.message?.includes('not found')) {
+          this.logger?.info({ streamName }, 'Creating JetStream stream...');
+          
+          await jsm.streams.add({
+            name: streamName,
+            subjects: ['events.*.*'],
+            retention: RetentionPolicy.Limits,
+            max_age: 24 * 60 * 60 * 1000 * 1000 * 1000, // 24 hours in nanoseconds
+            max_msgs: 1000000,
+            max_bytes: 1024 * 1024 * 1024, // 1GB
+            storage: StorageType.File,
+            num_replicas: 1,
+            discard: DiscardPolicy.Old,
+          });
+          
+          this.logger?.info({ streamName }, 'JetStream stream created successfully');
+        } else {
+          throw error;
+        }
+      }
+    } catch (error) {
+      this.logger?.error({ error }, 'Failed to ensure JetStream stream exists');
+      throw error;
     }
   }
 

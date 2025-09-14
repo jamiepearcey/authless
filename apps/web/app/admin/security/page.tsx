@@ -53,7 +53,7 @@ export default function AdminSecurityPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-4">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center space-x-4 mb-4">
           <Link 

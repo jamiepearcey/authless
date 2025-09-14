@@ -187,21 +187,21 @@ export class OutboxRepository {
   private async getAverageProcessingTime(whereClause: Prisma.OutboxEventWhereInput): Promise<number | undefined> {
     try {
       let query = Prisma.sql`
-        SELECT AVG(EXTRACT(EPOCH FROM (updated_at - created_at)) * 1000)::float as avg
-        FROM outbox_events
+        SELECT AVG(EXTRACT(EPOCH FROM ("updatedAt" - "createdAt")) * 1000)::float as avg
+        FROM "OutboxEvent"
         WHERE status = 'sent'
-          AND updated_at IS NOT NULL
-          AND created_at < NOW() - INTERVAL '1 minute'
+          AND "updatedAt" IS NOT NULL
+          AND "createdAt" < NOW() - INTERVAL '1 minute'
       `;
 
       if (whereClause.tenantId) {
         query = Prisma.sql`
-          SELECT AVG(EXTRACT(EPOCH FROM (updated_at - created_at)) * 1000)::float as avg
-          FROM outbox_events
+          SELECT AVG(EXTRACT(EPOCH FROM ("updatedAt" - "createdAt")) * 1000)::float as avg
+          FROM "OutboxEvent"
           WHERE status = 'sent'
-            AND tenant_id = ${whereClause.tenantId}
-            AND updated_at IS NOT NULL
-            AND created_at < NOW() - INTERVAL '1 minute'
+            AND "tenantId" = ${whereClause.tenantId}
+            AND "updatedAt" IS NOT NULL
+            AND "createdAt" < NOW() - INTERVAL '1 minute'
         `;
       }
 
@@ -209,7 +209,7 @@ export class OutboxRepository {
       return result[0]?.avg || undefined;
     } catch (error) {
       console.warn('Failed to calculate average processing time:', error);
-      return undefined;
+      return undefined
     }
   }
 
@@ -307,5 +307,92 @@ export class OutboxRepository {
     });
 
     return result.count;
+  }
+
+  async restartDeadEvents(
+    eventIds?: string[], 
+    newMaxTries?: number
+  ): Promise<{ restartedCount: number; events: any[] }> {
+    const defaultMaxTries = newMaxTries ?? DEFAULT_RETRY_CONFIG.maxTries;
+    
+    // Build where clause for dead events
+    const whereClause: Prisma.OutboxEventWhereInput = {
+      status: OutboxEventStatus.DEAD,
+    };
+    
+    // If specific event IDs provided, filter by them
+    if (eventIds && eventIds.length > 0) {
+      whereClause.id = {
+        in: eventIds.map(id => parseInt(id)),
+      };
+    }
+
+    // First, get the dead events that will be restarted
+    const deadEvents = await this.db.outboxEvent.findMany({
+      where: whereClause,
+      select: {
+        id: true,
+        eventType: true,
+        tries: true,
+        createdAt: true,
+      },
+    });
+
+    if (deadEvents.length === 0) {
+      return { restartedCount: 0, events: [] };
+    }
+
+    // Update the dead events to pending status with increased max retry count
+    // We'll use a custom field or approach to track the effective max retries
+    // For now, we'll reset the tries to 0 but keep track of the original tries
+    const updatePromises = deadEvents.map(event =>
+      this.db.outboxEvent.update({
+        where: { id: event.id },
+        data: {
+          status: OutboxEventStatus.PENDING,
+          tries: 0, // Reset tries to 0 for fresh retry
+          nextAttemptAt: new Date(), // Immediate retry
+          lastError: null, // Clear the error
+        },
+      })
+    );
+
+    await Promise.all(updatePromises);
+
+    return {
+      restartedCount: deadEvents.length,
+      events: deadEvents.map(event => ({
+        id: event.id.toString(),
+        eventType: event.eventType,
+        originalTries: event.tries,
+        createdAt: event.createdAt,
+      })),
+    };
+  }
+
+  async restartDeadEventById(
+    eventId: string, 
+    newMaxTries?: number
+  ): Promise<{ success: boolean; event?: any; error?: string }> {
+    try {
+      const result = await this.restartDeadEvents([eventId], newMaxTries);
+      
+      if (result.restartedCount === 0) {
+        return {
+          success: false,
+          error: 'Event not found or not in dead status',
+        };
+      }
+
+      return {
+        success: true,
+        event: result.events[0],
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
+    }
   }
 }

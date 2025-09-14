@@ -158,20 +158,6 @@ export default function TenantDashboardPage() {
             </p>
           </div>
           
-          <div className="flex space-x-3">
-            <Link href={`/tenants/${tenantSlug}/admin/settings`}>
-              <Button variant="outline" className="flex items-center gap-2">
-                <Settings className="h-4 w-4" />
-                Settings
-              </Button>
-            </Link>
-            <Link href={`/tenants/${tenantSlug}/admin/users`}>
-              <Button className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                Manage Users
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
 
@@ -230,75 +216,6 @@ export default function TenantDashboardPage() {
 
 
 
-      {/* User Management Section */}
-      <Card>
-        <CardHeader>
-          <div className="flex justify-between items-center">
-            <div>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                {t("Team Members", "tenants.dashboard.page.TenantDashboardPage.team_members__29ckols")}
-              </CardTitle>
-              <CardDescription>
-                {t("Manage your team members and their roles", "tenants.dashboard.page.TenantDashboardPage.manage_your_team_members_and_their_roles__30ckols")}
-              </CardDescription>
-            </div>
-            <Button
-              onClick={() => setShowInviteForm(true)}
-              className="flex items-center gap-2"
-            >
-              <Plus className="h-4 w-4" />
-              {t("Invite User", "tenants.dashboard.page.TenantDashboardPage.invite_user__31ckols")}
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          {memberships && memberships.length > 0 ? (
-            <div className="space-y-3">
-              {memberships.map((membership) => (
-                <div
-                  key={membership.id}
-                  className="flex items-center justify-between p-3 border border-gray-200 rounded-lg"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                      {membership.user.image ? (
-                        <img
-                          src={membership.user.image}
-                          alt={membership.user.name || "User"}
-                          className="h-10 w-10 rounded-full"
-                        />
-                      ) : (
-                        <span className="text-sm font-medium text-gray-600">
-                          {membership.user.name?.charAt(0) || membership.user.email?.charAt(0) || "U"}
-                        </span>
-                      )}
-                    </div>
-                    <div>
-                      <div className="font-medium text-gray-900">
-                        {membership.user.name || "Unnamed User"}
-                      </div>
-                      <div className="text-sm text-gray-500">{membership.user.email}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    {getRoleBadge(membership.role)}
-                    <div className="text-sm text-gray-500">
-                      {t("Joined", "tenants.dashboard.page.TenantDashboardPage.joined__32ckols")} {new Date(membership.createdAt).toLocaleDateString()}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8 text-gray-500">
-              <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-              <p>{t("No team members yet", "tenants.dashboard.page.TenantDashboardPage.no_team_members_yet__33ckols")}</p>
-              <p className="text-sm">{t("Invite your first team member to get started", "tenants.dashboard.page.TenantDashboardPage.invite_your_first_team_member_to_get_started__34ckols")}</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
 
       {/* Tenant Information */}
       <Card>

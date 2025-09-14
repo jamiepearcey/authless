@@ -121,7 +121,7 @@ export default function WelcomePage() {
   const Icon = currentStepData.icon;
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-4xl mx-auto  py-12">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full shadow-lg mb-6">

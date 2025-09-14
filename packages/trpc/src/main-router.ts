@@ -17,7 +17,10 @@ import { supportNotificationsRouter } from "./routers/support-notifications";
 import { tenantSupportRoutingRouter } from "./routers/tenant-support-routing";
 import { tenantSsoRouter } from "./routers/tenant-sso";
 import { outboxRouter } from "./routers/outbox";
+import { inboxRouter } from "./routers/inbox";
+import { securityRouter } from "./routers/security";
 import { auditRouter } from "./routers/audit";
+import { platformSettingsRouter } from "./routers/platform-settings";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -47,6 +50,7 @@ const appRouter = router({
   changePassword: userRouter.changePassword,
   deleteUser: userRouter.deleteUser,
   getAllUsers: userRouter.getAllUsers,
+  searchUsers: userRouter.searchUsers,
 
   // Tenant management
   createTenant: tenantRouter.createTenant,
@@ -210,16 +214,37 @@ const appRouter = router({
     tenantSupportRoutingRouter.deleteTenantSupportRouting,
 
   // Outbox Event Management (Platform Admin)
-  getOutboxStats: outboxRouter.getStats,
-  getOutboxEvents: outboxRouter.getEvents,
-  getOutboxEventById: outboxRouter.getEventById,
+  getOutboxStats: outboxRouter.getOutboxStats,
+  getOutboxEvents: outboxRouter.getOutboxEvents,
+  getOutboxEventById: outboxRouter.getOutboxEventById,
   retryFailedEvents: outboxRouter.retryFailedEvents,
   resetStuckEvents: outboxRouter.resetStuckEvents,
   cleanupProcessedEvents: outboxRouter.cleanupProcessedEvents,
+  restartDeadEvents: outboxRouter.restartDeadEvents,
+  restartDeadEventById: outboxRouter.restartDeadEventById,
   getEventsByTenant: outboxRouter.getEventsByTenant,
   getEventsByType: outboxRouter.getEventsByType,
-  getOutboxEventTypes: outboxRouter.getEventTypes,
+  getOutboxEventTypes: outboxRouter.getOutboxEventTypes,
   getOutboxTenantIds: outboxRouter.getTenantIds,
+
+  // Inbox Event Management (Platform Admin)
+  getInboxStats: inboxRouter.getStats,
+  getInboxEvents: inboxRouter.getEvents,
+  getInboxEventById: inboxRouter.getEventById,
+  getInboxEventTypes: inboxRouter.getEventTypes,
+  getInboxSources: inboxRouter.getSources,
+  insertInboxEvent: inboxRouter.insertEvent,
+  retryFailedInboxEvents: inboxRouter.retryFailedEvents,
+  resetStuckInboxEvents: inboxRouter.resetStuckEvents,
+  cleanupProcessedInboxEvents: inboxRouter.cleanupProcessedEvents,
+  deleteInboxEvent: inboxRouter.deleteEvent,
+
+  // Security Management (Platform Admin)
+  getFailedLogins: securityRouter.getFailedLogins,
+  getActiveSessions: securityRouter.getActiveSessions,
+  getRecentAuditEvents: securityRouter.getRecentAuditEvents,
+  updateSecuritySettings: securityRouter.updateSecuritySettings,
+  getSecurityStats: securityRouter.getSecurityStats,
 
   // Audit Event Management (Platform Admin & Tenant Admin)
   getAuditEvents: auditRouter.getAuditEvents,
@@ -227,6 +252,10 @@ const appRouter = router({
   getAuditStats: auditRouter.getAuditStats,
   getAuditFilterOptions: auditRouter.getFilterOptions,
   getAuditEventById: auditRouter.getAuditEventById,
+
+  // Platform Settings (Platform Admin)
+  getPlatformSettings: platformSettingsRouter.getPlatformSettings,
+  updatePlatformSettings: platformSettingsRouter.updatePlatformSettings,
 });
 
 // Export the router and type for client usage

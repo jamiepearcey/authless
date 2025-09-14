@@ -99,7 +99,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
     <AuthGuard>
       <div className="flex-1 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto  py-8">
           <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
             {/* Sidebar */}
             <aside className="lg:col-span-3">

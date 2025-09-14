@@ -219,7 +219,7 @@ export default function Verify2FAPage() {
 
   if (!nonce || !pendingAuth) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading authentication session...</p>
@@ -230,7 +230,7 @@ export default function Verify2FAPage() {
 
   if (availableMethods.length === 0) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
         <Card className="max-w-md w-full">
           <CardContent className="text-center p-6">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
@@ -246,7 +246,7 @@ export default function Verify2FAPage() {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
       <div className="max-w-md w-full space-y-8">
         <Card className="shadow-lg">
           <CardHeader className="space-y-1">

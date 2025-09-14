@@ -189,8 +189,6 @@ exports.Prisma.TenantScalarFieldEnum = {
   status: 'status',
   subdomain: 'subdomain',
   customDomain: 'customDomain',
-  domainAlias: 'domainAlias',
-  registrationClosed: 'registrationClosed',
   logoUrl: 'logoUrl',
   theme: 'theme',
   primaryColor: 'primaryColor',
@@ -217,7 +215,9 @@ exports.Prisma.TenantScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   suspendedAt: 'suspendedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  domainAlias: 'domainAlias',
+  registrationClosed: 'registrationClosed'
 };
 
 exports.Prisma.TenantSsoConfigurationScalarFieldEnum = {
@@ -375,8 +375,8 @@ exports.Prisma.AuditLogScalarFieldEnum = {
   userAgent: 'userAgent',
   metadata: 'metadata',
   severity: 'severity',
-  traceId: 'traceId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  traceId: 'traceId'
 };
 
 exports.Prisma.PasskeyScalarFieldEnum = {
@@ -678,6 +678,7 @@ exports.Prisma.OutboxEventScalarFieldEnum = {
   tries: 'tries',
   nextAttemptAt: 'nextAttemptAt',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   lastError: 'lastError',
   traceId: 'traceId'
 };
@@ -696,7 +697,6 @@ exports.Prisma.AuditEventScalarFieldEnum = {
   sourceHost: 'sourceHost',
   requestId: 'requestId',
   correlationId: 'correlationId',
-  traceId: 'traceId',
   actorType: 'actorType',
   actorId: 'actorId',
   actorName: 'actorName',
@@ -713,7 +713,26 @@ exports.Prisma.AuditEventScalarFieldEnum = {
   actionReason: 'actionReason',
   metadata: 'metadata',
   originalPayload: 'originalPayload',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  traceId: 'traceId'
+};
+
+exports.Prisma.InboxEventScalarFieldEnum = {
+  id: 'id',
+  eventType: 'eventType',
+  aggregateType: 'aggregateType',
+  aggregateId: 'aggregateId',
+  tenantId: 'tenantId',
+  payloadJson: 'payloadJson',
+  idempotencyKey: 'idempotencyKey',
+  status: 'status',
+  tries: 'tries',
+  nextAttemptAt: 'nextAttemptAt',
+  createdAt: 'createdAt',
+  lastError: 'lastError',
+  traceId: 'traceId',
+  source: 'source',
+  sourceId: 'sourceId'
 };
 
 exports.Prisma.SortOrder = {
@@ -784,7 +803,8 @@ exports.Prisma.ModelName = {
   SupportConfiguration: 'SupportConfiguration',
   TenantSupportRouting: 'TenantSupportRouting',
   OutboxEvent: 'OutboxEvent',
-  AuditEvent: 'AuditEvent'
+  AuditEvent: 'AuditEvent',
+  InboxEvent: 'InboxEvent'
 };
 
 /**

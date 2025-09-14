@@ -17,6 +17,15 @@ import {
   SelectValue,
   Textarea,
   Separator,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Input,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
 } from "@ui/base";
 import { 
   ArrowLeft,
@@ -32,6 +41,8 @@ import {
   Save,
   X,
   HeadphonesIcon,
+  Search,
+  Loader2,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 
@@ -88,6 +99,9 @@ export default function SupportCaseDetailPage() {
     priority: "",
     assigneeId: "",
   });
+  const [showAssignModal, setShowAssignModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedAssignee, setSelectedAssignee] = useState<any>(null);
 
   // Get tenant data first
   const { data: tenant } = trpc.getTenant.useQuery(
@@ -122,6 +136,26 @@ export default function SupportCaseDetailPage() {
       toast.success("Reply added successfully!");
       setReplyText("");
       refetchMessages();
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  // Search users for assignment
+  const { data: searchResults, isLoading: isSearching } = trpc.searchUsers.useQuery(
+    { query: searchQuery, limit: 10 },
+    { enabled: searchQuery.length >= 2 }
+  );
+
+  // Assign case mutation
+  const assignCase = trpc.assignCase.useMutation({
+    onSuccess: () => {
+      toast.success("Case assigned successfully!");
+      setShowAssignModal(false);
+      setSearchQuery("");
+      setSelectedAssignee(null);
       refetch();
     },
     onError: (error) => {
@@ -165,6 +199,32 @@ export default function SupportCaseDetailPage() {
         content: replyText.trim(),
         fromAddress: "support",
         toAddress: supportCase.contactMessage?.email || "customer",
+      });
+    } catch (error) {
+      // Handled by mutation
+    }
+  };
+
+  const handleAssignCase = async () => {
+    if (!supportCase || !selectedAssignee) return;
+    
+    try {
+      await assignCase.mutateAsync({
+        caseId: supportCase.id,
+        assigneeId: selectedAssignee.id,
+      });
+    } catch (error) {
+      // Handled by mutation
+    }
+  };
+
+  const handleUnassignCase = async () => {
+    if (!supportCase) return;
+    
+    try {
+      await assignCase.mutateAsync({
+        caseId: supportCase.id,
+        assigneeId: null,
       });
     } catch (error) {
       // Handled by mutation
@@ -309,6 +369,27 @@ export default function SupportCaseDetailPage() {
                     {new Date(supportCase.createdAt).toLocaleDateString()}
                   </p>
                 </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-500">Assigned To</label>
+                  <div className="mt-1">
+                    {supportCase.assignee ? (
+                      <div className="flex items-center space-x-2">
+                        <Avatar className="h-6 w-6">
+                          <AvatarImage src={supportCase.assignee.image || undefined} />
+                          <AvatarFallback className="text-xs">
+                            {supportCase.assignee.name?.charAt(0) || "U"}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">{supportCase.assignee.name}</p>
+                          <p className="text-xs text-gray-500">{supportCase.assignee.email}</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <span className="text-sm text-gray-500">Unassigned</span>
+                    )}
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -440,10 +521,128 @@ export default function SupportCaseDetailPage() {
                 <MessageSquare className="h-4 w-4 mr-2" />
                 Send Email
               </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <User className="h-4 w-4 mr-2" />
-                Assign to Staff
-              </Button>
+              <Dialog open={showAssignModal} onOpenChange={setShowAssignModal}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full justify-start">
+                    <User className="h-4 w-4 mr-2" />
+                    {supportCase?.assignee ? "Reassign Staff" : "Assign to Staff"}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>
+                      {supportCase?.assignee ? "Reassign Case" : "Assign Case to Staff"}
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    {/* Current Assignee */}
+                    {supportCase?.assignee && (
+                      <div className="p-3 bg-gray-50 rounded-lg">
+                        <p className="text-sm font-medium text-gray-700 mb-2">Current Assignee:</p>
+                        <div className="flex items-center space-x-3">
+                          <Avatar className="h-8 w-8">
+                            <AvatarImage src={supportCase.assignee.image || undefined} />
+                            <AvatarFallback>
+                              {supportCase.assignee.name?.charAt(0) || "U"}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="text-sm font-medium">{supportCase.assignee.name}</p>
+                            <p className="text-xs text-gray-500">{supportCase.assignee.email}</p>
+                          </div>
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={handleUnassignCase}
+                          disabled={assignCase.isPending}
+                          className="mt-2"
+                        >
+                          {assignCase.isPending ? "Unassigning..." : "Unassign"}
+                        </Button>
+                      </div>
+                    )}
+
+                    {/* Search for New Assignee */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Search for staff member:</label>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Input
+                          placeholder="Type name or email..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="pl-10"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Search Results */}
+                    {searchQuery.length >= 2 && (
+                      <div className="space-y-2 max-h-60 overflow-y-auto">
+                        {isSearching ? (
+                          <div className="flex items-center justify-center py-4">
+                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                            <span className="text-sm text-gray-500">Searching...</span>
+                          </div>
+                        ) : searchResults && searchResults.length > 0 ? (
+                          searchResults.map((user: any) => (
+                            <div
+                              key={user.id}
+                              className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                                selectedAssignee?.id === user.id
+                                  ? "border-blue-500 bg-blue-50"
+                                  : "border-gray-200 hover:bg-gray-50"
+                              }`}
+                              onClick={() => setSelectedAssignee(user)}
+                            >
+                              <div className="flex items-center space-x-3">
+                                <Avatar className="h-8 w-8">
+                                  <AvatarImage src={user.image || undefined} />
+                                  <AvatarFallback>
+                                    {user.name?.charAt(0) || "U"}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div className="flex-1">
+                                  <p className="text-sm font-medium">{user.name}</p>
+                                  <p className="text-xs text-gray-500">{user.email}</p>
+                                  <Badge variant="outline" className="text-xs mt-1">
+                                    {user.platformRole}
+                                  </Badge>
+                                </div>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <p className="text-sm text-gray-500 text-center py-4">
+                            No staff members found
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Action Buttons */}
+                    <div className="flex justify-end space-x-2 pt-4">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setShowAssignModal(false);
+                          setSearchQuery("");
+                          setSelectedAssignee(null);
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={handleAssignCase}
+                        disabled={!selectedAssignee || assignCase.isPending}
+                      >
+                        {assignCase.isPending ? "Assigning..." : "Assign Case"}
+                      </Button>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
               <Button variant="outline" className="w-full justify-start">
                 <Clock className="h-4 w-4 mr-2" />
                 Set Reminder

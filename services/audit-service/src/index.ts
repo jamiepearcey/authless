@@ -109,6 +109,39 @@ export class AuditService {
     this.logger = this.wrapper.getLogger();
   }
 
+  private normalizeTimestamp(timestamp: any): Date {
+    if (typeof timestamp === 'string') {
+      // Handle malformed timestamps like "2025-09-14T21:58:34.3NZ"
+      let timestampStr = timestamp;
+      
+      // Fix common malformed timestamp patterns
+      if (timestampStr.includes('NZ') && !timestampStr.endsWith('Z')) {
+        // Replace "3NZ" with "300Z" (pad milliseconds and fix timezone)
+        timestampStr = timestampStr.replace(/(\d)NZ$/, '$1000Z');
+      }
+      
+      const normalized = new Date(timestampStr);
+      
+      // If still invalid, use current time
+      if (isNaN(normalized.getTime())) {
+        this.logger.warn({
+          originalTimestamp: timestamp,
+        }, 'Invalid timestamp format, using current time');
+        return new Date();
+      }
+      
+      return normalized;
+    } else if (timestamp instanceof Date) {
+      return timestamp;
+    } else {
+      // Fallback to current time
+      this.logger.warn({
+        originalTimestamp: timestamp,
+      }, 'Unexpected timestamp type, using current time');
+      return new Date();
+    }
+  }
+
   private createJetStreamService(): JetStreamService {
     return {
       hooks: {
@@ -141,6 +174,11 @@ export class AuditService {
 
           if (!auditEvent || !auditEvent.eventName) {
             throw new Error('Invalid audit event format: missing eventName');
+          }
+
+          // Fix timestamp if it's a string (normalize malformed timestamps)
+          if (typeof auditEvent.timestamp === 'string') {
+            auditEvent.timestamp = this.normalizeTimestamp(auditEvent.timestamp);
           }
 
           // Check for custom audit handler first
@@ -192,38 +230,35 @@ export class AuditService {
 
   private async storeAuditEvent(auditEvent: AuditEvent): Promise<void> {
     const query = `
-      INSERT INTO "AuditEvent" (
-        id, "eventType", "eventName", "tenantId", "userId", "aggregateType", "aggregateId",
-        timestamp, "sourceService", "sourceVersion", "actorType", "actorId", "actorName",
-        "actorEmail", "resourceType", "resourceId", "resourceName", "actionType",
-        "actionDescription", "actionOutcome", "actionReason", metadata, "originalPayload"
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
+      INSERT INTO "AuditLog" (
+        id, "tenantId", "userId", action, "resourceType", "resourceId", 
+        details, "ipAddress", "userAgent", metadata, severity, "createdAt", "traceId"
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
     `;
 
+    // Map AuditEvent to AuditLog schema
     const values = [
       auditEvent.id,
-      auditEvent.eventType,
-      auditEvent.eventName,
       auditEvent.tenantId,
       auditEvent.userId,
-      auditEvent.aggregateType,
-      auditEvent.aggregateId,
-      auditEvent.timestamp,
-      auditEvent.source.service,
-      auditEvent.source.version,
-      auditEvent.actor?.type,
-      auditEvent.actor?.id,
-      auditEvent.actor?.name,
-      auditEvent.actor?.email,
+      auditEvent.action.type || auditEvent.eventType,
       auditEvent.resource?.type,
       auditEvent.resource?.id,
-      auditEvent.resource?.name,
-      auditEvent.action.type,
-      auditEvent.action.description,
-      auditEvent.action.outcome,
-      auditEvent.action.reason,
+      JSON.stringify({
+        eventType: auditEvent.eventType,
+        eventName: auditEvent.eventName,
+        aggregateType: auditEvent.aggregateType,
+        aggregateId: auditEvent.aggregateId,
+        source: auditEvent.source,
+        action: auditEvent.action,
+        originalPayload: auditEvent.originalPayload
+      }),
+      auditEvent.actor?.ipAddress,
+      auditEvent.actor?.userAgent,
       auditEvent.metadata ? JSON.stringify(auditEvent.metadata) : null,
-      JSON.stringify(auditEvent.originalPayload)
+      auditEvent.action.outcome === 'failure' ? 'error' : 'info',
+      auditEvent.timestamp,
+      auditEvent.source?.correlationId
     ];
 
     await this.db.query(query, values);

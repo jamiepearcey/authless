@@ -69,31 +69,16 @@ const navigationStructure: NavigationItem[] = [
     label: "Demos",
     items: [
       {
-        label: "Data Management",
-        href: "/data-management",
-        icon: Database,
-        description: "Advanced data grid with master-detail views",
-        adminOnly: true
-      },
-      {
         label: "Workflows",
         href: "/workflows/demo",
         icon: Workflow,
         description: "Workflow automation and process management"
       },
       {
-        label: "Grid Components",
-        href: "/components/grid",
-        icon: Grid3X3,
-        description: "Interactive data tables and grids",
-        comingSoon: true
-      },
-      {
-        label: "Form Builder",
-        href: "/components/forms",
-        icon: FileText,
-        description: "Dynamic form generation and validation",
-        comingSoon: true
+        label: "FlexLayout Trading",
+        href: "/demo/flexlayout-trading",
+        icon: BarChart3,
+        description: "Advanced trading terminal with flexible layouts"
       }
     ]
   },

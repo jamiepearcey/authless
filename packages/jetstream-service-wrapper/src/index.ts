@@ -445,7 +445,7 @@ export class JetStreamServiceWrapper implements ServiceRunner {
       try {
         await jsm.streams.add({
           name: this.config.streamName,
-          subjects: ['events.*'], // Accept all events.* subjects
+          subjects: ['events.*.*'], // Accept all events.* subjects
           retention: RetentionPolicy.Limits,
           max_age: 24 * 60 * 60 * 1000 * 1000 * 1000, // 24 hours in nanoseconds
           max_msgs: 1000000,
@@ -610,6 +610,7 @@ export class JetStreamServiceWrapper implements ServiceRunner {
 
       try {
         const data = safeParse(msg);
+        this.logger.info({ data }, 'Processing message');
         await this.service.processMessage(data, ctx);
         msg.ack();
         this.state.markOk();

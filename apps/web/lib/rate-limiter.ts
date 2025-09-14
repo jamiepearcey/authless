@@ -192,7 +192,7 @@ export const defaultRateLimit = createRateLimit({
 });
 
 export const apiRateLimit = createRateLimit({
-  points: 50,
+  points: 100,
   duration: 60,
   keyPrefix: 'api',
 });

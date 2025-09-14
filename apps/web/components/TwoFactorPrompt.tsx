@@ -289,7 +289,7 @@ export default function TwoFactorPrompt({
   // Default banner variant
   return (
     <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto ">
         <div className="flex items-center justify-between py-3">
           <div className="flex items-center space-x-3">
             <Shield className="h-5 w-5 text-blue-600" />

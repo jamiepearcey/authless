@@ -28,7 +28,7 @@ export const exampleConfig: EmailServiceConfig = {
   
   // Health and monitoring
   port: 8080,
-  metricsPort: 9091,
+  metricsPort: 9093,
   
   // Filter subjects for email events
   filterSubjects: ['email.*'],

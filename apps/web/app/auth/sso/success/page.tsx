@@ -51,7 +51,7 @@ export default function SsoSuccessPage() {
 
   if (error) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
         <div className="max-w-md w-full">
           <Card className="shadow-lg">
             <CardHeader className="space-y-1">
@@ -81,7 +81,7 @@ export default function SsoSuccessPage() {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
       <div className="max-w-md w-full">
         <Card className="shadow-lg">
           <CardHeader className="space-y-1">

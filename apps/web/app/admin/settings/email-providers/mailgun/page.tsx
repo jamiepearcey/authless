@@ -163,7 +163,7 @@ export default function MailgunProviderPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-4">
         <div className="flex justify-between items-center">
           <div>
             <div className="flex items-center space-x-4 mb-4">

@@ -182,7 +182,7 @@ export default function SignInPage() {
   // Show loading spinner while checking for SSO
   if (checkingSSO) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
         <div className="max-w-md w-full space-y-8">
           <Card className="shadow-lg">
             <CardContent className="flex flex-col items-center justify-center py-12">
@@ -196,7 +196,7 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
       <div className="max-w-md w-full space-y-8">
         <Card className="shadow-lg">
           <CardHeader className="space-y-1">

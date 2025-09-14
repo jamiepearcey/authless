@@ -12,7 +12,9 @@ import {
   HelpCircle,
   Home,
   Database,
-  Activity
+  Activity,
+  Mail,
+  Zap
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -58,6 +60,12 @@ export function AdminSidebar({ className }: AdminSidebarProps) {
       href: "/admin/security",
       icon: Shield,
       description: "Security settings"
+    },
+    {
+      name: "Inbox",
+      href: "/admin/inbox",
+      icon: Mail,
+      description: "Inbound event monitoring"
     },
     {
       name: "Outbox",

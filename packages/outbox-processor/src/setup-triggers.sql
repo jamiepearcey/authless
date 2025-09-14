@@ -1,6 +1,6 @@
 -- PostgreSQL trigger function and trigger for instant outbox event notifications
 -- This provides low-latency processing by waking up the processor immediately
--- when new events are inserted into the outbox_events table
+-- when new events are inserted into the OutboxEvent table
 
 -- Create the notification function
 CREATE OR REPLACE FUNCTION notify_outbox() RETURNS TRIGGER AS $$
@@ -31,16 +31,16 @@ CREATE TRIGGER trg_outbox_retry_notify
   EXECUTE FUNCTION notify_outbox();
 
 -- Create index for efficient pending event queries if not exists
-CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_outbox_events_pending_processing 
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_OutboxEvent_pending_processing 
 ON "OutboxEvent" (status, "nextAttemptAt", "createdAt", id) 
 WHERE status IN ('pending', 'processing');
 
 -- Create partial index for faster cleanup queries
-CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_outbox_events_sent_cleanup
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_OutboxEvent_sent_cleanup
 ON "OutboxEvent" ("createdAt")
 WHERE status = 'sent';
 
-CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_outbox_events_dead_cleanup  
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_OutboxEvent_dead_cleanup  
 ON "OutboxEvent" ("createdAt")
 WHERE status = 'dead';
 

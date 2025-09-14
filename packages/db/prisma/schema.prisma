@@ -32,70 +32,61 @@ model Session {
   userId       String
   tenantId     String?
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   tenant       Tenant?  @relation(fields: [tenantId], references: [id])
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([tenantId])
 }
 
 model User {
-  id                     String                  @id @default(cuid())
-  name                   String?
-  email                  String?                 @unique
-  emailVerified          DateTime?
-  image                  String?
-  hashedPassword         String?
-  isEmailVerified        Boolean                 @default(false)
-  emailVerificationToken String?                 @unique
-  passwordResetToken     String?                 @unique
-  passwordResetExpires   DateTime?
-  platformRole           String?
-  status                 String                  @default("active")
-  lastLoginAt            DateTime?
-  twoFactorSecret        String?
-  twoFactorEnabled       Boolean                 @default(false)
-  
-  // Profile fields
-  bio                    String?
-  location               String?
-  website                String?
-  timezone               String                  @default("UTC")
-  locale                 String                  @default("en")
-  
-  // Notification preferences
-  emailNotifications     Boolean                 @default(true)
-  marketingEmails        Boolean                 @default(false)
-  securityAlerts         Boolean                 @default(true)
-  activityUpdates        Boolean                 @default(false)
-  
-  // Support notification preferences  
+  id                        String                  @id @default(cuid())
+  name                      String?
+  email                     String?                 @unique
+  emailVerified             DateTime?
+  image                     String?
+  hashedPassword            String?
+  isEmailVerified           Boolean                 @default(false)
+  emailVerificationToken    String?                 @unique
+  passwordResetToken        String?                 @unique
+  passwordResetExpires      DateTime?
+  platformRole              String?
+  status                    String                  @default("active")
+  lastLoginAt               DateTime?
+  twoFactorSecret           String?
+  twoFactorEnabled          Boolean                 @default(false)
+  bio                       String?
+  location                  String?
+  website                   String?
+  timezone                  String                  @default("UTC")
+  locale                    String                  @default("en")
+  emailNotifications        Boolean                 @default(true)
+  marketingEmails           Boolean                 @default(false)
+  securityAlerts            Boolean                 @default(true)
+  activityUpdates           Boolean                 @default(false)
   notifySupportRepliesUI    Boolean                 @default(true)
   notifySupportRepliesEmail Boolean                 @default(true)
-  
-  createdAt              DateTime                @default(now())
-  updatedAt              DateTime                @updatedAt
-  accounts               Account[]
-  auditLogs              AuditLog[]
-  authenticatorCodes     AuthenticatorCode[]
-  contactMessages        ContactMessage[]
-  sentInvitations        Invitation[]            @relation("InvitedBy")
-  acceptedInvitations    Invitation[]            @relation("InvitationAcceptedBy")
-  memberships            Membership[]
-  invitedMemberships     Membership[]            @relation("InvitedBy")
-  notifications          Notification[]
-  notificationRecipients NotificationRecipient[]
-  passkeys               Passkey[]
-  sessions               Session[]
-  twoFactorMethods       TwoFactorMethod[]
-  
-  // Support system relations
-  assignedCases          SupportCase[]           @relation("CaseAssignee") 
-  caseStatusChanges      CaseStatusHistory[]     @relation("StatusChangedBy")
-  caseMetrics            CaseMetrics[]           @relation("CaseMetricsAssignee")
-  pendingAuths           PendingAuth[]
-  twoFactorCodes         TwoFactorCode[]
-  twoFactorAudits        TwoFactorAudit[]
-  ssoAuditLogs           SsoAuditLog[]
+  createdAt                 DateTime                @default(now())
+  updatedAt                 DateTime                @updatedAt
+  accounts                  Account[]
+  auditLogs                 AuditLog[]
+  authenticatorCodes        AuthenticatorCode[]
+  caseMetrics               CaseMetrics[]           @relation("CaseMetricsAssignee")
+  caseStatusChanges         CaseStatusHistory[]     @relation("StatusChangedBy")
+  contactMessages           ContactMessage[]
+  acceptedInvitations       Invitation[]            @relation("InvitationAcceptedBy")
+  sentInvitations           Invitation[]            @relation("InvitedBy")
+  invitedMemberships        Membership[]            @relation("InvitedBy")
+  memberships               Membership[]
+  notifications             Notification[]
+  notificationRecipients    NotificationRecipient[]
+  passkeys                  Passkey[]
+  pendingAuths              PendingAuth[]
+  sessions                  Session[]
+  ssoAuditLogs              SsoAuditLog[]
+  assignedCases             SupportCase[]           @relation("CaseAssignee")
+  twoFactorAudits           TwoFactorAudit[]
+  twoFactorCodes            TwoFactorCode[]
+  twoFactorMethods          TwoFactorMethod[]
 
   @@index([email])
   @@index([platformRole])
@@ -112,70 +103,65 @@ model VerificationToken {
 }
 
 model Tenant {
-  id                             String            @id @default(cuid())
-  slug                           String            @unique
+  id                             String                  @id @default(cuid())
+  slug                           String                  @unique
   name                           String
-  status                         String            @default("active")
-  subdomain                      String?           @unique
-  customDomain                   String?           @unique
-  domainAlias                    String?           @unique // Custom domain alias for tenancy access
-  registrationClosed             Boolean           @default(false) // Whether registration is closed for this tenancy
+  status                         String                  @default("active")
+  subdomain                      String?                 @unique
+  customDomain                   String?                 @unique
   logoUrl                        String?
   theme                          String?
   primaryColor                   String?
   secondaryColor                 String?
-  invitePolicy                   String            @default("admin_only")
-  emailVerificationBypassEnabled Boolean           @default(false)
-  locale                         String            @default("en")
-  timezone                       String            @default("UTC")
-  plan                           String            @default("free")
+  invitePolicy                   String                  @default("admin_only")
+  emailVerificationBypassEnabled Boolean                 @default(false)
+  locale                         String                  @default("en")
+  timezone                       String                  @default("UTC")
+  plan                           String                  @default("free")
   limits                         String?
   featureFlags                   String?
-  ssoEnabled                     Boolean           @default(false)
+  ssoEnabled                     Boolean                 @default(false)
   ssoProvider                    String?
-  billingEnabled                 Boolean           @default(false)
+  billingEnabled                 Boolean                 @default(false)
   stripeCustomerId               String?
   currentPeriodStart             DateTime?
   currentPeriodEnd               DateTime?
-  cancelAtPeriodEnd              Boolean           @default(false)
+  cancelAtPeriodEnd              Boolean                 @default(false)
   description                    String?
   website                        String?
   industry                       String?
   size                           String?
-  contactEmail                   String?           // Contact email for support and business inquiries
-  createdAt                      DateTime          @default(now())
-  updatedAt                      DateTime          @updatedAt
+  contactEmail                   String?
+  createdAt                      DateTime                @default(now())
+  updatedAt                      DateTime                @updatedAt
   suspendedAt                    DateTime?
   deletedAt                      DateTime?
+  domainAlias                    String?                 @unique
+  registrationClosed             Boolean                 @default(false)
   auditLogs                      AuditLog[]
+  caseMetrics                    CaseMetrics[]
   contactMessages                ContactMessage[]
   contactReasons                 ContactReason[]
+  featureAuditEntries            FeatureAuditEntry[]
   invitations                    Invitation[]
   memberships                    Membership[]
   notifications                  Notification[]
-  sessions                       Session[]
-  webhookEndpoints               WebhookEndpoint[]
-  featureRules                   TenantFeatureRule[]
-  featureAuditEntries           FeatureAuditEntry[]
-  twoFactorMethods               TwoFactorMethod[]
   pendingAuths                   PendingAuth[]
-  twoFactorCodes                 TwoFactorCode[]
-  twoFactorAudits                TwoFactorAudit[]
-  
-  // Support system relations
-  supportOptions                 SupportOption[]
-  supportCases                   SupportCase[]
-  caseMetrics                    CaseMetrics[]
-  supportConfigurations          SupportConfiguration[]
-  supportRouting                 TenantSupportRouting[]
-  
-  // SSO configuration
-  ssoConfiguration               TenantSsoConfiguration?
+  sessions                       Session[]
   ssoAuditLogs                   SsoAuditLog[]
+  supportCases                   SupportCase[]
+  supportConfigurations          SupportConfiguration[]
+  supportOptions                 SupportOption[]
+  featureRules                   TenantFeatureRule[]
+  ssoConfiguration               TenantSsoConfiguration?
+  supportRouting                 TenantSupportRouting[]
+  twoFactorAudits                TwoFactorAudit[]
+  twoFactorCodes                 TwoFactorCode[]
+  twoFactorMethods               TwoFactorMethod[]
+  webhookEndpoints               WebhookEndpoint[]
 
   @@index([slug])
   @@index([subdomain])
-  @@index([domainAlias])
   @@index([status])
   @@index([plan])
   @@index([createdAt])
@@ -184,90 +170,72 @@ model Tenant {
 }
 
 model TenantSsoConfiguration {
-  id                    String   @id @default(cuid())
-  tenantId              String   @unique
-  
-  // Basic SSO configuration
-  provider              String   // "saml", "oidc", "azure-ad", "google-workspace", "okta", "auth0", etc.
-  providerName          String   // Display name for the provider
-  isEnabled             Boolean  @default(false)
-  enforceSSO            Boolean  @default(false) // If true, disable password login for this tenant
-  
-  // SAML Configuration
-  samlEntityId          String?  // SAML Entity ID
-  samlSsoUrl            String?  // SAML SSO URL
-  samlSloUrl            String?  // SAML SLO URL (optional)
-  samlCertificate       String?  // X.509 Certificate (PEM format)
-  samlSigningCert       String?  // Signing certificate if different
-  samlNameIdFormat      String?  // Name ID format
-  samlAttributeMapping  Json?    // Attribute mappings for user data
-  
-  // OIDC Configuration
-  oidcIssuer            String?  // OIDC Issuer URL
-  oidcClientId          String?  // OIDC Client ID
-  oidcClientSecret      String?  // OIDC Client Secret (encrypted)
-  oidcScopes            String?  // Space-separated scopes
-  oidcTokenEndpoint     String?  // Token endpoint URL
-  oidcAuthEndpoint      String?  // Authorization endpoint URL
-  oidcUserinfoEndpoint  String?  // Userinfo endpoint URL
-  oidcJwksUri           String?  // JWKS URI for token verification
-  
-  // Generic OAuth2 Configuration (for providers like Azure AD)
-  oauth2ClientId        String?
-  oauth2ClientSecret    String?  // Encrypted
-  oauth2AuthUrl         String?
-  oauth2TokenUrl        String?
-  oauth2UserInfoUrl     String?
-  oauth2Scopes          String?
-  
-  // User provisioning settings
-  autoProvisionUsers    Boolean  @default(true)   // Auto-create users on first SSO login
-  defaultRole           String   @default("member") // Default role for new SSO users
-  allowedDomains        String?  // Comma-separated list of allowed email domains
-  userAttributeMapping  Json?    // Mapping of SSO attributes to user fields
-  
-  // Security settings
-  signAssertions        Boolean  @default(true)   // Require signed SAML assertions
-  signRequests          Boolean  @default(false)  // Sign SAML requests
-  encryptAssertions     Boolean  @default(false)  // Encrypt SAML assertions
-  sessionTimeout        Int?     @default(480)    // Session timeout in minutes
-  
-  // Audit and metadata
-  lastSyncAt            DateTime?
-  lastLoginAt           DateTime?
-  totalLogins           Int      @default(0)
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  createdBy             String   // User ID who configured SSO
-  updatedBy             String   // User ID who last updated SSO
-  
-  // Relations
-  tenant                Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  
+  id                   String    @id @default(cuid())
+  tenantId             String    @unique
+  provider             String
+  providerName         String
+  isEnabled            Boolean   @default(false)
+  enforceSSO           Boolean   @default(false)
+  samlEntityId         String?
+  samlSsoUrl           String?
+  samlSloUrl           String?
+  samlCertificate      String?
+  samlSigningCert      String?
+  samlNameIdFormat     String?
+  samlAttributeMapping Json?
+  oidcIssuer           String?
+  oidcClientId         String?
+  oidcClientSecret     String?
+  oidcScopes           String?
+  oidcTokenEndpoint    String?
+  oidcAuthEndpoint     String?
+  oidcUserinfoEndpoint String?
+  oidcJwksUri          String?
+  oauth2ClientId       String?
+  oauth2ClientSecret   String?
+  oauth2AuthUrl        String?
+  oauth2TokenUrl       String?
+  oauth2UserInfoUrl    String?
+  oauth2Scopes         String?
+  autoProvisionUsers   Boolean   @default(true)
+  defaultRole          String    @default("member")
+  allowedDomains       String?
+  userAttributeMapping Json?
+  signAssertions       Boolean   @default(true)
+  signRequests         Boolean   @default(false)
+  encryptAssertions    Boolean   @default(false)
+  sessionTimeout       Int?      @default(480)
+  lastSyncAt           DateTime?
+  lastLoginAt          DateTime?
+  totalLogins          Int       @default(0)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  createdBy            String
+  updatedBy            String
+  tenant               Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@index([tenantId])
   @@index([provider])
   @@index([isEnabled])
 }
 
 model SsoAuditLog {
-  id                String   @id @default(cuid())
-  tenantId          String
-  userId            String?  // User involved in the SSO event (if applicable)
-  event             String   // "login_attempt", "login_success", "login_failure", "config_updated", etc.
-  provider          String   // SSO provider used
-  ipAddress         String?
-  userAgent         String?
-  samlRequestId     String?  // SAML request ID for correlation
-  samlResponseId    String?  // SAML response ID for correlation
-  errorMessage      String?  // Error details for failed attempts
-  attributes        Json?    // Additional attributes from SSO response
-  sessionId         String?  // Session ID created
-  createdAt         DateTime @default(now())
-  
-  // Relations
-  tenant            Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  user              User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  id             String   @id @default(cuid())
+  tenantId       String
+  userId         String?
+  event          String
+  provider       String
+  ipAddress      String?
+  userAgent      String?
+  samlRequestId  String?
+  samlResponseId String?
+  errorMessage   String?
+  attributes     Json?
+  sessionId      String?
+  createdAt      DateTime @default(now())
+  tenant         Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([tenantId])
   @@index([userId])
   @@index([event])
@@ -287,9 +255,9 @@ model Membership {
   lastActiveAt         DateTime?
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
+  invitedBy            User?     @relation("InvitedBy", fields: [invitedByUserId], references: [id])
   tenant               Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  invitedBy            User?     @relation("InvitedBy", fields: [invitedByUserId], references: [id])
 
   @@unique([tenantId, userId])
   @@index([tenantId])
@@ -314,9 +282,9 @@ model Invitation {
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
   invitedByUserId         String
-  tenant                  Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  invitedBy               User      @relation("InvitedBy", fields: [invitedByUserId], references: [id])
   acceptedBy              User?     @relation("InvitationAcceptedBy", fields: [acceptedByUserId], references: [id])
+  invitedBy               User      @relation("InvitedBy", fields: [invitedByUserId], references: [id])
+  tenant                  Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   @@index([tenantId])
   @@index([email])
@@ -332,7 +300,7 @@ model ContactReason {
   label           String
   description     String
   icon            String
-  helpType        String                 @default("general") // technical, billing, account, general
+  helpType        String                 @default("general")
   isActive        Boolean                @default(true)
   sortOrder       Int                    @default(0)
   tenantId        String?
@@ -348,27 +316,27 @@ model ContactReason {
 }
 
 model ContactMessage {
-  id         String                 @id @default(cuid())
-  name       String
-  email      String
-  subject    String
-  message    String
-  userId     String?
-  tenantId   String?
-  status     String                 @default("open")
-  priority   String                 @default("normal")
-  createdAt  DateTime               @default(now())
-  updatedAt  DateTime               @updatedAt
-  assignedTo String?
-  category   String?
-  dueDate    DateTime?
-  resolvedAt DateTime?
-  tags       String?
-  user       User?                  @relation(fields: [userId], references: [id])
-  tenant     Tenant?                @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  reasons    ContactMessageReason[]
-  replies    ContactReply[]
-  supportCase SupportCase? // One-to-one relation to support case
+  id          String                 @id @default(cuid())
+  name        String
+  email       String
+  subject     String
+  message     String
+  userId      String?
+  tenantId    String?
+  status      String                 @default("open")
+  priority    String                 @default("normal")
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+  assignedTo  String?
+  category    String?
+  dueDate     DateTime?
+  resolvedAt  DateTime?
+  tags        String?
+  tenant      Tenant?                @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user        User?                  @relation(fields: [userId], references: [id])
+  reasons     ContactMessageReason[]
+  replies     ContactReply[]
+  supportCase SupportCase?
 
   @@index([userId])
   @@index([tenantId])
@@ -402,8 +370,8 @@ model ContactReply {
   attachments      String?
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
-  contactMessage   ContactMessage @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
   caseMessages     CaseMessage[]
+  contactMessage   ContactMessage @relation(fields: [contactMessageId], references: [id], onDelete: Cascade)
 
   @@index([contactMessageId])
   @@index([isFromUser])
@@ -423,8 +391,8 @@ model AuditLog {
   userAgent    String?
   metadata     String?
   severity     String   @default("info")
-  traceId      String?  // Distributed tracing ID
   createdAt    DateTime @default(now())
+  traceId      String?
   tenant       Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -433,7 +401,6 @@ model AuditLog {
   @@index([action])
   @@index([resourceType])
   @@index([severity])
-  @@index([traceId])
   @@index([createdAt])
 }
 
@@ -448,7 +415,7 @@ model Passkey {
   backupEligible   Boolean   @default(false)
   backupState      Boolean   @default(false)
   userVerification String    @default("preferred")
-  rpId             String?   // Relying Party ID (domain) this passkey was registered for
+  rpId             String?
   isActive         Boolean   @default(true)
   lastUsedAt       DateTime?
   createdAt        DateTime  @default(now())
@@ -459,8 +426,8 @@ model Passkey {
   @@index([credentialId])
   @@index([isActive])
   @@index([lastUsedAt])
-  @@index([createdAt])
   @@index([rpId])
+  @@index([createdAt])
 }
 
 model AuthenticatorCode {
@@ -494,8 +461,8 @@ model Notification {
   readAt      DateTime?
   createdAt   DateTime                @default(now())
   updatedAt   DateTime                @updatedAt
-  user        User?                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   tenant      Tenant?                 @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user        User?                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   recipients  NotificationRecipient[]
 
   @@index([tenantId])
@@ -516,8 +483,8 @@ model NotificationRecipient {
   readAt         DateTime?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([notificationId, userId])
   @@index([notificationId])
@@ -547,79 +514,68 @@ model WebhookEndpoint {
   @@index([createdAt])
 }
 
-// Feature Toggle System Models
-
 model FeatureDefinition {
-  id          String @id @default(cuid())
-  key         String @unique // e.g., "notifications", "sso", "discussion_wall"
-  name        String // Human-readable name
-  description String? // Description of the feature
-  tier        String // "Core", "Secondary", "Tenancy-only"
-  defaultEnabled Boolean @default(false) // Default state for new tenants
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  createdBy   String // User ID who created this feature
-  
-  // Relations
-  globalRules GlobalFeatureRule[]
-  tenantRules TenantFeatureRule[]
-  auditEntries FeatureAuditEntry[]
-  
+  id             String              @id @default(cuid())
+  key            String              @unique
+  name           String
+  description    String?
+  tier           String
+  defaultEnabled Boolean             @default(false)
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  createdBy      String
+  auditEntries   FeatureAuditEntry[]
+  globalRules    GlobalFeatureRule?
+  tenantRules    TenantFeatureRule[]
+
   @@index([tier])
   @@index([defaultEnabled])
   @@index([createdAt])
 }
 
 model GlobalFeatureRule {
-  id        String @id @default(cuid())
-  featureKey String // References FeatureDefinition.key
-  enabled   Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  createdBy String // User ID who created/modified this rule
-  
-  // Relations
-  feature   FeatureDefinition @relation(fields: [featureKey], references: [key], onDelete: Cascade)
-  
-  @@unique([featureKey]) // Only one global rule per feature
+  id         String            @id @default(cuid())
+  featureKey String            @unique
+  enabled    Boolean
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  createdBy  String
+  feature    FeatureDefinition @relation(fields: [featureKey], references: [key], onDelete: Cascade)
+
   @@index([enabled])
   @@index([createdAt])
 }
 
 model TenantFeatureRule {
-  id        String @id @default(cuid())
-  tenantId  String
-  featureKey String // References FeatureDefinition.key
-  enabled   Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  createdBy String // User ID who created/modified this rule
-  
-  // Relations
-  tenant    Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  feature   FeatureDefinition @relation(fields: [featureKey], references: [key], onDelete: Cascade)
-  
-  @@unique([tenantId, featureKey]) // Only one rule per tenant per feature
+  id         String            @id @default(cuid())
+  tenantId   String
+  featureKey String
+  enabled    Boolean
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  createdBy  String
+  feature    FeatureDefinition @relation(fields: [featureKey], references: [key], onDelete: Cascade)
+  tenant     Tenant            @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, featureKey])
   @@index([tenantId])
   @@index([enabled])
   @@index([createdAt])
 }
 
 model FeatureAuditEntry {
-  id          String @id @default(cuid())
-  featureKey  String // References FeatureDefinition.key
-  scope       String // "global" or "tenant"
-  tenantId    String? // Null for global scope
-  beforeValue String? // JSON representation of previous state
-  afterValue  String? // JSON representation of new state
-  action      String // "create", "update", "delete", "enable", "disable"
-  createdAt   DateTime @default(now())
-  createdBy   String // User ID who performed the action
-  
-  // Relations
+  id          String            @id @default(cuid())
+  featureKey  String
+  scope       String
+  tenantId    String?
+  beforeValue String?
+  afterValue  String?
+  action      String
+  createdAt   DateTime          @default(now())
+  createdBy   String
   feature     FeatureDefinition @relation(fields: [featureKey], references: [key], onDelete: Cascade)
-  tenant      Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  
+  tenant      Tenant?           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@index([featureKey])
   @@index([scope])
   @@index([tenantId])
@@ -628,36 +584,34 @@ model FeatureAuditEntry {
 }
 
 model SetupState {
-  id              String @id @default("singleton") // Singleton record
-  isCompleted     Boolean @default(false)
-  currentStep     String? // Current wizard step if in progress
-  contextSnapshot String? // JSON snapshot of wizard context
+  id              String    @id @default("singleton")
+  isCompleted     Boolean   @default(false)
+  currentStep     String?
+  contextSnapshot String?
   completedAt     DateTime?
-  completedBy     String? // User ID who completed setup
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  
+  completedBy     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
   @@index([isCompleted])
   @@index([completedAt])
 }
 
-// 2FA Factor model - tracks enabled 2FA methods per user
 model TwoFactorMethod {
-  id           String   @id @default(cuid())
-  userId       String
-  tenantId     String?
-  type         String   // 'totp', 'whatsapp', 'sms', 'email'
-  identifier   String?  // phone number for whatsapp/sms, email for email
-  secret       String?  // TOTP secret or encrypted data
-  isVerified   Boolean  @default(false)
-  isEnabled    Boolean  @default(false)
-  backupCodes  String?  // JSON array of backup codes
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  lastUsedAt   DateTime?
-
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  id          String    @id @default(cuid())
+  userId      String
+  tenantId    String?
+  type        String
+  identifier  String?
+  secret      String?
+  isVerified  Boolean   @default(false)
+  isEnabled   Boolean   @default(false)
+  backupCodes String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastUsedAt  DateTime?
+  tenant      Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, type, tenantId])
   @@index([userId])
@@ -665,20 +619,18 @@ model TwoFactorMethod {
   @@index([tenantId])
 }
 
-// Pending 2FA authentication state
 model PendingAuth {
-  id             String   @id @default(cuid())
-  userId         String
-  tenantId       String?
-  nonce          String   @unique
-  requiredFactors String  // JSON array of required factor types
-  createdAt      DateTime @default(now())
-  expiresAt      DateTime
-  ipAddress      String?
-  userAgent      String?
-
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  id              String   @id @default(cuid())
+  userId          String
+  tenantId        String?
+  nonce           String   @unique
+  requiredFactors String
+  createdAt       DateTime @default(now())
+  expiresAt       DateTime
+  ipAddress       String?
+  userAgent       String?
+  tenant          Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([nonce])
@@ -686,24 +638,22 @@ model PendingAuth {
   @@index([tenantId])
 }
 
-// 2FA verification codes (OTP for WhatsApp, SMS, etc.)
 model TwoFactorCode {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   userId      String
   tenantId    String?
-  type        String   // 'whatsapp', 'sms', 'email'
-  codeHash    String   // hashed verification code
-  salt        String   // salt for the hash
-  purpose     String   // 'login_2fa', 'factor_activation'
-  attempts    Int      @default(0)
-  maxAttempts Int      @default(5)
-  createdAt   DateTime @default(now())
+  type        String
+  codeHash    String
+  salt        String
+  purpose     String
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(5)
+  createdAt   DateTime  @default(now())
   expiresAt   DateTime
   usedAt      DateTime?
-  traceId     String?  // for tracking webhook delivery
-
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  traceId     String?
+  tenant      Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([type])
@@ -713,21 +663,19 @@ model TwoFactorCode {
   @@index([traceId])
 }
 
-// 2FA audit log
 model TwoFactorAudit {
-  id        String   @id @default(cuid())
-  userId    String
-  tenantId  String?
-  action    String   // 'enable', 'disable', 'send', 'verify', 'fail', 'lockout'
-  factorType String  // 'totp', 'whatsapp', 'sms', 'email'
-  success   Boolean
-  ipAddress String?
-  userAgent String?
-  metadata  String?  // JSON for additional context
-  createdAt DateTime @default(now())
-
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  id         String   @id @default(cuid())
+  userId     String
+  tenantId   String?
+  action     String
+  factorType String
+  success    Boolean
+  ipAddress  String?
+  userAgent  String?
+  metadata   String?
+  createdAt  DateTime @default(now())
+  tenant     Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([action])
@@ -736,40 +684,33 @@ model TwoFactorAudit {
   @@index([tenantId])
 }
 
-// ==========================================
-// SUPPORT RESOLUTION CENTER MODELS
-// ==========================================
-
-// Support Cases - Resolution lifecycle management for support interactions
 model SupportCase {
-  id                String                 @id @default(cuid())
-  contactMessageId  String?                @unique // Link to existing ContactMessage
-  caseNumberSeq     Int                    @unique @default(autoincrement()) // Auto-incrementing sequence number (starts at 1M)
-  caseNumber        String?                @unique // Base32 encoded case number (auto-generated)
-  title             String                 // Case title
-  description       String?                // Extended case description
-  status            String                 @default("OPEN") // OPEN, PENDING, RESOLVED, CLOSED
-  priority          String                 @default("NORMAL") // LOW, NORMAL, HIGH, URGENT
-  assigneeId        String?                // Optional assignee
-  tenantId          String?                // Tenant context
-  supportOptionId   String?                // Support option used
-  threadingKey      String?                @unique // Stable key for threading messages
-  source            String                 @default("CONTACT_FORM") // CONTACT_FORM, EMAIL, SMS, WHATSAPP, WEBHOOK
-  sourceMetadata    Json?                  // Provider-specific metadata
-  firstResponseAt   DateTime?
-  resolvedAt        DateTime?
-  closedAt          DateTime?
-  createdAt         DateTime               @default(now())
-  updatedAt         DateTime               @updatedAt
-  
-  // Relations
-  contactMessage    ContactMessage?        @relation(fields: [contactMessageId], references: [id], onDelete: SetNull)
-  assignee          User?                  @relation("CaseAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
-  tenant            Tenant?                @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  supportOption     SupportOption?         @relation(fields: [supportOptionId], references: [id], onDelete: SetNull)
-  messages          CaseMessage[]
-  statusHistory     CaseStatusHistory[]
-  
+  id               String              @id @default(cuid())
+  contactMessageId String?             @unique
+  caseNumberSeq    Int                 @unique @default(autoincrement())
+  caseNumber       String?             @unique
+  title            String
+  description      String?
+  status           String              @default("OPEN")
+  priority         String              @default("NORMAL")
+  assigneeId       String?
+  tenantId         String?
+  supportOptionId  String?
+  threadingKey     String?             @unique
+  source           String              @default("CONTACT_FORM")
+  sourceMetadata   Json?
+  firstResponseAt  DateTime?
+  resolvedAt       DateTime?
+  closedAt         DateTime?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  messages         CaseMessage[]
+  statusHistory    CaseStatusHistory[]
+  assignee         User?               @relation("CaseAssignee", fields: [assigneeId], references: [id])
+  contactMessage   ContactMessage?     @relation(fields: [contactMessageId], references: [id])
+  supportOption    SupportOption?      @relation(fields: [supportOptionId], references: [id])
+  tenant           Tenant?             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@index([status])
   @@index([assigneeId])
   @@index([tenantId])
@@ -779,31 +720,27 @@ model SupportCase {
   @@index([priority])
 }
 
-// Support Options - Routing configuration for support requests
 model SupportOption {
-  id               String            @id @default(cuid())
-  key              String            // Unique key (e.g., 'billing', 'technical')
-  label            String            // Display name
-  description      String?           // Help text
-  icon             String?           // Icon name/class
-  isActive         Boolean           @default(true)
-  isGlobal         Boolean           @default(true) // Platform vs tenant option
-  tenantId         String?           // NULL for global options
-  parentOptionId   String?           // For tenant overrides
-  sortOrder        Int               @default(0)
-  isHidden         Boolean           @default(false) // Hidden but available for routing
-  routingConfig    Json              // Routing configuration (emails, webhooks, etc.)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  
-  // Relations
-  tenant           Tenant?           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  parent           SupportOption?    @relation("OptionHierarchy", fields: [parentOptionId], references: [id], onDelete: SetNull)
-  children         SupportOption[]   @relation("OptionHierarchy")
-  cases            SupportCase[]
-  metrics          CaseMetrics[]
-  
-  @@unique([key], name: "global_key")
+  id             String          @id @default(cuid())
+  key            String          @unique
+  label          String
+  description    String?
+  icon           String?
+  isActive       Boolean         @default(true)
+  isGlobal       Boolean         @default(true)
+  tenantId       String?
+  parentOptionId String?
+  sortOrder      Int             @default(0)
+  isHidden       Boolean         @default(false)
+  routingConfig  Json
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  metrics        CaseMetrics[]
+  cases          SupportCase[]
+  parent         SupportOption?  @relation("OptionHierarchy", fields: [parentOptionId], references: [id])
+  children       SupportOption[] @relation("OptionHierarchy")
+  tenant         Tenant?         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@unique([tenantId, key], name: "tenant_key")
   @@index([tenantId])
   @@index([isActive])
@@ -811,137 +748,121 @@ model SupportOption {
   @@index([sortOrder])
 }
 
-// Case Messages - Unified thread for case communications
 model CaseMessage {
-  id                String           @id @default(cuid())
-  caseId            String
-  contactReplyId    String?          // Link to existing ContactReply if applicable
-  direction         String           // INBOUND, OUTBOUND
-  channel           String           // EMAIL, SMS, WHATSAPP, UI, SYSTEM
-  fromAddress       String?          // Email, phone number, user ID, etc.
-  toAddress         String?
-  subject           String?          // For email messages
-  content           String
-  isInternal        Boolean          @default(false) // Internal notes vs customer-visible
-  messageId         String?          // Provider message ID for deduplication
-  threadingData     Json?            // Headers, references for threading
-  attachments       Json?            // Array of attachment metadata
-  deliveryStatus    String?          @default("PENDING") // PENDING, SENT, DELIVERED, FAILED
-  deliveryMetadata  Json?            // Provider delivery receipts/errors
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-  
-  // Relations
-  case              SupportCase      @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  contactReply      ContactReply?    @relation(fields: [contactReplyId], references: [id], onDelete: SetNull)
-  
+  id               String        @id @default(cuid())
+  caseId           String
+  contactReplyId   String?
+  direction        String
+  channel          String
+  fromAddress      String?
+  toAddress        String?
+  subject          String?
+  content          String
+  isInternal       Boolean       @default(false)
+  messageId        String?
+  threadingData    Json?
+  attachments      Json?
+  deliveryStatus   String?       @default("PENDING")
+  deliveryMetadata Json?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  case             SupportCase   @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  contactReply     ContactReply? @relation(fields: [contactReplyId], references: [id])
+
   @@index([caseId])
   @@index([createdAt])
   @@index([direction])
-  @@index([messageId]) // For deduplication
+  @@index([messageId])
   @@index([channel])
   @@index([deliveryStatus])
 }
 
-// Case Status History - Audit trail for status changes
 model CaseStatusHistory {
-  id           String      @id @default(cuid())
-  caseId       String
-  fromStatus   String?
-  toStatus     String
-  changedBy    String?     // User who changed the status
-  reason       String?     // Optional reason for change
-  metadata     Json?       // Additional context
-  createdAt    DateTime    @default(now())
-  
-  // Relations
-  case         SupportCase @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  user         User?       @relation("StatusChangedBy", fields: [changedBy], references: [id], onDelete: SetNull)
-  
+  id         String      @id @default(cuid())
+  caseId     String
+  fromStatus String?
+  toStatus   String
+  changedBy  String?
+  reason     String?
+  metadata   Json?
+  createdAt  DateTime    @default(now())
+  case       SupportCase @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  user       User?       @relation("StatusChangedBy", fields: [changedBy], references: [id])
+
   @@index([caseId])
   @@index([createdAt])
   @@index([toStatus])
 }
 
-// Case Metrics - Pre-aggregated metrics for analytics
 model CaseMetrics {
-  id                    String         @id @default(cuid())
-  tenantId              String?
-  date                  DateTime       @db.Date // Daily aggregation
-  supportOptionId       String?
-  assigneeId            String?
-  totalCases            Int            @default(0)
-  openCases             Int            @default(0)
-  pendingCases          Int            @default(0)
-  resolvedCases         Int            @default(0)
-  closedCases           Int            @default(0)
-  avgFirstResponseTime  Int?           // in minutes
-  avgResolutionTime     Int?           // in minutes
-  createdAt             DateTime       @default(now())
-  updatedAt             DateTime       @updatedAt
-  
-  // Relations
-  tenant                Tenant?        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  supportOption         SupportOption? @relation(fields: [supportOptionId], references: [id], onDelete: SetNull)
-  assignee              User?          @relation("CaseMetricsAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
-  
+  id                   String         @id @default(cuid())
+  tenantId             String?
+  date                 DateTime       @db.Date
+  supportOptionId      String?
+  assigneeId           String?
+  totalCases           Int            @default(0)
+  openCases            Int            @default(0)
+  pendingCases         Int            @default(0)
+  resolvedCases        Int            @default(0)
+  closedCases          Int            @default(0)
+  avgFirstResponseTime Int?
+  avgResolutionTime    Int?
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  assignee             User?          @relation("CaseMetricsAssignee", fields: [assigneeId], references: [id])
+  supportOption        SupportOption? @relation(fields: [supportOptionId], references: [id])
+  tenant               Tenant?        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@unique([tenantId, date, supportOptionId, assigneeId])
   @@index([date])
   @@index([tenantId])
 }
 
-// Support Configuration - System and tenant policies  
 model SupportConfiguration {
-  id           String    @id @default(cuid())
-  tenantId     String?   // NULL for global config
-  key          String
-  value        Json
-  description  String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  
-  // Relations
-  tenant       Tenant?   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  
-  @@unique([key], name: "global_config_key")
+  id          String   @id @default(cuid())
+  tenantId    String?
+  key         String   @unique
+  value       Json
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tenant      Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@unique([tenantId, key], name: "tenant_config_key")
   @@index([tenantId])
 }
 
-// Tenant-specific email routing per help type
 model TenantSupportRouting {
-  id         String    @id @default(cuid())
-  tenantId   String
-  helpType   String    // technical, billing, account, general
-  email      String
-  isActive   Boolean   @default(true)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  
-  // Relations
-  tenant     Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  
+  id        String   @id @default(cuid())
+  tenantId  String
+  helpType  String
+  email     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@unique([tenantId, helpType])
   @@index([tenantId])
   @@index([helpType])
   @@index([isActive])
 }
 
-// Outbox events to be dispatched to the queue/bus
 model OutboxEvent {
-  id              Int       @id @default(autoincrement())
-  eventType       String    // e.g. 'support.case.created'
-  aggregateType   String    // e.g. 'support_case'
-  aggregateId     String
-  tenantId        String
-  payloadJson     Json
-  idempotencyKey  String?   @unique // hash or external id if available
-  status          String    @default("pending") // pending|processing|sent|failed|dead
-  tries           Int       @default(0)
-  nextAttemptAt   DateTime  @default(now())
-  createdAt       DateTime  @default(now())
-  lastError       String?
-  traceId         String?   // Distributed tracing ID
+  id             Int      @id @default(autoincrement())
+  eventType      String
+  aggregateType  String
+  aggregateId    String
+  tenantId       String
+  payloadJson    Json
+  idempotencyKey String?  @unique
+  status         String   @default("pending")
+  tries          Int      @default(0)
+  nextAttemptAt  DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  lastError      String?
+  traceId        String?
 
   @@index([status, nextAttemptAt])
   @@index([tenantId])
@@ -949,58 +870,68 @@ model OutboxEvent {
   @@index([traceId])
 }
 
-// Audit events for compliance and monitoring
 model AuditEvent {
-  id              String    @id // Generated hash from original event
-  eventType       String    // Normalized audit category: auth, financial, support, etc.
-  eventName       String    // Original event type name
-  tenantId        String
-  userId          String?   // User associated with the event
-  aggregateType   String    // Original aggregate type
-  aggregateId     String    // Original aggregate ID
-  timestamp       DateTime  // When the original event occurred
-  
-  // Source information
-  sourceService   String    // Service that generated the event
-  sourceVersion   String?   // Version of the service
-  sourceHost      String?   // Host/instance identifier
-  requestId       String?   // Request correlation ID
-  correlationId   String?   // Business correlation ID
-  traceId         String?   // Distributed tracing ID
-  
-  // Actor information (who performed the action)
-  actorType       String?   // user, system, service
-  actorId         String?   // Actor identifier
-  actorName       String?   // Actor display name
-  actorEmail      String?   // Actor email (hashed for privacy)
-  actorIpAddress  String?   // Source IP address
-  actorUserAgent  String?   // User agent string
-  
-  // Resource information (what was affected)
-  resourceType    String?   // Type of resource
-  resourceId      String?   // Resource identifier
-  resourceName    String?   // Resource display name
-  resourceAttributes String? @db.Text // JSON string of resource attributes
-  
-  // Action information (what happened)
-  actionType      String    // Type of action performed
-  actionDescription String? // Human-readable description
-  actionOutcome   String    // success, failure, unknown
-  actionReason    String?   // Reason for failure or additional context
-  
-  // Metadata and payload
-  metadata        String?   @db.Text // JSON string of additional metadata
-  originalPayload String    @db.Text // JSON string of original event payload
-  
-  // Timestamps
-  createdAt       DateTime  @default(now()) // When audit record was created
-  
+  id                 String   @id
+  eventType          String
+  eventName          String
+  tenantId           String
+  userId             String?
+  aggregateType      String
+  aggregateId        String
+  timestamp          DateTime
+  sourceService      String
+  sourceVersion      String?
+  sourceHost         String?
+  requestId          String?
+  correlationId      String?
+  actorType          String?
+  actorId            String?
+  actorName          String?
+  actorEmail         String?
+  actorIpAddress     String?
+  actorUserAgent     String?
+  resourceType       String?
+  resourceId         String?
+  resourceName       String?
+  resourceAttributes String?
+  actionType         String
+  actionDescription  String?
+  actionOutcome      String
+  actionReason       String?
+  metadata           String?
+  originalPayload    String
+  createdAt          DateTime @default(now())
+  traceId            String?
+
   @@index([tenantId, timestamp])
   @@index([eventType, timestamp])
   @@index([userId, timestamp])
   @@index([actorId, timestamp])
   @@index([resourceType, resourceId])
   @@index([actionOutcome, timestamp])
-  @@index([traceId])
   @@index([createdAt])
+}
+
+model InboxEvent {
+  id             Int      @id @default(autoincrement())
+  eventType      String
+  aggregateType  String
+  aggregateId    String
+  tenantId       String?
+  payloadJson    Json
+  idempotencyKey String?  @unique
+  status         String   @default("received")
+  tries          Int      @default(0)
+  nextAttemptAt  DateTime @default(now())
+  createdAt      DateTime @default(now())
+  lastError      String?
+  traceId        String?
+  source         String?
+  sourceId       String?
+
+  @@index([status, nextAttemptAt])
+  @@index([tenantId])
+  @@index([eventType])
+  @@index([traceId])
+  @@index([source])
 }

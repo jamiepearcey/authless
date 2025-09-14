@@ -329,33 +329,51 @@ export default function AccountPage() {
             </h3>
           </div>
           
-          {/* Fixed height container to prevent layout shift */}
-          <div className="min-h-[120px] transition-all duration-300 ease-in-out">
-            {!showPasswordForm ? (
-              <div className="h-full flex items-center justify-between p-6 bg-gradient-to-r from-slate-50 to-slate-100 border-2 border-slate-200 rounded-xl hover:border-indigo-300 hover:shadow-md transition-all duration-200 cursor-pointer group"
-                   onClick={() => setShowPasswordForm(true)}>
+          {/* Animated container with smooth expand/collapse */}
+          <div className="overflow-hidden transition-all duration-500 ease-in-out">
+            {/* Landing state - always present */}
+            <div 
+              className={`transition-[opacity,transform,max-height] duration-500 ease-in-out ${
+                showPasswordForm 
+                  ? 'opacity-0 transform -translate-y-4 max-h-0' 
+                  : 'opacity-100 transform translate-y-0 max-h-32'
+              }`}
+            >
+              <div 
+                className="flex items-center justify-between p-6 bg-gradient-to-r from-slate-50 to-slate-100 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-slate-200"
+                onClick={() => setShowPasswordForm(true)}
+              >
                 <div className="flex items-center space-x-6">
                   {/* Stylized asterisk display */}
-                  <div className="flex items-center justify-center w-16 h-16 bg-white rounded-full border-2 border-slate-200 group-hover:border-indigo-300 transition-all duration-200">
+                  <div className="flex items-center justify-center w-16 h-16 bg-white rounded-full border-2 border-slate-200">
                     <div className="flex items-center space-x-1">
                       <span className="text-indigo-600 text-lg font-bold tracking-wider">••••••</span>
                     </div>
                   </div>
                   <div>
-                    <p className="text-base font-semibold text-gray-900 group-hover:text-indigo-900 transition-colors">Password Protected</p>
+                    <p className="text-base font-semibold text-gray-900">Password Protected</p>
                     <p className="text-sm text-gray-500 flex items-center space-x-1">
                       <Shield className="h-3 w-3" />
                       <span>Click to change your password</span>
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2 text-indigo-600 group-hover:text-indigo-700 transition-colors">
+                <div className="flex items-center space-x-2 text-indigo-600">
                   <Edit3 className="h-5 w-5" />
                   <span className="text-sm font-medium">Change</span>
                 </div>
               </div>
-            ) : (
-              <div className="h-full">
+            </div>
+
+            {/* Form state - slides in from below */}
+            <div 
+              className={`transition-[opacity,transform,max-height] duration-500 ease-in-out ${
+                showPasswordForm 
+                  ? 'opacity-100 transform translate-y-0 max-h-96' 
+                  : 'opacity-0 transform translate-y-4 max-h-0'
+              }`}
+            >
+              <div className="pt-4">
                 <form onSubmit={handlePasswordChange} className="space-y-4 p-6 bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-200 rounded-xl">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -372,6 +390,7 @@ export default function AccountPage() {
                         required
                         minLength={8}
                         placeholder="Enter your new password"
+                        autoFocus
                       />
                       <p className="text-xs text-gray-500 mt-1">Must be at least 8 characters</p>
                     </div>
@@ -425,7 +444,7 @@ export default function AccountPage() {
                   </div>
                 </form>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

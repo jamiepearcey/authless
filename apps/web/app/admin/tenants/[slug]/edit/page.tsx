@@ -154,9 +154,9 @@ export default function EditTenantPage() {
 
   return (
     <main className="flex flex-1 pt-8 pb-8">
-      <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex-1 max-w-7xl mx-auto ">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-4">
           <div className="flex items-center space-x-4 mb-4">
             <Button
               variant="outline"

@@ -71,7 +71,7 @@ export default function SignUpPage() {
   // Show loading while checking registration status
   if (checkingRegistration) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4"></div>
@@ -85,7 +85,7 @@ export default function SignUpPage() {
   // Show message when registration is closed
   if (registrationClosed) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
             <div className="mx-auto h-12 w-12 text-red-600">
@@ -114,7 +114,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-1 items-center justify-center bg-gray-50 py-12 ">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

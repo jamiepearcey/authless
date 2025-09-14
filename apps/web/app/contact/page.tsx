@@ -363,7 +363,7 @@ const ContactPage = () => {
   if (status === "loading") {
     return (
       <main className="flex flex-1 pt-8 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto ">
           <div className="text-center">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600 mx-auto"></div>
             <p className="mt-4 text-gray-600">Loading...</p>
@@ -375,7 +375,7 @@ const ContactPage = () => {
 
   return (
     <div className="flex-1 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto  py-8">
         {/* Header */}
         <div className="mb-4">
           <div className="flex items-center justify-between">

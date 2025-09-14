@@ -1,0 +1,11 @@
+{
+  "name": "EVENTS",
+  "subjects": ["events.*.*"],
+  "retention": "limits",
+  "max_age": 86400000000000,
+  "max_msgs": 1000000,
+  "max_bytes": 1073741824,
+  "storage": "file",
+  "num_replicas": 1,
+  "discard": "old"
+}
