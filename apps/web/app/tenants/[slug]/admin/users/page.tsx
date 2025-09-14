@@ -1,10 +1,37 @@
 "use client";
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
-import { Users, Plus, Mail, Shield, UserCheck, UserX, MoreHorizontal, Edit, Trash2, Eye, ArrowLeft, ArrowUpDown, GripVertical, Search, X, Filter, ChevronDown } from "lucide-react";
+import { 
+  Users, 
+  Plus, 
+  Mail, 
+  Shield, 
+  UserCheck, 
+  UserX, 
+  MoreHorizontal, 
+  Edit, 
+  Trash2, 
+  Eye, 
+  ArrowLeft, 
+  ArrowUpDown, 
+  GripVertical, 
+  Search, 
+  X, 
+  Filter, 
+  ChevronDown,
+  Download,
+  Settings,
+  Columns,
+  RefreshCw,
+  UserPlus,
+  CheckCircle,
+  Clock,
+  Calendar,
+  Building2
+} from "lucide-react";
 import Link from "next/link";
 
 import { trpc } from "@/lib/trpc";
@@ -19,6 +46,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
 } from "@ui/base";
 import {
   Dialog,
@@ -45,11 +73,17 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   getFilteredRowModel,
+  getGroupedRowModel,
+  getPaginationRowModel,
   useReactTable,
   ColumnResizeMode,
   SortingState,
   ColumnOrderState,
   VisibilityState,
+  GroupingState,
+  ColumnFiltersState,
+  PaginationState,
+  ExpandedState,
 } from "@tanstack/react-table";
 
 interface UserData {
@@ -61,6 +95,12 @@ interface UserData {
   lastLoginAt: string | null;
   status: string;
   isEmailVerified: boolean;
+  subRows?: MembershipData[];
+  _groupingKey?: string;
+  _groupingValue?: string;
+  _timeBucket?: string;
+  _roleGroup?: string;
+  _statusGroup?: string;
 }
 
 interface MembershipData {
@@ -68,6 +108,12 @@ interface MembershipData {
   role: string;
   createdAt: string;
   user: UserData;
+  subRows?: MembershipData[];
+  _groupingKey?: string;
+  _groupingValue?: string;
+  _timeBucket?: string;
+  _roleGroup?: string;
+  _statusGroup?: string;
 }
 
 const columnHelper = createColumnHelper<MembershipData>();
@@ -76,6 +122,64 @@ type Predicate<T> = (value: T) => boolean;
 
 function or<T>(...predicates: Predicate<T>[]): Predicate<T> {
   return (value: T) => predicates.some(p => p(value));
+}
+
+// Helper function to create time-based buckets for grouping
+function getTimeBucket(date: Date): string {
+  const now = new Date();
+  const diffInMs = now.getTime() - date.getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInWeeks = Math.floor(diffInDays / 7);
+  const diffInMonths = Math.floor(diffInDays / 30);
+  const diffInYears = Math.floor(diffInDays / 365);
+
+  // Today
+  if (diffInDays === 0) {
+    return 'Today';
+  }
+  
+  // Yesterday
+  if (diffInDays === 1) {
+    return 'Yesterday';
+  }
+  
+  // This week (1-6 days ago)
+  if (diffInDays >= 2 && diffInDays <= 6) {
+    return 'This Week';
+  }
+  
+  // Last week (7-13 days ago)
+  if (diffInWeeks === 1) {
+    return 'Last Week';
+  }
+  
+  // This month (2-4 weeks ago)
+  if (diffInWeeks >= 2 && diffInWeeks <= 4) {
+    return 'This Month';
+  }
+  
+  // Last month (1-2 months ago)
+  if (diffInMonths >= 1 && diffInMonths <= 2) {
+    return 'Last Month';
+  }
+  
+  // This year (3-11 months ago)
+  if (diffInMonths >= 3 && diffInMonths <= 11) {
+    return 'This Year';
+  }
+  
+  // Last year (1-2 years ago)
+  if (diffInYears >= 1 && diffInYears <= 2) {
+    return 'Last Year';
+  }
+  
+  // Older than 2 years
+  if (diffInYears > 2) {
+    return 'Older';
+  }
+  
+  // Fallback
+  return 'Unknown';
 }
 
 export default function TenantUsersPage() {
@@ -103,15 +207,71 @@ export default function TenantUsersPage() {
   });
   const [search, setSearch] = useState("");
   
-  // TanStack Table state
+  // Advanced TanStack Table state
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    grouping: false, // Hide the virtual grouping column
+    timeBucket: false, // Hide the virtual time bucket column
+    roleGroup: false, // Hide the virtual role group column
+    statusGroup: false, // Hide the virtual status group column
+  });
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
+  const [grouping, setGrouping] = useState<GroupingState>([]);
+  const [expanded, setExpanded] = useState<ExpandedState>({});
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 20,
+  });
+
   const { data: memberships, refetch: refetchMemberships } = trpc.getTenantMemberships.useQuery(
     { slug: tenantSlug  },
     { enabled: !!tenantSlug }
   );
+
+  // Transform data for proper grouping
+  const transformedMemberships = useMemo(() => {
+    if (!memberships) return [];
+    
+    return memberships.map(membership => {
+      let groupingValue = 'All Members';
+      let timeBucket = getTimeBucket(new Date(membership.createdAt));
+      let roleGroup = membership.role || 'Unknown';
+      let statusGroup = membership.user.isEmailVerified ? 'Verified' : 'Unverified';
+      
+      if (grouping.length > 0) {
+        if (grouping[0] === 'role') {
+          groupingValue = roleGroup;
+        } else if (grouping[0] === 'status') {
+          groupingValue = statusGroup;
+        } else if (grouping[0] === 'timeBucket') {
+          groupingValue = timeBucket;
+        } else if (grouping[0] === 'roleGroup') {
+          groupingValue = roleGroup;
+        } else if (grouping[0] === 'statusGroup') {
+          groupingValue = statusGroup;
+        }
+      }
+      
+      return {
+        ...membership,
+        _groupingKey: membership.id,
+        _groupingValue: groupingValue,
+        _timeBucket: timeBucket,
+        _roleGroup: roleGroup,
+        _statusGroup: statusGroup,
+        user: {
+          ...membership.user,
+          _groupingKey: membership.user.id,
+          _groupingValue: groupingValue,
+          _timeBucket: timeBucket,
+          _roleGroup: roleGroup,
+          _statusGroup: statusGroup,
+        }
+      };
+    });
+  }, [memberships, grouping]);
 
   const inviteUser = trpc.inviteUser.useMutation({
     onSuccess: (data) => {
@@ -163,12 +323,61 @@ export default function TenantUsersPage() {
     },
   });
 
-  // Column definitions
+  // Advanced column definitions with grouping support
   const columns = useMemo(
     () => [
+      // Virtual grouping columns (hidden)
+      columnHelper.accessor("_groupingValue", {
+        id: "grouping",
+        header: () => null,
+        cell: () => null,
+        enableSorting: false,
+        enableResizing: false,
+        enableGrouping: true,
+        enableHiding: true,
+      }),
+      columnHelper.accessor("_timeBucket", {
+        id: "timeBucket",
+        header: () => null,
+        cell: () => null,
+        enableSorting: false,
+        enableResizing: false,
+        enableGrouping: true,
+        enableHiding: true,
+      }),
+      columnHelper.accessor("_roleGroup", {
+        id: "roleGroup",
+        header: () => null,
+        cell: () => null,
+        enableSorting: false,
+        enableResizing: false,
+        enableGrouping: true,
+        enableHiding: true,
+      }),
+      columnHelper.accessor("_statusGroup", {
+        id: "statusGroup",
+        header: () => null,
+        cell: () => null,
+        enableSorting: false,
+        enableResizing: false,
+        enableGrouping: true,
+        enableHiding: true,
+      }),
       columnHelper.accessor("user.name", {
         id: "user",
-        header: () => "User",
+        header: ({ column }) => (
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="h-8 px-2 hover:bg-gray-100"
+            >
+              <ArrowUpDown className="h-4 w-4 mr-1" />
+              User
+            </Button>
+          </div>
+        ),
         cell: ({ row }) => (
           <div className="flex items-center min-w-0">
             <div className="h-10 w-10 flex-shrink-0">
@@ -186,51 +395,43 @@ export default function TenantUsersPage() {
               <div className="text-sm font-medium text-gray-900 truncate">
                 {row.original.user.name || "No Name"}
               </div>
-                                            <div className="text-sm text-gray-500 truncate" title={row.original.user.email || ""}>
-                                {row.original.user.email || ""}
-                              </div>
+              <div className="text-sm text-gray-500 truncate" title={row.original.user.email || ""}>
+                {row.original.user.email || ""}
+              </div>
             </div>
           </div>
         ),
-        size: 350,
+        size: 300,
         minSize: 250,
-        maxSize: 500,
+        maxSize: 400,
         enableSorting: true,
         enableResizing: true,
+        enableGrouping: false,
       }),
       columnHelper.accessor("role", {
         id: "role",
-        header: () => "Role",
+        header: ({ column }) => (
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="h-8 px-2 hover:bg-gray-100"
+            >
+              <ArrowUpDown className="h-4 w-4 mr-1" />
+              Role
+            </Button>
+          </div>
+        ),
         cell: ({ row }) => {
           const role = row.original.role;
           switch (role) {
             case "admin":
-              return <Badge variant="default" className="bg-red-100 text-red-700 border-red-200">Admin</Badge>;
+              return <Badge variant="default" className="bg-red-100 text-red-700 border-red-200 hover:bg-red-200 hover:text-red-800">Admin</Badge>;
             case "member":
-              return <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">Member</Badge>;
+              return <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200 hover:bg-blue-200 hover:text-blue-800">Member</Badge>;
             default:
-              return <Badge variant="outline">{role}</Badge>;
-          }
-        },
-        size: 100,
-        minSize: 80,
-        maxSize: 120,
-        enableSorting: true,
-        enableResizing: true,
-      }),
-      columnHelper.accessor("user.isEmailVerified", {
-        id: "status",
-        header: () => "Status",
-        cell: ({ row }) => {
-          const isVerified = row.original.user.isEmailVerified;
-          if (isVerified) {
-            return <Badge variant="default" className="bg-green-100 text-green-700 border-green-200">Active</Badge>;
-          } else {
-            return (
-              <div className="flex items-center gap-1">
-                <Badge variant="outline" className="text-orange-600 border-orange-200">Unverified</Badge>
-              </div>
-            );
+              return <Badge variant="outline" className="hover:bg-gray-100">{role}</Badge>;
           }
         },
         size: 120,
@@ -238,32 +439,84 @@ export default function TenantUsersPage() {
         maxSize: 150,
         enableSorting: true,
         enableResizing: true,
+        enableGrouping: true,
+        filterFn: (row, id, value) => {
+          return value.includes(row.getValue(id));
+        },
+      }),
+      columnHelper.accessor("user.isEmailVerified", {
+        id: "status",
+        header: ({ column }) => (
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="h-8 px-2 hover:bg-gray-100"
+            >
+              <ArrowUpDown className="h-4 w-4 mr-1" />
+              Status
+            </Button>
+          </div>
+        ),
+        cell: ({ row }) => {
+          const isVerified = row.original.user.isEmailVerified;
+          if (isVerified) {
+            return <Badge variant="default" className="bg-green-100 text-green-700 border-green-200 hover:bg-green-200 hover:text-green-800">Verified</Badge>;
+          } else {
+            return <Badge variant="outline" className="text-orange-600 border-orange-200 hover:bg-orange-50">Unverified</Badge>;
+          }
+        },
+        size: 120,
+        minSize: 100,
+        maxSize: 150,
+        enableSorting: true,
+        enableResizing: true,
+        enableGrouping: true,
+        filterFn: (row, id, value) => {
+          return value.includes(row.getValue(id));
+        },
       }),
       columnHelper.accessor("createdAt", {
         id: "joined",
-        header: () => "Joined",
+        header: ({ column }) => (
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="h-8 px-2 hover:bg-gray-100"
+            >
+              <ArrowUpDown className="h-4 w-4 mr-1" />
+              Joined
+            </Button>
+          </div>
+        ),
         cell: ({ row }) => (
-          <span className="text-sm text-gray-500">
-            {new Date(row.original.createdAt).toLocaleDateString()}
-          </span>
+          <div className="flex items-center space-x-2">
+            <Calendar className="h-4 w-4 text-gray-400" />
+            <span className="text-sm text-gray-500">
+              {new Date(row.original.createdAt).toLocaleDateString()}
+            </span>
+          </div>
         ),
         size: 120,
         minSize: 100,
         maxSize: 150,
         enableSorting: true,
         enableResizing: true,
+        enableGrouping: true,
       }),
       columnHelper.display({
         id: "actions",
-        header: () => "Actions",
+        header: "Actions",
         cell: ({ row }) => (
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => openUserDetails(row.original.user as UserData)}
-              className="h-8 w-8 p-0"
-              title="View Details"
+              className="h-8 w-8 p-0 hover:bg-gray-100"
             >
               <Eye className="h-4 w-4" />
             </Button>
@@ -271,50 +524,101 @@ export default function TenantUsersPage() {
               variant="ghost"
               size="sm"
               onClick={() => openEditForm(row.original.user as UserData)}
-              className="h-8 w-8 p-0"
-              title="Edit User"
+              className="h-8 w-8 p-0 hover:bg-gray-100"
             >
               <Edit className="h-4 w-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => openDeleteConfirm(row.original.user as UserData)}
-              className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
-              title="Remove User"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() => openUserDetails(row.original.user as UserData)}
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  View Details
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => openEditForm(row.original.user as UserData)}
+                >
+                  <Edit className="h-4 w-4 mr-2" />
+                  Edit User
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    handleResendVerification(row.original.user.id);
+                  }}
+                  disabled={row.original.user.isEmailVerified}
+                  className="text-blue-600"
+                >
+                  <Mail className="h-4 w-4 mr-2" />
+                  Resend Verification
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => openDeleteConfirm(row.original.user as UserData)}
+                  className="text-red-600"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Remove User
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         ),
         size: 120,
         minSize: 100,
         maxSize: 150,
         enableSorting: false,
-        enableResizing: true,
+        enableResizing: false,
+        enableGrouping: false,
       }),
     ],
-    []
+    [grouping]
   );
 
-  // Table instance
+  // Advanced table instance with grouping and pagination
   const table = useReactTable({
-    data: memberships || [],
+    data: transformedMemberships,
     columns,
     state: {
       sorting,
       columnOrder,
       columnVisibility,
+      columnFilters,
       globalFilter,
+      grouping,
+      expanded,
+      pagination,
     },
     onSortingChange: setSorting,
     onColumnOrderChange: setColumnOrder,
     onColumnVisibilityChange: setColumnVisibility,
+    onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
+    onGroupingChange: setGrouping,
+    onExpandedChange: setExpanded,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getGroupedRowModel: getGroupedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     columnResizeMode: "onChange" as ColumnResizeMode,
+    enableGrouping: true,
+    enableColumnResizing: true,
+    enableSorting: true,
+    enableFilters: true,
+    enableGlobalFilter: true,
+    manualPagination: false,
+    globalFilterFn: "includesString",
+    groupedColumnMode: "remove",
+    enableExpanding: true,
+    enableSubRowSelection: false,
+    getSubRows: (row) => row.subRows,
   });
 
   const handleInviteUser = async (e: React.FormEvent) => {
@@ -435,40 +739,149 @@ export default function TenantUsersPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-4">
+        {/* Breadcrumb Navigation */}
+        <div className="flex items-center space-x-4 mb-4">
+          <Link 
+            href={`/tenants/${tenantSlug}/admin`}
+            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Admin
+          </Link>
+          <div className="h-6 w-px bg-gray-300" />
+          <BreadcrumbNavigation
+            items={[
+              { label: "Tenants", href: "/tenants/dashboard" },
+              { label: tenantSlug, href: `/tenants/${tenantSlug}` },
+              { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
+              { label: "Users", current: true },
+            ]}
+            showHome={false}
+          />
+        </div>
+        
+        {/* Page Header */}
         <div className="flex justify-between items-center">
-          <div>   <div className="flex items-center space-x-4 mb-4">
-                <Link 
-                  href={`/tenants/${tenantSlug}/admin`}
-                  className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-                >
-                  <ArrowLeft className="h-5 w-5 mr-2" />
-                  Back to Admin
-                </Link>
-                <div className="h-6 w-px bg-gray-300" />
-                <BreadcrumbNavigation
-                  items={[
-                    { label: "Tenants", href: "/tenants/dashboard" },
-                    { label: tenantSlug, href: `/tenants/${tenantSlug}` },
-                    { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
-                    { label: "Users", current: true },
-                  ]}
-                  showHome={false}
-                />
-              </div>
+          <div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <Users className="h-8 w-8 text-indigo-600" />
-              <span>User Management</span>
+              <span>Team Management</span>
             </h1>
             <p className="text-gray-600 mt-2">
-              Manage tenant members, roles, and permissions
+              Manage tenant members, roles, and permissions for {tenantSlug}
             </p>
           </div>
           
-          <Button onClick={() => setShowInviteForm(true)} className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Invite User
-          </Button>
+          <div className="flex items-center space-x-3">
+            <Button variant="outline" onClick={() => refetchMemberships()}>
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+            <Button variant="outline">
+              <Download className="h-4 w-4 mr-2" />
+              Export
+            </Button>
+            <Button onClick={() => setShowInviteForm(true)} className="bg-indigo-600 hover:bg-indigo-700">
+              <UserPlus className="h-4 w-4 mr-2" />
+              Invite User
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Advanced Controls */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          {/* Search and Filters */}
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search team members..."
+                value={globalFilter ?? ""}
+                onChange={(e) => setGlobalFilter(e.target.value)}
+                className="pl-10 w-64"
+              />
+            </div>
+            
+            {/* Column Visibility */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Columns className="h-4 w-4 mr-2" />
+                  Columns
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {table.getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => (
+                    <DropdownMenuItem
+                      key={column.id}
+                      onClick={() => column.toggleVisibility()}
+                      className="flex items-center justify-between"
+                    >
+                      <span>{column.id}</span>
+                      {column.getIsVisible() && <CheckCircle className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                  ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Grouping - Single column only */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <GripVertical className="h-4 w-4 mr-2" />
+                  Group by {grouping.length > 0 ? `(${grouping[0]})` : ''}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuLabel>Group by (single column)</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => setGrouping([])}
+                  className="flex items-center justify-between"
+                >
+                  <span>No grouping</span>
+                  {grouping.length === 0 && <CheckCircle className="h-4 w-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => setGrouping(grouping.includes('role') ? [] : ['role'])}
+                  className="flex items-center justify-between"
+                >
+                  <span>Role</span>
+                  {grouping.includes('role') && <CheckCircle className="h-4 w-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setGrouping(grouping.includes('status') ? [] : ['status'])}
+                  className="flex items-center justify-between"
+                >
+                  <span>Status</span>
+                  {grouping.includes('status') && <CheckCircle className="h-4 w-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setGrouping(grouping.includes('timeBucket') ? [] : ['timeBucket'])}
+                  className="flex items-center justify-between"
+                >
+                  <span>Joined</span>
+                  {grouping.includes('timeBucket') && <CheckCircle className="h-4 w-4" />}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          
+          {/* Stats */}
+          <div className="flex items-center space-x-4 text-sm text-gray-500">
+            <span>{table.getFilteredRowModel().rows.length} members</span>
+            {grouping.length > 0 && (
+              <span>{table.getGroupedRowModel().rows.length} groups</span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -526,183 +939,195 @@ export default function TenantUsersPage() {
         </Card>
       </div>
 
-      {/* Enhanced Toolbar */}
-      <Card className="mb-6">
-        <CardContent className="p-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            {/* Search Section */}
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Search team members by name or email..."
-                  value={globalFilter}
-                  onChange={(e) => setGlobalFilter(e.target.value)}
-                  className="pl-10 pr-4 h-10 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-                />
-                {globalFilter && (
-                  <button
-                    onClick={() => setGlobalFilter("")}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 hover:text-gray-600"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                )}
-              </div>
-            </div>
 
-            {/* Clear Filters Button */}
-            {globalFilter && (
-              <Button 
-                variant="outline" 
-                onClick={() => setGlobalFilter("")}
-                size="sm"
-                className="h-8 px-3 text-xs border-gray-300 hover:border-gray-400 hover:bg-gray-50"
-              >
-                <X className="h-3 w-3 mr-1" />
-                Clear Search
-              </Button>
-            )}
-          </div>
-
-          {/* Active Filters Display */}
-          {globalFilter && (
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm text-gray-500">Active filters:</span>
-                
-                {globalFilter && (
-                  <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200">
-                    <Search className="h-3 w-3 mr-1" />
-                    "{globalFilter}"
-                    <button
-                      onClick={() => setGlobalFilter("")}
-                      className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
+      {/* Advanced Table */}
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50 border-b border-gray-200">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      style={{ width: header.getSize() }}
                     >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                )}
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* User List */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle>Team Members</CardTitle>
-              <CardDescription>Manage user roles, permissions, and status</CardDescription>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setSorting([]);
-                  setColumnOrder([]);
-                  setColumnVisibility({});
-                  setGlobalFilter("");
-                }}
-                className="h-8 px-3 text-xs"
-              >
-                Reset Columns
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="p-0">
-          {table.getRowModel().rows.length === 0 ? (
-            <div className="text-center py-12">
-              <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No team members found</h3>
-              <p className="text-gray-600 mb-6">
-                {globalFilter ? "Try adjusting your search criteria" : "No team members have been added to this tenancy yet."}
-              </p>
-              {!globalFilter && (
-                <Button onClick={() => setShowInviteForm(true)}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Invite First Team Member
-                </Button>
-              )}
-            </div>
-          ) : (
-            <div className="overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    {table.getHeaderGroups().map(headerGroup => (
-                      <tr key={headerGroup.id}>
-                        {headerGroup.headers.map(header => (
-                          <th
-                            key={header.id}
-                            className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider relative group"
-                            style={{ width: header.getSize() }}
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {table.getRowModel().rows.length === 0 ? (
+                <tr>
+                  <td colSpan={table.getAllColumns().length} className="px-6 py-12 text-center">
+                    <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No team members found</h3>
+                    <p className="text-gray-600 mb-6">
+                      {globalFilter ? "Try adjusting your search criteria" : "No team members have been added to this tenancy yet."}
+                    </p>
+                    {!globalFilter && (
+                      <Button onClick={() => setShowInviteForm(true)}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Invite First Team Member
+                      </Button>
+                    )}
+                  </td>
+                </tr>
+              ) : (
+                table.getRowModel().rows.map((row) => {
+                  if (row.getIsGrouped()) {
+                    // Render grouped header row
+                    return (
+                      <React.Fragment key={row.id}>
+                        <tr className="bg-gray-100 border-b-2 border-gray-300">
+                          <td
+                            colSpan={row.getVisibleCells().length}
+                            className="px-6 py-3 text-sm font-semibold text-gray-900"
                           >
-                            <div className="flex items-center space-x-1 min-h-[20px]">
-                              {header.isPlaceholder ? null : (
-                                <div
-                                  className={`flex items-center space-x-1 min-h-[20px] ${
-                                    header.column.getCanSort() ? 'cursor-pointer select-none' : ''
-                                  }`}
-                                  onClick={header.column.getToggleSortingHandler()}
-                                >
-                                  <span className="flex-1">
-                                    {flexRender(header.column.columnDef.header, header.getContext())}
-                                  </span>
-                                  <div className="flex items-center space-x-1 w-6 justify-center">
-                                    {header.column.getCanSort() && (
-                                      <ArrowUpDown className="h-3 w-3 text-gray-400 flex-shrink-0" />
-                                    )}
-                                    {header.column.getIsSorted() === 'asc' && (
-                                      <span className="text-indigo-600 text-xs flex-shrink-0">↑</span>
-                                    )}
-                                    {header.column.getIsSorted() === 'desc' && (
-                                      <span className="text-indigo-600 text-xs flex-shrink-0">↓</span>
-                                    )}
-                                  </div>
-                                </div>
-                              )}
+                            <div className="flex items-center space-x-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={row.getToggleExpandedHandler()}
+                                className="h-6 w-6 p-0 hover:bg-gray-200"
+                              >
+                                {row.getIsExpanded() ? (
+                                  <ChevronDown className="h-4 w-4" />
+                                ) : (
+                                  <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
+                                )}
+                              </Button>
+                              <span className="font-medium">
+                                {row.groupingColumnId === 'role' ? 'Role' : 
+                                 row.groupingColumnId === 'status' ? 'Status' : 
+                                 row.groupingColumnId === 'timeBucket' ? 'Joined' : 
+                                 row.groupingColumnId}: {row.groupingValue === null || row.groupingValue === undefined ? 'No value' : String(row.groupingValue)} ({row.subRows.length} members)
+                              </span>
                             </div>
-                            {/* Column Resize Handle */}
-                            {header.column.getCanResize() && (
-                              <div
-                                className={`absolute right-0 top-0 h-full w-1 bg-gray-300 cursor-col-resize select-none touch-none ${
-                                  header.column.getIsResizing() ? 'bg-indigo-500' : 'hover:bg-gray-400'
-                                }`}
-                                onMouseDown={header.getResizeHandler()}
-                                onTouchStart={header.getResizeHandler()}
-                              />
-                            )}
-                          </th>
+                          </td>
+                        </tr>
+                        {/* Render sub-rows if expanded */}
+                        {row.getIsExpanded() && row.subRows.map((subRow) => (
+                          <tr key={subRow.id} className="hover:bg-gray-50 bg-gray-50">
+                            {subRow.getVisibleCells().map((cell) => (
+                              <td
+                                key={cell.id}
+                                className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 pl-8"
+                              >
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                              </td>
+                            ))}
+                          </tr>
                         ))}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {table.getRowModel().rows.map(row => (
+                      </React.Fragment>
+                    );
+                  } else {
+                    // Render regular data row (only if not part of a collapsed group)
+                    const isInCollapsedGroup = row.getParentRow() && !row.getParentRow()?.getIsExpanded();
+                    if (isInCollapsedGroup) {
+                      return null;
+                    }
+                    
+                    return (
                       <tr key={row.id} className="hover:bg-gray-50">
-                        {row.getVisibleCells().map(cell => (
+                        {row.getVisibleCells().map((cell) => (
                           <td
                             key={cell.id}
-                            className="px-6 py-4"
-                            style={{ width: cell.column.getSize() }}
+                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                           >
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           </td>
                         ))}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    );
+                  }
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div className="flex-1 flex justify-between sm:hidden">
+            <Button
+              variant="outline"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
+          <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm text-gray-700">
+                Showing{" "}
+                <span className="font-medium">
+                  {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}
+                </span>{" "}
+                to{" "}
+                <span className="font-medium">
+                  {Math.min(
+                    (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
+                    table.getFilteredRowModel().rows.length
+                  )}
+                </span>{" "}
+                of{" "}
+                <span className="font-medium">
+                  {table.getFilteredRowModel().rows.length}
+                </span>{" "}
+                results
+              </p>
             </div>
-          )}
-        </CardContent>  
-      </Card>
+            <div>
+              <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                <Button
+                  variant="outline"
+                  onClick={() => table.setPageIndex(0)}
+                  disabled={!table.getCanPreviousPage()}
+                  className="rounded-l-md"
+                >
+                  First
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                >
+                  Previous
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                >
+                  Next
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                  disabled={!table.getCanNextPage()}
+                  className="rounded-r-md"
+                >
+                  Last
+                </Button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Invite User Modal */}
       {showInviteForm && (

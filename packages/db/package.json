@@ -19,6 +19,8 @@
     "db:seed:simple": "tsx src/seed-simple.ts",
     "db:seed:contact-reasons": "tsx src/seed-contact-reasons.ts",
     "db:seed:multi-tenancy": "tsx src/seed-multi-tenancy.ts",
+    "db:setup": "tsx -e \"import { setupDatabase } from './src/setup-functions'; setupDatabase().catch(console.error)\"",
+    "db:test": "tsx -e \"import { testDatabaseFunctions } from './src/setup-functions'; testDatabaseFunctions().catch(console.error)\"",
     "db:switch:postgresql": "cp prisma/schema.postgresql.prisma prisma/schema.prisma",
     "db:switch:sqlite": "cp prisma/schema.sqlite.prisma prisma/schema.prisma",
     "test": "vitest run",

@@ -11,3 +11,6 @@ export * from "./generated/client";
 // Export outbox pattern types and repository
 export * from './outbox-types';
 export { OutboxRepository } from './outbox-repository';
+
+// Export database setup functions
+export * from './setup-functions';

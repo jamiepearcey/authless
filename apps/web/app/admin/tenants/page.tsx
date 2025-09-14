@@ -1,13 +1,31 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { t } from "@i18n-core";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Badge } from "@ui/base";
-import { ColumnOrderState, ColumnResizeMode, createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table";
+import { toast } from "@ui/base";
+import { 
+  ColumnOrderState, 
+  ColumnResizeMode, 
+  createColumnHelper, 
+  flexRender, 
+  getCoreRowModel, 
+  getFilteredRowModel, 
+  getSortedRowModel,
+  getGroupedRowModel,
+  getPaginationRowModel,
+  SortingState, 
+  useReactTable, 
+  VisibilityState,
+  GroupingState,
+  ColumnFiltersState,
+  PaginationState,
+  ExpandedState,
+} from "@tanstack/react-table";
 import { 
   Plus, 
   Search, 
@@ -23,11 +41,48 @@ import {
   X,
   ChevronDown,
   ArrowUpDown,
-  GripVertical
+  GripVertical,
+  Download,
+  Settings,
+  Columns,
+  RefreshCw,
+  CheckCircle,
+  Clock,
+  Globe,
+  MoreHorizontal
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import Link from "next/link";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+} from "@ui/base";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@ui/base";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@ui/base";
 
 
 // Define the tenant type
@@ -42,10 +97,90 @@ type Tenant = {
   _count?: {
     memberships: number;
   };
+  subRows?: Tenant[];
+  _groupingKey?: string;
+  _groupingValue?: string;
+  _timeBucket?: string;
+  _statusGroup?: string;
+  _planGroup?: string;
+  _sizeGroup?: string;
 };
 
 // Create column helper
 const columnHelper = createColumnHelper<Tenant>();
+
+// Helper function to create time-based buckets for grouping
+function getTimeBucket(date: Date): string {
+  const now = new Date();
+  const diffInMs = now.getTime() - date.getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInWeeks = Math.floor(diffInDays / 7);
+  const diffInMonths = Math.floor(diffInDays / 30);
+  const diffInYears = Math.floor(diffInDays / 365);
+
+  // Today
+  if (diffInDays === 0) {
+    return 'Today';
+  }
+  
+  // Yesterday
+  if (diffInDays === 1) {
+    return 'Yesterday';
+  }
+  
+  // This week (1-6 days ago)
+  if (diffInDays >= 2 && diffInDays <= 6) {
+    return 'This Week';
+  }
+  
+  // Last week (7-13 days ago)
+  if (diffInWeeks === 1) {
+    return 'Last Week';
+  }
+  
+  // This month (2-4 weeks ago)
+  if (diffInWeeks >= 2 && diffInWeeks <= 4) {
+    return 'This Month';
+  }
+  
+  // Last month (1-2 months ago)
+  if (diffInMonths >= 1 && diffInMonths <= 2) {
+    return 'Last Month';
+  }
+  
+  // This year (3-11 months ago)
+  if (diffInMonths >= 3 && diffInMonths <= 11) {
+    return 'This Year';
+  }
+  
+  // Last year (1-2 years ago)
+  if (diffInYears >= 1 && diffInYears <= 2) {
+    return 'Last Year';
+  }
+  
+  // Older than 2 years
+  if (diffInYears > 2) {
+    return 'Older';
+  }
+  
+  // Fallback
+  return 'Unknown';
+}
+
+// Helper function to create size-based buckets for grouping
+function getSizeBucket(memberCount: number): string {
+  if (memberCount === 0) {
+    return 'Empty (0 members)';
+  } else if (memberCount <= 5) {
+    return 'Small (1-5 members)';
+  } else if (memberCount <= 20) {
+    return 'Medium (6-20 members)';
+  } else if (memberCount <= 50) {
+    return 'Large (21-50 members)';
+  } else {
+    return 'Enterprise (50+ members)';
+  }
+}
 
 export default function AdminTenantsPage() {
   const router = useRouter();
@@ -54,28 +189,144 @@ export default function AdminTenantsPage() {
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [selectedPlan, setSelectedPlan] = useState<string>("all");
   
-  // TanStack Table state
+  // Modal states
+  const [showTenantDetails, setShowTenantDetails] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null);
+  const [tenantToDelete, setTenantToDelete] = useState<Tenant | null>(null);
+  
+  // Advanced TanStack Table state
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    grouping: false, // Hide virtual grouping column
+    timeBucket: false, // Hide virtual time bucket column
+    statusGroup: false, // Hide virtual status group column
+    planGroup: false, // Hide virtual plan group column
+    sizeGroup: false, // Hide virtual size group column
+  });
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
+  const [grouping, setGrouping] = useState<GroupingState>([]);
+  const [expanded, setExpanded] = useState<ExpandedState>({});
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 20,
+  });
   
   const limit = 20;
   const offset = (currentPage - 1) * limit;
 
-  const { data: tenantsData, isLoading } = trpc.getTenants.useQuery({
+  const { data: tenantsData, isLoading, refetch } = trpc.getTenants.useQuery({
     limit,
     offset,
     status: selectedStatus === "all" ? undefined : selectedStatus,
     plan: selectedPlan === "all" ? undefined : selectedPlan,
   });
 
-  // Define columns
+  // Transform data for proper grouping
+  const transformedTenants = useMemo(() => {
+    if (!tenantsData?.tenants) return [];
+    
+    return tenantsData.tenants.map(tenant => {
+      let groupingValue = 'All Tenants';
+      let timeBucket = getTimeBucket(new Date(tenant.createdAt));
+      let statusGroup = tenant.status || 'Unknown';
+      let planGroup = tenant.plan || 'Unknown';
+      let sizeGroup = getSizeBucket(tenant._count?.memberships || 0);
+      
+      if (grouping.length > 0) {
+        if (grouping[0] === 'status') {
+          groupingValue = statusGroup;
+        } else if (grouping[0] === 'plan') {
+          groupingValue = planGroup;
+        } else if (grouping[0] === 'timeBucket') {
+          groupingValue = timeBucket;
+        } else if (grouping[0] === 'statusGroup') {
+          groupingValue = statusGroup;
+        } else if (grouping[0] === 'planGroup') {
+          groupingValue = planGroup;
+        } else if (grouping[0] === 'sizeGroup') {
+          groupingValue = sizeGroup;
+        }
+      }
+      
+      return {
+        ...tenant,
+        _groupingKey: tenant.id,
+        _groupingValue: groupingValue,
+        _timeBucket: timeBucket,
+        _statusGroup: statusGroup,
+        _planGroup: planGroup,
+        _sizeGroup: sizeGroup,
+      };
+    });
+  }, [tenantsData?.tenants, grouping]);
+
+  // Define advanced columns with grouping support
   const columns = useMemo(
     () => [
+      // Virtual grouping columns (hidden)
+      columnHelper.accessor("_groupingValue", {
+        id: "grouping",
+        header: () => null,
+        cell: () => null,
+        enableSorting: false,
+        enableResizing: false,
+        enableGrouping: true,
+        enableHiding: true,
+      }),
+      columnHelper.accessor("_timeBucket", {
+        id: "timeBucket",
+        header: () => null,
+        cell: () => null,
+        enableSorting: false,
+        enableResizing: false,
+        enableGrouping: true,
+        enableHiding: true,
+      }),
+      columnHelper.accessor("_statusGroup", {
+        id: "statusGroup",
+        header: () => null,
+        cell: () => null,
+        enableSorting: false,
+        enableResizing: false,
+        enableGrouping: true,
+        enableHiding: true,
+      }),
+      columnHelper.accessor("_planGroup", {
+        id: "planGroup",
+        header: () => null,
+        cell: () => null,
+        enableSorting: false,
+        enableResizing: false,
+        enableGrouping: true,
+        enableHiding: true,
+      }),
+      columnHelper.accessor("_sizeGroup", {
+        id: "sizeGroup",
+        header: () => null,
+        cell: () => null,
+        enableSorting: false,
+        enableResizing: false,
+        enableGrouping: true,
+        enableHiding: true,
+      }),
       columnHelper.accessor("name", {
         id: "tenant",
-        header: () => t("Tenant", "admin.tenants.page.AdminTenantsPage.tenant__23ckols"),
+        header: ({ column }) => (
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="h-8 px-2 hover:bg-gray-100"
+            >
+              <ArrowUpDown className="h-4 w-4 mr-1" />
+              {t("Tenant", "admin.tenants.page.AdminTenantsPage.tenant__23ckols")}
+            </Button>
+          </div>
+        ),
         cell: ({ row }) => (
           <div className="flex items-center min-w-0">
             <div className="h-10 w-10 flex-shrink-0">
@@ -93,83 +344,160 @@ export default function AdminTenantsPage() {
             </div>
           </div>
         ),
-        size: 350,
+        size: 300,
         minSize: 250,
-        maxSize: 500,
+        maxSize: 400,
+        enableSorting: true,
+        enableResizing: true,
+        enableGrouping: false,
       }),
       columnHelper.accessor("status", {
         id: "status",
-        header: () => t("Status", "admin.tenants.page.AdminTenantsPage.status__24ckols"),
+        header: ({ column }) => (
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="h-8 px-2 hover:bg-gray-100"
+            >
+              <ArrowUpDown className="h-4 w-4 mr-1" />
+              {t("Status", "admin.tenants.page.AdminTenantsPage.status__24ckols")}
+            </Button>
+          </div>
+        ),
         cell: ({ getValue }) => {
           const status = getValue();
           switch (status) {
             case "active":
-              return <Badge variant="default" className="bg-green-100 text-green-800">Active</Badge>;
+              return <Badge variant="default" className="bg-green-100 text-green-800 hover:bg-green-200 hover:text-green-900">Active</Badge>;
             case "suspended":
-              return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Suspended</Badge>;
+              return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200 hover:text-yellow-900">Suspended</Badge>;
             case "deleted":
-              return <Badge variant="destructive" className="bg-red-100 text-red-800">Deleted</Badge>;
+              return <Badge variant="destructive" className="bg-red-100 text-red-800 hover:bg-red-200 hover:text-red-900">Deleted</Badge>;
             default:
-              return <Badge variant="outline">{status}</Badge>;
+              return <Badge variant="outline" className="hover:bg-gray-100">{status}</Badge>;
           }
         },
-        size: 100,
-        minSize: 80,
+        size: 120,
+        minSize: 100,
         maxSize: 150,
+        enableSorting: true,
+        enableResizing: true,
+        enableGrouping: true,
+        filterFn: (row, id, value) => {
+          return value.includes(row.getValue(id));
+        },
       }),
       columnHelper.accessor("plan", {
         id: "plan",
-        header: () => t("Plan", "admin.tenants.page.AdminTenantsPage.plan__25ckols"),
+        header: ({ column }) => (
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="h-8 px-2 hover:bg-gray-100"
+            >
+              <ArrowUpDown className="h-4 w-4 mr-1" />
+              {t("Plan", "admin.tenants.page.AdminTenantsPage.plan__25ckols")}
+            </Button>
+          </div>
+        ),
         cell: ({ getValue }) => {
           const plan = getValue();
           switch (plan) {
             case "free":
-              return <Badge variant="outline" className="text-gray-600">Free</Badge>;
+              return <Badge variant="outline" className="text-gray-600 hover:bg-gray-100">Free</Badge>;
             case "pro":
-              return <Badge variant="secondary" className="bg-blue-100 text-blue-800">Pro</Badge>;
+              return <Badge variant="secondary" className="bg-blue-100 text-blue-800 hover:bg-blue-200 hover:text-blue-900">Pro</Badge>;
             case "enterprise":
-              return <Badge variant="default" className="bg-purple-100 text-purple-800">Enterprise</Badge>;
+              return <Badge variant="default" className="bg-purple-100 text-purple-800 hover:bg-purple-200 hover:text-purple-900">Enterprise</Badge>;
             default:
-              return <Badge variant="outline">{plan}</Badge>;
+              return <Badge variant="outline" className="hover:bg-gray-100">{plan}</Badge>;
           }
         },
-        size: 100,
-        minSize: 80,
+        size: 120,
+        minSize: 100,
         maxSize: 150,
+        enableSorting: true,
+        enableResizing: true,
+        enableGrouping: true,
+        filterFn: (row, id, value) => {
+          return value.includes(row.getValue(id));
+        },
       }),
       columnHelper.accessor("_count.memberships", {
         id: "members",
-        header: () => t("Members", "admin.tenants.page.AdminTenantsPage.members__26ckols"),
-        cell: ({ getValue }) => (
-          <span className="text-sm text-gray-900">{getValue() || 0}</span>
+        header: ({ column }) => (
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="h-8 px-2 hover:bg-gray-100"
+            >
+              <ArrowUpDown className="h-4 w-4 mr-1" />
+              {t("Members", "admin.tenants.page.AdminTenantsPage.members__26ckols")}
+            </Button>
+          </div>
         ),
-        size: 80,
-        minSize: 60,
-        maxSize: 120,
-      }),
-      columnHelper.accessor("createdAt", {
-        id: "created",
-        header: () => t("Created", "admin.tenants.page.AdminTenantsPage.created__27ckols"),
         cell: ({ getValue }) => (
-          <span className="text-sm text-gray-500">
-            {new Date(getValue()).toLocaleDateString()}
-          </span>
+          <div className="flex items-center space-x-2">
+            <Users className="h-4 w-4 text-gray-400" />
+            <span className="text-sm text-gray-900">{getValue() || 0}</span>
+          </div>
         ),
         size: 120,
         minSize: 100,
         maxSize: 150,
+        enableSorting: true,
+        enableResizing: true,
+        enableGrouping: true,
       }),
-      columnHelper.display({
-        id: "actions",
-        header: () => t("Actions", "admin.tenants.page.AdminTenantsPage.actions__28ckols"),
-        cell: ({ row }) => (
-          <div className="flex items-center space-x-1">
+      columnHelper.accessor("createdAt", {
+        id: "created",
+        header: ({ column }) => (
+          <div className="flex items-center space-x-2">
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => handleViewTenant(row.original.slug)}
-              className="h-8 w-8 p-0"
-              title="View Tenant"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="h-8 px-2 hover:bg-gray-100"
+            >
+              <ArrowUpDown className="h-4 w-4 mr-1" />
+              {t("Created", "admin.tenants.page.AdminTenantsPage.created__27ckols")}
+            </Button>
+          </div>
+        ),
+        cell: ({ getValue }) => (
+          <div className="flex items-center space-x-2">
+            <Calendar className="h-4 w-4 text-gray-400" />
+            <span className="text-sm text-gray-500">
+              {new Date(getValue()).toLocaleDateString()}
+            </span>
+          </div>
+        ),
+        size: 120,
+        minSize: 100,
+        maxSize: 150,
+        enableSorting: true,
+        enableResizing: true,
+        enableGrouping: true,
+      }),
+      columnHelper.display({
+        id: "actions",
+        header: t("Actions", "admin.tenants.page.AdminTenantsPage.actions__28ckols"),
+        cell: ({ row }) => (
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setSelectedTenant(row.original);
+                setShowTenantDetails(true);
+              }}
+              className="h-8 w-8 p-0 hover:bg-gray-100"
             >
               <Eye className="h-4 w-4" />
             </Button>
@@ -177,50 +505,112 @@ export default function AdminTenantsPage() {
               variant="ghost"
               size="sm"
               onClick={() => handleEditTenant(row.original.slug)}
-              className="h-8 w-8 p-0"
-              title="Edit Tenant"
+              className="h-8 w-8 p-0 hover:bg-gray-100"
             >
               <Edit className="h-4 w-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
-              title="Delete Tenant"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() => {
+                    setSelectedTenant(row.original);
+                    setShowTenantDetails(true);
+                  }}
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  View Details
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleViewTenant(row.original.slug)}
+                >
+                  <Globe className="h-4 w-4 mr-2" />
+                  Visit Tenant
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleEditTenant(row.original.slug)}
+                >
+                  <Edit className="h-4 w-4 mr-2" />
+                  Edit Settings
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    toast.info("Status change not implemented yet");
+                  }}
+                  className="text-orange-600"
+                >
+                  <AlertTriangle className="h-4 w-4 mr-2" />
+                  {row.original.status === "active" ? "Suspend" : "Activate"}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setTenantToDelete(row.original);
+                    setShowDeleteConfirm(true);
+                  }}
+                  className="text-red-600"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete Tenant
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         ),
         size: 120,
         minSize: 100,
         maxSize: 150,
         enableSorting: false,
+        enableResizing: false,
+        enableGrouping: false,
       }),
     ],
-    [t]
+    [t, grouping]
   );
 
-  // Create table instance
+  // Advanced table instance with grouping and pagination
   const table = useReactTable({
-    data: tenantsData?.tenants || [],
+    data: transformedTenants,
     columns,
     state: {
       sorting,
       columnOrder,
       columnVisibility,
+      columnFilters,
       globalFilter: globalFilter || searchTerm,
+      grouping,
+      expanded,
+      pagination,
     },
     onSortingChange: setSorting,
     onColumnOrderChange: setColumnOrder,
     onColumnVisibilityChange: setColumnVisibility,
+    onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
+    onGroupingChange: setGrouping,
+    onExpandedChange: setExpanded,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getGroupedRowModel: getGroupedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     columnResizeMode: "onChange" as ColumnResizeMode,
+    enableGrouping: true,
     enableColumnResizing: true,
     enableSorting: true,
+    enableFilters: true,
+    enableGlobalFilter: true,
+    manualPagination: false,
+    globalFilterFn: "includesString",
+    groupedColumnMode: "remove",
+    enableExpanding: true,
+    enableSubRowSelection: false,
+    getSubRows: (row) => row.subRows,
   });
 
   // TODO: Implement inline tenant creation if needed in the future
@@ -294,144 +684,131 @@ export default function AdminTenantsPage() {
             </p>
           </div>
           
-          <Button onClick={handleCreateTenant} className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Create Tenant
-          </Button>
+          <div className="flex items-center space-x-3">
+            <Button variant="outline" onClick={() => refetch()}>
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+            <Button variant="outline">
+              <Download className="h-4 w-4 mr-2" />
+              Export
+            </Button>
+            <Button onClick={handleCreateTenant} className="bg-indigo-600 hover:bg-indigo-700">
+              <Plus className="h-4 w-4 mr-2" />
+              Create Tenant
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* Enhanced Toolbar */}
-      <Card className="mb-6">
-        <CardContent className="p-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            {/* Search Section */}
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Search tenants by name or slug..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 h-10 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-                />
-                {searchTerm && (
-                  <button
-                    onClick={() => setSearchTerm("")}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 hover:text-gray-600"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                )}
-              </div>
+      {/* Advanced Controls */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          {/* Search and Filters */}
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search tenants..."
+                value={globalFilter ?? ""}
+                onChange={(e) => setGlobalFilter(e.target.value)}
+                className="pl-10 w-64"
+              />
             </div>
+            
+            {/* Column Visibility */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Columns className="h-4 w-4 mr-2" />
+                  Columns
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {table.getAllColumns()
+                  .filter((column) => column.getCanHide() && !column.id.startsWith('_') && column.id !== 'grouping' && column.id !== 'timeBucket' && column.id !== 'statusGroup' && column.id !== 'planGroup' && column.id !== 'sizeGroup')
+                  .map((column) => (
+                    <DropdownMenuItem
+                      key={column.id}
+                      onClick={() => column.toggleVisibility()}
+                      className="flex items-center justify-between"
+                    >
+                      <span>{column.id}</span>
+                      {column.getIsVisible() && <CheckCircle className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                  ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-            {/* Filters Section */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <div className="flex items-center gap-2">
-                <Filter className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-medium text-gray-700">Filters:</span>
-              </div>
-              
-              <div className="flex flex-wrap items-center gap-2">
-                {/* Status Filter */}
-                <div className="relative">
-                  <select
-                    value={selectedStatus}
-                    onChange={(e) => setSelectedStatus(e.target.value)}
-                    className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 transition-colors min-w-[120px]"
-                  >
-                    <option value="all">All Statuses</option>
-                    <option value="active">Active</option>
-                    <option value="suspended">Suspended</option>
-                    <option value="deleted">Deleted</option>
-                  </select>
-                  <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-                </div>
-
-                {/* Plan Filter */}
-                <div className="relative">
-                  <select
-                    value={selectedPlan}
-                    onChange={(e) => setSelectedPlan(e.target.value)}
-                    className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 transition-colors min-w-[120px]"
-                  >
-                    <option value="all">All Plans</option>
-                    <option value="free">Free</option>
-                    <option value="pro">Pro</option>
-                    <option value="enterprise">Enterprise</option>
-                  </select>
-                  <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-                </div>
-
-                {/* Clear Filters Button */}
-                {(searchTerm || selectedStatus !== "all" || selectedPlan !== "all") && (
-                  <Button 
-                    variant="outline" 
-                    onClick={() => {
-                      setSearchTerm("");
-                      setSelectedStatus("all");
-                      setSelectedPlan("all");
-                      setCurrentPage(1);
-                    }}
-                    size="sm"
-                    className="h-8 px-3 text-xs border-gray-300 hover:border-gray-400 hover:bg-gray-50"
-                  >
-                    <X className="h-3 w-3 mr-1" />
-                    Clear All
-                  </Button>
-                )}
-              </div>
-            </div>
+            {/* Grouping - Single column only */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <GripVertical className="h-4 w-4 mr-2" />
+                  Group by {grouping.length > 0 ? `(${
+                    grouping[0] === 'status' ? 'Status' :
+                    grouping[0] === 'plan' ? 'Plan' :
+                    grouping[0] === 'sizeGroup' ? 'Size' :
+                    grouping[0] === 'timeBucket' ? 'Created' :
+                    grouping[0]
+                  })` : ''}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuLabel>Group by (single column)</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => setGrouping([])}
+                  className="flex items-center justify-between"
+                >
+                  <span>No grouping</span>
+                  {grouping.length === 0 && <CheckCircle className="h-4 w-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => setGrouping(grouping.includes('status') ? [] : ['status'])}
+                  className="flex items-center justify-between"
+                >
+                  <span>Status</span>
+                  {grouping.includes('status') && <CheckCircle className="h-4 w-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setGrouping(grouping.includes('plan') ? [] : ['plan'])}
+                  className="flex items-center justify-between"
+                >
+                  <span>Plan</span>
+                  {grouping.includes('plan') && <CheckCircle className="h-4 w-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setGrouping(grouping.includes('sizeGroup') ? [] : ['sizeGroup'])}
+                  className="flex items-center justify-between"
+                >
+                  <span>Size</span>
+                  {grouping.includes('sizeGroup') && <CheckCircle className="h-4 w-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setGrouping(grouping.includes('timeBucket') ? [] : ['timeBucket'])}
+                  className="flex items-center justify-between"
+                >
+                  <span>Created</span>
+                  {grouping.includes('timeBucket') && <CheckCircle className="h-4 w-4" />}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
+          
+          {/* Stats */}
+          <div className="flex items-center space-x-4 text-sm text-gray-500">
+            <span>{table.getFilteredRowModel().rows.length} tenants</span>
+            {grouping.length > 0 && (
+              <span>{table.getGroupedRowModel().rows.length} groups</span>
+            )}
+          </div>
+        </div>
+      </div>
 
-          {/* Active Filters Display */}
-          {(searchTerm || selectedStatus !== "all" || selectedPlan !== "all") && (
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm text-gray-500">Active filters:</span>
-                
-                {searchTerm && (
-                  <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200">
-                    <Search className="h-3 w-3 mr-1" />
-                    "{searchTerm}"
-                    <button
-                      onClick={() => setSearchTerm("")}
-                      className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                )}
-                
-                {selectedStatus !== "all" && (
-                  <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
-                    Status: {selectedStatus}
-                    <button
-                      onClick={() => setSelectedStatus("all")}
-                      className="ml-1 hover:bg-green-200 rounded-full p-0.5"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                )}
-                
-                {selectedPlan !== "all" && (
-                  <Badge variant="secondary" className="bg-purple-100 text-purple-800 border-purple-200">
-                    Plan: {selectedPlan}
-                    <button
-                      onClick={() => setSelectedPlan("all")}
-                      className="ml-1 hover:bg-purple-200 rounded-full p-0.5"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                )}
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -494,129 +871,280 @@ export default function AdminTenantsPage() {
         </Card>
       </div>
 
-      {/* TanStack Table */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle>{t("All Tenants", "admin.tenants.page.AdminTenantsPage.all_tenants__21ckols")}</CardTitle>
-              <CardDescription>
-                {t("Manage and monitor all workspaces in the system", "admin.tenants.page.AdminTenantsPage.manage_and_monitor_all_workspaces__22ckols")}
-              </CardDescription>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => table.resetColumnOrder()}
-                className="text-xs"
-              >
-                <GripVertical className="h-4 w-4 mr-1" />
-                Reset Columns
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full divide-y divide-gray-200" style={{ width: table.getCenterTotalSize() }}>
-                <thead className="bg-gray-50">
-                  {table.getHeaderGroups().map(headerGroup => (
-                    <tr key={headerGroup.id}>
-                      {headerGroup.headers.map(header => (
-                        <th
-                          key={header.id}
-                          className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider relative group"
-                          style={{ width: header.getSize() }}
-                        >
-                          <div className="flex items-center space-x-1 min-h-[20px]">
-                            {header.isPlaceholder ? null : (
-                              <div
-                                className={`flex items-center space-x-1 min-h-[20px] ${
-                                  header.column.getCanSort() ? 'cursor-pointer select-none' : ''
-                                }`}
-                                onClick={header.column.getToggleSortingHandler()}
+      {/* Advanced Table */}
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50 border-b border-gray-200">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      style={{ width: header.getSize() }}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {table.getRowModel().rows.length === 0 ? (
+                <tr>
+                  <td colSpan={table.getAllColumns().length} className="px-6 py-12 text-center">
+                    <Building2 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No tenants found</h3>
+                    <p className="text-gray-600 mb-6">
+                      {globalFilter ? "Try adjusting your search criteria" : "Get started by creating your first tenant"}
+                    </p>
+                    {!globalFilter && (
+                      <Button onClick={handleCreateTenant}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Tenant
+                      </Button>
+                    )}
+                  </td>
+                </tr>
+              ) : (
+                table.getRowModel().rows.map((row) => {
+                  if (row.getIsGrouped()) {
+                    // Render grouped header row
+                    return (
+                      <React.Fragment key={row.id}>
+                        <tr className="bg-gray-100 border-b-2 border-gray-300">
+                          <td
+                            colSpan={row.getVisibleCells().length}
+                            className="px-6 py-3 text-sm font-semibold text-gray-900"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={row.getToggleExpandedHandler()}
+                                className="h-6 w-6 p-0 hover:bg-gray-200"
                               >
-                                <span className="flex-1">
-                                  {flexRender(header.column.columnDef.header, header.getContext())}
-                                </span>
-                                <div className="flex items-center space-x-1 w-6 justify-center">
-                                  {header.column.getCanSort() && (
-                                    <ArrowUpDown className="h-3 w-3 text-gray-400 flex-shrink-0" />
-                                  )}
-                                  {header.column.getIsSorted() === 'asc' && (
-                                    <span className="text-indigo-600 text-xs flex-shrink-0">↑</span>
-                                  )}
-                                  {header.column.getIsSorted() === 'desc' && (
-                                    <span className="text-indigo-600 text-xs flex-shrink-0">↓</span>
-                                  )}
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                          {/* Column Resize Handle */}
-                          {header.column.getCanResize() && (
-                            <div
-                              className={`absolute right-0 top-0 h-full w-1 bg-gray-300 cursor-col-resize select-none touch-none ${
-                                header.column.getIsResizing() ? 'bg-indigo-500' : 'hover:bg-gray-400'
-                              }`}
-                              onMouseDown={header.getResizeHandler()}
-                              onTouchStart={header.getResizeHandler()}
-                            />
-                          )}
-                        </th>
-                      ))}
-                    </tr>
-                  ))}
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {table.getRowModel().rows.map(row => (
-                    <tr key={row.id} className="hover:bg-gray-50">
-                      {row.getVisibleCells().map(cell => (
-                        <td
-                          key={cell.id}
-                          className="px-6 py-4"
-                          style={{ width: cell.column.getSize() }}
-                        >
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                                {row.getIsExpanded() ? (
+                                  <ChevronDown className="h-4 w-4" />
+                                ) : (
+                                  <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
+                                )}
+                              </Button>
+                              <span className="font-medium">
+                                {row.groupingColumnId === 'status' ? 'Status' : 
+                                 row.groupingColumnId === 'plan' ? 'Plan' : 
+                                 row.groupingColumnId === 'sizeGroup' ? 'Size' : 
+                                 row.groupingColumnId === 'timeBucket' ? 'Created' : 
+                                 row.groupingColumnId}: {row.groupingValue === null || row.groupingValue === undefined ? 'No value' : String(row.groupingValue)} ({row.subRows.length} tenants)
+                              </span>
+                            </div>
+                          </td>
+                        </tr>
+                        {/* Render sub-rows if expanded */}
+                        {row.getIsExpanded() && row.subRows.map((subRow) => (
+                          <tr key={subRow.id} className="hover:bg-gray-50 bg-gray-50">
+                            {subRow.getVisibleCells().map((cell) => (
+                              <td
+                                key={cell.id}
+                                className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 pl-8"
+                              >
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </React.Fragment>
+                    );
+                  } else {
+                    // Render regular data row (only if not part of a collapsed group)
+                    const isInCollapsedGroup = row.getParentRow() && !row.getParentRow()?.getIsExpanded();
+                    if (isInCollapsedGroup) {
+                      return null;
+                    }
+                    
+                    return (
+                      <tr key={row.id} className="hover:bg-gray-50">
+                        {row.getVisibleCells().map((cell) => (
+                          <td
+                            key={cell.id}
+                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                          >
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </td>
+                        ))}
+                      </tr>
+                    );
+                  }
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div className="flex-1 flex justify-between sm:hidden">
+            <Button
+              variant="outline"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
+          <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm text-gray-700">
+                Showing{" "}
+                <span className="font-medium">
+                  {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}
+                </span>{" "}
+                to{" "}
+                <span className="font-medium">
+                  {Math.min(
+                    (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
+                    table.getFilteredRowModel().rows.length
+                  )}
+                </span>{" "}
+                of{" "}
+                <span className="font-medium">
+                  {table.getFilteredRowModel().rows.length}
+                </span>{" "}
+                results
+              </p>
+            </div>
+            <div>
+              <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                <Button
+                  variant="outline"
+                  onClick={() => table.setPageIndex(0)}
+                  disabled={!table.getCanPreviousPage()}
+                  className="rounded-l-md"
+                >
+                  First
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                >
+                  Previous
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                >
+                  Next
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                  disabled={!table.getCanNextPage()}
+                  className="rounded-r-md"
+                >
+                  Last
+                </Button>
+              </nav>
             </div>
           </div>
-          
-          {/* Pagination */}
-          {tenantsData && tenantsData.total > limit && (
-            <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
-              <div className="text-sm text-gray-700">
-                {t("Showing", "admin.tenants.page.AdminTenantsPage.showing__29ckols")} {offset + 1} {t("to", "admin.tenants.page.AdminTenantsPage.to__30ckols")} {Math.min(offset + limit, tenantsData.total)} {t("of", "admin.tenants.page.AdminTenantsPage.of__31ckols")} {tenantsData.total} {t("results", "admin.tenants.page.AdminTenantsPage.results__32ckols")}
+        </div>
+      </div>
+
+      {/* Tenant Details Modal */}
+      <Dialog open={showTenantDetails} onOpenChange={setShowTenantDetails}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Tenant Details</DialogTitle>
+            <DialogDescription>
+              View detailed information about this tenant
+            </DialogDescription>
+          </DialogHeader>
+          {selectedTenant && (
+            <div className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                  {selectedTenant.logoUrl ? (
+                    <img src={selectedTenant.logoUrl} alt={selectedTenant.name} className="h-16 w-16 rounded-full" />
+                  ) : (
+                    <Building2 className="h-8 w-8 text-white" />
+                  )}
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900">
+                    {selectedTenant.name}
+                  </h3>
+                  <p className="text-sm text-gray-500">{selectedTenant.slug}</p>
+                </div>
               </div>
-              <div className="flex space-x-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                  disabled={currentPage === 1}
-                >
-                  {t("Previous", "admin.tenants.page.AdminTenantsPage.previous__33ckols")}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={offset + limit >= (tenantsData?.total || 0)}
-                >
-                  {t("Next", "admin.tenants.page.AdminTenantsPage.next__34ckols")}
-                </Button>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium text-gray-500">Status</label>
+                  <p className="text-sm text-gray-900">{selectedTenant.status}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-500">Plan</label>
+                  <p className="text-sm text-gray-900">{selectedTenant.plan}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-500">Members</label>
+                  <p className="text-sm text-gray-900">{selectedTenant._count?.memberships || 0}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-500">Created</label>
+                  <p className="text-sm text-gray-900">
+                    {new Date(selectedTenant.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="col-span-2">
+                  <label className="text-sm font-medium text-gray-500">Tenant ID</label>
+                  <p className="text-sm text-gray-900 font-mono">{selectedTenant.id}</p>
+                </div>
               </div>
             </div>
           )}
-        </CardContent>
-      </Card>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowTenantDetails(false)}>
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Modal */}
+      <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Tenant</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this tenant? This action cannot be undone.
+              All tenant data and associated content will be permanently removed.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                toast.info("Tenant deletion not implemented yet");
+                setShowDeleteConfirm(false);
+              }}
+              className="bg-red-600 hover:bg-red-700 focus:ring-red-500"
+            >
+              Delete Tenant
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
