@@ -217,8 +217,8 @@ export const featureToggleRouter = router({
 
       return features.map(feature => ({
         ...feature,
-        hasGlobalRule: feature.globalRules.length > 0,
-        globalEnabled: feature.globalRules.length > 0 ? feature.globalRules[0].enabled : undefined,
+        hasGlobalRule: feature.globalRules && feature.globalRules.length > 0,
+        globalEnabled: feature.globalRules && feature.globalRules.length > 0 ? feature.globalRules[0].enabled : undefined,
         tenantRuleCount: feature._count.tenantRules,
         auditEntryCount: feature._count.auditEntries
       }));

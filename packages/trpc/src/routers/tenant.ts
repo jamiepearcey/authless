@@ -97,19 +97,6 @@ export const tenantRouter = router({
             contactEmail: input.contactEmail,
           },
         });
-        
-        // Log the action
-        await ctx.db.auditLog.create({
-          data: {
-            userId: ctx.session.user.id || "unknown",
-            action: "tenant_created",
-            resourceType: "tenant",
-            resourceId: newTenant.id,
-            traceId: ctx.trace.traceId,
-            details: JSON.stringify({ slug: input.slug, name: input.name }),
-            severity: "info",
-          },
-        });
 
         // Publish tenant created event
         await ctx.outbox.publishTenantEvent(

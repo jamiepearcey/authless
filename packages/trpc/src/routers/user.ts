@@ -376,6 +376,37 @@ export const userRouter = router({
     return users;
   }),
 
+  // Search users for assignment (supports predictive search)
+  searchUsers: protectedProcedure
+    .input(z.object({
+      query: z.string().min(1),
+      limit: z.number().min(1).max(50).default(10),
+    }))
+    .query(async ({ ctx, input }) => {
+      const users = await ctx.db.user.findMany({
+        where: {
+          status: "active",
+          OR: [
+            { name: { contains: input.query, mode: "insensitive" } },
+            { email: { contains: input.query, mode: "insensitive" } },
+          ],
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          image: true,
+          platformRole: true,
+        },
+        take: input.limit,
+        orderBy: [
+          { name: "asc" },
+          { email: "asc" },
+        ],
+      });
+      return users;
+    }),
+
   // Delete user (platform admin only)
   deleteUser: platformAdminProcedure
     .input(z.object({ id: z.string() }))

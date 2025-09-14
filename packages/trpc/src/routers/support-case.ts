@@ -586,7 +586,7 @@ export const supportCaseRouter = router({
     .input(
       z.object({
         caseId: z.string(),
-        assigneeId: z.string().optional(), // null to unassign
+        assigneeId: z.string().nullable().optional(), // null to unassign
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -601,6 +601,7 @@ export const supportCaseRouter = router({
               select: {
                 name: true,
                 email: true,
+                image: true,
               },
             },
           },

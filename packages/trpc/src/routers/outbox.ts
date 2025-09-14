@@ -4,14 +4,14 @@ import { router, platformAdminProcedure } from "../middleware";
 
 export const outboxRouter = router({
   // Get outbox statistics
-  getStats: platformAdminProcedure
+  getOutboxStats: platformAdminProcedure
     .input(z.object({ tenantId: z.string().optional() }))
     .query(async ({ ctx, input }) => {
       return await ctx.outbox.getStats(input.tenantId);
     }),
 
   // Get outbox events with pagination and filtering
-  getEvents: platformAdminProcedure
+  getOutboxEvents: platformAdminProcedure
     .input(z.object({
       tenantId: z.string().optional(),
       eventType: z.string().optional(),
@@ -60,31 +60,25 @@ export const outboxRouter = router({
       });
 
       return {
-        events: events.map(event => ({
-          ...event,
-          id: event.id.toString(), // Convert BigInt to string
-        })),
+        events,
         totalCount,
         hasMore: totalCount > input.offset + input.limit,
       };
     }),
 
   // Get event details by ID
-  getEventById: platformAdminProcedure
+  getOutboxEventById: platformAdminProcedure
     .input(z.object({ eventId: z.string() }))
     .query(async ({ ctx, input }) => {
       const event = await ctx.db.outboxEvent.findUnique({
-        where: { id: BigInt(input.eventId) },
+        where: { id: parseInt(input.eventId) },
       });
 
       if (!event) {
         throw new TRPCError({ code: "NOT_FOUND", message: "Event not found" });
       }
 
-      return {
-        ...event,
-        id: event.id.toString(), // Convert BigInt to string
-      };
+      return event;
     }),
 
   // Retry failed events
@@ -143,10 +137,7 @@ export const outboxRouter = router({
     }))
     .query(async ({ ctx, input }) => {
       const events = await ctx.outbox.getEventsByTenant(input.tenantId, input.limit);
-      return events.map(event => ({
-        ...event,
-        id: event.id.toString(), // Convert BigInt to string
-      }));
+      return events;
     }),
 
   // Get events by type
@@ -157,14 +148,11 @@ export const outboxRouter = router({
     }))
     .query(async ({ ctx, input }) => {
       const events = await ctx.outbox.getEventsByType(input.eventType, input.limit);
-      return events.map(event => ({
-        ...event,
-        id: event.id.toString(), // Convert BigInt to string
-      }));
+      return events;
     }),
 
   // Get distinct event types for filtering
-  getEventTypes: platformAdminProcedure.query(async ({ ctx }) => {
+  getOutboxEventTypes: platformAdminProcedure.query(async ({ ctx }) => {
     const result = await ctx.db.outboxEvent.findMany({
       select: { eventType: true },
       distinct: ['eventType'],
@@ -185,4 +173,35 @@ export const outboxRouter = router({
 
     return result.map(r => r.tenantId);
   }),
+
+  // Restart dead events (bulk)
+  restartDeadEvents: platformAdminProcedure
+    .input(z.object({ 
+      eventIds: z.array(z.string()).optional(),
+      newMaxTries: z.number().min(1).max(1000).optional()
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const repository = new (await import("@db/base")).OutboxRepository(ctx.db);
+      const result = await repository.restartDeadEvents(input.eventIds, input.newMaxTries);
+      
+      return { 
+        success: true, 
+        message: `${result.restartedCount} dead events restarted`,
+        restartedCount: result.restartedCount,
+        events: result.events
+      };
+    }),
+
+  // Restart a single dead event by ID
+  restartDeadEventById: platformAdminProcedure
+    .input(z.object({ 
+      eventId: z.string(),
+      newMaxTries: z.number().min(1).max(1000).optional()
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const repository = new (await import("@db/base")).OutboxRepository(ctx.db);
+      const result = await repository.restartDeadEventById(input.eventId, input.newMaxTries);
+      
+      return result;
+    }),
 });
