@@ -46,7 +46,6 @@ import {
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { toast } from "@ui/base";
 
 // Status badge component
@@ -257,24 +256,6 @@ export default function SupportCaseDetailPage() {
         <div className="flex justify-between items-center">
           <div>
             <div className="flex items-center space-x-4 mb-4">
-              <Link 
-                href={`/tenants/${tenantSlug}/admin/support`}
-                className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-              >
-                <ArrowLeft className="h-5 w-5 mr-2" />
-                Back to Support
-              </Link>
-              <div className="h-6 w-px bg-gray-300" />
-              <BreadcrumbNavigation
-                items={[
-                  { label: "Tenants", href: "/tenants/dashboard" },
-                  { label: tenantSlug, href: `/tenants/${tenantSlug}` },
-                  { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
-                  { label: "Support", href: `/tenants/${tenantSlug}/admin/support` },
-                  { label: `Case ${supportCase.caseNumber || supportCase.id.substring(0, 8)}`, current: true },
-                ]}
-                showHome={false}
-              />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <HeadphonesIcon className="h-8 w-8 text-indigo-600" />

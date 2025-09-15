@@ -22,6 +22,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import { AdminPageLayout } from "@/components/AdminPageLayout";
 import Link from "next/link";
 
 export default function AdminSupportPage() {
@@ -97,52 +98,38 @@ export default function AdminSupportPage() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="mb-4">
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-4 mb-4">
-          <Link 
-            href="/admin"
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Admin
-          </Link>
-          <div className="h-6 w-px bg-gray-300" />
-          <BreadcrumbNavigation
-            items={[
-              { label: "Admin", href: "/admin" },
-              { label: "Support Management", current: true },
-            ]}
-            showHome={false}
+    <AdminPageLayout
+      title="Support Management"
+      description="Manage platform-wide support cases and customer inquiries"
+      actions={
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Input
+            placeholder="Search support cases..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 w-64"
           />
         </div>
-        
-        {/* Page Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-              <HelpCircle className="h-8 w-8 text-indigo-600" />
-              <span>Support Management</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Manage platform-wide support cases and customer inquiries
-            </p>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search support cases..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-64"
-              />
-            </div>
-          </div>
-        </div>
+      }
+    >
+      {/* Breadcrumb Navigation */}
+      <div className="flex items-center space-x-4 mb-4">
+        <Link 
+          href="/admin"
+          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          Back to Admin
+        </Link>
+        <div className="h-6 w-px bg-gray-300" />
+        <BreadcrumbNavigation
+          items={[
+            { label: "Admin", href: "/admin" },
+            { label: "Support Management", current: true },
+          ]}
+          showHome={false}
+        />
       </div>
 
       {/* Support Metrics */}
@@ -493,6 +480,6 @@ export default function AdminSupportPage() {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
+    </AdminPageLayout>
   );
 }

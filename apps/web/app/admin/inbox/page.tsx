@@ -34,6 +34,7 @@ import { Badge } from "@ui/base";
 import { toast } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import { AdminPageLayout } from "@/components/AdminPageLayout";
 import Link from "next/link";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@ui/base";
 import { Label } from "@ui/base";
@@ -293,41 +294,11 @@ export default function InboxMonitoringPage() {
   }
 
   return (
-    <div className="flex-1 space-y-6">
-      {/* Header */}
-      <div className="mb-4">
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-4 mb-4">
-          <Link 
-            href="/admin"
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 mr-1" />
-            Back to Admin
-          </Link>
-          <BreadcrumbNavigation
-            items={[
-              { label: "Admin Dashboard", href: "/admin" },
-              { label: "Inbox Events", current: true },
-            ]}
-            showHome={false}
-          />
-        </div>
-        
-        {/* Page Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-              <Inbox className="h-8 w-8 text-indigo-600" />
-              <span>Inbox Event Monitoring</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Monitor and manage inbound events from external systems
-            </p>
-          </div>
-          
-          {/* Controls */}
-          <div className="flex items-center space-x-3">
+    <AdminPageLayout
+      title="Inbox Event Monitoring"
+      description="Monitor and manage inbound events from external systems"
+      actions={
+        <div className="flex items-center space-x-3">
             <Button
               variant={autoRefresh ? "default" : "outline"}
               onClick={toggleAutoRefresh}
@@ -460,7 +431,24 @@ export default function InboxMonitoringPage() {
               </DialogContent>
             </Dialog>
           </div>
-        </div>
+      }
+    >
+      {/* Breadcrumb Navigation */}
+      <div className="flex items-center space-x-4 mb-4">
+        <Link 
+          href="/admin"
+          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          Back to Admin
+        </Link>
+        <BreadcrumbNavigation
+          items={[
+            { label: "Admin Dashboard", href: "/admin" },
+            { label: "Inbox Events", current: true },
+          ]}
+          showHome={false}
+        />
       </div>
 
       {/* Stats Cards */}
@@ -834,6 +822,6 @@ export default function InboxMonitoringPage() {
           )}
         </div>
       </div>
-    </div>
+    </AdminPageLayout>
   );
 }

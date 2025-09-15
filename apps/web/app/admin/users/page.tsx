@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import { AdminPageLayout } from "@/components/AdminPageLayout";
 import Link from "next/link";
 import { toast } from "@ui/base";
 
@@ -676,55 +677,43 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <div className="flex-1 space-y-6">
-      {/* Header */}
-      <div className="mb-4">
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-4 mb-4">
-          <Link 
-            href="/admin"
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Admin
-          </Link>
-          <div className="h-6 w-px bg-gray-300" />
-          <BreadcrumbNavigation
-            items={[
-              { label: "Admin", href: "/admin" },
-              { label: "User Management", current: true },
-            ]}
-            showHome={false}
-          />
+    <AdminPageLayout
+      title="User Management"
+      description="Manage platform users, roles, and permissions"
+      actions={
+        <div className="flex items-center space-x-3">
+          <Button variant="outline" onClick={() => refetch()}>
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Refresh
+          </Button>
+          <Button variant="outline">
+            <Download className="h-4 w-4 mr-2" />
+            Export
+          </Button>
+          <Button className="bg-indigo-600 hover:bg-indigo-700">
+            <UserPlus className="h-4 w-4 mr-2" />
+            Add User
+          </Button>
         </div>
-        
-        {/* Page Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-              <Users className="h-8 w-8 text-indigo-600" />
-              <span>User Management</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Manage platform users, roles, and permissions
-            </p>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <Button variant="outline" onClick={() => refetch()}>
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
-            </Button>
-            <Button variant="outline">
-              <Download className="h-4 w-4 mr-2" />
-              Export
-            </Button>
-            <Button className="bg-indigo-600 hover:bg-indigo-700">
-              <UserPlus className="h-4 w-4 mr-2" />
-              Add User
-            </Button>
-          </div>
-        </div>
+      }
+    >
+      {/* Breadcrumb Navigation */}
+      <div className="flex items-center space-x-4 mb-4">
+        <Link 
+          href="/admin"
+          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          Back to Admin
+        </Link>
+        <div className="h-6 w-px bg-gray-300" />
+        <BreadcrumbNavigation
+          items={[
+            { label: "Admin", href: "/admin" },
+            { label: "User Management", current: true },
+          ]}
+          showHome={false}
+        />
       </div>
 
       {/* Advanced Controls */}
@@ -1078,6 +1067,6 @@ export default function AdminUsersPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </AdminPageLayout>
   );
 }

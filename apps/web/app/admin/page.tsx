@@ -1,18 +1,8 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, Button } from "@ui/base";
+import { Button } from "@ui/base";
 import { 
-  Building2, 
-  Users, 
-  Bell, 
-  Shield,
   BarChart3,
-  TrendingUp,
-  Activity,
-  AlertTriangle,
-  Send,
-  Database,
-  FileText,
   Settings
 } from "lucide-react";
 
@@ -20,6 +10,7 @@ import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { useHealthCheck } from "@/hooks/useHealthCheck";
 import DraggableDashboard from "@/components/DraggableDashboard";
+import { AdminPageLayout } from "@/components/AdminPageLayout";
 import { useState, useEffect } from "react";
 
 export default function AdminDashboardPage() {
@@ -66,51 +57,36 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="mb-4">
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-4 mb-4">
-          <BreadcrumbNavigation
-            items={[
-              { label: "Admin Dashboard", current: true },
-            ]}
-            showHome={false}
-          />
-        </div>
-        
-        {/* Page Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-              <BarChart3 className="h-8 w-8 text-indigo-600" />
-              <span>Platform Dashboard</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Overview of platform-wide metrics and system health
-            </p>
-          </div>
-          
-          {/* Grid Layout Toggle */}
-          <div className="flex items-center space-x-3">
-            <Button
-              variant={isGridMode ? "default" : "outline"}
-              onClick={() => {
-                const newGridMode = !isGridMode;
-                setIsGridMode(newGridMode);
-                try {
-                  localStorage.setItem('admin-dashboard-grid-mode', newGridMode.toString());
-                } catch (error) {
-                  console.error('Failed to save grid mode preference:', error);
-                }
-              }}
-              className="flex items-center space-x-2"
-            >
-              <Settings className="h-4 w-4" />
-              <span>{isGridMode ? "Exit Grid Mode" : "Enable Grid Layout"}</span>
-            </Button>
-          </div>
-        </div>
+    <AdminPageLayout
+      title="Platform Dashboard"
+      description="Overview of platform-wide metrics and system health"
+      actions={
+        <Button
+          variant={isGridMode ? "default" : "outline"}
+          onClick={() => {
+            const newGridMode = !isGridMode;
+            setIsGridMode(newGridMode);
+            try {
+              localStorage.setItem('admin-dashboard-grid-mode', newGridMode.toString());
+            } catch (error) {
+              console.error('Failed to save grid mode preference:', error);
+            }
+          }}
+          className="flex items-center space-x-2"
+        >
+          <Settings className="h-4 w-4" />
+          <span>{isGridMode ? "Exit Grid Mode" : "Enable Grid Layout"}</span>
+        </Button>
+      }
+    >
+      {/* Breadcrumb Navigation */}
+      <div className="flex items-center space-x-4 mb-4">
+        <BreadcrumbNavigation
+          items={[
+            { label: "Admin Dashboard", current: true },
+          ]}
+          showHome={false}
+        />
       </div>
 
       {/* Draggable Dashboard */}
@@ -129,6 +105,6 @@ export default function AdminDashboardPage() {
         avgResponseTime={avgResponseTime}
         isGridMode={isGridMode}
       />
-    </div>
+    </AdminPageLayout>
   );
 }

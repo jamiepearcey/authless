@@ -4,7 +4,6 @@ import { NotificationTemplateForm } from "@/components/NotificationTemplateForm"
 import { ArrowLeft, Bell, Settings } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 export default function TenantAdminNotificationsPage() {
   const params = useParams();
@@ -16,23 +15,6 @@ export default function TenantAdminNotificationsPage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-4">
-            <Link 
-              href={`/tenants/${tenantSlug}/admin`}
-              className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Admin
-            </Link>
-            <div className="h-6 w-px bg-gray-300" />
-            <BreadcrumbNavigation
-              items={[
-                { label: "Tenants", href: "/tenants/dashboard" },
-                { label: tenantSlug, href: `/tenants/${tenantSlug}` },
-                { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
-                { label: "Notifications", current: true },
-              ]}
-              showHome={false}
-            />
           </div>
           
           <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">

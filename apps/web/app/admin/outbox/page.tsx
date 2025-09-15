@@ -32,6 +32,7 @@ import { toast } from "@ui/base";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import { AdminPageLayout } from "@/components/AdminPageLayout";
 import Link from "next/link";
 
 interface OutboxEventFilters {
@@ -246,47 +247,11 @@ export default function OutboxMonitoringPage() {
   }
 
   return (
-    <div className="flex-1 space-y-6">
-        {/* Header */}
-        <div className="mb-4">
-          {/* Breadcrumb Navigation */}
-          <div className="flex items-center space-x-4 mb-4">
-            <Link 
-              href="/admin"
-              className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Admin
-            </Link>
-            <div className="h-6 w-px bg-gray-300" />
-            <BreadcrumbNavigation
-              items={[
-                { label: "Admin", href: "/admin" },
-                { label: "Outbox Monitoring", current: true },
-              ]}
-              showHome={false}
-            />
-          </div>
-          
-          {/* Page Header */}
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-                <Activity className="h-8 w-8 text-indigo-600" />
-                <span>Event Stream Monitor</span>
-                {autoRefresh && (
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm text-green-600 font-medium">Live</span>
-                  </div>
-                )}
-              </h1>
-              <p className="text-gray-600 mt-2">
-                Enterprise-grade event monitoring and delivery management
-              </p>
-            </div>
-            
-            <div className="flex items-center space-x-2">
+    <AdminPageLayout
+      title="Event Stream Monitor"
+      description="Enterprise-grade event monitoring and delivery management"
+      actions={
+        <div className="flex items-center space-x-2">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -325,10 +290,28 @@ export default function OutboxMonitoringPage() {
                 </Tooltip>
               </TooltipProvider>
             </div>
-          </div>
-        </div>
+      }
+    >
+      {/* Breadcrumb Navigation */}
+      <div className="flex items-center space-x-4 mb-4">
+        <Link 
+          href="/admin"
+          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          Back to Admin
+        </Link>
+        <div className="h-6 w-px bg-gray-300" />
+        <BreadcrumbNavigation
+          items={[
+            { label: "Admin", href: "/admin" },
+            { label: "Outbox Monitoring", current: true },
+          ]}
+          showHome={false}
+        />
+      </div>
 
-        {/* Enterprise Stats Grid */}
+      {/* Enterprise Stats Grid */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6 mb-6">
           <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
             <CardContent className="p-4">
@@ -911,6 +894,6 @@ export default function OutboxMonitoringPage() {
             )}
           </div>
         </div>
-    </div>
+    </AdminPageLayout>
   );
 }

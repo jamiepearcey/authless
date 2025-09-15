@@ -38,7 +38,6 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Copy } from "lucide-react";
 import { copyToClipboard, User } from "@shared/base";
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 import {
   DropdownMenu,
@@ -741,25 +740,6 @@ export default function TenantUsersPage() {
       {/* Header */}
       <div className="mb-4">
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-4 mb-4">
-          <Link 
-            href={`/tenants/${tenantSlug}/admin`}
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Admin
-          </Link>
-          <div className="h-6 w-px bg-gray-300" />
-          <BreadcrumbNavigation
-            items={[
-              { label: "Tenants", href: "/tenants/dashboard" },
-              { label: tenantSlug, href: `/tenants/${tenantSlug}` },
-              { label: "Admin", href: `/tenants/${tenantSlug}/admin` },
-              { label: "Users", current: true },
-            ]}
-            showHome={false}
-          />
-        </div>
         
         {/* Page Header */}
         <div className="flex justify-between items-center">

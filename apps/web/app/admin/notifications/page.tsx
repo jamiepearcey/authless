@@ -11,13 +11,12 @@ import {
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/base";
 import { Badge } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import Link from "next/link";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
-
+import { AdminPageLayout } from "@/components/AdminPageLayout";
 
 export default function AdminNotificationsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -312,49 +311,37 @@ export default function AdminNotificationsPage() {
   };
 
   return (
-    <div className="flex-1 space-y-6">
-      {/* Header */}
-      <div className="mb-4">
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-4 mb-4">
-          <Link 
-            href="/admin"
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Admin
-          </Link>
-          <div className="h-6 w-px bg-gray-300" />
-          <BreadcrumbNavigation
-            items={[
-              { label: "Admin", href: "/admin" },
-              { label: "Notifications", current: true },
-            ]}
-            showHome={false}
-          />
+    <AdminPageLayout
+      title="Notifications"
+      description="Manage system notifications and alerts"
+      actions={
+        <div className="flex items-center space-x-3">
+          <Button variant="outline" asChild>
+            <Link href="/admin/notifications/manage">Manage & Test</Link>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href="/admin/notifications/templates">Templates</Link>
+          </Button>
         </div>
-        
-        {/* Page Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-              <Bell className="h-8 w-8 text-indigo-600" />
-              <span>Notifications</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Manage system notifications and alerts
-            </p>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <Button variant="outline" asChild>
-              <Link href="/admin/notifications/manage">Manage & Test</Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="/admin/notifications/templates">Templates</Link>
-            </Button>
-          </div>
-        </div>
+      }
+    >
+      {/* Breadcrumb Navigation */}
+      <div className="flex items-center space-x-4 mb-4">
+        <Link 
+          href="/admin"
+          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          Back to Admin
+        </Link>
+        <div className="h-6 w-px bg-gray-300" />
+        <BreadcrumbNavigation
+          items={[
+            { label: "Admin", href: "/admin" },
+            { label: "Notifications", current: true },
+          ]}
+          showHome={false}
+        />
       </div>
 
       {/* Main Inbox Layout */}
@@ -733,7 +720,6 @@ export default function AdminNotificationsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => {/* TODO: Archive */}}
                 className="text-indigo-600 border-indigo-300 hover:bg-indigo-100"
               >
                 <Archive className="h-4 w-4 mr-2" />
@@ -813,7 +799,7 @@ export default function AdminNotificationsPage() {
           </div>
         </div>
       )}
-    </div>
+    </AdminPageLayout>
   );
 }
 

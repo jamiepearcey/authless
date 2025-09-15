@@ -1,6 +1,7 @@
 "use client";
 
 import { AdminSidebar } from "@/components/AdminSidebar";
+import { SidebarLayout } from "@/components/SidebarLayout";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -8,18 +9,8 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <div className="flex-1 bg-gray-50">
-      <div className="max-w-7xl mx-auto py-8">
-        <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
-          {/* Sidebar */}
-          <AdminSidebar />
-          
-          {/* Main Content */}
-          <div className="lg:col-span-9">
-            {children}
-          </div>
-        </div>
-      </div>
-    </div>
+    <SidebarLayout sidebar={<AdminSidebar />} sidebarWidth="md">
+      {children}
+    </SidebarLayout>
   );
 }

@@ -17,12 +17,12 @@ import {
   Calendar,
   Shield,
   Plus,
-  Mail
+  Mail,
+  ArrowLeft
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import Link from "next/link";
 import { toast } from "@ui/base";
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 
 export default function TenantDashboardPage() {
   const params = useParams();
@@ -137,15 +137,6 @@ export default function TenantDashboardPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center space-x-4 mb-4">
-          <BreadcrumbNavigation
-            items={[
-              { label: "Tenants", href: "/tenants/dashboard" },
-              { label: tenant.name || tenantSlug, current: true },
-            ]}
-            showHome={false}
-          />
-        </div>
         
         <div className="flex justify-between items-center">
           <div>
