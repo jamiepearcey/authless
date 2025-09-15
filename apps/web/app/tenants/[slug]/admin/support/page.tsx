@@ -47,10 +47,10 @@ import { toast } from "@ui/base";
 // Status badge component
 const StatusBadge = ({ status }: { status: string }) => {
   const variants: Record<string, { variant: any; icon: any; color: string }> = {
-    OPEN: { variant: "default", icon: AlertCircle, color: "text-blue-600" },
-    PENDING: { variant: "secondary", icon: Pause, color: "text-yellow-600" },
-    RESOLVED: { variant: "secondary", icon: CheckCircle, color: "text-green-600" },
-    CLOSED: { variant: "outline", icon: XCircle, color: "text-gray-600" },
+    OPEN: { variant: "default", icon: AlertCircle, color: "text-white" },
+    PENDING: { variant: "secondary", icon: Pause, color: "text-yellow-700" },
+    RESOLVED: { variant: "secondary", icon: CheckCircle, color: "text-green-700" },
+    CLOSED: { variant: "outline", icon: XCircle, color: "text-gray-700" },
   };
 
   const config = variants[status] || variants.OPEN;

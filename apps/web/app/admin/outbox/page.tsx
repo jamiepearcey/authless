@@ -393,9 +393,9 @@ export default function OutboxMonitoringPage() {
         </div>
 
         {/* Main Monitor Interface */}
-        <div className="flex h-[calc(100vh-12rem)] overflow-hidden bg-white rounded-lg border border-gray-200">
+        <div className="flex h-[calc(100vh-200px)] overflow-hidden bg-white rounded-lg border border-gray-200">
           {/* Left Panel - Event List */}
-          <div className="w-2/5 bg-white border-r border-gray-200 flex flex-col">
+          <div className="w-1/2 bg-white border-r border-gray-200 flex flex-col">
             {/* Left Panel Header */}
             <div className="p-4 border-b border-gray-200">
               <div className="flex items-center justify-between mb-4">
@@ -633,7 +633,7 @@ export default function OutboxMonitoringPage() {
           </div>
           
           {/* Right Panel - Event Details */}
-          <div className="flex-1 bg-gray-50 flex flex-col">
+          <div className="flex-1 bg-white flex flex-col">
             {selectedEventId && selectedEvent ? (
               <>
                 {/* Event Header */}
@@ -784,7 +784,8 @@ export default function OutboxMonitoringPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => {
-                            copyToClipboard('Payload data copied', 'Payload');
+                            const payloadText = selectedEvent.payloadJson ? JSON.stringify(selectedEvent.payloadJson, null, 2) : 'No payload data';
+                            copyToClipboard(payloadText, 'Payload');
                           }}
                           className="h-6 w-6 p-0 ml-auto"
                         >
@@ -795,7 +796,7 @@ export default function OutboxMonitoringPage() {
                     <CardContent>
                       <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
                         <pre className="text-sm text-green-400 font-mono whitespace-pre-wrap">
-                          {'[Payload data available - use copy button to view]'}
+                          {selectedEvent.payloadJson ? JSON.stringify(selectedEvent.payloadJson, null, 2) : 'No payload data'}
                         </pre>
                       </div>
                     </CardContent>

@@ -383,7 +383,7 @@ model ContactReply {
 model AuditLog {
   id           String   @id @default(cuid())
   tenantId     String?
-  userId       String
+  userId       String?
   action       String
   resourceType String?
   resourceId   String?
@@ -395,7 +395,7 @@ model AuditLog {
   createdAt    DateTime @default(now())
   traceId      String?
   tenant       Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([tenantId])
   @@index([userId])

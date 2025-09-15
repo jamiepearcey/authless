@@ -311,7 +311,10 @@ export const auditRouter = router({
           take: 50,
         }),
         ctx.db.auditLog.findMany({
-          where: whereConditions,
+          where: {
+            ...whereConditions,
+            userId: { isNot: null },
+          },
           select: { 
             userId: true,
             user: {
@@ -328,7 +331,7 @@ export const auditRouter = router({
         ctx.db.auditLog.findMany({
           where: {
             ...whereConditions,
-            tenantId: { not: null },
+            tenantId: { not: null as any },
           },
           select: { 
             tenantId: true,

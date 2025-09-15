@@ -20040,7 +20040,7 @@ export namespace Prisma {
   export type AuditLogGroupByOutputType = {
     id: string
     tenantId: string | null
-    userId: string
+    userId: string | null
     action: string
     resourceType: string | null
     resourceId: string | null
@@ -20085,7 +20085,7 @@ export namespace Prisma {
     createdAt?: boolean
     traceId?: boolean
     tenant?: boolean | AuditLog$tenantArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | AuditLog$userArgs<ExtArgs>
   }, ExtArgs["result"]["auditLog"]>
 
   export type AuditLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -20103,7 +20103,7 @@ export namespace Prisma {
     createdAt?: boolean
     traceId?: boolean
     tenant?: boolean | AuditLog$tenantArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | AuditLog$userArgs<ExtArgs>
   }, ExtArgs["result"]["auditLog"]>
 
   export type AuditLogSelectScalar = {
@@ -20124,23 +20124,23 @@ export namespace Prisma {
 
   export type AuditLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tenant?: boolean | AuditLog$tenantArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | AuditLog$userArgs<ExtArgs>
   }
   export type AuditLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tenant?: boolean | AuditLog$tenantArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | AuditLog$userArgs<ExtArgs>
   }
 
   export type $AuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AuditLog"
     objects: {
       tenant: Prisma.$TenantPayload<ExtArgs> | null
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       tenantId: string | null
-      userId: string
+      userId: string | null
       action: string
       resourceType: string | null
       resourceId: string | null
@@ -20516,7 +20516,7 @@ export namespace Prisma {
   export interface Prisma__AuditLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     tenant<T extends AuditLog$tenantArgs<ExtArgs> = {}>(args?: Subset<T, AuditLog$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    user<T extends AuditLog$userArgs<ExtArgs> = {}>(args?: Subset<T, AuditLog$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20889,6 +20889,21 @@ export namespace Prisma {
      */
     include?: TenantInclude<ExtArgs> | null
     where?: TenantWhereInput
+  }
+
+  /**
+   * AuditLog.user
+   */
+  export type AuditLog$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -49433,7 +49448,7 @@ export namespace Prisma {
     NOT?: AuditLogWhereInput | AuditLogWhereInput[]
     id?: StringFilter<"AuditLog"> | string
     tenantId?: StringNullableFilter<"AuditLog"> | string | null
-    userId?: StringFilter<"AuditLog"> | string
+    userId?: StringNullableFilter<"AuditLog"> | string | null
     action?: StringFilter<"AuditLog"> | string
     resourceType?: StringNullableFilter<"AuditLog"> | string | null
     resourceId?: StringNullableFilter<"AuditLog"> | string | null
@@ -49445,13 +49460,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
     traceId?: StringNullableFilter<"AuditLog"> | string | null
     tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
-    user?: XOR<UserRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
   }
 
   export type AuditLogOrderByWithRelationInput = {
     id?: SortOrder
     tenantId?: SortOrderInput | SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     action?: SortOrder
     resourceType?: SortOrderInput | SortOrder
     resourceId?: SortOrderInput | SortOrder
@@ -49472,7 +49487,7 @@ export namespace Prisma {
     OR?: AuditLogWhereInput[]
     NOT?: AuditLogWhereInput | AuditLogWhereInput[]
     tenantId?: StringNullableFilter<"AuditLog"> | string | null
-    userId?: StringFilter<"AuditLog"> | string
+    userId?: StringNullableFilter<"AuditLog"> | string | null
     action?: StringFilter<"AuditLog"> | string
     resourceType?: StringNullableFilter<"AuditLog"> | string | null
     resourceId?: StringNullableFilter<"AuditLog"> | string | null
@@ -49484,13 +49499,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
     traceId?: StringNullableFilter<"AuditLog"> | string | null
     tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
-    user?: XOR<UserRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type AuditLogOrderByWithAggregationInput = {
     id?: SortOrder
     tenantId?: SortOrderInput | SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     action?: SortOrder
     resourceType?: SortOrderInput | SortOrder
     resourceId?: SortOrderInput | SortOrder
@@ -49512,7 +49527,7 @@ export namespace Prisma {
     NOT?: AuditLogScalarWhereWithAggregatesInput | AuditLogScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"AuditLog"> | string
     tenantId?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
-    userId?: StringWithAggregatesFilter<"AuditLog"> | string
+    userId?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
     action?: StringWithAggregatesFilter<"AuditLog"> | string
     resourceType?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
     resourceId?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
@@ -53718,13 +53733,13 @@ export namespace Prisma {
     createdAt?: Date | string
     traceId?: string | null
     tenant?: TenantCreateNestedOneWithoutAuditLogsInput
-    user: UserCreateNestedOneWithoutAuditLogsInput
+    user?: UserCreateNestedOneWithoutAuditLogsInput
   }
 
   export type AuditLogUncheckedCreateInput = {
     id?: string
     tenantId?: string | null
-    userId: string
+    userId?: string | null
     action: string
     resourceType?: string | null
     resourceId?: string | null
@@ -53750,13 +53765,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     traceId?: NullableStringFieldUpdateOperationsInput | string | null
     tenant?: TenantUpdateOneWithoutAuditLogsNestedInput
-    user?: UserUpdateOneRequiredWithoutAuditLogsNestedInput
+    user?: UserUpdateOneWithoutAuditLogsNestedInput
   }
 
   export type AuditLogUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     tenantId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     action?: StringFieldUpdateOperationsInput | string
     resourceType?: NullableStringFieldUpdateOperationsInput | string | null
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53772,7 +53787,7 @@ export namespace Prisma {
   export type AuditLogCreateManyInput = {
     id?: string
     tenantId?: string | null
-    userId: string
+    userId?: string | null
     action: string
     resourceType?: string | null
     resourceId?: string | null
@@ -53802,7 +53817,7 @@ export namespace Prisma {
   export type AuditLogUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     tenantId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     action?: StringFieldUpdateOperationsInput | string
     resourceType?: NullableStringFieldUpdateOperationsInput | string | null
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -61373,10 +61388,12 @@ export namespace Prisma {
     update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutAuditLogsInput, TenantUpdateWithoutAuditLogsInput>, TenantUncheckedUpdateWithoutAuditLogsInput>
   }
 
-  export type UserUpdateOneRequiredWithoutAuditLogsNestedInput = {
+  export type UserUpdateOneWithoutAuditLogsNestedInput = {
     create?: XOR<UserCreateWithoutAuditLogsInput, UserUncheckedCreateWithoutAuditLogsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAuditLogsInput
     upsert?: UserUpsertWithoutAuditLogsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAuditLogsInput, UserUpdateWithoutAuditLogsInput>, UserUncheckedUpdateWithoutAuditLogsInput>
   }
@@ -64094,7 +64111,7 @@ export namespace Prisma {
     NOT?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
     id?: StringFilter<"AuditLog"> | string
     tenantId?: StringNullableFilter<"AuditLog"> | string | null
-    userId?: StringFilter<"AuditLog"> | string
+    userId?: StringNullableFilter<"AuditLog"> | string | null
     action?: StringFilter<"AuditLog"> | string
     resourceType?: StringNullableFilter<"AuditLog"> | string | null
     resourceId?: StringNullableFilter<"AuditLog"> | string | null
@@ -64727,12 +64744,12 @@ export namespace Prisma {
     severity?: string
     createdAt?: Date | string
     traceId?: string | null
-    user: UserCreateNestedOneWithoutAuditLogsInput
+    user?: UserCreateNestedOneWithoutAuditLogsInput
   }
 
   export type AuditLogUncheckedCreateWithoutTenantInput = {
     id?: string
-    userId: string
+    userId?: string | null
     action: string
     resourceType?: string | null
     resourceId?: string | null
@@ -78474,7 +78491,7 @@ export namespace Prisma {
 
   export type AuditLogCreateManyTenantInput = {
     id?: string
-    userId: string
+    userId?: string | null
     action: string
     resourceType?: string | null
     resourceId?: string | null
@@ -78753,12 +78770,12 @@ export namespace Prisma {
     severity?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     traceId?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUpdateOneRequiredWithoutAuditLogsNestedInput
+    user?: UserUpdateOneWithoutAuditLogsNestedInput
   }
 
   export type AuditLogUncheckedUpdateWithoutTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     action?: StringFieldUpdateOperationsInput | string
     resourceType?: NullableStringFieldUpdateOperationsInput | string | null
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78773,7 +78790,7 @@ export namespace Prisma {
 
   export type AuditLogUncheckedUpdateManyWithoutTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     action?: StringFieldUpdateOperationsInput | string
     resourceType?: NullableStringFieldUpdateOperationsInput | string | null
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null

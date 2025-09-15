@@ -119,7 +119,7 @@ function  SsoConfiguration({ tenantId, tenantSlug }: { tenantId: string; tenantS
         oidcScope: ssoConfig.oidcScopes || "openid profile email",
         attributeMapping: (() => {
           try {
-            return JSON.parse((ssoConfig?.samlAttributeMapping) || "{}");
+            return ssoConfig?.samlAttributeMapping != null ? JSON.parse(ssoConfig.samlAttributeMapping as string) : {}
           } catch {
             return {
               email: "email",

@@ -14,14 +14,22 @@ import {
   Calendar,
   User,
   Building2,
-  ArrowLeft
+  ArrowLeft,
+  Eye,
+  Code,
+  Activity,
+  Copy,
+  Play,
+  Pause
 } from "lucide-react";
 import { Button } from "@ui/base";
 import { Input } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import { AdminPageLayout } from "@/components/AdminPageLayout";
 import Link from "next/link";
 
 interface AuditEventFilters {
@@ -38,29 +46,45 @@ interface AuditEventFilters {
 export default function AuditEventsPage() {
   const [filters, setFilters] = useState<AuditEventFilters>({});
   const [page, setPage] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "severity" | "action">("newest");
   const limit = 50;
 
-  // Queries
+  // Queries with auto-refresh
   const { data: events, isLoading: eventsLoading, refetch: refetchEvents } = trpc.getAuditEvents.useQuery({
     action: filters.action,
     resourceType: filters.resourceType,
     severity: filters.severity,
     userId: filters.userId,
     tenantId: filters.tenantId,
-    search: filters.search,
+    search: filters.search || searchTerm,
     dateFrom: filters.dateFrom,
     dateTo: filters.dateTo,
     limit,
     offset: page * limit,
     sortBy: 'createdAt',
     sortOrder: 'desc',
+  }, {
+    refetchInterval: autoRefresh ? 10000 : false,
+    refetchIntervalInBackground: false
   });
   
   const { data: stats, isLoading: statsLoading, refetch: refetchStats } = trpc.getAuditStats.useQuery({
     ...filters,
+  }, {
+    refetchInterval: autoRefresh ? 5000 : false,
+    refetchIntervalInBackground: false
   });
   
   const { data: filterOptions } = trpc.getAuditFilterOptions.useQuery({});
+  
+  // Selected event details
+  const { data: selectedEvent, isLoading: selectedEventLoading, error: selectedEventError } = trpc.getAuditEventById.useQuery(
+    { eventId: selectedEventId! },
+    { enabled: !!selectedEventId, refetchInterval: autoRefresh ? 5000 : false }
+  );
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
@@ -88,6 +112,26 @@ export default function AuditEventsPage() {
       [key]: value === "all" ? undefined : value || undefined
     }));
     setPage(0);
+  };
+
+  const formatTime = (date: Date | string) => {
+    const d = new Date(date);
+    const now = new Date();
+    const diff = now.getTime() - d.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 1) return 'Just now';
+    if (minutes < 60) return `${minutes}m ago`;
+    if (hours < 24) return `${hours}h ago`;
+    if (days < 7) return `${days}d ago`;
+    return d.toLocaleDateString();
+  };
+
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    // You could add a toast notification here
   };
 
   const formatEventAction = (action: string) => {
@@ -124,391 +168,481 @@ export default function AuditEventsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="mb-4">
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-4 mb-4">
-          <Link 
-            href="/admin"
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Admin
-          </Link>
-          <div className="h-6 w-px bg-gray-300" />
-          <BreadcrumbNavigation
-            items={[
-              { label: "Admin", href: "/admin" },
-              { label: "Audit Events", current: true },
-            ]}
-            showHome={false}
-          />
+    <AdminPageLayout
+      title="Audit Events"
+      description="System activity audit trail and security monitoring"
+      actions={
+        <div className="flex items-center space-x-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={() => { refetchStats(); refetchEvents(); }}
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 px-2"
+                >
+                  <RefreshCw className="h-3 w-3" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Refresh Data</p>
+              </TooltipContent>
+            </Tooltip>
+            
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={() => setAutoRefresh(!autoRefresh)}
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 px-2"
+                >
+                  {autoRefresh ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{autoRefresh ? 'Pause Auto-refresh' : 'Start Auto-refresh'}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
-        
-        {/* Page Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-              <FileText className="h-8 w-8 text-indigo-600" />
-              <span>Audit Events</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              System activity audit trail and security monitoring
-            </p>
-          </div>
-          <div className="flex space-x-2">
-            <Button
-              onClick={() => { refetchStats(); refetchEvents(); }}
-              variant="outline"
-              size="sm"
-            >
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
-            </Button>
-          </div>
-        </div>
+      }
+    >
+      {/* Breadcrumb Navigation */}
+      <div className="flex items-center space-x-4 mb-4">
+        <Link 
+          href="/admin"
+          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          Back to Admin
+        </Link>
+        <div className="h-6 w-px bg-gray-300" />
+        <BreadcrumbNavigation
+          items={[
+            { label: "Admin", href: "/admin" },
+            { label: "Audit Events", current: true },
+          ]}
+          showHome={false}
+        />
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
+      {/* Enterprise Stats Grid */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5 mb-6">
+        <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-blue-800">Total Events</p>
+                <p className="text-2xl font-bold text-blue-700">{stats?.totalEvents || 0}</p>
+                <p className="text-xs text-blue-600 mt-1">All Time</p>
+              </div>
               <Info className="h-8 w-8 text-blue-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Events</p>
-                <p className="text-2xl font-bold text-indigo-600">{stats?.totalEvents || 0}</p>
-              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
+        <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-green-800">Recent (24h)</p>
+                <p className="text-2xl font-bold text-green-700">{stats?.recentEvents || 0}</p>
+                <p className="text-xs text-green-600 mt-1">Last 24 Hours</p>
+              </div>
               <Calendar className="h-8 w-8 text-green-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Recent (24h)</p>
-                <p className="text-2xl font-bold text-green-600">{stats?.recentEvents || 0}</p>
-              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
+        <Card className="bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-yellow-800">Warnings</p>
+                <p className="text-2xl font-bold text-yellow-700">{stats?.severityBreakdown?.warning || 0}</p>
+                <p className="text-xs text-yellow-600 mt-1">Attention Needed</p>
+              </div>
               <AlertTriangle className="h-8 w-8 text-yellow-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Warnings</p>
-                <p className="text-2xl font-bold text-yellow-600">{stats?.severityBreakdown?.warning || 0}</p>
-              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <XCircle className="h-8 w-8 text-red-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Errors</p>
-                <p className="text-2xl font-bold text-red-600">
+        <Card className="bg-gradient-to-r from-red-50 to-rose-50 border-red-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-red-800">Errors</p>
+                <p className="text-2xl font-bold text-red-700">
                   {(stats?.severityBreakdown?.error || 0) + (stats?.severityBreakdown?.critical || 0)}
+                </p>
+                <p className="text-xs text-red-600 mt-1">Critical Issues</p>
+              </div>
+              <XCircle className="h-8 w-8 text-red-600" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-r from-purple-50 to-violet-50 border-purple-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-purple-800">Info Events</p>
+                <p className="text-2xl font-bold text-purple-700">{stats?.severityBreakdown?.info || 0}</p>
+                <p className="text-xs text-purple-600 mt-1">Informational</p>
+              </div>
+              <FileText className="h-8 w-8 text-purple-600" />
+            </div>
+          </CardContent>
+        </Card>
+
+      </div>
+
+      {/* Main Content */}
+      <div className="flex h-[calc(100vh-200px)] overflow-hidden bg-white rounded-lg border border-gray-200">
+        {/* Left Panel - Event List */}
+        <div className="w-1/2 bg-white border-r border-gray-200 flex flex-col">
+          <div className="bg-white border-b border-gray-200 px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900">Audit Events</h2>
+                <p className="text-sm text-gray-500">
+                  {events?.totalCount || 0} total events
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Top Actions & Resources */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Top Actions</CardTitle>
-            <CardDescription>Most frequent audit actions</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {stats?.topActions?.slice(0, 5).map((action, index) => (
-                <div key={action.action} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm font-medium text-gray-500">#{index + 1}</span>
-                    <span className="text-sm">{formatEventAction(action.action)}</span>
-                  </div>
-                  <Badge variant="outline" className="text-xs">
-                    {action.count}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Resource Types</CardTitle>
-            <CardDescription>Most audited resource types</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {stats?.resourceTypeBreakdown?.slice(0, 5).map((resource, index) => (
-                <div key={resource.resourceType} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm font-medium text-gray-500">#{index + 1}</span>
-                    <span className="text-sm">{resource.resourceType}</span>
-                  </div>
-                  <Badge variant="outline" className="text-xs">
-                    {resource.count}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Filters */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Filter className="h-5 w-5" />
-            <span>Filters</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Severity
-              </label>
-              <Select onValueChange={(value) => handleFilterChange('severity', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All severities" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All severities</SelectItem>
-                  <SelectItem value="info">Info</SelectItem>
-                  <SelectItem value="warning">Warning</SelectItem>
-                  <SelectItem value="error">Error</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Action
-              </label>
-              <Select onValueChange={(value) => handleFilterChange('action', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All actions" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All actions</SelectItem>
-                  {filterOptions?.actions?.slice(0, 20).map((action) => (
-                    <SelectItem key={action} value={action}>
-                      {formatEventAction(action)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Resource Type
-              </label>
-              <Select onValueChange={(value) => handleFilterChange('resourceType', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All resources" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All resources</SelectItem>
-                  {filterOptions?.resourceTypes?.map((resourceType) => (
-                    <SelectItem key={resourceType} value={resourceType || ""}>
-                      {resourceType}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Search
-              </label>
+            
+            {/* Search and Filters */}
+            <div className="space-y-3 mt-4">
+              {/* Search */}
               <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
-                  placeholder="Search events..."
+                  placeholder="Search events, actions, users..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
-                  onChange={(e) => handleFilterChange('search', e.target.value)}
                 />
               </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Tenant
-              </label>
-              <Select onValueChange={(value) => handleFilterChange('tenantId', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All tenants" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All tenants</SelectItem>
-                  {filterOptions?.tenants?.map((tenant) => (
-                    <SelectItem key={tenant.id} value={tenant.id!}>
-                      {tenant.name} ({tenant.slug})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                User
-              </label>
-              <Select onValueChange={(value) => handleFilterChange('userId', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All users" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All users</SelectItem>
-                  {filterOptions?.users?.slice(0, 50).map((user) => (
-                    <SelectItem key={user.id} value={user.id}>
-                      {user.name || user.email || user.id}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Date From
-              </label>
-              <Input
-                type="date"
-                onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Date To
-              </label>
-              <Input
-                type="date"
-                onChange={(e) => handleFilterChange('dateTo', e.target.value)}
-              />
+              
+              {/* Quick Severity Filters */}
+              <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+                <Button
+                  variant={!filters.severity ? "default" : "ghost"}
+                  size="sm"
+                  className="h-7 px-3 text-xs"
+                  onClick={() => handleFilterChange('severity', '')}
+                >
+                  All
+                </Button>
+                <Button
+                  variant={filters.severity === "info" ? "default" : "ghost"}
+                  size="sm"
+                  className="h-7 px-3 text-xs"
+                  onClick={() => handleFilterChange('severity', 'info')}
+                >
+                  Info
+                </Button>
+                <Button
+                  variant={filters.severity === "warning" ? "default" : "ghost"}
+                  size="sm"
+                  className="h-7 px-3 text-xs"
+                  onClick={() => handleFilterChange('severity', 'warning')}
+                >
+                  Warning
+                </Button>
+                <Button
+                  variant={filters.severity === "error" ? "default" : "ghost"}
+                  size="sm"
+                  className="h-7 px-3 text-xs"
+                  onClick={() => handleFilterChange('severity', 'error')}
+                >
+                  Error
+                </Button>
+              </div>
+              
+              {/* Advanced Filters */}
+              <div className="grid grid-cols-2 gap-2">
+                <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="newest">Newest First</SelectItem>
+                    <SelectItem value="oldest">Oldest First</SelectItem>
+                    <SelectItem value="severity">By Severity</SelectItem>
+                    <SelectItem value="action">By Action</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                <Select onValueChange={(value) => handleFilterChange('action', value)}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Action" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Actions</SelectItem>
+                    {filterOptions?.actions?.map((action) => (
+                      <SelectItem key={action} value={action}>{formatEventAction(action)}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Events Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Audit Events</CardTitle>
-          <CardDescription>
-            {events?.totalCount || 0} total events found
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {events?.events.map((event) => (
-              <div
-                key={event.id}
-                className="flex items-start justify-between p-4 border rounded-lg hover:bg-gray-50"
-              >
-                <div className="flex items-start space-x-4">
-                  <div className={`p-2 rounded-full ${getSeverityColor(event.severity)}`}>
-                    {getSeverityIcon(event.severity)}
+          {/* Event List */}
+          <div className="flex-1 overflow-y-auto">
+            {events?.events.length === 0 ? (
+              <div className="text-center py-12">
+                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No audit events found</h3>
+                <p className="text-gray-500">No events match your current filters</p>
+              </div>
+            ) : (
+              events?.events.map((event) => (
+                <div
+                  key={event.id}
+                  className={`p-4 cursor-pointer transition-colors hover:bg-gray-50 ${
+                    selectedEventId === event.id ? 'bg-blue-50 border-r-2 border-r-blue-500' : ''
+                  }`}
+                  onClick={() => setSelectedEventId(event.id)}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start space-x-3">
+                      <div className={`p-1.5 rounded-full ${getSeverityColor(event.severity)}`}>
+                        {getSeverityIcon(event.severity)}
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center space-x-2 mb-1">
+                          <h3 className="font-medium text-gray-900 truncate">{formatEventAction(event.action)}</h3>
+                          <Badge variant="outline" className="text-xs flex-shrink-0">
+                            {event.resourceType}
+                          </Badge>
+                        </div>
+                        
+                        <p className="text-sm text-gray-600 truncate mb-1">
+                          {event.user?.name || event.user?.email || 'System'}
+                        </p>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2 text-xs text-gray-500">
+                            <Badge variant="outline" className={`text-xs ${getSeverityColor(event.severity)}`}>
+                              {event.severity}
+                            </Badge>
+                            {event.tenant && (
+                              <span className="text-xs text-gray-500">
+                                {event.tenant.name}
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-xs text-gray-400">
+                            {formatTime(event.createdAt)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Right Panel - Event Details */}
+        <div className="flex-1 bg-white flex flex-col">
+          {selectedEventId && selectedEvent ? (
+            <>
+              {/* Event Header */}
+              <div className="bg-white border-b border-gray-200 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className={`p-2 rounded-full ${getSeverityColor(selectedEvent.severity)}`}>
+                      {getSeverityIcon(selectedEvent.severity)}
+                    </div>
+                    <div>
+                      <h1 className="text-xl font-semibold text-gray-900">
+                        {formatEventAction(selectedEvent.action)}
+                      </h1>
+                      <div className="flex items-center space-x-3 mt-1">
+                        <Badge variant="outline" className={getSeverityColor(selectedEvent.severity)}>
+                          {selectedEvent.severity}
+                        </Badge>
+                        <Badge variant="outline">
+                          {selectedEvent.resourceType}
+                        </Badge>
+                        <span className="text-sm text-gray-500">
+                          {formatTime(selectedEvent.createdAt)}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <h3 className="font-medium">{formatEventAction(event.action)}</h3>
-                      <Badge variant="outline" className="text-xs">
-                        {event.resourceType}
-                      </Badge>
-                      <Badge 
-                        variant="outline" 
-                        className={`text-xs ${getSeverityColor(event.severity)} border`}
-                      >
-                        {event.severity}
-                      </Badge>
-                    </div>
-                    
-                    <div className="text-sm text-gray-600 space-y-1">
-                      <div className="flex items-center space-x-4">
-                        {event.user && (
-                          <div className="flex items-center space-x-1">
-                            <User className="h-3 w-3" />
-                            <span>{event.user.name || event.user.email}</span>
-                          </div>
-                        )}
-                        {event.tenant && (
-                          <div className="flex items-center space-x-1">
-                            <Building2 className="h-3 w-3" />
-                            <span>{event.tenant.name}</span>
-                          </div>
-                        )}
-                        {event.resourceId && (
-                          <span>Resource: {event.resourceId.substring(0, 8)}...</span>
-                        )}
-                      </div>
-                      <p className="text-xs text-gray-500">
-                        {formatEventDetails(event.details)}
-                      </p>
-                    </div>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => copyToClipboard(JSON.stringify(selectedEvent, null, 2), "Event data")}
+                    >
+                      <Copy className="h-4 w-4 mr-2" />
+                      Copy Data
+                    </Button>
                   </div>
                 </div>
-                
-                <div className="text-right text-sm text-gray-500">
-                  <p>{new Date(event.createdAt).toLocaleString()}</p>
-                </div>
               </div>
-            ))}
-          </div>
-
-          {/* Pagination */}
-          {events && events.totalCount > limit && (
-            <div className="flex justify-between items-center mt-6">
-              <p className="text-sm text-gray-600">
-                Showing {events.pagination.offset + 1} to {Math.min(events.pagination.offset + events.pagination.limit, events.totalCount)} of {events.totalCount} events
-              </p>
               
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600">
-                  Page {events.pagination.currentPage} of {events.pagination.totalPages}
-                </span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setPage(page - 1)}
-                  disabled={page === 0}
-                >
-                  Previous
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setPage(page + 1)}
-                  disabled={!events.hasMore}
-                >
-                  Next
-                </Button>
+              {/* Event Content */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                {/* Key Information */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Eye className="h-5 w-5" />
+                      <span>Event Information</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <label className="font-medium text-gray-700">Event ID</label>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                            {selectedEvent.id}
+                          </code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => copyToClipboard(selectedEvent.id, 'Event ID')}
+                            className="h-6 w-6 p-0"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="font-medium text-gray-700">Resource ID</label>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                            {selectedEvent.resourceId || 'N/A'}
+                          </code>
+                          {selectedEvent.resourceId && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => copyToClipboard(selectedEvent.resourceId!, 'Resource ID')}
+                              className="h-6 w-6 p-0"
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                      {selectedEvent.user && (
+                        <div>
+                          <label className="font-medium text-gray-700">User</label>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                              {selectedEvent.user.name || selectedEvent.user.email}
+                            </code>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => copyToClipboard(selectedEvent.user?.name || selectedEvent.user?.email || '', 'User')}
+                              className="h-6 w-6 p-0"
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                      {selectedEvent.tenant && (
+                        <div>
+                          <label className="font-medium text-gray-700">Tenant</label>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                              {selectedEvent.tenant.name}
+                            </code>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => copyToClipboard(selectedEvent.tenant?.name || '', 'Tenant')}
+                              className="h-6 w-6 p-0"
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Event Details */}
+                {selectedEvent.details && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center space-x-2">
+                        <Code className="h-5 w-5" />
+                        <span>Event Details</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="bg-gray-900 rounded-lg p-4 max-h-96 overflow-auto">
+                        <pre className="text-sm text-green-400 font-mono whitespace-pre-wrap">
+                          {(() => {
+                            try {
+                              return JSON.stringify(JSON.parse(selectedEvent.details), null, 2);
+                            } catch {
+                              return selectedEvent.details;
+                            }
+                          })()}
+                        </pre>
+                      </div>
+                      <div className="flex justify-end mt-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => copyToClipboard(selectedEvent.details || '', 'Details')}
+                          className="h-6 w-6 p-0 ml-auto"
+                        >
+                          <Copy className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </>
+          ) : selectedEventLoading ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4" />
+                <p className="text-gray-500">Loading event details...</p>
+              </div>
+            </div>
+          ) : selectedEventError ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center">
+                <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+                <p className="text-red-600">Failed to load event details</p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center">
+                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  Select an event to view details
+                </h3>
+                <p className="text-gray-500">
+                  Choose an event from the list to see its details and information
+                </p>
               </div>
             </div>
           )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </AdminPageLayout>
   );
 }

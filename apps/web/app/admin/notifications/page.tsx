@@ -624,7 +624,7 @@ export default function AdminNotificationsPage() {
                 </div>
                 
                 {/* Content Body */}
-                <div className="flex-1 overflow-y-auto p-6">
+                <div className="bg-white flex-1 overflow-y-auto p-6">
                   <div className="max-w-4xl">
                     {/* Main Content */}
                     <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">

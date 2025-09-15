@@ -107,8 +107,8 @@ export const tenantRouter = router({
             slug: input.slug,
             name: input.name,
             plan: input.plan,
-            createdBy: ctx.session.user.id,
-            createdByEmail: ctx.session.user.email,
+            createdBy: ctx.user.id,
+            createdByEmail: ctx.user.email,
             timestamp: new Date().toISOString(),
             metadata: {
               subdomain: input.subdomain,
@@ -120,7 +120,10 @@ export const tenantRouter = router({
               contactEmail: input.contactEmail,
             },
           },
-          { traceId: ctx.trace.traceId }
+          { 
+            traceId: ctx.trace.traceId,
+            idempotencyKey: `tenant.created.${newTenant.id}.${Date.now()}`
+          }
         );
         
         return newTenant;
@@ -193,6 +196,18 @@ export const tenantRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       try {
+        // Debug: Check context availability
+        console.log("updateTenant context check:", {
+          hasUser: !!ctx.user,
+          userId: ctx.user?.id,
+          userEmail: ctx.user?.email,
+          hasSession: !!ctx.session,
+          sessionUserId: ctx.session?.user?.id,
+          sessionUserEmail: ctx.session?.user?.email,
+          hasOutbox: !!ctx.outbox,
+          hasTrace: !!ctx.trace
+        });
+        
         const { slug, data } = input;
         
         // Check if tenant exists
@@ -210,42 +225,56 @@ export const tenantRouter = router({
           data,
         });
         
-        // Log the action
-        await ctx.db.auditLog.create({
-          data: {
-            userId: ctx.session.user.id || "unknown",
-            action: "tenant_updated",
-            resourceType: "tenant",
-            resourceId: updatedTenant.id,
-            traceId: ctx.trace.traceId,
-            details: JSON.stringify({ slug, changes: data }),
-            severity: "info",
-          },
-        });
-
         // Publish tenant updated event
-        await ctx.outbox.publishTenantEvent(
-          OutboxEvents.TENANT_UPDATED,
-          updatedTenant.id,
-          {
-            tenantId: updatedTenant.id,
-            slug: slug,
-            updatedBy: ctx.session.user.id,
-            updatedByEmail: ctx.session.user.email,
-            timestamp: new Date().toISOString(),
-            changes: data,
-            metadata: {
-              previousState: existingTenant,
+        console.log("About to publish tenant updated event...");
+        try {
+          const eventId = await ctx.outbox.publishTenantEvent(
+            OutboxEvents.TENANT_UPDATED,
+            updatedTenant.id,
+            {
+              tenantId: updatedTenant.id,
+              slug: slug,
+              updatedBy: ctx.user.id,
+              updatedByEmail: ctx.user.email,
+              timestamp: new Date().toISOString(),
+              changes: data,
+              metadata: {
+                previousState: existingTenant,
+              },
             },
-          },
-          { traceId: ctx.trace.traceId }
-        );
+            { 
+              traceId: ctx.trace.traceId,
+              idempotencyKey: `tenant.updated.${updatedTenant.id}.${Date.now()}`
+            }
+          );
+          console.log("Successfully published tenant updated event with ID:", eventId);
+        } catch (outboxError) {
+          console.error("Failed to publish tenant updated event:", {
+            error: outboxError,
+            errorMessage: outboxError instanceof Error ? outboxError.message : 'Unknown error',
+            errorStack: outboxError instanceof Error ? outboxError.stack : undefined,
+            userContext: {
+              hasUser: !!ctx.user,
+              userId: ctx.user?.id,
+              userEmail: ctx.user?.email,
+              hasSession: !!ctx.session,
+              sessionUserId: ctx.session?.user?.id,
+              sessionUserEmail: ctx.session?.user?.email
+            }
+          });
+          throw outboxError; // Re-throw to see the actual error
+        }
         
         return updatedTenant;
       } catch (error) {
         if (error instanceof TRPCError) throw error;
         
-        console.error("Failed to update tenant:", error);
+        console.error("Failed to update tenant - Full error details:", {
+          error: error,
+          message: error instanceof Error ? error.message : 'Unknown error',
+          stack: error instanceof Error ? error.stack : undefined,
+          name: error instanceof Error ? error.name : undefined,
+        });
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to update tenant",
@@ -291,22 +320,30 @@ export const tenantRouter = router({
           },
         });
 
-        // Publish tenant deleted event
-        await ctx.outbox.publishTenantEvent(
-          OutboxEvents.TENANT_DELETED,
-          deletedTenant.id,
-          {
-            tenantId: deletedTenant.id,
-            slug: slug,
-            deletedBy: ctx.session.user.id,
-            deletedByEmail: ctx.session.user.email,
-            timestamp: new Date().toISOString(),
-            metadata: {
-              previousState: existingTenant,
+        // Publish tenant deleted event (optional - don't fail if outbox is unavailable)
+        try {
+          await ctx.outbox.publishTenantEvent(
+            OutboxEvents.TENANT_DELETED,
+            deletedTenant.id,
+            {
+              tenantId: deletedTenant.id,
+              slug: slug,
+              deletedBy: ctx.user.id,
+              deletedByEmail: ctx.user.email,
+              timestamp: new Date().toISOString(),
+              metadata: {
+                previousState: existingTenant,
+              },
             },
-          },
-          { traceId: ctx.trace.traceId }
-        );
+            { 
+              traceId: ctx.trace.traceId,
+              idempotencyKey: `tenant.deleted.${deletedTenant.id}.${Date.now()}`
+            }
+          );
+        } catch (outboxError) {
+          console.warn("Failed to publish tenant deleted event to outbox:", outboxError);
+          // Continue with the deletion even if outbox publishing fails
+        }
         
         return deletedTenant;
       } catch (error) {

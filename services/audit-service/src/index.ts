@@ -169,6 +169,13 @@ export class AuditService {
 
       processMessage: async (data: unknown, ctx: ProcessingContext) => {
         try {
+          // Debug log the incoming data structure
+          this.logger.info({
+            messageId: ctx.messageId,
+            dataStructure: data,
+            dataType: typeof data
+          }, 'Processing incoming audit message');
+
           // Parse and validate the incoming message
           const auditEvent = data as AuditEvent;
 
@@ -228,6 +235,39 @@ export class AuditService {
     // For example: notifications, analytics, compliance checks, etc.
   }
 
+  private extractUserId(auditEvent: AuditEvent): string | null {
+    // Try multiple patterns to extract user ID from different event types
+    if (auditEvent.userId) {
+      return auditEvent.userId;
+    }
+
+    // For outbox events, check the originalPayload for user ID patterns
+    const payload = auditEvent.originalPayload || {};
+    
+    // Check common user ID field patterns
+    const userIdFields = [
+      'userId', 'user_id', 'updatedBy', 'createdBy', 'deletedBy', 
+      'actionedBy', 'triggeredBy', 'changedBy'
+    ];
+    
+    for (const field of userIdFields) {
+      if (payload[field]) {
+        return payload[field];
+      }
+    }
+
+    // Check nested user objects
+    if (payload.user?.id) {
+      return payload.user.id;
+    }
+
+    if (payload.actor?.id && payload.actor?.type === 'user') {
+      return payload.actor.id;
+    }
+
+    return null;
+  }
+
   private async storeAuditEvent(auditEvent: AuditEvent): Promise<void> {
     const query = `
       INSERT INTO "AuditLog" (
@@ -236,11 +276,14 @@ export class AuditService {
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
     `;
 
+    // Extract userId using multiple patterns
+    const userId = this.extractUserId(auditEvent);
+
     // Map AuditEvent to AuditLog schema
     const values = [
       auditEvent.id,
       auditEvent.tenantId,
-      auditEvent.userId,
+      userId,
       auditEvent.action.type || auditEvent.eventType,
       auditEvent.resource?.type,
       auditEvent.resource?.id,

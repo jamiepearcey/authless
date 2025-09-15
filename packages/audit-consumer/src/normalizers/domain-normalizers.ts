@@ -144,6 +144,57 @@ export class SupportEventNormalizer extends BaseEventNormalizer {
   }
 }
 
+// Tenant Events Normalizer
+export class TenantEventNormalizer extends BaseEventNormalizer {
+  canHandle(eventType: string): boolean {
+    return eventType.includes('tenant.') || 
+           eventType.includes('tenant_');
+  }
+
+  async normalize(rawEvent: any): Promise<AuditEvent> {
+    const baseEvent = this.parseBaseEvent(rawEvent);
+    
+    // Map tenant-specific user ID fields
+    const userId = baseEvent.payload.createdBy || 
+                   baseEvent.payload.updatedBy || 
+                   baseEvent.payload.deletedBy || 
+                   baseEvent.payload.userId;
+    
+    return {
+      id: this.generateAuditId(baseEvent.id, baseEvent.tenantId),
+      eventType: 'tenant',
+      eventName: baseEvent.eventType,
+      tenantId: baseEvent.tenantId,
+      userId: userId,
+      aggregateType: baseEvent.aggregateType,
+      aggregateId: baseEvent.aggregateId,
+      timestamp: this.parseTimestamp(baseEvent.created),
+      source: this.createSource(baseEvent.eventType, baseEvent.payload),
+      actor: this.inferActor({
+        ...baseEvent.payload,
+        userId: userId, // Ensure inferActor can find the userId
+      }),
+      resource: {
+        type: baseEvent.aggregateType,
+        id: baseEvent.aggregateId,
+        name: baseEvent.payload.name || baseEvent.payload.slug || `${baseEvent.aggregateType} ${baseEvent.aggregateId}`,
+        attributes: {
+          slug: baseEvent.payload.slug,
+          plan: baseEvent.payload.plan,
+          status: baseEvent.payload.status,
+        },
+      },
+      action: this.inferAction(baseEvent.eventType, baseEvent.payload),
+      metadata: {
+        ...this.extractMetadata(baseEvent.payload),
+        changes: baseEvent.payload.changes,
+        previousState: baseEvent.payload.metadata?.previousState,
+      },
+      originalPayload: baseEvent.payload,
+    };
+  }
+}
+
 // Generic Event Normalizer (fallback)
 export class GenericEventNormalizer extends BaseEventNormalizer {
   canHandle(eventType: string): boolean {
@@ -182,6 +233,7 @@ export class EventNormalizerRegistry {
       new AuthEventNormalizer(),
       new PaymentEventNormalizer(),
       new SupportEventNormalizer(),
+      new TenantEventNormalizer(),
       new GenericEventNormalizer(), // Always last (fallback)
     ];
   }

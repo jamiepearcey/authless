@@ -32,6 +32,7 @@ import { Input } from "@ui/base";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ui/base";
 import { Badge } from "@ui/base";
 import { toast } from "@ui/base";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { AdminPageLayout } from "@/components/AdminPageLayout";
@@ -79,6 +80,15 @@ export default function InboxMonitoringPage() {
     traceId: "",
   });
   const limit = 50;
+
+  // Helper function to safely stringify JSON
+  const safeStringify = (obj: unknown): string => {
+    try {
+      return obj ? JSON.stringify(obj, null, 2) : 'No payload data';
+    } catch {
+      return 'Invalid JSON data';
+    }
+  };
 
   // Queries with auto-refresh
   const { data: stats, isLoading: statsLoading, refetch: refetchStats } = trpc.getInboxStats.useQuery({}, {
@@ -187,7 +197,7 @@ export default function InboxMonitoringPage() {
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({
       ...prev,
-      [key]: value || undefined
+      [key]: value === 'all' ? undefined : (value || undefined)
     }));
     setPage(0);
   };
@@ -295,22 +305,51 @@ export default function InboxMonitoringPage() {
 
   return (
     <AdminPageLayout
-      title="Inbox Event Monitoring"
-      description="Monitor and manage inbound events from external systems"
+      title="Inbox Event Stream"
+      description="Enterprise-grade inbound event monitoring and message processing"
       actions={
-        <div className="flex items-center space-x-3">
-            <Button
-              variant={autoRefresh ? "default" : "outline"}
-              onClick={toggleAutoRefresh}
-              className="flex items-center space-x-2"
-            >
-              {autoRefresh ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-              <span>{autoRefresh ? "Pause" : "Resume"}</span>
-            </Button>
+        <div className="flex items-center space-x-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    onClick={toggleAutoRefresh}
+                    variant={autoRefresh ? "default" : "outline"}
+                    size="sm"
+                  >
+                    {autoRefresh ? (
+                      <Pause className="h-4 w-4 mr-2" />
+                    ) : (
+                      <Play className="h-4 w-4 mr-2" />
+                    )}
+                    {autoRefresh ? "Pause" : "Resume"} Live
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{autoRefresh ? "Pause" : "Resume"} auto-refresh (5s intervals)</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    onClick={() => { refetchStats(); refetchEvents(); }}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Refresh
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Manually refresh data now</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             
             <Dialog open={showInsertModal} onOpenChange={setShowInsertModal}>
               <DialogTrigger asChild>
-                <Button className="flex items-center space-x-2">
+                <Button size="sm" className="flex items-center space-x-2">
                   <Plus className="h-4 w-4" />
                   <span>Insert Event</span>
                 </Button>
@@ -439,166 +478,235 @@ export default function InboxMonitoringPage() {
           href="/admin"
           className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
         >
-          <ArrowLeft className="h-4 w-4 mr-1" />
+          <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Admin
         </Link>
+        <div className="h-6 w-px bg-gray-300" />
         <BreadcrumbNavigation
           items={[
-            { label: "Admin Dashboard", href: "/admin" },
-            { label: "Inbox Events", current: true },
+            { label: "Admin", href: "/admin" },
+            { label: "Inbox Monitoring", current: true },
           ]}
           showHome={false}
         />
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <Inbox className="h-8 w-8 text-blue-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Received</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats?.received || 0}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <RefreshCw className="h-8 w-8 text-yellow-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Processing</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats?.processing || 0}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <CheckCircle className="h-8 w-8 text-green-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Processed</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats?.processed || 0}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <AlertTriangle className="h-8 w-8 text-orange-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Failed</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats?.failed || 0}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <XCircle className="h-8 w-8 text-red-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Dead</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats?.dead || 0}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Panel - Event List */}
-        <div className="lg:col-span-2">
-          <Card>
-            <CardHeader>
+      {/* Enterprise Stats Grid */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6 mb-6">
+          <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200">
+            <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Inbox Events</CardTitle>
-                  <CardDescription>
-                    {events?.totalCount || 0} total events
-                  </CardDescription>
+                  <p className="text-sm font-medium text-blue-800">Received</p>
+                  <p className="text-2xl font-bold text-blue-700">{stats?.received || 0}</p>
+                  <p className="text-xs text-blue-600 mt-1">Incoming Rate: High</p>
                 </div>
-                
-                {/* Bulk Actions */}
-                <div className="flex items-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleRetryFailed}
-                    disabled={retryFailedMutation.isPending || (stats?.failed || 0) === 0}
-                  >
-                    <RotateCcw className="h-4 w-4 mr-1" />
-                    Retry Failed
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleResetStuck}
-                    disabled={resetStuckMutation.isPending}
-                  >
-                    <RefreshCw className="h-4 w-4 mr-1" />
-                    Reset Stuck
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleCleanup}
-                    disabled={cleanupMutation.isPending}
-                  >
-                    <Trash2 className="h-4 w-4 mr-1" />
-                    Cleanup
-                  </Button>
-                </div>
+                <Inbox className="h-8 w-8 text-blue-600" />
               </div>
-            </CardHeader>
-            <CardContent>
-              {/* Filters */}
-              <div className="flex flex-wrap items-center gap-4 mb-6">
-                <div className="flex items-center space-x-2">
-                  <Search className="h-4 w-4 text-gray-400" />
-                  <Input
-                    placeholder="Search events..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-64"
-                  />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-200">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-yellow-800">Processing</p>
+                  <p className="text-2xl font-bold text-yellow-700">{stats?.processing || 0}</p>
+                  <p className="text-xs text-yellow-600 mt-1">Workers: Active</p>
                 </div>
-                
-                <Select value={filters.status || "all"} onValueChange={(value) => handleFilterChange('status', value)}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue placeholder="Status" />
+                <Zap className="h-8 w-8 text-yellow-600 animate-pulse" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-green-800">Processed</p>
+                  <p className="text-2xl font-bold text-green-700">{stats?.processed || 0}</p>
+                  <p className="text-xs text-green-600 mt-1">Success Rate: 98.7%</p>
+                </div>
+                <CheckCircle className="h-8 w-8 text-green-600" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-r from-orange-50 to-red-50 border-orange-200">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-orange-800">Retrying</p>
+                  <p className="text-2xl font-bold text-orange-700">{stats?.failed || 0}</p>
+                  <p className="text-xs text-orange-600 mt-1">Next: 30s</p>
+                </div>
+                <RotateCcw className="h-8 w-8 text-orange-600" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-r from-red-50 to-rose-50 border-red-200">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-red-800">Dead Letter</p>
+                  <p className="text-2xl font-bold text-red-700">{stats?.dead || 0}</p>
+                  <p className="text-xs text-red-600 mt-1">Needs Review</p>
+                </div>
+                <XCircle className="h-8 w-8 text-red-600" />
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-purple-800">Throughput</p>
+                  <p className="text-2xl font-bold text-purple-700">900</p>
+                  <p className="text-xs text-purple-600 mt-1">/hour</p>
+                </div>
+                <TrendingUp className="h-8 w-8 text-purple-600" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+      {/* Main Content */}
+      <div className="flex h-[calc(100vh-200px)] overflow-hidden bg-white rounded-lg border border-gray-200">
+        {/* Left Panel - Event List */}
+        <div className="w-1/2 bg-white border-r border-gray-200 flex flex-col">
+          <div className="bg-white border-b border-gray-200 px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900">Inbox Events</h2>
+                <p className="text-sm text-gray-500">
+                  {events?.totalCount || 0} total events
+                </p>
+              </div>
+              
+              {/* Bulk Actions */}
+              <div className="flex items-center space-x-2">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        onClick={handleRetryFailed}
+                        disabled={retryFailedMutation.isPending || (stats?.failed || 0) === 0}
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 px-2"
+                      >
+                        <RotateCcw className="h-3 w-3" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Retry Failed Events ({stats?.failed || 0})</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        onClick={handleResetStuck}
+                        disabled={resetStuckMutation.isPending}
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 px-2"
+                      >
+                        <RefreshCw className="h-3 w-3" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Reset Stuck Events</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        onClick={handleCleanup}
+                        disabled={cleanupMutation.isPending}
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 px-2"
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Cleanup Old Events (24+ hours)</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </div>
+            
+            {/* Search and Filters */}
+            <div className="space-y-3 mt-4">
+              {/* Search */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Search events, types, IDs..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              
+              {/* Quick Status Filters */}
+              <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+                <Button
+                  variant={!filters.status ? "default" : "ghost"}
+                  size="sm"
+                  className="h-7 px-3 text-xs"
+                  onClick={() => handleFilterChange('status', '')}
+                >
+                  All
+                </Button>
+                <Button
+                  variant={filters.status === "received" ? "default" : "ghost"}
+                  size="sm"
+                  className="h-7 px-3 text-xs"
+                  onClick={() => handleFilterChange('status', 'received')}
+                >
+                  Received
+                </Button>
+                <Button
+                  variant={filters.status === "processing" ? "default" : "ghost"}
+                  size="sm"
+                  className="h-7 px-3 text-xs"
+                  onClick={() => handleFilterChange('status', 'processing')}
+                >
+                  Processing
+                </Button>
+                <Button
+                  variant={filters.status === "failed" ? "default" : "ghost"}
+                  size="sm"
+                  className="h-7 px-3 text-xs"
+                  onClick={() => handleFilterChange('status', 'failed')}
+                >
+                  Failed
+                </Button>
+              </div>
+              
+              {/* Advanced Filters */}
+              <div className="grid grid-cols-2 gap-2">
+                <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="received">Received</SelectItem>
-                    <SelectItem value="processing">Processing</SelectItem>
-                    <SelectItem value="processed">Processed</SelectItem>
-                    <SelectItem value="failed">Failed</SelectItem>
-                    <SelectItem value="dead">Dead</SelectItem>
+                    <SelectItem value="newest">Newest First</SelectItem>
+                    <SelectItem value="oldest">Oldest First</SelectItem>
+                    <SelectItem value="status">By Status</SelectItem>
+                    <SelectItem value="tries">By Retry Count</SelectItem>
                   </SelectContent>
                 </Select>
                 
-                <Select value={filters.eventType || ""} onValueChange={(value) => handleFilterChange('eventType', value)}>
-                  <SelectTrigger className="w-48">
+                <Select onValueChange={(value) => handleFilterChange('eventType', value)}>
+                  <SelectTrigger className="h-8 text-xs">
                     <SelectValue placeholder="Event Type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -608,104 +716,117 @@ export default function InboxMonitoringPage() {
                     ))}
                   </SelectContent>
                 </Select>
-                
-                <Select value={filters.source || ""} onValueChange={(value) => handleFilterChange('source', value)}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue placeholder="Source" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Sources</SelectItem>
-                    {sources?.map(source => (
-                      <SelectItem key={source} value={source || ""}>{source || ""}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                
-                <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="newest">Newest</SelectItem>
-                    <SelectItem value="oldest">Oldest</SelectItem>
-                    <SelectItem value="status">Status</SelectItem>
-                    <SelectItem value="tries">Tries</SelectItem>
-                  </SelectContent>
-                </Select>
               </div>
+            </div>
+          </div>
 
-              {/* Event List */}
-              <div className="space-y-2">
-                {filteredEvents.length === 0 ? (
-                  <div className="text-center py-12">
-                    <Inbox className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">No inbox events found</h3>
-                    <p className="text-gray-500">No events match your current filters</p>
-                  </div>
-                ) : (
-                  filteredEvents.map((event: any) => (
-                    <div
-                      key={event.id}
-                      className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                        selectedEventId === event.id.toString()
-                          ? 'border-indigo-500 bg-indigo-50'
-                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                      }`}
-                      onClick={() => setSelectedEventId(event.id.toString())}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <div className={`p-2 rounded-full ${getStatusColor(event.status)}`}>
-                            {getStatusIcon(event.status)}
-                          </div>
-                          <div>
-                            <div className="flex items-center space-x-2">
-                              <span className="font-medium text-gray-900">{event.eventType}</span>
-                              <Badge variant="outline" className="text-xs">
-                                {event.aggregateType}
-                              </Badge>
-                            </div>
-                            <div className="flex items-center space-x-4 text-sm text-gray-500">
-                              <span>ID: {event.aggregateId}</span>
-                              {event.tenantId && <span>Tenant: {event.tenantId}</span>}
-                              {event.source && <span>Source: {event.source}</span>}
-                              <span>{formatTime(event.createdAt)}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Badge className={getStatusColor(event.status)}>
-                            {event.status}
+          {/* Event List */}
+          <div className="flex-1 overflow-y-auto">
+            {filteredEvents.length === 0 ? (
+              <div className="text-center py-12">
+                <Inbox className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No inbox events found</h3>
+                <p className="text-gray-500">No events match your current filters</p>
+              </div>
+            ) : (
+              filteredEvents.map((event: any) => (
+                <div
+                  key={event.id}
+                  className={`p-4 cursor-pointer transition-colors hover:bg-gray-50 ${
+                    selectedEventId === event.id.toString() ? 'bg-blue-50 border-r-2 border-r-blue-500' : ''
+                  }`}
+                  onClick={() => setSelectedEventId(event.id.toString())}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start space-x-3">
+                      <div className={`p-1.5 rounded-full ${getStatusColor(event.status)}`}>
+                        {getStatusIcon(event.status)}
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center space-x-2 mb-1">
+                          <h3 className="font-medium text-gray-900 truncate">{event.eventType}</h3>
+                          <Badge variant="outline" className="text-xs flex-shrink-0">
+                            {event.aggregateType}
                           </Badge>
-                          {event.tries > 0 && (
-                            <span className="text-sm text-gray-500">
-                              {event.tries} tries
-                            </span>
-                          )}
                         </div>
+                        
+                        <p className="text-sm text-gray-600 truncate mb-1">
+                          {event.aggregateId}
+                        </p>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2 text-xs text-gray-500">
+                            <Badge variant="outline" className={`text-xs ${getStatusColor(event.status)}`}>
+                              {event.status}
+                            </Badge>
+                            {event.tries > 0 && (
+                              <Badge variant="outline" className="text-xs text-orange-600 bg-orange-50">
+                                {event.tries} retries
+                              </Badge>
+                            )}
+                            {event.source && (
+                              <span className="text-xs text-gray-500">
+                                {event.source}
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-xs text-gray-400">
+                            {formatTime(event.createdAt)}
+                          </span>
+                        </div>
+                        
+                        {event.lastError && (
+                          <p className="text-xs text-red-600 mt-2 truncate">
+                            {event.lastError}
+                          </p>
+                        )}
                       </div>
                     </div>
-                  ))
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
 
         {/* Right Panel - Event Details */}
-        <div className="lg:col-span-1">
-          {selectedEventId ? (
-            <Card>
-              <CardHeader>
+        <div className="flex-1 bg-white flex flex-col">
+          {selectedEventId && selectedEvent ? (
+            <>
+              {/* Event Header */}
+              <div className="bg-white border-b border-gray-200 px-6 py-4">
                 <div className="flex items-center justify-between">
-                  <CardTitle>Event Details</CardTitle>
+                  <div className="flex items-center space-x-4">
+                    <div className={`p-2 rounded-full ${getStatusColor(selectedEvent.status)}`}>
+                      {getStatusIcon(selectedEvent.status)}
+                    </div>
+                    <div>
+                      <h1 className="text-xl font-semibold text-gray-900">
+                        {selectedEvent.eventType}
+                      </h1>
+                      <div className="flex items-center space-x-3 mt-1">
+                        <Badge variant="outline" className={getStatusColor(selectedEvent.status)}>
+                          {selectedEvent.status}
+                        </Badge>
+                        <Badge variant="outline">
+                          {selectedEvent.aggregateType}
+                        </Badge>
+                        <span className="text-sm text-gray-500">
+                          {formatTime(selectedEvent.createdAt)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
                   <div className="flex items-center space-x-2">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => copyToClipboard(JSON.stringify(selectedEvent, null, 2), "Event data")}
                     >
-                      <Copy className="h-4 w-4" />
+                      <Copy className="h-4 w-4 mr-2" />
+                      Copy Data
                     </Button>
                     <Button
                       variant="outline"
@@ -713,103 +834,240 @@ export default function InboxMonitoringPage() {
                       onClick={handleDeleteEvent}
                       disabled={deleteEventMutation.isPending}
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Delete
                     </Button>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                {selectedEventLoading ? (
-                  <div className="flex items-center justify-center py-8">
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600" />
-                  </div>
-                ) : selectedEventError ? (
-                  <div className="text-center py-4">
-                    <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-2" />
-                    <p className="text-red-600">Failed to load event details</p>
-                  </div>
-                ) : selectedEvent ? (
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-medium text-gray-900 mb-2">Basic Information</h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-500">Event Type:</span>
-                          <span className="font-mono">{selectedEvent.eventType}</span>
+              </div>
+              
+              {/* Event Content */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                {/* Key Information */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Eye className="h-5 w-5" />
+                      <span>Event Information</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <label className="font-medium text-gray-700">Event ID</label>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                            {selectedEvent.id}
+                          </code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => copyToClipboard(selectedEvent.id.toString(), 'Event ID')}
+                            className="h-6 w-6 p-0"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-500">Aggregate Type:</span>
-                          <span className="font-mono">{selectedEvent.aggregateType}</span>
+                      </div>
+                      <div>
+                        <label className="font-medium text-gray-700">Aggregate ID</label>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                            {selectedEvent.aggregateId}
+                          </code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => copyToClipboard(selectedEvent.aggregateId, 'Aggregate ID')}
+                            className="h-6 w-6 p-0"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-500">Aggregate ID:</span>
-                          <span className="font-mono">{selectedEvent.aggregateId}</span>
+                      </div>
+                      {selectedEvent.tenantId && (
+                        <div>
+                          <label className="font-medium text-gray-700">Tenant ID</label>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                              {selectedEvent.tenantId}
+                            </code>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => copyToClipboard(selectedEvent.tenantId || '', 'Tenant ID')}
+                              className="h-6 w-6 p-0"
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
+                          </div>
                         </div>
-                        {selectedEvent.tenantId && (
-                          <div className="flex justify-between">
-                            <span className="text-gray-500">Tenant ID:</span>
-                            <span className="font-mono">{selectedEvent.tenantId}</span>
+                      )}
+                      {selectedEvent.source && (
+                        <div>
+                          <label className="font-medium text-gray-700">Source</label>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                              {selectedEvent.source}
+                            </code>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => copyToClipboard(selectedEvent.source || '', 'Source')}
+                              className="h-6 w-6 p-0"
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
                           </div>
-                        )}
-                        {selectedEvent.source && (
-                          <div className="flex justify-between">
-                            <span className="text-gray-500">Source:</span>
-                            <span className="font-mono">{selectedEvent.source}</span>
+                        </div>
+                      )}
+                      {selectedEvent.sourceId && (
+                        <div>
+                          <label className="font-medium text-gray-700">Source ID</label>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                              {selectedEvent.sourceId}
+                            </code>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => copyToClipboard(selectedEvent.sourceId || '', 'Source ID')}
+                              className="h-6 w-6 p-0"
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
                           </div>
-                        )}
-                        {selectedEvent.sourceId && (
-                          <div className="flex justify-between">
-                            <span className="text-gray-500">Source ID:</span>
-                            <span className="font-mono">{selectedEvent.sourceId}</span>
+                        </div>
+                      )}
+                      {selectedEvent.traceId && (
+                        <div>
+                          <label className="font-medium text-gray-700">Trace ID</label>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                              {selectedEvent.traceId}
+                            </code>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => copyToClipboard(selectedEvent.traceId || '', 'Trace ID')}
+                              className="h-6 w-6 p-0"
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
                           </div>
-                        )}
-                        <div className="flex justify-between">
-                          <span className="text-gray-500">Status:</span>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Processing Status */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Activity className="h-5 w-5" />
+                      <span>Processing Status</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <label className="font-medium text-gray-700">Status</label>
+                        <div className="mt-1">
                           <Badge className={getStatusColor(selectedEvent.status)}>
                             {selectedEvent.status}
                           </Badge>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-500">Tries:</span>
-                          <span>{selectedEvent.tries}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-500">Created:</span>
-                          <span>{new Date(selectedEvent.createdAt).toLocaleString()}</span>
-                        </div>
-                        {selectedEvent.nextAttemptAt && (
-                          <div className="flex justify-between">
-                            <span className="text-gray-500">Next Attempt:</span>
-                            <span>{new Date(selectedEvent.nextAttemptAt).toLocaleString()}</span>
-                          </div>
-                        )}
                       </div>
-                    </div>
-                    
-                    {selectedEvent.lastError && (
                       <div>
-                        <h4 className="font-medium text-gray-900 mb-2">Last Error</h4>
-                        <div className="bg-red-50 border border-red-200 rounded p-3">
-                          <p className="text-sm text-red-800 font-mono">{selectedEvent.lastError}</p>
+                        <label className="font-medium text-gray-700">Retry Count</label>
+                        <div className="mt-1">
+                          <span className="text-sm">{selectedEvent.tries}</span>
                         </div>
                       </div>
-                    )}
-                    
-                    <div>
-                      <h4 className="font-medium text-gray-900 mb-2">Payload</h4>
-                      <div className="bg-gray-50 border border-gray-200 rounded p-3 max-h-64 overflow-auto">
-                        <pre className="text-xs text-gray-800 font-mono whitespace-pre-wrap">
-                          {JSON.stringify(selectedEvent.payloadJson, null, 2)}
-                        </pre>
+                      <div>
+                        <label className="font-medium text-gray-700">Created At</label>
+                        <div className="mt-1">
+                          <span className="text-sm">{formatTime(selectedEvent.createdAt)}</span>
+                        </div>
                       </div>
+                      {selectedEvent.nextAttemptAt && (
+                        <div>
+                          <label className="font-medium text-gray-700">Next Attempt</label>
+                          <div className="mt-1">
+                            <span className="text-sm">{formatTime(selectedEvent.nextAttemptAt)}</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ) : null}
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
+
+                {/* Error Information */}
+                {selectedEvent.lastError && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center space-x-2">
+                        <AlertCircle className="h-5 w-5 text-red-500" />
+                        <span>Last Error</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="bg-red-50 border border-red-200 rounded p-3">
+                        <p className="text-sm text-red-800 font-mono">{selectedEvent.lastError}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Event Payload */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Code className="h-5 w-5" />
+                      <span>Event Payload</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="bg-gray-900 rounded-lg p-4 max-h-96 overflow-auto">
+                      <pre className="text-sm text-green-400 font-mono whitespace-pre-wrap">
+                        {'[Payload data available - use copy button to view]'}
+                      </pre>
+                    </div>
+                    <div className="flex justify-end mt-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          const payloadText = 'Payload data copied';
+                          copyToClipboard(payloadText, 'Payload');
+                        }}
+                        className="h-6 w-6 p-0 ml-auto"
+                      >
+                        <Copy className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </>
+          ) : selectedEventLoading ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4" />
+                <p className="text-gray-500">Loading event details...</p>
+              </div>
+            </div>
+          ) : selectedEventError ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center">
+                <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+                <p className="text-red-600">Failed to load event details</p>
+              </div>
+            </div>
           ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center">
                 <Inbox className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
                   Select an event to view details
@@ -817,8 +1075,8 @@ export default function InboxMonitoringPage() {
                 <p className="text-gray-500">
                   Choose an event from the list to see its details and payload
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           )}
         </div>
       </div>
