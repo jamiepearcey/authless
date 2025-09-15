@@ -14,9 +14,6 @@ export default function TenantAdminNotificationsPage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center space-x-4 mb-4">
-          </div>
-          
           <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
             <Bell className="h-8 w-8 text-indigo-600" />
             <span>Tenant Notifications</span>

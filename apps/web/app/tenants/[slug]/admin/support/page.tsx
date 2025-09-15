@@ -213,15 +213,6 @@ export default function TenantSupportPage() {
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <div>
-                          <div className="mb-4">
-                <Link 
-                  href={`/tenants/${tenantSlug}/admin`}
-                  className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-                >
-                  <ArrowLeft className="h-5 w-5 mr-2" />
-                  Back to Admin
-                </Link>
-              </div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <HeadphonesIcon className="h-8 w-8 text-indigo-600" />
               <span>Support Management</span>

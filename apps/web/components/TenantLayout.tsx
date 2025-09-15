@@ -31,8 +31,6 @@ export function TenantLayout({
 
     // Add admin breadcrumb if we're in admin section
     if (pathSegments.includes('admin')) {
-      baseBreadcrumbs.push({ label: "Admin", href: `/tenants/${tenantSlug}/admin` });
-      
       // Add specific admin page breadcrumb
       const adminPage = pathSegments[pathSegments.length - 1];
       switch (adminPage) {

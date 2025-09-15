@@ -8,7 +8,6 @@ import { ArrowLeft, Building2, Palette, Shield, Zap, AlertCircle, CheckCircle, E
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
-import Link from "next/link";
 
 // SSO Configuration Component
 function  SsoConfiguration({ tenantId, tenantSlug }: { tenantId: string; tenantSlug: string }) {
@@ -652,8 +651,6 @@ export default function TenantSettingsPage() {
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <div>
-            <div className="flex items-center space-x-4 mb-4">
-            </div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
               <Building2 className="h-8 w-8 text-indigo-600" />
               <span>Tenant Settings</span>
