@@ -28,7 +28,7 @@ export const invitationRouter = router({
           throw new TRPCError({ code: "NOT_FOUND", message: "Tenant not found" });
         }
         
-        // Check if user is already a member
+        // Check if user is already a member or has a pending invitation
         const existingUser = await ctx.db.user.findUnique({
           where: { email },
         });
@@ -38,14 +38,16 @@ export const invitationRouter = router({
             where: {
               userId: existingUser.id,
               tenantId: tenant.id,
-              status: "active",
+              status: { in: ["active", "pending"] },
             },
           });
           
           if (existingMembership) {
             throw new TRPCError({
               code: "CONFLICT",
-              message: "User is already a member of this tenant",
+              message: existingMembership.status === "active" 
+                ? "User is already a member of this tenant"
+                : "User already has a pending invitation",
             });
           }
         }
@@ -69,14 +71,38 @@ export const invitationRouter = router({
         // Generate invitation token
         const token = randomBytes(32).toString("hex");
         
-        // Create invitation
+        // Create or get user (in pending state)
+        let user = existingUser;
+        if (!user) {
+          user = await ctx.db.user.create({
+            data: {
+              email,
+              isEmailVerified: false,
+              emailVerificationToken: token, // Reuse invitation token for email verification
+              // No password initially - will be set on invitation acceptance
+            },
+          });
+        }
+        
+        // Create membership in pending state
+        const membership = await ctx.db.membership.create({
+          data: {
+            tenantId: tenant.id,
+            userId: user.id,
+            role,
+            status: "pending",
+            invitedByUserId: ctx.session.user.id,
+          },
+        });
+        
+        // Create invitation record for tracking
         const invitation = await ctx.db.invitation.create({
           data: {
             tenantId: tenant.id,
             email,
             role,
             token,
-            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
             bypassEmailVerification,
             message,
             invitedByUserId: ctx.session.user.id,
@@ -101,6 +127,9 @@ export const invitationRouter = router({
             expiresAt: invitation.expiresAt.toISOString(),
             status: invitation.status,
             message: message || undefined,
+            // Include the user ID of the invited user
+            invitedUserId: user.id,
+            membershipId: membership.id,
             metadata: {
               bypassEmailVerification,
               traceId: ctx.trace.traceId,
@@ -111,11 +140,11 @@ export const invitationRouter = router({
           }
         );
         
-        // TODO: Send invitation email
-        // For now, return the token (in production, this would be sent via email)
+        // Invitation email will be sent automatically via outbox → notification-service → email-service
         return {
           invitation,
-          token: token, // This should be sent via email in production
+          // Note: token is only returned for development/testing - in production emails are sent via notification service
+          token: process.env.NODE_ENV === 'development' ? token : undefined,
           invitationCode: bypassEmailVerification ? token : undefined,
         };
       } catch (error) {
@@ -195,39 +224,48 @@ export const invitationRouter = router({
         throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation has expired" });
       }
       
-      // Check if user already exists
-      let user = await ctx.db.user.findUnique({
+      // Get the user created during invitation (should already exist)
+      const user = await ctx.db.user.findUnique({
         where: { email: invitation.email },
       });
       
-      if (user) {
-        // User exists, just create membership
-        if (!user.hashedPassword) {
-          // User exists but has no password, update it
-          user = await ctx.db.user.update({
-            where: { id: user.id },
-            data: {
-              hashedPassword: await ctx.hashPassword(input.password),
-            },
-          });
-        }
-      } else {
-        // Create new user
-        user = await ctx.db.user.create({
-          data: {
-            email: invitation.email,
-            hashedPassword: await ctx.hashPassword(input.password),
-            isEmailVerified: true, // Since they're using invitation code
-          },
+      if (!user) {
+        throw new TRPCError({ 
+          code: "NOT_FOUND", 
+          message: "User not found - invitation may have been corrupted" 
         });
       }
       
-      // Create membership
-      const membership = await ctx.db.membership.create({
+      // Update user with password and mark as email verified
+      const updatedUser = await ctx.db.user.update({
+        where: { id: user.id },
         data: {
+          hashedPassword: await ctx.hashPassword(input.password),
+          isEmailVerified: true,
+          emailVerificationToken: null, // Clear the token
+        },
+      });
+      
+      // Find and activate the existing membership
+      const membership = await ctx.db.membership.findFirst({
+        where: {
           tenantId: invitation.tenantId,
           userId: user.id,
-          role: invitation.role,
+          status: "pending",
+        },
+      });
+      
+      if (!membership) {
+        throw new TRPCError({ 
+          code: "NOT_FOUND", 
+          message: "Pending membership not found" 
+        });
+      }
+      
+      // Activate the membership
+      const activatedMembership = await ctx.db.membership.update({
+        where: { id: membership.id },
+        data: {
           status: "active",
           invitationAcceptedAt: new Date(),
         },
@@ -239,7 +277,7 @@ export const invitationRouter = router({
         data: {
           status: "accepted",
           acceptedAt: new Date(),
-          acceptedByUserId: user.id,
+          acceptedByUserId: updatedUser.id,
         },
       });
       
@@ -271,8 +309,8 @@ export const invitationRouter = router({
       );
       
       return {
-        user,
-        membership,
+        user: updatedUser,
+        membership: activatedMembership,
         tenant: invitation.tenant,
       };
     }),
@@ -362,8 +400,8 @@ export const invitationRouter = router({
         },
       });
       
-      // TODO: Implement actual email sending logic
-      // For now, just return success
+      // Email verification will be sent automatically via outbox → notification-service → email-service
+      // This endpoint just triggers the user update event
       return { success: true, message: "Verification email sent" };
     }),
 

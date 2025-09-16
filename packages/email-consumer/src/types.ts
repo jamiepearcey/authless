@@ -89,14 +89,14 @@ export const LegacyEventSchema = z.object({
 });
 
 /**
- * Unified event schema that handles both delivery events and legacy events
+ * Primary event schema for email service - handles delivery events from notification service
  */
-export const EventSchema = z.union([
-  EmailDeliveryEventSchema,
-  LegacyEventSchema,
-]);
+export const EventSchema = EmailDeliveryEventSchema;
 
 export type Event = z.infer<typeof EventSchema>;
+
+// Legacy support - for backward compatibility only
+export type LegacyEvent = z.infer<typeof LegacyEventSchema>;
 
 /**
  * Email routing rule configuration

@@ -129,15 +129,30 @@ export class EmailService implements JetStreamService {
    * Process delivery events from notification service
    */
   private async processDeliveryEvent(event: any, ctx: ProcessingContext): Promise<void> {
-    // For delivery events, the recipient is already known from the notification
-    const recipient = {
-      userId: event.userId,
-      email: await this.getUserEmail(event.userId),
-      name: await this.getUserName(event.userId),
-    };
+    let recipient;
+    
+    // Check if this is an external recipient (invitation emails)
+    if (event.externalRecipient) {
+      recipient = {
+        userId: null,
+        email: event.externalRecipient.email,
+        name: event.externalRecipient.name || event.externalRecipient.email.split('@')[0],
+      };
+      console.log(`📧 Processing external recipient: ${recipient.email}`);
+    } else if (event.userId) {
+      // For delivery events, the recipient is already known from the notification
+      recipient = {
+        userId: event.userId,
+        email: await this.getUserEmail(event.userId),
+        name: await this.getUserName(event.userId),
+      };
 
-    if (!recipient.email) {
-      console.warn(`📧 No email found for user: ${event.userId}`);
+      if (!recipient.email) {
+        console.warn(`📧 No email found for user: ${event.userId}`);
+        return;
+      }
+    } else {
+      console.warn(`📧 No recipient information found in delivery event`);
       return;
     }
 

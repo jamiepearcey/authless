@@ -8,6 +8,33 @@ import {
 } from "../support-notification-service";
 import * as crypto from "crypto";
 
+// Export type for getUserContactMessages return value
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string | null;
+  status: string;
+  priority: string;
+  createdAt: Date;
+  updatedAt: Date;
+  caseNumber: string | null;
+  categories: string;
+  lastMessage: {
+    content: string | null;
+    createdAt: Date;
+    isFromUser: boolean;
+  };
+  unread: boolean;
+  assignee: {
+    name: string | null;
+    email: string | null;
+  } | null;
+}
+
+export type UserContactMessages = ContactMessage[];
+
 export const contactRouter = router({
   // Get contact reasons (public)
   getContactReasons: publicProcedure
@@ -327,7 +354,7 @@ export const contactRouter = router({
     }),
 
   // Get user's contact messages (protected) - now queries support cases
-  getUserContactMessages: protectedProcedure.query(async ({ ctx }) => {
+  getUserContactMessages: protectedProcedure.query(async ({ ctx }): Promise<UserContactMessages> => {
     if (!ctx.session?.user?.email) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }

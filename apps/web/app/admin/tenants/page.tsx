@@ -717,14 +717,28 @@ export default function AdminTenantsPage() {
                 <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {table.getAllColumns()
-                  .filter((column) => column.getCanHide() && !column.id.startsWith('_') && column.id !== 'grouping' && column.id !== 'timeBucket' && column.id !== 'statusGroup' && column.id !== 'planGroup' && column.id !== 'sizeGroup')
+                  .filter((column) => {
+                    // Only show columns that can be hidden and are not dynamic grouping columns
+                    const isDynamicColumn = [
+                      'grouping', 'timeBucket', 'statusGroup', 'planGroup', 'sizeGroup'
+                    ].includes(column.id);
+                    return column.getCanHide() && !isDynamicColumn;
+                  })
                   .map((column) => (
                     <DropdownMenuItem
                       key={column.id}
                       onClick={() => column.toggleVisibility()}
                       className="flex items-center justify-between"
                     >
-                      <span>{column.id}</span>
+                      <span>
+                        {column.id === 'tenant' ? 'Tenant' :
+                         column.id === 'status' ? 'Status' :
+                         column.id === 'plan' ? 'Plan' :
+                         column.id === 'members' ? 'Members' :
+                         column.id === 'created' ? 'Created' :
+                         column.id === 'actions' ? 'Actions' :
+                         column.id}
+                      </span>
                       {column.getIsVisible() && <CheckCircle className="h-4 w-4" />}
                     </DropdownMenuItem>
                   ))}

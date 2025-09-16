@@ -558,18 +558,6 @@ export default function InboxMonitoringPage() {
             </CardContent>
           </Card>
           
-          <Card className="bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-purple-800">Throughput</p>
-                  <p className="text-2xl font-bold text-purple-700">900</p>
-                  <p className="text-xs text-purple-600 mt-1">/hour</p>
-                </div>
-                <TrendingUp className="h-8 w-8 text-purple-600" />
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
       {/* Main Content */}

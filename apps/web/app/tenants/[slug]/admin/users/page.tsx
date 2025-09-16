@@ -105,6 +105,7 @@ interface UserData {
 interface MembershipData {
   id: string;
   role: string;
+  status: string;
   createdAt: string;
   user: UserData;
   subRows?: MembershipData[];
@@ -237,7 +238,8 @@ export default function TenantUsersPage() {
       let groupingValue = 'All Members';
       let timeBucket = getTimeBucket(new Date(membership.createdAt));
       let roleGroup = membership.role || 'Unknown';
-      let statusGroup = membership.user.isEmailVerified ? 'Verified' : 'Unverified';
+      let statusGroup = membership.status === 'pending' ? 'Pending Invitation' : 
+                        membership.user.isEmailVerified ? 'Verified' : 'Unverified';
       
       if (grouping.length > 0) {
         if (grouping[0] === 'role') {
@@ -459,8 +461,12 @@ export default function TenantUsersPage() {
           </div>
         ),
         cell: ({ row }) => {
+          const membershipStatus = row.original.status;
           const isVerified = row.original.user.isEmailVerified;
-          if (isVerified) {
+          
+          if (membershipStatus === 'pending') {
+            return <Badge variant="outline" className="text-blue-600 border-blue-200 hover:bg-blue-50">Pending Invitation</Badge>;
+          } else if (isVerified) {
             return <Badge variant="default" className="bg-green-100 text-green-700 border-green-200 hover:bg-green-200 hover:text-green-800">Verified</Badge>;
           } else {
             return <Badge variant="outline" className="text-orange-600 border-orange-200 hover:bg-orange-50">Unverified</Badge>;
@@ -696,6 +702,8 @@ export default function TenantUsersPage() {
     switch (status) {
       case "active":
         return <Badge variant="default" className="bg-green-100 text-green-700 border-green-200">Active</Badge>;
+      case "pending":
+        return <Badge variant="outline" className="text-blue-600 border-blue-200">Pending Invitation</Badge>;
       case "suspended":
         return <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200">Suspended</Badge>;
       case "removed":
@@ -797,14 +805,27 @@ export default function TenantUsersPage() {
                 <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {table.getAllColumns()
-                  .filter((column) => column.getCanHide())
+                  .filter((column) => {
+                    // Only show columns that can be hidden and are not dynamic grouping columns
+                    const isDynamicColumn = [
+                      'grouping', 'timeBucket', 'roleGroup', 'statusGroup'
+                    ].includes(column.id);
+                    return column.getCanHide() && !isDynamicColumn;
+                  })
                   .map((column) => (
                     <DropdownMenuItem
                       key={column.id}
                       onClick={() => column.toggleVisibility()}
                       className="flex items-center justify-between"
                     >
-                      <span>{column.id}</span>
+                      <span>
+                        {column.id === 'user' ? 'User' :
+                         column.id === 'role' ? 'Role' :
+                         column.id === 'status' ? 'Status' :
+                         column.id === 'joined' ? 'Joined' :
+                         column.id === 'actions' ? 'Actions' :
+                         column.id}
+                      </span>
                       {column.getIsVisible() && <CheckCircle className="h-4 w-4" />}
                     </DropdownMenuItem>
                   ))}

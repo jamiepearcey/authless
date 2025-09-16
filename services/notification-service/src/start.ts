@@ -1,39 +1,55 @@
 #!/usr/bin/env node
 
+import { SimpleNotificationService } from './index';
+
 /**
- * Startup script for the Realtime Service
+ * Simple startup script for the config-driven notification service
  * 
- * This demonstrates how to start the service with configuration
- * and handle graceful shutdown.
+ * This replaces the complex configuration in start.ts with a minimal setup
  */
 
-import RealtimeService from './index.js';
-import { config } from './config.js';
-
 async function main() {
-  console.log('🚀 Starting Realtime Service...');
-  
+  const service = new SimpleNotificationService({
+    serviceName: 'notification-service',
+    version: '1.0.0',
+    natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4223',
+    streamName: process.env.STREAM_NAME || 'EVENTS',
+    consumerName: process.env.CONSUMER_NAME || 'notification_consumer',
+    databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/authless',
+    concurrency: Number(process.env.CONCURRENCY) || 8,
+    batchSize: Number(process.env.BATCH_SIZE) || 100,
+    port: Number(process.env.PORT) || 8084,
+    metricsPort: Number(process.env.METRICS_PORT) || 9094,
+  });
+
+  // Graceful shutdown handling
+  const shutdown = async (signal: string) => {
+    console.log(`Received ${signal}, shutting down gracefully...`);
+    try {
+      await service.stop();
+      console.log('Service stopped successfully');
+      process.exit(0);
+    } catch (error) {
+      console.error('Error during shutdown:', error);
+      process.exit(1);
+    }
+  };
+
+  process.on('SIGTERM', () => shutdown('SIGTERM'));
+  process.on('SIGINT', () => shutdown('SIGINT'));
+
+  // Start the service
   try {
-    // Create the service using the factory
-    const service = new RealtimeService(config);
-    
-    // Start the service
     await service.start();
-    
-    console.log('✅ Realtime Service started successfully');
-    console.log(`📊 Health checks available at: http://localhost:${exampleConfig.port}/health`);
-    console.log(`📈 Metrics available at: http://localhost:${exampleConfig.metricsPort}/metrics`);
-    
-    // Keep the process running - signal handling is managed by the service wrapper
-    
+    console.log('🚀 Simple notification service started successfully');
+    console.log('📧 All notification logic is now config-driven in notification-config.ts');
   } catch (error) {
-    console.error('❌ Failed to start Realtime Service:', error);
+    console.error('Failed to start notification service:', error);
     process.exit(1);
   }
 }
 
-// Run the main function
-main().catch((error) => {
-  console.error('💥 Fatal error:', error);
-  process.exit(1);
-});
+// Check if this file is being run directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch(console.error);
+}

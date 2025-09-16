@@ -82,10 +82,10 @@ export function NotificationTemplateForm({ context, tenantId, onSuccess, classNa
     targetId: context === 'tenant' ? tenantId || '' : '',
   });
 
-  // Create notification mutation
-  const createNotification = trpc.createNotification.useMutation({
-    onSuccess: (notification) => {
-      toast.success(`Notification "${notification.title}" created successfully!`);
+  // Create notification intent mutation
+  const createNotification = trpc.createNotificationIntent.useMutation({
+    onSuccess: (intent) => {
+      toast.success(`Notification intent "${intent.type}" created successfully!`);
       // Reset form
       setNotificationForm({
         title: '',
@@ -123,39 +123,50 @@ export function NotificationTemplateForm({ context, tenantId, onSuccess, classNa
       return;
     }
 
-    const notificationData: any = {
-      title: notificationForm.title,
-      description: notificationForm.description || undefined,
-      type: notificationForm.type,
-      priority: notificationForm.priority,
+    // Build notification intent data for the new API
+    const intentData: any = {
+      type: `${context}_${notificationForm.type}_notification`,
+      payloadJson: {
+        title: notificationForm.title,
+        description: notificationForm.description || undefined,
+        type: notificationForm.type,
+        priority: notificationForm.priority,
+        sourceType: notificationForm.targetType,
+      },
     };
 
     // Add targeting based on context and type
     if (context === 'tenant') {
       // Tenant context: always target the current tenant
-      notificationData.tenantId = tenantId;
+      intentData.tenantId = tenantId;
       
       if (notificationForm.targetType === 'user' && notificationForm.targetId) {
-        notificationData.userId = notificationForm.targetId;
+        intentData.recipients = [notificationForm.targetId];
       } else if (notificationForm.targetType === 'role' && notificationForm.targetId) {
         const [role] = notificationForm.targetId.split(':');
-        notificationData.role = role;
+        intentData.recipients = { type: 'role', ids: [role] };
+      } else {
+        // All users in tenant
+        intentData.recipients = { type: 'user', ids: [] };
       }
     } else {
       // Admin context: can target globally or specifically
       if (notificationForm.targetType === 'user' && notificationForm.targetId) {
-        notificationData.userId = notificationForm.targetId;
+        intentData.recipients = [notificationForm.targetId];
       } else if (notificationForm.targetType === 'tenant' && notificationForm.targetId) {
-        notificationData.tenantId = notificationForm.targetId;
+        intentData.tenantId = notificationForm.targetId;
+        intentData.recipients = { type: 'user', ids: [] };
       } else if (notificationForm.targetType === 'role' && notificationForm.targetId) {
         const [tenantId, role] = notificationForm.targetId.split(':');
-        notificationData.tenantId = tenantId;
-        notificationData.role = role;
+        intentData.tenantId = tenantId;
+        intentData.recipients = { type: 'role', ids: [role] };
+      } else {
+        // Global notifications
+        intentData.recipients = { type: 'user', ids: [] };
       }
-      // Global notifications don't need additional targeting
     }
 
-    createNotification.mutate(notificationData);
+    createNotification.mutate(intentData);
   };
 
   const getTargetTypeOptions = () => {

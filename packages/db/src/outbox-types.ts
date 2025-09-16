@@ -90,6 +90,10 @@ export interface InvitationEventPayload {
   expiresAt: string;
   status: string;
   message?: string;
+  // ID of the user record created for the invitee
+  invitedUserId?: string;
+  // ID of the membership record created
+  membershipId?: string;
   metadata?: Record<string, any>;
 }
 

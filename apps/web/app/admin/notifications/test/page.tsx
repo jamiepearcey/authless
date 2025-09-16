@@ -42,10 +42,10 @@ export default function TestNotificationsPage() {
     { enabled: !!form.tenantId }
   );
 
-  // Create notification mutation
-    const createNotification = trpc.createNotification.useMutation({
+  // Create notification intent mutation
+    const createNotification = trpc.createNotificationIntent.useMutation({
     onSuccess: () => {
-      toast("Success! Notification sent successfully");
+      toast("Success! Notification intent created successfully");
       setIsLoading(false);
       // Reset form
       setForm({
@@ -66,17 +66,33 @@ export default function TestNotificationsPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    const notificationData = {
-      title: form.title,
-      description: form.description,
-      type: form.type,
-      priority: form.priority,
-      tenantId: form.targetType === "tenant" || form.targetType === "role" ? form.tenantId : undefined,
-      role: form.targetType === "role" ? form.role : undefined,
-      userId: form.targetType === "user" ? form.userId : undefined,
+    // Build notification intent data for the new API
+    const intentData: any = {
+      type: `admin_${form.type}_notification`,
+      payloadJson: {
+        title: form.title,
+        description: form.description,
+        type: form.type,
+        priority: form.priority,
+        sourceType: form.targetType,
+      },
     };
 
-    createNotification.mutate(notificationData);
+    // Set recipients based on target type
+    if (form.targetType === "user" && form.userId) {
+      intentData.recipients = [form.userId];
+    } else if (form.targetType === "tenant" && form.tenantId) {
+      intentData.tenantId = form.tenantId;
+      intentData.recipients = { type: 'user', ids: [] }; // All users in tenant
+    } else if (form.targetType === "role" && form.tenantId && form.role) {
+      intentData.tenantId = form.tenantId;
+      intentData.recipients = { type: 'role', ids: [form.role] };
+    } else {
+      // Global notifications
+      intentData.recipients = { type: 'user', ids: [] }; // All users
+    }
+
+    createNotification.mutate(intentData);
   };
 
   const getTargetDescription = () => {

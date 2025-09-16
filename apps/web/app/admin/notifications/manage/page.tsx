@@ -63,10 +63,10 @@ export default function NotificationManagementPage() {
     addToLog(`🔍 Subscription state: connected=${isConnected}, subscribed=${isSubscribed}, errors=${hasErrors}`);
   }, [isConnected, isSubscribed, hasErrors, error]);
 
-  // Create notification mutation
-  const createNotification = trpc.createNotification.useMutation({
-    onSuccess: (notification) => {
-      addToLog(`✅ Created notification: ${notification.title}`);
+  // Create notification intent mutation
+  const createNotification = trpc.createNotificationIntent.useMutation({
+    onSuccess: (intent: any) => {
+      addToLog(`✅ Created notification intent: ${intent.type} (ID: ${intent.id})`);
       // Reset form
       setNotificationForm({
         title: '',
@@ -77,7 +77,7 @@ export default function NotificationManagementPage() {
         targetId: '',
       });
     },
-    onError: (error) => {
+    onError: (error: any) => {
       addToLog(`❌ Failed to create notification: ${error.message}`);
     },
   });
@@ -124,28 +124,36 @@ export default function NotificationManagementPage() {
       return;
     }
 
-    const notificationData: any = {
-      title: notificationForm.title,
-      description: notificationForm.description || undefined,
-      type: notificationForm.type,
-      priority: notificationForm.priority,
+    // Build notification intent data for the new API
+    const intentData: any = {
+      type: `admin_${notificationForm.type}_notification`, // e.g., "admin_info_notification"
+      payloadJson: {
+        title: notificationForm.title,
+        description: notificationForm.description || undefined,
+        type: notificationForm.type,
+        priority: notificationForm.priority,
+        sourceType: notificationForm.targetType,
+      },
     };
 
-    // Add targeting based on type
+    // Set recipients based on target type
     if (notificationForm.targetType === 'user' && notificationForm.targetId) {
-      notificationData.userId = notificationForm.targetId;
+      intentData.recipients = [notificationForm.targetId]; // Direct user ID array
     } else if (notificationForm.targetType === 'tenant' && notificationForm.targetId) {
-      notificationData.tenantId = notificationForm.targetId;
+      intentData.tenantId = notificationForm.targetId;
+      intentData.recipients = { type: 'user', ids: [] }; // Will be resolved by notification service
     } else if (notificationForm.targetType === 'role' && notificationForm.targetId) {
       // For role-based, we'd need both tenant and role
       const [tenantId, role] = notificationForm.targetId.split(':');
-      notificationData.tenantId = tenantId;
-      notificationData.role = role;
+      intentData.tenantId = tenantId;
+      intentData.recipients = { type: 'role', ids: [role] };
+    } else {
+      // Global notifications - empty recipients array means all users
+      intentData.recipients = { type: 'user', ids: [] };
     }
-    // Global notifications don't need additional targeting
 
-    addToLog(`📤 Sending ${notificationForm.targetType} notification...`);
-    createNotification.mutate(notificationData);
+    addToLog(`📤 Sending ${notificationForm.targetType} notification intent...`);
+    createNotification.mutate(intentData);
   };
 
   const clearNotifications = () => {

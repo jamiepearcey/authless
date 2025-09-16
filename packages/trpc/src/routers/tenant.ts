@@ -452,11 +452,11 @@ export const tenantRouter = router({
         throw new TRPCError({ code: "NOT_FOUND", message: "Tenant not found" });
       }
       
-      // Get all memberships for this tenant
+      // Get all memberships for this tenant (active and pending)
       const memberships = await ctx.db.membership.findMany({
         where: {
           tenantId: tenant.id,
-          status: "active",
+          status: { in: ["active", "pending"] },
         },
         include: {
           user: {
@@ -489,6 +489,7 @@ export const tenantRouter = router({
           secondaryColor: tenant.secondaryColor,
         },
         role: membership.role,
+        status: membership.status,
         createdAt: membership.createdAt,
         lastActiveAt: membership.lastActiveAt,
         isAdmin: membership.role === "admin",

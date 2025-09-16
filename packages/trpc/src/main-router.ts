@@ -118,14 +118,13 @@ const appRouter = router({
   getAvailableAccounts: passkeyRouter.getAvailableAccounts,
 
   // Notification system
-  createNotification: notificationRouter.createNotification,
+  createNotificationIntent: notificationRouter.createNotificationIntent,
   getUserNotifications: notificationRouter.getUserNotifications,
   getUnreadCount: notificationRouter.getUnreadCount,
   markAsRead: notificationRouter.markAsRead,
   markAllAsRead: notificationRouter.markAllAsRead,
   archiveNotification: notificationRouter.archiveNotification,
   getAllNotifications: notificationRouter.getAllNotifications,
-  updateNotification: notificationRouter.updateNotification,
   deleteNotification: notificationRouter.deleteNotification,
   batchDeleteNotifications: notificationRouter.batchDeleteNotifications,
   createWebhookEndpoint: notificationRouter.createWebhookEndpoint,
