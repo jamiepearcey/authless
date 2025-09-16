@@ -20,15 +20,15 @@ fi
 echo "🔍 Checking existing streams..."
 
 # List existing streams
-nats stream list --server nats://localhost:4223 2>/dev/null || echo "No streams found or NATS not running"
+nats stream list --server nats://127.0.0.1:4223 2>/dev/null || echo "No streams found or NATS not running"
 
 # Delete the EVENTS stream if it exists (this will also delete all consumers)
 echo "🗑️  Deleting EVENTS stream and all its consumers..."
-nats stream delete EVENTS --server nats://localhost:4223 --force 2>/dev/null || echo "EVENTS stream not found or already deleted"
+nats stream delete EVENTS --server nats://127.0.0.1:4223 --force 2>/dev/null || echo "EVENTS stream not found or already deleted"
 
 # List streams after cleanup
 echo "📋 Remaining streams:"
-nats stream list --server nats://localhost:4223 2>/dev/null || echo "No streams remaining"
+nats stream list --server nats://127.0.0.1:4223 2>/dev/null || echo "No streams remaining"
 
 echo "✅ NATS stream cleanup complete!"
 echo ""

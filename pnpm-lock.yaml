@@ -928,6 +928,43 @@ importers:
         specifier: ^1.0.0
         version: 1.6.1(@types/node@20.19.11)(jsdom@26.1.0)(terser@5.43.1)
 
+  services/notification-service:
+    dependencies:
+      '@db/base':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@jetstream/realtime-consumer':
+        specifier: workspace:*
+        version: link:../../packages/realtime-consumer
+      '@jetstream/service-wrapper':
+        specifier: workspace:*
+        version: link:../../packages/jetstream-service-wrapper
+      '@shared/base':
+        specifier: workspace:*
+        version: link:../../packages/shared
+      nats:
+        specifier: ^2.28.2
+        version: 2.29.3
+      pg:
+        specifier: ^8.11.0
+        version: 8.16.3
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.11
+      '@types/pg':
+        specifier: ^8.10.0
+        version: 8.15.5
+      tsx:
+        specifier: ^4.0.0
+        version: 4.20.5
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.2
+      vitest:
+        specifier: ^1.0.0
+        version: 1.6.1(@types/node@20.19.11)(jsdom@26.1.0)(terser@5.43.1)
+
   services/outbox-service:
     dependencies:
       '@outbox/processor':
@@ -952,37 +989,6 @@ importers:
       '@types/node':
         specifier: ^20.0.0
         version: 20.19.11
-      tsx:
-        specifier: ^4.0.0
-        version: 4.20.5
-      typescript:
-        specifier: ^5.0.0
-        version: 5.9.2
-      vitest:
-        specifier: ^1.0.0
-        version: 1.6.1(@types/node@20.19.11)(jsdom@26.1.0)(terser@5.43.1)
-
-  services/realtime-service:
-    dependencies:
-      '@jetstream/realtime-consumer':
-        specifier: workspace:*
-        version: link:../../packages/realtime-consumer
-      '@jetstream/service-wrapper':
-        specifier: workspace:*
-        version: link:../../packages/jetstream-service-wrapper
-      nats:
-        specifier: ^2.28.2
-        version: 2.29.3
-      pg:
-        specifier: ^8.11.0
-        version: 8.16.3
-    devDependencies:
-      '@types/node':
-        specifier: ^20.0.0
-        version: 20.19.11
-      '@types/pg':
-        specifier: ^8.10.0
-        version: 8.15.5
       tsx:
         specifier: ^4.0.0
         version: 4.20.5

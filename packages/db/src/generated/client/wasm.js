@@ -419,6 +419,11 @@ exports.Prisma.NotificationScalarFieldEnum = {
   role: 'role',
   userId: 'userId',
   metadata: 'metadata',
+  dataJson: 'dataJson',
+  isAlert: 'isAlert',
+  emailOnly: 'emailOnly',
+  templateId: 'templateId',
+  templateVariables: 'templateVariables',
   expiresAt: 'expiresAt',
   readAt: 'readAt',
   createdAt: 'createdAt',
@@ -752,6 +757,63 @@ exports.Prisma.InboxEventScalarFieldEnum = {
   sourceId: 'sourceId'
 };
 
+exports.Prisma.NotificationIntentScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  type: 'type',
+  recipients: 'recipients',
+  payloadJson: 'payloadJson',
+  createdAt: 'createdAt',
+  processedAt: 'processedAt',
+  status: 'status',
+  errorMessage: 'errorMessage',
+  retryCount: 'retryCount',
+  maxRetries: 'maxRetries',
+  traceId: 'traceId',
+  idempotencyKey: 'idempotencyKey',
+  expiresAt: 'expiresAt'
+};
+
+exports.Prisma.NotificationDeliveryScalarFieldEnum = {
+  id: 'id',
+  notificationId: 'notificationId',
+  channel: 'channel',
+  status: 'status',
+  tries: 'tries',
+  maxTries: 'maxTries',
+  lastError: 'lastError',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  metadata: 'metadata'
+};
+
+exports.Prisma.NotificationPreferencesScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tenantId: 'tenantId',
+  type: 'type',
+  channels: 'channels',
+  emailEnabled: 'emailEnabled',
+  realtimeEnabled: 'realtimeEnabled',
+  smsEnabled: 'smsEnabled',
+  whatsappEnabled: 'whatsappEnabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NotificationTemplateScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  locale: 'locale',
+  subject: 'subject',
+  html: 'html',
+  text: 'text',
+  variables: 'variables',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -822,7 +884,11 @@ exports.Prisma.ModelName = {
   OutboxEvent: 'OutboxEvent',
   EmailProvider: 'EmailProvider',
   AuditEvent: 'AuditEvent',
-  InboxEvent: 'InboxEvent'
+  InboxEvent: 'InboxEvent',
+  NotificationIntent: 'NotificationIntent',
+  NotificationDelivery: 'NotificationDelivery',
+  NotificationPreferences: 'NotificationPreferences',
+  NotificationTemplate: 'NotificationTemplate'
 };
 
 /**

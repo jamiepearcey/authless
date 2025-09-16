@@ -68,7 +68,7 @@ await runService(service);
 
 // Or with custom configuration
 await runService(service, {
-  natsUrl: 'nats://localhost:4223',
+  natsUrl: 'nats://127.0.0.1:4223',
   streamName: 'events',
   consumerName: 'my-service-consumer',
   concurrency: 5,
@@ -198,7 +198,7 @@ import { ServiceConfigSchema } from '@jetstream/service-wrapper';
 const config = ServiceConfigSchema.parse({
   serviceName: 'my-service',
   version: '1.0.0',
-  natsUrl: 'nats://localhost:4223',
+  natsUrl: 'nats://127.0.0.1:4223',
   streamName: 'events',
   consumerName: 'my-service-consumer',
   concurrency: 10,

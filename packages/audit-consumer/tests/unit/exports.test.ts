@@ -42,7 +42,7 @@ describe('Package Exports', () => {
     
     expect(() => {
       createAuditConsumer({
-        natsUrl: 'nats://localhost:4223',
+        natsUrl: 'nats://127.0.0.1:4223',
         streamName: 'test-stream',
         consumerName: 'test-consumer',
         sinks: ['db'],

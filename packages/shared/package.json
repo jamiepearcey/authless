@@ -2,6 +2,7 @@
   "name": "@shared/base",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest"
@@ -10,6 +11,11 @@
   "types": "./src/index.ts",
   "exports": {
     ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    },
+    "./index.js": {
       "types": "./src/index.ts",
       "import": "./src/index.ts",
       "require": "./src/index.ts"

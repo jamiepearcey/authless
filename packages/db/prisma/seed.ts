@@ -35,6 +35,8 @@ async function main() {
       locale: 'en',
       timezone: 'UTC',
       plan: 'free',
+      domainAlias: null,
+      registrationClosed: false,
     },
   });
 

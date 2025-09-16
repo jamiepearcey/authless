@@ -9,7 +9,7 @@ import { PrismaClient } from '@db/base';
 import { connect, NatsConnection, JetStreamManager } from 'nats';
 
 const TEST_CONFIG: AuditConsumerConfig = {
-  natsUrl: 'nats://localhost:4223',
+  natsUrl: 'nats://127.0.0.1:4223',
   streamName: 'events',
   consumerName: 'test-audit-consumer',
   filterSubjects: ['audit.>'],
@@ -27,7 +27,7 @@ const TEST_CONFIG: AuditConsumerConfig = {
 };
 
 const TEST_AUDIT_SERVICE_CONFIG = {
-  natsUrl: 'nats://localhost:4223',
+  natsUrl: 'nats://127.0.0.1:4223',
   streamName: 'events',
   defaultTenantId: 'test-tenant',
   defaultService: 'test-service',
@@ -55,7 +55,7 @@ describe('Audit Consumer Integration Tests', () => {
 
     // Initialize NATS connection for test setup
     natsConnection = await connect({
-      servers: 'nats://localhost:4223',
+      servers: 'nats://127.0.0.1:4223',
       name: 'test-setup',
     });
     jsManager = natsConnection.jetstream();

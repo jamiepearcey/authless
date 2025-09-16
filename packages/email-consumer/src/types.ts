@@ -4,9 +4,39 @@ import { z } from 'zod';
 type ReactComponentType<P = any> = (props: P) => any;
 
 /**
- * Base event structure that comes from JetStream (updated to match new contract)
+ * Email delivery event structure from notification service
  */
-export const EventSchema = z.object({
+export const EmailDeliveryEventSchema = z.object({
+  eventName: z.string(), // 'notification.delivery.created'
+  deliveryId: z.string(),
+  notificationId: z.string(),
+  channel: z.string(), // 'email'
+  tenantId: z.string().nullable(),
+  userId: z.string(),
+  notification: z.object({
+    id: z.string(),
+    title: z.string(),
+    description: z.string().optional(),
+    type: z.string(),
+    priority: z.string().default('normal'),
+    templateId: z.string().optional(),
+    templateVariables: z.record(z.any()).optional(),
+    dataJson: z.record(z.any()).optional(),
+    createdAt: z.string(),
+  }),
+  created: z.string(),
+  payload: z.object({
+    deliveryId: z.string(),
+    notificationId: z.string(),
+    channel: z.string(),
+    maxRetries: z.number(),
+  }),
+});
+
+/**
+ * Legacy event schema for backward compatibility with other event types
+ */
+export const LegacyEventSchema = z.object({
   // Core AuditEvent fields
   id: z.string(),
   eventType: z.string(),
@@ -24,7 +54,7 @@ export const EventSchema = z.object({
     host: z.string().optional(),
     requestId: z.string().optional(),
     correlationId: z.string().optional(),
-  }),
+  }).optional(),
   
   // Actor information
   actor: z.object({
@@ -50,12 +80,21 @@ export const EventSchema = z.object({
     description: z.string().optional(),
     outcome: z.enum(['success', 'failure', 'unknown']),
     reason: z.string().optional(),
-  }),
+  }).optional(),
   
   // Metadata and original payload
   metadata: z.record(z.any()).optional(),
-  originalPayload: z.record(z.any()),
+  originalPayload: z.record(z.any()).optional(),
+  payload: z.record(z.any()).optional(), // For legacy compatibility
 });
+
+/**
+ * Unified event schema that handles both delivery events and legacy events
+ */
+export const EventSchema = z.union([
+  EmailDeliveryEventSchema,
+  LegacyEventSchema,
+]);
 
 export type Event = z.infer<typeof EventSchema>;
 

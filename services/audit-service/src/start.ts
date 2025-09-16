@@ -14,7 +14,7 @@ function createDefaultConfig(): AuditServiceConfig {
   return {
     serviceName: process.env.SERVICE_NAME || 'audit-service',
     version: process.env.SERVICE_VERSION || '1.0.0',
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
+    natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4223',
     streamName: process.env.NATS_STREAM_NAME || 'EVENTS',
     consumerName: process.env.AUDIT_CONSUMER_NAME || 'audit-consumer',
     databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/authless',

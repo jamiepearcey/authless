@@ -53,7 +53,7 @@ Set environment variables:
 ```bash
 # Required
 DATABASE_URL="postgresql://user:password@localhost:5432/db"
-NATS_URL="nats://localhost:4222"
+NATS_URL="nats://127.0.0.1:4222"
 
 # Email Provider (choose one)
 MAILGUN_API_KEY="your-mailgun-api-key"
@@ -95,7 +95,7 @@ import { EmailServiceConfig } from '@jetstream/email-service';
 const config: EmailServiceConfig = {
   serviceName: 'email-service',
   version: '1.0.0',
-  natsUrl: 'nats://localhost:4222',
+  natsUrl: 'nats://127.0.0.1:4222',
   streamName: 'EVENTS',
   consumerName: 'email_service',
   databaseUrl: 'postgresql://...',

@@ -24,7 +24,7 @@ export default function JetStreamProviderPage() {
     // JetStream specific settings
     streamName: "EMAIL_EVENTS",
     consumerName: "email-consumer",
-    natsUrl: "nats://localhost:4222",
+    natsUrl: "nats://127.0.0.1:4222",
     // Connection settings
     connectionTimeout: 5000,
     requestTimeout: 30000,
@@ -153,7 +153,7 @@ export default function JetStreamProviderPage() {
         replyToEmail: jetstreamSettings.replyToEmail || "",
         streamName: jetstreamSettings.streamName || "EMAIL_EVENTS",
         consumerName: jetstreamSettings.consumerName || "email-consumer",
-        natsUrl: jetstreamSettings.natsUrl || "nats://localhost:4222",
+        natsUrl: jetstreamSettings.natsUrl || "nats://127.0.0.1:4222",
         connectionTimeout: jetstreamSettings.connectionTimeout || 5000,
         requestTimeout: jetstreamSettings.requestTimeout || 30000,
         maxReconnectAttempts: jetstreamSettings.maxReconnectAttempts || 10,
@@ -355,7 +355,7 @@ export default function JetStreamProviderPage() {
                 value={formData.natsUrl}
                 onChange={(e) => setFormData(prev => ({ ...prev, natsUrl: e.target.value }))}
                 disabled={!isEditing}
-                placeholder="nats://localhost:4222"
+                placeholder="nats://127.0.0.1:4222"
                 required
               />
             </div>

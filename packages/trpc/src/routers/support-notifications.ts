@@ -39,7 +39,7 @@ export const supportNotificationsRouter = router({
       suppressIfNoPreference: z.boolean().default(true),
     }))
     .mutation(async ({ ctx, input }) => {
-      const supportNotificationService = createSupportNotificationService(ctx.db);
+      const supportNotificationService = createSupportNotificationService(ctx.db, ctx.outbox);
       
       return await supportNotificationService.createSupportNotification({
         ...input,
@@ -167,7 +167,7 @@ export const supportNotificationsRouter = router({
 
         const notifications = [];
 
-        const supportNotificationService = createSupportNotificationService(ctx.db);
+        const supportNotificationService = createSupportNotificationService(ctx.db, ctx.outbox);
 
         // Notify assignee
         if (input.includeAssignee && supportCase.assigneeId && supportCase.assigneeId !== input.excludeUserId) {

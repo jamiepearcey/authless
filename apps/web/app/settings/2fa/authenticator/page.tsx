@@ -239,7 +239,7 @@ export default function AuthenticatorSetupPage() {
 
       {/* Success Notification (overlays the QR section) */}
       {step === "success" && (
-        <div className="bg-white shadow rounded-lg p-6 border-2 border-green-200 bg-green-50">
+        <div className="bg-green-50 shadow rounded-lg p-6 border-2 border-green-200">
           <div className="text-center">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-green-900 mb-2">

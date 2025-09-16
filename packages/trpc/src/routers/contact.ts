@@ -170,7 +170,7 @@ export const contactRouter = router({
 
         // Send notification to tenant support email or primary admin
         try {
-          const notificationService = createSupportNotificationService(ctx.db);
+          const notificationService = createSupportNotificationService(ctx.db, ctx.outbox);
           await notifyTenantOfNewContact(
             ctx,
             {

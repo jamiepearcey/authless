@@ -98,7 +98,7 @@ case "${1:-start}" in
         echo -e "${YELLOW}🧹 Cleaning up NATS streams...${NC}"
         ./scripts/cleanup-nats-streams.sh
         
-        pnpm turbo run dev --concurrency=15 &
+        pnpm turbo run dev --concurrency=20 &
         echo $! >> "$PID_FILE"
         ;;
     "start"|*)

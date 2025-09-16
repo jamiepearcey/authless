@@ -315,7 +315,7 @@ export const n8nWebhookRouter = router({
               threadId: message.threadId,
               headers: message.channel === "EMAIL" ? (message as any).headers : undefined,
             },
-            attachments: message.attachments,
+            attachments: (message as any).attachments || undefined,
             deliveryStatus: "DELIVERED",
           }
         });
@@ -391,7 +391,7 @@ export const n8nWebhookRouter = router({
             direction: "OUTBOUND",
             channel: input.channel,
             fromAddress: input.channel === "EMAIL" 
-              ? supportCase.supportOption?.routingConfig?.addresses?.[0] || "support@example.com"
+              ? (supportCase.supportOption?.routingConfig as any)?.addresses?.[0] || "support@example.com"
               : "system",
             toAddress: input.to,
             subject: input.subject,
@@ -428,8 +428,8 @@ export const n8nWebhookRouter = router({
           attachments: input.attachments,
           threadingKey: supportCase.threadingKey,
           threadingData: {
-            inReplyTo: supportCase.sourceMetadata?.originalMessage?.messageId,
-            references: supportCase.sourceMetadata?.originalMessage?.references,
+            inReplyTo: (supportCase.sourceMetadata as any)?.originalMessage?.messageId,
+            references: (supportCase.sourceMetadata as any)?.originalMessage?.references,
           },
           tenant: supportCase.tenant ? {
             id: supportCase.tenant.id,
@@ -663,13 +663,13 @@ export const n8nWebhookRouter = router({
         for (const config of configurations) {
           await ctx.db.supportConfiguration.upsert({
             where: {
-              tenantId_key: {
-                tenantId: input.tenantId || null,
+              tenant_config_key: {
+                tenantId: input.tenantId || "",
                 key: config.key,
               }
             },
             create: {
-              tenantId: input.tenantId || null,
+              tenantId: input.tenantId || "",
               key: config.key,
               value: config.value,
               description: config.description,

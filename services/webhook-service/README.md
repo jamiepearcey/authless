@@ -24,7 +24,7 @@ This service follows the Authless architecture pattern:
 
 ```bash
 # NATS Configuration
-NATS_URL=nats://localhost:4222
+NATS_URL=nats://127.0.0.1:4222
 NATS_STREAM_NAME=EVENTS
 WEBHOOK_CONSUMER_NAME=webhook-consumer
 WEBHOOK_FILTER_SUBJECTS=events.webhook.*

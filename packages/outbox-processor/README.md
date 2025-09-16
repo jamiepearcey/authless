@@ -44,7 +44,7 @@ import { OutboxProcessor } from '@outbox/processor';
 
 const processor = new OutboxProcessor({
   databaseUrl: process.env.DATABASE_URL!,
-  natsUrl: process.env.NATS_URL || 'nats://localhost:4222',
+  natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4222',
   batchSize: 100,
   maxTries: 10,
   idleSleepMs: 500
@@ -59,7 +59,7 @@ await processor.start();
 Environment variables:
 
 - `DATABASE_URL` - PostgreSQL connection string (required)
-- `NATS_URL` - NATS server URL (default: nats://localhost:4222)
+- `NATS_URL` - NATS server URL (default: nats://127.0.0.1:4222)
 - `BATCH_SIZE` - Events processed per batch (default: 100)
 - `MAX_TRIES` - Maximum retry attempts (default: 10)
 - `IDLE_SLEEP_MS` - Fallback sleep when no notifications (default: 500ms)

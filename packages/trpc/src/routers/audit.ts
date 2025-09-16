@@ -313,7 +313,7 @@ export const auditRouter = router({
         ctx.db.auditLog.findMany({
           where: {
             ...whereConditions,
-            userId: { isNot: null },
+            userId: { not: null },
           },
           select: { 
             userId: true,

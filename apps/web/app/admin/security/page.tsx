@@ -83,7 +83,7 @@ export default function AdminSecurityPage() {
               <Key className="h-8 w-8 text-red-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Failed Logins (24h)</p>
-                <p className="text-2xl font-bold text-gray-900">{failedLogins?.count || 0}</p>
+                <p className="text-2xl font-bold text-gray-900">{failedLogins?.total || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -95,7 +95,7 @@ export default function AdminSecurityPage() {
               <Activity className="h-8 w-8 text-blue-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Active Sessions</p>
-                <p className="text-2xl font-bold text-gray-900">{activeSessions?.count || 0}</p>
+                <p className="text-2xl font-bold text-gray-900">{activeSessions?.total || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -107,7 +107,7 @@ export default function AdminSecurityPage() {
               <Users className="h-8 w-8 text-green-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">2FA Enabled Users</p>
-                <p className="text-2xl font-bold text-gray-900">{activeSessions?.twoFactorEnabled || 0}</p>
+                <p className="text-2xl font-bold text-gray-900">0</p>
               </div>
             </div>
           </CardContent>

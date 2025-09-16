@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@db/base";
 import { generatePasswordResetToken } from "@shared/base";
 import {
-  callPasswordResetWebhook,
   constructPasswordResetUrl,
 } from "@shared/base";
+import { TrpcOutboxService, OutboxEvents } from "@trpc/base";
 import { t } from "@i18n-core";
 export async function POST(request: NextRequest) {
   try {
@@ -75,17 +75,40 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Call password reset webhook
-    const webhookPayload = {
-      email: user.email!,
-      name: user.name || "User",
-      token: resetToken,
-      action: "password-reset" as const,
-      callbackUrl: constructPasswordResetUrl(resetToken),
-    };
-    const webhookSuccess = await callPasswordResetWebhook(webhookPayload);
-    if (!webhookSuccess) {
-      console.warn("Failed to send password reset email");
+    // Create notification intent for password reset email
+    try {
+      const outboxService = new TrpcOutboxService(db);
+      const callbackUrl = constructPasswordResetUrl(resetToken);
+      
+      await outboxService.publishNotificationIntentEvent(
+        OutboxEvents.NOTIFICATION_INTENT_CREATED,
+        `password-reset-${user.id}`,
+        {
+          id: `password-reset-${user.id}`,
+          tenantId: null, // Password reset is not tenant-specific
+          type: 'user.password_reset.requested',
+          recipients: [user.id],
+          payloadJson: {
+            name: user.name || "User",
+            email: user.email!,
+            callbackUrl: callbackUrl,
+            token: resetToken,
+            userId: user.id
+          },
+          channels: ['email'],
+          createdAt: new Date(),
+          status: 'pending',
+          retryCount: 0,
+          maxRetries: 3,
+          traceId: user.id
+        },
+        {
+          idempotencyKey: `password-reset-${user.id}-${Date.now()}`,
+          traceId: user.id
+        }
+      );
+    } catch (emailError) {
+      console.warn("Failed to send password reset email notification:", emailError);
       return NextResponse.json(
         {
           error: t(

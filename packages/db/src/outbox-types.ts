@@ -79,6 +79,20 @@ export interface SupportEventPayload {
   metadata?: Record<string, any>;
 }
 
+export interface InvitationEventPayload {
+  invitationId: string;
+  email: string;
+  role: string;
+  tenantId: string;
+  tenantSlug: string;
+  invitedByUserId: string;
+  invitedByEmail: string;
+  expiresAt: string;
+  status: string;
+  message?: string;
+  metadata?: Record<string, any>;
+}
+
 /**
  * Event type constants
  */
@@ -117,6 +131,12 @@ export const EventTypes = {
   LEAD_CONVERTED: 'lead.converted',
   LEAD_ABANDONED: 'lead.abandoned',
   
+  // Invitation events
+  INVITATION_CREATED: 'invitation.created',
+  INVITATION_ACCEPTED: 'invitation.accepted',
+  INVITATION_REJECTED: 'invitation.rejected',
+  INVITATION_EXPIRED: 'invitation.expired',
+  
   // System events
   SYSTEM_ERROR: 'system.error',
   SYSTEM_WARNING: 'system.warning',
@@ -136,6 +156,7 @@ export const AggregateTypes = {
   SUPPORT_TICKET: 'support_ticket',
   SUPPORT_MESSAGE: 'support_message',
   LEAD: 'lead',
+  INVITATION: 'invitation',
   SYSTEM: 'system',
 } as const;
 

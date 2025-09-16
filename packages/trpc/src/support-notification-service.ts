@@ -3,8 +3,7 @@
 
 import { TRPCError } from "@trpc/server";
 import { PrismaClient } from "@db/base";
-import { centrifugoService } from "./centrifugo";
-import { emailNotificationService } from "./email-service";
+import { TrpcOutboxService, OutboxEvents } from "./outbox-service";
 
 export interface CreateSupportNotificationInput {
   type: "CASE_CREATED" | "CASE_ASSIGNED" | "CASE_STATUS_CHANGED" | "CASE_MESSAGE_RECEIVED" | "CASE_MESSAGE_SENT" | "CASE_FIRST_RESPONSE" | "CASE_RESOLVED" | "CASE_CLOSED";
@@ -38,7 +37,10 @@ export interface SupportNotificationResult {
 }
 
 export class SupportNotificationService {
-  constructor(private db: PrismaClient) {}
+  constructor(
+    private db: PrismaClient,
+    private outbox: TrpcOutboxService
+  ) {}
 
   async createSupportNotification(input: CreateSupportNotificationInput): Promise<SupportNotificationResult> {
     try {
@@ -262,60 +264,57 @@ export class SupportNotificationService {
           }
         });
 
-        // Send UI notification
-        if (shouldSendUI) {
+        // Create a unified notification intent that the notification service will process
+        // This replaces the old approach of directly sending emails and UI notifications
+        // The notification service will handle channel routing and delivery
+        if (shouldSendUI || shouldSendEmail) {
           try {
-            await centrifugoService.publishNotification({
-              id: notification.id,
-              title: input.title,
-              description: input.description,
-              type: "support",
-              priority: priority,
-              createdAt: notification.createdAt.toISOString(),
-              tenantId: input.tenantId,
-              userId: recipient.userId,
-              metadata: {
-                caseId: input.caseId,
-                caseNumber: supportCase.caseNumber,
-                notificationType: input.type,
-              },
-            }, {
-              userId: recipient.userId,
-              tenantId: input.tenantId,
-            });
+            // Create notification intent with appropriate delivery channels
+            const channels = [];
+            if (shouldSendUI) channels.push('realtime');
+            if (shouldSendEmail) channels.push('email');
 
-            uiNotificationsSent++;
-          } catch (error) {
-            console.error(`Failed to send UI notification to user ${recipient.userId}:`, error);
-          }
-        }
-
-        // Send email notification
-        if (shouldSendEmail && recipient.email) {
-          try {
-            await emailNotificationService.sendNotificationEmail({
-              notification: {
-                id: notification.id,
-                title: input.title,
-                description: input.description,
-                type: "support",
-                priority: priority,
-                createdAt: notification.createdAt.toISOString(),
-              },
-              recipient: {
-                id: recipient.userId,
-                email: recipient.email,
-                name: recipient.name,
-              },
-              targetScope: {
+            await this.outbox.publishNotificationIntentEvent(
+              OutboxEvents.NOTIFICATION_INTENT_CREATED,
+              `support-${notification.id}-${recipient.userId}`,
+              {
+                id: `support-${notification.id}-${recipient.userId}`,
                 tenantId: input.tenantId,
-                userId: recipient.userId,
+                type: input.type.toLowerCase(), // e.g., 'case_created'
+                recipients: [recipient.userId],
+                payloadJson: {
+                  notificationId: notification.id,
+                  title: input.title,
+                  description: input.description || input.title,
+                  priority: priority,
+                  caseId: input.caseId,
+                  caseNumber: supportCase.caseNumber,
+                  supportNotificationType: input.type,
+                  templateVariables: {
+                    title: input.title,
+                    description: input.description,
+                    caseNumber: supportCase.caseNumber,
+                    priority: priority,
+                    type: "support"
+                  }
+                },
+                channels: channels,
+                createdAt: new Date(),
+                status: 'pending',
+                retryCount: 0,
+                maxRetries: 3,
+                traceId: input.userId
               },
-            });
+              { 
+                traceId: input.userId,
+                idempotencyKey: `support-notification-intent.${notification.id}.${recipient.userId}.${Date.now()}`
+              }
+            );
 
-            emailNotificationsSent++;
+            if (shouldSendUI) uiNotificationsSent++;
+            if (shouldSendEmail) emailNotificationsSent++;
           } catch (error) {
-            console.error(`Failed to send email notification to ${recipient.email}:`, error);
+            console.error(`Failed to publish notification intent for user ${recipient.userId}:`, error);
           }
         }
 
@@ -366,7 +365,7 @@ export class SupportNotificationService {
   }
 }
 
-// Factory function to create service with database instance
-export const createSupportNotificationService = (db: PrismaClient) => {
-  return new SupportNotificationService(db);
+// Factory function to create service with database and outbox instances
+export const createSupportNotificationService = (db: PrismaClient, outbox: TrpcOutboxService) => {
+  return new SupportNotificationService(db, outbox);
 };

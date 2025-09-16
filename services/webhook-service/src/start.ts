@@ -11,7 +11,7 @@ async function startWebhookService() {
     const webhookService = new WebhookService({
       serviceName: 'webhook-service',
       version: '1.0.0',
-      natsUrl: 'nats://localhost:4223',
+      natsUrl: 'nats://127.0.0.1:4223',
       streamName: 'EVENTS',
       consumerName: 'webhook_consumer',
       filterSubjects: ['webhook.*'],

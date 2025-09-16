@@ -6,7 +6,7 @@ import { AuditServiceConfig } from './index.js';
 export const exampleConfig: AuditServiceConfig = {
   serviceName: 'audit-service',
   version: '1.0.0',
-  natsUrl: 'nats://localhost:4223',
+  natsUrl: 'nats://127.0.0.1:4223',
   streamName: 'EVENTS',
   consumerName: 'audit_consumer',
   databaseUrl: 'postgresql://postgres:postgres@localhost:5432/authless',

@@ -1,4 +1,4 @@
-import { hash, compare } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -8,11 +8,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export async function hashPassword(password: string): Promise<string> {
-  return hash(password, 12);
+  return bcrypt.hash(password, 12);
 }
 
 export async function verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
-  return compare(password, hashedPassword);
+  return bcrypt.compare(password, hashedPassword);
 }
 
 export function formatDate(date: Date): string {

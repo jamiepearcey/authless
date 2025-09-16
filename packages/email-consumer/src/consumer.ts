@@ -1,5 +1,5 @@
 import { type JetStreamService, type ProcessingContext } from '@jetstream/service-wrapper';
-import { type Event, type EmailDeliveryResult } from './types.js';
+import { type Event, type EmailDeliveryResult, EventSchema } from './types.js';
 import { EmailRouter } from './email-router';
 import { ReactEmailRenderer } from './react-email-renderer';
 import { createEmailProvider, type EmailProvider } from './email-providers';
@@ -15,6 +15,9 @@ export class EmailService implements JetStreamService {
   private readonly templateRenderer: ReactEmailRenderer;
   private emailProvider: EmailProvider;
   private readonly database: any;
+  private lastConfigCheck = 0;
+  private configCacheTtlMs = 60000; // 1 minute cache
+  private currentConfigHash: string | null = null;
 
   constructor(
     private readonly config: {
@@ -32,78 +35,204 @@ export class EmailService implements JetStreamService {
   }
 
   /**
-   * Initialize or refresh email provider configuration from database
+   * Initialize or refresh email provider configuration from database with smart caching
    */
   private async initializeEmailProvider(): Promise<void> {
+    const now = Date.now();
+    
+    // Check if we need to refresh the config (cache expired)
+    if (now - this.lastConfigCheck < this.configCacheTtlMs) {
+      return; // Cache is still valid, no need to check
+    }
+
     try {
       if (this.database.getEmailProviderConfig) {
         const providerConfig = await this.database.getEmailProviderConfig();
         if (providerConfig) {
-          console.log(`📧 Initializing email provider: ${providerConfig.type}`);
-          this.emailProvider = createEmailProvider(providerConfig);
+          // Create a hash of the config to detect changes
+          const configHash = this.hashConfig(providerConfig);
+          
+          // Only reinitialize if config actually changed
+          if (configHash !== this.currentConfigHash) {
+            console.log(`📧 Email provider config changed, reinitializing: ${providerConfig.type}`);
+            this.emailProvider = createEmailProvider(providerConfig);
+            this.currentConfigHash = configHash;
+          }
         }
       }
+      
+      this.lastConfigCheck = now;
     } catch (error) {
-      console.warn(`📧 Failed to load email provider config from database, using default:`, error);
+      console.warn(`📧 Failed to load email provider config from database, using current provider:`, error);
+      this.lastConfigCheck = now; // Still update check time to prevent constant retries
     }
   }
 
   /**
-   * Process incoming email events (updated to handle new jetStreamEvent contract)
+   * Create a simple hash of the config to detect changes
+   */
+  private hashConfig(config: any): string {
+    try {
+      // Create a stable hash by stringifying relevant config properties
+      const hashableConfig = {
+        type: config.type,
+        apiKey: config.apiKey ? 'set' : 'unset', // Don't include actual key in hash
+        domain: config.domain,
+        host: config.host,
+        port: config.port,
+        fromName: config.fromName,
+        fromEmail: config.fromEmail,
+        replyToEmail: config.replyToEmail,
+      };
+      return Buffer.from(JSON.stringify(hashableConfig)).toString('base64');
+    } catch {
+      return Math.random().toString(); // Fallback to force refresh on error
+    }
+  }
+
+  /**
+   * Force refresh of email provider configuration (useful for external triggers)
+   */
+  public async refreshEmailProvider(): Promise<void> {
+    this.lastConfigCheck = 0; // Reset cache
+    await this.initializeEmailProvider();
+  }
+
+  /**
+   * Process incoming email events (handles both delivery events and legacy events)
    */
   async processMessage(eventData: unknown, ctx: ProcessingContext): Promise<void> {
     try {
-      // Initialize/refresh email provider configuration
+      // Initialize/refresh email provider configuration (with smart caching)
       await this.initializeEmailProvider();
       
       // Parse and validate the incoming message using the new schema
       const event = EventSchema.parse(eventData);
       
-      // Normalize timestamp if it's a string (handle malformed timestamps like audit-service)
-      if (typeof event.timestamp === 'string') {
-        let timestampStr = event.timestamp;
-        
-        // Fix common malformed timestamp patterns (same as audit-service)
-        if (timestampStr.includes('NZ') && !timestampStr.endsWith('Z')) {
-          timestampStr = timestampStr.replace(/(\d)NZ$/, '$1000Z');
-        }
-        
-        const normalized = new Date(timestampStr);
-        if (isNaN(normalized.getTime())) {
-          console.warn(`📧 Invalid timestamp format: ${event.timestamp}, using current time`);
-          event.timestamp = new Date();
-        } else {
-          event.timestamp = normalized;
-        }
+      // Determine if this is a delivery event or legacy event
+      if ('deliveryId' in event) {
+        // This is a delivery event from notification service
+        await this.processDeliveryEvent(event, ctx);
+      } else {
+        // This is a legacy event (backward compatibility)
+        await this.processLegacyEvent(event, ctx);
       }
 
-      // Route the event to determine which template to use
-      const routingResult = this.emailRouter.routeEvent(event);
-      if (!routingResult) {
-        console.log(`📧 No routing rule found for event: ${event.eventName}`);
-        return;
-      }
-
-      // Get recipients for this event
-      const recipients = await this.database.getRecipients(
-        event.eventName,
-        event.tenantId
-      );
-
-      if (recipients.length === 0) {
-        console.log(`📧 No recipients found for event: ${event.eventName}`);
-        return;
-      }
-
-      // Process email for each recipient
-      for (const recipient of recipients) {
-        await this.processEmailForRecipient(event, routingResult, recipient, ctx);
-      }
-
-      console.log(`📧 Processed email event: ${event.eventName} for ${recipients.length} recipients`);
+      console.log(`📧 Processed email event: ${event.eventName}`);
     } catch (error) {
       console.error(`❌ Error processing email event:`, error);
       throw error;
+    }
+  }
+
+  /**
+   * Process delivery events from notification service
+   */
+  private async processDeliveryEvent(event: any, ctx: ProcessingContext): Promise<void> {
+    // For delivery events, the recipient is already known from the notification
+    const recipient = {
+      userId: event.userId,
+      email: await this.getUserEmail(event.userId),
+      name: await this.getUserName(event.userId),
+    };
+
+    if (!recipient.email) {
+      console.warn(`📧 No email found for user: ${event.userId}`);
+      return;
+    }
+
+    // Route the event to determine which template to use
+    const routingResult = this.emailRouter.routeEvent(event);
+    if (!routingResult) {
+      console.log(`📧 No routing rule found for delivery event: ${event.eventName}`);
+      return;
+    }
+
+    // Process the email
+    await this.processEmailForRecipient(event, routingResult, recipient, ctx);
+  }
+
+  /**
+   * Process legacy events (backward compatibility)
+   */
+  private async processLegacyEvent(event: any, ctx: ProcessingContext): Promise<void> {
+    // Normalize timestamp if it's a string (handle malformed timestamps)
+    if ('timestamp' in event && typeof event.timestamp === 'string') {
+      let timestampStr = event.timestamp;
+      
+      // Fix common malformed timestamp patterns
+      if (timestampStr.includes('NZ') && !timestampStr.endsWith('Z')) {
+        timestampStr = timestampStr.replace(/(\d)NZ$/, '$1000Z');
+      }
+      
+      const normalized = new Date(timestampStr);
+      if (isNaN(normalized.getTime())) {
+        console.warn(`📧 Invalid timestamp format: ${event.timestamp}, using current time`);
+        event.timestamp = new Date();
+      } else {
+        event.timestamp = normalized;
+      }
+    }
+
+    // Route the event to determine which template to use
+    const routingResult = this.emailRouter.routeEvent(event);
+    if (!routingResult) {
+      console.log(`📧 No routing rule found for legacy event: ${event.eventName}`);
+      return;
+    }
+
+    // Get recipients for this event
+    const recipients = await this.database.getRecipients(
+      event.eventName,
+      event.tenantId
+    );
+
+    if (recipients.length === 0) {
+      console.log(`📧 No recipients found for event: ${event.eventName}`);
+      return;
+    }
+
+    // Process email for each recipient
+    for (const recipient of recipients) {
+      await this.processEmailForRecipient(event, routingResult, recipient, ctx);
+    }
+  }
+
+  /**
+   * Get user email by user ID
+   */
+  private async getUserEmail(userId: string): Promise<string | null> {
+    try {
+      if (this.database.getUserEmail) {
+        return await this.database.getUserEmail(userId);
+      }
+      // Fallback: look in database directly
+      const result = await this.database.query?.(`
+        SELECT email FROM "User" WHERE id = $1
+      `, [userId]);
+      return result?.rows?.[0]?.email || null;
+    } catch (error) {
+      console.warn(`📧 Failed to get email for user ${userId}:`, error);
+      return null;
+    }
+  }
+
+  /**
+   * Get user name by user ID
+   */
+  private async getUserName(userId: string): Promise<string | null> {
+    try {
+      if (this.database.getUserName) {
+        return await this.database.getUserName(userId);
+      }
+      // Fallback: look in database directly
+      const result = await this.database.query?.(`
+        SELECT name FROM "User" WHERE id = $1
+      `, [userId]);
+      return result?.rows?.[0]?.name || null;
+    } catch (error) {
+      console.warn(`📧 Failed to get name for user ${userId}:`, error);
+      return null;
     }
   }
 

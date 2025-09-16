@@ -110,8 +110,8 @@ export class FeatureToggleService {
     let enabled = feature.defaultEnabled;
 
     // Check global rule
-    if (feature.globalRules.length > 0) {
-      enabled = feature.globalRules[0].enabled;
+    if (feature.globalRules) {
+      enabled = feature.globalRules.enabled;
     }
 
     // Check tenant override (if applicable and tenant context provided)
@@ -152,8 +152,8 @@ export class FeatureToggleService {
       let enabled = feature.defaultEnabled;
 
       // Check global rule
-      if (feature.globalRules.length > 0) {
-        enabled = feature.globalRules[0].enabled;
+      if (feature.globalRules) {
+        enabled = feature.globalRules.enabled;
       }
 
       // Check tenant override (if applicable)
@@ -190,12 +190,12 @@ export class FeatureToggleService {
       let enabled = feature.defaultEnabled;
       let source: "default" | "global" | "tenant" = "default";
 
-      const hasGlobalRule = feature.globalRules.length > 0;
+      const hasGlobalRule = !!feature.globalRules;
       const hasTenantRule = context.tenantId && feature.tenantRules && feature.tenantRules.length > 0;
 
       // Apply precedence rules
-      if (hasGlobalRule) {
-        enabled = feature.globalRules[0].enabled;
+      if (hasGlobalRule && feature.globalRules) {
+        enabled = feature.globalRules.enabled;
         source = "global";
       }
 
@@ -212,7 +212,7 @@ export class FeatureToggleService {
         enabled,
         source,
         globalDefault: feature.defaultEnabled,
-        globalOverride: hasGlobalRule ? feature.globalRules[0].enabled : undefined,
+        globalOverride: hasGlobalRule && feature.globalRules ? feature.globalRules.enabled : undefined,
         tenantOverride: hasTenantRule ? feature.tenantRules![0].enabled : undefined
       };
     });

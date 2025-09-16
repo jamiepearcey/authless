@@ -115,7 +115,7 @@ const routingRules: EmailRoutingRule[] = [
 import { EmailConsumer } from '@jetstream/email-consumer';
 
 const consumer = new EmailConsumer({
-  natsUrl: 'nats://localhost:4223',
+  natsUrl: 'nats://127.0.0.1:4223',
   streamName: 'events',
   consumerName: 'email-consumer',
   filterSubjects: ['events.*'],

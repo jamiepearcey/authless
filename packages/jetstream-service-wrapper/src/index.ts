@@ -385,6 +385,14 @@ export class JetStreamServiceWrapper implements ServiceRunner {
     return this.logger;
   }
 
+  getNatsConnection(): NatsConnection | undefined {
+    return this.nc;
+  }
+
+  getJetStreamClient(): JetStreamClient | undefined {
+    return this.js;
+  }
+
   async start(): Promise<void> {
     if (this.state.isRunning) {
       this.logger.warn('Service already running');

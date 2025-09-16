@@ -45,15 +45,14 @@ export const securityRouter = router({
     .query(async ({ ctx }) => {
       const activeSessions = await ctx.db.session.findMany({
         where: {
-          expiresAt: {
+          expires: {
             gt: new Date(),
           },
         },
         select: {
           id: true,
           userId: true,
-          expiresAt: true,
-          createdAt: true,
+          expires: true,
           user: {
             select: {
               name: true,
@@ -62,7 +61,7 @@ export const securityRouter = router({
           },
         },
         orderBy: {
-          createdAt: "desc",
+          expires: "desc",
         },
         take: 100,
       });
@@ -153,7 +152,7 @@ export const securityRouter = router({
         // Active sessions
         ctx.db.session.count({
           where: {
-            expiresAt: { gt: now },
+            expires: { gt: now },
           },
         }),
         // Total users

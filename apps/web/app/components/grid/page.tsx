@@ -17,7 +17,7 @@ export default function PerspectiveGrid() {
       const { worker: createPerspectiveWorker } = await import("@finos/perspective");
       const WORKER_URL =
         "https://cdn.jsdelivr.net/npm/@finos/perspective@2.10.1/dist/umd/perspective.worker.js";
-      psWorker = createPerspectiveWorker({ worker: WORKER_URL });
+      psWorker = await createPerspectiveWorker(Promise.resolve(WORKER_URL));
 
       // (example) build a tiny table so you can verify it renders
       const rows = Array.from({ length: 1000 }, (_, i) => ({
@@ -45,8 +45,8 @@ export default function PerspectiveGrid() {
   return (
     <perspective-viewer
       ref={viewerRef}
-      plugin="Datagrid"
-      theme="Material Dark"
+      data-plugin="Datagrid"
+      data-theme="Material Dark"
       style={{ height: "80vh", width: "100%" }}
     />
   );

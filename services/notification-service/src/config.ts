@@ -1,4 +1,4 @@
-import type { RealtimeServiceConfig } from './index.js';
+import type { RealtimeServiceConfig } from './abstractions';
 
 /**
  * Example configuration for the Realtime Service
@@ -7,13 +7,13 @@ import type { RealtimeServiceConfig } from './index.js';
  * custom event handlers, and various processing options.
  */
 
-export const exampleConfig: RealtimeServiceConfig = {
+export const config: RealtimeServiceConfig = {
   // Service identity
   serviceName: 'realtime-service',
   version: '1.0.0',
   
   // NATS configuration
-  natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
+  natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4223',
   streamName: process.env.STREAM_NAME || 'EVENTS',
   consumerName: process.env.CONSUMER_NAME || 'realtime_consumer',
   
@@ -38,6 +38,13 @@ export const exampleConfig: RealtimeServiceConfig = {
       pattern: 'user.{userId}.notifications',
       eventTypes: ['notification'],
       requireAuth: true,
+    },
+    
+    // Notification intents (explicit notification requests)
+    {
+      pattern: 'notification.intent.{type}',
+      eventTypes: ['notification_intent'],
+      requireAuth: false, // Processed by service
     },
     
     // Payment events
@@ -69,8 +76,8 @@ export const exampleConfig: RealtimeServiceConfig = {
   maxRetries: Number(process.env.MAX_RETRIES) || 10,
   
   // Health and metrics
-  port: Number(process.env.PORT) || 8083,
-  metricsPort: Number(process.env.METRICS_PORT) || 9093,
+  port: Number(process.env.PORT) || 8084,
+  metricsPort: Number(process.env.METRICS_PORT) || 9094,
   healthCheckIntervalMs: Number(process.env.HEALTH_CHECK_INTERVAL_MS) || 10000,
   
   // Custom event handlers for domain-specific logic
@@ -119,6 +126,61 @@ export const exampleConfig: RealtimeServiceConfig = {
       // - Update ticket status
       // - Trigger notifications
     }
+  },
+
+  // Notification processing configuration
+  notificationConfig: {
+    // Domain event to notification type mapping
+    eventMappings: {
+      'invitation.created': {
+        notificationType: 'invitation_created',
+        templateId: 'invitation_created_template',
+        conditions: (event) => {
+          // Only notify if the invitation is not for the inviter themselves
+          return !event.payload?.bypassEmailVerification;
+        }
+      },
+      'invitation.accepted': {
+        notificationType: 'invitation_accepted',
+        templateId: 'invitation_accepted_template'
+      },
+      'tenant.member.removed': {
+        notificationType: 'member_removed',
+        templateId: 'member_removed_template'
+      },
+      'support.reply.created': {
+        notificationType: 'support_reply',
+        templateId: 'support_reply_template',
+        conditions: (event) => {
+          // Only notify if the reply is not from the case creator
+          return event.payload?.createdBy !== event.payload?.caseCreatorId;
+        }
+      },
+      'payment.failed': {
+        notificationType: 'payment_failed',
+        templateId: 'payment_failed_template'
+      },
+      'user.invited': {
+        notificationType: 'user_invited',
+        templateId: 'user_invited_template'
+      }
+    },
+    
+    // Default notification preferences
+    defaultPreferences: {
+      channels: {web: true, email: true, mobile: false, desktop: false},
+      categories: {}
+    },
+    
+    // Template processing
+    templateProcessing: true,
+    
+    // Delivery retry configuration
+    deliveryRetryConfig: {
+      maxRetries: 3,
+      baseDelayMs: 1000,
+      maxDelayMs: 30000
+    }
   }
 };
 
@@ -128,7 +190,7 @@ export const exampleConfig: RealtimeServiceConfig = {
 export const minimalConfig: RealtimeServiceConfig = {
   serviceName: 'realtime-service-dev',
   version: '0.1.0',
-  natsUrl: 'nats://localhost:4223',
+  natsUrl: 'nats://127.0.0.1:4223',
   streamName: 'EVENTS',
   consumerName: 'realtime_consumer_dev',
   databaseUrl: 'postgresql://postgres:postgres@localhost:5432/realtime_dev',
@@ -140,7 +202,46 @@ export const minimalConfig: RealtimeServiceConfig = {
       eventTypes: ['*'],
       requireAuth: false,
     }
-  ]
+  ],
+
+  // Notification processing configuration
+  notificationConfig: {
+    // Domain event to notification type mapping
+    eventMappings: {
+      'support.reply.created': {
+        notificationType: 'support_reply',
+        templateId: 'support_reply_template',
+        conditions: (event) => {
+          // Only notify if the reply is not from the case creator
+          return event.payload?.createdBy !== event.payload?.caseCreatorId;
+        }
+      },
+      'payment.failed': {
+        notificationType: 'payment_failed',
+        templateId: 'payment_failed_template'
+      },
+      'user.invited': {
+        notificationType: 'user_invited',
+        templateId: 'user_invited_template'
+      }
+    },
+    
+    // Default notification preferences
+    defaultPreferences: {
+      channels: {web: true, email: true, mobile: false, desktop: false},
+      categories: {}
+    },
+    
+    // Template processing
+    templateProcessing: true,
+    
+    // Delivery retry configuration
+    deliveryRetryConfig: {
+      maxRetries: 3,
+      baseDelayMs: 1000,
+      maxDelayMs: 30000
+    }
+  }
 };
 
 /**

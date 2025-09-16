@@ -4,7 +4,7 @@ import { z } from 'zod';
 // Environment variable configuration schema
 const EnvConfigSchema = z.object({
   // NATS Configuration
-  NATS_URL: z.string().default('nats://localhost:4222'),
+  NATS_URL: z.string().default('nats://127.0.0.1:4222'),
   AUDIT_STREAM_NAME: z.string().default('events'),
   AUDIT_CONSUMER_NAME: z.string().default('audit-consumer'),
   AUDIT_FILTER_SUBJECTS: z.string().optional(),

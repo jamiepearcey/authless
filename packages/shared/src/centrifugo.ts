@@ -273,3 +273,6 @@ export class CentrifugoService {
 
 // Export singleton instance
 export const centrifugoService = new CentrifugoService();
+
+// Also export as default for ESM compatibility
+export default centrifugoService;

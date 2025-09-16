@@ -10,6 +10,7 @@ import {
   type PaymentEventPayload,
   type NotificationEventPayload,
   type SupportEventPayload,
+  type InvitationEventPayload,
 } from "@db/base";
 
 /**
@@ -164,6 +165,34 @@ export class TrpcOutboxService {
   }
 
   /**
+   * Publish an invitation-related event
+   */
+  async publishInvitationEvent(
+    eventType: EventType,
+    invitationId: string,
+    tenantId: string | null,
+    payload: InvitationEventPayload,
+    options?: { idempotencyKey?: string; traceId?: string }
+  ): Promise<string> {
+    const input: CreateOutboxEventInput = {
+      eventType,
+      aggregateType: AggregateTypes.INVITATION,
+      aggregateId: invitationId,
+      tenantId: tenantId || "",
+      payloadJson: payload,
+      idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
+        eventType,
+        AggregateTypes.INVITATION,
+        invitationId,
+        tenantId || ""
+      ),
+      traceId: options?.traceId,
+    };
+
+    return await this.outboxRepository.createEvent(input);
+  }
+
+  /**
    * Generic event publishing method
    */
   async publishEvent(
@@ -212,6 +241,35 @@ export class TrpcOutboxService {
   async getEventsByType(eventType: string, limit: number = 100) {
     return await this.outboxRepository.getEventsByType(eventType, limit);
   }
+
+  /**
+   * Publish a notification intent event
+   */
+  async publishNotificationIntentEvent(
+    eventType: EventType,
+    intentId: string,
+    payload: any,
+    options?: { idempotencyKey?: string; traceId?: string }
+  ): Promise<string> {
+    const input: CreateOutboxEventInput = {
+      eventType,
+      aggregateType: AggregateTypes.NOTIFICATION,
+      aggregateId: intentId,
+      tenantId: payload.tenantId || "",
+      payloadJson: payload,
+      idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
+        eventType,
+        AggregateTypes.NOTIFICATION,
+        intentId,
+        payload.tenantId || "",
+        'notification_intent'
+      ),
+      traceId: options?.traceId,
+    };
+
+    return await this.outboxRepository.createEvent(input);
+  }
+
 }
 
 // Create a singleton instance for use across tRPC procedures
@@ -246,6 +304,16 @@ export const OutboxEvents = {
   TENANT_DELETED: 'tenant.deleted' as EventType,
   TENANT_MEMBER_ADDED: 'tenant.member.added' as EventType,
   TENANT_MEMBER_REMOVED: 'tenant.member.removed' as EventType,
+
+  // Notification events
+  NOTIFICATION_INTENT_CREATED: 'notification.intent.created' as EventType,
+  NOTIFICATION_CREATED: 'notification.created' as EventType,
+
+  // Invitation events
+  INVITATION_CREATED: 'invitation.created' as EventType,
+  INVITATION_ACCEPTED: 'invitation.accepted' as EventType,
+  INVITATION_REJECTED: 'invitation.rejected' as EventType,
+  INVITATION_EXPIRED: 'invitation.expired' as EventType,
 
   // Authentication events
   AUTH_LOGIN_INITIATED: 'auth.login.initiated' as EventType,

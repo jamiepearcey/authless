@@ -7,15 +7,15 @@
  * and handle graceful shutdown.
  */
 
-import RealtimeService, { RealtimeServiceFactory } from './index.js';
-import { exampleConfig } from './example-config.js';
+import RealtimeService from './index.js';
+import { config } from './config.js';
 
 async function main() {
   console.log('🚀 Starting Realtime Service...');
   
   try {
     // Create the service using the factory
-    const service = new RealtimeService(exampleConfig);
+    const service = new RealtimeService(config);
     
     // Start the service
     await service.start();

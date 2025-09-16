@@ -292,7 +292,7 @@ function createDefaultConfig(): WebhookServiceConfig {
   return {
     serviceName: 'webhook-service',
     version: '1.0.0',
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
+    natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4223',
     streamName: process.env.NATS_STREAM_NAME || 'EVENTS',
     consumerName: process.env.WEBHOOK_CONSUMER_NAME || 'webhook-consumer',
     filterSubjects: (process.env.WEBHOOK_FILTER_SUBJECTS || 'events.webhook.*').split(','),

@@ -6,7 +6,7 @@
 
 import { connect } from 'nats';
 
-const NATS_URL = process.env.NATS_URL || 'nats://localhost:4223';
+const NATS_URL = process.env.NATS_URL || 'nats://127.0.0.1:4223';
 
 async function inspectEventsStream() {
   console.log('🔍 Inspecting EVENTS stream configuration');

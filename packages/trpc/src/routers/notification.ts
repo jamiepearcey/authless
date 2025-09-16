@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { protectedProcedure, router, platformAdminProcedure } from "../middleware";
-import { centrifugoService } from "../centrifugo";
 import { emailNotificationService } from "../email-service";
+import { OutboxEvents } from "../outbox-service";
+import { centrifugoService } from "@shared/base";
 
 // Real-time notification adapter interface
 export interface NotificationAdapter {
@@ -10,28 +11,52 @@ export interface NotificationAdapter {
   subscribe(userId: string, callback: (notification: any) => void): () => void;
 }
 
-// Centrifugo-based notification adapter
-class CentrifugoNotificationAdapter implements NotificationAdapter {
+// Outbox-based notification adapter
+class OutboxNotificationAdapter implements NotificationAdapter {
+  constructor(private outbox: any) {}
+
   async publish(notification: any): Promise<void> {
-    // Publish to Centrifugo with appropriate channels based on notification scope
+    // Publish notification event to outbox for processing by realtime service
     const scope = {
       tenantId: notification.tenantId,
       role: notification.role,
       userId: notification.userId,
     };
 
-    console.log('🔍 [CentrifugoNotificationAdapter] Publishing notification:', {
+    console.log('🔍 [OutboxNotificationAdapter] Publishing notification event:', {
       id: notification.id,
       title: notification.title,
       scope: scope
     });
 
-    const success = await centrifugoService.publishNotification(notification, scope);
-    
-    if (!success) {
-      console.error('Failed to publish notification to Centrifugo:', notification.id);
-    } else {
-      console.log('✅ Published notification to Centrifugo:', notification.id, 'scope:', scope);
+    try {
+      const eventId = await this.outbox.publishNotificationEvent(
+        'NOTIFICATION_CREATED',
+        notification.id,
+        {
+          notificationId: notification.id,
+          tenantId: notification.tenantId,
+          role: notification.role,
+          userId: notification.userId,
+          title: notification.title,
+          description: notification.description,
+          type: notification.type,
+          priority: notification.priority,
+          metadata: notification.metadata,
+          createdAt: notification.createdAt.toISOString(),
+          expiresAt: notification.expiresAt?.toISOString(),
+          scope: scope
+        },
+        { 
+          traceId: (notification as any).traceId,
+          idempotencyKey: `notification.created.${notification.id}.${Date.now()}`
+        }
+      );
+      
+      console.log('✅ Published notification event to outbox:', eventId);
+    } catch (error) {
+      console.error('Failed to publish notification event to outbox:', error);
+      throw error;
     }
   }
 
@@ -94,10 +119,12 @@ class InMemoryNotificationAdapter implements NotificationAdapter {
   }
 }
 
-// Use Centrifugo adapter by default, fallback to in-memory for development
-export const notificationAdapter = process.env.NODE_ENV === 'test' 
-  ? new InMemoryNotificationAdapter()
-  : new CentrifugoNotificationAdapter();
+// Create notification adapter factory that takes outbox service
+export function createNotificationAdapter(outbox: any): NotificationAdapter {
+  return process.env.NODE_ENV === 'test' 
+    ? new InMemoryNotificationAdapter()
+    : new OutboxNotificationAdapter(outbox);
+}
 
 // Input schemas
 const createNotificationSchema = z.object({
@@ -147,7 +174,88 @@ const webhookEndpointSchema = z.object({
   tenantId: z.string().optional(),
 });
 
+const createNotificationIntentSchema = z.object({
+  type: z.string().min(1, "Notification type is required"),
+  recipients: z.union([
+    z.array(z.string()), // Direct user IDs
+    z.object({
+      type: z.enum(['user', 'role']),
+      ids: z.array(z.string()).min(1, "At least one recipient ID is required")
+    })
+  ]),
+  payloadJson: z.record(z.any()),
+  tenantId: z.string().optional(),
+  idempotencyKey: z.string().optional(),
+  expiresAt: z.date().optional(),
+});
+
 export const notificationRouter = router({
+  // Create a notification intent (explicit notification request)
+  createNotificationIntent: protectedProcedure
+    .input(createNotificationIntentSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { tenantId, type, recipients, payloadJson, idempotencyKey, expiresAt } = input;
+      
+      console.log('🔍 [createNotificationIntent] Input received:', {
+        type,
+        tenantId,
+        recipients,
+        idempotencyKey
+      });
+
+      // Create notification intent record
+      const intent = await ctx.db.notificationIntent.create({
+        data: {
+          tenantId: tenantId || ctx.session?.user?.tenantId,
+          type,
+          recipients: recipients as any, // Prisma will handle JSON serialization
+          payloadJson: payloadJson as any,
+          idempotencyKey,
+          expiresAt,
+          status: 'pending',
+          retryCount: 0,
+          maxRetries: 3,
+          traceId: ctx.trace?.traceId
+        },
+      });
+
+      console.log('🔍 [createNotificationIntent] Intent created:', {
+        id: intent.id,
+        type: intent.type,
+        status: intent.status
+      });
+
+      // Publish to JetStream for processing by realtime service
+      try {
+        const eventId = await ctx.outbox.publishNotificationIntentEvent(
+          OutboxEvents.NOTIFICATION_INTENT_CREATED,
+          intent.id,
+          {
+            intentId: intent.id,
+            tenantId: intent.tenantId,
+            type: intent.type,
+            recipients: intent.recipients,
+            payloadJson: intent.payloadJson,
+            createdAt: intent.createdAt.toISOString(),
+            idempotencyKey: intent.idempotencyKey,
+            expiresAt: intent.expiresAt?.toISOString(),
+            traceId: intent.traceId
+          },
+          { 
+            traceId: ctx.trace?.traceId,
+            idempotencyKey: `notification.intent.${intent.id}.${Date.now()}`
+          }
+        );
+        
+        console.log('🔍 [createNotificationIntent] Published to outbox:', eventId);
+      } catch (outboxError) {
+        console.error('🔍 [createNotificationIntent] Failed to publish to outbox:', outboxError);
+        // Don't fail the request if outbox publishing fails - the intent is still created
+      }
+
+      return intent;
+    }),
+
   // Create a new notification
   createNotification: platformAdminProcedure
     .input(createNotificationSchema)
@@ -255,7 +363,8 @@ export const notificationRouter = router({
         }
       }
 
-      // Publish to real-time adapter
+      // Publish to real-time adapter via outbox
+      const notificationAdapter = createNotificationAdapter(ctx.outbox);
       await notificationAdapter.publish(notification);
 
       // Send email notifications to users who have email notifications enabled
@@ -482,7 +591,8 @@ export const notificationRouter = router({
         data: updateData,
       });
 
-      // Publish updated notification to real-time adapter
+      // Publish updated notification to real-time adapter via outbox
+      const notificationAdapter = createNotificationAdapter(ctx.outbox);
       await notificationAdapter.publish(notification);
 
       // Trigger webhooks

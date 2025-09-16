@@ -49,7 +49,7 @@ Set environment variables:
 ```bash
 # Required
 DATABASE_URL="postgresql://user:password@localhost:5432/db"
-NATS_URL="nats://localhost:4222"
+NATS_URL="nats://127.0.0.1:4222"
 
 # Optional
 SERVICE_NAME="audit-service"
@@ -76,7 +76,7 @@ import { AuditServiceConfig } from '@jetstream/audit-service';
 const config: AuditServiceConfig = {
   serviceName: 'audit-service',
   version: '1.0.0',
-  natsUrl: 'nats://localhost:4222',
+  natsUrl: 'nats://127.0.0.1:4222',
   streamName: 'EVENTS',
   consumerName: 'audit_service',
   databaseUrl: 'postgresql://...',

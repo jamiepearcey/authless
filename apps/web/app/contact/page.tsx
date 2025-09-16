@@ -869,7 +869,7 @@ const ContactPage = () => {
                     </div>
 
                     {/* Form Content */}
-                    <div className="flex-1 overflow-y-auto p-6">
+                    <div className="bg-white flex-1 overflow-y-auto p-6">
                       <div className="max-w-4xl space-y-6">
                       <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Contact Reasons */}

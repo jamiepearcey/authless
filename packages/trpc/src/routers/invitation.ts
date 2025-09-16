@@ -2,6 +2,8 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { router, tenantAdminProcedure, protectedProcedure, publicProcedure } from "../middleware";
 import { randomBytes } from "crypto";
+import { getTrpcOutboxService, OutboxEvents } from "../outbox-service";
+import { AggregateTypes } from "@db/base";
 
 export const invitationRouter = router({
   // Invite user to tenant (tenant admin only)
@@ -77,22 +79,37 @@ export const invitationRouter = router({
             expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
             bypassEmailVerification,
             message,
-            invitedByUserId: ctx.session.user.id || ctx.session.user.email,
+            invitedByUserId: ctx.session.user.id,
           },
         });
         
-        // Log the action
-        await ctx.db.auditLog.create({
-          data: {
-            userId: ctx.session.user.id || "unknown",
-            action: "user_invited",
-            resourceType: "invitation",
-            resourceId: invitation.id,
-            traceId: ctx.trace.traceId,
-            details: JSON.stringify({ email, role, tenantSlug: slug }),
-            severity: "info",
+        // Publish invitation created event to outbox
+        const outboxService = getTrpcOutboxService(ctx.db);
+        
+        await outboxService.publishInvitationEvent(
+          OutboxEvents.INVITATION_CREATED,
+          invitation.id,
+          tenant.id,
+          {
+            invitationId: invitation.id,
+            email,
+            role,
+            tenantId: tenant.id,
+            tenantSlug: slug,
+            invitedByUserId: ctx.session.user.id,
+            invitedByEmail: ctx.session.user.email || "",
+            expiresAt: invitation.expiresAt.toISOString(),
+            status: invitation.status,
+            message: message || undefined,
+            metadata: {
+              bypassEmailVerification,
+              traceId: ctx.trace.traceId,
+            },
           },
-        });
+          {
+            traceId: ctx.trace.traceId,
+          }
+        );
         
         // TODO: Send invitation email
         // For now, return the token (in production, this would be sent via email)
@@ -226,18 +243,32 @@ export const invitationRouter = router({
         },
       });
       
-      // Log the action
-      await ctx.db.auditLog.create({
-        data: {
-          userId: user.id,
-          action: "invitation_accepted",
-          resourceType: "invitation",
-          resourceId: invitation.id,
-          traceId: ctx.trace.traceId,
-          details: JSON.stringify({ email: invitation.email, tenantId: invitation.tenantId }),
-          severity: "info",
+      // Publish invitation accepted event to outbox
+      const outboxService = getTrpcOutboxService(ctx.db);
+      await outboxService.publishInvitationEvent(
+        OutboxEvents.INVITATION_ACCEPTED,
+        invitation.id,
+        invitation.tenantId,
+        {
+          invitationId: invitation.id,
+          email: invitation.email,
+          role: invitation.role,
+          tenantId: invitation.tenantId,
+          tenantSlug: invitation.tenant?.slug || "",
+          invitedByUserId: invitation.invitedByUserId || "",
+          invitedByEmail: "", // Will be populated by audit service
+          expiresAt: invitation.expiresAt.toISOString(),
+          status: "accepted",
+          metadata: {
+            acceptedByUserId: user.id,
+            acceptedByEmail: user.email,
+            traceId: ctx.trace.traceId,
+          },
         },
-      });
+        {
+          traceId: ctx.trace.traceId,
+        }
+      );
       
       return {
         user,
@@ -345,12 +376,27 @@ export const invitationRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { slug, userId } = input;
       
+      // Get tenant information
+      const tenant = await ctx.db.tenant.findUnique({
+        where: { slug },
+        select: { id: true, slug: true, name: true },
+      });
+      
+      if (!tenant) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Tenant not found" });
+      }
+      
       // Verify user has access to this tenant
       const membership = await ctx.db.membership.findFirst({
         where: {
           userId,
-          tenant: { slug },
+          tenantId: tenant.id,
           status: "active",
+        },
+        include: {
+          user: {
+            select: { email: true },
+          },
         },
       });
       
@@ -369,18 +415,28 @@ export const invitationRouter = router({
         data: { status: "removed" },
       });
       
-      // Log the action
-      await ctx.db.auditLog.create({
-        data: {
-          userId: ctx.session.user.id || "unknown",
-          action: "user_removed_from_tenant",
-          resourceType: "membership",
-          resourceId: membership.id,
-          traceId: ctx.trace.traceId,
-          details: JSON.stringify({ removedUserId: userId, tenantSlug: slug }),
-          severity: "warning",
+      // Publish tenant member removed event to outbox
+      const outboxService = getTrpcOutboxService(ctx.db);
+      await outboxService.publishTenantEvent(
+        OutboxEvents.TENANT_MEMBER_REMOVED,
+        tenant.id,
+        {
+          tenantId: tenant.id,
+          tenantSlug: slug,
+          removedUserId: userId,
+          removedUserEmail: membership.user?.email || "",
+          removedByUserId: ctx.session.user.id,
+          removedByEmail: ctx.session.user.email || "",
+          membershipId: membership.id,
+          role: membership.role,
+          metadata: {
+            traceId: ctx.trace.traceId,
+          },
         },
-      });
+        {
+          traceId: ctx.trace.traceId,
+        }
+      );
       
       return { success: true };
     }),

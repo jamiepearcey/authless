@@ -277,15 +277,15 @@ export class OutboxProcessor {
       };
 
       // Derive subject from event type and tenant
-      const subject = this.deriveSubject(event.eventType, event.tenantId);
+      const subject = this.deriveSubject(String(event.eventType || ''), String(event.tenantId || ''));
 
       // Create headers for the message
       const msgHeaders = headers();
-      msgHeaders.set('Event-Type', event.eventType);
-      msgHeaders.set('Aggregate-Type', event.aggregateType);
-      msgHeaders.set('Aggregate-Id', event.aggregateId);
-      msgHeaders.set('Tenant-Id', event.tenantId);
-      msgHeaders.set('Outbox-Event-Id', event.id);
+      msgHeaders.set('Event-Type', String(event.eventType || ''));
+      msgHeaders.set('Aggregate-Type', String(event.aggregateType || ''));
+      msgHeaders.set('Aggregate-Id', String(event.aggregateId || ''));
+      msgHeaders.set('Tenant-Id', String(event.tenantId || ''));
+      msgHeaders.set('Outbox-Event-Id', String(event.id || ''));
 
       // Publish to JetStream with broker deduplication and timeout
       this.logger?.info({
@@ -476,7 +476,7 @@ export class OutboxProcessor {
 async function main() {
   const config: ProcessorConfig = {
     databaseUrl: process.env.DATABASE_URL!,
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4222',
+    natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4222',
     batchSize: parseInt(process.env.BATCH_SIZE || '100'),
     maxTries: parseInt(process.env.MAX_TRIES || '10'),
     idleSleepMs: parseInt(process.env.IDLE_SLEEP_MS || '500'),

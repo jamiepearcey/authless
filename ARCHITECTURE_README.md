@@ -199,7 +199,7 @@ export const appRouter = router({
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/authless"
 
 # NATS JetStream (Custom ports to avoid conflicts)
-NATS_URL="nats://localhost:4223"
+NATS_URL="nats://127.0.0.1:4223"
 
 # Authentication
 NEXTAUTH_SECRET="your-secret-here"

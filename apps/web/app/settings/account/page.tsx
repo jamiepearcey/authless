@@ -9,7 +9,7 @@ import { trpc } from "@/lib/trpc";
 import { ProfilePhotoUploadDialog } from "@/components/ProfilePhotoUploadDialog";
 
 export default function AccountPage() {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);

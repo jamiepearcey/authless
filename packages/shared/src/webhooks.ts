@@ -14,7 +14,13 @@ interface WhatsAppWebhookPayload {
   expiresIn: number; // minutes
 }
 
+/**
+ * @deprecated This function is deprecated. Use the notification service instead.
+ * Registration emails should now be sent through notification intents.
+ */
 export async function callRegistrationWebhook(payload: EmailWebhookPayload): Promise<boolean> {
+  console.warn("callRegistrationWebhook is deprecated. Use notification service with event type 'user.registration.email_verification_required'");
+  
   const webhookUrl = process.env.REGISTRATION_WEBHOOK_URL;
   if (!webhookUrl) {
     console.warn("REGISTRATION_WEBHOOK_URL not configured");
@@ -37,7 +43,13 @@ export async function callRegistrationWebhook(payload: EmailWebhookPayload): Pro
   }
 }
 
+/**
+ * @deprecated This function is deprecated. Use the notification service instead.
+ * Password reset emails should now be sent through notification intents.
+ */
 export async function callPasswordResetWebhook(payload: EmailWebhookPayload): Promise<boolean> {
+  console.warn("callPasswordResetWebhook is deprecated. Use notification service with event type 'user.password_reset.requested'");
+  
   const webhookUrl = process.env.PASSWORD_RESET_WEBHOOK_URL;
   if (!webhookUrl) {
     console.warn("PASSWORD_RESET_WEBHOOK_URL not configured");

@@ -174,7 +174,7 @@ Each service supports comprehensive environment configuration:
 SERVICE_NAME=audit-service
 SERVICE_VERSION=1.0.0
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/authless
-NATS_URL=nats://localhost:4222
+NATS_URL=nats://127.0.0.1:4222
 NATS_STREAM_NAME=EVENTS
 AUDIT_CONSUMER_NAME=audit-consumer
 AUDIT_CONCURRENCY=8
@@ -190,7 +190,7 @@ LOG_LEVEL=info
 SERVICE_NAME=outbox-service
 SERVICE_VERSION=1.0.0
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/authless
-NATS_URL=nats://localhost:4222
+NATS_URL=nats://127.0.0.1:4222
 OUTBOX_BATCH_SIZE=100
 OUTBOX_MAX_TRIES=10
 OUTBOX_IDLE_SLEEP_MS=500

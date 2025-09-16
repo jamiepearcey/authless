@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@db/base";
 import { hashPassword, generateEmailVerificationToken } from "@shared/base";
 import {
-  callRegistrationWebhook,
   constructEmailVerificationUrl,
 } from "@shared/base";
+import { TrpcOutboxService, OutboxEvents } from "@trpc/base";
 import { createUserSchema } from "@shared/base";
 import { t } from "@i18n-core";
 export async function POST(request: NextRequest) {
@@ -75,18 +75,41 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Call registration webhook
-    const webhookPayload = {
-      email: validatedData.email,
-      name: validatedData.name,
-      token: verificationToken,
-      action: "registration" as const,
-      callbackUrl: constructEmailVerificationUrl(verificationToken),
-    };
-    const webhookSuccess = await callRegistrationWebhook(webhookPayload);
-    if (!webhookSuccess) {
-      console.warn("Failed to send registration email, but user was created");
-      // Don't fail the signup if webhook fails, just log it
+    // Create notification intent for email verification
+    try {
+      const outboxService = new TrpcOutboxService(db);
+      const callbackUrl = constructEmailVerificationUrl(verificationToken);
+      
+      await outboxService.publishNotificationIntentEvent(
+        OutboxEvents.NOTIFICATION_INTENT_CREATED,
+        `email-verification-${user.id}`,
+        {
+          id: `email-verification-${user.id}`,
+          tenantId: null, // User registration is not tenant-specific
+          type: 'user.registration.email_verification_required',
+          recipients: [user.id],
+          payloadJson: {
+            name: validatedData.name,
+            email: validatedData.email,
+            callbackUrl: callbackUrl,
+            token: verificationToken,
+            userId: user.id
+          },
+          channels: ['email'],
+          createdAt: new Date(),
+          status: 'pending',
+          retryCount: 0,
+          maxRetries: 3,
+          traceId: user.id
+        },
+        {
+          idempotencyKey: `email-verification-${user.id}-${Date.now()}`,
+          traceId: user.id
+        }
+      );
+    } catch (emailError) {
+      console.warn("Failed to send registration email notification, but user was created:", emailError);
+      // Don't fail the signup if email notification fails, just log it
     }
 
     // Return success (don't return the hashed password or token)

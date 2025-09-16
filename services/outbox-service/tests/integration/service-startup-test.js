@@ -11,7 +11,7 @@ import { connect } from 'nats';
 import { randomUUID } from 'crypto';
 
 const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5433/authless';
-const NATS_URL = process.env.NATS_URL || 'nats://localhost:4223';
+const NATS_URL = process.env.NATS_URL || 'nats://127.0.0.1:4223';
 
 class ServiceTester {
   constructor() {

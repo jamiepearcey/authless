@@ -138,7 +138,7 @@ const auditService: JetStreamService = {
 const wrapper = new JetStreamServiceWrapper(auditService, {
   serviceName: 'audit-consumer',
   version: '1.0.0',
-  natsUrl: process.env.NATS_URL || 'nats://localhost:4222',
+  natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4222',
   streamName: 'EVENTS',
   consumerName: 'audit_consumer',
   concurrency: Number(process.env.CONCURRENCY) || 8,

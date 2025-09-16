@@ -56,11 +56,11 @@ export const exampleRoutingRules: EmailRoutingRule[] = [
     templateName: 'welcome-email',
     priority: 'high',
     extractVariables: (event) => ({
-      userName: event.payload.userName || 'User',
-      userEmail: event.payload.userEmail || '',
-      tenantName: event.payload.tenantName || event.tenantId || 'System',
+      userName: (event.payload as any)?.userName || 'User',
+      userEmail: (event.payload as any)?.userEmail || '',
+      tenantName: (event.payload as any)?.tenantName || event.tenantId || 'System',
     }),
-    condition: (event) => event.payload.userEmail && event.payload.userName,
+    condition: (event) => (event.payload as any)?.userEmail && (event.payload as any)?.userName,
   },
   {
     eventPattern: 'alert.*',
@@ -68,10 +68,10 @@ export const exampleRoutingRules: EmailRoutingRule[] = [
     priority: 'urgent',
     extractVariables: (event) => ({
       alertType: event.eventName.split('.')[1] || 'unknown',
-      alertTitle: event.payload.title || 'System Alert',
-      alertMessage: event.payload.message || 'An alert has been triggered',
+      alertTitle: (event.payload as any)?.title || 'System Alert',
+      alertMessage: (event.payload as any)?.message || 'An alert has been triggered',
       tenantName: event.tenantId || 'System',
-      priority: event.payload.priority || 'normal',
+      priority: (event.payload as any)?.priority || 'normal',
     }),
   },
   {
@@ -79,10 +79,10 @@ export const exampleRoutingRules: EmailRoutingRule[] = [
     templateName: 'case-update',
     priority: 'normal',
     extractVariables: (event) => ({
-      caseNumber: event.payload.caseNumber || event.payload.caseId || 'Unknown',
-      caseTitle: event.payload.caseTitle || event.payload.title || 'Support Case',
+      caseNumber: (event.payload as any)?.caseNumber || (event.payload as any)?.caseId || 'Unknown',
+      caseTitle: (event.payload as any)?.caseTitle || (event.payload as any)?.title || 'Support Case',
       updateType: event.eventName.split('.')[2] || 'updated',
-      updateMessage: event.payload.updateMessage || event.payload.message || 'Case has been updated',
+      updateMessage: (event.payload as any)?.updateMessage || (event.payload as any)?.message || 'Case has been updated',
       tenantName: event.tenantId || 'System',
     }),
   },
@@ -93,18 +93,18 @@ export const exampleRoutingRules: EmailRoutingRule[] = [
     extractVariables: (event) => ({
       alertType: 'tenant',
       alertTitle: `Tenant ${event.eventName.split('.')[1] || 'Event'}`,
-      alertMessage: event.payload.message || 'Tenant-related event occurred',
+      alertMessage: (event.payload as any)?.message || 'Tenant-related event occurred',
       tenantName: event.tenantId || 'System',
       priority: 'normal',
     }),
-    condition: (event) => event.tenantId && event.payload.message,
+    condition: (event) => event.tenantId && (event.payload as any)?.message,
   },
 ];
 
 // Helper function to create a complete email consumer configuration
 export function createExampleEmailConfig() {
   return {
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
+    natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4223',
     streamName: 'events',
     consumerName: 'email-consumer',
     filterSubjects: ['events.*'],
@@ -144,7 +144,7 @@ export function createExampleEmailConfig() {
 // Example configuration with Mailgun provider
 export function createMailgunEmailConfig() {
   return {
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
+    natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4223',
     streamName: 'events',
     consumerName: 'email-consumer',
     filterSubjects: ['events.*'],
@@ -179,7 +179,7 @@ export function createMailgunEmailConfig() {
 // Example configuration with SendGrid provider
 export function createSendGridEmailConfig() {
   return {
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
+    natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4223',
     streamName: 'events',
     consumerName: 'email-consumer',
     filterSubjects: ['events.*'],

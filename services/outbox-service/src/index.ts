@@ -318,7 +318,7 @@ function createDefaultConfig(): OutboxServiceConfig {
     serviceName: 'outbox-service',
     version: '1.0.0',
     databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/authless',
-    natsUrl: process.env.NATS_URL || 'nats://localhost:4223',
+    natsUrl: process.env.NATS_URL || 'nats://127.0.0.1:4223',
     batchSize: parseInt(process.env.OUTBOX_BATCH_SIZE || '100'),
     maxTries: parseInt(process.env.OUTBOX_MAX_TRIES || '10'),
     idleSleepMs: parseInt(process.env.OUTBOX_IDLE_SLEEP_MS || '500'),
