@@ -762,6 +762,7 @@ exports.Prisma.NotificationIntentScalarFieldEnum = {
   tenantId: 'tenantId',
   type: 'type',
   recipients: 'recipients',
+  channels: 'channels',
   payloadJson: 'payloadJson',
   createdAt: 'createdAt',
   processedAt: 'processedAt',

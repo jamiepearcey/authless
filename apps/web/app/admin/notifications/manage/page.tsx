@@ -38,6 +38,7 @@ export default function NotificationManagementPage() {
     priority: 'normal' as const,
     targetType: 'global' as 'global' | 'user' | 'tenant' | 'role',
     targetId: '',
+    channels: ['web'] as ('email' | 'web' | 'sms')[],
   });
 
   // Centrifugo connection
@@ -75,6 +76,7 @@ export default function NotificationManagementPage() {
         priority: 'normal',
         targetType: 'global',
         targetId: '',
+        channels: ['web'],
       });
     },
     onError: (error: any) => {
@@ -127,6 +129,7 @@ export default function NotificationManagementPage() {
     // Build notification intent data for the new API
     const intentData: any = {
       type: `admin_${notificationForm.type}_notification`, // e.g., "admin_info_notification"
+      channels: notificationForm.channels,
       payloadJson: {
         title: notificationForm.title,
         description: notificationForm.description || undefined,
@@ -141,15 +144,15 @@ export default function NotificationManagementPage() {
       intentData.recipients = [notificationForm.targetId]; // Direct user ID array
     } else if (notificationForm.targetType === 'tenant' && notificationForm.targetId) {
       intentData.tenantId = notificationForm.targetId;
-      intentData.recipients = { type: 'user', ids: [] }; // Will be resolved by notification service
+      intentData.recipients = { type: 'tenant' };
     } else if (notificationForm.targetType === 'role' && notificationForm.targetId) {
       // For role-based, we'd need both tenant and role
       const [tenantId, role] = notificationForm.targetId.split(':');
       intentData.tenantId = tenantId;
       intentData.recipients = { type: 'role', ids: [role] };
     } else {
-      // Global notifications - empty recipients array means all users
-      intentData.recipients = { type: 'user', ids: [] };
+      // Global notifications
+      intentData.recipients = { type: 'global' };
     }
 
     addToLog(`📤 Sending ${notificationForm.targetType} notification intent...`);
@@ -378,9 +381,47 @@ export default function NotificationManagementPage() {
                   </div>
                 )}
 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Delivery Channels
+                  </label>
+                  <div className="space-y-2">
+                    {(['web', 'email', 'sms'] as const).map((channel) => (
+                      <label key={channel} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          checked={notificationForm.channels.includes(channel)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setNotificationForm(prev => ({
+                                ...prev,
+                                channels: [...prev.channels, channel]
+                              }));
+                            } else {
+                              setNotificationForm(prev => ({
+                                ...prev,
+                                channels: prev.channels.filter(c => c !== channel)
+                              }));
+                            }
+                          }}
+                          className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        />
+                        <span className="text-sm text-gray-700">
+                          {channel === 'web' ? '🌐 Web (Real-time)' :
+                           channel === 'email' ? '📧 Email' :
+                           '📱 SMS'}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                  {notificationForm.channels.length === 0 && (
+                    <p className="text-sm text-red-600 mt-1">At least one channel must be selected</p>
+                  )}
+                </div>
+
                 <Button
                   onClick={sendNotification}
-                  disabled={createNotification.isPending || !notificationForm.title.trim()}
+                  disabled={createNotification.isPending || !notificationForm.title.trim() || notificationForm.channels.length === 0}
                   className="w-full"
                 >
                   {createNotification.isPending ? (

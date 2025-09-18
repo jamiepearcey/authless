@@ -427,7 +427,9 @@ export class OutboxProcessor {
   }
 
   private deriveSubject(eventType: string, tenantId: string): string {
-    return `events.${tenantId}.${eventType.replace(/\./g, '_')}`;
+    // Handle null/empty tenantId by using 'global' as the tenant segment
+    const tenant = tenantId && tenantId.trim() ? tenantId : 'global';
+    return `events.${tenant}.${eventType.replace(/\./g, '_')}`;
   }
 
   async close(): Promise<void> {

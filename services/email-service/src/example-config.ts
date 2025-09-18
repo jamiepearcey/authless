@@ -25,7 +25,7 @@ export const exampleConfig: EmailServiceConfig = {
   
   // Processing configuration
   concurrency: 5,
-  batchSize: 1,
+  batchSize: 10,
   retryLimit: 3,
   retryBackoffMs: 1000,
   

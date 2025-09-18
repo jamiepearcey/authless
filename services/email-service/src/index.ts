@@ -95,7 +95,7 @@ export class EmailService {
         consumerName: config.consumerName,
         filterSubjects: config.filterSubjects,
         concurrency: config.concurrency || 5,
-        batchSize: config.batchSize || 1,
+        batchSize: config.batchSize || 10,
         retryPolicy: {
           maxRetries: config.retryLimit || 3,
           baseMs: config.retryBackoffMs || 1000,

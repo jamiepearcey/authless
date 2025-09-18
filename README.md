@@ -37,9 +37,9 @@ Some parts are complete, others are in progress, and several are still planned. 
 |------------------------|---------------|-------------------------------------------------|
 | Event bus + outbox     | ✅ Mostly done| JetStream integration, retries, metrics         |
 | Multi-tenant database  | ✅ Mostly done| Isolation via Postgres + Prisma schema          |
-| Authentication         | ⚠️ In progress| Passkeys & MFA; SSO to come                     |
-| Realtime (Centrifugo)  | ⚠️ In progress| Server wired; UI integration ongoing            |
-| Microservices          | ⚠️ In progress| Audit/Email/Webhook/Realtime partially present  |
+| Authentication         | ✅ Mostly done| Passkeys & MFA; SSO to come                     |
+| Realtime (Centrifugo)  | ✅ Mostly done| Server wired; UI integration ongoing            |
+| Microservices          | ✅ Mostly done| Audit/Email/Webhook/Realtime present            |
 | Temporal workflows     | 🚧 Planned    | Base config present; domain flows TBD           |
 | Testing & hardening    | 🚧 Planned    | Integration/E2E tests, security headers, limits |
 

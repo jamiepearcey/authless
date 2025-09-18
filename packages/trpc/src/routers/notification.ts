@@ -35,14 +35,43 @@ const createNotificationIntentSchema = z.object({
   recipients: z.union([
     z.array(z.string()), // Direct user IDs
     z.object({
-      type: z.enum(['user', 'role']),
-      ids: z.array(z.string()).min(1, "At least one recipient ID is required")
+      type: z.enum(['user', 'role', 'tenant', 'global']),
+      ids: z.array(z.string()).optional(), // Optional for global/tenant-wide messages
+      roles: z.array(z.string()).optional(), // Optional role filter for tenant messages
     })
   ]),
+  channels: z.array(z.enum(['email', 'web', 'sms'])).default(['web']),
   payloadJson: z.record(z.any()),
   tenantId: z.string().optional(),
   idempotencyKey: z.string().optional(),
   expiresAt: z.date().optional(),
+}).refine((data) => {
+  // Validate recipients based on type
+  if (Array.isArray(data.recipients)) {
+    return data.recipients.length > 0; // Direct user IDs must have at least one
+  }
+  
+  const recipientObj = data.recipients;
+  
+  // For global messages, no specific validation needed
+  if (recipientObj.type === 'global') {
+    return true;
+  }
+  
+  // For tenant messages, no specific IDs needed
+  if (recipientObj.type === 'tenant') {
+    return true;
+  }
+  
+  // For user and role types, require IDs
+  if (recipientObj.type === 'user' || recipientObj.type === 'role') {
+    return recipientObj.ids && recipientObj.ids.length > 0;
+  }
+  
+  return true;
+}, {
+  message: "Invalid recipient configuration",
+  path: ["recipients"]
 });
 
 export const notificationRouter = router({
@@ -50,12 +79,13 @@ export const notificationRouter = router({
   createNotificationIntent: protectedProcedure
     .input(createNotificationIntentSchema)
     .mutation(async ({ ctx, input }) => {
-      const { tenantId, type, recipients, payloadJson, idempotencyKey, expiresAt } = input;
+      const { tenantId, type, recipients, channels, payloadJson, idempotencyKey, expiresAt } = input;
       
       console.log('🔍 [createNotificationIntent] Input received:', {
         type,
         tenantId,
         recipients,
+        channels,
         idempotencyKey
       });
 
@@ -65,6 +95,7 @@ export const notificationRouter = router({
           tenantId: tenantId || ctx.session?.user?.tenantId,
           type,
           recipients: recipients as any, // Prisma will handle JSON serialization
+          channels: channels as any, // Store selected channels
           payloadJson: payloadJson as any,
           idempotencyKey,
           expiresAt,
@@ -91,6 +122,7 @@ export const notificationRouter = router({
             tenantId: intent.tenantId,
             type: intent.type,
             recipients: intent.recipients,
+            channels: intent.channels,
             payloadJson: intent.payloadJson,
             createdAt: intent.createdAt.toISOString(),
             idempotencyKey: intent.idempotencyKey,

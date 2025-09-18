@@ -47626,6 +47626,7 @@ export namespace Prisma {
     tenantId: number
     type: number
     recipients: number
+    channels: number
     payloadJson: number
     createdAt: number
     processedAt: number
@@ -47685,6 +47686,7 @@ export namespace Prisma {
     tenantId?: true
     type?: true
     recipients?: true
+    channels?: true
     payloadJson?: true
     createdAt?: true
     processedAt?: true
@@ -47789,6 +47791,7 @@ export namespace Prisma {
     tenantId: string | null
     type: string
     recipients: JsonValue
+    channels: JsonValue | null
     payloadJson: JsonValue
     createdAt: Date
     processedAt: Date | null
@@ -47825,6 +47828,7 @@ export namespace Prisma {
     tenantId?: boolean
     type?: boolean
     recipients?: boolean
+    channels?: boolean
     payloadJson?: boolean
     createdAt?: boolean
     processedAt?: boolean
@@ -47843,6 +47847,7 @@ export namespace Prisma {
     tenantId?: boolean
     type?: boolean
     recipients?: boolean
+    channels?: boolean
     payloadJson?: boolean
     createdAt?: boolean
     processedAt?: boolean
@@ -47861,6 +47866,7 @@ export namespace Prisma {
     tenantId?: boolean
     type?: boolean
     recipients?: boolean
+    channels?: boolean
     payloadJson?: boolean
     createdAt?: boolean
     processedAt?: boolean
@@ -47890,6 +47896,7 @@ export namespace Prisma {
       tenantId: string | null
       type: string
       recipients: Prisma.JsonValue
+      channels: Prisma.JsonValue | null
       payloadJson: Prisma.JsonValue
       createdAt: Date
       processedAt: Date | null
@@ -48298,6 +48305,7 @@ export namespace Prisma {
     readonly tenantId: FieldRef<"NotificationIntent", 'String'>
     readonly type: FieldRef<"NotificationIntent", 'String'>
     readonly recipients: FieldRef<"NotificationIntent", 'Json'>
+    readonly channels: FieldRef<"NotificationIntent", 'Json'>
     readonly payloadJson: FieldRef<"NotificationIntent", 'Json'>
     readonly createdAt: FieldRef<"NotificationIntent", 'DateTime'>
     readonly processedAt: FieldRef<"NotificationIntent", 'DateTime'>
@@ -52479,6 +52487,7 @@ export namespace Prisma {
     tenantId: 'tenantId',
     type: 'type',
     recipients: 'recipients',
+    channels: 'channels',
     payloadJson: 'payloadJson',
     createdAt: 'createdAt',
     processedAt: 'processedAt',
@@ -56704,6 +56713,7 @@ export namespace Prisma {
     tenantId?: StringNullableFilter<"NotificationIntent"> | string | null
     type?: StringFilter<"NotificationIntent"> | string
     recipients?: JsonFilter<"NotificationIntent">
+    channels?: JsonNullableFilter<"NotificationIntent">
     payloadJson?: JsonFilter<"NotificationIntent">
     createdAt?: DateTimeFilter<"NotificationIntent"> | Date | string
     processedAt?: DateTimeNullableFilter<"NotificationIntent"> | Date | string | null
@@ -56722,6 +56732,7 @@ export namespace Prisma {
     tenantId?: SortOrderInput | SortOrder
     type?: SortOrder
     recipients?: SortOrder
+    channels?: SortOrderInput | SortOrder
     payloadJson?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrderInput | SortOrder
@@ -56744,6 +56755,7 @@ export namespace Prisma {
     tenantId?: StringNullableFilter<"NotificationIntent"> | string | null
     type?: StringFilter<"NotificationIntent"> | string
     recipients?: JsonFilter<"NotificationIntent">
+    channels?: JsonNullableFilter<"NotificationIntent">
     payloadJson?: JsonFilter<"NotificationIntent">
     createdAt?: DateTimeFilter<"NotificationIntent"> | Date | string
     processedAt?: DateTimeNullableFilter<"NotificationIntent"> | Date | string | null
@@ -56761,6 +56773,7 @@ export namespace Prisma {
     tenantId?: SortOrderInput | SortOrder
     type?: SortOrder
     recipients?: SortOrder
+    channels?: SortOrderInput | SortOrder
     payloadJson?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrderInput | SortOrder
@@ -56786,6 +56799,7 @@ export namespace Prisma {
     tenantId?: StringNullableWithAggregatesFilter<"NotificationIntent"> | string | null
     type?: StringWithAggregatesFilter<"NotificationIntent"> | string
     recipients?: JsonWithAggregatesFilter<"NotificationIntent">
+    channels?: JsonNullableWithAggregatesFilter<"NotificationIntent">
     payloadJson?: JsonWithAggregatesFilter<"NotificationIntent">
     createdAt?: DateTimeWithAggregatesFilter<"NotificationIntent"> | Date | string
     processedAt?: DateTimeNullableWithAggregatesFilter<"NotificationIntent"> | Date | string | null
@@ -61674,6 +61688,7 @@ export namespace Prisma {
     id?: string
     type: string
     recipients: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     processedAt?: Date | string | null
@@ -61692,6 +61707,7 @@ export namespace Prisma {
     tenantId?: string | null
     type: string
     recipients: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     processedAt?: Date | string | null
@@ -61708,6 +61724,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     recipients?: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -61726,6 +61743,7 @@ export namespace Prisma {
     tenantId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     recipients?: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -61743,6 +61761,7 @@ export namespace Prisma {
     tenantId?: string | null
     type: string
     recipients: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     processedAt?: Date | string | null
@@ -61759,6 +61778,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     recipients?: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -61776,6 +61796,7 @@ export namespace Prisma {
     tenantId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     recipients?: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -64797,6 +64818,7 @@ export namespace Prisma {
     tenantId?: SortOrder
     type?: SortOrder
     recipients?: SortOrder
+    channels?: SortOrder
     payloadJson?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrder
@@ -71362,6 +71384,7 @@ export namespace Prisma {
     id?: string
     type: string
     recipients: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     processedAt?: Date | string | null
@@ -71378,6 +71401,7 @@ export namespace Prisma {
     id?: string
     type: string
     recipients: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     processedAt?: Date | string | null
@@ -72145,6 +72169,7 @@ export namespace Prisma {
     tenantId?: StringNullableFilter<"NotificationIntent"> | string | null
     type?: StringFilter<"NotificationIntent"> | string
     recipients?: JsonFilter<"NotificationIntent">
+    channels?: JsonNullableFilter<"NotificationIntent">
     payloadJson?: JsonFilter<"NotificationIntent">
     createdAt?: DateTimeFilter<"NotificationIntent"> | Date | string
     processedAt?: DateTimeNullableFilter<"NotificationIntent"> | Date | string | null
@@ -86429,6 +86454,7 @@ export namespace Prisma {
     id?: string
     type: string
     recipients: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     processedAt?: Date | string | null
@@ -86990,6 +87016,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     recipients?: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -87006,6 +87033,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     recipients?: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -87022,6 +87050,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     recipients?: JsonNullValueInput | InputJsonValue
+    channels?: NullableJsonNullValueInput | InputJsonValue
     payloadJson?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

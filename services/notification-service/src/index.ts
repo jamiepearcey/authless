@@ -42,7 +42,8 @@ export class SimpleNotificationService {
       streamName: config.streamName,
       consumerName: config.consumerName,
       concurrency: config.concurrency || 8,
-      batchSize: config.batchSize || 100,
+      ackWaitMs: 30000,
+      batchSize: config.batchSize || 10,
       
       retryPolicy: {
         maxRetries: 3,

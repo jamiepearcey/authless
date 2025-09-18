@@ -984,7 +984,8 @@ model NotificationIntent {
   id            String    @id @default(cuid())
   tenantId      String?
   type          String
-  recipients    Json      // Array of user IDs or roles
+  recipients    Json      // Array of user IDs or roles (supports global/tenant/role targeting)
+  channels      Json?     // Array of delivery channels: ['email', 'web', 'sms']
   payloadJson   Json
   createdAt     DateTime  @default(now())
   processedAt   DateTime?

@@ -9,17 +9,18 @@ export interface NotificationRule {
   
   // Notification configuration
   notificationType: string;
-  templateId: string;
+  templateId?: string; // Optional until all templates are created
   priority: 'low' | 'normal' | 'high' | 'urgent';
   
   // Recipient resolution strategy
   recipientStrategy: {
-    type: 'direct' | 'role' | 'tenant' | 'custom';
+    type: 'direct' | 'role' | 'tenant' | 'global' | 'custom';
     // For 'direct': extract from specific payload fields
     fields?: string[];
     // For 'role': target users with specific roles
     roles?: string[];
     // For 'tenant': all active members of tenant
+    // For 'global': all active users across all tenants (for system-wide notifications)
     // For 'custom': use custom function
     resolver?: (event: any) => Promise<string[]>;
   };
@@ -98,7 +99,7 @@ export const notificationRules: NotificationRule[] = [
   {
     eventPattern: 'support.reply.created',
     notificationType: 'support_reply',
-    templateId: 'support_reply_template',
+    // templateId: 'support_reply_template', // Template not yet created
     priority: 'normal',
     recipientStrategy: {
       type: 'direct',
@@ -122,7 +123,7 @@ export const notificationRules: NotificationRule[] = [
   {
     eventPattern: 'support.ticket.assigned',
     notificationType: 'case_assigned',
-    templateId: 'case_assigned_template',
+    // templateId: 'case_assigned_template', // Template not yet created
     priority: 'normal',
     recipientStrategy: {
       type: 'direct',
@@ -143,7 +144,7 @@ export const notificationRules: NotificationRule[] = [
   {
     eventPattern: 'payment.failed',
     notificationType: 'payment_failed',
-    templateId: 'payment_failed_template',
+    // templateId: 'payment_failed_template', // Template not yet created
     priority: 'high',
     recipientStrategy: {
       type: 'role',
@@ -164,7 +165,7 @@ export const notificationRules: NotificationRule[] = [
   {
     eventPattern: 'tenant.member.removed',
     notificationType: 'member_removed',
-    templateId: 'member_removed_template',
+    // templateId: 'member_removed_template', // Template not yet created
     priority: 'normal',
     recipientStrategy: {
       type: 'role',
@@ -188,7 +189,7 @@ export const notificationRules: NotificationRule[] = [
     templateId: 'maintenance_template',
     priority: 'urgent',
     recipientStrategy: {
-      type: 'tenant' // All active members
+      type: 'global' // All active users across all tenants for system-wide maintenance
     },
     channels: ['email', 'web'],
     templateVariables: {
