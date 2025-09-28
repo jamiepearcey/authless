@@ -535,4 +535,28 @@ export const tenantRouter = router({
 
     return userTenants;
   }),
+
+  // Get tenants for workflow testing (protected - limited scope)
+  getTenantsForWorkflow: protectedProcedure
+    .input(z.object({
+      limit: z.number().min(1).max(20).default(10),
+    }))
+    .query(async ({ ctx, input }) => {
+      const tenants = await ctx.db.tenant.findMany({
+        where: { 
+          status: { not: "deleted" },
+        },
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          status: true,
+          plan: true,
+        },
+        take: input.limit,
+        orderBy: { createdAt: "desc" },
+      });
+      
+      return tenants;
+    }),
 });

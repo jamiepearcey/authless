@@ -259,7 +259,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // TODO: Look into this
+  // Handle tenant-specific routing
   if (!isUntenanted || tenantSlug) {
     // We're in /tenants/[slug] mode
     if (pathParts[1] === "tenants" && pathParts[2]) {

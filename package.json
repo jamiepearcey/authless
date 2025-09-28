@@ -19,7 +19,7 @@
     "dev:stop": "./dev.sh stop",
     "temporal:worker": "pnpm -C workflows run worker:dev",
     "temporal:build": "pnpm -C workflows run build",
-    "start:all": "./scripts/kill-port-conflicts.sh && turbo run dev --filter=@web/app --filter=@jetstream/email-service --filter=@jetstream/audit-service --filter=@jetstream/webhook-service --filter=@jetstream/realtime-service --filter=@jetstream/outbox-service",
+    "start:all": "./scripts/kill-port-conflicts.sh && turbo run dev --filter=@web/app --filter=@jetstream/email-service --filter=@jetstream/audit-service --filter=@jetstream/webhook-service --filter=@jetstream/realtime-service --filter=@jetstream/outbox-service --filter=@authless/workflows",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "db:generate": "turbo run prisma:generate",

@@ -13,6 +13,11 @@ import {
   type InvitationEventPayload,
 } from "@db/base";
 
+// Generate a unique trace ID for request tracking
+function generateTraceId(): string {
+  return `trace_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+}
+
 /**
  * Outbox service for tRPC procedures
  * Provides easy methods to publish domain events to the outbox pattern
@@ -38,13 +43,13 @@ export class TrpcOutboxService {
       eventType,
       aggregateType: AggregateTypes.USER,
       aggregateId: userId,
-      tenantId: tenantId || "",
+      tenantId: tenantId || "global", // Use "global" for cross-tenant/platform events
       payloadJson: payload,
       idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
         eventType,
         AggregateTypes.USER,
         userId,
-        tenantId || "",
+        tenantId || "global", // Use "global" for cross-tenant events
         payload.action
       ),
       traceId: options?.traceId,
@@ -94,13 +99,13 @@ export class TrpcOutboxService {
       eventType,
       aggregateType: AggregateTypes.SUPPORT_TICKET,
       aggregateId: supportId,
-      tenantId: tenantId || "",
+      tenantId: tenantId || "global",
       payloadJson: payload,
       idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
         eventType,
         AggregateTypes.SUPPORT_TICKET,
         supportId,
-        tenantId || ""
+        tenantId || "global"
       ),
       traceId: options?.traceId,
     };
@@ -122,13 +127,13 @@ export class TrpcOutboxService {
       eventType,
       aggregateType: AggregateTypes.NOTIFICATION,
       aggregateId: notificationId,
-      tenantId: tenantId || "",
+      tenantId: tenantId || "global",
       payloadJson: payload,
       idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
         eventType,
         AggregateTypes.NOTIFICATION,
         notificationId,
-        tenantId || ""
+        tenantId || "global"
       ),
       traceId: options?.traceId,
     };
@@ -150,13 +155,13 @@ export class TrpcOutboxService {
       eventType,
       aggregateType: AggregateTypes.PAYMENT,
       aggregateId: paymentId,
-      tenantId: tenantId || "",
+      tenantId: tenantId || "global",
       payloadJson: payload,
       idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
         eventType,
         AggregateTypes.PAYMENT,
         paymentId,
-        tenantId || ""
+        tenantId || "global"
       ),
       traceId: options?.traceId,
     };
@@ -178,13 +183,13 @@ export class TrpcOutboxService {
       eventType,
       aggregateType: AggregateTypes.INVITATION,
       aggregateId: invitationId,
-      tenantId: tenantId || "",
+      tenantId: tenantId || "global",
       payloadJson: payload,
       idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
         eventType,
         AggregateTypes.INVITATION,
         invitationId,
-        tenantId || ""
+        tenantId || "global"
       ),
       traceId: options?.traceId,
     };
@@ -207,13 +212,13 @@ export class TrpcOutboxService {
       eventType,
       aggregateType,
       aggregateId,
-      tenantId: tenantId || "",
+      tenantId: tenantId || "global",
       payloadJson: payload,
       idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
         eventType,
         aggregateType,
         aggregateId,
-        tenantId || ""
+        tenantId || "global"
       ),
       traceId: options?.traceId,
     };
@@ -255,16 +260,46 @@ export class TrpcOutboxService {
       eventType,
       aggregateType: AggregateTypes.NOTIFICATION,
       aggregateId: intentId,
-      tenantId: payload.tenantId || "",
+      tenantId: payload.tenantId,
       payloadJson: payload,
       idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
         eventType,
         AggregateTypes.NOTIFICATION,
         intentId,
-        payload.tenantId || "",
+        payload.tenantId || "global",
         'notification_intent'
       ),
       traceId: options?.traceId,
+    };
+
+    return await this.outboxRepository.createEvent(input);
+  }
+
+  /**
+   * Generic method to publish any event type
+   */
+  async publishGenericEvent(
+    eventType: string,
+    aggregateType: AggregateType,
+    aggregateId: string,
+    tenantId: string | null,
+    payload: any,
+    options?: { idempotencyKey?: string; traceId?: string }
+  ): Promise<string> {
+    const input: CreateOutboxEventInput = {
+      eventType: eventType as EventType,
+      aggregateType,
+      aggregateId,
+      tenantId: tenantId || "global",
+      payloadJson: payload,
+      idempotencyKey: options?.idempotencyKey || generateIdempotencyKey(
+        eventType as EventType,
+        aggregateType,
+        aggregateId,
+        tenantId || "global",
+        payload.action || "generic"
+      ),
+      traceId: options?.traceId || generateTraceId(),
     };
 
     return await this.outboxRepository.createEvent(input);

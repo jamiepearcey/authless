@@ -11,7 +11,7 @@
       "default": "./dist/client.js"
     },
     "./client": {
-      "types": "./dist/client.d.ts", 
+      "types": "./dist/client.d.ts",
       "default": "./dist/client.js"
     },
     "./workflows": {
@@ -25,19 +25,22 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch",
+    "dev": "tsx src/worker.ts",
+    "dev:watch": "tsc --watch",
     "worker": "node dist/worker.js",
-    "worker:dev": "tsx src/worker.ts"
+    "worker:dev": "tsx src/worker.ts",
+    "test:subscription": "tsx src/test-subscription.ts"
   },
   "dependencies": {
+    "@db/base": "link:../packages/db",
+    "@temporalio/activity": "^1.10.1",
     "@temporalio/client": "^1.10.1",
     "@temporalio/worker": "^1.10.1",
-    "@temporalio/workflow": "^1.10.1",
-    "@temporalio/activity": "^1.10.1"
+    "@temporalio/workflow": "^1.10.1"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "tsx": "^4.20.5",
-    "typescript": "^5.0.0",
-    "@types/node": "^20.0.0"
+    "typescript": "^5.0.0"
   }
 }

@@ -89,6 +89,8 @@ model User {
   twoFactorCodes            TwoFactorCode[]
   twoFactorMethods          TwoFactorMethod[]
   createdEmailProviders     EmailProvider[]
+  orders                    Order[]
+  subscriptions             Subscription[]
 
   @@index([email])
   @@index([platformRole])
@@ -163,6 +165,9 @@ model Tenant {
   twoFactorCodes                 TwoFactorCode[]
   twoFactorMethods               TwoFactorMethod[]
   webhookEndpoints               WebhookEndpoint[]
+  orders                         Order[]
+  subscriptions                  Subscription[]
+  orderConfigurations            OrderConfiguration[]
 
   @@index([slug])
   @@index([subdomain])
@@ -864,7 +869,7 @@ model OutboxEvent {
   eventType      String
   aggregateType  String
   aggregateId    String
-  tenantId       String
+  tenantId       String?  // Allow null for cross-tenant/platform events
   payloadJson    Json
   idempotencyKey String?  @unique
   status         String   @default("pending")
@@ -879,6 +884,328 @@ model OutboxEvent {
   @@index([tenantId])
   @@index([eventType])
   @@index([traceId])
+}
+
+// Admin Order Configuration System
+model OrderConfiguration {
+  id                String                        @id @default(cuid())
+  tenantId          String?                       // null = platform-level configuration
+  
+  // Basic configuration
+  name              String                        // "Pro Plan", "Enterprise", "One-time Setup"
+  slug              String                        // URL-friendly identifier
+  description       String?
+  shortDescription  String?                       // For cards/listings
+  
+  // Features and metadata
+  features          String[]                      // JSON array of feature strings
+  metadata          Json?                         // Additional configuration data
+  
+  // Terms and legal
+  termsContent      String?                       // HTML/Markdown terms specific to this order type
+  requiresTerms     Boolean                       @default(true)
+  
+  // Display and ordering
+  displayOrder      Int                           @default(0)
+  isActive          Boolean                       @default(true)
+  isPublic          Boolean                       @default(true) // Show on public pricing pages
+  
+  // Category and type
+  category          String?                       // "subscription", "one-time", "setup", etc.
+  tags              String[]                      // For filtering/organization
+  
+  createdAt         DateTime                      @default(now())
+  updatedAt         DateTime                      @updatedAt
+  
+  // Relations
+  tenant            Tenant?                       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  pricingOptions    OrderConfigurationPricing[]
+  orders            Order[]
+  
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+  @@index([isActive])
+  @@index([isPublic])
+  @@index([category])
+  @@index([displayOrder])
+}
+
+model OrderConfigurationPricing {
+  id                     String                 @id @default(cuid())
+  orderConfigurationId   String
+  
+  // Pricing details
+  name                   String                 // "Monthly", "Yearly", "One-time"
+  amount                 Int                    // in cents
+  currency               String                 @default("gbp")
+  
+  // Subscription configuration
+  frequency              SubscriptionFrequency?
+  isRecurring            Boolean                @default(false)
+  
+  // Discounts and promotions
+  discountPercent        Int?                   @default(0) // 0-100
+  discountAmount         Int?                   // Alternative to percentage, in cents
+  discountDescription    String?                // "20% off first year"
+  
+  // Trial and setup
+  trialDays              Int?                   @default(0)
+  setupFee               Int?                   @default(0) // One-time setup fee in cents
+  
+  // Display
+  displayOrder           Int                    @default(0)
+  isDefault              Boolean                @default(false) // Default selection
+  isPopular              Boolean                @default(false) // Highlight as popular
+  isActive               Boolean                @default(true)
+  
+  // Stripe integration
+  stripePriceId          String?                // Link to Stripe Price ID for subscriptions
+  stripeProductId        String?                // Link to Stripe Product ID
+  
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  
+  // Relations
+  orderConfiguration     OrderConfiguration     @relation(fields: [orderConfigurationId], references: [id], onDelete: Cascade)
+  
+  @@index([orderConfigurationId])
+  @@index([isActive])
+  @@index([displayOrder])
+  @@index([frequency])
+}
+
+// Order Management System  
+enum OrderStatus {
+  DRAFT
+  PENDING
+  CONFIRMED
+  PROCESSING
+  COMPLETED
+  UP_TO_DATE
+  CANCELLED
+  FAILED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  PENDING
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
+  VOID
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum SubscriptionFrequency {
+  EVERY_10_MINUTES
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+  EXPIRED
+}
+
+model Order {
+  id                    String              @id @default(cuid())
+  tenantId              String?
+  userId                String?
+  orderConfigurationId  String?             // Links to admin-defined order configuration
+  
+  orderNumber           String              @unique
+  description           String?
+  totalAmount           Int                 // in cents
+  currency              String              @default("gbp")
+  status                OrderStatus         @default(DRAFT)
+  metadata              Json?
+  
+  // Guest checkout information (when no userId)
+  guestName             String?
+  guestEmail            String?
+  
+  // Billing information
+  billingCompanyName    String?
+  billingVatNumber      String?
+  billingAddressLine1   String?
+  billingAddressLine2   String?
+  billingCity           String?
+  billingState          String?
+  billingPostalCode     String?
+  billingCountry        String?
+  
+  // Selected pricing option details (snapshot at time of order)
+  selectedPricingName   String?             // "Monthly", "Yearly", etc.
+  selectedPricingAmount Int?                // Snapshot of amount at time of order
+  appliedDiscountPercent Int?               // Discount applied at time of order
+  appliedDiscountAmount Int?                // Discount amount in cents
+  
+  // Subscription details (if applicable)
+  isSubscription        Boolean             @default(false)
+  subscriptionFrequency SubscriptionFrequency?
+  subscriptionAutoRenew Boolean             @default(false)
+  subscriptionAutoPay   Boolean             @default(false)
+  subscriptionStartDate DateTime?
+  subscriptionEndDate   DateTime?
+  
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  
+  // Relations
+  tenant                Tenant?             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user                  User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  orderConfiguration    OrderConfiguration? @relation(fields: [orderConfigurationId], references: [id], onDelete: SetNull)
+  invoices              Invoice[]
+  subscription          Subscription?
+  
+  @@index([tenantId])
+  @@index([userId])
+  @@index([orderConfigurationId])
+  @@index([status])
+  @@index([orderNumber])
+  @@index([guestEmail])
+  @@index([createdAt])
+}
+
+model Invoice {
+  id               String        @id @default(cuid())
+  orderId          String
+  invoiceNumber    String        @unique
+  description      String?
+  amount           Int           // in cents
+  currency         String        @default("gbp")
+  status           InvoiceStatus @default(DRAFT)
+  
+  // Pending state control
+  isPending        Boolean       @default(false) // If true, only visible when order is complete
+  
+  // Due date and billing period
+  issueDate        DateTime      @default(now())
+  dueDate          DateTime
+  billingPeriodStart DateTime?
+  billingPeriodEnd   DateTime?
+  
+  // Invoice URLs and metadata
+  invoiceUrl       String?
+  checkoutUrl      String?
+  metadata         Json?
+  
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  
+  // Relations
+  order            Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  payments         Payment[]
+  
+  @@index([orderId])
+  @@index([status])
+  @@index([dueDate])
+  @@index([invoiceNumber])
+  @@index([createdAt])
+}
+
+model Payment {
+  id               String        @id @default(cuid())
+  invoiceId        String
+  paymentIntentId  String?       // Stripe payment intent ID
+  amount           Int           // in cents
+  currency         String        @default("gbp")
+  status           PaymentStatus @default(PENDING)
+  
+  // Payment method and provider details
+  paymentMethod    String?       // 'card', 'bank_transfer', etc.
+  paymentProvider  String?       // 'stripe', 'paypal', etc.
+  providerTransactionId String?
+  
+  // Failure and retry information
+  failureReason    String?
+  attemptCount     Int           @default(1)
+  maxAttempts      Int           @default(3)
+  
+  // Refund information
+  refundedAmount   Int           @default(0)
+  refundReason     String?
+  
+  // Timestamps
+  processedAt      DateTime?
+  failedAt         DateTime?
+  refundedAt       DateTime?
+  
+  metadata         Json?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  
+  // Relations
+  invoice          Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  
+  @@index([invoiceId])
+  @@index([status])
+  @@index([paymentIntentId])
+  @@index([createdAt])
+}
+
+model Subscription {
+  id               String              @id @default(cuid())
+  orderId          String              @unique
+  tenantId         String?
+  userId           String?
+  
+  // Subscription configuration
+  frequency        SubscriptionFrequency
+  amount           Int                 // in cents
+  currency         String              @default("gbp")
+  status           SubscriptionStatus  @default(ACTIVE)
+  
+  // Billing cycle
+  startDate        DateTime
+  endDate          DateTime?
+  nextBillingDate  DateTime
+  lastBillingDate  DateTime?
+  
+  // Auto-renewal and payment settings
+  autoRenew        Boolean             @default(true)
+  autoPay          Boolean             @default(false)
+  
+  // Stripe integration
+  stripeSubscriptionId String?         @unique
+  
+  // Temporal workflow tracking
+  workflowId       String?             // Temporal workflow ID for billing
+  workflowRunId    String?             // Temporal run ID
+  
+  // Trial and promotional settings
+  trialEndDate     DateTime?
+  discountPercent  Int?                // 0-100
+  discountEndDate  DateTime?
+  
+  metadata         Json?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  
+  // Relations
+  order            Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  tenant           Tenant?             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user             User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@index([tenantId])
+  @@index([userId])
+  @@index([status])
+  @@index([nextBillingDate])
+  @@index([workflowId])
+  @@index([createdAt])
 }
 
 model EmailProvider {
@@ -1062,3 +1389,4 @@ model NotificationTemplate {
   @@index([type])
   @@index([locale])
 }
+

@@ -17,9 +17,9 @@ pnpm run db:test
 ```
 
 That's it! The setup command will:
-1. ✅ Verify database connection
+1.  Verify database connection
 2. 📁 Process all SQL files in `database-functions/` directory
-3. 🎉 Confirm successful setup
+3.  Confirm successful setup
 
 ### How It Works
 

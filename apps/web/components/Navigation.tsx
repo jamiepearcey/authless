@@ -22,8 +22,7 @@ const Navigation = () => {
   const isAuthenticated = session?.user != null;
 
   const handleLogout = () => {
-    signOut();
-    redirect('/');
+    signOut({ callbackUrl: '/' });
   };
 
   return (

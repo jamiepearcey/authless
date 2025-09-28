@@ -22,6 +22,10 @@ import { securityRouter } from "./routers/security";
 import { auditRouter } from "./routers/audit";
 import { platformSettingsRouter } from "./routers/platform-settings";
 import { emailProviderRouter } from "./routers/email-provider";
+import { orderRouter } from "./routers/order";
+import { invoiceRouter } from "./routers/invoice";
+import { subscriptionRouter } from "./routers/subscription";
+import { orderConfigurationRouter } from "./routers/order-configuration";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -52,6 +56,7 @@ const appRouter = router({
   deleteUser: userRouter.deleteUser,
   getAllUsers: userRouter.getAllUsers,
   searchUsers: userRouter.searchUsers,
+  getUsersForWorkflow: userRouter.getUsersForWorkflow,
 
   // Tenant management
   createTenant: tenantRouter.createTenant,
@@ -63,6 +68,7 @@ const appRouter = router({
   getTenantMemberships: tenantRouter.getTenantMemberships,
   getUserTenants: tenantRouter.getUserTenants,
   getTenantRoles: tenantRouter.getTenantRoles,
+  getTenantsForWorkflow: tenantRouter.getTenantsForWorkflow,
 
   // Tenant SSO Management
   getSsoConfiguration: tenantSsoRouter.getSsoConfiguration,
@@ -263,6 +269,46 @@ const appRouter = router({
   updateEmailProvider: emailProviderRouter.updateProvider,
   testEmailProvider: emailProviderRouter.testProvider,
   deleteEmailProvider: emailProviderRouter.deleteProvider,
+
+  // Order Management
+  createOrder: orderRouter.createOrder,
+  getOrder: orderRouter.getOrder,
+  getOrders: orderRouter.getOrders,
+  updateOrderStatus: orderRouter.updateOrderStatus,
+  getInvoiceCheckoutUrl: orderRouter.getInvoiceCheckoutUrl,
+  cancelOrder: orderRouter.cancelOrder,
+
+  // Invoice Management
+  getInvoice: invoiceRouter.getInvoice,
+  getInvoiceByNumber: invoiceRouter.getInvoiceByNumber,
+  getInvoices: invoiceRouter.getInvoices,
+  updateInvoiceStatus: invoiceRouter.updateInvoiceStatus,
+  createCheckoutSession: invoiceRouter.createCheckoutSession,
+  createPayment: invoiceRouter.createPayment,
+  getInvoicePayments: invoiceRouter.getInvoicePayments,
+  markInvoiceAsSent: invoiceRouter.markAsSent,
+  voidInvoice: invoiceRouter.voidInvoice,
+
+  // Subscription Management
+  getSubscription: subscriptionRouter.getSubscription,
+  getSubscriptions: subscriptionRouter.getSubscriptions,
+  updateSubscriptionStatus: subscriptionRouter.updateSubscriptionStatus,
+  updateSubscriptionBillingSettings: subscriptionRouter.updateBillingSettings,
+  cancelSubscription: subscriptionRouter.cancelSubscription,
+  reactivateSubscription: subscriptionRouter.reactivateSubscription,
+  getSubscriptionHistory: subscriptionRouter.getSubscriptionHistory,
+
+  // Order Configuration Management (Admin)
+  getOrderConfigurationBySlug: orderConfigurationRouter.getBySlug,
+  getPublicOrderConfigurations: orderConfigurationRouter.getPublicConfigurations,
+  getOrderConfigurationById: orderConfigurationRouter.getById,
+  listOrderConfigurations: orderConfigurationRouter.list,
+  createOrderConfiguration: orderConfigurationRouter.create,
+  updateOrderConfiguration: orderConfigurationRouter.update,
+  deleteOrderConfiguration: orderConfigurationRouter.delete,
+  createOrderConfigurationPricingOption: orderConfigurationRouter.createPricingOption,
+  updateOrderConfigurationPricingOption: orderConfigurationRouter.updatePricingOption,
+  deleteOrderConfigurationPricingOption: orderConfigurationRouter.deletePricingOption,
 });
 
 // Export the router and type for client usage

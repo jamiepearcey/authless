@@ -405,7 +405,7 @@ export const contactRouter = router({
           createdAt: lastMessage?.createdAt || supportCase.createdAt,
           isFromUser: lastMessage ? lastMessage.direction === "INBOUND" : true,
         },
-        unread: false, // TODO: Implement unread logic based on case messages
+        unread: lastMessage ? lastMessage.direction === "INBOUND" : false, // Mark as unread if last message is from user
         assignee: supportCase.assignee,
       };
     });

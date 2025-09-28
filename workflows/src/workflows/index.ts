@@ -6,4 +6,5 @@
 
 export * from './hello';
 export * from './user-onboarding';
-export * from './payment-processing';
+export * from './order-automation';
+export * from './recurring-billing';

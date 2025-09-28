@@ -7,9 +7,9 @@ This directory contains SQL files that define PostgreSQL functions, triggers, an
 When you run `pnpm run db:setup`, the system:
 
 1. 🔍 **Scans** this directory for all `.sql` files
-2. 📋 **Sorts** them alphabetically for consistent execution order
-3. 🚀 **Executes** each file's statements in sequence
-4. ✅ **Validates** successful completion
+2. **Sorts** them alphabetically for consistent execution order
+3. **Executes** each file's statements in sequence
+4. **Validates** successful completion
 
 ## Adding New Functions
 
@@ -65,10 +65,10 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 ## Parsing Rules
 
 The system properly handles PostgreSQL syntax including:
-- ✅ **Dollar-quoted strings** (`$$ ... $$`) for function bodies
-- ✅ **Multi-line statements** spanning multiple lines
-- ✅ **Comment lines** starting with `--`
-- ✅ **Complex functions** with DECLARE blocks and nested logic
+- **Dollar-quoted strings** (`$$ ... $$`) for function bodies
+- **Multi-line statements** spanning multiple lines
+- **Comment lines** starting with `--`
+- **Complex functions** with DECLARE blocks and nested logic
 
 ## Testing
 

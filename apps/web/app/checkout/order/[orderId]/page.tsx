@@ -270,7 +270,7 @@ export default function RetryPaymentPage() {
               {orderData.canRetry && (
                 <div className="pt-6 border-t">
                   <Button
-                    onClick={() => router.push(`/checkout/${orderId}`)}
+                    onClick={() => router.push(`/checkout/order/${orderId}`)}
                     className="w-full bg-orange-600 hover:bg-orange-700"
                   >
                     <CreditCard className="h-4 w-4 mr-2" />
@@ -412,7 +412,7 @@ export default function RetryPaymentPage() {
                       retryOrderId: orderId,
                     }}
                     onSuccess={() => {
-                      router.push('/payments/success');
+                      router.push(`/orders/${orderId}`);
                     }}
                     onError={(error) => setError(error)}
                   />

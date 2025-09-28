@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { TenantAdminSidebar } from "@/components/TenantAdminSidebar";
 import { SidebarLayout } from "@/components/SidebarLayout";
 import { BreadcrumbItem } from "./BreadcrumbNavigation";
+import { AuthGuard } from "./AuthGuard";
 
 interface TenantLayoutProps {
   children: ReactNode;
@@ -58,16 +59,18 @@ export function TenantLayout({
   };
 
   return (
-    <SidebarLayout 
-      sidebar={<TenantAdminSidebar tenantSlug={tenantSlug} />} 
-      sidebarWidth="md"
-      className={className}
-      breadcrumbs={getBreadcrumbs()}
-      backHref="/admin/tenants"
-      backLabel="Back to Platform"
-      showHome={false}
-    >
-      {children}
-    </SidebarLayout>
+    <AuthGuard>
+      <SidebarLayout 
+        sidebar={<TenantAdminSidebar tenantSlug={tenantSlug} />} 
+        sidebarWidth="md"
+        className={className}
+        breadcrumbs={getBreadcrumbs()}
+        backHref="/admin/tenants"
+        backLabel="Back to Platform"
+        showHome={false}
+      >
+        {children}
+      </SidebarLayout>
+    </AuthGuard>
   );
 }

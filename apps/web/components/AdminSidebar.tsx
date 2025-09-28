@@ -14,7 +14,8 @@ import {
   Database,
   Activity,
   Mail,
-  Zap
+  Zap,
+  CreditCard
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -54,6 +55,12 @@ export function AdminSidebar({ className }: AdminSidebarProps) {
       href: "/admin/support",
       icon: HelpCircle,
       description: "Support case management"
+    },
+    {
+      name: "Payment Options",
+      href: "/admin/payment-options",
+      icon: CreditCard,
+      description: "Order configurations and pricing"
     },
     {
       name: "Security",

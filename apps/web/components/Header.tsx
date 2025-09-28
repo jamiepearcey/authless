@@ -188,11 +188,11 @@ export default function Header() {
                         Account Settings
                       </Link>
                       <Link
-                        href="/payments/history"
+                        href="/orders/history"
                         className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
                       >
                         <CreditCard className="h-4 w-4 mr-3 text-gray-400" />
-                        Payment History
+                        Orders & Payments
                       </Link>
                     </div>
                     
@@ -232,7 +232,7 @@ export default function Header() {
                     <div className="border-t border-gray-100 my-1"></div>
                     <div className="py-1">
                       <button
-                        onClick={() => signOut()}
+                        onClick={() => signOut({ callbackUrl: '/' })}
                         className="flex items-center w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
                       >
                         <LogOut className="h-4 w-4 mr-3" />

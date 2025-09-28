@@ -9,7 +9,7 @@ A comprehensive Stripe integration package for the Authless uk application, prov
 - 📱 **Subscription Management** - Recurring billing and plan management
 - 👤 **Customer Management** - Customer profiles and payment methods
 - 🎣 **Webhooks Support** - Real-time event handling
-- ⚛️ **React Components** - Pre-built UI components for payments
+-  **React Components** - Pre-built UI components for payments
 - 🪝 **React Hooks** - Custom hooks for easy integration
 - 📘 **TypeScript First** - Full type safety and IntelliSense
 

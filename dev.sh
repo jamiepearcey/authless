@@ -86,6 +86,13 @@ case "${1:-start}" in
         pnpm dev &
         echo $! >> "../../$PID_FILE"
         cd ../..
+        
+        # Start workflow service (Temporal worker)
+        echo -e "${GREEN}⚡ Starting workflow service...${NC}"
+        cd workflows
+        pnpm dev &
+        echo $! >> "../$PID_FILE"
+        cd ..
         ;;
     "all")
         echo -e "${BLUE}🚀 Starting all services...${NC}"
@@ -123,6 +130,7 @@ echo "   Main app: http://localhost:3000"
 echo "   ACME tenant: http://acme.test:3000"
 echo "   Startup tenant: http://startup.test:3000"
 echo "   Enterprise tenant: http://enterprise.test:3000"
+echo "   Temporal UI: http://localhost:8233"
 echo ""
 echo -e "${YELLOW}🛑 To stop: ./dev.sh stop${NC}"
 echo -e "${YELLOW}🔍 To kill ports only: ./dev.sh kill-ports${NC}"

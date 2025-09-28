@@ -1,6 +1,6 @@
 # Authless — SaaS Architecture Foundation (WIP)
 
-⚠️ **Work in Progress**: This project is an advanced SaaS architecture **foundation** under active development.  
+**Work in Progress**: This project is an advanced SaaS architecture **foundation** under active development.  
 It demonstrates event-driven microservices, multi-tenancy, real-time capabilities, and authentication patterns.  
 The goal is to provide a **reference implementation and learning resource**, not a turnkey product.
 
@@ -35,15 +35,15 @@ Some parts are complete, others are in progress, and several are still planned. 
 
 | Area                   | Status        | Notes                                           |
 |------------------------|---------------|-------------------------------------------------|
-| Event bus + outbox     | ✅ Mostly done| JetStream integration, retries, metrics         |
-| Multi-tenant database  | ✅ Mostly done| Isolation via Postgres + Prisma schema          |
-| Authentication         | ✅ Mostly done| Passkeys & MFA; SSO to come                     |
-| Realtime (Centrifugo)  | ✅ Mostly done| Server wired; UI integration ongoing            |
-| Microservices          | ✅ Mostly done| Audit/Email/Webhook/Realtime present            |
-| Temporal workflows     | 🚧 Planned    | Base config present; domain flows TBD           |
-| Testing & hardening    | 🚧 Planned    | Integration/E2E tests, security headers, limits |
+| Event bus + outbox     | Mostly done| JetStream integration, retries, metrics         |
+| Multi-tenant database  | Mostly done| Isolation via Postgres + Prisma schema          |
+| Authentication         | Mostly done| Passkeys & MFA; SSO to come                     |
+| Realtime (Centrifugo)  | Mostly done| Server wired; UI integration ongoing            |
+| Microservices          | Mostly done| Audit/Email/Webhook/Realtime present            |
+| Temporal workflows     | Planned    | Base config present; domain flows TBD           |
+| Testing & hardening    | Planned    | Integration/E2E tests, security headers, limits |
 
-Percentages can be misleading; the table above reflects practical readiness.
+The table above reflects practical readiness based on current implementation status.
 
 ---
 

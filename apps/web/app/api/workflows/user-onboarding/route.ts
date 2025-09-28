@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     
     // Validate required fields
-    const requiredFields = ['userId', 'email', 'name', 'tenantId', 'emailVerificationToken'];
+    const requiredFields = ['email', 'name', 'emailVerificationToken'];
     for (const field of requiredFields) {
       if (!body[field]) {
         return NextResponse.json(
@@ -35,6 +35,20 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         );
       }
+    }
+
+    // Validate business logic: onboarding is either platform user or tenant user
+    // Platform User Onboarding: user registering on platform (requires userId)
+    // Tenant User Onboarding: user registering within tenant (requires tenantId)
+    if (!body.userId && !body.tenantId) {
+      return NextResponse.json(
+        { 
+          success: false,
+          error: 'Missing required field: userId or tenantId',
+          message: 'Please provide either userId (for platform user onboarding) or tenantId (for tenant user onboarding)'
+        },
+        { status: 400 }
+      );
     }
 
     // Prepare workflow parameters

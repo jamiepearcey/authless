@@ -31,16 +31,16 @@ const {
 });
 
 export interface UserOnboardingParams {
-  userId: string;
+  userId?: string; // For platform user onboarding
   email: string;
   name: string;
-  tenantId: string;
+  tenantId?: string; // For tenant user onboarding
   emailVerificationToken: string;
   skipEmailVerification?: boolean;
 }
 
 export interface UserOnboardingResult {
-  userId: string;
+  userId?: string;
   email: string;
   status: 'completed' | 'failed' | 'email_verification_pending';
   emailVerified: boolean;
@@ -53,7 +53,15 @@ export interface UserOnboardingResult {
 export async function userOnboardingWorkflow(params: UserOnboardingParams): Promise<UserOnboardingResult> {
   const startTime = Date.now();
   
+  // Validate business logic: onboarding is either platform user or tenant user
+  // Platform User Onboarding: user registering on platform (requires userId)
+  // Tenant User Onboarding: user registering within tenant (requires tenantId)
+  if (!params.userId && !params.tenantId) {
+    throw new Error('Either userId (for platform user onboarding) or tenantId (for tenant user onboarding) must be provided');
+  }
+  
   log.info('Starting User Onboarding workflow', { 
+    onboardingType: params.userId ? 'platform-user' : 'tenant-user',
     userId: params.userId,
     email: params.email,
     tenantId: params.tenantId,
@@ -148,7 +156,7 @@ export async function userOnboardingWorkflow(params: UserOnboardingParams): Prom
       aggregateId: params.userId,
       tenantId: params.tenantId,
       payloadJson: {
-        id: crypto.randomUUID(),
+        id: `onboarding-event-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
         eventType: 'UserOnboardingEvent',
         eventName: 'user.onboarding.completed',
         tenantId: params.tenantId,
@@ -195,7 +203,7 @@ export async function userOnboardingWorkflow(params: UserOnboardingParams): Prom
       aggregateId: params.userId,
       tenantId: params.tenantId,
       payloadJson: {
-        id: crypto.randomUUID(),
+        id: `onboarding-event-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
         eventType: 'UserOnboardingEvent',
         eventName: 'user.onboarding.failed',
         tenantId: params.tenantId,

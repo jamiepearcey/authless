@@ -1,10 +1,10 @@
 # Authless - Services Integration Testing Suite
 
-**⚠️ STATUS: Services 75% Complete, Testing Suite 95% Complete**
+**STATUS: Services mostly complete, Testing Suite ready for production**
 
 This directory contains comprehensive integration tests and working service configurations for the event-driven microservices architecture. The testing infrastructure is mature, while individual services are in various stages of completion.
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 The services implement an event-driven architecture with the following flow:
 
@@ -13,7 +13,7 @@ Application → OutboxEvent (DB) → Outbox Service → NATS → Audit Service �
                                               ↘ → Webhook Service → External APIs
 ```
 
-## 🧪 Testing Strategy
+## Testing Strategy
 
 This testing suite provides multiple levels of verification:
 
@@ -22,44 +22,44 @@ This testing suite provides multiple levels of verification:
 3. **Manual Verification Scripts** - Practical scripts for testing live services
 4. **Docker-based Testing** - Containerized testing environment
 
-## 📋 Services Included
+## Services Included
 
-### Audit Service ⚠️ (75% Complete)
+### Audit Service (In Progress)
 - **Purpose**: Processes and stores audit events from the message bus
 - **Port**: 8081 (Health), 9091 (Metrics)
 - **Key Features**: NATS JetStream consumer, PostgreSQL storage, custom event handlers
 - **Status**: Basic functionality working, some edge cases need handling
 - **Location**: `./audit-service/`
 
-### Outbox Service ✅ (95% Complete)
+### Outbox Service (Production Ready)
 - **Purpose**: Reliably publishes events from database to message bus (Transactional Outbox Pattern)
 - **Port**: 8082 (Health), 9092 (Metrics)  
 - **Key Features**: Batch processing, retry logic, failure handling, PostgreSQL LISTEN/NOTIFY
 - **Status**: Production-ready, comprehensive error handling
 - **Location**: `../packages/outbox-processor/`
 
-### Email Service ⚠️ (80% Complete)
+### Email Service (Mostly Complete)
 - **Purpose**: Processes email events and sends notifications
 - **Port**: 8083 (Health), 9093 (Metrics)
 - **Key Features**: React Email templates, SMTP integration, retry logic
 - **Status**: Core functionality working, templating system in progress
 - **Location**: `./email-service/`
 
-### Webhook Service ⚠️ (70% Complete)
+### Webhook Service (In Development)
 - **Purpose**: Delivers events to external webhooks
 - **Port**: 8084 (Health), 9094 (Metrics)
 - **Key Features**: HTTP delivery, retry logic, endpoint management
 - **Status**: Basic implementation, needs production hardening
 - **Location**: `./webhook-service/`
 
-### Realtime Service ⚠️ (80% Complete)
+### Realtime Service (Mostly Complete)
 - **Purpose**: Handles real-time notifications via Centrifugo
 - **Port**: 8085 (Health), 9095 (Metrics)
 - **Key Features**: WebSocket management, channel routing, presence tracking
 - **Status**: Centrifugo integration working, advanced features in progress
 - **Location**: `./realtime-service/`
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -102,7 +102,7 @@ docker-compose -f docker-compose.services.yml logs -f
 docker-compose -f docker-compose.services.yml down
 ```
 
-## 🧪 Running Tests
+## Running Tests
 
 ### Manual Verification (Recommended)
 The manual verification script provides the most practical testing approach:
@@ -113,10 +113,10 @@ node tests/manual-verification.js
 ```
 
 This script will:
-1. ✅ Test direct NATS → Audit Service flow
-2. ✅ Test Outbox → NATS → Audit Service flow  
-3. ✅ Verify service health and metrics
-4. 📊 Provide detailed status reporting
+1. Test direct NATS → Audit Service flow
+2. Test Outbox → NATS → Audit Service flow  
+3. Verify service health and metrics
+4. Provide detailed status reporting
 
 ### Integration Tests
 
@@ -140,7 +140,7 @@ cd audit-service
 npx vitest run tests/integration/audit-behavioral.test.ts
 ```
 
-## 🐳 Docker Configuration
+## Docker Configuration
 
 ### Production-Ready Features
 
@@ -163,7 +163,7 @@ cd outbox-service
 docker build -t authless/outbox-service:latest .
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -199,7 +199,7 @@ METRICS_PORT=9090
 LOG_LEVEL=info
 ```
 
-## 📊 Monitoring & Observability
+## Monitoring & Observability
 
 ### Health Endpoints
 - Audit Service: `http://localhost:8081/health`
@@ -222,7 +222,7 @@ LOG_LEVEL=info
 - `outbox_service_processing_duration_seconds`
 - `outbox_service_queue_size`
 
-## 🗃️ Database Schema
+## Database Schema
 
 ### AuditEvent Table
 Stores processed audit events with full audit trail information.
@@ -235,7 +235,7 @@ Stores events awaiting publication to the message bus.
 - Event type and aggregate filtering
 - Time-based range queries
 
-## 🔄 Event Flow Testing
+## Event Flow Testing
 
 ### Test Scenarios Covered
 
@@ -255,7 +255,7 @@ Stores events awaiting publication to the message bus.
 5. **Performance Testing**
    - High-volume events → Throughput measurement → Resource utilization
 
-## 🛡️ Security Considerations
+## Security Considerations
 
 - Services run as non-root users in containers
 - Database credentials via environment variables
@@ -263,7 +263,7 @@ Stores events awaiting publication to the message bus.
 - Comprehensive input validation
 - Error messages don't leak system details
 
-## 📈 Performance Tuning
+## Performance Tuning
 
 ### Audit Service
 - `AUDIT_CONCURRENCY`: Number of concurrent message processors (default: 8)
@@ -275,7 +275,7 @@ Stores events awaiting publication to the message bus.
 - `OUTBOX_IDLE_SLEEP_MS`: Sleep between polling cycles (default: 500)
 - `OUTBOX_MAX_TRIES`: Maximum retry attempts (default: 10)
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -313,7 +313,7 @@ psql $DATABASE_URL -c "SELECT status, COUNT(*) FROM \"OutboxEvent\" GROUP BY sta
 curl http://localhost:8222/varz  # NATS server info
 ```
 
-## 🎯 Testing Best Practices
+## Testing Best Practices
 
 1. **Always start with manual verification** - It provides the clearest feedback
 2. **Use Docker Compose for consistent environments** - Eliminates configuration drift
@@ -321,7 +321,7 @@ curl http://localhost:8222/varz  # NATS server info
 4. **Test failure scenarios** - Ensures robustness under stress
 5. **Verify tenant isolation** - Critical for multi-tenant applications
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [NATS JetStream Documentation](https://docs.nats.io/jetstream)
 - [Transactional Outbox Pattern](https://microservices.io/patterns/data/transactional-outbox.html)
@@ -330,7 +330,7 @@ curl http://localhost:8222/varz  # NATS server info
 
 ---
 
-## 🏁 Quick Verification
+## Quick Verification
 
 To quickly verify everything is working:
 
@@ -345,10 +345,10 @@ sleep 30
 cd audit-service && node tests/manual-verification.js
 
 # 4. Expected output:
-# ✅ Event found in audit database!
-# ✅ Outbox service published the event
-# ✅ Audit service processed the event!
-# 🎉 All integration tests passed!
+# Event found in audit database!
+# Outbox service published the event
+# Audit service processed the event!
+# All integration tests passed!
 ```
 
 That's it! You now have a comprehensive, battle-tested event-driven microservices setup with full integration testing coverage.

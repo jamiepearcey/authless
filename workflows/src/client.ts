@@ -8,7 +8,8 @@
 import { Client, Connection } from '@temporalio/client';
 import type { HelloWorkflowParams, HelloWorkflowResult } from './workflows/hello';
 import type { UserOnboardingParams, UserOnboardingResult } from './workflows/user-onboarding';
-import type { PaymentProcessingParams, PaymentProcessingResult } from './workflows/payment-processing';
+import type { OrderAutomationParams, OrderAutomationResult } from './workflows/order-automation';
+import type { RecurringBillingParams, RecurringBillingResult } from './workflows/recurring-billing';
 
 // Default connection options
 const DEFAULT_ADDRESS = process.env.TEMPORAL_ADDRESS || 'localhost:7233';
@@ -81,24 +82,25 @@ export async function startUserOnboardingWorkflow(
   };
 }
 
+
 /**
- * Start a Payment Processing workflow
+ * Start an Order Automation workflow
  */
-export async function startPaymentProcessingWorkflow(
-  params: PaymentProcessingParams,
+export async function startOrderAutomationWorkflow(
+  params: OrderAutomationParams,
   workflowId?: string
-): Promise<{ workflowId: string; result: Promise<PaymentProcessingResult> }> {
+): Promise<{ workflowId: string; result: Promise<OrderAutomationResult> }> {
   const temporalClient = await getTemporalClient();
   
-  const id = workflowId || `payment-processing-${params.userId}-${Date.now()}`;
+  const id = workflowId || `order-automation-${params.userId}-${Date.now()}`;
   
-  const handle = await temporalClient.workflow.start('paymentProcessingWorkflow', {
+  const handle = await temporalClient.workflow.start('orderAutomationWorkflow', {
     taskQueue: 'authless-workflows-queue',
     args: [params],
     workflowId: id,
   });
 
-  console.log(`🚀 Started Payment Processing workflow ${handle.workflowId}`);
+  console.log(`🚀 Started Order Automation workflow ${handle.workflowId}`);
   
   return {
     workflowId: handle.workflowId,
@@ -128,6 +130,103 @@ export async function isWorkflowRunning(workflowId: string): Promise<boolean> {
     return description.status.name === 'RUNNING';
   } catch (error) {
     return false;
+  }
+}
+
+/**
+ * Get Order Automation workflow status
+ */
+export async function getOrderAutomationWorkflowStatus(workflowId: string): Promise<{
+  status: 'running' | 'completed' | 'failed';
+  result?: OrderAutomationResult;
+  message?: string;
+}> {
+  try {
+    const temporalClient = await getTemporalClient();
+    const handle = temporalClient.workflow.getHandle(workflowId);
+    const description = await handle.describe();
+    
+    if (description.status.name === 'RUNNING') {
+      return { status: 'running', message: 'Order automation workflow is running' };
+    } else if (description.status.name === 'COMPLETED') {
+      const result = await handle.result() as OrderAutomationResult;
+      return { 
+        status: 'completed', 
+        result,
+        message: 'Order automation workflow completed successfully' 
+      };
+    } else {
+      return { 
+        status: 'failed', 
+        message: `Order automation workflow failed: ${description.status.name}` 
+      };
+    }
+  } catch (error) {
+    return { 
+      status: 'failed', 
+      message: error instanceof Error ? error.message : 'Unknown error' 
+    };
+  }
+}
+
+/**
+ * Start a Recurring Billing workflow
+ */
+export async function startRecurringBillingWorkflow(
+  params: RecurringBillingParams,
+  workflowId?: string
+): Promise<{ workflowId: string; result: Promise<RecurringBillingResult> }> {
+  const temporalClient = await getTemporalClient();
+
+  const id = workflowId || `recurring-billing-${Date.now()}`;
+  
+  const handle = await temporalClient.workflow.start('recurringBillingWorkflow', {
+    taskQueue: 'authless-workflows-queue',
+    args: [params],
+    workflowId: id,
+  });
+
+  console.log(`🚀 Started Recurring Billing workflow ${handle.workflowId}`);
+  
+  return {
+    workflowId: handle.workflowId,
+    result: handle.result(),
+  };
+}
+
+/**
+ * Get Recurring Billing workflow status
+ */
+export async function getRecurringBillingWorkflowStatus(workflowId: string): Promise<{
+  status: 'running' | 'completed' | 'failed';
+  result?: RecurringBillingResult;
+  message?: string;
+}> {
+  try {
+    const temporalClient = await getTemporalClient();
+    const handle = temporalClient.workflow.getHandle(workflowId);
+    const description = await handle.describe();
+    
+    if (description.status.name === 'RUNNING') {
+      return { status: 'running', message: 'Recurring billing workflow is running' };
+    } else if (description.status.name === 'COMPLETED') {
+      const result = await handle.result() as RecurringBillingResult;
+      return { 
+        status: 'completed', 
+        result,
+        message: 'Recurring billing workflow completed successfully' 
+      };
+    } else {
+      return { 
+        status: 'failed', 
+        message: `Recurring billing workflow failed: ${description.status.name}` 
+      };
+    }
+  } catch (error) {
+    return { 
+      status: 'failed', 
+      message: error instanceof Error ? error.message : 'Unknown error' 
+    };
   }
 }
 

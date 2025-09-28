@@ -8,7 +8,8 @@
 import { Worker } from '@temporalio/worker';
 import * as helloActivities from './activities/hello';
 import * as userOnboardingActivities from './activities/user-onboarding';
-import * as paymentProcessingActivities from './activities/payment-processing';
+import * as orderAutomationActivities from './activities/order-automation';
+import * as recurringBillingActivities from './activities/recurring-billing';
 
 async function run() {
   console.log('🚀 Starting Temporal Worker...');
@@ -16,11 +17,12 @@ async function run() {
   // Create and run a Worker
   const worker = await Worker.create({
     workflowsPath: new URL('./workflows', import.meta.url).pathname,
-    activities: {
-      ...helloActivities,
-      ...userOnboardingActivities,
-      ...paymentProcessingActivities,
-    },
+          activities: {
+            ...helloActivities,
+            ...userOnboardingActivities,
+            ...orderAutomationActivities,
+            ...recurringBillingActivities,
+          },
     taskQueue: 'authless-workflows-queue',
   });
 

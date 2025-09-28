@@ -198,6 +198,24 @@ export class OutboxService {
         );
       });
 
+      // Add custom health endpoint with detailed information
+      this.lightship.server.on('request', async (req, res) => {
+        if (req.url === '/health/detailed') {
+          try {
+            const healthData = await this.getDetailedHealth();
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(healthData, null, 2));
+          } catch (error) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              status: 'unhealthy',
+              error: error instanceof Error ? error.message : String(error),
+              timestamp: new Date().toISOString()
+            }));
+          }
+        }
+      });
+
       // Start metrics server if enabled
       if (this.config.metricsEnabled !== false) {
         await this.startMetricsServer();
@@ -277,6 +295,50 @@ export class OutboxService {
         }
       });
     });
+  }
+
+  private async getDetailedHealth(): Promise<any> {
+    const healthStatus: any = {
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      service: {
+        name: this.config.serviceName,
+        version: this.config.version,
+        uptime: process.uptime()
+      },
+      checks: {},
+      errors: []
+    };
+
+    // Check database connection via processor
+    try {
+      // Since processor has database connection, we can use a simple check
+      healthStatus.checks.processor = { 
+        status: this.processor ? 'running' : 'stopped', 
+        lastChecked: new Date().toISOString() 
+      };
+    } catch (error) {
+      healthStatus.status = 'unhealthy';
+      healthStatus.checks.processor = { 
+        status: 'failed', 
+        error: error instanceof Error ? error.message : String(error),
+        lastChecked: new Date().toISOString()
+      };
+      healthStatus.errors.push({
+        component: 'processor',
+        error: error instanceof Error ? error.message : String(error),
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Check service running status
+    healthStatus.checks.service = {
+      status: this.isRunning ? 'running' : 'stopped',
+      isRunning: this.isRunning,
+      lastChecked: new Date().toISOString()
+    };
+
+    return healthStatus;
   }
 
   /**

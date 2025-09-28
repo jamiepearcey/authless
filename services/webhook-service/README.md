@@ -12,13 +12,13 @@ This service follows the Authless architecture pattern:
 
 ## Features
 
-- ✅ Consumes events from NATS JetStream
-- ✅ Configurable webhook endpoints with event filtering
-- ✅ Automatic retry logic with exponential backoff
-- ✅ HMAC signature verification for security
-- ✅ Delivery tracking and logging
-- ✅ Health checks and metrics
-- ✅ Graceful shutdown
+-  Consumes events from NATS JetStream
+-  Configurable webhook endpoints with event filtering
+-  Automatic retry logic with exponential backoff
+-  HMAC signature verification for security
+-  Delivery tracking and logging
+-  Health checks and metrics
+-  Graceful shutdown
 
 ## Environment Variables
 

@@ -76,16 +76,7 @@ export default function EditTenantPage() {
     },
   });
 
-  // TODO: Implement delete functionality when needed
-  // const deleteTenant = trpc.deleteTenant.useMutation({
-  //   onSuccess: () => {
-  //     toast.success("Tenant deleted successfully!");
-  //     router.push("/admin/tenants");
-  //   },
-  //   onError: (error) => {
-  //     toast.error(error.message);
-  //   },
-  // });
+  // Note: Tenant deletion functionality can be added here when required
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,17 +114,7 @@ export default function EditTenantPage() {
     }
   };
 
-  // TODO: Implement delete functionality when needed
-  // const handleDelete = async () => {
-  //   if (!confirm("Are you sure you want to delete this tenant? This action cannot be undone.")) {
-  //     return;
-  //   }
-  //   try {
-  //     await deleteTenant.mutateAsync({ slug: tenantSlug });
-  //   } catch (error) {
-  //     // Handle error
-  //   }
-  // };
+  // Note: Tenant deletion handler can be implemented when delete functionality is added
 
   if (isLoading) {
     return (

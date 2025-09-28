@@ -18,6 +18,7 @@ interface PaymentFormProps {
   currency?: string;
   description?: string;
   metadata?: Record<string, string>;
+  disabled?: boolean;
   onSuccess?: (paymentIntent: any) => void;
   onError?: (error: string) => void;
   onProcessing?: (isProcessing: boolean) => void;
@@ -28,6 +29,7 @@ const CheckoutForm: React.FC<PaymentFormProps> = ({
   currency = 'gbp',
   description,
   metadata,
+  disabled = false,
   onSuccess,
   onError,
   onProcessing
@@ -188,7 +190,7 @@ const CheckoutForm: React.FC<PaymentFormProps> = ({
 
       <button
         type="submit"
-        disabled={!stripe || isLoading}
+        disabled={!stripe || isLoading || disabled}
         className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
       >
         {isLoading ? (

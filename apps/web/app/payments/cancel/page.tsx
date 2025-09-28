@@ -53,26 +53,6 @@ export default function PaymentCancelPage() {
                   </div>
                 </div>
               </div>
-
-              {sessionId && (
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">Session Details</h3>
-                  <dl className="space-y-1 text-sm">
-                    <div className="flex justify-between">
-                      <dt className="text-gray-600">Session ID:</dt>
-                      <dd className="font-mono text-xs">{sessionId}</dd>
-                    </div>
-                    <div className="flex justify-between">
-                      <dt className="text-gray-600">Status:</dt>
-                      <dd className="text-yellow-600 font-semibold">Cancelled</dd>
-                    </div>
-                    <div className="flex justify-between">
-                      <dt className="text-gray-600">Time:</dt>
-                      <dd>{new Date().toLocaleString()}</dd>
-                    </div>
-                  </dl>
-                </div>
-              )}
             </div>
           </CardContent>
         </Card>

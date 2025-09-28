@@ -9,33 +9,33 @@ export interface SendVerificationEmailParams {
   email: string;
   name: string;
   token: string;
-  userId: string;
+  userId?: string;
 }
 
 export interface CreateUserProfileParams {
-  userId: string;
+  userId?: string;
   email: string;
   name: string;
-  tenantId: string;
+  tenantId?: string;
 }
 
 export interface SetupInitialDataParams {
-  userId: string;
-  tenantId: string;
+  userId?: string;
+  tenantId?: string;
 }
 
 export interface SendWelcomeEmailParams {
   email: string;
   name: string;
-  userId: string;
-  tenantId: string;
+  userId?: string;
+  tenantId?: string;
 }
 
 export interface NotifyAdminsParams {
   type: string;
-  userId: string;
+  userId?: string;
   email: string;
-  tenantId: string;
+  tenantId?: string;
 }
 
 export async function sendVerificationEmail(params: SendVerificationEmailParams): Promise<void> {

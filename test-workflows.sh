@@ -20,17 +20,5 @@ curl -s -X POST "http://localhost:3000/api/workflows/user-onboarding" \
     "waitForResult": true
   }' | jq '.'
 
-echo -e "\n3. Testing Payment Processing Workflow..."
-curl -s -X POST "http://localhost:3000/api/workflows/payment-processing" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "userId": "test-user-123",
-    "tenantId": "test-tenant-123",
-    "amount": 2999,
-    "currency": "USD",
-    "paymentMethodId": "pm_test_123",
-    "description": "Test payment",
-    "waitForResult": true
-  }' | jq '.'
 
 echo -e "\n✅ Workflow testing complete!"

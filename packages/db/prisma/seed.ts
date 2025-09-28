@@ -145,6 +145,14 @@ async function main() {
 
   console.log('✅ Contact reasons created');
 
+  // Seed order configurations
+  console.log('🌱 Seeding order configurations...');
+  const { execSync } = require('child_process');
+  execSync('npx tsx src/seed-order-configurations.ts', { 
+    stdio: 'inherit',
+    env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL }
+  });
+
   console.log('🎉 Database seeding completed!');
   console.log('📧 Admin email: admin@authless.uk');
   console.log('🔑 Admin password: admin123');

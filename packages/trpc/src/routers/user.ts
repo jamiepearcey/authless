@@ -407,6 +407,27 @@ export const userRouter = router({
       return users;
     }),
 
+  // Get users for workflow testing (protected - limited scope)
+  getUsersForWorkflow: protectedProcedure
+    .input(z.object({
+      limit: z.number().min(1).max(20).default(10),
+    }))
+    .query(async ({ ctx, input }) => {
+      const users = await ctx.db.user.findMany({
+        where: { status: "active" },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          platformRole: true,
+        },
+        take: input.limit,
+        orderBy: { createdAt: "desc" },
+      });
+      
+      return users;
+    }),
+
   // Delete user (platform admin only)
   deleteUser: platformAdminProcedure
     .input(z.object({ id: z.string() }))

@@ -1,6 +1,6 @@
 # 📧 Simplified Notification Service Architecture
 
-## 🎯 **The Problem with the Old Architecture**
+## **The Problem with the Old Architecture**
 
 The original notification service was overly complex:
 
@@ -44,10 +44,10 @@ All notification logic is now defined declaratively in one configuration file:
 
 ### **Key Benefits**
 
-1. **🔧 Config-Driven**: Add new notifications by adding config, no code changes
+1. **Config-Driven**: Add new notifications by adding config, no code changes
 2. **📝 Declarative**: Clear, readable notification rules
-3. **🎯 Single Responsibility**: Each component has one clear purpose
-4. **🚀 Simple**: Unified processing for all event types
+3. **Single Responsibility**: Each component has one clear purpose
+4. **Simple**: Unified processing for all event types
 5. **🔍 Debuggable**: Easy to trace what notifications are triggered
 
 ## 📁 **File Structure**
@@ -64,7 +64,7 @@ All notification logic is now defined declaratively in one configuration file:
 - ❌ `config.ts` (scattered configuration)
 - ❌ `start.ts` (complex startup logic)
 
-## 🔄 **How It Works**
+## **How It Works**
 
 ### **1. Event Processing Flow**
 ```
@@ -129,7 +129,7 @@ conditions: [
 ]
 ```
 
-## 🚀 **Adding New Notifications**
+## **Adding New Notifications**
 
 To add a new notification, simply add a rule to `notification-config.ts`:
 
@@ -154,7 +154,7 @@ To add a new notification, simply add a rule to `notification-config.ts`:
 
 **That's it!** No code changes required.
 
-## 🔧 **Migration Guide**
+## **Migration Guide**
 
 ### **To Use the New Architecture:**
 
@@ -177,7 +177,7 @@ To add a new notification, simply add a rule to `notification-config.ts`:
 - Event payload formats remain the same
 - Template system unchanged
 
-## 📊 **Comparison**
+## **Comparison**
 
 | Aspect | Old Architecture | New Architecture |
 |--------|------------------|------------------|
@@ -188,11 +188,11 @@ To add a new notification, simply add a rule to `notification-config.ts`:
 | **Maintainability** | Difficult | Easy |
 | **Debugging** | Complex traces | Simple, linear flow |
 
-## 🎉 **Result**
+## **Result**
 
-- ✅ **90% less code** - From 1000+ lines to ~300 lines
-- ✅ **Config-driven** - Add notifications without code changes  
-- ✅ **Unified processing** - All events handled the same way
-- ✅ **Clear separation** - Each file has single responsibility
-- ✅ **Easy debugging** - Linear, predictable flow
-- ✅ **Maintainable** - Changes are isolated to config
+- **Significant code reduction** - From 1000+ lines to ~300 lines
+- **Config-driven** - Add notifications without code changes  
+- **Unified processing** - All events handled the same way
+- **Clear separation** - Each file has single responsibility
+- **Easy debugging** - Linear, predictable flow
+- **Maintainable** - Changes are isolated to config

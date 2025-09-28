@@ -120,7 +120,7 @@ apiLogger.warn('Rate limit approaching', { current: 95, limit: 100 });
 ```typescript
 logger.debug('Debug information', { config: { port: 3000 } });
 logger.info('Service started successfully');
-logger.warn('Resource usage is high', { memory: '85%', cpu: '90%' });
+logger.warn('Resource usage is high', { memory: '850MB', cpu: 'high' });
 logger.error('Failed to process request', error, { requestId: '12345' });
 ```
 
@@ -248,8 +248,8 @@ See `src/examples/logger-usage.ts` for comprehensive logging examples.
 
 Pino is one of the fastest Node.js loggers available:
 
-- **JSON output**: ~30% faster than console.log
-- **Pretty output**: ~50% faster than other pretty printers
+- **JSON output**: Significantly faster than console.log
+- **Pretty output**: High-performance pretty printing
 - **Minimal overhead**: Sub-millisecond logging operations
 - **Async by default**: Non-blocking log operations
 

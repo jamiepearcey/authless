@@ -216,13 +216,53 @@ export class AuditService {
       },
 
       healthCheck: async () => {
-        // Check database connection
-        await this.db.query('SELECT 1');
-
-        return {
-          database: 'connected',
-          timestamp: new Date().toISOString()
+        const healthStatus: any = {
+          status: 'healthy',
+          timestamp: new Date().toISOString(),
+          checks: {},
+          errors: []
         };
+
+        // Check database connection
+        try {
+          await this.db.query('SELECT 1');
+          healthStatus.checks.database = { status: 'connected', lastChecked: new Date().toISOString() };
+        } catch (error) {
+          healthStatus.status = 'unhealthy';
+          healthStatus.checks.database = { 
+            status: 'failed', 
+            error: error instanceof Error ? error.message : String(error),
+            lastChecked: new Date().toISOString()
+          };
+          healthStatus.errors.push({
+            component: 'database',
+            error: error instanceof Error ? error.message : String(error),
+            timestamp: new Date().toISOString()
+          });
+        }
+
+        // Check recent processing activity
+        try {
+          const recentLogs = await this.db.query(`
+            SELECT COUNT(*) as count 
+            FROM "AuditLog" 
+            WHERE "createdAt" > NOW() - INTERVAL '5 minutes'
+          `);
+          const recentCount = parseInt(recentLogs.rows[0]?.count || '0');
+          healthStatus.checks.recentActivity = { 
+            status: 'active', 
+            recentEvents: recentCount,
+            lastChecked: new Date().toISOString()
+          };
+        } catch (error) {
+          healthStatus.errors.push({
+            component: 'recent_activity_check',
+            error: error instanceof Error ? error.message : String(error),
+            timestamp: new Date().toISOString()
+          });
+        }
+
+        return healthStatus;
       }
     };
   }
@@ -282,7 +322,7 @@ export class AuditService {
     // Map AuditEvent to AuditLog schema
     const values = [
       auditEvent.id,
-      auditEvent.tenantId,
+      auditEvent.tenantId || null, // Convert empty string to null for foreign key constraint
       userId,
       auditEvent.action.type || auditEvent.eventType,
       auditEvent.resource?.type,

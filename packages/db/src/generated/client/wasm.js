@@ -688,6 +688,153 @@ exports.Prisma.OutboxEventScalarFieldEnum = {
   traceId: 'traceId'
 };
 
+exports.Prisma.OrderConfigurationScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  shortDescription: 'shortDescription',
+  features: 'features',
+  metadata: 'metadata',
+  termsContent: 'termsContent',
+  requiresTerms: 'requiresTerms',
+  displayOrder: 'displayOrder',
+  isActive: 'isActive',
+  isPublic: 'isPublic',
+  category: 'category',
+  tags: 'tags',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderConfigurationPricingScalarFieldEnum = {
+  id: 'id',
+  orderConfigurationId: 'orderConfigurationId',
+  name: 'name',
+  amount: 'amount',
+  currency: 'currency',
+  frequency: 'frequency',
+  isRecurring: 'isRecurring',
+  discountPercent: 'discountPercent',
+  discountAmount: 'discountAmount',
+  discountDescription: 'discountDescription',
+  trialDays: 'trialDays',
+  setupFee: 'setupFee',
+  displayOrder: 'displayOrder',
+  isDefault: 'isDefault',
+  isPopular: 'isPopular',
+  isActive: 'isActive',
+  stripePriceId: 'stripePriceId',
+  stripeProductId: 'stripeProductId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  orderConfigurationId: 'orderConfigurationId',
+  orderNumber: 'orderNumber',
+  description: 'description',
+  totalAmount: 'totalAmount',
+  currency: 'currency',
+  status: 'status',
+  metadata: 'metadata',
+  guestName: 'guestName',
+  guestEmail: 'guestEmail',
+  billingCompanyName: 'billingCompanyName',
+  billingVatNumber: 'billingVatNumber',
+  billingAddressLine1: 'billingAddressLine1',
+  billingAddressLine2: 'billingAddressLine2',
+  billingCity: 'billingCity',
+  billingState: 'billingState',
+  billingPostalCode: 'billingPostalCode',
+  billingCountry: 'billingCountry',
+  selectedPricingName: 'selectedPricingName',
+  selectedPricingAmount: 'selectedPricingAmount',
+  appliedDiscountPercent: 'appliedDiscountPercent',
+  appliedDiscountAmount: 'appliedDiscountAmount',
+  isSubscription: 'isSubscription',
+  subscriptionFrequency: 'subscriptionFrequency',
+  subscriptionAutoRenew: 'subscriptionAutoRenew',
+  subscriptionAutoPay: 'subscriptionAutoPay',
+  subscriptionStartDate: 'subscriptionStartDate',
+  subscriptionEndDate: 'subscriptionEndDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.InvoiceScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  invoiceNumber: 'invoiceNumber',
+  description: 'description',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  isPending: 'isPending',
+  issueDate: 'issueDate',
+  dueDate: 'dueDate',
+  billingPeriodStart: 'billingPeriodStart',
+  billingPeriodEnd: 'billingPeriodEnd',
+  invoiceUrl: 'invoiceUrl',
+  checkoutUrl: 'checkoutUrl',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  paymentIntentId: 'paymentIntentId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paymentMethod: 'paymentMethod',
+  paymentProvider: 'paymentProvider',
+  providerTransactionId: 'providerTransactionId',
+  failureReason: 'failureReason',
+  attemptCount: 'attemptCount',
+  maxAttempts: 'maxAttempts',
+  refundedAmount: 'refundedAmount',
+  refundReason: 'refundReason',
+  processedAt: 'processedAt',
+  failedAt: 'failedAt',
+  refundedAt: 'refundedAt',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SubscriptionScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  frequency: 'frequency',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  nextBillingDate: 'nextBillingDate',
+  lastBillingDate: 'lastBillingDate',
+  autoRenew: 'autoRenew',
+  autoPay: 'autoPay',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  workflowId: 'workflowId',
+  workflowRunId: 'workflowRunId',
+  trialEndDate: 'trialEndDate',
+  discountPercent: 'discountPercent',
+  discountEndDate: 'discountEndDate',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.EmailProviderScalarFieldEnum = {
   id: 'id',
   type: 'type',
@@ -844,7 +991,50 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+exports.SubscriptionFrequency = exports.$Enums.SubscriptionFrequency = {
+  EVERY_10_MINUTES: 'EVERY_10_MINUTES',
+  MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY',
+  YEARLY: 'YEARLY'
+};
 
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  DRAFT: 'DRAFT',
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  UP_TO_DATE: 'UP_TO_DATE',
+  CANCELLED: 'CANCELLED',
+  FAILED: 'FAILED'
+};
+
+exports.InvoiceStatus = exports.$Enums.InvoiceStatus = {
+  DRAFT: 'DRAFT',
+  PENDING: 'PENDING',
+  SENT: 'SENT',
+  PAID: 'PAID',
+  OVERDUE: 'OVERDUE',
+  CANCELLED: 'CANCELLED',
+  VOID: 'VOID'
+};
+
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED',
+  PARTIALLY_REFUNDED: 'PARTIALLY_REFUNDED'
+};
+
+exports.SubscriptionStatus = exports.$Enums.SubscriptionStatus = {
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  CANCELLED: 'CANCELLED',
+  EXPIRED: 'EXPIRED'
+};
 
 exports.Prisma.ModelName = {
   Account: 'Account',
@@ -883,6 +1073,12 @@ exports.Prisma.ModelName = {
   SupportConfiguration: 'SupportConfiguration',
   TenantSupportRouting: 'TenantSupportRouting',
   OutboxEvent: 'OutboxEvent',
+  OrderConfiguration: 'OrderConfiguration',
+  OrderConfigurationPricing: 'OrderConfigurationPricing',
+  Order: 'Order',
+  Invoice: 'Invoice',
+  Payment: 'Payment',
+  Subscription: 'Subscription',
   EmailProvider: 'EmailProvider',
   AuditEvent: 'AuditEvent',
   InboxEvent: 'InboxEvent',
