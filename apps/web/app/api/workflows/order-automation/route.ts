@@ -37,18 +37,36 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Validate business logic: orders are either user-to-tenant or tenant-to-platform
+    // Validate business logic: orders are either user-to-tenant, tenant-to-platform, or guest orders
     // User Order: user buying from tenant (requires tenantId, userId is the buyer)
-    // Tenant Order: tenant buying from platform (requires userId for billing/admin, tenantId is the buyer)
-    if (!body.userId && !body.tenantId) {
-      return NextResponse.json(
-        { 
-          success: false,
-          error: 'Missing required field: userId or tenantId',
-          message: 'Please provide either userId (for tenant orders) or tenantId (for user orders)'
-        },
-        { status: 400 }
-      );
+    // Tenant Order: tenant buying from platform (requires userId for billing/admin, tenantId is the buyer)  
+    // Guest Order: guest buying (no userId or tenantId, but guestName and guestEmail are required)
+    const isGuestOrder = !body.userId && !body.tenantId;
+    
+    if (isGuestOrder) {
+      // Guest order validation
+      if (!body.guestName || !body.guestEmail) {
+        return NextResponse.json(
+          { 
+            success: false,
+            error: 'Missing required fields for guest order: guestName and guestEmail',
+            message: 'Guest orders require both guestName and guestEmail'
+          },
+          { status: 400 }
+        );
+      }
+    } else {
+      // Regular order validation
+      if (!body.userId && !body.tenantId) {
+        return NextResponse.json(
+          { 
+            success: false,
+            error: 'Missing required field: userId or tenantId',
+            message: 'Please provide either userId (for tenant orders) or tenantId (for user orders)'
+          },
+          { status: 400 }
+        );
+      }
     }
 
     // Prepare workflow parameters
@@ -65,6 +83,18 @@ export async function POST(request: NextRequest) {
       // Payment processing parameters
       paymentIntentId: body.paymentIntentId,
       processPayment: Boolean(body.processPayment),
+      // Guest checkout information
+      guestName: body.guestName,
+      guestEmail: body.guestEmail,
+      // Billing information
+      billingCompanyName: body.billingCompanyName,
+      billingVatNumber: body.billingVatNumber,
+      billingAddressLine1: body.billingAddressLine1,
+      billingAddressLine2: body.billingAddressLine2,
+      billingCity: body.billingCity,
+      billingState: body.billingState,
+      billingPostalCode: body.billingPostalCode,
+      billingCountry: body.billingCountry,
     };
 
     // Log workflow parameters for debugging

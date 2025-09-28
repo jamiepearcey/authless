@@ -18,6 +18,9 @@ export async function createOrder(params: {
   isSubscription: boolean;
   description: string;
   metadata?: Record<string, any>;
+  // Guest checkout information
+  guestName?: string;
+  guestEmail?: string;
   // Billing information
   billingCompanyName?: string;
   billingVatNumber?: string;
@@ -31,12 +34,19 @@ export async function createOrder(params: {
   console.log('🛒 Creating order via Prisma:', params);
   
   try {
-    // Validate that only one of userId or tenantId is provided
-    if (!params.userId && !params.tenantId) {
-      throw new Error('Either userId or tenantId must be provided');
-    }
-    if (params.userId && params.tenantId) {
-      throw new Error('Cannot provide both userId and tenantId - order must be associated with either a user OR tenant');
+    // Validate guest order vs regular order
+    const isGuestOrder = !params.userId && !params.tenantId;
+    
+    if (isGuestOrder) {
+      // Guest order validation
+      if (!params.guestName || !params.guestEmail) {
+        throw new Error('Guest orders require guestName and guestEmail');
+      }
+    } else {
+      // Regular order validation
+      if (params.userId && params.tenantId) {
+        throw new Error('Cannot provide both userId and tenantId - order must be associated with either a user OR tenant');
+      }
     }
     
     // Create order directly in database
@@ -50,7 +60,15 @@ export async function createOrder(params: {
         currency: params.currency,
         status: "PENDING",
         isSubscription: params.isSubscription,
-        metadata: JSON.stringify(params.metadata || {}),
+        metadata: JSON.stringify({
+          ...params.metadata,
+          // Include guest information in metadata for guest orders
+          ...(params.guestName && params.guestEmail ? {
+            guestName: params.guestName,
+            guestEmail: params.guestEmail,
+            isGuestOrder: true,
+          } : {}),
+        }),
         // Billing information
         billingCompanyName: params.billingCompanyName || null,
         billingVatNumber: params.billingVatNumber || null,
@@ -138,13 +156,18 @@ export async function processPayment(params: {
   console.log('💳 Processing payment via Prisma:', params);
   
   try {
+    // Validate that we have a real payment intent ID (not 'pending' or empty)
+    if (!params.paymentMethodId || params.paymentMethodId === 'pending' || params.paymentMethodId === '') {
+      throw new Error('Invalid payment method ID - cannot process payment without valid Stripe payment intent');
+    }
+    
     // Create payment record in database
     const payment = await prisma.payment.create({
       data: {
         invoiceId: params.invoiceId,
         amount: params.amount,
         currency: params.currency,
-        status: "SUCCEEDED", // For testing, assume payments succeed
+        status: "SUCCEEDED", // Only mark as succeeded if we have a real payment intent
         paymentMethod: 'card', // Default to 'card' for Stripe payments
         paymentIntentId: params.paymentMethodId, // Use the actual Stripe payment intent ID
         metadata: JSON.stringify({

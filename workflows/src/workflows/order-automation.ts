@@ -47,6 +47,9 @@ export interface OrderAutomationParams {
   // Payment processing
   paymentIntentId?: string;
   processPayment?: boolean;
+  // Guest checkout information
+  guestName?: string;
+  guestEmail?: string;
   // Billing information
   billingCompanyName?: string;
   billingVatNumber?: string;
@@ -82,20 +85,29 @@ export interface OrderAutomationResult {
 export async function orderAutomationWorkflow(params: OrderAutomationParams): Promise<OrderAutomationResult> {
   const startTime = Date.now();
   
-  // Validate business logic: orders are either user-to-tenant or tenant-to-platform
+  // Validate business logic: orders are either user-to-tenant, tenant-to-platform, or guest orders
   // User Order: user buying from tenant (requires tenantId, userId is the buyer)
   // Tenant Order: tenant buying from platform (requires userId for billing/admin, tenantId is the buyer)
-  if (!params.userId && !params.tenantId) {
+  // Guest Order: guest buying (no userId or tenantId, but guestName and guestEmail are required)
+  const isGuestOrder = !params.userId && !params.tenantId;
+  
+  if (isGuestOrder && (!params.guestName || !params.guestEmail)) {
+    throw new Error('Guest orders require guestName and guestEmail');
+  }
+  
+  if (!isGuestOrder && !params.userId && !params.tenantId) {
     throw new Error('Either userId (for tenant orders) or tenantId (for user orders) must be provided');
   }
   
   // Determine order type based on business logic
-  const isUserOrder = !!params.tenantId; // User buying from tenant
+  const orderType = isGuestOrder ? 'guest' : (!!params.tenantId ? 'user-to-tenant' : 'tenant-to-platform');
   
   log.info('Starting Order Automation workflow', { 
-    orderType: isUserOrder ? 'user-to-tenant' : 'tenant-to-platform',
+    orderType,
     userId: params.userId,
     tenantId: params.tenantId,
+    guestName: params.guestName,
+    guestEmail: params.guestEmail,
     orderNumber: params.orderNumber,
     totalAmount: params.totalAmount,
     currency: params.currency,
@@ -126,6 +138,9 @@ export async function orderAutomationWorkflow(params: OrderAutomationParams): Pr
       isSubscription: params.isSubscription,
       description: params.description,
       metadata: params.metadata,
+      // Guest checkout information
+      guestName: params.guestName,
+      guestEmail: params.guestEmail,
       // Billing information
       billingCompanyName: params.billingCompanyName,
       billingVatNumber: params.billingVatNumber,
@@ -163,8 +178,9 @@ export async function orderAutomationWorkflow(params: OrderAutomationParams): Pr
       log.info('Invoice generated successfully', { orderId, invoiceId });
     }
 
-    // Step 3: Process payment if paymentIntentId is provided, otherwise set to pending
-    if (params.paymentIntentId && params.processPayment) {
+    // Step 3: Process payment if paymentIntentId is provided and valid, otherwise set to pending
+    if (params.paymentIntentId && params.processPayment && 
+        params.paymentIntentId !== 'pending' && params.paymentIntentId !== '') {
       log.info('Processing payment immediately', { orderId, paymentIntentId: params.paymentIntentId });
       
       const paymentResult = await processPayment({

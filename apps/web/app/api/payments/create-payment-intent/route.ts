@@ -7,7 +7,7 @@ const CreatePaymentIntentSchema = z.object({
   amount: z.number().positive().min(30),
   currency: z.string().default('gbp'),
   customerId: z.string().optional(),
-  metadata: z.record(z.string()).optional(),
+  metadata: z.record(z.any()).optional(), // Allow any type in metadata, we'll convert to strings
   description: z.string().optional(),
 });
 
@@ -103,8 +103,19 @@ export async function POST(request: NextRequest) {
 
     const stripe = getStripeClient();
 
-    // Ensure we have valid metadata
+    // Ensure we have valid metadata and convert all values to strings
     let metadata: Record<string, string> = {};
+    
+    // Helper function to convert any value to string
+    const convertToStringMetadata = (obj: Record<string, any>): Record<string, string> => {
+      const result: Record<string, string> = {};
+      for (const [key, value] of Object.entries(obj || {})) {
+        if (value !== null && value !== undefined) {
+          result[key] = String(value);
+        }
+      }
+      return result;
+    };
     
     if (session?.user) {
       // Authenticated user checkout
@@ -119,7 +130,7 @@ export async function POST(request: NextRequest) {
       metadata = {
         userId: session.user.id,
         userEmail: session.user.email || '',
-        ...validatedData.metadata,
+        ...convertToStringMetadata(validatedData.metadata),
       };
     } else {
       // Guest checkout
@@ -132,9 +143,9 @@ export async function POST(request: NextRequest) {
       }
       
       metadata = {
-        guestEmail: body.metadata.guestEmail,
-        guestName: body.metadata.guestName,
-        ...validatedData.metadata,
+        guestEmail: String(body.metadata.guestEmail),
+        guestName: String(body.metadata.guestName),
+        ...convertToStringMetadata(validatedData.metadata),
       };
     }
     

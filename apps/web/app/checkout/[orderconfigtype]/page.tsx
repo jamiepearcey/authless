@@ -175,18 +175,21 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
         currency: selectedPricingOption.currency,
         isSubscription: selectedPricingOption.isRecurring,
         subscriptionFrequency: selectedPricingOption.frequency,
+        // For guest checkouts, we need to create without user or tenant
         ...(session?.user?.id && !isGuest ? { userId: session.user.id } : {}),
         paymentIntentId,
-        processPayment: true,
+        processPayment: !!paymentIntentId, // Only process payment if we have a payment intent ID
         waitForResult: true,
         metadata: {
           orderConfigurationId: orderConfiguration.id,
           pricingOptionId: selectedPricingOption.id,
         },
+        // Guest information - add to workflow params directly
         ...(isGuest ? {
           guestName: guestInfo.name,
           guestEmail: guestInfo.email,
         } : {}),
+        // Billing information
         ...(billingInfo.companyName && { billingCompanyName: billingInfo.companyName }),
         ...(billingInfo.vatNumber && { billingVatNumber: billingInfo.vatNumber }),
         ...(billingInfo.addressLine1 && { billingAddressLine1: billingInfo.addressLine1 }),
@@ -220,31 +223,6 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
     }
   };
 
-  // Handle payment success
-  const handlePaymentSuccess = async (paymentIntent: any) => {
-    try {
-      const paymentIntentId = typeof paymentIntent === 'string' ? paymentIntent : paymentIntent.id;
-      
-      const orderResult = await createOrderWithPayment(paymentIntentId);
-
-      await trackPaymentCompleted(
-        orderConfiguration.name,
-        selectedPricingOption.amount,
-        paymentIntentId,
-        { paymentMethod: 'stripe_elements' }
-      );
-      
-      if (orderResult?.orderId) {
-        router.push(`/orders/${orderResult.orderId}`);
-      } else {
-        router.push('/error/order_creation_failed?returnUrl=/checkout');
-      }
-    } catch (error) {
-      console.error('Failed to create order after payment:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      router.push(`/error/order_creation_failed?returnUrl=/checkout&details=${encodeURIComponent(errorMessage)}`);
-    }
-  };
 
   // Handle payment error
   const handlePaymentError = (error: string) => {
@@ -271,12 +249,12 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
       // Create order via workflow first (without payment processing)
       const orderResult = await createOrderWithPayment('');
       
-      if (!orderResult?.orderId) {
+      if (!orderResult?.result?.orderId) {
         throw new Error('Failed to create order');
       }
 
       // Redirect to order page where they can pay with Stripe
-      router.push(`/orders/${orderResult.orderId}`);
+      router.push(`/orders/${orderResult.result.orderId}`);
     } catch (error) {
       console.error('Stripe checkout failed:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -708,7 +686,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                         metadata={{
                           plan: orderConfiguration.name,
                           pricingOption: selectedPricingOption.id,
-                          frequency: selectedPricingOption.frequency,
+                          frequency: selectedPricingOption.frequency || '',
                           isSubscription: selectedPricingOption.isRecurring.toString(),
                           ...(session?.user?.id && { userId: session.user.id }),
                           ...(isGuest && guestInfo.email && { guestEmail: guestInfo.email }),
@@ -731,8 +709,8 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                             );
                             
                             // Redirect to order details page
-                            if (orderResult?.orderId) {
-                              router.push(`/orders/${orderResult.orderId}`);
+                            if (orderResult?.result?.orderId) {
+                              router.push(`/orders/${orderResult.result.orderId}`);
                             } else {
                               // If no order was created, redirect to error page
                               router.push('/error/order_creation_failed?returnUrl=/checkout');
