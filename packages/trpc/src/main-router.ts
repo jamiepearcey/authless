@@ -26,6 +26,7 @@ import { orderRouter } from "./routers/order";
 import { invoiceRouter } from "./routers/invoice";
 import { subscriptionRouter } from "./routers/subscription";
 import { orderConfigurationRouter } from "./routers/order-configuration";
+import { billingDashboardRouter } from "./routers/billing-dashboard";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -297,6 +298,12 @@ const appRouter = router({
   cancelSubscription: subscriptionRouter.cancelSubscription,
   reactivateSubscription: subscriptionRouter.reactivateSubscription,
   getSubscriptionHistory: subscriptionRouter.getSubscriptionHistory,
+
+  // Billing Dashboard
+  getBillingMetrics: billingDashboardRouter.getBillingMetrics,
+  getPlanMetrics: billingDashboardRouter.getPlanMetrics,
+  getSubscriptionMetrics: billingDashboardRouter.getSubscriptionMetrics,
+  getCustomersList: billingDashboardRouter.getCustomersList,
 
   // Order Configuration Management (Admin)
   getOrderConfigurationBySlug: orderConfigurationRouter.getBySlug,

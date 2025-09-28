@@ -6,8 +6,8 @@
       "@/*": [
         "./*"
       ],
-      "@ui/*": [
-        "../../packages/ui/src/*"
+      "@ui/base": [
+        "../../packages/ui/src"
       ],
       "@trpc/*": [
         "../../packages/trpc/src/*"
