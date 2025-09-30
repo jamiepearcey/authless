@@ -92,8 +92,8 @@ The table above reflects practical readiness based on current implementation sta
 
 ### Default Credentials
 
-- **Admin user:** admin@authless.uk / password123
-- **Regular user:** user@authless.uk / password123
+- **Admin user:** admin@authless.uk / admin123
+- **Regular user:** user@authless.uk / admin123
 
 ---
 

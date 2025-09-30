@@ -55,25 +55,10 @@ export default function AdminSecurityPage() {
     <AdminPageLayout
       title="Security Controls"
       description="Configure platform security settings and monitor real security events"
+      breadcrumb={[
+        { label: "Security", current: true },
+      ]}
     >
-      {/* Breadcrumb Navigation */}
-      <div className="flex items-center space-x-4 mb-4">
-        <Link 
-          href="/admin"
-          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Admin
-        </Link>
-        <div className="h-6 w-px bg-gray-300" />
-        <BreadcrumbNavigation
-          items={[
-            { label: "Admin", href: "/admin" },
-            { label: "Security", current: true },
-          ]}
-          showHome={false}
-        />
-      </div>
 
       {/* Real Security Metrics */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -75,6 +75,7 @@ model User {
   contactMessages           ContactMessage[]
   acceptedInvitations       Invitation[]              @relation("InvitationAcceptedBy")
   sentInvitations           Invitation[]              @relation("InvitedBy")
+  dashboardLayouts          DashboardLayout[]
   invitedMemberships        Membership[]              @relation("InvitedBy")
   memberships               Membership[]
   notifications             Notification[]
@@ -152,6 +153,7 @@ model Tenant {
   notifications                  Notification[]
   notificationIntents            NotificationIntent[]
   notificationPreferences        NotificationPreferences[]
+  dashboardLayouts               DashboardLayout[]
   pendingAuths                   PendingAuth[]
   sessions                       Session[]
   ssoAuditLogs                   SsoAuditLog[]
@@ -1388,4 +1390,22 @@ model NotificationTemplate {
   @@unique([type, locale])
   @@index([type])
   @@index([locale])
+}
+
+model DashboardLayout {
+  id        String   @id @default(cuid())
+  userId    String
+  tenantId  String?
+  dashboard String // 'system-health' | 'billing'
+  layout    Json // GridStack layout configuration
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant    Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dashboard], name: "platform_layout")
+  @@unique([userId, tenantId, dashboard], name: "tenant_layout")
+  @@index([userId])
+  @@index([tenantId])
+  @@index([dashboard])
 }

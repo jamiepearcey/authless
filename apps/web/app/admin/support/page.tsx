@@ -101,6 +101,9 @@ export default function AdminSupportPage() {
     <AdminPageLayout
       title="Support Management"
       description="Manage platform-wide support cases and customer inquiries"
+      breadcrumb={[
+        { label: "Support", current: true },
+      ]}
       actions={
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -113,25 +116,6 @@ export default function AdminSupportPage() {
         </div>
       }
     >
-      {/* Breadcrumb Navigation */}
-      <div className="flex items-center space-x-4 mb-4">
-        <Link 
-          href="/admin"
-          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Admin
-        </Link>
-        <div className="h-6 w-px bg-gray-300" />
-        <BreadcrumbNavigation
-          items={[
-            { label: "Admin", href: "/admin" },
-            { label: "Support Management", current: true },
-          ]}
-          showHome={false}
-        />
-      </div>
-
       {/* Support Metrics */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>

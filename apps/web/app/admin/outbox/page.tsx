@@ -34,6 +34,7 @@ import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { AdminPageLayout } from "@/components/AdminPageLayout";
 import Link from "next/link";
+import { AdminBreadcrumb } from "@/components/AdminBreadcrumb";
 
 interface OutboxEventFilters {
   status?: 'pending' | 'processing' | 'sent' | 'failed' | 'dead';
@@ -250,6 +251,9 @@ export default function OutboxMonitoringPage() {
     <AdminPageLayout
       title="Event Stream Monitor"
       description="Enterprise-grade event monitoring and delivery management"
+      breadcrumb={[
+        { label: "Outbox Monitoring", current: true },
+      ]}
       actions={
         <div className="flex items-center space-x-2">
               <TooltipProvider>
@@ -292,25 +296,6 @@ export default function OutboxMonitoringPage() {
             </div>
       }
     >
-      {/* Breadcrumb Navigation */}
-      <div className="flex items-center space-x-4 mb-4">
-        <Link 
-          href="/admin"
-          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Admin
-        </Link>
-        <div className="h-6 w-px bg-gray-300" />
-        <BreadcrumbNavigation
-          items={[
-            { label: "Admin", href: "/admin" },
-            { label: "Outbox Monitoring", current: true },
-          ]}
-          showHome={false}
-        />
-      </div>
-
       {/* Enterprise Stats Grid */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6 mb-6">
           <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">

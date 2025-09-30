@@ -241,7 +241,12 @@ export const billingDashboardRouter = router({
 
         // Get all order configurations (plans) with their order data
         const orderConfigurations = await ctx.db.orderConfiguration.findMany({
-          where: isPlatform ? {} : { tenantId: input.tenantId || ctx.session.user.tenantId },
+          where: isPlatform 
+            ? { isActive: true } // Platform view: get all active configurations
+            : { 
+                tenantId: input.tenantId || ctx.session.user.tenantId,
+                isActive: true 
+              },
           include: {
             orders: {
               where: {

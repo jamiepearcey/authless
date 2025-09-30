@@ -27,6 +27,7 @@ import { invoiceRouter } from "./routers/invoice";
 import { subscriptionRouter } from "./routers/subscription";
 import { orderConfigurationRouter } from "./routers/order-configuration";
 import { billingDashboardRouter } from "./routers/billing-dashboard";
+import { dashboardLayoutRouter } from "./routers/dashboard-layout";
 
 // Main router that aggregates all feature routers
 const appRouter = router({
@@ -316,6 +317,11 @@ const appRouter = router({
   createOrderConfigurationPricingOption: orderConfigurationRouter.createPricingOption,
   updateOrderConfigurationPricingOption: orderConfigurationRouter.updatePricingOption,
   deleteOrderConfigurationPricingOption: orderConfigurationRouter.deletePricingOption,
+
+  // Dashboard Layout Management
+  getDashboardLayout: dashboardLayoutRouter.getLayout,
+  saveDashboardLayout: dashboardLayoutRouter.saveLayout,
+  resetDashboardLayout: dashboardLayoutRouter.resetLayout,
 });
 
 // Export the router and type for client usage

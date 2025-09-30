@@ -2,12 +2,16 @@
 
 import { ReactNode } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
+import { BreadcrumbItem } from "./BreadcrumbNavigation";
+import { AdminBreadcrumb } from "./AdminBreadcrumb";
 
 interface AdminPageLayoutProps {
   children: ReactNode;
   title: string;
   description?: string;
   actions?: ReactNode;
+  breadcrumb?: BreadcrumbItem[] | BreadcrumbItem;
+  header?: ReactNode;
   className?: string;
 }
 
@@ -16,10 +20,12 @@ export function AdminPageLayout({
   title, 
   description, 
   actions,
+  breadcrumb,
+  header,
   className = ""
 }: AdminPageLayoutProps) {
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={`${className}`}>
       {/* Page Header */}
       <div className="md:flex md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
@@ -38,7 +44,17 @@ export function AdminPageLayout({
           </div>
         )}
       </div>
+      
+      {(header || breadcrumb) && (
+        <div className="mb-4">
+          {breadcrumb && (
+              <AdminBreadcrumb items={Array.isArray(breadcrumb) ? breadcrumb : [breadcrumb]} />
+          )}
+          {header} 
+        </div>
+      )}
 
+        
       {/* Page Content */}
       <div className="space-y-6">
         {children}

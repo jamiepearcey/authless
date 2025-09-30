@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { defaultRateLimit, apiRateLimit, authRateLimit } from "./lib/rate-limiter";
+import { applyRateLimitWithHeaders } from "./lib/rate-limiter";
 
 // Reserved subdomains that should not be treated as tenants
 const RESERVED_SUBDOMAINS = new Set([
@@ -161,35 +161,24 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   
   // Apply rate limiting with error handling
-  let rateLimitResult;
+  let rateLimitResponse;
   
   try {
-    if (pathname.startsWith('/api/')) {
-      rateLimitResult = await apiRateLimit(request);
-    } else if (pathname.startsWith('/auth/')) {
-      rateLimitResult = await authRateLimit(request);
-    } else {
-      rateLimitResult = await defaultRateLimit(request);
-    }
+    rateLimitResponse = await applyRateLimitWithHeaders(request);
     
     // If rate limit exceeded, return error response
-    if (!rateLimitResult.success) {
+    if (!rateLimitResponse.result.success) {
       return new Response(
         JSON.stringify({
           error: 'Too Many Requests',
           message: 'Rate limit exceeded. Please try again later.',
-          retryAfter: rateLimitResult.retryAfter,
+          retryAfter: rateLimitResponse.result.retryAfter,
         }),
         {
           status: 429,
           headers: {
             'Content-Type': 'application/json',
-            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
-            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
-            'X-RateLimit-Reset': rateLimitResult.reset.toISOString(),
-            ...(rateLimitResult.retryAfter && {
-              'Retry-After': rateLimitResult.retryAfter.toString(),
-            }),
+            ...rateLimitResponse.headers,
           },
         }
       );
@@ -197,12 +186,19 @@ export async function middleware(request: NextRequest) {
   } catch (error) {
     // If rate limiting fails, log error but continue processing request
     console.error('Rate limiting error:', error);
-    // Set a default rate limit result to continue processing
-    rateLimitResult = {
-      success: true,
-      limit: 100,
-      remaining: 99,
-      reset: new Date(Date.now() + 60000), // 1 minute from now
+    // Set a default rate limit response to continue processing
+    rateLimitResponse = {
+      result: {
+        success: true,
+        limit: 100,
+        remaining: 99,
+        reset: new Date(Date.now() + 60000), // 1 minute from now
+      },
+      headers: {
+        'X-RateLimit-Limit': '100',
+        'X-RateLimit-Remaining': '99',
+        'X-RateLimit-Reset': new Date(Date.now() + 60000).toISOString(),
+      },
     };
   }
 
@@ -217,11 +213,6 @@ export async function middleware(request: NextRequest) {
     "untenanted"
   );
   requestHeaders.set("x-is-untenanted", String(isUntenanted));
-  
-  // Add rate limit headers to all successful responses
-  requestHeaders.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
-  requestHeaders.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
-  requestHeaders.set('X-RateLimit-Reset', rateLimitResult.reset.toISOString());
   const pathParts = pathname.split("/");
 
   // Handle SSO redirection for tenant sign-in pages
@@ -274,9 +265,9 @@ export async function middleware(request: NextRequest) {
         });
         
         // Add rate limit headers to response
-        response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
-        response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
-        response.headers.set('X-RateLimit-Reset', rateLimitResult.reset.toISOString());
+        Object.entries(rateLimitResponse.headers).forEach(([key, value]) => {
+          response.headers.set(key, value);
+        });
         
         return response;
       }
@@ -289,9 +280,9 @@ export async function middleware(request: NextRequest) {
       });
       
       // Add rate limit headers to response
-      response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
-      response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
-      response.headers.set('X-RateLimit-Reset', rateLimitResult.reset.toISOString());
+      Object.entries(rateLimitResponse.headers).forEach(([key, value]) => {
+        response.headers.set(key, value);
+      });
       
       return response;
     }
@@ -303,9 +294,9 @@ export async function middleware(request: NextRequest) {
   });
   
   // Add rate limit headers to response
-  response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
-  response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
-  response.headers.set('X-RateLimit-Reset', rateLimitResult.reset.toISOString());
+  Object.entries(rateLimitResponse.headers).forEach(([key, value]) => {
+    response.headers.set(key, value);
+  });
   
   return response;
 }

@@ -1,14 +1,22 @@
-import { NextRequest } from 'next/server';
+import { NextRequest } from "next/server";
 
-interface RateLimitConfig {
-  keyPrefix?: string;
-  points: number;
-  duration: number;
-  blockDuration?: number;
-  execEvenly?: boolean;
+// Rate limit configuration for different endpoint patterns
+export interface RateLimitConfig {
+  // Pattern to match against the pathname
+  pattern: string | RegExp;
+  // HTTP methods this limit applies to (e.g., ['GET'], ['POST'], ['GET', 'POST'])
+  methods: string[];
+  // Rate limit values
+  limit: number;
+  windowMs: number; // Time window in milliseconds
+  // Optional: Custom key function for more complex rate limiting
+  keyGenerator?: (request: NextRequest) => string;
+  // Optional: Skip rate limiting for certain conditions
+  skip?: (request: NextRequest) => boolean;
 }
 
-interface RateLimitResult {
+// Rate limit result
+export interface RateLimitResult {
   success: boolean;
   limit: number;
   remaining: number;
@@ -16,190 +24,490 @@ interface RateLimitResult {
   retryAfter?: number;
 }
 
-interface RateLimitRecord {
-  count: number;
-  resetTime: number;
-  blockUntil?: number;
+// Rate limit response with headers
+export interface RateLimitResponse {
+  result: RateLimitResult;
+  headers: Record<string, string>;
 }
 
-class RateLimitService {
-  private limiters: Map<string, Map<string, RateLimitRecord>> = new Map();
-  private cleanupInterval?: NodeJS.Timeout;
+// Generic rate limiter class
+export class RateLimiter {
+  private store: Map<string, { count: number; resetTime: number }>;
+  private cleanupInterval: NodeJS.Timeout;
 
   constructor() {
-    // Clean up expired records every 5 minutes
-    if (typeof setInterval !== 'undefined') {
+    this.store = new Map();
+    
+    // Clean up expired entries periodically
       this.cleanupInterval = setInterval(() => {
         this.cleanup();
-      }, 5 * 60 * 1000);
-    }
+    }, 60 * 1000); // Clean up every minute
   }
 
-  private getLimiterStore(limiterKey: string): Map<string, RateLimitRecord> {
-    if (!this.limiters.has(limiterKey)) {
-      this.limiters.set(limiterKey, new Map());
-    }
-    return this.limiters.get(limiterKey)!;
-  }
-
-  private cleanup() {
+  private cleanup(): void {
     const now = Date.now();
-    for (const [limiterKey, store] of this.limiters.entries()) {
-      for (const [identifier, record] of store.entries()) {
-        // Remove expired records
-        if (record.resetTime < now && (!record.blockUntil || record.blockUntil < now)) {
-          store.delete(identifier);
-        }
-      }
-      // Remove empty stores
-      if (store.size === 0) {
-        this.limiters.delete(limiterKey);
+    for (const [key, value] of this.store.entries()) {
+      if (now > value.resetTime) {
+        this.store.delete(key);
       }
     }
   }
 
-  async checkLimit(
-    identifier: string,
+  // Apply rate limiting based on configuration
+  async applyLimit(
+    request: NextRequest, 
     config: RateLimitConfig
   ): Promise<RateLimitResult> {
-    // Ensure identifier is a valid string
-    if (!identifier || typeof identifier !== 'string') {
-      identifier = 'anonymous';
-    }
-
-    const limiterKey = `${config.keyPrefix || 'default'}_${config.points}_${config.duration}`;
-    const store = this.getLimiterStore(limiterKey);
+    const key = config.keyGenerator?.(request) || this.defaultKeyGenerator(request);
     const now = Date.now();
+    const windowStart = Math.floor(now / config.windowMs) * config.windowMs;
+    const resetTime = windowStart + config.windowMs;
+    const storeKey = `${key}:${windowStart}`;
     
-    let record = store.get(identifier);
+    // Get current count
+    const current = this.store.get(storeKey) || { count: 0, resetTime };
     
-    // Check if still blocked
-    if (record?.blockUntil && record.blockUntil > now) {
+    // Check if we've exceeded the limit
+    if (current.count >= config.limit) {
+      const retryAfter = Math.ceil((resetTime - now) / 1000);
       return {
         success: false,
-        limit: config.points,
+        limit: config.limit,
         remaining: 0,
-        reset: new Date(record.blockUntil),
-        retryAfter: Math.ceil((record.blockUntil - now) / 1000),
+        reset: new Date(resetTime),
+        retryAfter,
       };
     }
     
-    // Reset if window has passed
-    if (!record || record.resetTime <= now) {
-      record = {
-        count: 0,
-        resetTime: now + (config.duration * 1000),
-      };
-    }
-    
-    // Increment count
-    record.count++;
-    
-    // Check if limit exceeded
-    if (record.count > config.points) {
-      // Set block time
-      const blockDuration = (config.blockDuration || config.duration) * 1000;
-      record.blockUntil = now + blockDuration;
-      
-      store.set(identifier, record);
-      
-      return {
-        success: false,
-        limit: config.points,
-        remaining: 0,
-        reset: new Date(record.blockUntil),
-        retryAfter: Math.ceil(blockDuration / 1000),
-      };
-    }
-    
-    // Update record
-    store.set(identifier, record);
+    // Increment the count
+    current.count++;
+    this.store.set(storeKey, current);
     
     return {
       success: true,
-      limit: config.points,
-      remaining: Math.max(0, config.points - record.count),
-      reset: new Date(record.resetTime),
+      limit: config.limit,
+      remaining: config.limit - current.count,
+      reset: new Date(resetTime),
     };
   }
 
-  getClientIdentifier(request: NextRequest): string {
-    // Try to get real IP from various headers (for proxy/CDN scenarios)
-    const forwarded = request.headers.get('x-forwarded-for');
-    const realIp = request.headers.get('x-real-ip');
-    const cfConnectingIp = request.headers.get('cf-connecting-ip');
+  // Apply rate limiting with headers
+  async applyLimitWithHeaders(
+    request: NextRequest, 
+    config: RateLimitConfig
+  ): Promise<RateLimitResponse> {
+    const result = await this.applyLimit(request, config);
     
-    if (forwarded && typeof forwarded === 'string') {
-      const ip = forwarded.split(',')[0].trim();
-      if (ip) return ip;
+    const headers: Record<string, string> = {
+      'X-RateLimit-Limit': result.limit.toString(),
+      'X-RateLimit-Remaining': result.remaining.toString(),
+      'X-RateLimit-Reset': result.reset.toISOString(),
+    };
+
+    if (result.retryAfter) {
+      headers['Retry-After'] = result.retryAfter.toString();
     }
-    
-    if (realIp && typeof realIp === 'string') {
-      return realIp;
-    }
-    
-    if (cfConnectingIp && typeof cfConnectingIp === 'string') {
-      return cfConnectingIp;
-    }
-    
-    // Fallback: use host header or generate a fallback identifier
-    const host = request.headers.get('host');
-    if (host && typeof host === 'string') {
-      return `host-${host}`;
-    }
-    
-    return 'anonymous';
+
+    return {
+      result,
+      headers,
+    };
   }
 
-  destroy() {
+  // Default key generator using IP + User Agent
+  private defaultKeyGenerator(request: NextRequest): string {
+    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+    const userAgent = request.headers.get('user-agent') || 'unknown';
+    return `${ip}:${userAgent}`;
+  }
+
+  // Clear all rate limits (useful for testing)
+  clearAll(): void {
+    this.store.clear();
+  }
+
+  // Clear rate limits for a specific key pattern
+  clearForPattern(pattern: string | RegExp): void {
+    const regex = typeof pattern === 'string' ? new RegExp(pattern) : pattern;
+    for (const key of this.store.keys()) {
+      if (regex.test(key)) {
+        this.store.delete(key);
+      }
+    }
+  }
+
+  // Cleanup resources
+  destroy(): void {
     if (this.cleanupInterval) {
       clearInterval(this.cleanupInterval);
     }
+    this.store.clear();
   }
 }
 
-export const rateLimitService = new RateLimitService();
+// Rate limit configuration manager
+export class RateLimitConfigManager {
+  private configs: RateLimitConfig[] = [];
 
-export interface CreateRateLimitOptions {
-  points: number;
-  duration: number;
-  blockDuration?: number;
-  keyPrefix?: string;
-  skipSuccessfulRequests?: boolean;
-  skipFailedRequests?: boolean;
-  keyGenerator?: (request: NextRequest) => string;
+  constructor() {
+    this.loadDefaultConfigs();
+  }
+
+  // Add a configuration to the stack
+  addConfig(config: RateLimitConfig): void {
+    this.configs.push(config);
+  }
+
+  // Add multiple configurations
+  addConfigs(configs: RateLimitConfig[]): void {
+    this.configs.push(...configs);
+  }
+
+  // Find the first matching configuration
+  findMatchingConfig(request: NextRequest): RateLimitConfig | null {
+    const pathname = request.nextUrl.pathname;
+    const method = request.method.toUpperCase();
+    
+    for (const config of this.configs) {
+      // Check if the pattern matches
+      const patternMatches = typeof config.pattern === 'string' 
+        ? pathname.startsWith(config.pattern)
+        : config.pattern.test(pathname);
+      
+      // Check if the method matches
+      const methodMatches = config.methods.includes(method);
+      
+      // Check if we should skip this rate limit
+      const shouldSkip = config.skip?.(request) || false;
+      
+      if (patternMatches && methodMatches && !shouldSkip) {
+        return config;
+      }
+    }
+    
+    return null;
+  }
+
+  // Load default configurations
+  private loadDefaultConfigs(): void {
+    // Default key generators
+    const defaultKeyGenerator = (request: NextRequest): string => {
+      const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+      const userAgent = request.headers.get('user-agent') || 'unknown';
+      return `${ip}:${userAgent}`;
+    };
+
+    const authenticatedKeyGenerator = (request: NextRequest): string => {
+      const authToken = request.cookies.get("next-auth.session-token") || 
+                       request.cookies.get("__Secure-next-auth.session-token");
+      
+      if (authToken) {
+        // Use a hash of the token for authenticated users
+        return `auth:${authToken.value.substring(0, 16)}`;
+      }
+      
+      // Fallback to IP-based for unauthenticated users
+      return defaultKeyGenerator(request);
+    };
+
+    const isAuthenticated = (request: NextRequest): boolean => {
+      const authToken = request.cookies.get("next-auth.session-token") || 
+                       request.cookies.get("__Secure-next-auth.session-token");
+      return !!authToken;
+    };
+
+    // Default configurations - ordered from most specific to least specific
+    this.configs = [
+      // Development mode - very lenient for testing
+      ...(process.env.NODE_ENV === 'development' ? [
+        {
+          pattern: /^\/api\/trpc\/(getDashboardLayout|saveDashboardLayout|resetDashboardLayout)/,
+          methods: ['POST'],
+          limit: 1000, // Very high limit for development
+          windowMs: 60 * 1000, // 1 minute
+          keyGenerator: authenticatedKeyGenerator,
+        },
+        {
+          pattern: /^\/api\/trpc\/getCentrifugoToken/,
+          methods: ['GET', 'POST'],
+          limit: 2000, // Very high limit for Centrifugo in development
+          windowMs: 60 * 1000, // 1 minute
+          keyGenerator: authenticatedKeyGenerator,
+        },
+        {
+          pattern: /^\/api\/trpc\/.*\?batch=1$/,
+          methods: ['GET', 'POST'],
+          limit: 1000, // Very high limit for batch requests in development
+          windowMs: 60 * 1000, // 1 minute
+          keyGenerator: authenticatedKeyGenerator,
+        }
+      ] : []),
+      // API endpoints - very restrictive
+      {
+        pattern: /^\/api\/auth\/signin$/,
+        methods: ['POST'],
+        limit: 5, // 5 login attempts per window
+        windowMs: 15 * 60 * 1000, // 15 minutes
+        keyGenerator: defaultKeyGenerator,
+      },
+      
+      // Password reset endpoints
+      {
+        pattern: /^\/api\/auth\/reset-password$/,
+        methods: ['POST'],
+        limit: 3, // 3 password reset attempts per window
+        windowMs: 60 * 60 * 1000, // 1 hour
+        keyGenerator: defaultKeyGenerator,
+      },
+      
+      // Registration endpoints
+      {
+        pattern: /^\/api\/auth\/register$/,
+        methods: ['POST'],
+        limit: 3, // 3 registration attempts per window
+        windowMs: 60 * 60 * 1000, // 1 hour
+        keyGenerator: defaultKeyGenerator,
+      },
+      
+      // Webhook endpoints - more lenient
+      {
+        pattern: /^\/api\/webhooks\//,
+        methods: ['POST'],
+        limit: 100, // 100 webhook calls per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: defaultKeyGenerator,
+      },
+      
+      // tRPC batch requests - more lenient since they contain multiple calls
+      {
+        pattern: /^\/api\/trpc\/.*\?batch=1$/,
+        methods: ['GET', 'POST'],
+        limit: 200, // 200 batch requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+      },
+      
+      // Dashboard layout operations - more lenient for testing
+      {
+        pattern: /^\/api\/trpc\/(getDashboardLayout|saveDashboardLayout|resetDashboardLayout)/,
+        methods: ['POST'],
+        limit: 200, // 200 dashboard operations per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+      },
+      
+      // Centrifugo token requests - very lenient for real-time features
+      {
+        pattern: /^\/api\/trpc\/getCentrifugoToken/,
+        methods: ['GET', 'POST'],
+        limit: 500, // 500 token requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+      },
+      
+      // tRPC mutations (POST requests to tRPC)
+      {
+        pattern: /^\/api\/trpc\/[^/]+\.[^/]+$/,
+        methods: ['POST'],
+        limit: 60, // 60 mutations per window for authenticated users
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+      },
+      
+      // tRPC queries (GET requests to tRPC)
+      {
+        pattern: /^\/api\/trpc\/[^/]+\.[^/]+$/,
+        methods: ['GET'],
+        limit: 120, // 120 queries per window for authenticated users
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+      },
+      
+      // General API endpoints - POST
+      {
+        pattern: /^\/api\//,
+        methods: ['POST'],
+        limit: 30, // 30 POST requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+      },
+      
+      // General API endpoints - GET
+      {
+        pattern: /^\/api\//,
+        methods: ['GET'],
+        limit: 100, // 100 GET requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+      },
+      
+      // Auth pages - more restrictive
+      {
+        pattern: /^\/auth\//,
+        methods: ['GET', 'POST'],
+        limit: 20, // 20 requests per window
+        windowMs: 15 * 60 * 1000, // 15 minutes
+        keyGenerator: defaultKeyGenerator,
+      },
+      
+      // Admin pages - authenticated users only
+      {
+        pattern: /^\/admin\//,
+        methods: ['GET'],
+        limit: 200, // 200 GET requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+        skip: (request) => !isAuthenticated(request),
+      },
+      
+      // Admin pages - POST requests
+      {
+        pattern: /^\/admin\//,
+        methods: ['POST'],
+        limit: 50, // 50 POST requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+        skip: (request) => !isAuthenticated(request),
+      },
+      
+      // Dashboard pages - authenticated users
+      {
+        pattern: /^\/dashboard\//,
+        methods: ['GET'],
+        limit: 150, // 150 GET requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+        skip: (request) => !isAuthenticated(request),
+      },
+      
+      // Settings pages - authenticated users
+      {
+        pattern: /^\/settings\//,
+        methods: ['GET'],
+        limit: 100, // 100 GET requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+        skip: (request) => !isAuthenticated(request),
+      },
+      
+      // Settings pages - POST requests
+      {
+        pattern: /^\/settings\//,
+        methods: ['POST'],
+        limit: 20, // 20 POST requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+        skip: (request) => !isAuthenticated(request),
+      },
+      
+      // Tenant pages - authenticated users
+      {
+        pattern: /^\/tenants\/[^/]+\//,
+        methods: ['GET'],
+        limit: 120, // 120 GET requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+        skip: (request) => !isAuthenticated(request),
+      },
+      
+      // Tenant pages - POST requests
+      {
+        pattern: /^\/tenants\/[^/]+\//,
+        methods: ['POST'],
+        limit: 30, // 30 POST requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: authenticatedKeyGenerator,
+        skip: (request) => !isAuthenticated(request),
+      },
+      
+      // Default rate limit for all other requests
+      {
+        pattern: /.*/,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+        limit: 200, // 200 requests per window
+        windowMs: 60 * 1000, // 1 minute
+        keyGenerator: defaultKeyGenerator,
+      },
+    ];
+  }
 }
 
-export function createRateLimit(options: CreateRateLimitOptions) {
-  return async (request: NextRequest): Promise<RateLimitResult> => {
-    const identifier = options.keyGenerator 
-      ? options.keyGenerator(request) 
-      : rateLimitService.getClientIdentifier(request);
+// Global instances
+const rateLimiter = new RateLimiter();
+const configManager = new RateLimitConfigManager();
 
-    return rateLimitService.checkLimit(identifier, {
-      keyPrefix: options.keyPrefix || 'general',
-      points: options.points,
-      duration: options.duration,
-      blockDuration: options.blockDuration,
-    });
-  };
+// Expose rate limit utilities to global scope in development
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  (window as any).clearAllRateLimits = clearAllRateLimits;
+  (window as any).clearDashboardRateLimits = clearDashboardRateLimits;
+  (window as any).clearCentrifugoRateLimits = clearCentrifugoRateLimits;
 }
 
-export const defaultRateLimit = createRateLimit({
-  points: 100, // Number of requests
-  duration: 60, // Per 60 seconds
-  keyPrefix: 'general',
-});
+// Main function to apply rate limiting
+export async function applyRateLimit(request: NextRequest): Promise<RateLimitResult> {
+  const config = configManager.findMatchingConfig(request);
+  
+  if (!config) {
+    // No rate limit configured, allow the request
+    return {
+      success: true,
+      limit: 0,
+      remaining: 0,
+      reset: new Date(Date.now() + 60000),
+    };
+  }
+  
+  return rateLimiter.applyLimit(request, config);
+}
 
-export const apiRateLimit = createRateLimit({
-  points: 100,
-  duration: 60,
-  keyPrefix: 'api',
-});
+// Main function to apply rate limiting with headers
+export async function applyRateLimitWithHeaders(request: NextRequest): Promise<RateLimitResponse> {
+  const config = configManager.findMatchingConfig(request);
+  
+  if (!config) {
+    // No rate limit configured, allow the request
+    return {
+      result: {
+        success: true,
+        limit: 0,
+        remaining: 0,
+        reset: new Date(Date.now() + 60000),
+      },
+      headers: {
+        'X-RateLimit-Limit': '0',
+        'X-RateLimit-Remaining': '0',
+        'X-RateLimit-Reset': new Date(Date.now() + 60000).toISOString(),
+      },
+    };
+  }
+  
+  return rateLimiter.applyLimitWithHeaders(request, config);
+}
 
-export const authRateLimit = createRateLimit({
-  points: 20,
-  duration: 300, // 5 minutes
-  blockDuration: 900, // Block for 15 minutes
-  keyPrefix: 'auth',
-});
+// Utility functions for testing and debugging
+export function clearAllRateLimits(): void {
+  rateLimiter.clearAll();
+}
+
+export function clearDashboardRateLimits(): void {
+  rateLimiter.clearForPattern(/dashboard/);
+}
+
+export function clearCentrifugoRateLimits(): void {
+  rateLimiter.clearForPattern(/centrifugo/i);
+}
+
+// Legacy functions for backward compatibility
+export async function defaultRateLimit(request: NextRequest) {
+  return applyRateLimit(request);
+}
+
+export async function apiRateLimit(request: NextRequest) {
+  return applyRateLimit(request);
+}
+
+export async function authRateLimit(request: NextRequest) {
+  return applyRateLimit(request);
+}
+
+// Classes are already exported above

@@ -258,6 +258,11 @@ export type NotificationPreferences = $Result.DefaultSelection<Prisma.$Notificat
  * 
  */
 export type NotificationTemplate = $Result.DefaultSelection<Prisma.$NotificationTemplatePayload>
+/**
+ * Model DashboardLayout
+ * 
+ */
+export type DashboardLayout = $Result.DefaultSelection<Prisma.$DashboardLayoutPayload>
 
 /**
  * Enums
@@ -956,6 +961,16 @@ export class PrismaClient<
     * ```
     */
   get notificationTemplate(): Prisma.NotificationTemplateDelegate<ExtArgs>;
+
+  /**
+   * `prisma.dashboardLayout`: Exposes CRUD operations for the **DashboardLayout** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DashboardLayouts
+    * const dashboardLayouts = await prisma.dashboardLayout.findMany()
+    * ```
+    */
+  get dashboardLayout(): Prisma.DashboardLayoutDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1445,7 +1460,8 @@ export namespace Prisma {
     NotificationIntent: 'NotificationIntent',
     NotificationDelivery: 'NotificationDelivery',
     NotificationPreferences: 'NotificationPreferences',
-    NotificationTemplate: 'NotificationTemplate'
+    NotificationTemplate: 'NotificationTemplate',
+    DashboardLayout: 'DashboardLayout'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1461,7 +1477,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "tenantSsoConfiguration" | "ssoAuditLog" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit" | "supportCase" | "supportOption" | "caseMessage" | "caseStatusHistory" | "caseMetrics" | "supportConfiguration" | "tenantSupportRouting" | "outboxEvent" | "orderConfiguration" | "orderConfigurationPricing" | "order" | "invoice" | "payment" | "subscription" | "emailProvider" | "auditEvent" | "inboxEvent" | "notificationIntent" | "notificationDelivery" | "notificationPreferences" | "notificationTemplate"
+      modelProps: "account" | "session" | "user" | "verificationToken" | "tenant" | "tenantSsoConfiguration" | "ssoAuditLog" | "membership" | "invitation" | "contactReason" | "contactMessage" | "contactMessageReason" | "contactReply" | "auditLog" | "passkey" | "authenticatorCode" | "notification" | "notificationRecipient" | "webhookEndpoint" | "featureDefinition" | "globalFeatureRule" | "tenantFeatureRule" | "featureAuditEntry" | "setupState" | "twoFactorMethod" | "pendingAuth" | "twoFactorCode" | "twoFactorAudit" | "supportCase" | "supportOption" | "caseMessage" | "caseStatusHistory" | "caseMetrics" | "supportConfiguration" | "tenantSupportRouting" | "outboxEvent" | "orderConfiguration" | "orderConfigurationPricing" | "order" | "invoice" | "payment" | "subscription" | "emailProvider" | "auditEvent" | "inboxEvent" | "notificationIntent" | "notificationDelivery" | "notificationPreferences" | "notificationTemplate" | "dashboardLayout"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4895,6 +4911,76 @@ export namespace Prisma {
           }
         }
       }
+      DashboardLayout: {
+        payload: Prisma.$DashboardLayoutPayload<ExtArgs>
+        fields: Prisma.DashboardLayoutFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DashboardLayoutFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DashboardLayoutFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload>
+          }
+          findFirst: {
+            args: Prisma.DashboardLayoutFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DashboardLayoutFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload>
+          }
+          findMany: {
+            args: Prisma.DashboardLayoutFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload>[]
+          }
+          create: {
+            args: Prisma.DashboardLayoutCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload>
+          }
+          createMany: {
+            args: Prisma.DashboardLayoutCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DashboardLayoutCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload>[]
+          }
+          delete: {
+            args: Prisma.DashboardLayoutDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload>
+          }
+          update: {
+            args: Prisma.DashboardLayoutUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload>
+          }
+          deleteMany: {
+            args: Prisma.DashboardLayoutDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DashboardLayoutUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DashboardLayoutUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DashboardLayoutPayload>
+          }
+          aggregate: {
+            args: Prisma.DashboardLayoutAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDashboardLayout>
+          }
+          groupBy: {
+            args: Prisma.DashboardLayoutGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DashboardLayoutGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DashboardLayoutCountArgs<ExtArgs>
+            result: $Utils.Optional<DashboardLayoutCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -5064,6 +5150,7 @@ export namespace Prisma {
     contactMessages: number
     acceptedInvitations: number
     sentInvitations: number
+    dashboardLayouts: number
     invitedMemberships: number
     memberships: number
     notifications: number
@@ -5091,6 +5178,7 @@ export namespace Prisma {
     contactMessages?: boolean | UserCountOutputTypeCountContactMessagesArgs
     acceptedInvitations?: boolean | UserCountOutputTypeCountAcceptedInvitationsArgs
     sentInvitations?: boolean | UserCountOutputTypeCountSentInvitationsArgs
+    dashboardLayouts?: boolean | UserCountOutputTypeCountDashboardLayoutsArgs
     invitedMemberships?: boolean | UserCountOutputTypeCountInvitedMembershipsArgs
     memberships?: boolean | UserCountOutputTypeCountMembershipsArgs
     notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
@@ -5174,6 +5262,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSentInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InvitationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDashboardLayoutsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DashboardLayoutWhereInput
   }
 
   /**
@@ -5304,6 +5399,7 @@ export namespace Prisma {
     notifications: number
     notificationIntents: number
     notificationPreferences: number
+    dashboardLayouts: number
     pendingAuths: number
     sessions: number
     ssoAuditLogs: number
@@ -5332,6 +5428,7 @@ export namespace Prisma {
     notifications?: boolean | TenantCountOutputTypeCountNotificationsArgs
     notificationIntents?: boolean | TenantCountOutputTypeCountNotificationIntentsArgs
     notificationPreferences?: boolean | TenantCountOutputTypeCountNotificationPreferencesArgs
+    dashboardLayouts?: boolean | TenantCountOutputTypeCountDashboardLayoutsArgs
     pendingAuths?: boolean | TenantCountOutputTypeCountPendingAuthsArgs
     sessions?: boolean | TenantCountOutputTypeCountSessionsArgs
     ssoAuditLogs?: boolean | TenantCountOutputTypeCountSsoAuditLogsArgs
@@ -5428,6 +5525,13 @@ export namespace Prisma {
    */
   export type TenantCountOutputTypeCountNotificationPreferencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NotificationPreferencesWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountDashboardLayoutsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DashboardLayoutWhereInput
   }
 
   /**
@@ -8305,6 +8409,7 @@ export namespace Prisma {
     contactMessages?: boolean | User$contactMessagesArgs<ExtArgs>
     acceptedInvitations?: boolean | User$acceptedInvitationsArgs<ExtArgs>
     sentInvitations?: boolean | User$sentInvitationsArgs<ExtArgs>
+    dashboardLayouts?: boolean | User$dashboardLayoutsArgs<ExtArgs>
     invitedMemberships?: boolean | User$invitedMembershipsArgs<ExtArgs>
     memberships?: boolean | User$membershipsArgs<ExtArgs>
     notifications?: boolean | User$notificationsArgs<ExtArgs>
@@ -8395,6 +8500,7 @@ export namespace Prisma {
     contactMessages?: boolean | User$contactMessagesArgs<ExtArgs>
     acceptedInvitations?: boolean | User$acceptedInvitationsArgs<ExtArgs>
     sentInvitations?: boolean | User$sentInvitationsArgs<ExtArgs>
+    dashboardLayouts?: boolean | User$dashboardLayoutsArgs<ExtArgs>
     invitedMemberships?: boolean | User$invitedMembershipsArgs<ExtArgs>
     memberships?: boolean | User$membershipsArgs<ExtArgs>
     notifications?: boolean | User$notificationsArgs<ExtArgs>
@@ -8426,6 +8532,7 @@ export namespace Prisma {
       contactMessages: Prisma.$ContactMessagePayload<ExtArgs>[]
       acceptedInvitations: Prisma.$InvitationPayload<ExtArgs>[]
       sentInvitations: Prisma.$InvitationPayload<ExtArgs>[]
+      dashboardLayouts: Prisma.$DashboardLayoutPayload<ExtArgs>[]
       invitedMemberships: Prisma.$MembershipPayload<ExtArgs>[]
       memberships: Prisma.$MembershipPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
@@ -8844,6 +8951,7 @@ export namespace Prisma {
     contactMessages<T extends User$contactMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$contactMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findMany"> | Null>
     acceptedInvitations<T extends User$acceptedInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, User$acceptedInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany"> | Null>
     sentInvitations<T extends User$sentInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, User$sentInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany"> | Null>
+    dashboardLayouts<T extends User$dashboardLayoutsArgs<ExtArgs> = {}>(args?: Subset<T, User$dashboardLayoutsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "findMany"> | Null>
     invitedMemberships<T extends User$invitedMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$invitedMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany"> | Null>
     memberships<T extends User$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany"> | Null>
     notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany"> | Null>
@@ -9388,6 +9496,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: InvitationScalarFieldEnum | InvitationScalarFieldEnum[]
+  }
+
+  /**
+   * User.dashboardLayouts
+   */
+  export type User$dashboardLayoutsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    where?: DashboardLayoutWhereInput
+    orderBy?: DashboardLayoutOrderByWithRelationInput | DashboardLayoutOrderByWithRelationInput[]
+    cursor?: DashboardLayoutWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DashboardLayoutScalarFieldEnum | DashboardLayoutScalarFieldEnum[]
   }
 
   /**
@@ -10993,6 +11121,7 @@ export namespace Prisma {
     notifications?: boolean | Tenant$notificationsArgs<ExtArgs>
     notificationIntents?: boolean | Tenant$notificationIntentsArgs<ExtArgs>
     notificationPreferences?: boolean | Tenant$notificationPreferencesArgs<ExtArgs>
+    dashboardLayouts?: boolean | Tenant$dashboardLayoutsArgs<ExtArgs>
     pendingAuths?: boolean | Tenant$pendingAuthsArgs<ExtArgs>
     sessions?: boolean | Tenant$sessionsArgs<ExtArgs>
     ssoAuditLogs?: boolean | Tenant$ssoAuditLogsArgs<ExtArgs>
@@ -11099,6 +11228,7 @@ export namespace Prisma {
     notifications?: boolean | Tenant$notificationsArgs<ExtArgs>
     notificationIntents?: boolean | Tenant$notificationIntentsArgs<ExtArgs>
     notificationPreferences?: boolean | Tenant$notificationPreferencesArgs<ExtArgs>
+    dashboardLayouts?: boolean | Tenant$dashboardLayoutsArgs<ExtArgs>
     pendingAuths?: boolean | Tenant$pendingAuthsArgs<ExtArgs>
     sessions?: boolean | Tenant$sessionsArgs<ExtArgs>
     ssoAuditLogs?: boolean | Tenant$ssoAuditLogsArgs<ExtArgs>
@@ -11132,6 +11262,7 @@ export namespace Prisma {
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       notificationIntents: Prisma.$NotificationIntentPayload<ExtArgs>[]
       notificationPreferences: Prisma.$NotificationPreferencesPayload<ExtArgs>[]
+      dashboardLayouts: Prisma.$DashboardLayoutPayload<ExtArgs>[]
       pendingAuths: Prisma.$PendingAuthPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       ssoAuditLogs: Prisma.$SsoAuditLogPayload<ExtArgs>[]
@@ -11559,6 +11690,7 @@ export namespace Prisma {
     notifications<T extends Tenant$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany"> | Null>
     notificationIntents<T extends Tenant$notificationIntentsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$notificationIntentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationIntentPayload<ExtArgs>, T, "findMany"> | Null>
     notificationPreferences<T extends Tenant$notificationPreferencesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$notificationPreferencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findMany"> | Null>
+    dashboardLayouts<T extends Tenant$dashboardLayoutsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$dashboardLayoutsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "findMany"> | Null>
     pendingAuths<T extends Tenant$pendingAuthsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$pendingAuthsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingAuthPayload<ExtArgs>, T, "findMany"> | Null>
     sessions<T extends Tenant$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany"> | Null>
     ssoAuditLogs<T extends Tenant$ssoAuditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$ssoAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SsoAuditLogPayload<ExtArgs>, T, "findMany"> | Null>
@@ -12150,6 +12282,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationPreferencesScalarFieldEnum | NotificationPreferencesScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.dashboardLayouts
+   */
+  export type Tenant$dashboardLayoutsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    where?: DashboardLayoutWhereInput
+    orderBy?: DashboardLayoutOrderByWithRelationInput | DashboardLayoutOrderByWithRelationInput[]
+    cursor?: DashboardLayoutWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DashboardLayoutScalarFieldEnum | DashboardLayoutScalarFieldEnum[]
   }
 
   /**
@@ -59830,6 +59982,980 @@ export namespace Prisma {
 
 
   /**
+   * Model DashboardLayout
+   */
+
+  export type AggregateDashboardLayout = {
+    _count: DashboardLayoutCountAggregateOutputType | null
+    _min: DashboardLayoutMinAggregateOutputType | null
+    _max: DashboardLayoutMaxAggregateOutputType | null
+  }
+
+  export type DashboardLayoutMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    dashboard: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DashboardLayoutMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tenantId: string | null
+    dashboard: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DashboardLayoutCountAggregateOutputType = {
+    id: number
+    userId: number
+    tenantId: number
+    dashboard: number
+    layout: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DashboardLayoutMinAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    dashboard?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DashboardLayoutMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    dashboard?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DashboardLayoutCountAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    dashboard?: true
+    layout?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DashboardLayoutAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DashboardLayout to aggregate.
+     */
+    where?: DashboardLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DashboardLayouts to fetch.
+     */
+    orderBy?: DashboardLayoutOrderByWithRelationInput | DashboardLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DashboardLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DashboardLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DashboardLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DashboardLayouts
+    **/
+    _count?: true | DashboardLayoutCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DashboardLayoutMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DashboardLayoutMaxAggregateInputType
+  }
+
+  export type GetDashboardLayoutAggregateType<T extends DashboardLayoutAggregateArgs> = {
+        [P in keyof T & keyof AggregateDashboardLayout]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDashboardLayout[P]>
+      : GetScalarType<T[P], AggregateDashboardLayout[P]>
+  }
+
+
+
+
+  export type DashboardLayoutGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DashboardLayoutWhereInput
+    orderBy?: DashboardLayoutOrderByWithAggregationInput | DashboardLayoutOrderByWithAggregationInput[]
+    by: DashboardLayoutScalarFieldEnum[] | DashboardLayoutScalarFieldEnum
+    having?: DashboardLayoutScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DashboardLayoutCountAggregateInputType | true
+    _min?: DashboardLayoutMinAggregateInputType
+    _max?: DashboardLayoutMaxAggregateInputType
+  }
+
+  export type DashboardLayoutGroupByOutputType = {
+    id: string
+    userId: string
+    tenantId: string | null
+    dashboard: string
+    layout: JsonValue
+    createdAt: Date
+    updatedAt: Date
+    _count: DashboardLayoutCountAggregateOutputType | null
+    _min: DashboardLayoutMinAggregateOutputType | null
+    _max: DashboardLayoutMaxAggregateOutputType | null
+  }
+
+  type GetDashboardLayoutGroupByPayload<T extends DashboardLayoutGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DashboardLayoutGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DashboardLayoutGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DashboardLayoutGroupByOutputType[P]>
+            : GetScalarType<T[P], DashboardLayoutGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DashboardLayoutSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    dashboard?: boolean
+    layout?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | DashboardLayout$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["dashboardLayout"]>
+
+  export type DashboardLayoutSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    dashboard?: boolean
+    layout?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | DashboardLayout$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["dashboardLayout"]>
+
+  export type DashboardLayoutSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    dashboard?: boolean
+    layout?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DashboardLayoutInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | DashboardLayout$tenantArgs<ExtArgs>
+  }
+  export type DashboardLayoutIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | DashboardLayout$tenantArgs<ExtArgs>
+  }
+
+  export type $DashboardLayoutPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DashboardLayout"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      tenantId: string | null
+      dashboard: string
+      layout: Prisma.JsonValue
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["dashboardLayout"]>
+    composites: {}
+  }
+
+  type DashboardLayoutGetPayload<S extends boolean | null | undefined | DashboardLayoutDefaultArgs> = $Result.GetResult<Prisma.$DashboardLayoutPayload, S>
+
+  type DashboardLayoutCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DashboardLayoutFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DashboardLayoutCountAggregateInputType | true
+    }
+
+  export interface DashboardLayoutDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DashboardLayout'], meta: { name: 'DashboardLayout' } }
+    /**
+     * Find zero or one DashboardLayout that matches the filter.
+     * @param {DashboardLayoutFindUniqueArgs} args - Arguments to find a DashboardLayout
+     * @example
+     * // Get one DashboardLayout
+     * const dashboardLayout = await prisma.dashboardLayout.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DashboardLayoutFindUniqueArgs>(args: SelectSubset<T, DashboardLayoutFindUniqueArgs<ExtArgs>>): Prisma__DashboardLayoutClient<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one DashboardLayout that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DashboardLayoutFindUniqueOrThrowArgs} args - Arguments to find a DashboardLayout
+     * @example
+     * // Get one DashboardLayout
+     * const dashboardLayout = await prisma.dashboardLayout.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DashboardLayoutFindUniqueOrThrowArgs>(args: SelectSubset<T, DashboardLayoutFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DashboardLayoutClient<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first DashboardLayout that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardLayoutFindFirstArgs} args - Arguments to find a DashboardLayout
+     * @example
+     * // Get one DashboardLayout
+     * const dashboardLayout = await prisma.dashboardLayout.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DashboardLayoutFindFirstArgs>(args?: SelectSubset<T, DashboardLayoutFindFirstArgs<ExtArgs>>): Prisma__DashboardLayoutClient<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first DashboardLayout that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardLayoutFindFirstOrThrowArgs} args - Arguments to find a DashboardLayout
+     * @example
+     * // Get one DashboardLayout
+     * const dashboardLayout = await prisma.dashboardLayout.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DashboardLayoutFindFirstOrThrowArgs>(args?: SelectSubset<T, DashboardLayoutFindFirstOrThrowArgs<ExtArgs>>): Prisma__DashboardLayoutClient<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more DashboardLayouts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardLayoutFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DashboardLayouts
+     * const dashboardLayouts = await prisma.dashboardLayout.findMany()
+     * 
+     * // Get first 10 DashboardLayouts
+     * const dashboardLayouts = await prisma.dashboardLayout.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dashboardLayoutWithIdOnly = await prisma.dashboardLayout.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DashboardLayoutFindManyArgs>(args?: SelectSubset<T, DashboardLayoutFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a DashboardLayout.
+     * @param {DashboardLayoutCreateArgs} args - Arguments to create a DashboardLayout.
+     * @example
+     * // Create one DashboardLayout
+     * const DashboardLayout = await prisma.dashboardLayout.create({
+     *   data: {
+     *     // ... data to create a DashboardLayout
+     *   }
+     * })
+     * 
+     */
+    create<T extends DashboardLayoutCreateArgs>(args: SelectSubset<T, DashboardLayoutCreateArgs<ExtArgs>>): Prisma__DashboardLayoutClient<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many DashboardLayouts.
+     * @param {DashboardLayoutCreateManyArgs} args - Arguments to create many DashboardLayouts.
+     * @example
+     * // Create many DashboardLayouts
+     * const dashboardLayout = await prisma.dashboardLayout.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DashboardLayoutCreateManyArgs>(args?: SelectSubset<T, DashboardLayoutCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DashboardLayouts and returns the data saved in the database.
+     * @param {DashboardLayoutCreateManyAndReturnArgs} args - Arguments to create many DashboardLayouts.
+     * @example
+     * // Create many DashboardLayouts
+     * const dashboardLayout = await prisma.dashboardLayout.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DashboardLayouts and only return the `id`
+     * const dashboardLayoutWithIdOnly = await prisma.dashboardLayout.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DashboardLayoutCreateManyAndReturnArgs>(args?: SelectSubset<T, DashboardLayoutCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a DashboardLayout.
+     * @param {DashboardLayoutDeleteArgs} args - Arguments to delete one DashboardLayout.
+     * @example
+     * // Delete one DashboardLayout
+     * const DashboardLayout = await prisma.dashboardLayout.delete({
+     *   where: {
+     *     // ... filter to delete one DashboardLayout
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DashboardLayoutDeleteArgs>(args: SelectSubset<T, DashboardLayoutDeleteArgs<ExtArgs>>): Prisma__DashboardLayoutClient<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one DashboardLayout.
+     * @param {DashboardLayoutUpdateArgs} args - Arguments to update one DashboardLayout.
+     * @example
+     * // Update one DashboardLayout
+     * const dashboardLayout = await prisma.dashboardLayout.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DashboardLayoutUpdateArgs>(args: SelectSubset<T, DashboardLayoutUpdateArgs<ExtArgs>>): Prisma__DashboardLayoutClient<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more DashboardLayouts.
+     * @param {DashboardLayoutDeleteManyArgs} args - Arguments to filter DashboardLayouts to delete.
+     * @example
+     * // Delete a few DashboardLayouts
+     * const { count } = await prisma.dashboardLayout.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DashboardLayoutDeleteManyArgs>(args?: SelectSubset<T, DashboardLayoutDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DashboardLayouts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardLayoutUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DashboardLayouts
+     * const dashboardLayout = await prisma.dashboardLayout.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DashboardLayoutUpdateManyArgs>(args: SelectSubset<T, DashboardLayoutUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DashboardLayout.
+     * @param {DashboardLayoutUpsertArgs} args - Arguments to update or create a DashboardLayout.
+     * @example
+     * // Update or create a DashboardLayout
+     * const dashboardLayout = await prisma.dashboardLayout.upsert({
+     *   create: {
+     *     // ... data to create a DashboardLayout
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DashboardLayout we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DashboardLayoutUpsertArgs>(args: SelectSubset<T, DashboardLayoutUpsertArgs<ExtArgs>>): Prisma__DashboardLayoutClient<$Result.GetResult<Prisma.$DashboardLayoutPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of DashboardLayouts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardLayoutCountArgs} args - Arguments to filter DashboardLayouts to count.
+     * @example
+     * // Count the number of DashboardLayouts
+     * const count = await prisma.dashboardLayout.count({
+     *   where: {
+     *     // ... the filter for the DashboardLayouts we want to count
+     *   }
+     * })
+    **/
+    count<T extends DashboardLayoutCountArgs>(
+      args?: Subset<T, DashboardLayoutCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DashboardLayoutCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DashboardLayout.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardLayoutAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DashboardLayoutAggregateArgs>(args: Subset<T, DashboardLayoutAggregateArgs>): Prisma.PrismaPromise<GetDashboardLayoutAggregateType<T>>
+
+    /**
+     * Group by DashboardLayout.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardLayoutGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DashboardLayoutGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DashboardLayoutGroupByArgs['orderBy'] }
+        : { orderBy?: DashboardLayoutGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DashboardLayoutGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDashboardLayoutGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DashboardLayout model
+   */
+  readonly fields: DashboardLayoutFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DashboardLayout.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DashboardLayoutClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    tenant<T extends DashboardLayout$tenantArgs<ExtArgs> = {}>(args?: Subset<T, DashboardLayout$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DashboardLayout model
+   */ 
+  interface DashboardLayoutFieldRefs {
+    readonly id: FieldRef<"DashboardLayout", 'String'>
+    readonly userId: FieldRef<"DashboardLayout", 'String'>
+    readonly tenantId: FieldRef<"DashboardLayout", 'String'>
+    readonly dashboard: FieldRef<"DashboardLayout", 'String'>
+    readonly layout: FieldRef<"DashboardLayout", 'Json'>
+    readonly createdAt: FieldRef<"DashboardLayout", 'DateTime'>
+    readonly updatedAt: FieldRef<"DashboardLayout", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DashboardLayout findUnique
+   */
+  export type DashboardLayoutFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which DashboardLayout to fetch.
+     */
+    where: DashboardLayoutWhereUniqueInput
+  }
+
+  /**
+   * DashboardLayout findUniqueOrThrow
+   */
+  export type DashboardLayoutFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which DashboardLayout to fetch.
+     */
+    where: DashboardLayoutWhereUniqueInput
+  }
+
+  /**
+   * DashboardLayout findFirst
+   */
+  export type DashboardLayoutFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which DashboardLayout to fetch.
+     */
+    where?: DashboardLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DashboardLayouts to fetch.
+     */
+    orderBy?: DashboardLayoutOrderByWithRelationInput | DashboardLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DashboardLayouts.
+     */
+    cursor?: DashboardLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DashboardLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DashboardLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DashboardLayouts.
+     */
+    distinct?: DashboardLayoutScalarFieldEnum | DashboardLayoutScalarFieldEnum[]
+  }
+
+  /**
+   * DashboardLayout findFirstOrThrow
+   */
+  export type DashboardLayoutFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which DashboardLayout to fetch.
+     */
+    where?: DashboardLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DashboardLayouts to fetch.
+     */
+    orderBy?: DashboardLayoutOrderByWithRelationInput | DashboardLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DashboardLayouts.
+     */
+    cursor?: DashboardLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DashboardLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DashboardLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DashboardLayouts.
+     */
+    distinct?: DashboardLayoutScalarFieldEnum | DashboardLayoutScalarFieldEnum[]
+  }
+
+  /**
+   * DashboardLayout findMany
+   */
+  export type DashboardLayoutFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which DashboardLayouts to fetch.
+     */
+    where?: DashboardLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DashboardLayouts to fetch.
+     */
+    orderBy?: DashboardLayoutOrderByWithRelationInput | DashboardLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DashboardLayouts.
+     */
+    cursor?: DashboardLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DashboardLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DashboardLayouts.
+     */
+    skip?: number
+    distinct?: DashboardLayoutScalarFieldEnum | DashboardLayoutScalarFieldEnum[]
+  }
+
+  /**
+   * DashboardLayout create
+   */
+  export type DashboardLayoutCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DashboardLayout.
+     */
+    data: XOR<DashboardLayoutCreateInput, DashboardLayoutUncheckedCreateInput>
+  }
+
+  /**
+   * DashboardLayout createMany
+   */
+  export type DashboardLayoutCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DashboardLayouts.
+     */
+    data: DashboardLayoutCreateManyInput | DashboardLayoutCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DashboardLayout createManyAndReturn
+   */
+  export type DashboardLayoutCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many DashboardLayouts.
+     */
+    data: DashboardLayoutCreateManyInput | DashboardLayoutCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DashboardLayout update
+   */
+  export type DashboardLayoutUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DashboardLayout.
+     */
+    data: XOR<DashboardLayoutUpdateInput, DashboardLayoutUncheckedUpdateInput>
+    /**
+     * Choose, which DashboardLayout to update.
+     */
+    where: DashboardLayoutWhereUniqueInput
+  }
+
+  /**
+   * DashboardLayout updateMany
+   */
+  export type DashboardLayoutUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DashboardLayouts.
+     */
+    data: XOR<DashboardLayoutUpdateManyMutationInput, DashboardLayoutUncheckedUpdateManyInput>
+    /**
+     * Filter which DashboardLayouts to update
+     */
+    where?: DashboardLayoutWhereInput
+  }
+
+  /**
+   * DashboardLayout upsert
+   */
+  export type DashboardLayoutUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DashboardLayout to update in case it exists.
+     */
+    where: DashboardLayoutWhereUniqueInput
+    /**
+     * In case the DashboardLayout found by the `where` argument doesn't exist, create a new DashboardLayout with this data.
+     */
+    create: XOR<DashboardLayoutCreateInput, DashboardLayoutUncheckedCreateInput>
+    /**
+     * In case the DashboardLayout was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DashboardLayoutUpdateInput, DashboardLayoutUncheckedUpdateInput>
+  }
+
+  /**
+   * DashboardLayout delete
+   */
+  export type DashboardLayoutDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+    /**
+     * Filter which DashboardLayout to delete.
+     */
+    where: DashboardLayoutWhereUniqueInput
+  }
+
+  /**
+   * DashboardLayout deleteMany
+   */
+  export type DashboardLayoutDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DashboardLayouts to delete
+     */
+    where?: DashboardLayoutWhereInput
+  }
+
+  /**
+   * DashboardLayout.tenant
+   */
+  export type DashboardLayout$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * DashboardLayout without action
+   */
+  export type DashboardLayoutDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardLayout
+     */
+    select?: DashboardLayoutSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DashboardLayoutInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -60830,6 +61956,19 @@ export namespace Prisma {
   export type NotificationTemplateScalarFieldEnum = (typeof NotificationTemplateScalarFieldEnum)[keyof typeof NotificationTemplateScalarFieldEnum]
 
 
+  export const DashboardLayoutScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    tenantId: 'tenantId',
+    dashboard: 'dashboard',
+    layout: 'layout',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DashboardLayoutScalarFieldEnum = (typeof DashboardLayoutScalarFieldEnum)[keyof typeof DashboardLayoutScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -61217,6 +62356,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageListRelationFilter
     acceptedInvitations?: InvitationListRelationFilter
     sentInvitations?: InvitationListRelationFilter
+    dashboardLayouts?: DashboardLayoutListRelationFilter
     invitedMemberships?: MembershipListRelationFilter
     memberships?: MembershipListRelationFilter
     notifications?: NotificationListRelationFilter
@@ -61272,6 +62412,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageOrderByRelationAggregateInput
     acceptedInvitations?: InvitationOrderByRelationAggregateInput
     sentInvitations?: InvitationOrderByRelationAggregateInput
+    dashboardLayouts?: DashboardLayoutOrderByRelationAggregateInput
     invitedMemberships?: MembershipOrderByRelationAggregateInput
     memberships?: MembershipOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
@@ -61330,6 +62471,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageListRelationFilter
     acceptedInvitations?: InvitationListRelationFilter
     sentInvitations?: InvitationListRelationFilter
+    dashboardLayouts?: DashboardLayoutListRelationFilter
     invitedMemberships?: MembershipListRelationFilter
     memberships?: MembershipListRelationFilter
     notifications?: NotificationListRelationFilter
@@ -61508,6 +62650,7 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     notificationIntents?: NotificationIntentListRelationFilter
     notificationPreferences?: NotificationPreferencesListRelationFilter
+    dashboardLayouts?: DashboardLayoutListRelationFilter
     pendingAuths?: PendingAuthListRelationFilter
     sessions?: SessionListRelationFilter
     ssoAuditLogs?: SsoAuditLogListRelationFilter
@@ -61572,6 +62715,7 @@ export namespace Prisma {
     notifications?: NotificationOrderByRelationAggregateInput
     notificationIntents?: NotificationIntentOrderByRelationAggregateInput
     notificationPreferences?: NotificationPreferencesOrderByRelationAggregateInput
+    dashboardLayouts?: DashboardLayoutOrderByRelationAggregateInput
     pendingAuths?: PendingAuthOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     ssoAuditLogs?: SsoAuditLogOrderByRelationAggregateInput
@@ -61639,6 +62783,7 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     notificationIntents?: NotificationIntentListRelationFilter
     notificationPreferences?: NotificationPreferencesListRelationFilter
+    dashboardLayouts?: DashboardLayoutListRelationFilter
     pendingAuths?: PendingAuthListRelationFilter
     sessions?: SessionListRelationFilter
     ssoAuditLogs?: SsoAuditLogListRelationFilter
@@ -66292,6 +67437,76 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"NotificationTemplate"> | Date | string
   }
 
+  export type DashboardLayoutWhereInput = {
+    AND?: DashboardLayoutWhereInput | DashboardLayoutWhereInput[]
+    OR?: DashboardLayoutWhereInput[]
+    NOT?: DashboardLayoutWhereInput | DashboardLayoutWhereInput[]
+    id?: StringFilter<"DashboardLayout"> | string
+    userId?: StringFilter<"DashboardLayout"> | string
+    tenantId?: StringNullableFilter<"DashboardLayout"> | string | null
+    dashboard?: StringFilter<"DashboardLayout"> | string
+    layout?: JsonFilter<"DashboardLayout">
+    createdAt?: DateTimeFilter<"DashboardLayout"> | Date | string
+    updatedAt?: DateTimeFilter<"DashboardLayout"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }
+
+  export type DashboardLayoutOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    dashboard?: SortOrder
+    layout?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type DashboardLayoutWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    platform_layout?: DashboardLayoutPlatform_layoutCompoundUniqueInput
+    tenant_layout?: DashboardLayoutTenant_layoutCompoundUniqueInput
+    AND?: DashboardLayoutWhereInput | DashboardLayoutWhereInput[]
+    OR?: DashboardLayoutWhereInput[]
+    NOT?: DashboardLayoutWhereInput | DashboardLayoutWhereInput[]
+    userId?: StringFilter<"DashboardLayout"> | string
+    tenantId?: StringNullableFilter<"DashboardLayout"> | string | null
+    dashboard?: StringFilter<"DashboardLayout"> | string
+    layout?: JsonFilter<"DashboardLayout">
+    createdAt?: DateTimeFilter<"DashboardLayout"> | Date | string
+    updatedAt?: DateTimeFilter<"DashboardLayout"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantNullableRelationFilter, TenantWhereInput> | null
+  }, "id" | "platform_layout" | "tenant_layout">
+
+  export type DashboardLayoutOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    dashboard?: SortOrder
+    layout?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DashboardLayoutCountOrderByAggregateInput
+    _max?: DashboardLayoutMaxOrderByAggregateInput
+    _min?: DashboardLayoutMinOrderByAggregateInput
+  }
+
+  export type DashboardLayoutScalarWhereWithAggregatesInput = {
+    AND?: DashboardLayoutScalarWhereWithAggregatesInput | DashboardLayoutScalarWhereWithAggregatesInput[]
+    OR?: DashboardLayoutScalarWhereWithAggregatesInput[]
+    NOT?: DashboardLayoutScalarWhereWithAggregatesInput | DashboardLayoutScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DashboardLayout"> | string
+    userId?: StringWithAggregatesFilter<"DashboardLayout"> | string
+    tenantId?: StringNullableWithAggregatesFilter<"DashboardLayout"> | string | null
+    dashboard?: StringWithAggregatesFilter<"DashboardLayout"> | string
+    layout?: JsonWithAggregatesFilter<"DashboardLayout">
+    createdAt?: DateTimeWithAggregatesFilter<"DashboardLayout"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DashboardLayout"> | Date | string
+  }
+
   export type AccountCreateInput = {
     id?: string
     type: string
@@ -66487,6 +67702,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -66542,6 +67758,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -66597,6 +67814,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -66652,6 +67870,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -66851,6 +68070,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -66915,6 +68135,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -66979,6 +68200,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -67043,6 +68265,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -72377,6 +73600,74 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DashboardLayoutCreateInput = {
+    id?: string
+    dashboard: string
+    layout: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutDashboardLayoutsInput
+    tenant?: TenantCreateNestedOneWithoutDashboardLayoutsInput
+  }
+
+  export type DashboardLayoutUncheckedCreateInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    dashboard: string
+    layout: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DashboardLayoutUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutDashboardLayoutsNestedInput
+    tenant?: TenantUpdateOneWithoutDashboardLayoutsNestedInput
+  }
+
+  export type DashboardLayoutUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DashboardLayoutCreateManyInput = {
+    id?: string
+    userId: string
+    tenantId?: string | null
+    dashboard: string
+    layout: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DashboardLayoutUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DashboardLayoutUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -72650,6 +73941,12 @@ export namespace Prisma {
     none?: InvitationWhereInput
   }
 
+  export type DashboardLayoutListRelationFilter = {
+    every?: DashboardLayoutWhereInput
+    some?: DashboardLayoutWhereInput
+    none?: DashboardLayoutWhereInput
+  }
+
   export type MembershipListRelationFilter = {
     every?: MembershipWhereInput
     some?: MembershipWhereInput
@@ -72765,6 +74062,10 @@ export namespace Prisma {
   }
 
   export type InvitationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DashboardLayoutOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -75992,6 +77293,45 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type DashboardLayoutPlatform_layoutCompoundUniqueInput = {
+    userId: string
+    dashboard: string
+  }
+
+  export type DashboardLayoutTenant_layoutCompoundUniqueInput = {
+    userId: string
+    tenantId: string
+    dashboard: string
+  }
+
+  export type DashboardLayoutCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    dashboard?: SortOrder
+    layout?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DashboardLayoutMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    dashboard?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DashboardLayoutMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    dashboard?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -76110,6 +77450,13 @@ export namespace Prisma {
     connectOrCreate?: InvitationCreateOrConnectWithoutInvitedByInput | InvitationCreateOrConnectWithoutInvitedByInput[]
     createMany?: InvitationCreateManyInvitedByInputEnvelope
     connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+  }
+
+  export type DashboardLayoutCreateNestedManyWithoutUserInput = {
+    create?: XOR<DashboardLayoutCreateWithoutUserInput, DashboardLayoutUncheckedCreateWithoutUserInput> | DashboardLayoutCreateWithoutUserInput[] | DashboardLayoutUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DashboardLayoutCreateOrConnectWithoutUserInput | DashboardLayoutCreateOrConnectWithoutUserInput[]
+    createMany?: DashboardLayoutCreateManyUserInputEnvelope
+    connect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
   }
 
   export type MembershipCreateNestedManyWithoutInvitedByInput = {
@@ -76278,6 +77625,13 @@ export namespace Prisma {
     connectOrCreate?: InvitationCreateOrConnectWithoutInvitedByInput | InvitationCreateOrConnectWithoutInvitedByInput[]
     createMany?: InvitationCreateManyInvitedByInputEnvelope
     connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+  }
+
+  export type DashboardLayoutUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<DashboardLayoutCreateWithoutUserInput, DashboardLayoutUncheckedCreateWithoutUserInput> | DashboardLayoutCreateWithoutUserInput[] | DashboardLayoutUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DashboardLayoutCreateOrConnectWithoutUserInput | DashboardLayoutCreateOrConnectWithoutUserInput[]
+    createMany?: DashboardLayoutCreateManyUserInputEnvelope
+    connect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
   }
 
   export type MembershipUncheckedCreateNestedManyWithoutInvitedByInput = {
@@ -76510,6 +77864,20 @@ export namespace Prisma {
     update?: InvitationUpdateWithWhereUniqueWithoutInvitedByInput | InvitationUpdateWithWhereUniqueWithoutInvitedByInput[]
     updateMany?: InvitationUpdateManyWithWhereWithoutInvitedByInput | InvitationUpdateManyWithWhereWithoutInvitedByInput[]
     deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
+  }
+
+  export type DashboardLayoutUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DashboardLayoutCreateWithoutUserInput, DashboardLayoutUncheckedCreateWithoutUserInput> | DashboardLayoutCreateWithoutUserInput[] | DashboardLayoutUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DashboardLayoutCreateOrConnectWithoutUserInput | DashboardLayoutCreateOrConnectWithoutUserInput[]
+    upsert?: DashboardLayoutUpsertWithWhereUniqueWithoutUserInput | DashboardLayoutUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DashboardLayoutCreateManyUserInputEnvelope
+    set?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    disconnect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    delete?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    connect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    update?: DashboardLayoutUpdateWithWhereUniqueWithoutUserInput | DashboardLayoutUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DashboardLayoutUpdateManyWithWhereWithoutUserInput | DashboardLayoutUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DashboardLayoutScalarWhereInput | DashboardLayoutScalarWhereInput[]
   }
 
   export type MembershipUpdateManyWithoutInvitedByNestedInput = {
@@ -76848,6 +78216,20 @@ export namespace Prisma {
     deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
   }
 
+  export type DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DashboardLayoutCreateWithoutUserInput, DashboardLayoutUncheckedCreateWithoutUserInput> | DashboardLayoutCreateWithoutUserInput[] | DashboardLayoutUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DashboardLayoutCreateOrConnectWithoutUserInput | DashboardLayoutCreateOrConnectWithoutUserInput[]
+    upsert?: DashboardLayoutUpsertWithWhereUniqueWithoutUserInput | DashboardLayoutUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DashboardLayoutCreateManyUserInputEnvelope
+    set?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    disconnect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    delete?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    connect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    update?: DashboardLayoutUpdateWithWhereUniqueWithoutUserInput | DashboardLayoutUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DashboardLayoutUpdateManyWithWhereWithoutUserInput | DashboardLayoutUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DashboardLayoutScalarWhereInput | DashboardLayoutScalarWhereInput[]
+  }
+
   export type MembershipUncheckedUpdateManyWithoutInvitedByNestedInput = {
     create?: XOR<MembershipCreateWithoutInvitedByInput, MembershipUncheckedCreateWithoutInvitedByInput> | MembershipCreateWithoutInvitedByInput[] | MembershipUncheckedCreateWithoutInvitedByInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutInvitedByInput | MembershipCreateOrConnectWithoutInvitedByInput[]
@@ -77142,6 +78524,13 @@ export namespace Prisma {
     connect?: NotificationPreferencesWhereUniqueInput | NotificationPreferencesWhereUniqueInput[]
   }
 
+  export type DashboardLayoutCreateNestedManyWithoutTenantInput = {
+    create?: XOR<DashboardLayoutCreateWithoutTenantInput, DashboardLayoutUncheckedCreateWithoutTenantInput> | DashboardLayoutCreateWithoutTenantInput[] | DashboardLayoutUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DashboardLayoutCreateOrConnectWithoutTenantInput | DashboardLayoutCreateOrConnectWithoutTenantInput[]
+    createMany?: DashboardLayoutCreateManyTenantInputEnvelope
+    connect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+  }
+
   export type PendingAuthCreateNestedManyWithoutTenantInput = {
     create?: XOR<PendingAuthCreateWithoutTenantInput, PendingAuthUncheckedCreateWithoutTenantInput> | PendingAuthCreateWithoutTenantInput[] | PendingAuthUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: PendingAuthCreateOrConnectWithoutTenantInput | PendingAuthCreateOrConnectWithoutTenantInput[]
@@ -77321,6 +78710,13 @@ export namespace Prisma {
     connectOrCreate?: NotificationPreferencesCreateOrConnectWithoutTenantInput | NotificationPreferencesCreateOrConnectWithoutTenantInput[]
     createMany?: NotificationPreferencesCreateManyTenantInputEnvelope
     connect?: NotificationPreferencesWhereUniqueInput | NotificationPreferencesWhereUniqueInput[]
+  }
+
+  export type DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<DashboardLayoutCreateWithoutTenantInput, DashboardLayoutUncheckedCreateWithoutTenantInput> | DashboardLayoutCreateWithoutTenantInput[] | DashboardLayoutUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DashboardLayoutCreateOrConnectWithoutTenantInput | DashboardLayoutCreateOrConnectWithoutTenantInput[]
+    createMany?: DashboardLayoutCreateManyTenantInputEnvelope
+    connect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
   }
 
   export type PendingAuthUncheckedCreateNestedManyWithoutTenantInput = {
@@ -77572,6 +78968,20 @@ export namespace Prisma {
     update?: NotificationPreferencesUpdateWithWhereUniqueWithoutTenantInput | NotificationPreferencesUpdateWithWhereUniqueWithoutTenantInput[]
     updateMany?: NotificationPreferencesUpdateManyWithWhereWithoutTenantInput | NotificationPreferencesUpdateManyWithWhereWithoutTenantInput[]
     deleteMany?: NotificationPreferencesScalarWhereInput | NotificationPreferencesScalarWhereInput[]
+  }
+
+  export type DashboardLayoutUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<DashboardLayoutCreateWithoutTenantInput, DashboardLayoutUncheckedCreateWithoutTenantInput> | DashboardLayoutCreateWithoutTenantInput[] | DashboardLayoutUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DashboardLayoutCreateOrConnectWithoutTenantInput | DashboardLayoutCreateOrConnectWithoutTenantInput[]
+    upsert?: DashboardLayoutUpsertWithWhereUniqueWithoutTenantInput | DashboardLayoutUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: DashboardLayoutCreateManyTenantInputEnvelope
+    set?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    disconnect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    delete?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    connect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    update?: DashboardLayoutUpdateWithWhereUniqueWithoutTenantInput | DashboardLayoutUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: DashboardLayoutUpdateManyWithWhereWithoutTenantInput | DashboardLayoutUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: DashboardLayoutScalarWhereInput | DashboardLayoutScalarWhereInput[]
   }
 
   export type PendingAuthUpdateManyWithoutTenantNestedInput = {
@@ -77932,6 +79342,20 @@ export namespace Prisma {
     update?: NotificationPreferencesUpdateWithWhereUniqueWithoutTenantInput | NotificationPreferencesUpdateWithWhereUniqueWithoutTenantInput[]
     updateMany?: NotificationPreferencesUpdateManyWithWhereWithoutTenantInput | NotificationPreferencesUpdateManyWithWhereWithoutTenantInput[]
     deleteMany?: NotificationPreferencesScalarWhereInput | NotificationPreferencesScalarWhereInput[]
+  }
+
+  export type DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<DashboardLayoutCreateWithoutTenantInput, DashboardLayoutUncheckedCreateWithoutTenantInput> | DashboardLayoutCreateWithoutTenantInput[] | DashboardLayoutUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DashboardLayoutCreateOrConnectWithoutTenantInput | DashboardLayoutCreateOrConnectWithoutTenantInput[]
+    upsert?: DashboardLayoutUpsertWithWhereUniqueWithoutTenantInput | DashboardLayoutUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: DashboardLayoutCreateManyTenantInputEnvelope
+    set?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    disconnect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    delete?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    connect?: DashboardLayoutWhereUniqueInput | DashboardLayoutWhereUniqueInput[]
+    update?: DashboardLayoutUpdateWithWhereUniqueWithoutTenantInput | DashboardLayoutUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: DashboardLayoutUpdateManyWithWhereWithoutTenantInput | DashboardLayoutUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: DashboardLayoutScalarWhereInput | DashboardLayoutScalarWhereInput[]
   }
 
   export type PendingAuthUncheckedUpdateManyWithoutTenantNestedInput = {
@@ -80102,6 +81526,36 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
+  export type UserCreateNestedOneWithoutDashboardLayoutsInput = {
+    create?: XOR<UserCreateWithoutDashboardLayoutsInput, UserUncheckedCreateWithoutDashboardLayoutsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDashboardLayoutsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutDashboardLayoutsInput = {
+    create?: XOR<TenantCreateWithoutDashboardLayoutsInput, TenantUncheckedCreateWithoutDashboardLayoutsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutDashboardLayoutsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutDashboardLayoutsNestedInput = {
+    create?: XOR<UserCreateWithoutDashboardLayoutsInput, UserUncheckedCreateWithoutDashboardLayoutsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDashboardLayoutsInput
+    upsert?: UserUpsertWithoutDashboardLayoutsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDashboardLayoutsInput, UserUpdateWithoutDashboardLayoutsInput>, UserUncheckedUpdateWithoutDashboardLayoutsInput>
+  }
+
+  export type TenantUpdateOneWithoutDashboardLayoutsNestedInput = {
+    create?: XOR<TenantCreateWithoutDashboardLayoutsInput, TenantUncheckedCreateWithoutDashboardLayoutsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutDashboardLayoutsInput
+    upsert?: TenantUpsertWithoutDashboardLayoutsInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutDashboardLayoutsInput, TenantUpdateWithoutDashboardLayoutsInput>, TenantUncheckedUpdateWithoutDashboardLayoutsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -80485,6 +81939,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -80539,6 +81994,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -80609,6 +82065,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -80663,6 +82120,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -80727,6 +82185,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
@@ -80790,6 +82249,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
@@ -80849,6 +82309,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -80903,6 +82364,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -80982,6 +82444,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
@@ -81045,6 +82508,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
@@ -81110,6 +82574,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -81164,6 +82629,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -81494,6 +82960,34 @@ export namespace Prisma {
 
   export type InvitationCreateManyInvitedByInputEnvelope = {
     data: InvitationCreateManyInvitedByInput | InvitationCreateManyInvitedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DashboardLayoutCreateWithoutUserInput = {
+    id?: string
+    dashboard: string
+    layout: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutDashboardLayoutsInput
+  }
+
+  export type DashboardLayoutUncheckedCreateWithoutUserInput = {
+    id?: string
+    tenantId?: string | null
+    dashboard: string
+    layout: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DashboardLayoutCreateOrConnectWithoutUserInput = {
+    where: DashboardLayoutWhereUniqueInput
+    create: XOR<DashboardLayoutCreateWithoutUserInput, DashboardLayoutUncheckedCreateWithoutUserInput>
+  }
+
+  export type DashboardLayoutCreateManyUserInputEnvelope = {
+    data: DashboardLayoutCreateManyUserInput | DashboardLayoutCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -82434,6 +83928,35 @@ export namespace Prisma {
   export type InvitationUpdateManyWithWhereWithoutInvitedByInput = {
     where: InvitationScalarWhereInput
     data: XOR<InvitationUpdateManyMutationInput, InvitationUncheckedUpdateManyWithoutInvitedByInput>
+  }
+
+  export type DashboardLayoutUpsertWithWhereUniqueWithoutUserInput = {
+    where: DashboardLayoutWhereUniqueInput
+    update: XOR<DashboardLayoutUpdateWithoutUserInput, DashboardLayoutUncheckedUpdateWithoutUserInput>
+    create: XOR<DashboardLayoutCreateWithoutUserInput, DashboardLayoutUncheckedCreateWithoutUserInput>
+  }
+
+  export type DashboardLayoutUpdateWithWhereUniqueWithoutUserInput = {
+    where: DashboardLayoutWhereUniqueInput
+    data: XOR<DashboardLayoutUpdateWithoutUserInput, DashboardLayoutUncheckedUpdateWithoutUserInput>
+  }
+
+  export type DashboardLayoutUpdateManyWithWhereWithoutUserInput = {
+    where: DashboardLayoutScalarWhereInput
+    data: XOR<DashboardLayoutUpdateManyMutationInput, DashboardLayoutUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type DashboardLayoutScalarWhereInput = {
+    AND?: DashboardLayoutScalarWhereInput | DashboardLayoutScalarWhereInput[]
+    OR?: DashboardLayoutScalarWhereInput[]
+    NOT?: DashboardLayoutScalarWhereInput | DashboardLayoutScalarWhereInput[]
+    id?: StringFilter<"DashboardLayout"> | string
+    userId?: StringFilter<"DashboardLayout"> | string
+    tenantId?: StringNullableFilter<"DashboardLayout"> | string | null
+    dashboard?: StringFilter<"DashboardLayout"> | string
+    layout?: JsonFilter<"DashboardLayout">
+    createdAt?: DateTimeFilter<"DashboardLayout"> | Date | string
+    updatedAt?: DateTimeFilter<"DashboardLayout"> | Date | string
   }
 
   export type MembershipUpsertWithWhereUniqueWithoutInvitedByInput = {
@@ -83413,6 +84936,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DashboardLayoutCreateWithoutTenantInput = {
+    id?: string
+    dashboard: string
+    layout: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutDashboardLayoutsInput
+  }
+
+  export type DashboardLayoutUncheckedCreateWithoutTenantInput = {
+    id?: string
+    userId: string
+    dashboard: string
+    layout: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DashboardLayoutCreateOrConnectWithoutTenantInput = {
+    where: DashboardLayoutWhereUniqueInput
+    create: XOR<DashboardLayoutCreateWithoutTenantInput, DashboardLayoutUncheckedCreateWithoutTenantInput>
+  }
+
+  export type DashboardLayoutCreateManyTenantInputEnvelope = {
+    data: DashboardLayoutCreateManyTenantInput | DashboardLayoutCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PendingAuthCreateWithoutTenantInput = {
     id?: string
     nonce: string
@@ -84345,6 +85896,22 @@ export namespace Prisma {
     data: XOR<NotificationPreferencesUpdateManyMutationInput, NotificationPreferencesUncheckedUpdateManyWithoutTenantInput>
   }
 
+  export type DashboardLayoutUpsertWithWhereUniqueWithoutTenantInput = {
+    where: DashboardLayoutWhereUniqueInput
+    update: XOR<DashboardLayoutUpdateWithoutTenantInput, DashboardLayoutUncheckedUpdateWithoutTenantInput>
+    create: XOR<DashboardLayoutCreateWithoutTenantInput, DashboardLayoutUncheckedCreateWithoutTenantInput>
+  }
+
+  export type DashboardLayoutUpdateWithWhereUniqueWithoutTenantInput = {
+    where: DashboardLayoutWhereUniqueInput
+    data: XOR<DashboardLayoutUpdateWithoutTenantInput, DashboardLayoutUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type DashboardLayoutUpdateManyWithWhereWithoutTenantInput = {
+    where: DashboardLayoutScalarWhereInput
+    data: XOR<DashboardLayoutUpdateManyMutationInput, DashboardLayoutUncheckedUpdateManyWithoutTenantInput>
+  }
+
   export type PendingAuthUpsertWithWhereUniqueWithoutTenantInput = {
     where: PendingAuthWhereUniqueInput
     update: XOR<PendingAuthUpdateWithoutTenantInput, PendingAuthUncheckedUpdateWithoutTenantInput>
@@ -84829,6 +86396,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -84892,6 +86460,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -84971,6 +86540,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -85034,6 +86604,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -85097,6 +86668,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
@@ -85160,6 +86732,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
@@ -85219,6 +86792,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -85273,6 +86847,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -85352,6 +86927,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
@@ -85415,6 +86991,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
@@ -85480,6 +87057,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -85534,6 +87112,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -85588,6 +87167,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
@@ -85642,6 +87222,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
@@ -85709,6 +87290,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -85772,6 +87354,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -85832,6 +87415,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
@@ -85886,6 +87470,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
@@ -85956,6 +87541,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
@@ -86010,6 +87596,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
@@ -86083,6 +87670,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -86146,6 +87734,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -86212,6 +87801,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
@@ -86266,6 +87856,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
@@ -86319,6 +87910,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -86373,6 +87965,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -86432,6 +88025,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -86486,6 +88080,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -86554,6 +88149,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -86617,6 +88213,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -86687,6 +88284,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -86741,6 +88339,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -86806,6 +88405,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -86860,6 +88460,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -86934,6 +88535,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -86997,6 +88599,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -87082,6 +88685,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -87145,6 +88749,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -87250,6 +88855,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -87313,6 +88919,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -87376,6 +88983,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -87439,6 +89047,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -87498,6 +89107,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -87552,6 +89162,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -87736,6 +89347,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -87799,6 +89411,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -87864,6 +89477,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -87918,6 +89532,7 @@ export namespace Prisma {
     caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -88442,6 +90057,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -88505,6 +90121,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -88564,6 +90181,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -88618,6 +90236,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -88697,6 +90316,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -88760,6 +90380,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -88825,6 +90446,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -88879,6 +90501,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -88934,6 +90557,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -88988,6 +90612,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -89058,6 +90683,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -89112,6 +90738,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -89165,6 +90792,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -89219,6 +90847,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -89289,6 +90918,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -89343,6 +90973,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -89406,6 +91037,7 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -89469,6 +91101,7 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -89529,6 +91162,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
@@ -89583,6 +91217,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
@@ -89754,6 +91389,7 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -89817,6 +91453,7 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -89883,6 +91520,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
@@ -89937,6 +91575,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
@@ -90126,6 +91765,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -90180,6 +91820,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -90307,6 +91948,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -90361,6 +92003,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -90424,6 +92067,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -90487,6 +92131,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -90566,6 +92211,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -90629,6 +92275,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -90937,6 +92584,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -91000,6 +92648,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -91118,6 +92767,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -91181,6 +92831,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -91276,6 +92927,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -91339,6 +92991,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -91457,6 +93110,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -91520,6 +93174,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -91584,6 +93239,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -91647,6 +93303,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -91706,6 +93363,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -91760,6 +93418,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -91839,6 +93498,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -91902,6 +93562,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -91967,6 +93628,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -92021,6 +93683,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -92084,6 +93747,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
@@ -92147,6 +93811,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
     supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
@@ -92206,6 +93871,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -92260,6 +93926,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -92339,6 +94006,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
@@ -92402,6 +94070,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
     supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
@@ -92467,6 +94136,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -92521,6 +94191,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -92584,6 +94255,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -92647,6 +94319,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -92706,6 +94379,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -92760,6 +94434,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -92839,6 +94514,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -92902,6 +94578,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -92967,6 +94644,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -93021,6 +94699,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -93084,6 +94763,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -93147,6 +94827,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -93206,6 +94887,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -93260,6 +94942,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -93339,6 +95022,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -93402,6 +95086,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -93467,6 +95152,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -93521,6 +95207,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -93653,6 +95340,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -93707,6 +95395,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -93865,6 +95554,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -93928,6 +95618,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -94030,6 +95721,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -94084,6 +95776,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -94260,6 +95953,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -94323,6 +96017,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -94575,6 +96270,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -94638,6 +96334,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -94814,6 +96511,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -94877,6 +96575,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -95148,6 +96847,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -95202,6 +96902,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -95328,6 +97029,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -95382,6 +97084,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -95436,6 +97139,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -95490,6 +97194,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -95601,6 +97306,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -95664,6 +97370,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -95734,6 +97441,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -95788,6 +97496,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -95911,6 +97620,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -95974,6 +97684,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -96038,6 +97749,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -96101,6 +97813,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -96180,6 +97893,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -96243,6 +97957,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -96306,6 +98021,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -96369,6 +98085,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -96448,6 +98165,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -96511,6 +98229,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -96574,6 +98293,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -96637,6 +98357,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -96852,6 +98573,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -96915,6 +98637,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -97136,6 +98859,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -97199,6 +98923,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -97258,6 +98983,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -97312,6 +99038,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -97543,6 +99270,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -97606,6 +99334,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -97671,6 +99400,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -97725,6 +99455,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -98370,6 +100101,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -98433,6 +100165,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -98492,6 +100225,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -98546,6 +100280,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -98708,6 +100443,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -98771,6 +100507,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -98836,6 +100573,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -98890,6 +100628,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -98944,6 +100683,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -98998,6 +100738,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -99068,6 +100809,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -99122,6 +100864,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -99184,6 +100927,7 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutTenantInput
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -99247,6 +100991,7 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -99326,6 +101071,7 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutTenantNestedInput
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -99389,6 +101135,7 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -99552,6 +101299,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -99606,6 +101354,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
     acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutUserInput
     invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -99673,6 +101422,7 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutTenantInput
     notifications?: NotificationCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
     sessions?: SessionCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
@@ -99736,6 +101486,7 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
     notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
+    dashboardLayouts?: DashboardLayoutUncheckedCreateNestedManyWithoutTenantInput
     pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
     sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
     ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
@@ -99807,6 +101558,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -99861,6 +101613,7 @@ export namespace Prisma {
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutUserNestedInput
     invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -99934,6 +101687,7 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutTenantNestedInput
     notifications?: NotificationUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
     sessions?: SessionUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
@@ -99997,6 +101751,7 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
     notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
+    dashboardLayouts?: DashboardLayoutUncheckedUpdateManyWithoutTenantNestedInput
     pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
     ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
@@ -100085,6 +101840,514 @@ export namespace Prisma {
   export type NotificationUpdateManyWithWhereWithoutTemplateInput = {
     where: NotificationScalarWhereInput
     data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutTemplateInput>
+  }
+
+  export type UserCreateWithoutDashboardLayoutsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutUserInput
+    acceptedInvitations?: InvitationCreateNestedManyWithoutAcceptedByInput
+    sentInvitations?: InvitationCreateNestedManyWithoutInvitedByInput
+    invitedMemberships?: MembershipCreateNestedManyWithoutInvitedByInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientCreateNestedManyWithoutUserInput
+    notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseCreateNestedManyWithoutAssigneeInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderCreateNestedManyWithoutCreatedByInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutDashboardLayoutsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    hashedPassword?: string | null
+    isEmailVerified?: boolean
+    emailVerificationToken?: string | null
+    passwordResetToken?: string | null
+    passwordResetExpires?: Date | string | null
+    platformRole?: string | null
+    status?: string
+    lastLoginAt?: Date | string | null
+    twoFactorSecret?: string | null
+    twoFactorEnabled?: boolean
+    bio?: string | null
+    location?: string | null
+    website?: string | null
+    timezone?: string
+    locale?: string
+    emailNotifications?: boolean
+    marketingEmails?: boolean
+    securityAlerts?: boolean
+    activityUpdates?: boolean
+    notifySupportRepliesUI?: boolean
+    notifySupportRepliesEmail?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedCreateNestedManyWithoutUserInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutAssigneeInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedCreateNestedManyWithoutUserInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutUserInput
+    acceptedInvitations?: InvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInvitedByInput
+    invitedMemberships?: MembershipUncheckedCreateNestedManyWithoutInvitedByInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationRecipients?: NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+    notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutUserInput
+    assignedCases?: SupportCaseUncheckedCreateNestedManyWithoutAssigneeInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutUserInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutUserInput
+    createdEmailProviders?: EmailProviderUncheckedCreateNestedManyWithoutCreatedByInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutDashboardLayoutsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDashboardLayoutsInput, UserUncheckedCreateWithoutDashboardLayoutsInput>
+  }
+
+  export type TenantCreateWithoutDashboardLayoutsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryCreateNestedManyWithoutTenantInput
+    invitations?: InvitationCreateNestedManyWithoutTenantInput
+    memberships?: MembershipCreateNestedManyWithoutTenantInput
+    notifications?: NotificationCreateNestedManyWithoutTenantInput
+    notificationIntents?: NotificationIntentCreateNestedManyWithoutTenantInput
+    notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthCreateNestedManyWithoutTenantInput
+    sessions?: SessionCreateNestedManyWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationCreateNestedOneWithoutTenantInput
+    supportRouting?: TenantSupportRoutingCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointCreateNestedManyWithoutTenantInput
+    orders?: OrderCreateNestedManyWithoutTenantInput
+    subscriptions?: SubscriptionCreateNestedManyWithoutTenantInput
+    orderConfigurations?: OrderConfigurationCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutDashboardLayoutsInput = {
+    id?: string
+    slug: string
+    name: string
+    status?: string
+    subdomain?: string | null
+    customDomain?: string | null
+    logoUrl?: string | null
+    theme?: string | null
+    primaryColor?: string | null
+    secondaryColor?: string | null
+    invitePolicy?: string
+    emailVerificationBypassEnabled?: boolean
+    locale?: string
+    timezone?: string
+    plan?: string
+    limits?: string | null
+    featureFlags?: string | null
+    ssoEnabled?: boolean
+    ssoProvider?: string | null
+    billingEnabled?: boolean
+    stripeCustomerId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    cancelAtPeriodEnd?: boolean
+    description?: string | null
+    website?: string | null
+    industry?: string | null
+    size?: string | null
+    contactEmail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    suspendedAt?: Date | string | null
+    deletedAt?: Date | string | null
+    domainAlias?: string | null
+    registrationClosed?: boolean
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    caseMetrics?: CaseMetricsUncheckedCreateNestedManyWithoutTenantInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutTenantInput
+    contactReasons?: ContactReasonUncheckedCreateNestedManyWithoutTenantInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedCreateNestedManyWithoutTenantInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutTenantInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutTenantInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutTenantInput
+    notificationIntents?: NotificationIntentUncheckedCreateNestedManyWithoutTenantInput
+    notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutTenantInput
+    pendingAuths?: PendingAuthUncheckedCreateNestedManyWithoutTenantInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    ssoAuditLogs?: SsoAuditLogUncheckedCreateNestedManyWithoutTenantInput
+    supportCases?: SupportCaseUncheckedCreateNestedManyWithoutTenantInput
+    supportConfigurations?: SupportConfigurationUncheckedCreateNestedManyWithoutTenantInput
+    supportOptions?: SupportOptionUncheckedCreateNestedManyWithoutTenantInput
+    featureRules?: TenantFeatureRuleUncheckedCreateNestedManyWithoutTenantInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedCreateNestedOneWithoutTenantInput
+    supportRouting?: TenantSupportRoutingUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorAudits?: TwoFactorAuditUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutTenantInput
+    twoFactorMethods?: TwoFactorMethodUncheckedCreateNestedManyWithoutTenantInput
+    webhookEndpoints?: WebhookEndpointUncheckedCreateNestedManyWithoutTenantInput
+    orders?: OrderUncheckedCreateNestedManyWithoutTenantInput
+    subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    orderConfigurations?: OrderConfigurationUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutDashboardLayoutsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutDashboardLayoutsInput, TenantUncheckedCreateWithoutDashboardLayoutsInput>
+  }
+
+  export type UserUpsertWithoutDashboardLayoutsInput = {
+    update: XOR<UserUpdateWithoutDashboardLayoutsInput, UserUncheckedUpdateWithoutDashboardLayoutsInput>
+    create: XOR<UserCreateWithoutDashboardLayoutsInput, UserUncheckedCreateWithoutDashboardLayoutsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDashboardLayoutsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDashboardLayoutsInput, UserUncheckedUpdateWithoutDashboardLayoutsInput>
+  }
+
+  export type UserUpdateWithoutDashboardLayoutsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutUserNestedInput
+    acceptedInvitations?: InvitationUpdateManyWithoutAcceptedByNestedInput
+    sentInvitations?: InvitationUpdateManyWithoutInvitedByNestedInput
+    invitedMemberships?: MembershipUpdateManyWithoutInvitedByNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUpdateManyWithoutUserNestedInput
+    notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUpdateManyWithoutAssigneeNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUpdateManyWithoutCreatedByNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDashboardLayoutsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformRole?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: StringFieldUpdateOperationsInput | string
+    locale?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    activityUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesUI?: BoolFieldUpdateOperationsInput | boolean
+    notifySupportRepliesEmail?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    authenticatorCodes?: AuthenticatorCodeUncheckedUpdateManyWithoutUserNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutAssigneeNestedInput
+    caseStatusChanges?: CaseStatusHistoryUncheckedUpdateManyWithoutUserNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutUserNestedInput
+    acceptedInvitations?: InvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+    invitedMemberships?: MembershipUncheckedUpdateManyWithoutInvitedByNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationRecipients?: NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+    notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutUserNestedInput
+    assignedCases?: SupportCaseUncheckedUpdateManyWithoutAssigneeNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutUserNestedInput
+    createdEmailProviders?: EmailProviderUncheckedUpdateManyWithoutCreatedByNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type TenantUpsertWithoutDashboardLayoutsInput = {
+    update: XOR<TenantUpdateWithoutDashboardLayoutsInput, TenantUncheckedUpdateWithoutDashboardLayoutsInput>
+    create: XOR<TenantCreateWithoutDashboardLayoutsInput, TenantUncheckedCreateWithoutDashboardLayoutsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutDashboardLayoutsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutDashboardLayoutsInput, TenantUncheckedUpdateWithoutDashboardLayoutsInput>
+  }
+
+  export type TenantUpdateWithoutDashboardLayoutsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUpdateManyWithoutTenantNestedInput
+    notificationIntents?: NotificationIntentUpdateManyWithoutTenantNestedInput
+    notificationPreferences?: NotificationPreferencesUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUpdateManyWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUpdateOneWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUpdateManyWithoutTenantNestedInput
+    orders?: OrderUpdateManyWithoutTenantNestedInput
+    subscriptions?: SubscriptionUpdateManyWithoutTenantNestedInput
+    orderConfigurations?: OrderConfigurationUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutDashboardLayoutsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
+    customDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    theme?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    invitePolicy?: StringFieldUpdateOperationsInput | string
+    emailVerificationBypassEnabled?: BoolFieldUpdateOperationsInput | boolean
+    locale?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    limits?: NullableStringFieldUpdateOperationsInput | string | null
+    featureFlags?: NullableStringFieldUpdateOperationsInput | string | null
+    ssoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    ssoProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    billingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelAtPeriodEnd?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    suspendedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    domainAlias?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationClosed?: BoolFieldUpdateOperationsInput | boolean
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    caseMetrics?: CaseMetricsUncheckedUpdateManyWithoutTenantNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutTenantNestedInput
+    contactReasons?: ContactReasonUncheckedUpdateManyWithoutTenantNestedInput
+    featureAuditEntries?: FeatureAuditEntryUncheckedUpdateManyWithoutTenantNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutTenantNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutTenantNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutTenantNestedInput
+    notificationIntents?: NotificationIntentUncheckedUpdateManyWithoutTenantNestedInput
+    notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutTenantNestedInput
+    pendingAuths?: PendingAuthUncheckedUpdateManyWithoutTenantNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    ssoAuditLogs?: SsoAuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    supportCases?: SupportCaseUncheckedUpdateManyWithoutTenantNestedInput
+    supportConfigurations?: SupportConfigurationUncheckedUpdateManyWithoutTenantNestedInput
+    supportOptions?: SupportOptionUncheckedUpdateManyWithoutTenantNestedInput
+    featureRules?: TenantFeatureRuleUncheckedUpdateManyWithoutTenantNestedInput
+    ssoConfiguration?: TenantSsoConfigurationUncheckedUpdateOneWithoutTenantNestedInput
+    supportRouting?: TenantSupportRoutingUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorAudits?: TwoFactorAuditUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorCodes?: TwoFactorCodeUncheckedUpdateManyWithoutTenantNestedInput
+    twoFactorMethods?: TwoFactorMethodUncheckedUpdateManyWithoutTenantNestedInput
+    webhookEndpoints?: WebhookEndpointUncheckedUpdateManyWithoutTenantNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutTenantNestedInput
+    subscriptions?: SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    orderConfigurations?: OrderConfigurationUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -100198,6 +102461,15 @@ export namespace Prisma {
     message?: string | null
     acceptedAt?: Date | string | null
     acceptedByUserId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DashboardLayoutCreateManyUserInput = {
+    id?: string
+    tenantId?: string | null
+    dashboard: string
+    layout: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -100805,6 +103077,33 @@ export namespace Prisma {
     message?: NullableStringFieldUpdateOperationsInput | string | null
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acceptedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DashboardLayoutUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutDashboardLayoutsNestedInput
+  }
+
+  export type DashboardLayoutUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DashboardLayoutUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -101741,6 +104040,15 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type DashboardLayoutCreateManyTenantInput = {
+    id?: string
+    userId: string
+    dashboard: string
+    layout: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type PendingAuthCreateManyTenantInput = {
     id?: string
     userId: string
@@ -102437,6 +104745,33 @@ export namespace Prisma {
     realtimeEnabled?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     whatsappEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DashboardLayoutUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutDashboardLayoutsNestedInput
+  }
+
+  export type DashboardLayoutUncheckedUpdateWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DashboardLayoutUncheckedUpdateManyWithoutTenantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    dashboard?: StringFieldUpdateOperationsInput | string
+    layout?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -104551,6 +106886,10 @@ export namespace Prisma {
      * @deprecated Use NotificationTemplateDefaultArgs instead
      */
     export type NotificationTemplateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NotificationTemplateDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DashboardLayoutDefaultArgs instead
+     */
+    export type DashboardLayoutArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DashboardLayoutDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

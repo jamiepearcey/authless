@@ -962,6 +962,16 @@ exports.Prisma.NotificationTemplateScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.DashboardLayoutScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tenantId: 'tenantId',
+  dashboard: 'dashboard',
+  layout: 'layout',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1085,7 +1095,8 @@ exports.Prisma.ModelName = {
   NotificationIntent: 'NotificationIntent',
   NotificationDelivery: 'NotificationDelivery',
   NotificationPreferences: 'NotificationPreferences',
-  NotificationTemplate: 'NotificationTemplate'
+  NotificationTemplate: 'NotificationTemplate',
+  DashboardLayout: 'DashboardLayout'
 };
 
 /**

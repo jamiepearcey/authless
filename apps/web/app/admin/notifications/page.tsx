@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { 
-  Bell, Search, Loader2, Inbox, Trash2, ArrowLeft, 
+  Bell, Search, Loader2, Inbox, Trash2, 
   Archive, Flag, Clock, CheckCircle, 
   AlertCircle, Info, AlertTriangle, 
   RefreshCw, Download, Building,
@@ -15,7 +15,6 @@ import { Badge } from "@ui/base";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
 import Link from "next/link";
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { AdminPageLayout } from "@/components/AdminPageLayout";
 import { useSession } from "next-auth/react";
 
@@ -44,7 +43,7 @@ export default function AdminNotificationsPage() {
     isFetchingNextPage,
     isLoading,
     refetch,
-  } = trpc.getAllNotifications.useInfiniteQuery(
+  } = trpc.getAllNotifications.useInfiniteQuery(  
     {
       limit: 20,
       status: statusFilter === "all" ? undefined : statusFilter,
@@ -345,6 +344,9 @@ export default function AdminNotificationsPage() {
     <AdminPageLayout
       title="Notifications"
       description="Manage system notifications and alerts"
+      breadcrumb  ={[
+        { label: "Notifications", current: true },
+      ]}
       actions={
         <div className="flex items-center space-x-3">
           <Button variant="outline" asChild>
@@ -356,25 +358,6 @@ export default function AdminNotificationsPage() {
         </div>
       }
     >
-      {/* Breadcrumb Navigation */}
-      <div className="flex items-center space-x-4 mb-4">
-        <Link 
-          href="/admin"
-          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Admin
-        </Link>
-        <div className="h-6 w-px bg-gray-300" />
-        <BreadcrumbNavigation
-          items={[
-            { label: "Admin", href: "/admin" },
-            { label: "Notifications", current: true },
-          ]}
-          showHome={false}
-        />
-      </div>
-
       {/* Main Inbox Layout */}
       <div className="flex h-[calc(100vh-12rem)] overflow-hidden bg-white rounded-lg border border-gray-200">
 

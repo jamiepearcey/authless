@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@ui/base";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
 import { 
   BarChart3,
   Settings,
@@ -10,23 +9,73 @@ import {
 } from "lucide-react";
 
 import { trpc } from "@/lib/trpc";
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { useHealthCheck } from "@/hooks/useHealthCheck";
 import DraggableDashboard from "@/components/DraggableDashboard";
+import DraggableBillingDashboard from "@/components/DraggableBillingDashboard";
 import { AdminPageLayout } from "@/components/AdminPageLayout";
-import { BillingDashboard, DashboardContext } from "@/components/dashboard";
+import { DashboardContext } from "@/components/dashboard";
 import { useState, useEffect } from "react";
+import { RotateCcw, Save } from "lucide-react";
 
 export default function AdminDashboardPage() {
   const { data: dashboardStats, isLoading } = trpc.getAllTenants.useQuery();
   const { data: outboxStats, isLoading: outboxLoading } = trpc.getOutboxStats.useQuery({});
   const { data: auditStats, isLoading: auditLoading } = trpc.getAuditStats.useQuery({});
   
+  // Reset layout mutations
+  const resetSystemHealthLayout = trpc.resetDashboardLayout.useMutation();
+  const resetBillingLayout = trpc.resetDashboardLayout.useMutation();
+  
+  // Save layout mutations
+  const saveSystemHealthLayout = trpc.saveDashboardLayout.useMutation();
+  const saveBillingLayout = trpc.saveDashboardLayout.useMutation();
+  
   // Grid mode state
   const [isGridMode, setIsGridMode] = useState(false);
+
+  // Reset layout handlers
+  const handleResetSystemHealthLayout = () => {
+    resetSystemHealthLayout.mutate({
+      dashboard: "system-health"
+    }, {
+      onSuccess: () => {
+        window.location.reload();
+      }
+    });
+  };
+
+  const handleResetBillingLayout = () => {
+    resetBillingLayout.mutate({
+      dashboard: "billing"
+    }, {
+      onSuccess: () => {
+        window.location.reload();
+      }
+    });
+  };
+
+  // Manual save handlers for testing
+  const handleSaveSystemHealthLayout = () => {
+    if ((window as any).saveSystemHealthLayout) {
+      (window as any).saveSystemHealthLayout();
+    } else {
+      console.log('Save function not available yet');
+    }
+  };
+
+  const handleSaveBillingLayout = () => {
+    if ((window as any).saveBillingLayout) {
+      (window as any).saveBillingLayout();
+    } else {
+      console.log('Save function not available yet');
+    }
+  };
   
   // Billing dashboard state
   const [timeRange, setTimeRange] = useState<'week' | 'month' | 'quarter' | 'year'>('month');
+  
+  // Active tab state
+  const [activeTab, setActiveTab] = useState<'system' | 'billing'>('system');
   
   const billingDashboardContext: DashboardContext = {
     type: 'platform',
@@ -72,6 +121,34 @@ export default function AdminDashboardPage() {
     <AdminPageLayout
       title="Platform Administration"
       description="Manage tenants, billing, and platform-wide analytics"
+      header={
+        <div className="border-b border-gray-200">
+          <nav className="-mb-px flex">
+            <button
+              onClick={() => setActiveTab('system')}
+              className={`flex items-center space-x-2 py-4 px-1 border-b-2 text-sm font-medium transition-colors ${
+                activeTab === 'system'
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>System Health</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('billing')}
+              className={`flex items-center space-x-2 py-4 px-1 border-b-2 text-sm font-medium transition-colors ${
+                activeTab === 'billing'
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <DollarSign className="h-4 w-4" />
+              <span>Billing & Analytics</span>
+            </button>
+          </nav>
+        </div>
+      }
       actions={
         <div className="flex items-center space-x-3">
           <select
@@ -100,77 +177,67 @@ export default function AdminDashboardPage() {
             <Settings className="h-4 w-4" />
             <span>{isGridMode ? "Exit Grid Mode" : "Enable Grid Layout"}</span>
           </Button>
+          {isGridMode && (
+            <>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={activeTab === 'billing' ? handleSaveBillingLayout : handleSaveSystemHealthLayout}
+                className="flex items-center space-x-2"
+              >
+                <Save className="h-4 w-4" />
+                <span>Save Layout</span>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={activeTab === 'billing' ? handleResetBillingLayout : handleResetSystemHealthLayout}
+                className="flex items-center space-x-2"
+                disabled={activeTab === 'billing' ? resetBillingLayout.isPending : resetSystemHealthLayout.isPending}
+              >
+                <RotateCcw className="h-4 w-4" />
+                <span>Reset Layout</span>
+              </Button>
+            </>
+          )}
         </div>
       }
     >
-      {/* Breadcrumb Navigation */}
-      <div className="flex items-center space-x-4 mb-6">
-        <BreadcrumbNavigation
-          items={[
-            { label: "Admin Dashboard", current: true },
-          ]}
-          showHome={false}
-        />
-      </div>
-
       {/* Tabbed Interface */}
-      <Tabs defaultValue="system" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 lg:w-fit lg:grid-cols-3">
-          <TabsTrigger value="system" className="flex items-center space-x-2">
-            <BarChart3 className="h-4 w-4" />
-            <span>System Health</span>
-          </TabsTrigger>
-          <TabsTrigger value="billing" className="flex items-center space-x-2">
-            <DollarSign className="h-4 w-4" />
-            <span>Billing & Analytics</span>
-          </TabsTrigger>
-          <TabsTrigger value="tenants" className="flex items-center space-x-2">
-            <Building className="h-4 w-4" />
-            <span>Tenants</span>
-          </TabsTrigger>
-        </TabsList>
+      <div className="space-y-6">
 
-        <TabsContent value="system" className="space-y-6">
-          {/* Original Dashboard */}
-          <DraggableDashboard
-            dashboardStats={dashboardStats || []}
-            outboxStats={outboxStats}
-            auditStats={auditStats}
-            healthData={healthData}
-            healthLoading={healthLoading}
-            healthError={healthError}
-            lastUpdate={lastUpdate}
-            refreshHealth={refreshHealth}
-            isAllHealthy={isAllHealthy}
-            healthyCount={healthyCount}
-            totalCount={totalCount}
-            avgResponseTime={avgResponseTime}
-            isGridMode={isGridMode}
-          />
-        </TabsContent>
-
-        <TabsContent value="billing" className="space-y-6">
-          {/* Billing Dashboard */}
-          <BillingDashboard 
-            context={billingDashboardContext}
-            className="space-y-6"
-          />
-        </TabsContent>
-
-        <TabsContent value="tenants" className="space-y-6">
-          {/* Tenant Management - This would be implemented later */}
-          <div className="text-center py-12">
-            <Building className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Tenant Management</h3>
-            <p className="text-gray-500 mb-4">
-              Detailed tenant management interface would be implemented here
-            </p>
-            <Button variant="outline">
-              View All Tenants
-            </Button>
+        {activeTab === 'system' && (
+          <div >
+            {/* Original Dashboard */}
+            <DraggableDashboard
+              dashboardStats={dashboardStats || []}
+              outboxStats={outboxStats}
+              auditStats={auditStats}
+              healthData={healthData}
+              healthLoading={healthLoading}
+              healthError={healthError}
+              lastUpdate={lastUpdate}
+              refreshHealth={refreshHealth}
+              isAllHealthy={isAllHealthy}
+              healthyCount={healthyCount}
+              totalCount={totalCount}
+              avgResponseTime={avgResponseTime}
+              isGridMode={isGridMode}
+            />
           </div>
-        </TabsContent>
-      </Tabs>
+        )}
+
+        {activeTab === 'billing' && (
+          <div className="">
+            {/* Billing Dashboard */}
+            <DraggableBillingDashboard 
+              context={billingDashboardContext}
+              isGridMode={isGridMode}
+              className="space-y-6"
+            />
+          </div>
+        )}
+      </div>
     </AdminPageLayout>
   );
 }

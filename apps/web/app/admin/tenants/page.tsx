@@ -654,6 +654,9 @@ export default function AdminTenantsPage() {
     <AdminPageLayout
       title="Tenant Management"
       description="Manage all workspaces and their settings"
+      breadcrumb={[
+        { label: "Tenant Management", current: true },
+      ]}
       actions={
         <div className="flex items-center space-x-3">
           <Button variant="outline" onClick={() => refetch()}>
@@ -671,25 +674,6 @@ export default function AdminTenantsPage() {
         </div>
       }
     >
-      {/* Breadcrumb Navigation */}
-      <div className="flex items-center space-x-4 mb-4">
-        <Link 
-          href="/admin"
-          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Admin
-        </Link>
-        <div className="h-6 w-px bg-gray-300" />
-        <BreadcrumbNavigation
-          items={[
-            { label: "Admin", href: "/admin" },
-            { label: "Tenant Management", current: true },
-          ]}
-          showHome={false}
-        />
-      </div>
-
       {/* Advanced Controls */}
       <div className="bg-white rounded-lg border border-gray-200 p-4">
         <div className="flex flex-wrap items-center justify-between gap-4">

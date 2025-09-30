@@ -3,11 +3,10 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/base";
 import { Button, Input, Label, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Switch } from "@ui/base";
-import { Settings, Server, Mail, Bell, Globe, Zap, ArrowLeft } from "lucide-react";
+import { Settings, Mail, Bell, Zap, Globe  } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "@ui/base";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/base";
-import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
+import { AdminPageLayout } from "@/components/AdminPageLayout";
 import Link from "next/link";
 
 export default function AdminSettingsPage() {
@@ -158,77 +157,73 @@ export default function AdminSettingsPage() {
 
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="mb-8">
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-4 mb-4">
-          <Link 
-            href="/admin"
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Admin
-          </Link>
-          <div className="h-6 w-px bg-gray-300" />
-          <BreadcrumbNavigation
-            items={[
-              { label: "Admin", href: "/admin" },
-              { label: "Platform Settings", current: true },
-            ]}
-            showHome={false}
-          />
-        </div>
-        
-        {/* Page Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-              <Settings className="h-8 w-8 text-indigo-600" />
-              <span>Platform Settings</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Configure platform-wide settings and preferences
-            </p>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            {isEditing ? (
-              <>
-                <Button variant="outline" onClick={() => setIsEditing(false)}>
-                  Cancel
-                </Button>
-                <Button onClick={handleSubmit} disabled={updateSettings.isPending}>
-                  {updateSettings.isPending ? "Saving..." : "Save Changes"}
-                </Button>
-              </>
-            ) : (
-              <Button onClick={() => setIsEditing(true)}>
-                Edit Settings
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
+    <AdminPageLayout
+      title="Platform Settings"
+      description="Configure platform-wide settings and preferences"
+      breadcrumb={[
+        { label: "Settings", current: true },
+      ]}
+      header={
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="platform" className="flex items-center gap-2">
-            <Zap className="h-4 w-4" />
-            Feature Toggles
-          </TabsTrigger>
-          <TabsTrigger value="email" className="flex items-center gap-2">
-            <Mail className="h-4 w-4" />
-            Email Providers
-          </TabsTrigger>
-          <TabsTrigger value="notifications" className="flex items-center gap-2">
-            <Bell className="h-4 w-4" />
-            Notifications
-          </TabsTrigger>
-        </TabsList>
+        <div className="border-b border-gray-200">
+          <nav className="-mb-px flex space-x-8">
+            <button
+              onClick={() => setActiveTab('platform')}
+              className={`flex items-center space-x-2 py-4 px-1 border-b-2 text-sm font-medium transition-colors ${
+                activeTab === 'platform'
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Zap className="h-4 w-4" />
+              <span>Feature Toggles</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('email')}
+              className={`flex items-center space-x-2 py-4 px-1 border-b-2 text-sm font-medium transition-colors ${
+                activeTab === 'email'
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Mail className="h-4 w-4" />
+              <span>Email Providers</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('notifications')}
+              className={`flex items-center space-x-2 py-4 px-1 border-b-2 text-sm font-medium transition-colors ${
+                activeTab === 'notifications'
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Bell className="h-4 w-4" />
+              <span>Notifications</span>
+            </button>
+          </nav>
+        </div>
+      }
+      actions={
+        isEditing ? (
+          <>
+            <Button variant="outline" onClick={() => setIsEditing(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSubmit} disabled={updateSettings.isPending}>
+              {updateSettings.isPending ? "Saving..." : "Save Changes"}
+            </Button>
+          </>
+        ) : (
+          <Button onClick={() => setIsEditing(true)}>
+            Edit Settings
+          </Button>
+        )
+      }
+    >
 
-        {/* Feature Toggles */}
-        <TabsContent value="platform" className="space-y-6">
+      <div className="space-y-6">
+        {activeTab === 'platform' && (
+          <div className="space-y-6">
           {/* Core Platform Features */}
           <Card>
             <CardHeader>
@@ -668,11 +663,12 @@ export default function AdminSettingsPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-
+          </div>
+        )}
 
         {/* Email Settings */}
-        <TabsContent value="email" className="space-y-6">
+        {activeTab === 'email' && (
+          <div className="space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>Email Service Providers</CardTitle>
@@ -808,11 +804,12 @@ export default function AdminSettingsPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-
+          </div>
+        )}
 
         {/* Notification Settings */}
-        <TabsContent value="notifications" className="space-y-6">
+        {activeTab === 'notifications' && (
+          <div className="space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>Notification Settings</CardTitle>
@@ -863,9 +860,10 @@ export default function AdminSettingsPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+          </div>
+        )}
 
-      </Tabs>
-    </div>
+      </div>
+    </AdminPageLayout>
   );
 }

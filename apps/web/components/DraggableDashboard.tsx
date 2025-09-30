@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { GridStack } from "gridstack";
 import "gridstack/dist/gridstack.min.css";
+import { trpc } from "@/lib/trpc";
 
 interface DashboardStatProps {
   title: string;
@@ -61,6 +62,48 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
     lastUpdate, refreshHealth, isAllHealthy, healthyCount, totalCount, avgResponseTime, isGridMode
   } = props;
 
+  // tRPC mutations for saving layout
+  const saveLayoutMutation = trpc.saveDashboardLayout.useMutation();
+  const resetLayoutMutation = trpc.resetDashboardLayout.useMutation();
+  const getLayoutQuery = trpc.getDashboardLayout.useQuery({ 
+    dashboard: "system-health" as const,
+  } as any);
+
+  // Expose save function to parent component
+  const saveCurrentLayout = () => {
+    if (gridInstanceRef.current) {
+      const layout = gridInstanceRef.current.save(false) as any[];
+      console.log('Manually saving layout:', layout);
+      saveLayoutMutation.mutate({
+        dashboard: "system-health",
+        layout: layout,
+      }, {
+        onSuccess: () => {
+          console.log('Layout saved successfully');
+        },
+        onError: (error) => {
+          console.error('Failed to save layout:', error);
+        }
+      });
+    }
+  };
+
+  const handleResetLayout = () => {
+    resetLayoutMutation.mutate({
+      dashboard: "system-health"
+    }, {
+      onSuccess: () => {
+        // Reload the page to reset to default layout
+        window.location.reload();
+      }
+    });
+  };
+
+  // Expose save function to window for debugging
+  useEffect(() => {
+    (window as any).saveSystemHealthLayout = saveCurrentLayout;
+  }, [saveCurrentLayout]);
+
            // 12-col grid with proper heights for content
      const widgets = [
       { id: "stats-1", x: 0,  y: 0,  w: 3, h: 3, minW: 2, minH: 3  },
@@ -99,11 +142,10 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
          margin: 5,
          animate: true,
          float: false,
-         resizable: isGridMode ? { handles: "se" } : false,
-         draggable: isGridMode ? { handle: ".card-header, .grid-stack-item-content" } : false,
+         resizable: isGridMode ? { handles: "se" } : undefined,
+         draggable: isGridMode ? { handle: ".card-header, .grid-stack-item-content" } : undefined,
          staticGrid: !isGridMode,
          minRow: 1,
-         disableOneColumnMode: true,
          acceptWidgets: isGridMode
        },
        gridRef.current
@@ -111,13 +153,66 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
 
     gridInstanceRef.current = grid;
 
+    // Load saved layout if available
+    if (getLayoutQuery.data && Array.isArray(getLayoutQuery.data)) {
+      try {
+        grid.load(getLayoutQuery.data as any);
+      } catch (error) {
+        console.error('Failed to load saved layout:', error);
+      }
+    }
+
+    // Save layout changes when grid changes
+    const saveLayout = () => {
+      if (gridInstanceRef.current) {
+        const layout = gridInstanceRef.current.save(false) as any[];
+        console.log('Saving layout:', layout);
+        saveLayoutMutation.mutate({
+          dashboard: "system-health",
+          layout: layout,
+        }, {
+          onSuccess: () => {
+            console.log('Layout saved successfully');
+          },
+          onError: (error) => {
+            console.error('Failed to save layout:', error);
+          }
+        });
+      }
+    };
+
+    // Listen for grid changes
+    grid.on('change', saveLayout);
+    grid.on('resizestop', saveLayout);
+
     return () => {
+      grid.off('change');
+      grid.off('resizestop');
       if (gridInstanceRef.current) {
         gridInstanceRef.current.destroy(false);
         gridInstanceRef.current = null;
       }
     };
-  }, [isMounted, isGridMode]);
+  }, [isMounted, isGridMode, getLayoutQuery.data]);
+
+  // Save layout when exiting grid mode
+  useEffect(() => {
+    if (!isGridMode && gridInstanceRef.current) {
+      const layout = gridInstanceRef.current.save(false) as any[];
+      console.log('Saving layout on grid mode exit:', layout);
+      saveLayoutMutation.mutate({
+        dashboard: "system-health",
+        layout: layout,
+      }, {
+        onSuccess: () => {
+          console.log('Layout saved on grid mode exit');
+        },
+        onError: (error) => {
+          console.error('Failed to save layout on grid mode exit:', error);
+        }
+      });
+    }
+  }, [isGridMode, saveLayoutMutation]);
 
   if (!isMounted) {
     return (

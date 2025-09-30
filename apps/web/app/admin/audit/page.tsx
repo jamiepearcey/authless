@@ -31,6 +31,7 @@ import { trpc } from "@/lib/trpc";
 import { BreadcrumbNavigation } from "@/components/BreadcrumbNavigation";
 import { AdminPageLayout } from "@/components/AdminPageLayout";
 import Link from "next/link";
+import { AdminBreadcrumb } from "@/components/AdminBreadcrumb";
 
 interface AuditEventFilters {
   action?: string;
@@ -171,6 +172,9 @@ export default function AuditEventsPage() {
     <AdminPageLayout
       title="Audit Events"
       description="System activity audit trail and security monitoring"
+      header={<AdminBreadcrumb items={[
+        { label: "Audit Events", current: true },
+      ]} />}
       actions={
         <div className="flex items-center space-x-2">
           <TooltipProvider>
@@ -209,25 +213,6 @@ export default function AuditEventsPage() {
         </div>
       }
     >
-      {/* Breadcrumb Navigation */}
-      <div className="flex items-center space-x-4 mb-4">
-        <Link 
-          href="/admin"
-          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Admin
-        </Link>
-        <div className="h-6 w-px bg-gray-300" />
-        <BreadcrumbNavigation
-          items={[
-            { label: "Admin", href: "/admin" },
-            { label: "Audit Events", current: true },
-          ]}
-          showHome={false}
-        />
-      </div>
-
       {/* Enterprise Stats Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5 mb-6">
         <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200">
