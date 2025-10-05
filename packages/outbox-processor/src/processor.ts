@@ -1,6 +1,5 @@
 import { Client } from "pg";
 import { connect, NatsConnection, JetStreamClient, StringCodec, headers, DiscardPolicy, StorageType, RetentionPolicy } from "nats";
-import type { OutboxEvent } from "@db/base";
 
 const sc = StringCodec();
 const MAX_TRIES = 10;
@@ -88,21 +87,20 @@ export class OutboxProcessor {
     await this.pg.query('LISTEN outbox_wakeup');
     this.logger?.info({}, 'Listening for outbox notifications');
 
-    // Connect to NATS JetStream with proper timeouts
+    // Connect to NATS JetStream with simplified timeout
+    this.logger?.info({}, 'Connecting to NATS...');
     this.nats = await connect({ 
       servers: this.config.natsUrl,
-      timeout: 30000, // 30 second connection timeout
-      pingInterval: 20000, // 20 second ping interval
-      maxPingOut: 5,
-      reconnect: true,
-      maxReconnectAttempts: -1,
-      reconnectTimeWait: 1000
+      timeout: 5000
     });
+    this.logger?.info({}, 'Connected to NATS successfully');
     
     // Create JetStream client with extended timeout
+    this.logger?.info({}, 'Creating JetStream client...');
     this.js = this.nats.jetstream({
       timeout: 30000 // 30 second JetStream operation timeout
     });
+    this.logger?.info({}, 'JetStream client created successfully');
     
     // Create the EVENTS stream if it doesn't exist
     // Don't fail initialization if stream creation fails - we'll retry during processing

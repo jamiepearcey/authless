@@ -1,5 +1,6 @@
-import { ArrowLeft, Link } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { BreadcrumbItem, BreadcrumbNavigation } from "./BreadcrumbNavigation";
+import Link from "next/link";
 
 export interface AdminBreadcrumbProps {
   items: BreadcrumbItem[];

@@ -36,8 +36,8 @@ export function useIsAdmin(tenantId?: string) {
   }
 
   // Check if user is admin of the specific tenant
-  const { data: memberships, isLoading: membershipsLoading } = trpc.getTenantMemberships.useQuery(
-    { slug: tenantId },
+  const { data: memberships, isLoading: membershipsLoading } = trpc.getTenantMembershipsById.useQuery(
+    { tenantId: tenantId },
     { enabled: !!tenantId && status === "authenticated" }
   );
 
@@ -67,8 +67,8 @@ export function useIsAdmin(tenantId?: string) {
 export function useIsTenantMember(tenantId: string) {
   const { data: session, status } = useSession();
   
-  const { data: memberships, isLoading: membershipsLoading } = trpc.getTenantMemberships.useQuery(
-    { slug: tenantId },
+  const { data: memberships, isLoading: membershipsLoading } = trpc.getTenantMembershipsById.useQuery(
+    { tenantId: tenantId },
     { enabled: !!tenantId && status === "authenticated" }
   );
 
@@ -95,8 +95,8 @@ export function useIsTenantMember(tenantId: string) {
 export function useTenantRole(tenantId: string) {
   const { data: session, status } = useSession();
   
-  const { data: memberships, isLoading: membershipsLoading } = trpc.getTenantMemberships.useQuery(
-    { slug: tenantId },
+  const { data: memberships, isLoading: membershipsLoading } = trpc.getTenantMembershipsById.useQuery(
+    { tenantId: tenantId },
     { enabled: !!tenantId && status === "authenticated" }
   );
 

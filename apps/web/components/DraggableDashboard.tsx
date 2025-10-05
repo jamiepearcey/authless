@@ -212,7 +212,7 @@ export default function DraggableDashboard(props: DraggableDashboardProps) {
         }
       });
     }
-  }, [isGridMode, saveLayoutMutation]);
+  }, [isGridMode]);
 
   if (!isMounted) {
     return (

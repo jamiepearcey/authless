@@ -499,6 +499,81 @@ export const tenantRouter = router({
       return transformedMemberships;
     }),
 
+  // Get tenant memberships by tenant ID (for admin helper functions)
+  getTenantMembershipsById: protectedProcedure
+    .input(z.object({ tenantId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      // Get tenant first
+      const tenant = await ctx.db.tenant.findUnique({
+        where: { id: input.tenantId },
+      });
+      
+      if (!tenant) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Tenant not found" });
+      }
+
+      // Check if user is a member of this tenant (unless they're a platform admin)
+      if (ctx.session.user?.platformRole !== "admin") {
+        const membership = await ctx.db.membership.findFirst({
+          where: {
+            userId: ctx.session.user.id || ctx.session.user.email,
+            tenantId: input.tenantId,
+            status: "active",
+          },
+        });
+        
+        if (!membership) {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Tenant access required" });
+        }
+      }
+      
+      // Get all memberships for this tenant (active and pending)
+      const memberships = await ctx.db.membership.findMany({
+        where: {
+          tenantId: tenant.id,
+          status: { in: ["active", "pending"] },
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              status: true,
+              image: true,
+              createdAt: true,
+              lastLoginAt: true,
+              isEmailVerified: true,
+            },
+          },
+        },
+        orderBy: { createdAt: "desc" },
+      });
+      
+      // Transform the data to include computed fields
+      const transformedMemberships = memberships.map((membership) => ({
+        id: membership.id,
+        tenant: {
+          id: tenant.id,
+          slug: tenant.slug,
+          name: tenant.name,
+          status: tenant.status,
+          logoUrl: tenant.logoUrl,
+          plan: tenant.plan,
+          primaryColor: tenant.primaryColor,
+          secondaryColor: tenant.secondaryColor,
+        },
+        role: membership.role,
+        status: membership.status,
+        createdAt: membership.createdAt,
+        lastActiveAt: membership.lastActiveAt,
+        isAdmin: membership.role === "admin",
+        user: membership.user,
+      }));
+      
+      return transformedMemberships;
+    }),
+
   // Get user's tenants (for tenant switcher)
   getUserTenants: protectedProcedure.query(async ({ ctx }) => {
     if (!ctx.session?.user?.email) {

@@ -68,6 +68,7 @@ const appRouter = router({
   getAllTenants: tenantRouter.getAllTenants,
   getTenants: tenantRouter.getTenants,
   getTenantMemberships: tenantRouter.getTenantMemberships,
+  getTenantMembershipsById: tenantRouter.getTenantMembershipsById,
   getUserTenants: tenantRouter.getUserTenants,
   getTenantRoles: tenantRouter.getTenantRoles,
   getTenantsForWorkflow: tenantRouter.getTenantsForWorkflow,
