@@ -7,6 +7,7 @@ import { Mail, Bell, Trash2, Globe, Lock, Save, MapPin, Clock, Eye, EyeOff, User
 import { useLocale, t } from "@i18n-core";
 import { trpc } from "@/lib/trpc";
 import { ProfilePhotoUploadDialog } from "@/components/ProfilePhotoUploadDialog";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function AccountPage() {
   const { data: session, update } = useSession();
@@ -38,6 +39,15 @@ export default function AccountPage() {
     confirmPassword: "",
   });
   const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [isHoveringPassword, setIsHoveringPassword] = useState(false);
+  const [passwordValidation, setPasswordValidation] = useState({
+    minLength: false,
+    hasUppercase: false,
+    hasLowercase: false,
+    hasNumber: false,
+    hasSpecial: false,
+    passwordsMatch: false,
+  });
 
   // Get current user data
   const { data: userData, refetch: refetchUser } = trpc.getCurrentUser.useQuery(undefined, {
@@ -100,17 +110,46 @@ export default function AccountPage() {
     }
   }, [userData]);
 
+  // Password validation effect
+  useEffect(() => {
+    const { newPassword, confirmPassword } = passwordData;
+    setPasswordValidation({
+      minLength: newPassword.length >= 8,
+      hasUppercase: /[A-Z]/.test(newPassword),
+      hasLowercase: /[a-z]/.test(newPassword),
+      hasNumber: /[0-9]/.test(newPassword),
+      hasSpecial: /[!@#$%^&*(),.?":{}|<>]/.test(newPassword),
+      passwordsMatch: newPassword.length > 0 && newPassword === confirmPassword,
+    });
+  }, [passwordData]);
+
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!session?.user?.id) return;
 
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      toast.error("New passwords do not match");
+    // Validate all requirements
+    if (!passwordValidation.minLength) {
+      toast.error("Password must be at least 8 characters long");
       return;
     }
-
-    if (passwordData.newPassword.length < 8) {
-      toast.error("Password must be at least 8 characters long");
+    if (!passwordValidation.hasUppercase) {
+      toast.error("Password must contain at least one uppercase letter");
+      return;
+    }
+    if (!passwordValidation.hasLowercase) {
+      toast.error("Password must contain at least one lowercase letter");
+      return;
+    }
+    if (!passwordValidation.hasNumber) {
+      toast.error("Password must contain at least one number");
+      return;
+    }
+    if (!passwordValidation.hasSpecial) {
+      toast.error("Password must contain at least one special character");
+      return;
+    }
+    if (!passwordValidation.passwordsMatch) {
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -329,123 +368,149 @@ export default function AccountPage() {
             </h3>
           </div>
           
-          {/* Animated container with smooth expand/collapse */}
-          <div className="overflow-hidden transition-all duration-500 ease-in-out">
-            {/* Landing state - always present */}
-            <div 
-              className={`transition-[opacity,transform,max-height] duration-500 ease-in-out ${
-                showPasswordForm 
-                  ? 'opacity-0 transform -translate-y-4 max-h-0' 
-                  : 'opacity-100 transform translate-y-0 max-h-32'
-              }`}
-            >
-              <div 
-                className="flex items-center justify-between p-6 bg-gradient-to-r from-slate-50 to-slate-100 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-slate-200"
-                onClick={() => setShowPasswordForm(true)}
-              >
-                <div className="flex items-center space-x-6">
-                  {/* Stylized asterisk display */}
-                  <div className="flex items-center justify-center w-16 h-16 bg-white rounded-full border-2 border-slate-200">
-                    <div className="flex items-center space-x-1">
-                      <span className="text-indigo-600 text-lg font-bold tracking-wider">••••••</span>
+          {/* Fixed-size password container */}
+          <div className="h-[320px]">
+            <AnimatePresence mode="wait">
+              {!showPasswordForm ? (
+                /* Landing state - password protected */
+                <motion.div
+                  key="landing"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-col items-center justify-center p-8 bg-gray-50 border border-gray-200 rounded-lg cursor-pointer hover:border-indigo-300 hover:bg-gray-100 transition-colors h-full"
+                  onClick={() => setShowPasswordForm(true)}
+                  onMouseEnter={() => setIsHoveringPassword(true)}
+                  onMouseLeave={() => setIsHoveringPassword(false)}
+                >
+                  <div className="flex items-center justify-center w-28 h-28 bg-white rounded-full border-2 border-gray-300 mb-4 shadow-sm">
+                    <div className="flex items-center space-x-1.5">
+                      {[0, 1, 2, 3, 4].map((i) => (
+                        <motion.div
+                          key={i}
+                          className="w-2 h-2 bg-gray-400 rounded-full"
+                          animate={isHoveringPassword ? {
+                            y: [0, -8, 0],
+                          } : {
+                            y: 0,
+                          }}
+                          transition={{
+                            duration: 0.6,
+                            repeat: isHoveringPassword ? Infinity : 0,
+                            repeatDelay: 0.5,
+                            delay: i * 0.1,
+                            ease: "easeInOut",
+                          }}
+                        />
+                      ))}
                     </div>
                   </div>
+                  <p className="text-base font-medium text-gray-900 mb-1">Password Protected</p>
+                  <p className="text-sm text-gray-500">Click to change your password</p>
+                </motion.div>
+              ) : (
+                /* Password change form */
+                <motion.form
+                  key="form"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  onSubmit={handlePasswordChange}
+                  className="h-full flex flex-col"
+                >
+                <div className="flex-1 space-y-3">
                   <div>
-                    <p className="text-base font-semibold text-gray-900">Password Protected</p>
-                    <p className="text-sm text-gray-500 flex items-center space-x-1">
-                      <Shield className="h-3 w-3" />
-                      <span>Click to change your password</span>
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2 text-indigo-600">
-                  <Edit3 className="h-5 w-5" />
-                  <span className="text-sm font-medium">Change</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Form state - slides in from below */}
-            <div 
-              className={`transition-[opacity,transform,max-height] duration-500 ease-in-out ${
-                showPasswordForm 
-                  ? 'opacity-100 transform translate-y-0 max-h-96' 
-                  : 'opacity-0 transform translate-y-4 max-h-0'
-              }`}
-            >
-              <div className="pt-4">
-                <form onSubmit={handlePasswordChange} className="space-y-4 p-6 bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-200 rounded-xl">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="newPassword" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-                        <Key className="h-4 w-4 text-indigo-600" />
-                        New Password
-                      </Label>
-                      <Input
-                        id="newPassword"
-                        type="password"
-                        value={passwordData.newPassword}
-                        onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
-                        className="h-11 border-indigo-200 focus:border-indigo-400 focus:ring-indigo-400"
-                        required
-                        minLength={8}
-                        placeholder="Enter your new password"
-                        autoFocus
-                      />
-                      <p className="text-xs text-gray-500 mt-1">Must be at least 8 characters</p>
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="confirmPassword" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-                        <CheckCircle className="h-4 w-4 text-indigo-600" />
-                        Confirm Password
-                      </Label>
-                      <Input
-                        id="confirmPassword"
-                        type="password"
-                        value={passwordData.confirmPassword}
-                        onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                        className="h-11 border-indigo-200 focus:border-indigo-400 focus:ring-indigo-400"
-                        required
-                        placeholder="Confirm your new password"
-                      />
-                    </div>
+                    <Label htmlFor="newPassword" className="text-sm font-medium text-gray-700 mb-1.5 block">
+                      New Password
+                    </Label>
+                    <Input
+                      id="newPassword"
+                      type="password"
+                      value={passwordData.newPassword}
+                      onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                      className="h-9"
+                      placeholder="Enter your new password"
+                      autoFocus
+                    />
                   </div>
                   
-                  <div className="flex items-center justify-end space-x-3 pt-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => {
-                        setShowPasswordForm(false);
-                        setPasswordData({ newPassword: "", confirmPassword: "" });
-                      }}
-                      className="border-slate-300 text-slate-600 hover:bg-slate-50"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      type="submit"
-                      disabled={isChangingPassword}
-                      className="bg-indigo-600 hover:bg-indigo-700 flex items-center space-x-2"
-                    >
-                      {isChangingPassword ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                          <span>Saving...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Save className="h-4 w-4" />
-                          <span>Save Password</span>
-                        </>
-                      )}
-                    </Button>
+                  <div>
+                    <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700 mb-1.5 block">
+                      Confirm Password
+                    </Label>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      value={passwordData.confirmPassword}
+                      onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                      className="h-9"
+                      placeholder="Confirm your new password"
+                    />
                   </div>
-                </form>
-              </div>
-            </div>
-          </div>
+
+                  {/* Password requirements */}
+                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-2.5">
+                    <p className="text-xs font-medium text-gray-700 mb-1.5">Password must contain:</p>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                      <div className={`text-xs flex items-center space-x-1.5 ${passwordValidation.minLength ? 'text-green-600' : 'text-gray-500'}`}>
+                        <CheckCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>At least 8 characters</span>
+                      </div>
+                      <div className={`text-xs flex items-center space-x-1.5 ${passwordValidation.hasUppercase ? 'text-green-600' : 'text-gray-500'}`}>
+                        <CheckCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>One uppercase letter</span>
+                      </div>
+                      <div className={`text-xs flex items-center space-x-1.5 ${passwordValidation.hasLowercase ? 'text-green-600' : 'text-gray-500'}`}>
+                        <CheckCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>One lowercase letter</span>
+                      </div>
+                      <div className={`text-xs flex items-center space-x-1.5 ${passwordValidation.hasNumber ? 'text-green-600' : 'text-gray-500'}`}>
+                        <CheckCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>One number</span>
+                      </div>
+                      <div className={`text-xs flex items-center space-x-1.5 ${passwordValidation.hasSpecial ? 'text-green-600' : 'text-gray-500'}`}>
+                        <CheckCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>One special character</span>
+                      </div>
+                      <div className={`text-xs flex items-center space-x-1.5 ${passwordValidation.passwordsMatch ? 'text-green-600' : 'text-gray-500'}`}>
+                        <CheckCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>Passwords match</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-end space-x-3 pt-3 border-t border-gray-200 mt-3">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setShowPasswordForm(false);
+                      setPasswordData({ newPassword: "", confirmPassword: "" });
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={isChangingPassword}
+                  >
+                    {isChangingPassword ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                        Saving...
+                      </>
+                    ) : (
+                      'Save Password'
+                    )}
+                  </Button>
+                </div>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </div>  
         </div>
       </div>
 

@@ -174,18 +174,18 @@ export default function Header() {
                         Profile
                       </Link>
                       <Link
-                        href="/settings/2fa"
-                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
-                      >
-                        <Shield className="h-4 w-4 mr-3 text-gray-400" />
-                        Two-Factor Authentication
-                      </Link>
-                      <Link
                         href="/settings/account"
                         className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
                       >
                         <Settings className="h-4 w-4 mr-3 text-gray-400" />
                         Account Settings
+                      </Link>
+                      <Link
+                        href="/settings/2fa"
+                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                      >
+                        <Shield className="h-4 w-4 mr-3 text-gray-400" />
+                        Two-Factor Authentication
                       </Link>
                       <Link
                         href="/orders/history"

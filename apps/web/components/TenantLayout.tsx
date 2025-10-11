@@ -6,6 +6,7 @@ import { TenantAdminSidebar } from "@/components/TenantAdminSidebar";
 import { SidebarLayout } from "@/components/SidebarLayout";
 import { BreadcrumbItem } from "./BreadcrumbNavigation";
 import { AuthGuard } from "./AuthGuard";
+import { useIsAdmin } from "@/lib/admin-helper";
 
 interface TenantLayoutProps {
   children: ReactNode;
@@ -19,6 +20,7 @@ export function TenantLayout({
   className = ""
 }: TenantLayoutProps) {
   const pathname = usePathname();
+  const {isPlatformAdmin} = useIsAdmin();
 
   // Determine breadcrumbs based on current path
   const getBreadcrumbs = (): BreadcrumbItem[] => {
@@ -66,6 +68,7 @@ export function TenantLayout({
         className={className}
         breadcrumbs={getBreadcrumbs()}
         backHref="/admin/tenants"
+        hasBack={isPlatformAdmin}
         backLabel="Back to Platform"
         showHome={false}
       >

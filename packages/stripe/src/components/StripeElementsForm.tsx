@@ -167,26 +167,6 @@ const CheckoutForm: React.FC<PaymentFormProps> = ({
         </div>
       </div>
 
-      {message && (
-        <div className={`p-4 rounded-md ${
-          isComplete ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
-        }`}>
-          <div className="flex">
-            {isComplete ? (
-              <div className="h-5 w-5 text-green-400">✓</div>
-            ) : (
-              <div className="h-5 w-5 text-red-400">⚠</div>
-            )}
-            <div className="ml-3">
-              <p className={`text-sm ${
-                isComplete ? 'text-green-800' : 'text-red-800'
-              }`}>
-                {message}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
 
       <button
         type="submit"
