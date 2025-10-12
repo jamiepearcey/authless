@@ -757,7 +757,37 @@ export default function AccountPage() {
                 }
               }}>
                 <SelectTrigger className="w-full h-12 border-2 border-slate-200 focus:border-indigo-400 focus:ring-indigo-400 hover:border-slate-300 transition-all duration-200 bg-gradient-to-r from-slate-50 to-white">
-                  <SelectValue placeholder={t("Select timezone", "settings.account.page.AccountPage.select_timezone__17abcde")} />
+                  <div className="flex items-center gap-3 py-1">
+                    <span className="text-xl">
+                      {timezone === "UTC" ? "🌍" :
+                       timezone === "Europe/London" ? "🇬🇧" :
+                       timezone === "Europe/Berlin" ? "🇩🇪" :
+                       timezone === "America/New_York" ? "🇺🇸" :
+                       timezone === "America/Los_Angeles" ? "🇺🇸" :
+                       timezone === "Asia/Tokyo" ? "🇯🇵" :
+                       timezone === "Australia/Sydney" ? "🇦🇺" : "🌍"}
+                    </span>
+                    <div className="text-left">
+                      <span className="font-medium">
+                        {timezone === "UTC" ? "UTC" :
+                         timezone === "Europe/London" ? "London" :
+                         timezone === "Europe/Berlin" ? "Berlin" :
+                         timezone === "America/New_York" ? "New York" :
+                         timezone === "America/Los_Angeles" ? "Los Angeles" :
+                         timezone === "Asia/Tokyo" ? "Tokyo" :
+                         timezone === "Australia/Sydney" ? "Sydney" : timezone}
+                      </span>
+                      <span className="text-xs text-gray-500 block">
+                        {timezone === "UTC" ? "Coordinated Universal Time" :
+                         timezone === "Europe/London" ? "GMT/BST" :
+                         timezone === "Europe/Berlin" ? "CET/CEST" :
+                         timezone === "America/New_York" ? "EST/EDT" :
+                         timezone === "America/Los_Angeles" ? "PST/PDT" :
+                         timezone === "Asia/Tokyo" ? "JST" :
+                         timezone === "Australia/Sydney" ? "AEDT/AEST" : ""}
+                      </span>
+                    </div>
+                  </div>
                 </SelectTrigger>
                 <SelectContent className="max-h-60 overflow-y-auto">
                   <SelectItem value="UTC" className="hover:bg-indigo-50 cursor-pointer">
