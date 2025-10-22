@@ -823,6 +823,7 @@ export default function OutboxMonitoringPage() {
                           </div>
                         </div>
                         
+                        
                         <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded">
                           <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                           <div className="flex-1">

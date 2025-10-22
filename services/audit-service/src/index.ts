@@ -316,14 +316,14 @@ export class AuditService {
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
     `;
 
-    // Extract userId using multiple patterns
+    // Extract userId using multiple patterns - no validation needed for audit
     const userId = this.extractUserId(auditEvent);
 
     // Map AuditEvent to AuditLog schema
     const values = [
       auditEvent.id,
-      auditEvent.tenantId || null, // Convert empty string to null for foreign key constraint
-      userId,
+      auditEvent.tenantId || null, // Store original tenantId for audit integrity
+      userId, // Store original userId for audit integrity
       auditEvent.action.type || auditEvent.eventType,
       auditEvent.resource?.type,
       auditEvent.resource?.id,
@@ -334,7 +334,8 @@ export class AuditService {
         aggregateId: auditEvent.aggregateId,
         source: auditEvent.source,
         action: auditEvent.action,
-        originalPayload: auditEvent.originalPayload
+        originalPayload: auditEvent.originalPayload,
+        extractedUserId: extractedUserId // Preserve original extracted userId for debugging
       }),
       auditEvent.actor?.ipAddress,
       auditEvent.actor?.userAgent,

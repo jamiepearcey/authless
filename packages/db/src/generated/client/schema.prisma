@@ -867,18 +867,19 @@ model TenantSupportRouting {
 }
 
 model OutboxEvent {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   eventType      String
   aggregateType  String
   aggregateId    String
   tenantId       String? // Allow null for cross-tenant/platform events
   payloadJson    Json
-  idempotencyKey String?  @unique
-  status         String   @default("pending")
-  tries          Int      @default(0)
-  nextAttemptAt  DateTime @default(now())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  idempotencyKey String?   @unique
+  status         String    @default("pending")
+  tries          Int       @default(0)
+  nextAttemptAt  DateTime  @default(now())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  sentAt         DateTime? // Timestamp when event was successfully sent
   lastError      String?
   traceId        String?
 
@@ -886,6 +887,7 @@ model OutboxEvent {
   @@index([tenantId])
   @@index([eventType])
   @@index([traceId])
+  @@index([sentAt])
 }
 
 // Admin Order Configuration System
@@ -1247,7 +1249,7 @@ model AuditEvent {
   id                 String   @id
   eventType          String
   eventName          String
-  tenantId           String
+  tenantId           String?
   userId             String?
   aggregateType      String
   aggregateId        String

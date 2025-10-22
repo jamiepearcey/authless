@@ -25,13 +25,14 @@ interface OutboxEventRow {
   eventType: string;
   aggregateType: string;
   aggregateId: string;
-  tenantId: string;
+  tenantId: string | null; // Allow null for cross-tenant/platform events
   payloadJson: any;
   idempotencyKey: string | null;
   status: string;
   tries: number;
   createdAt: Date;
   nextAttemptAt: Date | null;
+  sentAt: Date | null;
   lastError: string | null;
 }
 
@@ -45,13 +46,25 @@ export class OutboxProcessor {
   private logger?: ProcessorConfig['logger'];
 
   constructor(private config: ProcessorConfig) {
-    this.pg = new Client({ connectionString: config.databaseUrl });
+    this.pg = new Client({ 
+      connectionString: config.databaseUrl
+    });
     this.logger = config.logger;
   }
 
   private backoff(tries: number): number {
     const base = Math.min(tries, 6); // cap exponential growth
     return 1000 * Math.pow(2, base) + Math.floor(Math.random() * 250); // ms + jitter
+  }
+
+  private async queryWithTimeout(query: string, params: any[], timeoutMs: number = 10000): Promise<any> {
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error(`Query timeout after ${timeoutMs}ms`)), timeoutMs);
+    });
+
+    const queryPromise = this.pg.query(query, params);
+
+    return Promise.race([queryPromise, timeoutPromise]);
   }
 
   private wakeup() {
@@ -97,9 +110,17 @@ export class OutboxProcessor {
     
     // Create JetStream client with extended timeout
     this.logger?.info({}, 'Creating JetStream client...');
-    this.js = this.nats.jetstream({
+    
+    // Wrap JetStream creation in a timeout to prevent hanging
+    const jetstreamPromise = Promise.resolve(this.nats!.jetstream({
       timeout: 30000 // 30 second JetStream operation timeout
+    }));
+    
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('JetStream creation timeout after 10 seconds')), 10000);
     });
+    
+    this.js = await Promise.race([jetstreamPromise, timeoutPromise]);
     this.logger?.info({}, 'JetStream client created successfully');
     
     // Create the EVENTS stream if it doesn't exist
@@ -160,12 +181,12 @@ export class OutboxProcessor {
       throw new Error('JetStream client not initialized');
     }
 
-    // Claim a batch of pending events
-    const { rows } = await this.pg.query(`
+    // Claim a batch of pending events (case-insensitive status check) with timeout
+    const { rows } = await this.queryWithTimeout(`
       WITH cte AS (
         SELECT id
         FROM "OutboxEvent"
-        WHERE status = 'pending' 
+        WHERE UPPER(status) = 'PENDING' 
           AND ("nextAttemptAt" IS NULL OR "nextAttemptAt" <= NOW())
         ORDER BY "createdAt" ASC, id ASC
         LIMIT $1
@@ -176,7 +197,7 @@ export class OutboxProcessor {
       FROM cte
       WHERE o.id = cte.id
       RETURNING o.*;
-    `, [this.config.batchSize || BATCH_SIZE]);
+    `, [this.config.batchSize || BATCH_SIZE], 10000); // 10 second timeout for batch queries
 
     if (rows.length === 0) {
       return 0;
@@ -212,14 +233,12 @@ export class OutboxProcessor {
       createdAt: event.createdAt.toISOString()
     }, `🔄 Processing event ${event.id} (${event.eventType})`);
 
-    const tx = await this.pg.query('BEGIN');
-    
     try {
       if (!this.js) {
         throw new Error('JetStream client not initialized');
       }
 
-      // Ensure the stream exists before publishing
+      // Ensure the stream exists before publishing (outside transaction)
       try {
         await this.ensureStreamExists();
       } catch (error) {
@@ -230,60 +249,65 @@ export class OutboxProcessor {
       // Create a normalized AuditEvent format for the audit service
       const jetStreamEvent = {
         // Required AuditEvent fields
-        id: event.id,
-        eventType: event.eventType,
-        eventName: event.eventType,
-        tenantId: event.tenantId,
-        userId: event.payloadJson?.createdBy || event.payloadJson?.updatedBy || event.payloadJson?.deletedBy || event.payloadJson?.userId,
-        aggregateType: event.aggregateType,
-        aggregateId: event.aggregateId,
+        id: String(event.id),
+        eventType: String(event.eventType || 'unknown'),
+        eventName: String(event.eventType || 'unknown'),
+        tenantId: event.tenantId ? String(event.tenantId) : null,
+        userId: String(event.payloadJson?.createdBy || event.payloadJson?.updatedBy || event.payloadJson?.deletedBy || event.payloadJson?.userId || 'system'),
+        aggregateType: String(event.aggregateType || 'unknown'),
+        aggregateId: String(event.aggregateId || 'unknown'),
         timestamp: event.createdAt.toISOString(),
         source: {
           service: 'outbox-service',
           version: '1.0.0',
           host: process.env.HOSTNAME || 'localhost',
-          requestId: event.idempotencyKey || event.id,
-          correlationId: (event as any).traceId,
+          requestId: String(event.idempotencyKey || event.id),
+          correlationId: String((event as any).traceId || ''),
         },
         actor: {
           type: 'user' as const,
-          id: event.payloadJson?.createdBy || event.payloadJson?.updatedBy || event.payloadJson?.deletedBy || event.payloadJson?.userId || 'system',
-          name: event.payloadJson?.createdByName || event.payloadJson?.updatedByName || event.payloadJson?.deletedByName || event.payloadJson?.userName,
-          email: event.payloadJson?.createdByEmail || event.payloadJson?.updatedByEmail || event.payloadJson?.deletedByEmail || event.payloadJson?.userEmail,
-          ipAddress: event.payloadJson?.ipAddress,
-          userAgent: event.payloadJson?.userAgent,
+          id: String(event.payloadJson?.createdBy || event.payloadJson?.updatedBy || event.payloadJson?.deletedBy || event.payloadJson?.userId || 'system'),
+          name: String(event.payloadJson?.createdByName || event.payloadJson?.updatedByName || event.payloadJson?.deletedByName || event.payloadJson?.userName || ''),
+          email: String(event.payloadJson?.createdByEmail || event.payloadJson?.updatedByEmail || event.payloadJson?.deletedByEmail || event.payloadJson?.userEmail || ''),
+          ipAddress: String(event.payloadJson?.ipAddress || ''),
+          userAgent: String(event.payloadJson?.userAgent || ''),
         },
         resource: {
-          type: event.aggregateType,
-          id: event.aggregateId,
-          name: event.payloadJson?.name || event.payloadJson?.title,
+          type: String(event.aggregateType || 'unknown'),
+          id: String(event.aggregateId || 'unknown'),
+          name: String(event.payloadJson?.name || event.payloadJson?.title || ''),
           attributes: event.payloadJson,
         },
         action: {
-          type: event.eventType,
-          description: `Created ${event.aggregateType}`,
+          type: String(event.eventType || 'unknown'),
+          description: `Created ${String(event.aggregateType || 'unknown')}`,
           outcome: 'success' as const,
           reason: 'Event processed successfully',
         },
         metadata: {
-          outboxId: event.id,
-          outboxEventType: event.eventType,
+          outboxId: String(event.id),
+          outboxEventType: String(event.eventType || 'unknown'),
           outboxCreated: event.createdAt.toISOString(),
-          outboxIdempotencyKey: event.idempotencyKey || event.id,
+          outboxIdempotencyKey: String(event.idempotencyKey || event.id),
         },
         originalPayload: event.payloadJson,
       };
 
       // Derive subject from event type and tenant
-      const subject = this.deriveSubject(String(event.eventType || ''), String(event.tenantId || ''));
+      const subject = this.deriveSubject(event.eventType, event.tenantId);
 
-      // Create headers for the message
+      // Create headers for the message with safe string conversion
       const msgHeaders = headers();
-      msgHeaders.set('Event-Type', String(event.eventType || ''));
-      msgHeaders.set('Aggregate-Type', String(event.aggregateType || ''));
-      msgHeaders.set('Aggregate-Id', String(event.aggregateId || ''));
-      msgHeaders.set('Tenant-Id', String(event.tenantId || ''));
-      msgHeaders.set('Outbox-Event-Id', String(event.id || ''));
+      const safeHeaderValue = (value: any, fallback: string = 'unknown'): string => {
+        if (value === null || value === undefined) return fallback;
+        return String(value).trim() || fallback;
+      };
+      
+      msgHeaders.set('Event-Type', safeHeaderValue(event.eventType, 'unknown'));
+      msgHeaders.set('Aggregate-Type', safeHeaderValue(event.aggregateType, 'unknown'));
+      msgHeaders.set('Aggregate-Id', safeHeaderValue(event.aggregateId, 'unknown'));
+      msgHeaders.set('Tenant-Id', safeHeaderValue(event.tenantId, 'system'));
+      msgHeaders.set('Outbox-Event-Id', safeHeaderValue(event.id, 'unknown'));
 
       // Publish to JetStream with broker deduplication and timeout
       this.logger?.info({
@@ -295,10 +319,11 @@ export class OutboxProcessor {
         headers: msgHeaders.toString()
       }, `🚀 Publishing event ${event.id} to subject: ${subject}`);
 
+      // Publish to JetStream (outside transaction to avoid long-running locks)
       const publishResult = await this.js.publish(
         subject, 
         sc.encode(JSON.stringify(jetStreamEvent)), {
-        msgID: event.idempotencyKey || event.id,
+        msgID: safeHeaderValue(event.idempotencyKey || event.id, String(event.id)),
         headers: msgHeaders,
         timeout: 20000 // 20 second timeout for individual publish operations
       });
@@ -313,20 +338,18 @@ export class OutboxProcessor {
         }
       }, `✅ JetStream publish successful for event ${event.id}`);
 
-      // Mark as sent
+      // Mark as sent in a short transaction with timeout
       this.logger?.info(`💾 Updating event ${event.id} status to 'sent'`);
-      await this.pg.query(
-        'UPDATE "OutboxEvent" SET status = $2, "lastError" = NULL WHERE id = $1',
-        [event.id, 'sent']
+      await this.queryWithTimeout(
+        'UPDATE "OutboxEvent" SET status = $2, "sentAt" = NOW(), "lastError" = NULL WHERE id = $1',
+        [event.id, 'sent'],
+        5000 // 5 second timeout for status updates
       );
 
-      await this.pg.query('COMMIT');
       this.logger?.info(`📤 Event ${event.id} (${event.eventType}) published successfully`);
       return true;
 
     } catch (error: any) {
-      await this.pg.query('ROLLBACK');
-      
       const tries = event.tries + 1;
       const maxTries = this.config.maxTries || MAX_TRIES;
       const delayMs = this.backoff(tries);
@@ -365,12 +388,13 @@ export class OutboxProcessor {
         delayMs
       }, `💾 Updating event ${event.id} status to '${newStatus}' after error`);
 
-      await this.pg.query(
+      await this.queryWithTimeout(
         `UPDATE "OutboxEvent"
          SET status = $2, tries = $3, "lastError" = $4,
              "nextAttemptAt" = NOW() + MAKE_INTERVAL(secs => $5 / 1000.0)
          WHERE id = $1`,
-        [event.id, newStatus, tries, errorMessage, delayMs]
+        [event.id, newStatus, tries, errorMessage, delayMs],
+        5000 // 5 second timeout for error updates
       );
 
       if (newStatus === 'dead') {
@@ -424,10 +448,11 @@ export class OutboxProcessor {
     }
   }
 
-  private deriveSubject(eventType: string, tenantId: string): string {
-    // Handle null/empty tenantId by using 'global' as the tenant segment
-    const tenant = tenantId && tenantId.trim() ? tenantId : 'global';
-    return `events.${tenant}.${eventType.replace(/\./g, '_')}`;
+  private deriveSubject(eventType: string | null, tenantId: string | null): string {
+    // Handle null/empty tenantId by using 'system' as the tenant segment for NATS subjects
+    const tenant = tenantId && typeof tenantId === 'string' && tenantId.trim() ? tenantId : 'system';
+    const safeEventType = eventType && typeof eventType === 'string' ? eventType : 'unknown';
+    return `events.${tenant}.${safeEventType.replace(/\./g, '_')}`;
   }
 
   async close(): Promise<void> {

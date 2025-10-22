@@ -221,9 +221,8 @@ export class OutboxService {
         await this.startMetricsServer();
       }
 
-      // Initialize and start the outbox processor
+      // Initialize the outbox processor
       await this.processor.init();
-      await this.processor.start();
 
       this.isRunning = true;
       this.lightship.signalReady();
@@ -234,6 +233,9 @@ export class OutboxService {
         batchSize: this.config.batchSize,
         maxTries: this.config.maxTries,
       }, 'Outbox service started successfully');
+
+      // Start the outbox processor (this runs indefinitely)
+      await this.processor.start();
 
     } catch (error) {
       this.logger.error({ error }, 'Failed to start outbox service');

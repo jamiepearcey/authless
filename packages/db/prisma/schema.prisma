@@ -392,8 +392,8 @@ model ContactReply {
 
 model AuditLog {
   id           String   @id @default(cuid())
-  tenantId     String?
-  userId       String?
+  tenantId     String?  // No foreign key - audit should capture any value for historical integrity
+  userId       String?  // No foreign key - audit should capture any value for historical integrity
   action       String
   resourceType String?
   resourceId   String?
@@ -404,8 +404,6 @@ model AuditLog {
   severity     String   @default("info")
   createdAt    DateTime @default(now())
   traceId      String?
-  tenant       Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([tenantId])
   @@index([userId])
@@ -867,18 +865,19 @@ model TenantSupportRouting {
 }
 
 model OutboxEvent {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   eventType      String
   aggregateType  String
   aggregateId    String
-  tenantId       String?  // Allow null for cross-tenant/platform events
+  tenantId       String?   // Allow null for cross-tenant/platform events
   payloadJson    Json
-  idempotencyKey String?  @unique
-  status         String   @default("pending")
-  tries          Int      @default(0)
-  nextAttemptAt  DateTime @default(now())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  idempotencyKey String?   @unique
+  status         String    @default("pending")
+  tries          Int       @default(0)
+  nextAttemptAt  DateTime  @default(now())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  sentAt         DateTime? // Timestamp when event was successfully sent
   lastError      String?
   traceId        String?
 
@@ -886,6 +885,7 @@ model OutboxEvent {
   @@index([tenantId])
   @@index([eventType])
   @@index([traceId])
+  @@index([sentAt])
 }
 
 // Admin Order Configuration System
@@ -1247,7 +1247,7 @@ model AuditEvent {
   id                 String   @id
   eventType          String
   eventName          String
-  tenantId           String
+  tenantId           String?
   userId             String?
   aggregateType      String
   aggregateId        String

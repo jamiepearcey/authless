@@ -44329,6 +44329,7 @@ export namespace Prisma {
     nextAttemptAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    sentAt: Date | null
     lastError: string | null
     traceId: string | null
   }
@@ -44345,6 +44346,7 @@ export namespace Prisma {
     nextAttemptAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    sentAt: Date | null
     lastError: string | null
     traceId: string | null
   }
@@ -44362,6 +44364,7 @@ export namespace Prisma {
     nextAttemptAt: number
     createdAt: number
     updatedAt: number
+    sentAt: number
     lastError: number
     traceId: number
     _all: number
@@ -44390,6 +44393,7 @@ export namespace Prisma {
     nextAttemptAt?: true
     createdAt?: true
     updatedAt?: true
+    sentAt?: true
     lastError?: true
     traceId?: true
   }
@@ -44406,6 +44410,7 @@ export namespace Prisma {
     nextAttemptAt?: true
     createdAt?: true
     updatedAt?: true
+    sentAt?: true
     lastError?: true
     traceId?: true
   }
@@ -44423,6 +44428,7 @@ export namespace Prisma {
     nextAttemptAt?: true
     createdAt?: true
     updatedAt?: true
+    sentAt?: true
     lastError?: true
     traceId?: true
     _all?: true
@@ -44527,6 +44533,7 @@ export namespace Prisma {
     nextAttemptAt: Date
     createdAt: Date
     updatedAt: Date
+    sentAt: Date | null
     lastError: string | null
     traceId: string | null
     _count: OutboxEventCountAggregateOutputType | null
@@ -44563,6 +44570,7 @@ export namespace Prisma {
     nextAttemptAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sentAt?: boolean
     lastError?: boolean
     traceId?: boolean
   }, ExtArgs["result"]["outboxEvent"]>
@@ -44580,6 +44588,7 @@ export namespace Prisma {
     nextAttemptAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sentAt?: boolean
     lastError?: boolean
     traceId?: boolean
   }, ExtArgs["result"]["outboxEvent"]>
@@ -44597,6 +44606,7 @@ export namespace Prisma {
     nextAttemptAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sentAt?: boolean
     lastError?: boolean
     traceId?: boolean
   }
@@ -44618,6 +44628,7 @@ export namespace Prisma {
       nextAttemptAt: Date
       createdAt: Date
       updatedAt: Date
+      sentAt: Date | null
       lastError: string | null
       traceId: string | null
     }, ExtArgs["result"]["outboxEvent"]>
@@ -45025,6 +45036,7 @@ export namespace Prisma {
     readonly nextAttemptAt: FieldRef<"OutboxEvent", 'DateTime'>
     readonly createdAt: FieldRef<"OutboxEvent", 'DateTime'>
     readonly updatedAt: FieldRef<"OutboxEvent", 'DateTime'>
+    readonly sentAt: FieldRef<"OutboxEvent", 'DateTime'>
     readonly lastError: FieldRef<"OutboxEvent", 'String'>
     readonly traceId: FieldRef<"OutboxEvent", 'String'>
   }
@@ -53905,7 +53917,7 @@ export namespace Prisma {
     id: string
     eventType: string
     eventName: string
-    tenantId: string
+    tenantId: string | null
     userId: string | null
     aggregateType: string
     aggregateId: string
@@ -54062,7 +54074,7 @@ export namespace Prisma {
       id: string
       eventType: string
       eventName: string
-      tenantId: string
+      tenantId: string | null
       userId: string | null
       aggregateType: string
       aggregateId: string
@@ -61636,6 +61648,7 @@ export namespace Prisma {
     nextAttemptAt: 'nextAttemptAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    sentAt: 'sentAt',
     lastError: 'lastError',
     traceId: 'traceId'
   };
@@ -65744,6 +65757,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFilter<"OutboxEvent"> | Date | string
     createdAt?: DateTimeFilter<"OutboxEvent"> | Date | string
     updatedAt?: DateTimeFilter<"OutboxEvent"> | Date | string
+    sentAt?: DateTimeNullableFilter<"OutboxEvent"> | Date | string | null
     lastError?: StringNullableFilter<"OutboxEvent"> | string | null
     traceId?: StringNullableFilter<"OutboxEvent"> | string | null
   }
@@ -65761,6 +65775,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sentAt?: SortOrderInput | SortOrder
     lastError?: SortOrderInput | SortOrder
     traceId?: SortOrderInput | SortOrder
   }
@@ -65781,6 +65796,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFilter<"OutboxEvent"> | Date | string
     createdAt?: DateTimeFilter<"OutboxEvent"> | Date | string
     updatedAt?: DateTimeFilter<"OutboxEvent"> | Date | string
+    sentAt?: DateTimeNullableFilter<"OutboxEvent"> | Date | string | null
     lastError?: StringNullableFilter<"OutboxEvent"> | string | null
     traceId?: StringNullableFilter<"OutboxEvent"> | string | null
   }, "id" | "idempotencyKey">
@@ -65798,6 +65814,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sentAt?: SortOrderInput | SortOrder
     lastError?: SortOrderInput | SortOrder
     traceId?: SortOrderInput | SortOrder
     _count?: OutboxEventCountOrderByAggregateInput
@@ -65823,6 +65840,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeWithAggregatesFilter<"OutboxEvent"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"OutboxEvent"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"OutboxEvent"> | Date | string
+    sentAt?: DateTimeNullableWithAggregatesFilter<"OutboxEvent"> | Date | string | null
     lastError?: StringNullableWithAggregatesFilter<"OutboxEvent"> | string | null
     traceId?: StringNullableWithAggregatesFilter<"OutboxEvent"> | string | null
   }
@@ -66799,7 +66817,7 @@ export namespace Prisma {
     id?: StringFilter<"AuditEvent"> | string
     eventType?: StringFilter<"AuditEvent"> | string
     eventName?: StringFilter<"AuditEvent"> | string
-    tenantId?: StringFilter<"AuditEvent"> | string
+    tenantId?: StringNullableFilter<"AuditEvent"> | string | null
     userId?: StringNullableFilter<"AuditEvent"> | string | null
     aggregateType?: StringFilter<"AuditEvent"> | string
     aggregateId?: StringFilter<"AuditEvent"> | string
@@ -66833,7 +66851,7 @@ export namespace Prisma {
     id?: SortOrder
     eventType?: SortOrder
     eventName?: SortOrder
-    tenantId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
     userId?: SortOrderInput | SortOrder
     aggregateType?: SortOrder
     aggregateId?: SortOrder
@@ -66870,7 +66888,7 @@ export namespace Prisma {
     NOT?: AuditEventWhereInput | AuditEventWhereInput[]
     eventType?: StringFilter<"AuditEvent"> | string
     eventName?: StringFilter<"AuditEvent"> | string
-    tenantId?: StringFilter<"AuditEvent"> | string
+    tenantId?: StringNullableFilter<"AuditEvent"> | string | null
     userId?: StringNullableFilter<"AuditEvent"> | string | null
     aggregateType?: StringFilter<"AuditEvent"> | string
     aggregateId?: StringFilter<"AuditEvent"> | string
@@ -66904,7 +66922,7 @@ export namespace Prisma {
     id?: SortOrder
     eventType?: SortOrder
     eventName?: SortOrder
-    tenantId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
     userId?: SortOrderInput | SortOrder
     aggregateType?: SortOrder
     aggregateId?: SortOrder
@@ -66944,7 +66962,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"AuditEvent"> | string
     eventType?: StringWithAggregatesFilter<"AuditEvent"> | string
     eventName?: StringWithAggregatesFilter<"AuditEvent"> | string
-    tenantId?: StringWithAggregatesFilter<"AuditEvent"> | string
+    tenantId?: StringNullableWithAggregatesFilter<"AuditEvent"> | string | null
     userId?: StringNullableWithAggregatesFilter<"AuditEvent"> | string | null
     aggregateType?: StringWithAggregatesFilter<"AuditEvent"> | string
     aggregateId?: StringWithAggregatesFilter<"AuditEvent"> | string
@@ -71572,6 +71590,7 @@ export namespace Prisma {
     nextAttemptAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    sentAt?: Date | string | null
     lastError?: string | null
     traceId?: string | null
   }
@@ -71589,6 +71608,7 @@ export namespace Prisma {
     nextAttemptAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    sentAt?: Date | string | null
     lastError?: string | null
     traceId?: string | null
   }
@@ -71605,6 +71625,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastError?: NullableStringFieldUpdateOperationsInput | string | null
     traceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -71622,6 +71643,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastError?: NullableStringFieldUpdateOperationsInput | string | null
     traceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -71639,6 +71661,7 @@ export namespace Prisma {
     nextAttemptAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    sentAt?: Date | string | null
     lastError?: string | null
     traceId?: string | null
   }
@@ -71655,6 +71678,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastError?: NullableStringFieldUpdateOperationsInput | string | null
     traceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -71672,6 +71696,7 @@ export namespace Prisma {
     nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastError?: NullableStringFieldUpdateOperationsInput | string | null
     traceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -72837,7 +72862,7 @@ export namespace Prisma {
     id: string
     eventType: string
     eventName: string
-    tenantId: string
+    tenantId?: string | null
     userId?: string | null
     aggregateType: string
     aggregateId: string
@@ -72871,7 +72896,7 @@ export namespace Prisma {
     id: string
     eventType: string
     eventName: string
-    tenantId: string
+    tenantId?: string | null
     userId?: string | null
     aggregateType: string
     aggregateId: string
@@ -72905,7 +72930,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     eventType?: StringFieldUpdateOperationsInput | string
     eventName?: StringFieldUpdateOperationsInput | string
-    tenantId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     aggregateType?: StringFieldUpdateOperationsInput | string
     aggregateId?: StringFieldUpdateOperationsInput | string
@@ -72939,7 +72964,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     eventType?: StringFieldUpdateOperationsInput | string
     eventName?: StringFieldUpdateOperationsInput | string
-    tenantId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     aggregateType?: StringFieldUpdateOperationsInput | string
     aggregateId?: StringFieldUpdateOperationsInput | string
@@ -72973,7 +72998,7 @@ export namespace Prisma {
     id: string
     eventType: string
     eventName: string
-    tenantId: string
+    tenantId?: string | null
     userId?: string | null
     aggregateType: string
     aggregateId: string
@@ -73007,7 +73032,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     eventType?: StringFieldUpdateOperationsInput | string
     eventName?: StringFieldUpdateOperationsInput | string
-    tenantId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     aggregateType?: StringFieldUpdateOperationsInput | string
     aggregateId?: StringFieldUpdateOperationsInput | string
@@ -73041,7 +73066,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     eventType?: StringFieldUpdateOperationsInput | string
     eventName?: StringFieldUpdateOperationsInput | string
-    tenantId?: StringFieldUpdateOperationsInput | string
+    tenantId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     aggregateType?: StringFieldUpdateOperationsInput | string
     aggregateId?: StringFieldUpdateOperationsInput | string
@@ -76172,6 +76197,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sentAt?: SortOrder
     lastError?: SortOrder
     traceId?: SortOrder
   }
@@ -76193,6 +76219,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sentAt?: SortOrder
     lastError?: SortOrder
     traceId?: SortOrder
   }
@@ -76209,6 +76236,7 @@ export namespace Prisma {
     nextAttemptAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sentAt?: SortOrder
     lastError?: SortOrder
     traceId?: SortOrder
   }
